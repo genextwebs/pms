@@ -29,7 +29,7 @@
 	                    </a>
 	                </li>
 	                <li class="active">
-	                    <a href="leads.html" class="nav-link-s">
+	                    <a href="<?php echo base_url().'Leads/index'?>" class="nav-link-s">
 	                        <i class="ti-receipt"></i>
 	                        <span>Leads</span>
 	                    </a>

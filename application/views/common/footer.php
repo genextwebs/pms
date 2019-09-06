@@ -17,7 +17,12 @@
 
     <script src="<?php echo base_url();?>assets/js/bootstrap.js"></script>
     <script src="<?php echo base_url();?>assets/js/custome.js"></script>
+<<<<<<< HEAD
     <script src="https://cdn.ckeditor.com/4.12.1/standard/ckeditor.js"></script>
+=======
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.js"></script>
+    <script src="<?php echo base_url();?>assets/js/validation.js"></script>
+>>>>>>> 64d34a364ac34d182b458f7fbc6126efeedf02dd
     <!-- sidebar -->
     <script type="text/javascript">
         $(document).ready(function() {
