@@ -14,7 +14,6 @@
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/simple-line-icons.css">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/themify-icons.css">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/ie7.css">
-    <link rel="stylesheet" href="<?php echo base_url();?>assets/css/morris.css">
 
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/sidebar.css">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/style.css">
@@ -28,7 +27,7 @@
 				<img class="img-fluid" src="<?php echo base_url();?>assets/images/logo.png" alt="home" style="max-width: 280px;">
 			</a>
 			<div class="stats-box">
-				<form id="loginform" method="post" class="form-material" action="<?php echo base_url().'loginController/checklogin'?>"> 
+				<form id="loginform" method="post" class="form-material" action="<?php echo base_url().'login/checklogin'?>"> 
 					<div class="row">
 						<div class="col-md-12">
 							<div class="form-group">
@@ -64,7 +63,6 @@
     <script src="<?php echo base_url();?>assets/js/popper.min.js"></script>
 	
     <script src="<?php echo base_url();?>assets/js/bootstrap.js"></script>
-    <script src="<?php echo base_url();?>assets/js/custome.js"></script>
     <!-- sidebar -->
 </body>
 </html>
