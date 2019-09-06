@@ -21,24 +21,18 @@
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/sidebar.css">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/style.css">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/validate-error.css">
-    
-
 </head>
 <body>
-
 	<div class="wrapper">
 	 <nav id="sidebar">
             <div class="sidebar-header">
                 <h3 class="text-left logo-left"><img class="img-fluid img-logo" src="<?php echo base_url();?>assets/images/logo.png" alt="pecific school of engineering"></h3>
-                <strong><img class="img-fluid" src="images/small-logo.png" alt="pecific school of engineering"></strong>
+                <strong><img class="img-fluid" src="<?php echo base_url();?>assets/images/small-logo.png" alt="pecific school of engineering"></strong>
             </div>
             <div class="admin-panel">Admin Panel</div>
             <?php $this->load->view('common/sidebar'); ?>
-			
         </nav>
-
         <!-- Page Content  -->
 		 
-       
 		<div id="content" class="content">
 		<?php $this->load->view('common/topheader'); ?>

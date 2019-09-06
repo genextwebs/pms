@@ -1,8 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Project extends CI_Controller 
-{
+class Project extends CI_Controller {
+
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('common_model');
@@ -19,6 +19,4 @@ class Project extends CI_Controller
 		$this->load->view('project/addproject');
 		$this->load->view('common/footer');
 	}
-	
-	
 }
