@@ -35,7 +35,7 @@
 	                    </a>
 	                </li>
 	                <li>
-	                    <a href="project.html" class="nav-link-s">
+	                    <a href="<?php echo base_url().'Project/index'?>" class="nav-link-s">
 	                        <i class="icon-layers"></i>
 	                        <span>Projects</span>
 	                    </a>

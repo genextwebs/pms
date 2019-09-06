@@ -13,16 +13,18 @@
     <script src="<?php echo base_url();?>assets/js/dataTables.bootstrap4.min.js"></script>
     <script src="<?php echo base_url();?>assets/js/responsive.bootstrap4.min.js"></script>
     <script src="<?php echo base_url();?>assets/js/dataTables.responsive.min.js"></script>
+	<script src="<?php echo base_url();?>assets/js/search-dropdown.min.js"></script>
 
     <script src="<?php echo base_url();?>assets/js/bootstrap.js"></script>
     <script src="<?php echo base_url();?>assets/js/custome.js"></script>
-
+    <script src="https://cdn.ckeditor.com/4.12.1/standard/ckeditor.js"></script>
     <!-- sidebar -->
     <script type="text/javascript">
         $(document).ready(function() {
 		    $('#users-table').DataTable();
-		} );
-    </script>
+		    CKEDITOR.replace( 'editor1' );
+		});
+	</script>
 </body>
 </html>
 
