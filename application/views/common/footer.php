@@ -33,9 +33,9 @@
 		});
     </script>
     <?php 
-        $controller = $this->uri->segment(1);
-        $function = $this->uri->segment(2);
-        if(  $controller == 'Leads' && $function == 'index') { ?>
+        $controller = strtolower($this->uri->segment(1));
+        $function = strtolower($this->uri->segment(2));
+        if(  $controller == 'leads' && $function == 'index') { ?>
             <script type="text/javascript">
                 jQuery(document).ready(function() {
             var oTable = jQuery('#leads').DataTable({

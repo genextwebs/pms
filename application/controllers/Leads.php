@@ -51,7 +51,7 @@ class Leads extends CI_Controller
 			{
 				$tempStr =' where ';
 			}
-			$whereStr = $tempStr.' (companyname like "%'.$searchTerm.'%" OR website like "%'.$searchTerm.'%" OR address like "%'.$searchTerm.'%" OR clientname like "%'.$searchTerm.'%" OR clientemail like "%'.$searchTserm.'%" OR note like "%'.$searchTerm.'%")';
+			$whereStr = $tempStr.' (companyname like "%'.$searchTerm.'%" OR website like "%'.$searchTerm.'%" OR address like "%'.$searchTerm.'%" OR clientname like "%'.$searchTerm.'%" OR clientemail like "%'.$searchTerm.'%" OR note like "%'.$searchTerm.'%")';
 		}	
 		$query = "SELECT id,clientid,clientname,companyname,website,address,clientname,clientemail,note,created_at,nextfollowup,status from tbl_leads".$whereStr;
 		//echo $query;die;
@@ -80,8 +80,8 @@ class Leads extends CI_Controller
 				'<div class="dropdown action m-r-10">
 	                <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
 	                		<div class="dropdown-menu">
-			                    <a  class="dropdown-item" href="#"><i class="fa fa-search"></i> View</a>
-			                    <a  class="dropdown-item" href="#"><i class="fa fa-edit"></i> Edit</a>
+			                    <a  class="dropdown-item" href='.base_url().'college_management/editDivision/'.base64_encode($id).'><i class="fa fa-search"></i> View</a>
+			                    <a  class="dropdown-item" href='.base_url().'leads/editleads/'.base64_encode($id).'><i class="fa fa-edit"></i> Edit</a>
 			                    <a  class="dropdown-item" href="#"><i class="fa fa-trash "></i> Delete</a>
 			                    <a  class="dropdown-item" href="#"><i class="fa fa-user"></i> Change To Client</a>
 			                    <a  class="dropdown-item" href="#"><i class="fa fa-thumbs-up"></i> Add Follow Up</a>
@@ -104,8 +104,6 @@ class Leads extends CI_Controller
 			                    <a  class="dropdown-item" href="#"><i class="fa fa-search"></i> View</a>
 			                    <a  class="dropdown-item" href="#"><i class="fa fa-edit"></i> Edit</a>
 			                    <a  class="dropdown-item" href="#"><i class="fa fa-trash "></i> Delete</a>
-			                    <a  class="dropdown-item" href="#"><i class="fa fa-user"></i> Change To Client</a>
-			                    <a  class="dropdown-item" href="#"><i class="fa fa-thumbs-up"></i> Add Follow Up</a>
 	                	</div>
 	            </div>'
 				
@@ -119,9 +117,9 @@ class Leads extends CI_Controller
                  "recordsFiltered" => count($data['leads']),
                  "data" => $datarow
             );*/
-        $data['alldata']=$this->common_model->getData('tbl_leads');
-        print_r($data);die;
-		$iTotal=count($data['alldata']);
+        $data['alldata'] = $this->common_model->getData('tbl_leads');
+        //print_r($data);die;
+		$iTotal = count($data['alldata']);
 		$output = array
 		(
 		   "sEcho" => intval($_POST['sEcho']),
@@ -130,8 +128,35 @@ class Leads extends CI_Controller
 		   "iTotalDisplayRecords" => count($data['leads']),
 		   "aaData" => $datarow
 		);
-	  echo json_encode($result);
+	  echo json_encode($output);
       exit();
+	}
+
+	public function editleads(){
+		$id = base64_decode($this->uri->segment(3));
+		$whereArr=array('id'=>$id);
+		$data['leads'] = $this->common_model->getData('tbl_leads',$whereArr);
+		$this->load->view('common/header');
+		$this->load->view('leads/editleads',$data);
+		$this->load->view('common/footer');
+		if($this->input->post('btnupdate'))
+		{
+			$companyname = $this->input->post('company_name');
+			$website = $this->input->post('website');
+			$address = $this->input->post('address');
+			$clientname = $this->input->post('client_name');
+			$clientemail = $this->input->post('client_email');
+			$mobile = $this->input->post('mobile');
+			$nextfollowup = $this->input->post('follow_up');
+			$status = $this->input->post('status');
+			$source = $this->input->post('source');
+			$note = $this->input->post('note');
+			$updateArr = array('clientid'=>0,'companyname'=>$companyname,'website'=>$website,'address'=>$address,'clientname'=>$clientname,'clientemail'=>$clientemail,'mobile'=>$mobile,'nextfollowup'=>$nextfollowup,'status'=>$status,'source'=>$source,'note'=>$note);
+			$whereArr=array('id'=>$id);
+			$this->common_model->updatedata('tbl_leads',$updateArr,$whereArr);
+			$this->session->set_flashdata('message_name', 'Lead Insert sucessfully');
+			redirect('Leads/index');
+		}
 	} 
 	
 }
