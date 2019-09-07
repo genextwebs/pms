@@ -53,7 +53,7 @@
             		</div>
             	</div>
             	<div class="table-responsive">
-                	<table class="table table-bordered table-hover" id="users-table">
+                	<table class="table table-bordered table-hover" id="leads" >
 					   	<thead>
 					      	<tr role="row">
 						         <th>Id</th>
@@ -65,38 +65,6 @@
 						         <th>Action</th>
 					      	</tr>
 					   	</thead>
-					   	<tbody>
-					      <tr role="row" class="odd">
-					         <td class="" tabindex="0">1</td>
-					         <td>
-					         	<a href="#">Test Client</a>
-					         	<div class="clearfix"></div>
-					         	<label class="badge badge-info">Lead</label>
-					         </td>
-					         <td>Test Lead</td>
-					         <td>23-08-2019</td>
-					         <td>--</td>
-					         <td>
-					         	<select class="form-control width-auto" name="statusChange">
-            						<option value="4">Pending</option>
-            						<option selected="" value="5">Overview</option>
-            						<option value="6">Confirmed</option>
-        						</select>
-					         </td>
-					         <td>
-					         	<div class="dropdown action m-r-10">
-					                <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
-					                <div class="dropdown-menu">
-					                    <a  class="dropdown-item" href="#"><i class="fa fa-search"></i> View</a>
-					                    <a  class="dropdown-item" href="#"><i class="fa fa-edit"></i> Edit</a>
-					                    <a  class="dropdown-item" href="#"><i class="fa fa-trash "></i> Delete</a>
-					                    <a  class="dropdown-item" href="#"><i class="fa fa-user"></i> Change To Client</a>
-					                    <a  class="dropdown-item" href="#"><i class="fa fa-thumbs-up"></i> Add Follow Up</a>
-					                </div>
-					             </div>
-					         </td>
-					      </tr>
-					   	</tbody>
 					</table>
 				</div>
             </div>

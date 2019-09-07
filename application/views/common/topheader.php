@@ -45,7 +45,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="<?php echo baseurl().'login/logout'; ?>"><i class="fa fa-power-off"></i> Logout</a>
+                    <a href="<?php echo base_url().'login/logout'; ?>"><i class="fa fa-power-off"></i> Logout</a>
                 </li>
             </ul>
         </div>

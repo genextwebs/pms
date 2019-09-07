@@ -8,32 +8,5 @@ $(function(){
 		submitHandler: function(form) {
 		form.submit();}
 	});
-
-	$("form[name='division']").validate({
-		rules:{
-			division_name:"required",
-			branch:"required",
-			semester:"required",
-			Intake:"required",
-			status:"required",	
-			
-		},			
-		submitHandler: function(form) {
-		form.submit();}
-	});
-
-	$("form[name='subject']").validate({
-		rules:{
-				branch:"required",
-				semester:"required",
-				faculty:"required",
-				'multiple_branch[]':"required",
-				subject_name:"required",
-				subject_code:"required",
-				status:"required",	
-				
-		},			
-		submitHandler: function(form) {
-		form.submit();}
-	});
+	
 });

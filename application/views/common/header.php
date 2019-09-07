@@ -12,6 +12,7 @@
 	<link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap.css">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/fixedHeader.bootstrap4.min.css">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/responsive.bootstrap4.min.css">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/font-awesome.css">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/simple-line-icons.css">

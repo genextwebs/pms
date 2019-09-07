@@ -23,10 +23,15 @@
             	</div>
             	<div class="card-wrapper collapse show">
             		<div class="card-body">
-            			<form id="creatclient" class="aj-form" name="leads" method="post">
+            			<form id="creatclient" class="aj-form" name="leads" method="post" action="<?php echo base_url().'Leads/insertleads'?>">
+                            <?php
+                                    $mess = $this->session->flashdata('message_name');
+                                    if(!empty($mess)){
+                                        //warning 
+                                    ?>
             				<div class="submit-alerts">
             					<div class="alert alert-success" role="alert">
-								  This is a success alert
+                                    <?php echo $mess; ?>
 								</div>
 								<div class="alert alert-danger" role="alert">
 								  This is a danger alert
@@ -35,6 +40,7 @@
 								  This is a warning alert
 								</div>
             				</div>
+                            <?php } ?>
             				<div class="form-body">
             					<h3 class="box-title">Company Details</h3>
             					<hr>
@@ -88,8 +94,8 @@
 										<div class="form-group">
 											<label class="control-label">Next Follow Up</label>
 											<select id="follow_up" name="follow_up" class="form-control">
-												<option selected>Yes</option>
-												<option>No</option>
+												<option selected value="0">Yes</option>
+												<option value="1">No</option>
 											</select>
 										</div>
 									</div>
@@ -103,7 +109,7 @@
                     			
 								<!-- action btn -->
                                 <div class="form-actions">
-	                                <button type="submit" id="save-form" class="btn btn-success"> <i class="fa fa-check"></i> Save</button>
+	                                <input type="submit" id="save-form" class="btn btn-success" name="btnsave" value="Save"> <i class="fa fa-check" ></i> 
 	                                <button type="reset" class="btn btn-default">Reset</button>
 	                            </div>
             				</div>

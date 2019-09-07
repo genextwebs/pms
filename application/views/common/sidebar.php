@@ -10,14 +10,14 @@
                     <a href="#"><i class="fas fa-sign-in-alt"></i> <span>Login As Employee</span></a>
                 </li>
                 <li>
-                    <a href="<?php echo baseurl().'login/logout'; ?>"><i class="fas fa-power-off"></i> <span>Logout</span></a>
+                    <a href="<?php echo base_url().'Login/logout'; ?>"><i class="fas fa-power-off"></i> <span>Logout</span></a>
                 </li>
             </ul>
         </li>
     </ul>
     <ul class="list-unstyled components">
         <li>
-            <a href="<?php echo baseurl().'dashboard'; ?>" class="nav-link-s">
+            <a href="<?php echo base_url().'Dashboard'; ?>" class="nav-link-s">
                 <i class="icon-speedometer"></i>
                 <span>Dashbord</span>
             </a>
