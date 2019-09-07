@@ -19,4 +19,17 @@ class Project extends CI_Controller {
 		$this->load->view('project/addproject');
 		$this->load->view('common/footer');
 	}
+	
+	public function projecttemplate(){
+		$this->load->view('common/header');
+		$this->load->view('project/projecttemplate');
+		$this->load->view('common/footer');	
+	}
+	
+	public function addtemplate(){
+		$this->load->view('common/header');
+		$this->load->view('project/addtemplate');
+		$this->load->view('common/footer');	
+	}
+	
 }
