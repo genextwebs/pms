@@ -1,3 +1,4 @@
+
  <nav aria-label="breadcrumb" class="breadcrumb-nav">
 	<div class="row">
 		<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
@@ -5,8 +6,8 @@
 		</div>
 		<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 			<ol class="breadcrumb">
-				<li><a href="index.html">Home</a></li>
-				<li><a href="clients.html">Projects</a></li>
+				<li><a href="<?php echo base_url().'Dashboard/';?>">Home</a></li>
+				<li><a href="<?php echo base_url().'Project/';?>">Projects</a></li>
 				<li class="active">Add New</li>
 			</ol>
 		</div>
@@ -22,7 +23,7 @@
 				</div>
 				<div class="card-wrapper collapse show">
 					<div class="card-body">
-						<form id="creatclient" class="aj-form">
+						<form id="creatclient" class="aj-form" name="creatclient" method="post" action="<?php echo base_url().'Project/insertproject';?>">
 							<div class="submit-alerts">
 								<div class="alert alert-success" role="alert">
 								  This is a success alert
@@ -46,11 +47,11 @@
 									</div>
 									<div class="col-md-6">
 										<div class="form-group project-category">
-										<label class="control-label" for="project-category">
+										<label class="control-label" for="project-category">Project Category
 										<a href="#project-category1" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#project-category1">Add Project Category <i class="fa fa-plus" aria-hidden="true"></i></a>
 										</label>
 																										
-											<select class="custom-select br-0" id="project-category">
+											<select class="custom-select br-0" id="project-category" name="project-category">
 												<option selected>Choose...</option>
 												<option value="Laravel">Laravel</option>
 												<option value="Yii">Yii</option>
@@ -75,19 +76,27 @@
 											<input type="text" name="deadline" id="deadline" autocomplete="off" class="form-control">
 										</div>
 									</div>
-									<div class="col-md-4">
+									<div class="col-md-4" >
 										<div class="form-group" style="padding-top: 25px;">
 											<div class="custom-control custom-checkbox my-1 mr-sm-2">
-												<input type="checkbox" class="custom-control-input" name="without_deadline" id="without_deadline">
+												<input type="checkbox" class="custom-control-input" name="without_deadline" id="without_deadline" onclick="checkUncheck()">
 												<label class="custom-control-label" for="without_deadline" style="padding-top: 2px;">Add project without deadline?</label>
 											</div>
 										</div>
 									</div>
-									<div class="col-md-12 ">
+									<div class="col-md-4">
 										<div class="form-group">
 											<div class="custom-control custom-checkbox my-1 mr-sm-2">
 												<input type="checkbox" class="custom-control-input" name="manual_timelog" id="manual_timelog">
 												<label class="custom-control-label" for="manual_timelog" style="padding-top: 2px;">Allow manual time logs?</label>
+											</div>
+										</div>
+									</div>
+										<div class="col-md-4">
+										<div class="form-group">
+											<div class="custom-control custom-checkbox my-1 mr-sm-2">
+												<input type="checkbox" class="custom-control-input" name="project_member" id="project_member">
+												<label class="custom-control-label" for="project_member" style="padding-top: 2px;">Add me as a project member</label>
 											</div>
 										</div>
 									</div>
@@ -129,14 +138,23 @@
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-md-6">
+									<div class="col-md-4">
 										<div class="form-group">
 											<div class="custom-control custom-checkbox my-1 mr-sm-2">
-												<input type="checkbox" class="custom-control-input" name="client-view-tasks" id="client-view-tasks">
+												<input type="checkbox" class="custom-control-input" name="client-view-tasks" id="client-view-tasks" onclick="viewtask()">
 												<label class="custom-control-label" for="client-view-tasks" style="padding-top: 2px;">Client can view tasks of this project</label>
 											</div>
 										</div>
-									</div>
+									</div>	
+									<div class="col-md-8">
+										<div class="form-group"  id="viewnotification" style="display:none;">
+											<div class="custom-control custom-checkbox my-1 mr-sm-2">
+												<input type="checkbox" class="custom-control-input" name="tasks-notification" id="tasks-notification">
+												<label class="custom-control-label" for="tasks-notification" style="padding-top: 2px;">Send task notification to client?</label>
+											</div>
+										</div>
+									</div>	
+								</div>
 								</div>
 								<h3 class="box-title mb-3 mt-2">Budget Info</h3>
 								<div class="row">
@@ -168,8 +186,8 @@
 
 								<!-- action btn -->
 								<div class="form-actions">
-									<button type="submit" id="save-form" class="btn btn-success"> <i class="fa fa-check"></i> Save</button>
-									<button type="reset" class="btn btn-default">Reset</button>
+									<i class="fa fa-check"><input type="submit" id="save-form" class="btn btn-success" name="btnsave" value="Save"> </i> 
+									<input type="reset" class="btn btn-default" value="Reset">
 								</div>
 							</div>
 						</form>
@@ -250,4 +268,26 @@
 	</div>
 </div>
 <!--end category--> 
+ <script type="text/javascript">
 
+	function checkUncheck(){ 
+
+		var checkBox = document.getElementById("without_deadline");
+        if (checkBox.checked) {
+            $('#deadlineBox').hide().checked;
+        }
+		else{
+			 $('#deadlineBox').show();
+		}	
+	}
+	function viewtask(){ 
+
+		var checkBox = document.getElementById("client-view-tasks");
+        if (checkBox.checked) {
+            $('#viewnotification').show().checked;
+        }
+		else{
+			 $('#viewnotification').hide();
+		}	
+	}
+</script>
