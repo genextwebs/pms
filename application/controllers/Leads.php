@@ -31,7 +31,7 @@ class Leads extends CI_Controller
 			$mobile = $this->input->post('mobile');
 			$nextfollowup = $this->input->post('follow_up');
 			$note = $this->input->post('note');
-			$insArr = array('clientid'=>0,'companyname'=>$companyname,'website'=>$website,'address'=>$address,'clientname'=>$clientname,'clientemail'=>$clientemail,'mobile'=>$mobile,'nextfollowup'=>$nextfollowup,'status'=>'Pending','note'=>$note);
+			$insArr = array('clientid'=>0,'companyname'=>$companyname,'website'=>$website,'address'=>$address,'clientname'=>$clientname,'clientemail'=>$clientemail,'mobile'=>$mobile,'nextfollowup'=>$nextfollowup,'status'=>0,'note'=>$note);
 			$this->common_model->insertData('tbl_leads',$insArr);
 			$this->session->set_flashdata('message_name', 'Lead Insert sucessfully');
 			redirect('Leads/index');
@@ -66,8 +66,16 @@ class Leads extends CI_Controller
 				{
 					$next = $row->nextfollowup='No';
 				}
+				if($row->status == 0)
+				{
+					$status = $row->status='Pending';
+				}
+				else
+				{
+					$status = $row->status='Confirmed';
+				}
 				$clientid = $row->clientid;
-			if($row->status == 'Pending')
+			if($row->status == 0)
 			{
 				$datarow[] = array(
 				
@@ -76,7 +84,7 @@ class Leads extends CI_Controller
                 $row->companyname,
                 $row->created_at,
 				$next,
-				$row->status,
+				$status,
 				'<div class="dropdown action m-r-10">
 	                <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
 	                		<div class="dropdown-menu">
@@ -170,7 +178,7 @@ class Leads extends CI_Controller
 
 	public function changeleadtoclient(){
 		$id = base64_decode($this->uri->segment(3));
-		$whereArr=array('id'=>$id);
+		$whereArr = array('id'=>$id);
 		$data['leads'] = $this->common_model->getData('tbl_leads',$whereArr);
 		$this->load->view('common/header');
 		$this->load->view('leads/leadstoclient',$data);
@@ -198,16 +206,17 @@ class Leads extends CI_Controller
 			$gst_number = $this->input->post('gst_number');
 			$note = $this->input->post('note');
 			$login = $this->input->post('login');
-			$insArr=array('companyname' => $companyname,'website' => $website,'address' => $address,'clientname' => $clientname,'clientemail' => $clientemail,'password' => $password, 'generaterandompassword' => $grp, 'mobile' => $mobile,'skype' => $skype,'linkedin' => $linkedin,'twitter' => $twitter,'facebook' => $facebook,'gstnumber' => $gstnumber,'note' => $note,'login' =>$login );
-				//print_r($insArr);die;
-				$this->common_model->insertData('tbl_clients',$insArr);
-				$last_inserted = $this->db->insert_id();
-				$updateArr = array('status'=>'Confirmed','clientid'=>$last_inserted);
-				$whereArr = array('id'=>$id1);
-				$this->common_model->updateData('tbl_leads',$updateArr,$whereArr);
-				//echo $this->db->last_query();die;
-				$this->session->set_flashdata('message_name', "Lead Change Succeessfully");
-				redirect('Leads/index');
+			$insArr=array('companyname' => $companyname,'website' => $website,'address' => $address,'clientname' => $clientname,'clientemail' => $clientemail,'password' => $password, 'generaterandompassword' => $grp, 'mobile' => $mobile,'skype' => $skype,'linkedin' => $linkedin,'twitter' => $twitter,'facebook' => $facebook,'gstnumber' => $gst_number,'note' => $note,'login' =>$login );
+			//print_r($insArr);die;
+			$this->common_model->insertData('tbl_clients',$insArr);
+			$last_inserted = $this->db->insert_id();
+			$updateArr = array('status'=>'2','clientid'=>$last_inserted);
+			$whereArr = array('id'=>$id);
+			$this->common_model->updateData('tbl_leads',$updateArr,$whereArr);
+			echo $this->db->last_query();
+			print_r($whereArr);die;
+			$this->session->set_flashdata('message_name', "Lead Change Succeessfully");
+			redirect('Leads/index');
 		}
 	}
-}
+}							

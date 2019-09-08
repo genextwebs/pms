@@ -48,7 +48,7 @@ $(function(){
 });
 
 
-function checkuncheck()
+/*function checkuncheck()
 {
 	var checkbox = document.getElementById('randompassword');
 	var password = document.getElementById('password');
@@ -57,5 +57,5 @@ function checkuncheck()
 		var myval = "@123";
 		password.value=document.getElementById('name').value+myval;
 	}
-}
+}*/
 
