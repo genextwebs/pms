@@ -3,10 +3,15 @@ $(function(){
 		rules:{
 			company_name : "required",
 			client_name : "required",
-			client_email : "required",
+			client_email:
+						{
+							required:true,
+							email: true
+						},
 			mobile :
 					{	
 						required:true,
+						digits: true,
 						minlength:10,
 						maxlength:10
 					},
@@ -41,3 +46,16 @@ $(function(){
 	});
 	
 });
+
+
+function checkuncheck()
+{
+	var checkbox = document.getElementById('randompassword');
+	var password = document.getElementById('password');
+	//var jobValue = document.getElementById('txtname').value;
+	if(checkbox.checked==true{
+		var myval = "@123";
+		password.value=document.getElementById('name').value+myval;
+	}
+}
+

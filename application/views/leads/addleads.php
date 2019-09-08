@@ -87,7 +87,7 @@
 									<div class="col-lg-4 col-md-6">
 										<div class="form-group">
 											<label class="control-label">Mobile</label>
-											<input type="number" id="mobile" name="mobile" class="form-control">
+											<input type="text" id="mobile" name="mobile" class="form-control">
 										</div>
 									</div>
 									<div class="col-lg-4 col-md-6">

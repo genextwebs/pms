@@ -87,7 +87,7 @@
 									<div class="col-lg-4 col-md-6">
 										<div class="form-group">
 											<label class="control-label">Mobile</label>
-											<input type="number" id="mobile" name="mobile" class="form-control" value="<?php echo !empty($leads[0]->mobile) ?  $leads[0]->mobile : ' '?>">
+											<input type="text" id="mobile" name="mobile" class="form-control" value="<?php echo !empty($leads[0]->mobile) ?  $leads[0]->mobile : ' '?>">
 										</div>
 									</div>
 									<div class="col-lg-4 col-md-6">
@@ -105,9 +105,9 @@
                                         <div class="form-group">
                                             <label class="control-label">Status</label>
                                             <select id="status" name="status" class="form-control">
-                                                <option>Pending</option>
-                                                <option>Overview</option>
-                                                <option>Confirmed</option>
+                                                <option value="0">Pending</option>
+                                                <option value="1">Overview</option>
+                                                <option value="2">Confirmed</option>
                                             </select>
                                         </div>
                                     </div>
@@ -115,9 +115,9 @@
                                         <div class="form-group">
                                             <label class="control-label">Source</label>
                                             <select id="source" name="source" class="form-control">
-                                                <option>Social Media</option>
-                                                <option>Google</option>
-                                                <option>Other</option>
+                                                <option value="0">Social Media</option>
+                                                <option value="1">Google</option>
+                                                <option value="2">Other</option>
                                             </select>
                                         </div>
                                     </div>
