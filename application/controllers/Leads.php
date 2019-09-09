@@ -180,6 +180,7 @@ class Leads extends CI_Controller
 		$id = base64_decode($this->uri->segment(3));
 		$whereArr = array('id'=>$id);
 		$data['leads'] = $this->common_model->getData('tbl_leads',$whereArr);
+		$data['editID'] = $id;
 		$this->load->view('common/header');
 		$this->load->view('leads/leadstoclient',$data);
 		$this->load->view('common/footer');

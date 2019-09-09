@@ -23,7 +23,7 @@
 		                	</div>
 		                	<div class="card-wrapper collapse show">
 		                		<div class="card-body">
-		                			<form id="creatclient" class="aj-form" method="post" action="<?php echo base_url().'leads/changeleadtoclient'?>">
+		                			<form id="creatclient" class="aj-form" method="post" action="<?php echo base_url().'leads/changeleadtoclient/'.base64_encode($editID)?>">
 		                				<div class="submit-alerts">
 		                					<div class="alert alert-success" role="alert">
 											  This is a success alert
