@@ -31,7 +31,7 @@ class Leads extends CI_Controller
 			$mobile = $this->input->post('mobile');
 			$nextfollowup = $this->input->post('follow_up');
 			$note = $this->input->post('note');
-			$insArr = array('clientid'=>0,'companyname'=>$companyname,'website'=>$website,'address'=>$address,'clientname'=>$clientname,'clientemail'=>$clientemail,'mobile'=>$mobile,'nextfollowup'=>$nextfollowup,'status'=>0,'note'=>$note);
+			$insArr = array('clientid'=>0,'companyname'=>$companyname,'website'=>$website,'address'=>$address,'clientname'=>$clientname,'clientemail'=>$clientemail,'mobile'=>$mobile,'nextfollowup'=>$nextfollowup,'status'=>'0','note'=>$note);
 			$this->common_model->insertData('tbl_leads',$insArr);
 			$this->session->set_flashdata('message_name', 'Lead Insert sucessfully');
 			redirect('Leads/index');
@@ -58,24 +58,23 @@ class Leads extends CI_Controller
 		$data['leads'] = $this->common_model->coreQueryObject($query);
 		$datarow = array();
 		foreach($data['leads'] as $row) {
-				if($row->nextfollowup == '0')
-				{
+				if($row->nextfollowup == '0'){
 					$next= $row->nextfollowup='Yes';
 				}
-				else
-				{
+				else{
 					$next = $row->nextfollowup='No';
 				}
-				if($row->status == 0)
-				{
-					$status = $row->status='Pending';
+				if($row->status == '0'){
+					$status = $row->status = 'Pending';
 				}
-				else
-				{
-					$status = $row->status='Confirmed';
+				else if($row->status == '1'){
+					$status = $row->status = 'Overview';
+				}
+				else{
+					$status = $row->status = 'Confirmed';
 				}
 				$clientid = $row->clientid;
-			if($row->status == 0)
+			if($status == 'Pending')
 			{
 				$datarow[] = array(
 				
@@ -110,8 +109,8 @@ class Leads extends CI_Controller
 	                <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
 	               		 <div class="dropdown-menu">
 			                    <a  class="dropdown-item" href="#"><i class="fa fa-search"></i> View</a>
-			                    <a  class="dropdown-item" href="#"><i class="fa fa-edit"></i> Edit</a>
-			                    <a  class="dropdown-item" href="#"><i class="fa fa-trash "></i> Delete</a>
+			                    <a  class="dropdown-item" href='.base_url().'leads/editclients/'.base64_encode($clientid).'><i class="fa fa-edit"></i> Edit</a>
+			                    <a  class="dropdown-item" href='.base_url().'leads/deleteclients/'.base64_encode($clientid).' onclick="javascript:return confirm(\'Are u Sure want to delete?\');"><i class="fa fa-trash "></i> Delete</a>
 	                	</div>
 	            </div>'
 				
@@ -214,10 +213,56 @@ class Leads extends CI_Controller
 			$updateArr = array('status'=>'2','clientid'=>$last_inserted);
 			$whereArr = array('id'=>$id);
 			$this->common_model->updateData('tbl_leads',$updateArr,$whereArr);
-			echo $this->db->last_query();
-			print_r($whereArr);die;
 			$this->session->set_flashdata('message_name', "Lead Change Succeessfully");
 			redirect('Leads/index');
 		}
 	}
+
+	public function editclients(){
+		$id = base64_decode($this->uri->segment(3));
+		$whereArr = array('id'=>$id);
+		$data['clients'] = $this->common_model->getData('tbl_clients',$whereArr);
+		$this->load->view('common/header');
+		$this->load->view('leads/editclients',$data);
+		$this->load->view('common/footer');
+		if($this->input->post('btnupdate'))
+		{
+			$companyname = $this->input->post('company_name');
+			$website = $this->input->post('website');
+			$address = $this->input->post('address');
+			$clientname = $this->input->post('name');
+			$clientemail = $this->input->post('email');
+			$password = $this->input->post('password');
+			if($this->input->post('randompassword')=='on'){
+				$randompassword='1';
+			}
+			else{ 
+				$randompassword='0';
+			}
+			$grp = $randompassword;
+			$mobile = $this->input->post('mobile');
+			$skype = $this->input->post('skype');
+			$linkedin = $this->input->post('linkedin');
+			$twitter = $this->input->post('twitter');
+			$facebook = $this->input->post('facebook');
+			$gst_number = $this->input->post('gst_number');
+			$note = $this->input->post('note');
+			$login = $this->input->post('login');
+			$updateArr=array('companyname' => $companyname,'website' => $website,'address' => $address,'clientname' => $clientname,'clientemail' => $clientemail,'password' => $password, 'generaterandompassword' => $grp, 'mobile' => $mobile,'skype' => $skype,'linkedin' => $linkedin,'twitter' => $twitter,'facebook' => $facebook,'gstnumber' => $gst_number,'note' => $note,'login' =>$login );
+			$whereArr = array('id'=>$id);
+			$this->common_model->updatedata('tbl_clients',$updateArr,$whereArr);
+			$this->session->set_flashdata('message_name', "Client Change Succeessfully");
+			redirect('Leads/index');
+		}
+	}
+
+	public function deleteclients()
+	{
+		$id = base64_decode($this->uri->segment(3));
+		$whereArr = array('id'=>$id);
+		$this->common_model->deleteData('tbl_clients',$whereArr);
+		echo $this->db->last_query();die;
+		$this->session->set_flashdata('message_name', 'Client Delete sucessfully');
+		redirect('Leads/index');
+	} 
 }							

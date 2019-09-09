@@ -44,18 +44,32 @@ $(function(){
 		submitHandler: function(form) {
 		form.submit();}
 	});
+
+	$("form[name='leadtoclient']").validate({
+		rules:{
+				password : "required",
+				website :{
+							required: true,
+      						url: true
+						},
+		},			
+		submitHandler: function(form) {
+		form.submit();}
+	});
 	
 });
 
 
-/*function checkuncheck()
+function checkuncheck()
 {
 	var checkbox = document.getElementById('randompassword');
 	var password = document.getElementById('password');
 	//var jobValue = document.getElementById('txtname').value;
-	if(checkbox.checked==true{
+	if(checkbox.checked==true){
 		var myval = "@123";
 		password.value=document.getElementById('name').value+myval;
 	}
-}*/
+}
 
+
+	

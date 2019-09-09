@@ -23,7 +23,7 @@
 		                	</div>
 		                	<div class="card-wrapper collapse show">
 		                		<div class="card-body">
-		                			<form id="creatclient" class="aj-form" method="post" action="<?php echo base_url().'leads/changeleadtoclient/'.base64_encode($editID)?>" name="leadtoclient">
+		                			<form id="creatclient" class="aj-form" method="post">
 		                				<div class="submit-alerts">
 		                					<div class="alert alert-success" role="alert">
 											  This is a success alert
@@ -42,13 +42,13 @@
 		                						<div class="col-md-6">
 		                							<div class="form-group">
 		                								<label class="control-label">Company Name</label>
-		                								<input id="company_name" class="form-control" type="text" name="company_name" value="<?php echo !empty($leads[0]->companyname) ?  $leads[0]->companyname : ' '?>">
+		                								<input id="company_name" class="form-control" type="text" name="company_name" value="<?php echo !empty($clients[0]->companyname) ?  $clients[0]->companyname : ' '?>">
 		                							</div>
 		                						</div>
 		                						<div class="col-md-6">
 		                							<div class="form-group">
 		                								<label class="control-label">Website</label>
-		                								<input id="website" class="form-control" type="text" name="website" value="<?php echo !empty($leads[0]->website) ?  $leads[0]->website : ' '?>">
+		                								<input id="website" class="form-control" type="text" name="website" value="<?php echo !empty($clients[0]->website) ?  $clients[0]->website : ' '?>">
 		                							</div>
 		                						</div>
 		                					</div>
@@ -56,7 +56,7 @@
 		                						<div class="col-md-12">
 		                							<div class="form-group">
 		                								<label class="control-label">Address</label>
-		                								<textarea name="address" id="address" rows="5" value="" class="form-control"></textarea>
+		                								<textarea name="address" id="address" rows="5" value="" class="form-control"><?php echo !empty($clients[0]->address) ?  $clients[0]->address : ' '?></textarea>
 		                							</div>
 		                						</div>
 		                					</div>
@@ -66,13 +66,13 @@
 		                						<div class="col-md-6">
 		                							<div class="form-group">
 		                								<label class="control-label">Client Name</label>
-		                								<input id="name" class="form-control" type="text" name="name" value="<?php echo !empty($leads[0]->clientname) ?  $leads[0]->clientname : ' '?>">
+		                								<input id="name" class="form-control" type="text" name="name" value="<?php echo !empty($clients[0]->clientname) ?  $clients[0]->clientname : ' '?>">
 		                							</div>
 		                						</div>
 		                						<div class="col-md-6">
 		                							<div class="form-group">
 		                								<label class="control-label">client Email</label>
-		                								<input id="email" class="form-control" type="email" name="email" value="<?php echo !empty($leads[0]->clientemail) ?  $leads[0]->clientemail : ' '?>">
+		                								<input id="email" class="form-control" type="email" name="email" value="<?php echo !empty($clients[0]->clientemail) ?  $clients[0]->clientemail : ' '?>">
 		                								<span class="help-block">Client will login using this email.</span>
 		                							</div>
 		                						</div>
@@ -89,7 +89,7 @@
 		                						<div class="col-xs-12 col-md-4 mt-4">
 		                							<div class="form-group">
 		                								<div class="checkbox checkbox-info">
-			                                                <input id="randompassword" name="randompassword" value="0" type="checkbox" onclick="checkuncheck();">
+			                                                <input id="randompassword" name="randompassword" value="true" type="checkbox" <?php echo ($clients[0]->generaterandompassword == '1' ? 'checked' : null); ?>>
 			                                                <label for="randompassword">Generate Random Password</label>
 			                                            </div>
 		                							</div>
@@ -98,7 +98,7 @@
 		                							<div class="form-group">
 		                								<div class="form-group">
 				                                            <label>Mobile</label>
-				                                            <input type="tel" name="mobile" id="mobile" value="<?php echo !empty($leads[0]->mobile) ?  $leads[0]->mobile : ' '?>" class="form-control">
+				                                            <input type="tel" name="mobile" id="mobile" value="<?php echo !empty($clients[0]->mobile) ?  $clients[0]->mobile : ' '?>" class="form-control">
 				                                        </div>
 		                							</div>
 		                						</div>
@@ -107,25 +107,25 @@
 		                						<div class="col-md-3">
 		                							<div class="form-group">
 		                								<label class="control-label">skype</label>
-		                								<input id="skype" class="form-control" type="text" name="skype">
+		                								<input id="skype" class="form-control" type="text" name="skype" value="<?php echo !empty($clients[0]->skype) ?  $clients[0]->skype : ' '?>">
 		                							</div>
 		                						</div>
 		                						<div class="col-md-3">
 		                							<div class="form-group">
 		                								<label class="control-label">Linkedin</label>
-		                								<input id="linkedin" class="form-control" type="text" name="linkedin">
+		                								<input id="linkedin" class="form-control" type="text" name="linkedin" value="<?php echo !empty($clients[0]->linkedin) ?  $clients[0]->linkedin : ' '?>">
 		                							</div>
 		                						</div>
 		                						<div class="col-md-3">
 		                							<div class="form-group">
 		                								<label class="control-label">Twitter</label>
-		                								<input id="twitter" class="form-control" type="text" name="twitter">
+		                								<input id="twitter" class="form-control" type="text" name="twitter" value="<?php echo !empty($clients[0]->twitter) ?  $clients[0]->twitter : ' '?>">
 		                							</div>
 		                						</div>
 		                						<div class="col-md-3">
 		                							<div class="form-group">
 		                								<label class="control-label">facebook</label>
-		                								<input id="facebook" class="form-control" type="text" name="facebook">
+		                								<input id="facebook" class="form-control" type="text" name="facebook" value="<?php echo !empty($clients[0]->facebook) ?  $clients[0]->facebook : ' '?>">
 		                							</div>
 		                						</div>
 		                					</div>
@@ -133,7 +133,7 @@
 			                                    <div class="col-md-6">
 			                                        <div class="form-group">
 			                                            <label for="gst_number">GST Number</label>
-			                                            <input type="text" id="gst_number" name="gst_number" class="form-control" value="">
+			                                            <input type="text" id="gst_number" name="gst_number" class="form-control" value="<?php echo !empty($clients[0]->gstnumber) ?  $clients[0]->gstnumber : ' '?>">
 			                                        </div>
 			                                    </div>
 			                                </div>
@@ -141,7 +141,7 @@
 			                                    <div class="col-md-12">
 			                                        <label>Note</label>
 			                                        <div class="form-group">
-			                                            <textarea name="note" id="note" class="form-control" rows="5"></textarea>
+			                                            <textarea name="note" id="note" class="form-control" rows="5"><?php echo !empty($clients[0]->note) ?  $clients[0]->note : ' '?></textarea>
 			                                        </div>
 			                                    </div>
 			                                </div>
@@ -150,14 +150,14 @@
 			                                        <div class="form-group">
 			                                            <label>Log In</label>
 			                                            <select name="login" id="login" class="form-control">
-			                                                <option value="0">Enable</option>
-			                                                <option value="1">Disable</option>
+			                                                <option value="0" <?php if($clients[0]->login=='0'){ echo 'selected'; } ?>>Enable</option>
+			                                                <option value="1" <?php if($clients[0]->login=='1'){ echo 'selected'; } ?>>Disable</option>
 			                                            </select>
 			                                        </div>
 			                                    </div>
 			                                </div>
 			                                <div class="form-actions">
-				                                <input type="submit" id="save-form" class="btn btn-success" value="Save" name="btnsave"> <i class="fa fa-check"></i> 
+				                                <input type="submit" id="save-form" class="btn btn-success" value="Update" name="btnupdate"> <i class="fa fa-check"></i> 
 				                                <button type="reset" class="btn btn-default">Reset</button>
 				                            </div>
 		                				</div>
