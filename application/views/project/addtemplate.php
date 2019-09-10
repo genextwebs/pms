@@ -42,7 +42,7 @@
 		                								<label class="control-label">Project Name</label>
 		                								<input id="project_name" class="form-control" type="text" name="project_name" value="">
 		                							
-</div>
+												</div>
 		                						</div>
 		                						<div class="col-md-6">
 		                							<div class="form-group project-category">

@@ -67,36 +67,44 @@
 		                		<div class="col-lg-3 col-md-4">
 		                			<div class="form-group">
             							<label class="control-label">Projects Status</label>
-            							<select id='project_status' class="custom-select">
-								            <option value='0'>All</option>          
+            							<select id="project_status" class="custom-select">
+								            <option value='all'>All</option>          
 								            <option value='1'>Complete</option>  
-								            <option value='2'>Incomplete</option>   
+								            <option value='0'>Incomplete</option>   
 								        </select> 
             						</div>
 		                		</div>
 		                		<div class="col-lg-3 col-md-4">
 		                			<div class="form-group">
             							<label class="control-label">Client Name</label>
-            							<select id='client_name' class="custom-select">
-								            <option value='0'>All</option>          
-								            <option value='1'>Complete</option>  
-								            <option value='2'>Incomplete</option>   
-								        </select> 
+										<select id="clientname" class="custom-select" name="clientname">
+								            <option value="">--Select--</option>
+												<?php
+													foreach($client as $row)
+													{
+														echo '<option value="'.$row->id.'" >'.$row->clientname.'</option>';
+													}
+												?>
+										</select>
             						</div>
 		                		</div>
 		                		<div class="col-lg-3 col-md-4">
 		                			<div class="form-group">
             							<label class="control-label">Project Category</label>
-            							<select id='project_categ' class="custom-select">
-								            <option value='0'>All</option>          
-								            <option value='1'>Complete</option>  
-								            <option value='2'>Incomplete</option>   
+            							<select id="categoryname" class="custom-select" name="categoryname">
+								            <option value="">--Select--</option>
+											<?php
+												foreach($category as $cat)
+												{
+													echo '<option value="'.$cat->id.'" >'.$cat->name.'</option>';
+												}
+											?>
 								        </select> 
             						</div>
 		                		</div>
 		                	</div>
 		                	<div class="table-responsive">
-			                	<table class="table table-bordered table-hover" id="users-table">
+			                	<table class="table table-bordered table-hover" id="project">
 								   	<thead>
 								      	<tr role="row">
 									         <th>Id</th>
@@ -108,89 +116,6 @@
 									         <th>Action</th>
 								      	</tr>
 								   	</thead>
-								   	<tbody>
-									    <tr role="row" class="odd">
-									        <td class="" tabindex="0">1</td>
-									        <td>
-									         	<a href="#">Server installation</a>
-									        </td>
-									        <td class="">
-									        	<img data-toggle="tooltip" data-original-title="Isom Toy" src="images/user-avtar.png" alt="user" class="img-circle" width="30"> 
-									        	<img data-toggle="tooltip" data-original-title="Jeffry Abernathy" src="images/user-avtar.png" alt="user" class="img-circle" width="30"> 
-									        	<img data-toggle="tooltip" data-original-title="Easter Stokes" src="images/user-avtar.png" alt="user" class="img-circle" width="30"> 
-									        	<hr>
-									        	<a class="font-12" href="#"><i class="fa fa-plus"></i> Add Project Members</a>
-									        </td>
-									        <td>23-08-2019</td>
-									        <td>Lessie Bosco</td>
-									        <td>
-									         	<h5>Progress<span class="pull-right">60%</span></h5>
-									         	 <div class="progress hight-4px">
-												  	<div class="progress-bar bg-warning" style="width:60%;height:20px"></div>
-												</div> 
-									        </td>
-									        <td>
-									         	<a href="#" class="btn btn-info btn-circle" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-						                      	<a href="project-details.html" class="btn btn-success btn-circle" data-toggle="tooltip" data-original-title="View Project Details"><i class="fa fa-search" aria-hidden="true"></i></a>
-						                      	<a href="#" class="btn btn-warning  btn-circle archive" data-toggle="tooltip" data-user-id="1" data-original-title=" Archive"><i class="fa fa-archive" aria-hidden="true"></i></a>
-						                        <a href="#" class="btn btn-danger btn-circle sa-params" data-toggle="tooltip" data-user-id="1" data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>
-					                    	</td>
-									    </tr>
-									    <tr role="row" class="even">
-									        <td class="" tabindex="0">1</td>
-									        <td>
-									         	<a href="#">Server integrate</a>
-									        </td>
-									        <td class="">
-									        	<img data-toggle="tooltip" data-original-title="Isom Toy" src="images/user-avtar.png" alt="user" class="img-circle" width="30"> 
-									        	<img data-toggle="tooltip" data-original-title="Jeffry Abernathy" src="images/user-avtar.png" alt="user" class="img-circle" width="30">  
-									        	<hr>
-									        	<a class="font-12" href="#"><i class="fa fa-plus"></i> Add Project Members</a>
-									        </td>
-									        <td>2-08-2017</td>
-									        <td>Fidoo Bosco</td>
-									        <td>
-									         	<h5>Progress<span class="pull-right">40%</span></h5>
-									         	 <div class="progress hight-4px">
-												  	<div class="progress-bar bg-danger" style="width:40%;height:20px"></div>
-												</div> 
-									        </td>
-									        <td>
-									         	<a href="#" class="btn btn-info btn-circle" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-						                      	<a href="project-details.html" class="btn btn-success btn-circle" data-toggle="tooltip" data-original-title="View Project Details"><i class="fa fa-search" aria-hidden="true"></i></a>
-						                      	<a href="#" class="btn btn-warning  btn-circle archive" data-toggle="tooltip" data-user-id="1" data-original-title=" Archive"><i class="fa fa-archive" aria-hidden="true"></i></a>
-						                        <a href="#" class="btn btn-danger btn-circle sa-params" data-toggle="tooltip" data-user-id="1" data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>
-					                    	</td>
-									    </tr>
-									    <tr role="row" class="odd">
-									        <td class="" tabindex="0">1</td>
-									        <td>
-									         	<a href="#">Database installation</a>
-									        </td>
-									        <td class="">
-									        	<img data-toggle="tooltip" data-original-title="Isom Toy" src="images/user-avtar.png" alt="user" class="img-circle" width="30"> 
-									        	<img data-toggle="tooltip" data-original-title="Jeffry Abernathy" src="images/user-avtar.png" alt="user" class="img-circle" width="30"> 
-									        	<img data-toggle="tooltip" data-original-title="Easter Stokes" src="images/user-avtar.png" alt="user" class="img-circle" width="30"> 
-									        	<img data-toggle="tooltip" data-original-title="Easter Stokes" src="images/user-avtar.png" alt="user" class="img-circle" width="30">
-									        	<hr>
-									        	<a class="font-12" href="#"><i class="fa fa-plus"></i> Add Project Members</a>
-									        </td>
-									        <td>23-08-2019</td>
-									        <td>Lombard Kemo</td>
-									        <td>
-									         	<h5>Progress<span class="pull-right">76%</span></h5>
-									         	 <div class="progress hight-4px">
-												  	<div class="progress-bar bg-success" style="width:76%;height:20px"></div>
-												</div> 
-									        </td>
-									        <td>
-									         	<a href="#" class="btn btn-info btn-circle" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-						                      	<a href="project-details.html" class="btn btn-success btn-circle" data-toggle="tooltip" data-original-title="View Project Details"><i class="fa fa-search" aria-hidden="true"></i></a>
-						                      	<a href="#" class="btn btn-warning  btn-circle archive" data-toggle="tooltip" data-user-id="1" data-original-title=" Archive"><i class="fa fa-archive" aria-hidden="true"></i></a>
-						                        <a href="#" class="btn btn-danger btn-circle sa-params" data-toggle="tooltip" data-user-id="1" data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>
-					                    	</td>
-									    </tr>
-								   	</tbody>
 								</table>
 							</div>
 		                </div>
@@ -248,7 +173,7 @@
 					            </table>
 					        </div>
 					        <hr>
-					        <form id="" class="" >
+					        <form id="" class="" method="post">
 						        <div class="form-body">
 						            <div class="row">
 						                <div class="col-md-12 ">

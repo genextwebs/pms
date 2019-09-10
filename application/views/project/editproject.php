@@ -23,7 +23,7 @@
 				</div>
 				<div class="card-wrapper collapse show">
 					<div class="card-body">
-						<form id="creatclient" class="aj-form" name="creatclient" method="post" action="<?php echo base_url().'Project/insertproject';?>">
+						<form id="creatclient" class="aj-form" name="creatclient" method="post" action="<?php echo base_url().'Project/editproject';?>">
 							<div class="submit-alerts">
 								<div class="alert alert-success" role="alert">
 								  This is a success alert
@@ -44,7 +44,7 @@
 											<label class="control-label">Project Name</label>
 											<input id="project_name" class="form-control" type="text" name="project_name" value="">
 										</div>
-									</div>Select Client
+									</div>
 									<div class="col-md-6">
 										<div class="form-group project-category">
 										<label class="control-label" for="project-category">Project Category
@@ -52,13 +52,13 @@
 										</label>
 																										
 											<select class="custom-select br-0" id="project-category" name="project-category">
-												<option selected>Choose...</option>
-												<option value="Laravel">Laravel</option>
-												<option value="Yii">Yii</option>
-												<option value="Zend">Zend</option>
-												<option value="CakePhp">CaKePhp</option>
-												<option value="Android">Android</option>
-												<option value="ios">ios</option>
+							
+												<?php
+													foreach($category as $cat)
+													{
+														echo '<option value="'.$cat->id.'">'.$cat->name.'</option>';
+													}
+												?>
 											</select>
 										</div>
 									</div>
