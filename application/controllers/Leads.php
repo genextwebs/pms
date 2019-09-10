@@ -53,8 +53,23 @@ class Leads extends CI_Controller
 			}
 			$whereStr = $tempStr.' (companyname like "%'.$searchTerm.'%" OR website like "%'.$searchTerm.'%" OR address like "%'.$searchTerm.'%" OR clientname like "%'.$searchTerm.'%" OR clientemail like "%'.$searchTerm.'%" OR note like "%'.$searchTerm.'%")';
 		}	
-		$query = "SELECT id,clientid,clientname,companyname,website,address,clientname,clientemail,note,created_at,nextfollowup,status from tbl_leads".$whereStr;
-		//echo $query;die;
+	    $sLimit = "";
+	    $sOffset = "";
+	    if ($_POST['iDisplayStart'] < 0) {
+	        $_POST['iDisplayStart'] = 0;
+	    }
+	    if ($_POST['iDisplayLength'] < 0) {
+	        $_POST['iDisplayLength'] = 10;
+	    }
+	    if (isset($_POST['iDisplayStart']) && $_POST['iDisplayLength'] != '-1') {
+	        $sLimit = (int) substr($_POST['iDisplayLength'], 0, 6);
+	        $sOffset = (int) $_POST['iDisplayStart'];
+	    } else {
+	        $sLimit = 10;
+	        $sOffset = (int) $_POST['iDisplayStart'];
+	    }
+	    $query = "SELECT id,clientid,clientname,companyname,website,address,clientname,clientemail,note,created_at,nextfollowup,status from tbl_leads ".$whereStr.' limit '.$sOffset.', '.$sLimit;
+		#echo $query;die;
 		$data['leads'] = $this->common_model->coreQueryObject($query);
 		$datarow = array();
 		foreach($data['leads'] as $row) {
@@ -74,7 +89,7 @@ class Leads extends CI_Controller
 					$status = $row->status = 'Confirmed';
 				}
 				$clientid = $row->clientid;
-			if($status == 'Pending')
+			if($clientid == '0')
 			{
 				$datarow[] = array(
 				
@@ -210,7 +225,7 @@ class Leads extends CI_Controller
 			//print_r($insArr);die;
 			$this->common_model->insertData('tbl_clients',$insArr);
 			$last_inserted = $this->db->insert_id();
-			$updateArr = array('status'=>'2','clientid'=>$last_inserted);
+			$updateArr = array('clientid'=>$last_inserted);
 			$whereArr = array('id'=>$id);
 			$this->common_model->updateData('tbl_leads',$updateArr,$whereArr);
 			$this->session->set_flashdata('message_name', "Lead Change Succeessfully");

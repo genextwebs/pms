@@ -89,7 +89,7 @@
 		                						<div class="col-xs-12 col-md-4 mt-4">
 		                							<div class="form-group">
 		                								<div class="checkbox checkbox-info">
-			                                                <input id="randompassword" name="randompassword" value="true" type="checkbox" <?php echo ($clients[0]->generaterandompassword == '1' ? 'checked' : null); ?>>
+			                                                <input id="randompassword" name="randompassword" value="true" type="checkbox" onclick="checkuncheck();">
 			                                                <label for="randompassword">Generate Random Password</label>
 			                                            </div>
 		                							</div>
