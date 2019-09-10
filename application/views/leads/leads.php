@@ -20,7 +20,12 @@
                 <h3 class="box-title text-white">Total Leads</h3>
                 <ul class="list-inline two-wrap">
                     <li><i class="icon-docs text-white"></i></li>
-                    <li class="text-right"><span id="" class="counter text-white">1</span></li>
+                    <?php 
+                        $whereArr =  array('clientid' => 0);
+                        $leadArr = $this->common_model->getData('tbl_leads',$whereArr);
+                        $total_leads = count($leadArr);
+                    ?>
+                    <li class="text-right"><span id="" class="counter text-white"><?php echo  $total_leads; ?></span></li>
                 </ul>
             </div>
         </div>
@@ -29,7 +34,12 @@
                 <h3 class="box-title text-white">Total Clients Convert</h3>
                 <ul class="list-inline two-wrap">
                     <li><i class="icon-user text-white"></i></li>
-                    <li class="text-right"><span id="" class="counter text-white">0</span></li>
+                    <?php 
+                        $whereArr =  array('clientid !=' => 0);
+                        $leadArr = $this->common_model->getData('tbl_leads',$whereArr);
+                        $total_leads = count($leadArr);
+                    ?>
+                    <li class="text-right"><span id="" class="counter text-white"><?php echo  $total_leads; ?></span></li>
                 </ul>
             </div>
         </div>

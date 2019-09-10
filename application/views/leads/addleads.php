@@ -5,8 +5,8 @@
         </div>
         <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
         	<ol class="breadcrumb">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="leads.html">Leads</a></li>
+                <li><a href="<?php echo base_url().'dashboard'?>">Home</a></li>
+                <li><a href="<?php echo base_url().'leads/index'?>">Leads</a></li>
                 <li class="active">Add New</li>
             </ol>
         </div>
@@ -30,9 +30,12 @@
                                         //warning 
                                     ?>
             				<div class="submit-alerts">
-            					<div class="alert alert-success" role="alert">
+            					<div class="alert alert-success" role="alert" style="display:block;">
                                     <?php echo $mess; ?>
 								</div>
+                            </div>
+                            <?php } ?>
+                            <div class="submit-alerts">
 								<div class="alert alert-danger" role="alert">
 								  This is a danger alert
 								</div>
@@ -40,7 +43,7 @@
 								  This is a warning alert
 								</div>
             				</div>
-                            <?php } ?>
+                            
             				<div class="form-body">
             					<h3 class="box-title">Company Details</h3>
             					<hr>
