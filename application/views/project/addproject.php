@@ -44,24 +44,21 @@
 											<label class="control-label">Project Name</label>
 											<input id="project_name" class="form-control" type="text" name="project_name" value="">
 										</div>
-									</div>Select Client
+									</div>
 									<div class="col-md-6">
 										<div class="form-group project-category">
-										<label class="control-label" for="project-category">Project Category
-										<a href="#project-category1" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#project-category1">Add Project Category <i class="fa fa-plus" aria-hidden="true"></i></a>
-										</label>
-																										
+											<label class="control-label" for="project-category">Project Category <a class="btn btn-sm btn-outline-success ml-1" href="#"><i class="fa fa-plus"></i> Add Project Category</a></label>
 											<select class="custom-select br-0" id="project-category" name="project-category">
-												<option selected>Choose...</option>
-												<option value="Laravel">Laravel</option>
-												<option value="Yii">Yii</option>
-												<option value="Zend">Zend</option>
-												<option value="CakePhp">CaKePhp</option>
-												<option value="Android">Android</option>
-												<option value="ios">ios</option>
+											
+												<?php
+												foreach($category as $cat){
+													echo '<option value="'.$cat->id.'">'.$cat->name.'</option> ';
+												}
+												?>
+											
 											</select>
 										</div>
-									</div>
+							</div>
 								</div>
 								<div class="row">
 									<div class="col-md-4">
@@ -117,23 +114,22 @@
 										</div>
 									</div>
 								</div>
-									<h3 class="box-title mb-3 mt-2">Client Info</h3>
-                                			<div class="row">
-                                				<div class="col-md-12">
-                                					<div class="form-group">
-                                						<label class="control-label" for="select-client">Select Client</label>
-                                						<select class="custom-select" id="select-client" name="select-client">
-                                							  <option value="">--Select--</option>
-																	<?php
-																		foreach($client as $row)
-																		{
-																			echo '<option value="'.$row->id.'" >'.$row->clientname.'</option>';
-																		}
-																	?>
-                                						</select>
-                                					</div>
-                                				</div>
-                                			</div>
+								<h3 class="box-title mb-3 mt-2">Client Info</h3>
+									<div class="row">
+										<div class="col-md-12">
+											<div class="form-group">
+												<select class="custom-select" id="select-client" name="select-client">
+													  <option value="">--Select--</option>
+															<?php
+																foreach($client as $row)
+																{
+																	echo '<option value="'.$row->id.'" >'.$row->clientname.'</option>';
+																}
+															?>
+												</select>
+											</div>
+										</div>
+									</div>
 								<div class="row">
 									<div class="col-md-4">
 										<div class="form-group">
