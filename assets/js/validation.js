@@ -98,5 +98,38 @@ $(function() {
 	});
 });
 
+function deleteclients(clientid){
+var url = base_url+"Clients/deleteclient";
+swal({
+ title: "Are you sure?",
+ text: "You will not be able to recover this imaginary file!",
+ type: "warning",
+ showCancelButton: true,
+ confirmButtonColor: "#DD6B55",
+ confirmButtonText: "Yes, delete it!",
+ closeOnConfirm: false
+},
+function(isConfirm){
+if (isConfirm) {
+       $.ajax({
+           url: url,
+           type: "POST",
+           dataType: "JSON",
+           data: {clientid:clientid},
+           data: {clientid:clienti},
+          dataType: "html",
+           success: function (data) {
+               swal("Done!", "It was succesfully deleted!", "success");
+               //$("#leads").fnReloadAjax();
+                //$('#leads').DataTable.ajax.reload(null,false);
+                window.location.reload();
+           },
+           error: function (xhr, ajaxOptions, thrownError) {
+               swal("Error deleting!", "Please try again", "error");
+           }
+       });
+   }
+   });
+}
 
 	

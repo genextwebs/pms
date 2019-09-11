@@ -23,33 +23,33 @@
 	                			<div class="row">
 	                				<div class="col-sm-6 b-r">
 	                					<strong>Full Name</strong> <br>
-                						<p class="text-muted">Wilmer Fay DDS</p>
+                						<p class="text-muted"><?php echo !empty($clients[0]->clientname) ?  $clients[0]->clientname : ' '?></p>
 	                				</div>
 	                				<div class="col-sm-6">
 	                					<strong>Mobile</strong> <br>
-	                					<p class="text-muted">NA</p>
+	                					<p class="text-muted"><?php echo !empty($clients[0]->mobile) ?  $clients[0]->mobile : ' '?></p>
 	                				</div>
 	                			</div>
 	                			<hr>
 	                			<div class="row">
 	                				<div class="col-sm-6 b-r">
 	                					<strong>Email</strong> <br>
-                						<p class="text-muted">Client@example.com</p>
+                						<p class="text-muted"><?php echo !empty($clients[0]->clientemail) ?  $clients[0]->clientemail : ' '?></p>
 	                				</div>
 	                				<div class="col-sm-6">
 	                					<strong>Company Name</strong> <br>
-	                					<p class="text-muted">Red Group</p>
+	                					<p class="text-muted"><?php echo !empty($clients[0]->companyname) ?  $clients[0]->companyname : ' '?></p>
 	                				</div>
 	                			</div>
 	                			<hr>
 	                			<div class="row">
 	                				<div class="col-sm-6 b-r">
 	                					<strong>Website</strong> <br>
-                						<p class="text-muted">www.genextwebs.com</p>
+                						<p class="text-muted"><?php echo !empty($clients[0]->website) ?  $clients[0]->website : ' '?></p>
 	                				</div>
 	                				<div class="col-sm-6">
 	                					<strong>Address</strong> <br>
-	                					<p class="text-muted">189 Lindgren Fort Suite AZ 98241</p>
+	                					<p class="text-muted"><?php echo !empty($clients[0]->address) ?  $clients[0]->address : ' '?></p>
 	                				</div>
 	                			</div>
 	                			<hr>

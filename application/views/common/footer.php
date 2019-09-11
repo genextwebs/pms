@@ -21,6 +21,8 @@
     <script src="<?php echo base_url();?>assets/js/custome.js"></script>
 
     <script src="https://cdn.ckeditor.com/4.12.1/standard/ckeditor.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.js"></script>
     <script src="<?php echo base_url();?>assets/js/validation.js"></script>

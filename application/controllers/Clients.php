@@ -43,9 +43,8 @@ class Clients extends CI_Controller
 				$gstnumber=$this->input->post('gst_number');
 				$note=$this->input->post('note');
 				$login=$this->input->post('login');
-				$insertArr=array('companyname' => $companyname,'website' => $website,'address' => $address,'clientname' => $clientname,'clientemail' => $clientemail,'password' => $password, 'generaterandompassword' => $grp, 'mobile' => $mobile,'status'=>'1','skype' => $skype,'linkedin' => $linkedin,'twitter' => $twitter,'facebook' => $facebook,'gstnumber' => $gstnumber,'note' => $note,'login' =>$login, );
+				$insertArr=array('companyname' => $companyname,'website' => $website,'address' => $address,'clientname' => $clientname,'clientemail' => $clientemail,'password' => md5($password), 'generaterandompassword' => $grp, 'mobile' => $mobile,'status'=>'1','skype' => $skype,'linkedin' => $linkedin,'twitter' => $twitter,'facebook' => $facebook,'gstnumber' => $gstnumber,'note' => $note,'login' =>$login, );
 				$this->common_model->insertdata('tbl_clients',$insertArr);
-				//echo $this->db->last_query();die;
 				$this->session->set_flashdata('messagename', "Data Inserted Succeessfully");
 				redirect('Clients/index');
 				
@@ -139,26 +138,26 @@ class Clients extends CI_Controller
 		if($row->status=='1')
 		{
 			$status=$row->status='Active';
+			$sta='<lable class="label label-success">'.$status.'</label>';
+
 		}
 		else
 		
 		{
 			$status=$row->status='Deactive';
+			$sta='<lable class="label label-danger">'.$status.'</label>';
+
 		}
            $datarow[] = array(
                 $id=$row->id,
 				$row->clientname,
 				$row->companyname,
 				$row->clientemail,
-				$status,
+				$sta,
 				$row->createdat,
-				'<a class="btn btn-info btn-circle" data-toggle="tooltip" data-original-title="Edit" href='.base_url().'Clients/editclients/'.base64_encode($id).'><i class="fa fa-pencil" aria-hidden="true"></i></a>
-				<a class="btn btn-success btn-circle" data-toggle="tooltip" data-original-title="View Client Details" href='.base_url().'Clients/viewclientdetail/'.base64_encode($id).'><i class="fa fa-search" aria-hidden="true" ></i></a>
-				<a  class="btn btn-danger btn-circle sa-params" data-toggle="tooltip" data-user-id="3" data-original-title="Delete" href='.base_url().'leads/deleteclients/'.base64_encode($id).' onclick="javascript:return confirm(\'Are u Sure want to delete?\');"><i class="fa fa-times" aria-hidden="true"></i></a>'
-								        
-								     
-				/*"<a href='".base_url()."Clients/editrecord/".base64_encode($id)."'>Edit</a>",
-				"<a href='".base_url()."Clients/deleterecord/".base64_encode($id)." ' onClick='javascript:return confirm(\"Are you sure to Delete?\")'>DELETE</a>"*/          
+				"<abbr title=\"Edit\"><a class=\"btn btn-info btn-circle\" data-toggle=\"tooltip\" data-original-title=\"Edit\" href='".base_url()."Clients/editclients/".base64_encode($id)."'><i class=\"fa fa-pencil\" aria-hidden=\"true"\></i></a></abbr>
+				<abbr title=\"View Client Details\"><a class=\"btn btn-success btn-circle\" data-toggle=\"tooltip\" data-original-title=\"View Client Details\" href='".base_url()."Clients/viewclientdetail/".base64_encode($id)."'><i class=\"fa fa-search\" aria-hidden=\"true\" ></i></a></abbr>
+				<abbr title=\"Delete\"><a  class=\"btn btn-danger btn-circle sa-params\" data-toggle=\"tooltip\"  data-original-title=\"Delete\" href=\"javascript:void();\" onclick=\"deleteclients('".base64_encode($id)."');\"><i class=\"fa fa-times\" aria-hidden=\"true\"></i></a></abbr>"	
            );
 	   }
 		$data['alldata']=$this->common_model->getData('tbl_clients');
@@ -185,14 +184,15 @@ class Clients extends CI_Controller
 
 		if($this->input->post('btnupdate'))
 		{
+			//echo "<pre>";print_r($_POST);die;
 			$companyname=$this->input->post('company_name');
 				$website=$this->input->post('website');
 				$address=$this->input->post('address');
 				$clientname=$this->input->post('name');
 				$clientemail=$this->input->post('email');
-				if($this->input->post('Password')!='')
+				if($this->input->post('password')!='')
 				{
-					$updateArr['password']=$this->input->post('Password');
+					$updateArr['password']=md5($this->input->post('password'));
 				}	
 				$mobile=$this->input->post('mobile');
 				$status=$this->input->post('status');
@@ -226,13 +226,12 @@ class Clients extends CI_Controller
 				redirect('Clients/index');
 			}
 	}
-	public function deleteclients()
+	public function deleteclient()
 	{
-		$id=$this->uri->segment(3);
-		$id1=base64_decode($id);
-		$whereArr=array('id'=>$id1);
+		//$id=$this->uri->segment(3);
+		$clientid=base64_decode($_POST['clientid']);
+		$whereArr=array('id'=>$clientid);
 		$this->common_model->deleteData('tbl_clients',$whereArr);
-		$this->session->set_flashdata('messagename', "Data Delete Succeessfully");
 		redirect('Clients/index');
 	}
 	public function viewclientdetail()

@@ -26,6 +26,7 @@
 		                			<form id="creatclient" class="aj-form" method="post" action="<?php echo base_url().'Clients/insertclients' ?>" name="client" >
 		                				<div class="submit-alerts">
 		                					<div class="alert alert-success" role="alert">
+											
 											  This is a success alert
 											</div>
 											<div class="alert alert-danger" role="alert">
@@ -65,7 +66,7 @@
 		                					<div class="row">
 		                						<div class="col-md-6">
 		                							<div class="form-group">
-		                								<label class="control-label">Client Name</label>
+		                								<label class="control-label">Cient Name</label>
 		                								<input id="name" class="form-control" type="text" name="name" value="">
 		                							</div>
 		                						</div>
@@ -106,7 +107,7 @@
 		                					<div class="row">
 		                						<div class="col-md-3">
 		                							<div class="form-group">
-		                								<label class="control-label">skype</label>
+		                								<label class="control-label">Skype</label>
 		                								<input id="skype" class="form-control" type="text" name="skype">
 		                							</div>
 		                						</div>
@@ -124,7 +125,7 @@
 		                						</div>
 		                						<div class="col-md-3">
 		                							<div class="form-group">
-		                								<label class="control-label">facebook</label>
+		                								<label class="control-label">Facebook</label>
 		                								<input id="facebook" class="form-control" type="text" name="facebook">
 		                							</div>
 		                						</div>

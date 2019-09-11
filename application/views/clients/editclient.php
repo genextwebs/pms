@@ -72,7 +72,7 @@
 		                						</div>
 		                						<div class="col-md-6">
 		                							<div class="form-group">
-		                						+		<label class="control-label">Client Email</label>
+		                								<label class="control-label">Client Email</label>
 		                								<input id="email" class="form-control" type="email" name="email" value="<?php echo !empty($clients[0]->clientemail) ?  $clients[0]->clientemail : ' '?>">
 		                								<span class="help-block">Client will login using this email.</span>
 		                							</div>
@@ -92,7 +92,7 @@
 		                								<div class="form-group">
 				                                            <label>Mobile</label>
 				                                            <input type="tel" name="mobile" id="mobile" value="<?php echo !empty($clients[0]->mobile) ?  $clients[0]->mobile : ' '?>" class="form-control">
-				                                        </div>
+				                                       </div>
 		                							</div>
 		                						</div>
 												<div class="col-md-4">
@@ -109,7 +109,7 @@
 											<div class="row">
 		                						<div class="col-md-3">
 		                							<div class="form-group">
-		                								<label class="control-label">skype</label>
+		                								<label class="control-label">Skype</label>
 		                								<input id="skype" class="form-control" type="text" name="skype" value="<?php echo !empty($clients[0]->skype) ?  $clients[0]->skype : ' '?>">
 		                							</div>
 		                						</div>
@@ -127,7 +127,7 @@
 		                						</div>
 		                						<div class="col-md-3">
 		                							<div class="form-group">
-		                								<label class="control-label">facebook</label>
+		                								<label class="control-label">Facebook</label>
 		                								<input id="facebook" class="form-control" type="text" name="facebook" value="<?php echo !empty($clients[0]->facebook) ?  $clients[0]->facebook : ' '?>">
 		                							</div>
 		                						</div>
@@ -161,7 +161,7 @@
 			                                </div>
 			                                <div class="form-actions">
 				                                <input type="submit" id="save-form" class="btn btn-success" name="btnupdate" value="Update" > <i class="fa fa-check"></i>
-				                                <input type="submit" class="btn btn-default" value="Back" >
+				                                <a href="<?php echo base_url().'Clients/index' ?>" class="btn btn-default">Back</a>
 				                            </div>
 		                				</div>
 		                			</form>
