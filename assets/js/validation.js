@@ -116,7 +116,6 @@ if (isConfirm) {
            type: "POST",
            dataType: "JSON",
            data: {clientid:clientid},
-           data: {clientid:clienti},
           dataType: "html",
            success: function (data) {
                swal("Done!", "It was succesfully deleted!", "success");
@@ -131,5 +130,4 @@ if (isConfirm) {
    }
    });
 }
-
 	
