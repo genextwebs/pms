@@ -23,7 +23,7 @@
             </a>
         </li>
         <li>
-            <a href="clients.html" class="nav-link-s">
+            <a href="<?php echo base_url().'Clients'?>" class="nav-link-s">
                 <i class="icon-people"></i>
                 <span>Clients</span>
             </a>

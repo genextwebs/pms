@@ -62,6 +62,7 @@ $(function(){
 
 function checkuncheck()
 {
+	
 	var checkbox = document.getElementById('randompassword');
 	var password = document.getElementById('password');
 	//var jobValue = document.getElementById('txtname').value;
@@ -70,6 +71,32 @@ function checkuncheck()
 		password.value=document.getElementById('name').value+myval;
 	}
 }
+
+	//clientvalidation
+	
+$(function() {
+	$("form[name='client']").validate({
+		rules: {
+			website :{	required: true,
+      					url: true
+						},
+			name: "required",
+			 client_email:
+						{
+							required:true,
+							email: true
+						},
+			password:
+			  {
+				required: true,
+				minlength: 6
+			  
+			  }
+			 	},
+				submitHandler: function(form) {
+				form.submit();}
+	});
+});
 
 
 	

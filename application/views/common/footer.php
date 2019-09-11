@@ -136,10 +136,48 @@
 			});
             </script>
     <?php } 
-	else
-	{
-		
-	}?>
+	 elseif($controller == 'clients' && $function == 'index') { ?>
+            <script type="text/javascript">
+                jQuery(document).ready(function() {
+            var oTable = jQuery('#clients').DataTable({
+                order: [[1, 'asc']],
+                bServerSide: true,
+                //"aoColumns": [{ "bSearchable": true }],
+                sAjaxSource: "<?php echo base_url(); ?>Clients/client_list",
+                sServerMethod: "POST",
+                fnServerData: function ( sSource, aoData, fnCallback, oSettings ) {
+                    oSettings.jqXHR = $.ajax( {
+                            "dataType": 'json',
+                            "type": "POST",
+                            "url": sSource,
+                            "data": aoData,
+                            "timeout": 60000, //1000 - 1 sec - wait one minute before erroring out = 30000
+                            //"error": handleServerError,
+                            "success": function(json) {
+                                var oTable = jQuery('#clients').dataTable();
+                                var oLanguage = oTable.fnSettings().oLanguage;
+                                if((json.estimateCount == true) && (json.iTotalDisplayRecords == json.limitCountQuery)){
+                                    oLanguage.sInfo = '<b>_START_ to _END_</b> of more than _TOTAL_ (<small>' + json.iTotalRecordsFormatted + ' Clients</small>)';
+                                }
+                                else{
+                                    oLanguage.sInfo = '<b>_START_ to _END_</b> of <b>_TOTAL_</b> (<small>' + json.iTotalRecordsFormatted + ' Clients</small>)';
+                                }
+                                
+                                fnCallback(json);
+                            }
+                        });
+                },
+                fnRowCallback: function( nRow, aData, iDisplayIndex ){
+                        return nRow;
+                },
+                fnDrawCallback: function(oSettings, json) {
+                        //extra js code 
+                },
+            });
+        });
+            </script>
+    <?php } ?>
+
 </body>
 </html>
 
