@@ -80,7 +80,7 @@
 		 <?php }
 		//$controller = strtolower($this->uri->segment(1));
        // $function = strtolower($this->uri->segment(2));		 
-		 else if($controller == 'project' && $function == 'index') { 
+		 else if($controller == 'project' && $function == 'index' || $function == '') { 
 		?>
 		<script type="text/javascript">
                 jQuery(document).ready(function() {

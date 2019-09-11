@@ -98,6 +98,39 @@ $(function() {
 	});
 });
 
+function deleteLeadClient(leadId, clientId, type){
+	var url = base_url+"leads/deleteleads";
+	swal({
+	  title: "Are you sure?",
+	  text: "You will not be able to recover this imaginary file!",
+	  type: "warning",
+	  showCancelButton: true,
+	  confirmButtonColor: "#DD6B55",
+	  confirmButtonText: "Yes, delete it!",
+	  closeOnConfirm: false
+	},
+function(isConfirm){
+	if (isConfirm) {
+        $.ajax({
+            url: url,
+            type: "POST",
+            dataType: "JSON",
+            data: {leadId:leadId, clientId:clientId, type:type},
+           	dataType: "html",
+            success: function (data) {
+                swal("Done!", "It was succesfully deleted!", "success");
+                //$("#leads").fnReloadAjax();
+                 //$('#leads').DataTable.ajax.reload(null,false); 
+                 window.location.reload();
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                swal("Error deleting!", "Please try again", "error");
+            }
+        });
+    }
+    });
+}
+
 function deleteclients(clientid){
 var url = base_url+"Clients/deleteclient";
 swal({

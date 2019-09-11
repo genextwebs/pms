@@ -5,8 +5,8 @@
         </div>
         <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
             <ol class="breadcrumb">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="#">Leads</a></li>
+                <li><a href="<?php echo base_url().'dashboard'?>">Home</a></li>
+                <li><a href="<?php echo base_url().'leads'?>">Leads</a></li>
             </ol>
         </div>
     </div>
@@ -36,8 +36,8 @@
                     <li><i class="icon-user text-white"></i></li>
                     <?php 
                         $whereArr =  array('clientid !=' => 0);
-                        $leadArr = $this->common_model->getData('tbl_leads',$whereArr);
-                        $total_leads = count($leadArr);
+                        $ClientArr = $this->common_model->getData('tbl_leads',$whereArr);
+                        $total_leads = count($ClientArr);
                     ?>
                     <li class="text-right"><span id="" class="counter text-white"><?php echo  $total_leads; ?></span></li>
                 </ul>
@@ -52,7 +52,6 @@
                 </ul>
             </div>
         </div>
-
         <div class="col-md-12">
             <div class="stats-box">
             	<div class="row">
@@ -61,6 +60,17 @@
                             <a href="<?php echo base_url().'Leads/addleads'?>" class="btn btn-outline-success btn-sm">Add New Lead <i class="fa fa-plus" aria-hidden="true"></i></a>
                         </div>
             		</div>
+                    <?php
+                        $mess = $this->session->flashdata('message_name');
+                        if(!empty($mess)){
+                            //warning 
+                    ?>
+                            <div class="submit-alerts">
+                                <div class="alert alert-success" role="alert" style="display:block;">
+                                    <?php echo $mess; ?>
+                                </div>
+                            </div>
+                            <?php } ?>
             	</div>
             	<div class="table-responsive">
                 	<table class="table table-bordered table-hover" id="leads" >
