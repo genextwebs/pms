@@ -8,6 +8,7 @@
 
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="<?php echo base_url();?>assets/js/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.js"></script>
     <!-- <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script> -->
     <script src="<?php echo base_url();?>assets/js/jquery.dataTables.min.js"></script>
     <script src="<?php echo base_url();?>assets/js/dataTables.fixedHeader.min.js"></script>
@@ -21,9 +22,6 @@
     <script src="<?php echo base_url();?>assets/js/custome.js"></script>
 
     <script src="https://cdn.ckeditor.com/4.12.1/standard/ckeditor.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
-
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.js"></script>
     <script src="<?php echo base_url();?>assets/js/validation.js"></script>
 
@@ -37,7 +35,7 @@
     <?php 
         $controller = strtolower($this->uri->segment(1));
         $function = strtolower($this->uri->segment(2));
-        if(  $controller == 'leads' && $function == 'index') { ?>
+        if(  $controller == 'leads' && $function == 'index' || $function == '') { ?>
             <script type="text/javascript">
                 jQuery(document).ready(function() {
 				var oTable = jQuery('#leads').DataTable({

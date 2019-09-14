@@ -52,13 +52,13 @@
             						<div class="col-md-6">
             							<div class="form-group">
             								<label class="control-label">Company Name</label>
-            								<input id="company_name" class="form-control" type="text" name="company_name" value="<?php if(!empty($errormess['company_name'])){echo $errormess['company_name'];}else{ }?>">
+            								<input id="company_name" class="form-control" type="text" name="company_name" value="<?php if(!empty($sessData['company_name'])){echo $sessData['company_name'];}else{ }?>">
             							</div>
             						</div>
             						<div class="col-md-6">
             							<div class="form-group">
             								<label class="control-label">Website</label>
-            								<input id="website" class="form-control" type="text" name="website" value="<?php if(!empty($errormess['website'])){echo $errormess['website'];}else{ }?>">
+            								<input id="website" class="form-control" type="text" name="website" value="<?php if(!empty($sessData['website'])){echo $sessData['website'];}else{ }?>">
             							</div>
             						</div>
             					</div>
@@ -66,7 +66,7 @@
                             		<div class="col-md-12">
                                         <div class="form-group">
                                             <label class="control-label">Address</label>
-                                            <textarea name="address" id="address" class="form-control" rows="4"><?php if(!empty($errormess['address'])){echo $errormess['address'];}else{ }?></textarea>
+                                            <textarea name="address" id="address" class="form-control" rows="4"><?php if(!empty($sessData['address'])){echo $sessData['address'];}else{ }?></textarea>
                                         </div>
                                     </div>
                     			</div>
@@ -76,7 +76,7 @@
 								    <div class="col-md-6">
 								        <div class="form-group">
 								            <label class="control-label">Client Name</label>
-								            <input type="text" name="client_name" id="client_name" class="form-control" value="<?php if(!empty($errormess['client_name'])){echo $errormess['client_name'];}else{ }?>">
+								            <input type="text" name="client_name" id="client_name" class="form-control" value="<?php if(!empty($sessData['client_name'])){echo $sessData['client_name'];}else{ }?>">
 								        </div>
 								    </div>
 								    <div class="col-md-6">
@@ -91,20 +91,20 @@
 									<div class="col-lg-4 col-md-6">
 										<div class="form-group">
 											<label class="control-label">Mobile</label>
-											<input type="text" id="mobile" name="mobile" class="form-control" value="<?php if(!empty($errormess['mobile'])){echo $errormess['mobile'];}else{ }?>">
+											<input type="text" id="mobile" name="mobile" class="form-control" value="<?php if(!empty($sessData['mobile'])){echo $sessData['mobile'];}else{ }?>">
 										</div>
 									</div>
 									<div class="col-lg-4 col-md-6">
 										<div class="form-group">
 											<label class="control-label">Next Follow Up</label>
 											<select id="follow_up" name="follow_up" class="form-control">
-												<option selected value="0" <?php if(!empty($errormess['follow_up'])){
-                                                            if($errormess['follow_up'] == 0){
+												<option selected value="0" <?php if(!empty($sessData['follow_up'])){
+                                                            if($sessData['follow_up'] == 0){
                                                                 echo 'selected';    
                                                             }}
                                                             ?>>Yes</option>
-												<option value="1" <?php if(!empty($errormess['follow_up'])){
-                                                            if($errormess['follow_up'] == 1){
+												<option value="1" <?php if(!empty($sessData['follow_up'])){
+                                                            if($sessData['follow_up'] == 1){
                                                                 echo 'selected';    
                                                             }}
                                                             ?>>No</option>
@@ -114,7 +114,7 @@
 									<div class="col-md-12">
 										<div class="form-group">
 											<label class="control-label">Note</label>
-											<textarea id="note" name="note" class="form-control" rows="4"><?php if(!empty($errormess['note'])){echo $errormess['note'];}else{ }?></textarea>
+											<textarea id="note" name="note" class="form-control" rows="4"><?php if(!empty($sessData['note'])){echo $sessData['note'];}else{ }?></textarea>
 										</div>
 									</div>
 								</div>

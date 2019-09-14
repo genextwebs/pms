@@ -15,7 +15,7 @@ class Leads extends CI_Controller
 	}
 
 	public function addleads(){
-		$data['errormess'] = $this->session->flashdata('data');
+		$data['sessData'] = $this->session->flashdata('data');
 		$this->load->view('common/header');
 		$this->load->view('leads/addleads',$data);
 		$this->load->view('common/footer');
@@ -44,7 +44,7 @@ class Leads extends CI_Controller
 			$insArr = array('clientid'=>0,'companyname'=>$companyname,'website'=>$website,'address'=>$address,'clientname'=>$clientname,'clientemail'=>$clientemail,'mobile'=>$mobile,'nextfollowup'=>$nextfollowup,'status'=>'0','note'=>$note);
 			$this->common_model->insertData('tbl_leads',$insArr);
 			$this->session->set_flashdata('message_name', 'Lead Insert sucessfully');
-			redirect('Leads/index');
+			redirect('Leads');
 			}
 		}
 	}
@@ -100,6 +100,7 @@ class Leads extends CI_Controller
 					$status = $row->status = 'Confirmed';
 				}
 				$clientid = $row->clientid;
+				$create_date = date('d-m-Y', strtotime($row->created_at));
 			if($clientid == '0')
 			{
 				$datarow[] = array(
@@ -107,7 +108,7 @@ class Leads extends CI_Controller
 				$id = $row->id,
                 $row->clientname,
                 $row->companyname,
-                $row->created_at,
+                $create_date,
 				$next,
 				$status,
 				'<div class="dropdown action m-r-10">
@@ -128,7 +129,7 @@ class Leads extends CI_Controller
 				$id = $row->id,
                 $row->clientname,
                 $row->companyname,
-                $row->created_at,
+                $create_date,
 				$next,
 				$row->status,
 				'<div class="dropdown action m-r-10">
@@ -188,7 +189,7 @@ class Leads extends CI_Controller
 			$whereArr = array('id'=>$id);
 			$this->common_model->updatedata('tbl_leads',$updateArr,$whereArr);
 			$this->session->set_flashdata('message_name', 'Lead Insert sucessfully');
-			redirect('Leads/index');
+			redirect('Leads');
 		}
 	}
 
@@ -244,7 +245,7 @@ class Leads extends CI_Controller
 			$whereArr = array('id'=>$id);
 			$this->common_model->updateData('tbl_leads',$updateArr,$whereArr);
 			$this->session->set_flashdata('message_name', "Lead Change Succeessfully");
-			redirect('Leads/index');
+			redirect('Leads');
 		}
 	}
 
@@ -300,7 +301,7 @@ class Leads extends CI_Controller
 			$whereArr = array('id'=>$id);
 			$this->common_model->updatedata('tbl_clients',$updateArr,$whereArr);
 			$this->session->set_flashdata('message_name', "Client Change Succeessfully");
-			redirect('Leads/index');
+			redirect('Leads');
 		}
 	} 
 

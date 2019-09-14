@@ -8,7 +8,7 @@ $(function(){
 							required:true,
 							email: true
 						},
-			mobile :
+			mobile:
 					{	
 						required:true,
 						digits: true,
@@ -65,10 +65,12 @@ function checkuncheck()
 	
 	var checkbox = document.getElementById('randompassword');
 	var password = document.getElementById('password');
-	//var jobValue = document.getElementById('txtname').value;
-	if(checkbox.checked==true){
+	if(checkbox.checked == true){
 		var myval = "@123";
-		password.value=document.getElementById('name').value+myval;
+		password.value = document.getElementById('name').value+myval;
+	}
+	else{
+		password.value = "";
 	}
 }
 
@@ -119,9 +121,25 @@ function(isConfirm){
            	dataType: "html",
             success: function (data) {
                 swal("Done!", "It was succesfully deleted!", "success");
+                var objJson = JSON.parse(data);
+ 
+            var table = $("#leads").dataTable();
+ 
+            oSettings = table.fnSettings();
+ 
+            table.fnClearTable(this);
+ 
+            for (var i=0; i < objJson.detail.length; i++)
+            {
+                table.oApi._fnAddData(oSettings, objJson.detail[i]);
+                //this part always send error DataTables warning: table id=tbDataTable - Requested unknown parameter '0' for row 0.
+            }
+ 
+            oSettings.aiDisplay = oSettings.aiDisplayMaster.slice();
+            table.fnDraw();
                 //$("#leads").fnReloadAjax();
                  //$('#leads').DataTable.ajax.reload(null,false); 
-                 window.location.reload();
+                // window.location.reload();
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 swal("Error deleting!", "Please try again", "error");
@@ -132,16 +150,16 @@ function(isConfirm){
 }
 
 function deleteclients(clientid){
-var url = base_url+"Clients/deleteclient";
-swal({
- title: "Are you sure?",
- text: "You will not be able to recover this imaginary file!",
- type: "warning",
- showCancelButton: true,
- confirmButtonColor: "#DD6B55",
- confirmButtonText: "Yes, delete it!",
- closeOnConfirm: false
-},
+		var url = base_url+"Clients/deleteclient";
+		swal({
+		 title: "Are you sure?",
+		 text: "You will not be able to recover this imaginary file!",
+		 type: "warning",
+		 showCancelButton: true,
+		 confirmButtonColor: "#DD6B55",
+		 confirmButtonText: "Yes, delete it!",
+		 closeOnConfirm: false
+		},
 function(isConfirm){
 if (isConfirm) {
        $.ajax({
@@ -149,7 +167,7 @@ if (isConfirm) {
            type: "POST",
            dataType: "JSON",
            data: {clientid:clientid},
-           data: {clientid:clienti},
+ 
           dataType: "html",
            success: function (data) {
                swal("Done!", "It was succesfully deleted!", "success");
