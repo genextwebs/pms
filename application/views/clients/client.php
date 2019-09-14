@@ -20,7 +20,11 @@
 			                <h3 class="box-title text-white">Total Clients</h3>
 			                <ul class="list-inline two-wrap">
 			                    <li><i class="icon-user text-white"></i></li>
-			                    <li class="text-right"><span id="" class="counter text-white">31</span></li>
+								<?php 
+										$clientsArr = $this->common_model->getData('tbl_clients');
+										$total_clients = count($clientsArr);
+								?>
+			                    <li class="text-right"><span id="" class="counter text-white"><?php echo  $total_clients; ?></span></li>
 			                </ul>
 			            </div>
                     </div>
@@ -35,6 +39,18 @@
 										<a href="javascript:;" id="toggle-filter" class="btn btn-outline-danger btn-sm toggle-filter"><i class="fa fa-sliders"></i> Filter Results</a>
 									</div>
                 				</div>
+								   <?php
+										//warning 
+										$mess = $this->session->flashdata('message_name');
+										if(!empty($mess)){
+									?>
+                            <div class="submit-alerts">
+                                <div class="alert alert-success" role="alert" style="display:block;">
+                                    <?php echo $mess; ?>
+                                </div>
+                            </div>
+                            <?php } ?>
+   
                 		</div>
 		                	
 		                	<div class="table-responsive">

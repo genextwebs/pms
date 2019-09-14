@@ -60,7 +60,8 @@
 			                            <a href="<?php echo base_url().'Project/addproject'?>" class="btn btn-outline-success btn-sm">Add New Project <i class="fa fa-plus" aria-hidden="true"></i></a>
 			                            <a href="#project-category" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#project-category">Add Project Category <i class="fa fa-plus" aria-hidden="true"></i></a>
 			                            <a href="<?php echo base_url().'Project/projecttemplate';?>" class="btn btn-outline-primary btn-sm">Project Templates <i class="fa fa-plus" aria-hidden="true"></i></a>
-			                        </div>
+										 <a href="<?php echo base_url().'Project/viewarchiev';?>"  class="btn btn-outline btn-info btn-sm">View Archive <i class="fa fa-trash" aria-hidden="true"></i></a>
+								   </div>
 		                		</div>
 		                	</div>
 		                	<div class="row">

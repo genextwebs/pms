@@ -16,6 +16,7 @@ class Clients extends CI_Controller
 		$this->load->view('common/footer');
 	}
 	public function addclients(){
+		$data['sessData'] = $this->session->flashdata('data');
 		$this->load->view('common/header');
 		$this->load->view('clients/addclient');
 		$this->load->view('common/footer');
@@ -43,11 +44,19 @@ class Clients extends CI_Controller
 				$gstnumber=$this->input->post('gst_number');
 				$note=$this->input->post('note');
 				$login=$this->input->post('login');
+				$whereArr = array('clientemail' => $clientemail);
+				$data = $this->common_model->getData('tbl_clients',$whereArr);
+				if(count($data)==1){
+				$this->session->set_flashdata('message_name','Email already exits');
+				$this->session->set_flashdata("data",$_POST);
+				redirect('Clients/addclients');
+				}
+				else{
 				$insertArr=array('companyname' => $companyname,'website' => $website,'address' => $address,'clientname' => $clientname,'clientemail' => $clientemail,'password' => md5($password), 'generaterandompassword' => $grp, 'mobile' => $mobile,'status'=>'1','skype' => $skype,'linkedin' => $linkedin,'twitter' => $twitter,'facebook' => $facebook,'gstnumber' => $gstnumber,'note' => $note,'login' =>$login, );
 				$this->common_model->insertdata('tbl_clients',$insertArr);
 				$this->session->set_flashdata('messagename', "Data Inserted Succeessfully");
 				redirect('Clients/index');
-				
+				}
 			}
 	}
 	public function client_list()

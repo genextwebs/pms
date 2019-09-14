@@ -23,7 +23,7 @@
 				</div>
 				<div class="card-wrapper collapse show">
 					<div class="card-body">
-						<form id="creatclient" class="aj-form" name="creatclient" method="post" action="<?php echo base_url().'Project/editproject';?>">
+						<form id="creatclient" class="aj-form" method="post" action="<?php echo base_url().'Project/editproject/'.base64_encode($editId);?>">
 							<div class="submit-alerts">
 								<div class="alert alert-success" role="alert">
 								  This is a success alert
@@ -42,7 +42,7 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label class="control-label">Project Name</label>
-											<input id="project_name" class="form-control" type="text" name="project_name" value="">
+											<input id="project_name" class="form-control" type="text" name="project_name" value="<?php echo !empty($projectinfo[0]->projectname) ? $projectinfo[0]->projectname : '' ?>">
 										</div>
 									</div>
 									<div class="col-md-6">
@@ -67,13 +67,13 @@
 									<div class="col-md-4">
 										<div class="form-group">
 											<label class="control-label">Start Date</label>
-											<input type="date" name="start_date" id="start_date" autocomplete="off" class="form-control">
+											<input type="date" name="start_date" id="start_date" autocomplete="off" class="form-control" value="<?php echo !empty($projectinfo[0]->startdate) ? $projectinfo[0]->startdate : '' ?>">
 										</div>
 									</div>
 									<div class="col-md-4" id="deadlineBox">
 										<div class="form-group">
 											<label class="control-label">Deadline</label>
-											<input type="date" name="deadline" id="deadline" autocomplete="off" class="form-control">
+											<input type="date" name="deadline" id="deadline" autocomplete="off" class="form-control" value="<?php echo !empty($projectinfo[0]->deadline) ? $projectinfo[0]->deadline : '' ?>">
 										</div>
 									</div>
 									<div class="col-md-4" >
@@ -92,20 +92,13 @@
 											</div>
 										</div>
 									</div>
-										<div class="col-md-4">
-										<div class="form-group">
-											<div class="custom-control custom-checkbox my-1 mr-sm-2">
-												<input type="checkbox" class="custom-control-input" name="project_member" id="project_member">
-												<label class="custom-control-label" for="project_member" style="padding-top: 2px;">Add me as a project member</label>
-											</div>
-										</div>
-									</div>
+										
 								</div>
 								<div class="row">
 									<div class="col-md-12">
 										<div class="form-group">
 											<label class="control-label">Project Summary</label>
-											<textarea name="editor1"></textarea>
+											<textarea name="editor1"><?php echo !empty($projectinfo[0]->projectsummary) ? $projectinfo[0]->projectsummary : '' ?></textarea>
 										</div>
 									</div>
 								</div>
@@ -113,20 +106,28 @@
 									<div class="col-md-12">
 										<div class="form-group">
 											<label class="control-label">Note</label>
-											<textarea id="notes" class="form-control" name="notes" rows="5"></textarea>
+											<textarea id="notes" class="form-control" name="notes" rows="5"><?php echo !empty($projectinfo[0]->note) ? $projectinfo[0]->note : '' ?></textarea>
 										</div>
 									</div>
 								</div>
+								
 									<h3 class="box-title mb-3 mt-2">Client Info</h3>
                                 			<div class="row">
                                 				<div class="col-md-12">
                                 					<div class="form-group">
                                 						<label class="control-label" for="select-client">Select Client</label>
-                                						<select class="custom-select" id="select-client" name="select-client">
-                                							  <option value="">--Select--</option>
+                                						<select class="custom-select" id="select-client" name="select-client" value="<?php echo !empty($projectinfo[0]->clientid) ? $projectinfo[0]->clientid : '' ?>">
+                                							  
 																	<?php
 																		foreach($client as $row)
 																		{
+																			$str='';
+																			if($row->id==$projectinfo->select-client)
+																			{
+																				$str='selected';
+																				?>	
+																				<?php
+																			}
 																			echo '<option value="'.$row->id.'" >'.$row->clientname.'</option>';
 																		}
 																	?>
@@ -158,32 +159,32 @@
 									<div class="col-md-4">
 										<div class="form-group">
 											<label class="control-label">Project Budget</label>
-											<input type="text" class="form-control" name="project-budget">
+											<input type="text" class="form-control" name="project-budget" value="<?php echo !empty($projectinfo[0]->projectbudget) ? $projectinfo[0]->projectbudget : '' ?>">
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label class="control-label">Currency</label>
-											<select id="" class="form-control" name="currency-id">
-												<option selected>--</option>
-												<option>Dollars (USD)</option>
-												<option>Pounds (GBP)</option>
-												<option>Euros (EUR)</option>
-												<option>Rupee (INR)</option>
+											<select id="" class="form-control" name="currency-id" value="<?php echo !empty($projectinfo[0]->currency) ? $projectinfo[0]->currency : '' ?>">
+												
+												<option value="1" <?php if($projectinfo[0]->currency=='1'){echo 'selected';}?>>Dollars (USD)</option>
+												<option value="2" <?php if($projectinfo[0]->currency=='2'){echo 'selected';}?>>Pounds (GBP)</option>
+												<option value="3" <?php if($projectinfo[0]->currency=='3'){echo 'selected';}?>>Euros (EUR)</option>
+												<option value="4" <?php if($projectinfo[0]->currency=='4'){echo 'selected';}?>>Rupee (INR)</option>
 											</select>
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label class="control-label">Hours Allocated</label>
-											<input type="text" class="form-control" name="hours-allocated">
+											<input type="text" class="form-control" name="hours-allocated" value="<?php echo !empty($projectinfo[0]->hoursallocated) ? $projectinfo[0]->hoursallocated : '' ?>">
 										</div>
 									</div>
 								</div>
 
 								<!-- action btn -->
 								<div class="form-actions">
-									<i class="fa fa-check"><input type="submit" id="save-form" class="btn btn-success" name="btnsave" value="Save"> </i> 
+									<i class="fa fa-check"><input type="submit" id="save-form" class="btn btn-success" name="btnedit" value="Update"> </i> 
 									<input type="reset" class="btn btn-default" value="Reset">
 								</div>
 							</div>

@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/simple-line-icons.css">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/themify-icons.css">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/ie7.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.css">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/sidebar.css">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/style.css">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/validate-error.css">

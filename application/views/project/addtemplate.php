@@ -23,7 +23,7 @@
 		                	</div>
 		                	<div class="card-wrapper collapse show">
 		                		<div class="card-body">
-		                			<form id="creatclient" class="aj-form" name="creatclient">
+		                			<form id="creatclient" class="aj-form" name="creatclient" action="<?php echo base_url().'Project/inserttemplate';?>">
 		                				<div class="submit-alerts">
 		                					<div class="alert alert-success" role="alert">
 											  This is a success alert
@@ -44,23 +44,19 @@
 		                							
 												</div>
 		                						</div>
-		                						<div class="col-md-6">
-		                							<div class="form-group project-category">
-														<label class="control-label" for="project-categoryf">Project Category
-															<a class="btn btn-sm btn-outline-success ml-1" href="#project-category1" data-toggle="modal" data-target="#project-category1"> Add Project Category<i class="fa fa-plus" aria-hidden="true"></i></a>
-														</label>
-														<select class="custom-select br-0" id="project-category">
-		                									<option selected>Choose...</option>
-		                									<option value="Laravel">Laravel</option>
-		                									<option value="Yii">Yii</option>
-		                									<option value="Zend">Zend</option>
-		                									<option value="CakePhp">CaKePhp</option>
-		                									<option value="Android">Android</option>
-		                									<option value="ios">ios</option>
-		                								</select>
-		                							</div>
-		                						</div>
-		                					</div>
+		                				<div class="col-md-6">
+											<div class="form-group project-category">
+												<label class="control-label" for="project-category">Project Category <a class="btn btn-sm btn-outline-success ml-1" href="#"><i class="fa fa-plus"></i> Add Project Category</a></label>
+												<select class="custom-select br-0" id="project-category" name="project-category">
+														<?php
+															foreach($category as $cat){
+																echo '<option value="'.$cat->id.'">'.$cat->name.'</option> ';
+															}
+															?>
+												</select>
+											</div>
+										</div>
+										</div>
 		                					<div class="row">
 											    <div class="col-md-6">
 											        <div class="form-group">
@@ -98,7 +94,7 @@
 
 											<!-- action btn -->
 			                                <div class="form-actions">
-				                                <button type="submit" id="save-form" class="btn btn-success"> <i class="fa fa-check"></i> Save</button>
+				                                <button type="submit" id="save-form" class="btn btn-success" name="btnsave"> <i class="fa fa-check"></i> Save</button>
 				                                <button type="reset" class="btn btn-default">Reset</button>
 				                            </div>
 		                				</div>

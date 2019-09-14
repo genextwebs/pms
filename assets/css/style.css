@@ -499,6 +499,7 @@ ul.border-none li{
 }
 .submit-alerts > div.alert.alert-success{
   box-shadow: 3px 3px 1px rgba(86, 154, 102, 0.29);
+  
 }
 .submit-alerts > div.alert.alert-danger{
   box-shadow: 3px 3px 1px rgba(176, 108, 114, 0.36);

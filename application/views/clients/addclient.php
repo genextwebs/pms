@@ -43,13 +43,13 @@
 		                						<div class="col-md-6">
 		                							<div class="form-group">
 		                								<label class="control-label">Company Name</label>
-		                								<input id="company_name" class="form-control" type="text" name="company_name" value="">
+		                								<input id="company_name" class="form-control" type="text" name="company_name" value="<?php if(!empty($sessData['company_name'])) { echo $sessData['company_name']; } else {} ?>">
 		                							</div>
 		                						</div>
 		                						<div class="col-md-6">
 		                							<div class="form-group">
 		                								<label class="control-label">Website</label>
-		                								<input id="website" class="form-control" type="text" name="website" value="">
+		                								<input id="website" class="form-control" type="text" name="website" value="<?php if(!empty($sessData['website'])) { echo $sessData['website']; } else {} ?>">
 		                							</div>
 		                						</div>
 		                					</div>
@@ -57,7 +57,7 @@
 		                						<div class="col-md-12">
 		                							<div class="form-group">
 		                								<label class="control-label">Address</label>
-		                								<textarea name="address" id="address" rows="5" value="" class="form-control"></textarea>
+		                								<textarea name="address" id="address" rows="5" class="form-control"><?php if(!empty($sessData['address'])) { echo $sessData['address']; } else {} ?></textarea>
 		                							</div>
 		                						</div>
 		                					</div>
@@ -67,13 +67,13 @@
 		                						<div class="col-md-6">
 		                							<div class="form-group">
 		                								<label class="control-label">Cient Name</label>
-		                								<input id="name" class="form-control" type="text" name="name" value="">
+		                								<input id="name" class="form-control" type="text" name="name" value="<?php if(!empty($sessData['name'])) { echo $sessData['name']; } else {} ?>">
 		                							</div>
 		                						</div>
 		                						<div class="col-md-6">
 		                							<div class="form-group">
 		                								<label class="control-label">Client Email</label>
-		                								<input id="email" class="form-control" type="email" name="email" value="">
+		                								<input id="email" class="form-control" type="email" name="email" >
 		                								<span class="help-block">Client will login using this email.</span>
 		                							</div>
 		                						</div>
@@ -83,14 +83,14 @@
 		                							<div class="form-group">
 		                								<label>Password</label>
 		                								<input type="Password" style="display: none;">
-		                								<input id="password" type="Password" class="form-control" name="password">
+		                								<input id="password" type="Password" class="form-control" name="password" value="<?php if(!empty($sessData['password'])) { echo $sessData['password']; } else {} ?>">
 		                								<span class="help-block">Client will login using this password.</span>
 		                							</div>
 		                						</div>
 		                						<div class="col-xs-12 col-md-4 mt-4">
 		                							<div class="form-group">
 		                								<div class="checkbox checkbox-info">
-			                                                <input id="randompassword" name="randompassword" value="true" type="checkbox" onclick="checkuncheck();">
+			                                                <input id="randompassword" name="randompassword" value="true" type="checkbox" onclick="checkuncheck();"  >
 			                                                <label for="randompassword">Generate Random Password</label>
 			                                            </div>
 		                							</div>
@@ -99,7 +99,7 @@
 		                							<div class="form-group">
 		                								<div class="form-group">
 				                                            <label>Mobile</label>
-				                                            <input type="tel" name="mobile" id="mobile" value="" class="form-control">
+				                                            <input type="tel" name="mobile" id="mobile" class="form-control" value="<?php if(!empty($sessData['mobile'])) { echo $sessData['mobile']; } else {} ?>">
 				                                        </div>
 		                							</div>
 		                						</div>
@@ -108,25 +108,25 @@
 		                						<div class="col-md-3">
 		                							<div class="form-group">
 		                								<label class="control-label">Skype</label>
-		                								<input id="skype" class="form-control" type="text" name="skype">
+		                								<input id="skype" class="form-control" type="text" name="skype" value="<?php if(!empty($sessData['skype'])) { echo $sessData['skype']; } else {} ?>">
 		                							</div>
 		                						</div>
 		                						<div class="col-md-3">
 		                							<div class="form-group">
 		                								<label class="control-label">Linkedin</label>
-		                								<input id="linkedin" class="form-control" type="text" name="linkedin">
+		                								<input id="linkedin" class="form-control" type="text" name="linkedin" value="<?php if(!empty($sessData['linkedin'])) { echo $sessData['linkedin']; } else {} ?>">
 		                							</div>
 		                						</div>
 		                						<div class="col-md-3">
 		                							<div class="form-group">
 		                								<label class="control-label">Twitter</label>
-		                								<input id="twitter" class="form-control" type="text" name="twitter">
+		                								<input id="twitter" class="form-control" type="text" name="twitter" value="<?php if(!empty($sessData['twitter'])) { echo $sessData['twitter']; } else {} ?>">
 		                							</div>
 		                						</div>
 		                						<div class="col-md-3">
 		                							<div class="form-group">
 		                								<label class="control-label">Facebook</label>
-		                								<input id="facebook" class="form-control" type="text" name="facebook">
+		                								<input id="facebook" class="form-control" type="text" name="facebook" value="<?php if(!empty($sessData['facebook'])) { echo $sessData['facebook']; } else {} ?>">
 		                							</div>
 		                						</div>
 		                					</div>
@@ -134,7 +134,7 @@
 			                                    <div class="col-md-6">
 			                                        <div class="form-group">
 			                                            <label for="gst_number">GST Number</label>
-			                                            <input type="text" id="gst_number" name="gst_number" class="form-control" value="">
+			                                            <input type="text" id="gst_number" name="gst_number" class="form-control" value="<?php if(!empty($sessData['gst_number'])) { echo $sessData['gst_number']; } else {} ?>">
 			                                        </div>
 			                                    </div>
 			                                </div>
@@ -142,7 +142,7 @@
 			                                    <div class="col-md-12">
 			                                        <label>Note</label>
 			                                        <div class="form-group">
-			                                            <textarea name="note" id="note" class="form-control" rows="5"></textarea>
+			                                            <textarea name="note" id="note" class="form-control" rows="5"><?php if(!empty($sessData['note'])) { echo $sessData['note']; } else {} ?></textarea>
 			                                        </div>
 			                                    </div>
 			                                </div>
