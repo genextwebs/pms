@@ -57,21 +57,23 @@
             	<div class="row">
             		<div class="col-md-6">
             			<div class="form-group">
-                            <a href="<?php echo base_url().'Leads/addleads'?>" class="btn btn-outline-success btn-sm">Add New Lead <i class="fa fa-plus" aria-hidden="true"></i></a>
+                            <a href="<?php echo base_url().'leads/addleads'?>" class="btn btn-outline-success btn-sm">Add New Lead <i class="fa fa-plus" aria-hidden="true"></i></a>
                         </div>
             		</div>
-                    <?php
-                        $mess = $this->session->flashdata('message_name');
-                        if(!empty($mess)){
-                            //warning 
-                    ?>
-                            <div class="submit-alerts">
-                                <div class="alert alert-success" role="alert" style="display:block;">
-                                    <?php echo $mess; ?>
-                                </div>
-                            </div>
-                            <?php } ?>
             	</div>
+                <?php
+                    $mess = $this->session->flashdata('message_name');
+                    if(!empty($mess)){
+                        //warning 
+                    ?>
+                    <div class="col-md-12">
+                        <div class="submit-alerts">
+                            <div class="alert alert-success" role="alert" style="display:block;">
+                                <?php echo $mess; ?>
+                            </div>
+                        </div>
+                    </div>
+                <?php } ?>
             	<div class="table-responsive">
                 	<table class="table table-bordered table-hover" id="leads" >
 					   	<thead>
