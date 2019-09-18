@@ -25,24 +25,18 @@
 		                		</div>
 		                	</div>
 		                	<div class="table-responsive">
-			                	<table class="table table-bordered" id="users-table">
+			                	<table class="table table-bordered" id="template" name="template">
 								   	<thead>
 								      	<tr role="row">
 									        <th>Id</th>
-									        <th>Template name</th>
-									        <th>Template Members</th>
+									        <th>Template Name</th>
+									       <!-- <th>Template Members</th>-->
 									        <th>Category</th>
 									        <th>Action</th>
 								      	</tr>
 								   	</thead>
 								   	<tbody>
-								      	<tr class="odd">
-								      		<td></td>
-								      		<td></td>
-								      		<td></td>
-								      		<td></td>
-								      		<td></td>
-								      	</tr>
+								      	
 								   	</tbody>
 								</table>
 							</div>

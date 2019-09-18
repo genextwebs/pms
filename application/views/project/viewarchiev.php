@@ -25,7 +25,7 @@
 	</div>
 </div>
 <div class="table-responsive">
-	<table class="table table-bordered table-hover" id="projecttemp" name="projecttemp">
+	<table class="table table-bordered table-hover" id="archievdata" name="archievdata">
 		<thead>
 			<tr role="row">
 				 <th>Id</th>
@@ -33,10 +33,11 @@
 				 <th>Project Members</th>
 				 <th>Deadline</th>
 				 <th>Client</th>
-				
 				 <th>Action</th>
 			</tr>
 		</thead>
+		<tbody>
+		</tbody>
 	</table>
 </div>
 	

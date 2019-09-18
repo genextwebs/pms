@@ -23,7 +23,7 @@
 		                	</div>
 		                	<div class="card-wrapper collapse show">
 		                		<div class="card-body">
-		                			<form id="creatclient" class="aj-form" name="creatclient" action="<?php echo base_url().'Project/inserttemplate';?>">
+		                			<form id="creatclient" class="aj-form" name="creatclient" method="post" action="<?php echo base_url().'Project/inserttemplate';?>">
 		                				<div class="submit-alerts">
 		                					<div class="alert alert-success" role="alert">
 											  This is a success alert
