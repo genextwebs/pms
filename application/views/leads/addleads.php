@@ -23,7 +23,7 @@
             	</div>
             	<div class="card-wrapper collapse show">
             		<div class="card-body">
-            			<form id="creatclient" class="aj-form" name="leads" method="post" action="<?php echo base_url().'Leads/insertleads'?>">
+            			<form id="creatclient" class="aj-form" name="leadss" method="post" action="<?php echo base_url().'Leads/insertleads'?>">
                             <?php
                                     $mess = $this->session->flashdata('message_name');
                                     if(!empty($mess)){
@@ -37,8 +37,8 @@
 								<div class="alert alert-danger" role="alert" style="display:block;">
 								 <?php echo $mess; ?>
 								</div>
-                            <?php  } ?>
                             </div>
+                            <?php  } ?>
                             <div class="submit-alerts">
 								<div class="alert alert-warning" role="alert">
 								  This is a warning alert

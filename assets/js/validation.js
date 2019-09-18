@@ -149,40 +149,5 @@ function(isConfirm){
     });
 }
 
-function deleteclients(clientid){
-		var url = base_url+"Clients/deleteclient";
-		swal({
-		 title: "Are you sure?",
-		 text: "You will not be able to recover this imaginary file!",
-		 type: "warning",
-		 showCancelButton: true,
-		 confirmButtonColor: "#DD6B55",
-		 confirmButtonText: "Yes, delete it!",
-		 closeOnConfirm: false
-		},
-function(isConfirm){
-if (isConfirm) {
-       $.ajax({
-           url: url,
-           type: "POST",
-           dataType: "JSON",
-           data: {clientid:clientid},
-<<<<<<< HEAD
-=======
- 
->>>>>>> 32d2bb7e03538612de6335a60df0a18ac62ae1cd
-          dataType: "html",
-           success: function (data) {
-               swal("Done!", "It was succesfully deleted!", "success");
-               //$("#leads").fnReloadAjax();
-                //$('#leads').DataTable.ajax.reload(null,false);
-                window.location.reload();
-           },
-           error: function (xhr, ajaxOptions, thrownError) {
-               swal("Error deleting!", "Please try again", "error");
-           }
-       });
-   }
-   });
-}
+
 	
