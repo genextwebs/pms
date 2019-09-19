@@ -24,14 +24,26 @@
 		                	<div class="card-wrapper collapse show">
 		                		<div class="card-body">
 		                			<form id="creatclient" class="aj-form" method="post" action="<?php echo base_url().'Clients/insertclients' ?>" name="client" >
-		                				<div class="submit-alerts">
-		                					<div class="alert alert-success" role="alert">
+											 <?php
+												$mess = $this->session->flashdata('message_name');
+												if(!empty($mess)){
+													//warning 
+											?>
+            				
+										<div class="submit-alerts">
+		                					<div class="alert alert-success" role="alert" style="display:block;">
 											
 											  This is a success alert
 											</div>
-											<div class="alert alert-danger" role="alert">
-											  This is a danger alert
+										</div>
+										<div class="submit-alerts">
+											<div class="alert alert-danger" role="alert" style="display:block;">
+												<?php echo $mess; ?>
 											</div>
+										</div>
+												<?php } ?>
+									
+										<div class="submit-alerts">
 											<div class="alert alert-warning" role="alert">
 											  This is a warning alert
 											</div>
@@ -151,8 +163,8 @@
 			                                        <div class="form-group">
 			                                            <label>Log In</label>
 			                                            <select name="login" id="login" class="form-control">
-			                                                <option value="1">Enable</option>
-			                                                <option value="0">Disable</option>
+			                                                <option value="1" <?php if(!empty($sessData['login'])) {if($sessData['login']==1){echo 'selected';}} ?> >Enable</option>
+			                                                <option value="0" <?php if(!empty($sessData['login'])) {if($sessData['login']==1){echo 'selected';}} ?> >Disable</option>
 			                                            </select>
 			                                        </div>
 			                                    </div>
