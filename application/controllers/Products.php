@@ -33,15 +33,16 @@ class Products extends CI_Controller
 			$insArr = array('name'=>$name,'price'=>$calculatedTaxRate,'tax'=>$tax,'description'=>$description);
 			$this->common_model->insertData('tbl_product',$insArr);
 			$this->session->set_flashdata('message_name', 'Product Insert sucessfully');
-			redirect('products');
+			redirect('Products');
 		}
 	}
 
 	public function inserttax(){
 		if(!empty($_POST)){
-			$taxname = $this->input->post('tax_name');
+			$taxname = $this->input->post('taxname');
 			$rate = $this->input->post('rate');
 			$insArr = array('taxname'=>$taxname,'rate'=>$rate);
+			//print_r($insArr);die;
 			$this->common_model->insertData('tbl_tax',$insArr);
 		}
 	}

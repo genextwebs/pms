@@ -83,7 +83,7 @@
 				                            </div>
 		                				</div>
 		                			</form>
-		                		</div>
+		                		</div>/
 		                	</div>
 		                </div>
 		            </div>
@@ -97,7 +97,7 @@
             	<div class="modal-dialog modal-lg" role="document">
             		<div class="modal-content br-0">
             			<div class="modal-header">
-            				<h4 class="modal-title"> Tax</h4>
+            				<h4 class="modal-title">Tax</h4>
             				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
             					<span aria-hidden="true">×</span>
             				</button>
@@ -143,26 +143,10 @@
 						        </div>
 						        
 						        <div class="form-actions">
-						            <input type="button" id="save-category" class="btn btn-success" name="Save" value="Save"> <i class="fa fa-check"></i> 
+						            <input type="submit" id="save-category" class="btn btn-success" name="Save" value="Save"> <i class="fa fa-check"></i> 
 						        </div>
 							</form>
             			</div>
             		</div>
             	</div>
             </div>
-
- <script type="text/javascript">
-    $(document).ready(function(){
-        // Initialize select2
-        $("#project-tax").select2();
-        // Read selected option
-        $('#tax-settings').click(function(){
-            var username = $('#project-tax option:selected').text();
-            var userid = $('#project-tax').val();
-       
-            $('#result').html("id : " + userid + ", name : " + username);
-        });
-    });
-</script>
-
-

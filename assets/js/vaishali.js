@@ -86,7 +86,7 @@ $(function(){
 	});
 });
 
-	$(function(){
+$(function(){
 
 		$("form[name='leadtoclient']").validate({
 		rules:{
@@ -102,6 +102,19 @@ $(function(){
 	
 });
 
+$(function(){
+
+		$("form[name='product']").validate({
+		rules:{
+				name : "required",
+				price : "required",
+				Description : "required"					
+		},			
+		submitHandler: function(form) {
+		form.submit();}
+	});
+	
+});
 
 function checkuncheck()
 {
@@ -138,28 +151,7 @@ function(isConfirm){
            	dataType: "html",
             success: function (data) {
                 swal("Done!", "It was succesfully deleted!", "success");
-                //var objJson = JSON.parse(data);
-
-                //location.reload(true);
                 $("#leads").DataTable().ajax.reload();
- 				// $("#leads").load(window.location + " #leads");
-            /*var table = $("#leads").dataTable();
- 
-            oSettings = table.fnSettings();
- 
-            table.fnClearTable(this);
- 
-            for (var i=0; i < objJson.detail.length; i++)
-            {
-                table.oApi._fnAddData(oSettings, objJson.detail[i]);
-                //this part always send error DataTables warning: table id=tbDataTable - Requested unknown parameter '0' for row 0.
-            }
- 
-            oSettings.aiDisplay = oSettings.aiDisplayMaster.slice();
-            table.fnDraw();
-                //$("#leads").fnReloadAjax();
-                 //$('#leads').DataTable.ajax.reload(null,false); 
-                // window.location.reload();*/
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 swal("Error deleting!", "Please try again", "error");
@@ -173,19 +165,20 @@ function(isConfirm){
 $("#tax").submit(function(event) {
 			event.preventDefault();
 			var taxname = $("input[name='tax_name']").val();
-       		var rate = $("textarea[name='rate']").val();
-
-
+       		var rate = $("input[name='rate']").val();
+       		var dataString = 'taxname='+ taxname + '&rate='+ rate;
         $.ajax({
            url: base_url+"products/inserttax",
            type: 'POST',
-           data: {taxname: taxname , rate: rate},
+           data: dataString,
            error: function() {
               alert('Something is wrong');
            },
            success: function(data) {
-                $("tbody").append("<tr><td>"+taxname+"</td><td>"+rate+"</td></tr>");
-                alert("Record added successfully");  
+           	window.location.reload();
+           	//$("#project-tax").hide();
+                //$("tbody").append("<tr><td>"+taxname+"</td><td>"+rate+"</td></tr>");
+               // alert("Record added successfully");  
            }
         });
 
