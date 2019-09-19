@@ -26,7 +26,7 @@ jQuery(document).ready(function() {
 	        "sAjaxSource": base_url+"Project/projectlist",
 	        "sServerMethod": "POST",
 	        "sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
-        	"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No Leads found<br/><br/></center>', "sZeroRecords": "<center><br/>No Leads found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ leads", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
+        	"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No Projects found<br/><br/></center>', "sZeroRecords": "<center><br/>No Projects found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ leads", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
         	"fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
 				aoData.push( { "name": "status1", "value": $('#project_status').val() } );
 				aoData.push( { "name": "clientname1", "value": $('#clientname').val() } );
@@ -43,10 +43,10 @@ jQuery(document).ready(function() {
 	                    var oLanguage = oTable.fnSettings().oLanguage;
 
 	                    if((json.estimateCount == true) && (json.iTotalDisplayRecords == json.limitCountQuery)){
-	                        oLanguage.sInfo = '<b>_START_ to _END_</b> of more than _TOTAL_ (<small>' + json.iTotalRecordsFormatted + ' Leads</small>)';
+	                        oLanguage.sInfo = '<b>_START_ to _END_</b> of more than _TOTAL_ (<small>' + json.iTotalRecordsFormatted + ' Projects</small>)';
 	                    }
 	                    else{
-	                        oLanguage.sInfo = '<b>_START_ to _END_</b> of <b>_TOTAL_</b> (<small>' + json.iTotalRecordsFormatted + ' Leads</small>)';
+	                        oLanguage.sInfo = '<b>_START_ to _END_</b> of <b>_TOTAL_</b> (<small>' + json.iTotalRecordsFormatted + ' Projects</small>)';
 	                    }
 	                    
 	                    fnCallback(json);
@@ -80,16 +80,16 @@ jQuery(document).ready(function() {
                       { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
                       { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
                       { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
-                      { "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
-                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
-                      { "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
+                     // { "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
+                      //{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+                      //{ "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
                      ],
 	        "bServerSide": true,
 	        "fixedHeader": true,
 	        "sAjaxSource": base_url+"Project/templatelist",
 	        "sServerMethod": "POST",
 	        "sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
-        	"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No Leads found<br/><br/></center>', "sZeroRecords": "<center><br/>No Leads found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ leads", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
+        	"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No Projects found<br/><br/></center>', "sZeroRecords": "<center><br/>No Projects found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ leads", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
         	"fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
 			
         		oSettings.jqXHR = $.ajax( {
@@ -149,10 +149,10 @@ jQuery(document).ready(function() {
 	        "sAjaxSource": base_url+"Project/archivelist",
 	        "sServerMethod": "POST",
 	        "sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
-        	"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No Leads found<br/><br/></center>', "sZeroRecords": "<center><br/>No Leads found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ leads", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
+        	"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No Projects found<br/><br/></center>', "sZeroRecords": "<center><br/>No Projects found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ leads", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
         	"fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
-				aoData.push( { "name": "status1", "value": $('#project_status').val() } );
-				aoData.push( { "name": "clientname1", "value": $('#clientname').val() } );
+				aoData.push( { "name": "status2", "value": $('#project_status').val() } );
+				aoData.push( { "name": "clientname2", "value": $('#clientname').val() } );
         		oSettings.jqXHR = $.ajax( {
 	                "dataType": 'json',
 	                "type": "POST",
@@ -185,7 +185,7 @@ jQuery(document).ready(function() {
 	
 	
 });
-	
+	//PROJECT FILTER
 	$('#clientname').change(function(){ //button filter event click
 				var oTable = $('#project').DataTable();
 					oTable.draw();
@@ -200,7 +200,7 @@ jQuery(document).ready(function() {
 			});
         
 		
-	
+	//ARCHIEVE FILTER
 	$('#clientname').change(function(){ //button filter event click
 				var oTable = $('#archievdata').DataTable();
 					oTable.draw();

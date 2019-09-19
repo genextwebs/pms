@@ -92,7 +92,7 @@
 										<div class="col-md-4">
 										<div class="form-group">
 											<div class="custom-control custom-checkbox my-1 mr-sm-2">
-												<input type="checkbox" class="custom-control-input" name="project_member" id="project_member">
+												<input type="checkbox" class="custom-control-input" name="project_member" id="project_member" checked>
 												<label class="custom-control-label" for="project_member" style="padding-top: 2px;">Add me as a project member</label>
 											</div>
 										</div>
