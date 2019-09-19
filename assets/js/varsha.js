@@ -71,6 +71,13 @@ jQuery(document).ready(function() {
 	        "sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
         	"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No Leads found<br/><br/></center>', "sZeroRecords": "<center><br/>No Leads found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ leads", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
         	"fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
+			
+			aoData.push( { "name": "startdate", "value": $('#startdate').val() } );
+					aoData.push( { "name": "enddate", "value": $('#enddate').val() } );
+					aoData.push( { "name": "clientname", "value": $('#clientname').val() } );
+					aoData.push( { "name": "status", "value": $('#status').val() } );
+					
+			
         		oSettings.jqXHR = $.ajax( {
 	                "dataType": 'json',
 	                "type": "POST",
@@ -101,6 +108,11 @@ jQuery(document).ready(function() {
 		});
 	}
 });
+$('#btnapply').click(function(){ //button filter event click
+				var oTable = $('#clients').DataTable();
+					oTable.draw();
+			});
+				
 
 
 function deleteclients(clientid){
@@ -138,4 +150,18 @@ if (isConfirm) {
    }
    });
 }
+	
+$(document).ready(function(){
+	  $("#startdate").datepicker({
+		   todayBtn:  1,
+			autoclose: true,
+		   }).on('changeDate', function (selected) {
+			/*var minDate = new Date(selected.date.valueOf());
+			$('#enddate').datetimepicker('setStartDate', minDate);*/
+		});
+		
+			$("#enddate").datepicker();
+	});
+
+	
 	

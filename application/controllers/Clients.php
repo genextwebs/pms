@@ -2,19 +2,21 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 class Clients extends CI_Controller
 {
-	public function __construct()
-	{
+	public function __construct(){
 		parent::__construct();
 		$this->load->database();
 		$this->load->model('common_model');
 		ini_set('display_errors',1);
 		error_reporting(E_ALL);
 	}
+	
 	public function index(){
+		$data['clients']=$this->common_model->getData('tbl_clients');
 		$this->load->view('common/header');
-		$this->load->view('clients/client');
+		$this->load->view('clients/client',$data);
 		$this->load->view('common/footer');
 	}
+	
 	public function addclients(){
 		$data['sessData'] = $this->session->flashdata('data');
 		$this->load->view('common/header');
@@ -22,49 +24,43 @@ class Clients extends CI_Controller
 		$this->load->view('common/footer');
 	}
 	
-	public function insertclients()
-	{
-		//echo "dfd";die;
-			if(!empty($_POST))
-			{
-						//echo "dfd";die;
-
-				$companyname=$this->input->post('company_name');
-				//echo $companyname;die;
-				$website=$this->input->post('website');
-				$address=$this->input->post('address');
-				$clientname=$this->input->post('name');
-				$clientemail=$this->input->post('email');
-				$password=$this->input->post('password');
-				if($this->input->post('randompassword')=='on')
-				{$on='1';}
-				else{ $on='0';}
-				$grp=$on;
-				$mobile=$this->input->post('mobile');
-				$skype=$this->input->post('skype');
-				$linkedin=$this->input->post('linkedin');
-				$twitter=$this->input->post('twitter');
-				$facebook=$this->input->post('facebook');
-				$gstnumber=$this->input->post('gst_number');
-				$note=$this->input->post('note');
-				$login=$this->input->post('login');
-				$whereArr = array('clientemail' => $clientemail);
-				$data = $this->common_model->getData('tbl_clients',$whereArr);
-				if(count($data)==1){
+	public function insertclients(){
+		if(!empty($_POST))
+		{
+			$companyname=$this->input->post('company_name');
+			$website=$this->input->post('website');
+			$address=$this->input->post('address');
+			$clientname=$this->input->post('name');
+			$clientemail=$this->input->post('email');
+			$password=$this->input->post('password');
+			if($this->input->post('randompassword')=='on')
+			{$on='1';}
+			else{ $on='0';}
+			$grp=$on;
+			$mobile=$this->input->post('mobile');
+			$skype=$this->input->post('skype');
+			$linkedin=$this->input->post('linkedin');
+			$twitter=$this->input->post('twitter');
+			$facebook=$this->input->post('facebook');
+			$gstnumber=$this->input->post('gst_number');	
+			$note=$this->input->post('note');
+			$login=$this->input->post('login');
+			$whereArr = array('clientemail' => $clientemail);
+			$data = $this->common_model->getData('tbl_clients',$whereArr);
+			if(count($data)==1){
 				$this->session->set_flashdata('message_name','Email already exits');
 				$this->session->set_flashdata("data",$_POST);
 				redirect('Clients/addclients');
-				}
-				else{
+			}
+			else{
 				$insertArr=array('companyname' => $companyname,'website' => $website,'address' => $address,'clientname' => $clientname,'clientemail' => $clientemail,'password' => md5($password), 'generaterandompassword' => $grp, 'mobile' => $mobile,'status'=>'1','skype' => $skype,'linkedin' => $linkedin,'twitter' => $twitter,'facebook' => $facebook,'gstnumber' => $gstnumber,'note' => $note,'login' =>$login );
 				$this->common_model->insertdata('tbl_clients',$insertArr);
-				/*echo $this->db->last_query();
-				die;*/
 				$this->session->set_flashdata('message_name', "Data Inserted Succeessfully");
 				redirect('Clients/index');
-				}
 			}
+		}
 	}
+	
 	public function client_list(){
 	if(!empty($_POST)){
 			$_GET = $_POST;
@@ -128,11 +124,33 @@ class Clients extends CI_Controller
             	$searchTerm = trim($_GET['sSearch']);
             	$sWhere .= ' AND (clientname like "%'.$searchTerm.'%" OR companyname like "%'.$searchTerm.'%" OR website like "%'.$searchTerm.'%" OR address like "%'.$searchTerm.'%" OR clientemail like "%'.$searchTerm.'%" OR facebook like "%'.$searchTerm.'%" OR note like "%'.$searchTerm.'%")';
             }
-            if(!empty($sWhere)){
-            	$sWhere = " WHERE 1 ".$sWhere;
-            }
-            /** Filtering End */
-		}
+				$startdate=!empty($_POST['startdate']) ? $_POST['startdate'] : '';
+				$enddate=!empty($_POST['enddate']) ? $_POST['enddate'] : '';
+				$clientname=!empty($_POST['clientname']) ? $_POST['clientname'] : '';
+				$status=$_POST['status'];
+		
+					if(!empty($clientname)){
+							$sWhere.=' AND  clientname="'.$clientname.'"';
+
+					}
+					
+					if($status=='all'){
+						}else{
+								$sWhere.=' AND status='.$status;
+						}
+					if(!empty($startdate)){						
+						$sWhere.=' AND createdat>="'.$startdate.'"';
+					}
+					if(!empty($enddate)){						
+						$sWhere.=' AND createdat<="'.$enddate.'"';
+					}
+					
+					if(!empty($sWhere)){
+						$sWhere = " WHERE 1 ".$sWhere;
+					}
+					/** Filtering End */
+				}
+				
 		
 	    $query = "SELECT * from tbl_clients ".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 		$clientsArr = $this->common_model->coreQueryObject($query);
@@ -190,8 +208,8 @@ class Clients extends CI_Controller
 	  echo json_encode($output);
       exit();
 	}
-	public function editclients()
-	{
+	
+	public function editclients(){
 		$id=$this->uri->segment(3);
 		$id1=base64_decode($id);
 		$whereArr=array('id'=>$id1);
@@ -202,25 +220,23 @@ class Clients extends CI_Controller
 
 		if($this->input->post('btnupdate'))
 		{
-			//echo "<pre>";print_r($_POST);die;
 			$companyname=$this->input->post('company_name');
-				$website=$this->input->post('website');
-				$address=$this->input->post('address');
-				$clientname=$this->input->post('name');
-				$clientemail=$this->input->post('email');
-				if($this->input->post('password')!='')
-				{
+			$website=$this->input->post('website');
+			$address=$this->input->post('address');
+			$clientname=$this->input->post('name');
+			$clientemail=$this->input->post('email');
+			if($this->input->post('password')!=''){
 					$updateArr['password']=md5($this->input->post('password'));
-				}	
-				$mobile=$this->input->post('mobile');
-				$status=$this->input->post('status');
-				$skype=$this->input->post('skype');
-				$linkedin=$this->input->post('linkedin');
-				$twitter=$this->input->post('twitter');
-				$facebook=$this->input->post('facebook');
-				$gstnumber=$this->input->post('gst_number');
-				$note=$this->input->post('note');
-				$login=$this->input->post('login');
+			}	
+			$mobile=$this->input->post('mobile');
+			$status=$this->input->post('status');
+			$skype=$this->input->post('skype');
+			$linkedin=$this->input->post('linkedin');
+			$twitter=$this->input->post('twitter');
+			$facebook=$this->input->post('facebook');
+			$gstnumber=$this->input->post('gst_number');
+			$note=$this->input->post('note');
+			$login=$this->input->post('login');
 					
 				$updateArr['companyname'] = $companyname;
 				$updateArr['website'] = $website;
@@ -239,21 +255,19 @@ class Clients extends CI_Controller
 				
 				$whereArr=array('id'=>base64_decode($id));
 				$data['query']=$this->common_model->updateData('tbl_clients',$updateArr,$whereArr);
-				//echo $this->db->last_query();die;
 				$this->session->set_flashdata('messagename', "Data Update Succeessfully");
 				redirect('Clients/index');
-			}
+		}
 	}
-	public function deleteclient()
-	{
-		//$id=$this->uri->segment(3);
+	
+	public function deleteclient(){
 		$clientid=base64_decode($_POST['clientid']);
 		$whereArr=array('id'=>$clientid);
 		$this->common_model->deleteData('tbl_clients',$whereArr);
 		redirect('Clients/index');
 	}
-	public function viewclientdetail()
-	{
+	
+	public function viewclientdetail(){
 		$id=$this->uri->segment(3);
 		$id1=base64_decode($id);
 		$whereArr=array('id'=>$id1);

@@ -1,12 +1,12 @@
 <nav aria-label="breadcrumb" class="breadcrumb-nav">
                 <div class="row">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title"><i class="icon-people"></i> Clients</h4>
+                        <h4 class="page-title"><i class="icon-people"></i>Estimates</h4>
                     </div>
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                         <ol class="breadcrumb">
                             <li><a href="<?php echo base_url().'dashboard'?>">Home</a></li>
-                            <li><a href="<?php echo base_url().'Clients'?>">Clients</a></li>
+                            <li><a href="<?php echo base_url().'Finance'?>">Estimates</a></li>
                             <li class="active">Add New</li>
                         </ol>
                     </div>
@@ -19,7 +19,7 @@
                     <div class="col-md-12">
 		                <div class="card br-0">
 		                	<div class="card-header br-0 card-header-inverse">
-		                		 ADD CLIENT INFO
+								CREATE ESTIMATE
 		                	</div>
 		                	<div class="card-wrapper collapse show">
 		                		<div class="card-body">
@@ -49,32 +49,40 @@
 											</div>
 		                				</div>
 		                				<div class="form-body">
-		                					<h3 class="box-title">Company Details</h3>
-		                					<hr>
 		                					<div class="row">
-		                						<div class="col-md-6">
+		                						<div class="col-md-4">
 		                							<div class="form-group">
-		                								<label class="control-label">Company Name</label>
-		                								<input id="company_name" class="form-control" type="text" name="company_name" value="<?php if(!empty($sessData['company_name'])) { echo $sessData['company_name']; } else {} ?>">
+		                								<label class="control-label">Client</label>
+			                                            <select name="client" id="client" class="form-control">
+															<option value="">select</option>
+																<?php
+																	foreach($client as $row)
+																	{
+																		echo '<option value="'.$row->clientname.'">'.$row->clientname.'</option>';
+																	}
+																?>
+														</select>
 		                							</div>
 		                						</div>
-		                						<div class="col-md-6">
+		                						<div class="col-md-4">
 		                							<div class="form-group">
-		                								<label class="control-label">Website</label>
-		                								<input id="website" class="form-control" type="text" name="website" value="<?php if(!empty($sessData['website'])) { echo $sessData['website']; } else {} ?>">
+		                								<label class="control-label">Currency</label>
+														<select name="currency" id="currency" class="form-control">
+															<option value="">select</option>
+															<option value="1">$(USD)</option>
+															<option value="2">R(IND)</option>
+														</select>
+													</div>
+		                						</div>
+												<div class="col-md-4">
+		                							<div class="form-group">
+		                								<label class="control-label">Valid Till</label>
+														<input type="date" class="form-control" name="valid_till" id="valid_till" value="">
 		                							</div>
 		                						</div>
 		                					</div>
-		                					<div class="row">
-		                						<div class="col-md-12">
-		                							<div class="form-group">
-		                								<label class="control-label">Address</label>
-		                								<textarea name="address" id="address" rows="5" class="form-control"><?php if(!empty($sessData['address'])) { echo $sessData['address']; } else {} ?></textarea>
-		                							</div>
-		                						</div>
-		                					</div>
-		                					<h3 class="box-title mt-4">Client Details</h3>
-		                					<hr>
+											<hr>
+											<button aria-expanded="false" data-toggle="dropdown" class="btn btn-info dropdown-toggle waves-effect waves-light" type="button">Products <span class="caret"></span></button>
 		                					<div class="row">
 		                						<div class="col-md-6">
 		                							<div class="form-group">

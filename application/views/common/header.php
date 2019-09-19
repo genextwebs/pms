@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/fixedHeader.bootstrap4.min.css">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/responsive.bootstrap4.min.css">
+
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/font-awesome.css">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/simple-line-icons.css">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/themify-icons.css">

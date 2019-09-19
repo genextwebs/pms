@@ -17,6 +17,8 @@
     <script src="<?php echo base_url();?>assets/js/dataTables.responsive.min.js"></script>
 	<script src="<?php echo base_url();?>assets/js/search-dropdown.min.js"></script>
      <script src="<?php echo base_url();?>assets/js/datatables.bundle.min.js"></script>
+	 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.0/js/bootstrap-datepicker.min.js"></script>
+
 
     <script src="<?php echo base_url();?>assets/js/bootstrap.js"></script>
     <script src="<?php echo base_url();?>assets/js/custome.js"></script>
