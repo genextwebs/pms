@@ -23,13 +23,13 @@
             </a>
         </li>
         <li>
-            <a href="<?php echo base_url().'Clients/index'?>" class="nav-link-s">
+            <a href="<?php echo base_url().'clients'?>" class="nav-link-s">
                 <i class="icon-people"></i>
                 <span>Clients</span>
             </a>
         </li>
         <li class="active">
-            <a href="<?php echo base_url().'leads/index'?>" class="nav-link-s">
+            <a href="<?php echo base_url().'leads'?>" class="nav-link-s">
                 <i class="ti-receipt"></i>
                 <span>Leads</span>
             </a>
@@ -58,13 +58,13 @@
             </ul>
         </li>
         <li>
-            <a href="#" class="nav-link-s">
+            <a href="<?php echo base_url().'products'?>" class="nav-link-s">
                 <i class="icon-basket"></i>
                 <span>Products</span>
             </a>
         </li>
         <li>
-            <a href="#finance" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle collapsed">
+            <a href="<?php echo base_url().'finance' ?>" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle collapsed">
                 <i class="fa fa-money"></i>
                 <span>Finance</span>
             </a>

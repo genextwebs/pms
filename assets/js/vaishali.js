@@ -168,3 +168,26 @@ function(isConfirm){
     }
     });
 }
+
+
+$("#tax").submit(function(event) {
+			event.preventDefault();
+			var taxname = $("input[name='tax_name']").val();
+       		var rate = $("textarea[name='rate']").val();
+
+
+        $.ajax({
+           url: base_url+"products/inserttax",
+           type: 'POST',
+           data: {taxname: taxname , rate: rate},
+           error: function() {
+              alert('Something is wrong');
+           },
+           success: function(data) {
+                $("tbody").append("<tr><td>"+taxname+"</td><td>"+rate+"</td></tr>");
+                alert("Record added successfully");  
+           }
+        });
+
+
+});
