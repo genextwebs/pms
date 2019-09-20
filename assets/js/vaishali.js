@@ -257,4 +257,34 @@ $("#save-category").click(function(event) {
 });
 
 
- 
+ function deleteproducts(id){
+	var url = base_url+"products/deleteproducts";
+	swal({
+	 title: "Are you sure?",
+	 text: "You will not be able to recover this imaginary file!",
+	 type: "warning",
+	 showCancelButton: true,
+	 confirmButtonColor: "#DD6B55",
+	 confirmButtonText: "Yes, delete it!",
+	 closeOnConfirm: false
+	},
+function(isConfirm){
+if (isConfirm) {
+       $.ajax({
+           url: url,
+           type: "POST",
+           dataType: "JSON",
+           data: {id:id},
+          dataType: "html",
+		  
+           success: function (data) {
+               swal("Done!", "It was succesfully deleted!", "success");
+			   $('#products').DataTable().ajax.reload();
+           },
+           error: function (xhr, ajaxOptions, thrownError) {
+               swal("Error deleting!", "Please try again", "error");
+           }
+       });
+   }
+   });
+}

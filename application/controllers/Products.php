@@ -142,8 +142,8 @@ class Products extends CI_Controller
 		foreach($productsArr as $row) {
 			$id = $row->id;
 			
-				$actionStr = '<a href='.base_url().'Project/editproject/'.base64_encode($row->id). ' class="btn btn-info btn-circle" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-					<a href='.base_url().'Project/deleteproject/'.base64_encode($row->id).' onclick="javascript:return confirm(\'Are u Sure want to delete?\');" class="btn btn-danger btn-circle sa-params" data-toggle="tooltip" data-user-id="1" data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>';
+				$actionStr = "<abbr title=\"Edit\"><a class=\"btn btn-info btn-circle\" data-toggle=\"tooltip\" data-original-title=\"Edit\" href='".base_url()."Products/editproducts/".base64_encode($row->id)."'><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i></a></abbr>
+					<abbr title=\"Delete\"><a  class=\"btn btn-danger btn-circle sa-params\" data-toggle=\"tooltip\"  data-original-title=\"Delete\" href=\"javascript:void();\" onclick=\"deleteproducts('".base64_encode($row->id)."');\"><i class=\"fa fa-times\" aria-hidden=\"true\"></i></a></abbr>";
 			
 			$datarow[] = array(
 				$id = $i,
@@ -165,5 +165,35 @@ class Products extends CI_Controller
 	  echo json_encode($output);
       exit();
 	}
+
+	public function editproducts(){
+		$id = base64_decode($this->uri->segment(3));
+		$whereArr=array('id'=>$id);
+		$data['products'] = $this->common_model->getData('tbl_product',$whereArr);
+		$data['tax'] = $this->common_model->getData('tbl_tax');
+		$this->load->view('common/header');
+		$this->load->view('products/editproducts',$data);
+		$this->load->view('common/footer');
+		if(!empty($_POST)){
+			$name = $this->input->post('name');
+			$price = $this->input->post('price');
+			$tax = $this->input->post('tax');
+			$price1=($price*$tax)/100;
+			$total=$price+$price1;
+			$description = $this->input->post('description');
+			$updateArr = array('name'=>$name,'price'=>$total,'tax'=>$tax,'description'=>$description);
+			$this->common_model->updatedata('tbl_product',$updateArr,$whereArr);
+			$this->session->set_flashdata('message_name', 'Product Update sucessfully');
+			redirect('Products');
+		}
+	}
+
+	public function deleteproducts(){
+		$id = base64_decode($_POST['id']);
+		$whereArr = array('id'=>$id);
+		$this->common_model->deleteData('tbl_product',$whereArr);
+		redirect('Products');
+	}
+
 }
 ?>
