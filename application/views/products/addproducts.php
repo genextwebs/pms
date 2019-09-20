@@ -23,7 +23,7 @@
 		                	</div>
 		                	<div class="card-wrapper collapse show">
 		                		<div class="card-body">
-		                			<form id="creatclient" class="aj-form" name="product" action="<?php echo base_url().'products/insertproducts'?>" method="post">
+		                			<form  class="aj-form" name="product" id="product" action="<?php echo base_url().'products/insertproducts'?>" method="post">
 		                				<div class="submit-alerts">
 		                					<div class="alert alert-success" role="alert">
 											  This is a success alert
@@ -60,8 +60,9 @@
 											            	</a>
 											            	</label>
 			                							<select id='project-select' class="custom-select" name="tax">
+			                								<option value="">Select Tax</option>
 												            <?php foreach($tax as $row) { ?>
-												            	<option value="<?php echo $row->id?>" ><?php echo $row->taxname;?>(<?php echo $row->rate?>%)</option>
+												            	<option value="<?php echo $row->rate?>" ><?php echo $row->taxname;?>(<?php echo $row->rate?>%)</option>
 												            <?php
 												            	}
 												            ?>
@@ -83,7 +84,7 @@
 				                            </div>
 		                				</div>
 		                			</form>
-		                		</div>
+		                		</div>/
 		                	</div>
 		                </div>
 		            </div>
@@ -104,7 +105,7 @@
             			</div>
             			<div class="modal-body">
             				<div class="table-responsive">
-					            <table class="table">
+					            <table class="table" id="table_tax">
 					                <thead>
 					                <tr>
 					                    <th>#</th>
@@ -113,13 +114,18 @@
 					                </tr>
 					                </thead>
 					                <tbody>
-					                    <?php foreach ($tax as $row) { ?>      
+					                    <?php 
+					                    $i = 1;
+					                    foreach ($tax as $row) { 
+					                	 ?>      
 										      <tr>
-										      	  <td><?php echo $row->id; ?></td>
+										      	  <td><?php echo $i; ?></td>
 										          <td><?php echo $row->taxname; ?></td>
 										          <td><?php echo $row->rate; ?></td>
 										      </tr>
-										   <?php } ?>
+										   <?php 
+										   $i++;
+										} ?>
 									</tbody>
 					            </table>
 					        </div>
@@ -143,7 +149,7 @@
 						        </div>
 						        
 						        <div class="form-actions">
-						            <input type="submit" id="save-category" class="btn btn-success" name="Save" value="Save"> <i class="fa fa-check"></i> 
+						            <input type="button" id="save-category" class="btn btn-success" name="Save" value="Save"> <i class="fa fa-check"></i> 
 						        </div>
 							</form>
             			</div>
