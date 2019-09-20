@@ -7,7 +7,7 @@
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                         <ol class="breadcrumb">
                             <li><a href="<?php echo base_url().'Project/';?>">Home</a></li>
-                            <li><a href="<?php echo base_url().'Project/';?>">Projects</a></li>
+                             <li class="active">Projects</li>
                         </ol>
                     </div>
                 </div>
@@ -77,7 +77,7 @@
 							</div>
 						</div>
 		                <div class="row">
-		                	<div class="col-lg-3 col-md-4">
+		                	<!--<div class="col-lg-3 col-md-4">
 		                		<div class="form-group">
             						<label class="control-label">Projects Status</label>
             						<select id="project_status" class="custom-select">
@@ -86,7 +86,22 @@
 										<option value='0'>Incomplete</option>   
 									</select> 
             					</div>
-		                	</div>
+		                	</div>-->
+							
+									<div class="col-md-4">
+										<div class="form-group">
+										<label class="control-label">Project Status</label>
+											<select name="status" id="project_status" class="custom-select" name="status">
+												<option value='all'>All</option> 
+												<option value='0'>Incomplete </option>
+												<option value='1'>Complete </option>
+												<option value='2'>In Progress </option>
+												<option value='3'>On Hold  </option>
+												<option value='4'>Canceled </option>
+										   </select>
+									   </div>
+                                   </div>
+                            
 							<div class="col-lg-3 col-md-4">
 								<div class="form-group">
 									<label class="control-label">Client Name</label>

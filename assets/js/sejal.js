@@ -217,7 +217,8 @@ jQuery(document).ready(function() {
 		rules:{
 				project_name : "required",
 				start_date : "required",
-				deadline : "required",		
+				deadline : "required",	
+				select_client:"required",
 		},			
 		submitHandler: function(form) {
 		form.submit();}
@@ -231,5 +232,33 @@ jQuery(document).ready(function() {
 		submitHandler: function(form) {
 		form.submit();}
 	});
+	
+	//add category
+	
+	
+
+		$("#category").submit(function(event) {
+					event.preventDefault();
+					var name = $("input[name='category_name']").val();
+					//var rate = $("input[name='rate']").val();
+					var dataString = 'name='+ name;
+				$.ajax({
+				   url: base_url+"project/insertcategory",
+				   type: 'POST',
+				   data: dataString,
+				   error: function() {
+					  alert('Something is wrong');
+				   },
+				   success: function(data) {
+					window.location.reload();
+					//$("#project-category1").hide();
+						//$("tbody").append("<tr><td>"+taxname+"</td><td>"+rate+"</td></tr>");
+					   // alert("Record added successfully");  
+				   }
+				});
+
+
+		});
+
 	
 

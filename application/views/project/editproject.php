@@ -91,8 +91,7 @@
 												<label class="custom-control-label" for="manual_timelog" style="padding-top: 2px;">Allow manual time logs?</label>
 											</div>
 										</div>
-									</div>
-										
+									</div>		
 								</div>
 								<div class="row">
 									<div class="col-md-12">
@@ -181,7 +180,20 @@
 										</div>
 									</div>
 								</div>
-
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+										<label class="control-label">Project Status</label>
+											<select name="status" id="" class="form-control" name="status">
+												<option value="0">Incomplete </option>
+												<option value="1">Complete </option>
+												<option value="2">In Progress </option>
+												<option value="3">On Hold  </option>
+												<option value="4">Canceled </option>
+										   </select>
+									   </div>
+                                   </div>
+                                </div>
 								<!-- action btn -->
 								<div class="form-actions">
 									<i class="fa fa-check"><input type="submit" id="save-form" class="btn btn-success" name="btnedit" value="Update"> </i> 

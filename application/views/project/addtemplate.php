@@ -57,7 +57,7 @@
 											</div>
 										</div>
 										</div>
-		                					<div class="row">
+		                					<!--<div class="row">
 											    <div class="col-md-6">
 											        <div class="form-group">
 											            <div class="custom-control custom-checkbox my-1 mr-sm-2">
@@ -74,6 +74,32 @@
 														</div>
 											        </div>
 											    </div>
+											</div>-->
+											<div class="row">
+												<div class="col-md-4">
+													<div class="form-group">
+														<div class="custom-control custom-checkbox my-1 mr-sm-2">
+															<input type="checkbox" class="custom-control-input" name="client-view-tasks" id="client-view-tasks" onclick="viewtask()">
+															<label class="custom-control-label" for="client-view-tasks" style="padding-top: 2px;">Client can view tasks of this project</label>
+														</div>
+													</div>
+												</div>	
+											<div class="col-md-4">
+												<div class="form-group"  id="viewnotification" style="display:none;">
+													<div class="custom-control custom-checkbox my-1 mr-sm-2">
+														<input type="checkbox" class="custom-control-input" name="tasks-notification" id="tasks-notification">
+														<label class="custom-control-label" for="tasks-notification" style="padding-top: 2px;">Send task notification to client?</label>
+													</div>
+												</div>
+											</div>	
+											<div class="col-md-4">
+												<div class="form-group">
+													<div class="custom-control custom-checkbox my-1 mr-sm-2">
+														<input type="checkbox" class="custom-control-input" name="manual_timelog" id="manual_timelog">
+														<label class="custom-control-label" for="manual_timelog" style="padding-top: 2px;">Allow manual time logs?</label>
+													</div>
+												</div>
+											</div>
 											</div>
 											<div class="row">
                                         		<div class="col-md-12">
@@ -175,3 +201,26 @@
 				</div>
 			</div>
 			<!--end category--> 
+<script type="text/javascript">
+
+	function checkUncheck(){ 
+
+		var checkBox = document.getElementById("without_deadline");
+        if (checkBox.checked) {
+            $('#deadlineBox').hide().checked;
+        }
+		else{
+			 $('#deadlineBox').show();
+		}	
+	}
+	function viewtask(){ 
+
+		var checkBox = document.getElementById("client-view-tasks");
+        if (checkBox.checked) {
+            $('#viewnotification').show().checked;
+        }
+		else{
+			 $('#viewnotification').hide();
+		}	
+	}
+</script>

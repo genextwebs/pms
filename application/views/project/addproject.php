@@ -47,7 +47,7 @@
 									</div>
 									<div class="col-md-6">
 										<div class="form-group project-category">
-											<label class="control-label" for="project-category">Project Category <a class="btn btn-sm btn-outline-success ml-1" href="#"><i class="fa fa-plus"></i> Add Project Category</a></label>
+											<label class="control-label" for="project-category">Project Category <a class="btn btn-sm btn-outline-success ml-1" href="javascript:;" data-toggle="modal" data-target="#project-category1"><i class="fa fa-plus"></i> Add Project Category</a></label>
 											<select class="custom-select br-0" id="project-category" name="project-category">
 											
 												<?php
@@ -89,7 +89,7 @@
 											</div>
 										</div>
 									</div>
-										<div class="col-md-4">
+									<div class="col-md-4">
 										<div class="form-group">
 											<div class="custom-control custom-checkbox my-1 mr-sm-2">
 												<input type="checkbox" class="custom-control-input" name="project_member" id="project_member" checked>
@@ -118,7 +118,7 @@
 									<div class="row">
 										<div class="col-md-12">
 											<div class="form-group">
-												<select class="custom-select" id="select-client" name="select-client">
+												<select class="custom-select" id="select-client" name="select_client">
 													  <option value="">--Select--</option>
 															<?php
 																foreach($client as $row)
@@ -175,8 +175,10 @@
 											<input type="text" class="form-control" name="hours-allocated">
 										</div>
 									</div>
+									
 								</div>
 
+                     
 								<!-- action btn -->
 								<div class="form-actions">
 									<i class="fa fa-check"><input type="submit" id="save-form" class="btn btn-success" name="btnsave" value="Save"> </i> 
@@ -211,37 +213,19 @@
 							<th>Action</th>
 						</tr>
 						</thead>
-						<tbody>
-							<tr id="cat-1">
-								<td>1</td>
-								<td>Laravel</td>
-								<td><a href="javascript:;" data-cat-id="1" class="btn btn-sm btn-danger btn-rounded delete-category">Remove</a></td>
-							</tr>
-							<tr id="cat-2">
-								<td>2</td>
-								<td>Yii</td>
-								<td><a href="javascript:;" data-cat-id="2" class="btn btn-sm btn-danger btn-rounded delete-category">Remove</a></td>
-							</tr>
-							<tr id="cat-3">
-								<td>3</td>
-								<td>Zend</td>
-								<td><a href="javascript:;" data-cat-id="3" class="btn btn-sm btn-danger btn-rounded delete-category">Remove</a></td>
-							</tr>
-							<tr id="cat-4">
-								<td>4</td>
-								<td>CakePhp</td>
-								<td><a href="javascript:;" data-cat-id="4" class="btn btn-sm btn-danger btn-rounded delete-category">Remove</a></td>
-							</tr>
-							<tr id="cat-5">
-								<td>5</td>
-								<td>Codeigniter</td>
-								<td><a href="javascript:;" data-cat-id="5" class="btn btn-sm btn-danger btn-rounded delete-category">Remove</a></td>
-							</tr>
+						 <tbody>
+								<?php foreach ($category as $row) { ?>      
+									  <tr>
+										  <td><?php echo $row->id; ?></td>
+										  <td><?php echo $row->name; ?></td>
+										  <td><a href="javascript:;" data-cat-id="1" class="btn btn-sm btn-danger btn-rounded delete-category">Remove</a></td>
+									  </tr>
+							   <?php } ?>
 						</tbody>
 					</table>
 				</div>
 				<hr>
-				<form id="" class="">
+				<form id="category" class="" name="category" method="post">
 					<div class="form-body">
 						<div class="row">
 							<div class="col-md-12 ">
@@ -253,7 +237,7 @@
 						</div>
 					</div>
 					<div class="form-actions">
-						<button type="button" id="save-category" class="btn btn-success"> <i class="fa fa-check"></i> Save</button>
+						<input type="submit" id="save-category" class="btn btn-success" value="Save"> <i class="fa fa-check"></i>
 					</div>
 				</form>
 			</div>
@@ -283,4 +267,16 @@
 			 $('#viewnotification').hide();
 		}	
 	}
+	
+	     /*   $(document).ready(function(){
+            // Initialize select2
+            $('#project-category').select2();
+            // Read selected option
+            $('#save-category').click(function(){
+                var username = $('#project_categ option:selected').text();
+                var userid = $('#project_categ').val();
+           
+                $('#result').html("id : " + userid + ", name : " + username);
+            });
+        });*/
 </script>

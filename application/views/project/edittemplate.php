@@ -44,19 +44,19 @@
 		                							
 												</div>
 		                						</div>
-		                				<div class="col-md-6">
-											<div class="form-group project-category">
-												<label class="control-label" for="project-category">Project Category <a class="btn btn-sm btn-outline-success ml-1" href="#"><i class="fa fa-plus"></i> Add Project Category</a></label>
-												<select class="custom-select br-0" id="project-category" name="project-category">
-														<?php
-															foreach($category as $cat){
-																echo '<option value="'.$cat->id.'">'.$cat->name.'</option> ';
-															}
-															?>
-												</select>
-											</div>
-										</div>
-										</div>
+												<div class="col-md-6">
+													<div class="form-group project-category">
+														<label class="control-label" for="project-category">Project Category <a class="btn btn-sm btn-outline-success ml-1" href="#"><i class="fa fa-plus"></i> Add Project Category</a></label>
+														<select class="custom-select br-0" id="project-category" name="project-category">
+																<?php
+																	foreach($category as $cat){
+																		echo '<option value="'.$cat->id.'">'.$cat->name.'</option> ';
+																	}
+																	?>
+														</select>
+													</div>
+												</div>
+										    </div>
 		                					<div class="row">
 											    <div class="col-md-6">
 											        <div class="form-group">
@@ -79,10 +79,19 @@
                                         		<div class="col-md-12">
 		                                            <div class="form-group">
 		                                                <label class="control-label">Project Summary</label>
-		                                                <textarea name="summary"><?php echo !empty($templateinfo[0]->projectsummary) ? $templateinfo[0]->projectsummary : '' ?></textarea>
+		                                                <textarea name="editor1"><?php echo !empty($templateinfo[0]->projectname) ? $templateinfo[0]->projectname : '' ?></textarea>
 		                                            </div>
 		                                        </div>
                                 			</div>
+											<!--<div class="row">
+                                        		<div class="col-md-12">
+		                                            <div class="form-group">
+		                                                <label class="control-label">Project Summary</label>
+		                                                <textarea name="summary"></textarea>
+		                                            </div>
+		                                        </div>
+                                			</div>-->
+
                                 			<div class="row">
                                 				<div class="col-md-12">
 		                                            <div class="form-group">
