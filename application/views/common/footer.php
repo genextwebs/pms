@@ -25,7 +25,7 @@
 
     <script src="https://cdn.ckeditor.com/4.12.1/standard/ckeditor.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.js"></script>
-
+    <script src="http://xoxco.com/examples/jquery.tagsinput.js"></script>
     <script type="text/javascript">
         var controllerName = '<?php echo strtolower($this->uri->segment(1)); ?>';
         var functionName = '<?php echo strtolower($this->uri->segment(2)); ?>';

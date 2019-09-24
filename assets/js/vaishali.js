@@ -248,6 +248,7 @@ $("#save-category").click(function(event) {
      			/*$.each(data.taxdata, function(key, value) {
                            $('select[name="tax"]').append('<option value="'+ value.id +'">'+ value.rate +'</option>');
                        })*/
+                $('select[name="tax"]').html('');       
                 $('select[name="tax"]').append(data.taxdata);
                $("tbody").append("<tr><td>"+data.count+"</td><td>"+taxname+"</td><td>"+rate+"</td></tr>");
                $('#project-tax').modal('toggle');
@@ -288,3 +289,97 @@ if (isConfirm) {
    }
    });
 }
+
+$(function() {
+		$('#skills').tagsInput({width:'auto'});
+    });
+
+$("#save-designation").click(function(event) {
+			event.preventDefault();
+			var name = $("input[name='designation_name']").val();
+       		var dataString = 'name='+ name;
+        $.ajax({
+           url: base_url+"employee/insert_designation",
+           type: 'POST',
+           dataType: 'json',
+           data: dataString,
+           error: function() {
+              alert('Something is wrong');
+           },
+           success: function(data) {
+           	//console.log(data);
+     			/*$.each(data.taxdata, function(key, value) {
+                           $('select[name="tax"]').append('<option value="'+ value.id +'">'+ value.rate +'</option>');
+                       })*/
+                $('select[name="designation"]').html('');
+                $('select[name="designation"]').append(data.taxdata);
+              // $("tbody").append("<tr><td>"+data.count+"</td><td>"+taxname+"</td><td>"+rate+"</td></tr>");
+               $('#data-designation').modal('toggle');
+                $('#modeldesignation')[0].reset();
+           }
+        });
+});
+
+
+$("#save-department").click(function(event) {
+			event.preventDefault();
+			var name = $("input[name='department_name']").val();
+       		var dataString = 'name='+ name;
+        $.ajax({
+           url: base_url+"employee/insert_department",
+           type: 'POST',
+           dataType: 'json',
+           data: dataString,
+           error: function() {
+              alert('Something is wrong');
+           },
+           success: function(data) {
+           	//console.log(data);
+     			/*$.each(data.taxdata, function(key, value) {
+                           $('select[name="tax"]').append('<option value="'+ value.id +'">'+ value.rate +'</option>');
+                       })*/
+                $('select[name="department"]').html('');
+                $('select[name="department"]').append(data.taxdata);
+              // $("tbody").append("<tr><td>"+data.count+"</td><td>"+taxname+"</td><td>"+rate+"</td></tr>");
+               $('#data-department').modal('toggle');
+                $('#modaldepartment')[0].reset();
+           }
+        });
+});
+
+
+$(document).ready(function(){
+ 
+        $('#submit').change(function(e){
+			
+            e.preventDefault(); 
+                 $.ajax({
+                     url:base_url+"employee/do_upload",
+                     type:"post",
+                     data:new FormData(this),
+                     processData:false,
+                     contentType:false,
+                     cache:false,
+                     async:false,
+                      success: function(data){
+						var myArray = JSON.parse(data);
+						if(myArray.error!='')
+						  {
+							 alert(myArray.serror);
+							$('#errordiv').css('display', 'block');
+							$('#errordiv').append(myArray.error);  
+						  }
+						  else
+						  {
+							 //$('#imgdiv').css('display', 'block');
+							 $('#imgdiv').append("<img src="base_url+'uploads/'+myArray.image+" width="100px" height="100px"><a onClick="removeimage();" href="">Remove</a>");
+							 $('#imagename').val(myArray.image);
+						  }	
+					}
+                 });
+            });
+    });
+    function removeimage()
+	{
+	$('#imgdiv').html('');
+	}

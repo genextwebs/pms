@@ -64,13 +64,13 @@
             </a>
         </li>
         <li>
-            <a href="<?php echo base_url().'finance' ?>" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle collapsed">
+            <a href="#finance" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle collapsed">
                 <i class="fa fa-money"></i>
                 <span>Finance</span>
             </a>
             <ul class="collapse list-unstyled" id="finance">
                 <li>
-                    <a href="#">Estimates</a>
+                    <a href="<?php echo base_url().'finance' ?>">Estimates</a>
                 </li>
                 <li>
                     <a href="#">Invoices</a>
@@ -102,7 +102,7 @@
             </a>
             <ul class="collapse list-unstyled" id="employees">
                 <li>
-                    <a href="#">Employees List</a>
+                    <a href="<?php echo base_url().'employee'?>">Employees List</a>
                 </li>
                 <li>
                     <a href="#">Teams</a>
