@@ -18,6 +18,7 @@ class Project extends CI_Controller {
 			}
 			
 			public function addproject(){
+				$data['sessData'] = $this->session->flashdata('data');
 				$data['client']=$this->common_model->getData('tbl_clients');
 				$data['category']=$this->common_model->getData('tbl_project_category');
 				$this->load->view('common/header');
@@ -67,16 +68,26 @@ class Project extends CI_Controller {
 					$budget=$this->input->post('project-budget');
 					$currency=$this->input->post('currency-id');
 					$hours=$this->input->post('hours-allocated');	
+					
+					$whereArr=array('projectname'=>$name);	
+					$query=$this->common_model->getData('tbl_project_info',$whereArr);
+					if(count($query)==1)
+					{
+						$this->session->set_flashdata('message_name', 'Projectname is already exists..');
+						$this->session->set_flashdata("data",$_POST);
+						redirect('Project/addproject');
+					}
+					else{
 					$store=array('projectname'=>$name,'projectcategoryid'=>$cat,'startdate'=>$date,'manualtimelog'=>$timelog,
 					'projectmember'=>$member,'deadline'=>$deadline,'clientid'=>$client,'viewtask'=>$view,
 					'tasknotification'=>$tasks,'status'=>0,'projectsummary'=>$editor1,'note'=>$notes,
 					'projectbudget'=>$budget,'currency'=>$currency,'hoursallocated'=>$hours,'archive'=>0);
 					$this->common_model->insertData('tbl_project_info',$store);
-					$this->session->set_flashdata('message','Insert Succesfully....');
+					//$this->session->set_flashdata('message','Insert Succesfully....');
 					redirect('Project/index');
 				}	
 			}
-			
+			}
 			public function projectlist(){
 				if(!empty($_POST)){
 					$_GET = $_POST;
@@ -534,8 +545,6 @@ class Project extends CI_Controller {
 			}
 }
 
-					
-				
 			
 				
 }		

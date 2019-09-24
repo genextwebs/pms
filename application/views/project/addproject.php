@@ -24,7 +24,7 @@
 				<div class="card-wrapper collapse show">
 					<div class="card-body">
 						<form id="creatclient" class="aj-form" name="creatclient" method="post" action="<?php echo base_url().'Project/insertproject';?>">
-							<div class="submit-alerts">
+							<!--<div class="submit-alerts">
 								<div class="alert alert-success" role="alert">
 								  This is a success alert
 								</div>
@@ -34,7 +34,28 @@
 								<div class="alert alert-warning" role="alert">
 								  This is a warning alert
 								</div>
-							</div>
+							</div>-->
+							<?php
+                                    $mess = $this->session->flashdata('message_name');
+                                    if(!empty($mess)){
+                                        //warning 
+                                    ?>
+            				<div class="submit-alerts">
+            					<div class="alert alert-success" role="alert" style="display:block;">
+								</div>
+                            </div>
+                            <div class="submit-alerts">
+								<div class="alert alert-danger" role="alert" style="display:block;">
+								 <?php echo $mess; ?>
+								</div>
+                            </div>
+                            <?php  } ?>
+                            <div class="submit-alerts">
+								<div class="alert alert-warning" role="alert">
+								  This is a warning alert
+								</div>
+            				</div>
+                            
 							<div class="form-body">
 								<h3 class="box-title">Project Info</h3>
 								<hr>
@@ -52,10 +73,18 @@
 											
 												<?php
 												foreach($category as $cat){
-													echo '<option value="'.$cat->id.'">'.$cat->name.'</option> ';
-												}
-												?>
-											
+													//echo '<option value="'.$cat->id.'">'.$cat->name.'</option> ';
+													$str='';
+													if(!empty($sessData['project-category'])){
+														if($sessData['project-category'] == $cat->id){
+															$str='selected';
+														}
+													}
+													?>
+													<option value="<?php echo $cat->id?>" <?php echo $str;?>><?php echo $cat->name;?></option>
+													<?php
+													} 
+													?> 											
 											</select>
 										</div>
 							</div>
@@ -64,19 +93,19 @@
 									<div class="col-md-4">
 										<div class="form-group">
 											<label class="control-label">Start Date</label>
-											<input type="date" name="start_date" id="start_date" autocomplete="off" class="form-control">
+											<input type="date" name="start_date" id="start_date" autocomplete="off" class="form-control" value="<?php if(!empty($sessData['start_date'])){echo $sessData['start_date'];}else{ }?>">
 										</div>
 									</div>
 									<div class="col-md-4" id="deadlineBox">
 										<div class="form-group">
 											<label class="control-label">Deadline</label>
-											<input type="date" name="deadline" id="deadline" autocomplete="off" class="form-control">
+											<input type="date" name="deadline" id="deadline" autocomplete="off" class="form-control" value="<?php if(!empty($sessData['deadline'])){echo $sessData['deadline'];}else{ }?>">
 										</div>
 									</div>
 									<div class="col-md-4" >
 										<div class="form-group" style="padding-top: 25px;">
 											<div class="custom-control custom-checkbox my-1 mr-sm-2">
-												<input type="checkbox" class="custom-control-input" name="without_deadline" id="without_deadline" onclick="checkUncheck()">
+												<input type="checkbox" class="custom-control-input" name="without_deadline" id="without_deadline" onclick="checkUncheck()" >
 												<label class="custom-control-label" for="without_deadline" style="padding-top: 2px;">Add project without deadline?</label>
 											</div>
 										</div>
@@ -84,8 +113,8 @@
 									<div class="col-md-4">
 										<div class="form-group">
 											<div class="custom-control custom-checkbox my-1 mr-sm-2">
-												<input type="checkbox" class="custom-control-input" name="manual_timelog" id="manual_timelog">
-												<label class="custom-control-label" for="manual_timelog" style="padding-top: 2px;">Allow manual time logs?</label>
+												<input type="checkbox" class="custom-control-input" name="manual_timelog" id="manual_timelog" value="<?php if(!empty($sessData['manual_timelog'])){echo $sessData['manual_timelog'];}else{ }?>">
+												<label class="custom-control-label" for="manual_timelog" style="padding-top: 2px;" >Allow manual time logs?</label>
 											</div>
 										</div>
 									</div>
@@ -102,7 +131,7 @@
 									<div class="col-md-12">
 										<div class="form-group">
 											<label class="control-label">Project Summary</label>
-											<textarea name="editor1"></textarea>
+											<textarea name="editor1"><?php if(!empty($sessData['editor1'])){echo $sessData['editor1'];}else{ }?></textarea>
 										</div>
 									</div>
 								</div>
@@ -110,7 +139,7 @@
 									<div class="col-md-12">
 										<div class="form-group">
 											<label class="control-label">Note</label>
-											<textarea id="notes" class="form-control" name="notes" rows="5"></textarea>
+											<textarea id="notes" class="form-control" name="notes" rows="5"><?php if(!empty($sessData['notes'])){echo $sessData['notes'];}else{ }?></textarea>
 										</div>
 									</div>
 								</div>
@@ -120,12 +149,23 @@
 											<div class="form-group">
 												<select class="custom-select" id="select-client" name="select_client">
 													  <option value="">--Select--</option>
-															<?php
-																foreach($client as $row)
-																{
-																	echo '<option value="'.$row->id.'" >'.$row->clientname.'</option>';
+												<?php
+													foreach($client as $row)
+													{
+														//echo '<option value="'.$row->id.'" >'.$row->clientname.'</option>';
+													
+															//echo '<option value="'.$cat->id.'">'.$cat->name.'</option> ';
+															$str='';
+															if(!empty($sessData['select_client'])){
+																if($sessData['select_client'] == $row->id){
+																	$str='selected';
 																}
+															}
 															?>
+															<option value="<?php echo $row->id?>" <?php echo $str;?>><?php echo $row->clientname;?></option>
+													<?php
+													} 
+													?> 		
 												</select>
 											</div>
 										</div>
@@ -154,25 +194,47 @@
 									<div class="col-md-4">
 										<div class="form-group">
 											<label class="control-label">Project Budget</label>
-											<input type="text" class="form-control" name="project-budget">
+											<input type="text" class="form-control" name="project-budget" value="<?php if(!empty($sessData['project-budget'])){echo $sessData['project-budget'];}else{ }?>">
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label class="control-label">Currency</label>
 											<select id="" class="form-control" name="currency-id">
-												<option selected>--</option>
-												<option>Dollars (USD)</option>
+												<option selected value="0" <?php if(!empty($sessData['currency-id'])){
+                                                            if($sessData['currency-id'] == 0){
+                                                                echo 'selected';    
+                                                            }}
+                                                            ?>>Dollars (USD)</option>
+												<option value="1" <?php if(!empty($sessData['currency-id'])){
+                                                            if($sessData['currency-id'] == 1){
+                                                                echo 'selected';    
+                                                            }}
+                                                            ?>>Pounds (GBP)</option>
+												<option value="2" <?php if(!empty($sessData['currency-id'])){
+                                                            if($sessData['currency-id'] == 2){
+                                                                echo 'selected';    
+                                                            }}
+                                                            ?>>Euros (EUR)</option>
+												<option value="3" <?php if(!empty($sessData['currency-id'])){
+                                                            if($sessData['currency-id'] == 3){
+                                                                echo 'selected';    
+                                                            }}
+                                                            ?>>Rupee (INR)</option>
+											
+											</select>
+
+												<!--<option>Dollars (USD)</option>
 												<option>Pounds (GBP)</option>
 												<option>Euros (EUR)</option>
 												<option>Rupee (INR)</option>
-											</select>
+											</select>-->
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label class="control-label">Hours Allocated</label>
-											<input type="text" class="form-control" name="hours-allocated">
+											<input type="text" class="form-control" name="hours-allocated" value="<?php if(!empty($sessData['hours-allocated'])){echo $sessData['hours-allocated'];}else{ }?>">
 										</div>
 									</div>
 									
