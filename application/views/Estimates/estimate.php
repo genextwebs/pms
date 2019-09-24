@@ -26,6 +26,37 @@
                 				</div>
 							</div>
 							
+							<div class="row">
+		                		<div class="col-lg-3 col-md-4">
+		                			<div class="form-group">
+            							<label class="control-label">Select Date Range</label>
+											<input type="text" placehoder="Start Date" id="startdate" name="startdate" data-date-format='yyyy-mm-dd' /><spam>TO</spam>
+											<input type="text" placehoder="End Date" id="enddate" name="enddate" data-date-format='yyyy-mm-dd'  />
+									</div>
+		                		</div>
+		                		<div class="col-lg-3 col-md-4">
+		                			<div class="form-group">
+            							<label class="control-label">Status</label>
+            							<select id='status' class="custom-select">
+								            <option value='all'>All</option>          
+								            <option value='0'>Waiting</option>  
+								            <option value='1'>Accepted</option> 
+								            <option value='2'>Declined</option>   
+											
+								        </select> 
+            						</div>
+		                		</div>
+		                		<div class="col-lg-3 col-md-4">
+		                			<div class="form-group">
+										<input type="button" value="Apply" name="btnapply" id="btnapply"> 
+										<input type="reset" value="Reset">
+									</div>
+		                		</div>
+							</div>
+		                
+
+							
+							
 								   <?php
 										//warning 
 										$mess = $this->session->flashdata('message_name');
@@ -41,7 +72,7 @@
                             <?php } ?>
    		                	
 		                	<div class="table-responsive">
-			                	<table class="table table-bordered" id="clients">
+			                	<table class="table table-bordered" id="estimate">
 								   	<thead>
 								      	<tr role="row">
 									         <th>Id</th>

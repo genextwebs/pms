@@ -23,7 +23,7 @@
 		                	</div>
 		                	<div class="card-wrapper collapse show">
 		                		<div class="card-body">
-		                			<form id="creatclient" class="aj-form" method="post" action="<?php echo base_url().'Clients/insertclients' ?>" name="client" >
+		                			<form id="creatclient" class="aj-form" method="post" action="<?php echo base_url().'Finance/insertEstimates' ?>" name="client" >
 											 <?php
 												$mess = $this->session->flashdata('message_name');
 												if(!empty($mess)){
@@ -83,104 +83,87 @@
 		                					</div>
 											<hr>
 											<button aria-expanded="false" data-toggle="dropdown" class="btn btn-info dropdown-toggle waves-effect waves-light" type="button">Products <span class="caret"></span></button>
-		                					<div class="row">
-		                						<div class="col-md-6">
-		                							<div class="form-group">
-		                								<label class="control-label">Cient Name</label>
-		                								<input id="name" class="form-control" type="text" name="name" value="<?php if(!empty($sessData['name'])) { echo $sessData['name']; } else {} ?>">
-		                							</div>
-		                						</div>
-		                						<div class="col-md-6">
-		                							<div class="form-group">
-		                								<label class="control-label">Client Email</label>
-		                								<input id="email" class="form-control" type="email" name="email" >
-		                								<span class="help-block">Client will login using this email.</span>
-		                							</div>
-		                						</div>
-		                					</div>
-		                					<div class="row">
-		                						<div class="col-md-4">
-		                							<div class="form-group">
-		                								<label>Password</label>
-		                								<input type="Password" style="display: none;">
-		                								<input id="password" type="Password" class="form-control" name="password" value="<?php if(!empty($sessData['password'])) { echo $sessData['password']; } else {} ?>">
-		                								<span class="help-block">Client will login using this password.</span>
-		                							</div>
-		                						</div>
-		                						<div class="col-xs-12 col-md-4 mt-4">
-		                							<div class="form-group">
-		                								<div class="checkbox checkbox-info">
-			                                                <input id="randompassword" name="randompassword" value="on" type="checkbox" onclick="checkuncheck();"  >
-			                                                <label for="randompassword">Generate Random Password</label>
-			                                            </div>
-		                							</div>
-		                						</div>
-		                						<div class="col-md-4">
-		                							<div class="form-group">
-		                								<div class="form-group">
-				                                            <label>Mobile</label>
-				                                            <input type="tel" name="mobile" id="mobile" class="form-control" value="<?php if(!empty($sessData['mobile'])) { echo $sessData['mobile']; } else {} ?>">
-				                                        </div>
-		                							</div>
-		                						</div>
-		                					</div>
-		                					<div class="row">
-		                						<div class="col-md-3">
-		                							<div class="form-group">
-		                								<label class="control-label">Skype</label>
-		                								<input id="skype" class="form-control" type="text" name="skype" value="<?php if(!empty($sessData['skype'])) { echo $sessData['skype']; } else {} ?>">
-		                							</div>
-		                						</div>
-		                						<div class="col-md-3">
-		                							<div class="form-group">
-		                								<label class="control-label">Linkedin</label>
-		                								<input id="linkedin" class="form-control" type="text" name="linkedin" value="<?php if(!empty($sessData['linkedin'])) { echo $sessData['linkedin']; } else {} ?>">
-		                							</div>
-		                						</div>
-		                						<div class="col-md-3">
-		                							<div class="form-group">
-		                								<label class="control-label">Twitter</label>
-		                								<input id="twitter" class="form-control" type="text" name="twitter" value="<?php if(!empty($sessData['twitter'])) { echo $sessData['twitter']; } else {} ?>">
-		                							</div>
-		                						</div>
-		                						<div class="col-md-3">
-		                							<div class="form-group">
-		                								<label class="control-label">Facebook</label>
-		                								<input id="facebook" class="form-control" type="text" name="facebook" value="<?php if(!empty($sessData['facebook'])) { echo $sessData['facebook']; } else {} ?>">
-		                							</div>
-		                						</div>
-		                					</div>
-		                					<div class="row">
-			                                    <div class="col-md-6">
-			                                        <div class="form-group">
-			                                            <label for="gst_number">GST Number</label>
-			                                            <input type="text" id="gst_number" name="gst_number" class="form-control" value="<?php if(!empty($sessData['gst_number'])) { echo $sessData['gst_number']; } else {} ?>">
-			                                        </div>
-			                                    </div>
-			                                </div>
-			                                <div class="row">
-			                                    <div class="col-md-12">
-			                                        <label>Note</label>
-			                                        <div class="form-group">
-			                                            <textarea name="note" id="note" class="form-control" rows="5"><?php if(!empty($sessData['note'])) { echo $sessData['note']; } else {} ?></textarea>
-			                                        </div>
-			                                    </div>
-			                                </div>
-			                                <div class="row">
-			                                    <div class="col-md-6 ">
-			                                        <div class="form-group">
-			                                            <label>Log In</label>
-			                                            <select name="login" id="login" class="form-control">
-			                                                <option value="1" <?php if(!empty($sessData['login'])) {if($sessData['login']==1){echo 'selected';}} ?> >Enable</option>
-			                                                <option value="0" <?php if(!empty($sessData['login'])) {if($sessData['login']==1){echo 'selected';}} ?> >Disable</option>
-			                                            </select>
-			                                        </div>
-			                                    </div>
-			                                </div>
-			                                <div class="form-actions">
+											<div id="dynamic">
+											<div class="row" >
+												<div class="form-group">
+                                                    <label class="control-label hidden-md hidden-lg">Item</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-addon"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span></div>
+                                                        <input type="text" class="form-control item_name" name="item_name[]">
+                                                    </div>
+                                                </div>
+												<div class="col-md-1">
+													<div class="form-group">
+														<label class="control-label hidden-md hidden-lg">Qty/Hrs</label>
+														<input type="number" min="1" class="form-control quantity" name="quantity[]" id="quantity1">
+													</div>
+												</div>
+												<div class="col-md-2">
+													<div class="form-group">
+														<label class="control-label hidden-md hidden-lg">Unit Price</label>
+														<input type="text" class="form-control cost_per_item" name="cost_per_item[]" id="cost_per_item1" onblur="countamount(1);">
+													</div>
+												</div>
+												<div class="col-md-2">
+													<div class="form-group">
+														<label class="control-label hidden-md hidden-lg">Tax
+														<a href="javascript:;" id="tax-settings" data-toggle="modal" data-target="#project-tax">
+											            	<i class="ti-settings text-info"></i>
+											            	</a>
+											            	
+														</label>
+														<select name="tax[]" class="form-control type" id="taxes1" onchange="counttax(1);">
+															<option value="">Select Tax</option>
+															<?php foreach($tax as $row) { ?>
+												            	<option value="<?php echo $row->rate?>" ><?php echo $row->taxname;?>(<?php echo $row->rate?>%)</option>
+												            <?php
+												            	}
+												            ?>
+														</select>
+													</div>	
+												</div>
+												<div class="col-md-2 border-dark  text-center">
+													<label class="control-label hidden-md hidden-lg">Amount</label>
+												<input type="text" name="amount[]" id="amount1">
+
+													<!--<p class="form-control-static" id="amountdisplay"><span class="amount-html">0.00</span></p>
+													<input type="hidden" class="amount" name="amount[]" id="amount1">-->
+												</div>
+											</div>
+											<div class="row">
+												<div class="form-group">
+													<textarea name="item_Description[]" class="form-control" placeholder="Description" rows="2"></textarea>
+												</div>
+											</div>
+										</div>
+											<input type="hidden" id="counter" value="1">
+
+											<div class="row">
+												<div class="col-xs-12 m-t-5">
+													<button type="button" class="btn btn-info" id="item-repeat"><i class="fa fa-plus"></i> Add Item</button>
+												</div>
+											</div>
+												<div class="row m-t-5 font-bold">
+														<div class="col-md-offset-9 col-md-1 col-xs-6 text-right p-t-10">Total</div>
+															<p class="form-control-static col-xs-6 col-md-2"  name="total" id="total">
+																<!--<span class="total">0.00</span>-->
+															</p>
+															<input type="hidden" class="total-field" name="finaltotal" id="finaltotal">
+												</div>
+											<div class="row">
+												<div class="col-sm-12">
+													<div class="form-group">
+														<label class="control-label">Note</label>
+														<textarea name="note" class="form-control" rows="5"></textarea>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-12">
 				                                <input type="submit" id="save-form" class="btn btn-success" name="btnsubmit" value="Save" > <i class="fa fa-check"></i>
-				                                <input type="reset" class="btn btn-default" value="Reset" >
-				                            </div>
+												</div>
+											</div>
+													
 		                				</div>
 		                			</form>
 		                		</div>
@@ -188,5 +171,68 @@
 		                </div>
 		            </div>
                 </div>
-            </div>
             <!-- ends of contentwrap -->
+
+			<!-- Modal -->
+			
+			<div class="modal fade project-tax" id="project-tax" tabindex="-1" role="dialog" aria-labelledby="project-tax" aria-hidden="true">
+            	<div class="modal-dialog modal-lg" role="document">
+            		<div class="modal-content br-0">
+            			<div class="modal-header">
+            				<h4 class="modal-title">Tax</h4>
+            				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            					<span aria-hidden="true">×</span>
+            				</button>
+            			</div>
+            			<div class="modal-body">
+            				<div class="table-responsive">
+					            <table class="table">
+					                <thead>
+					                <tr>
+					                    <th>#</th>
+					                    <th>Tax Name</th>
+					                    <th>Rate %</th>
+					                </tr>
+					                </thead>
+					                <tbody>
+					                    <?php 
+										$i = 1;
+										foreach ($tax as $row) { ?>      
+										      <tr>
+										      	  <td><?php echo $i; ?></td>
+										          <td><?php echo $row->taxname; ?></td>
+										          <td><?php echo $row->rate; ?></td>
+										      </tr>
+										   <?php
+											$i++;
+										   } ?>
+									</tbody>
+					            </table>
+					        </div>
+					        <hr>
+					        <form id="tax" class="" name="tax" method="post" >
+						        <div class="form-body">
+						            <div class="row">
+						                <div class="col-md-6 ">
+						                    <div class="form-group">
+						                        <label>Tax Name</label>
+						                        <input type="text" name="tax_name" id="tax_name" class="form-control">
+						                    </div>
+						                </div>
+						                <div class="col-md-6 ">
+						                    <div class="form-group">
+						                        <label>Rate %</label>
+						                        <input type="text" name="rate" id="rate" class="form-control">
+						                    </div>
+						                </div>
+						            </div>
+						        </div>
+						        
+						        <div class="form-actions">
+						            <input type="submit" id="save-category" class="btn btn-success" name="Save" value="Save"> <i class="fa fa-check"></i> 
+						        </div>
+							</form>
+            			</div>
+            		</div>
+            	</div>
+            </div>

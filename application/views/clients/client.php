@@ -43,7 +43,7 @@
 								<div class="row">
 		                		<div class="col-lg-3 col-md-4">
 		                			<div class="form-group">
-            							<label class="control-label">Select Table Range</label>
+            							<label class="control-label">Select Date Range</label>
 											<input type="text" placehoder="Start Date" id="startdate" name="startdate" data-date-format='yyyy-mm-dd' /><spam>TO</spam>
 											<input type="text" placehoder="End Date" id="enddate" name="enddate" data-date-format='yyyy-mm-dd'  />
 									</div>
