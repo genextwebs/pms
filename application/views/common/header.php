@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/themify-icons.css">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/ie7.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="http://xoxco.com/examples/jquery.tagsinput.css" />
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/sidebar.css">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/style.css">

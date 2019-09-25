@@ -228,9 +228,8 @@ function(isConfirm){
     }
     });
 }
-
-
-$("#save-category").click(function(event) {
+// for add tax in product
+$("#save-product").click(function(event) {
 			event.preventDefault();
 			var taxname = $("input[name='tax_name']").val();
        		var rate = $("input[name='rate']").val();
@@ -290,10 +289,12 @@ if (isConfirm) {
    });
 }
 
+// display skills in employee
 $(function() {
 		$('#skills').tagsInput({width:'auto'});
     });
 
+// display designation in employee
 $("#save-designation").click(function(event) {
 			event.preventDefault();
 			var name = $("input[name='designation_name']").val();
@@ -320,7 +321,7 @@ $("#save-designation").click(function(event) {
         });
 });
 
-
+// display department in employee
 $("#save-department").click(function(event) {
 			event.preventDefault();
 			var name = $("input[name='department_name']").val();
@@ -347,10 +348,10 @@ $("#save-department").click(function(event) {
         });
 });
 
-
+// image upload and preview
 $(document).ready(function(){
  
-        $('#submit').change(function(e){
+        $('#createemployee').change(function(e){
 			
             e.preventDefault(); 
                  $.ajax({
@@ -365,14 +366,22 @@ $(document).ready(function(){
 						var myArray = JSON.parse(data);
 						if(myArray.error!='')
 						  {
-							 alert(myArray.serror);
+							 alert(myArray.error);
 							$('#errordiv').css('display', 'block');
 							$('#errordiv').append(myArray.error);  
 						  }
 						  else
 						  {
-							 //$('#imgdiv').css('display', 'block');
-							 $('#imgdiv').append("<img src="base_url+'uploads/'+myArray.image+" width="100px" height="100px"><a onClick="removeimage();" href="">Remove</a>");
+						  	$('<img />')
+                        .attr('src'	, base_url + "uploads/"+myArray.image)         // ADD IMAGE PROPERTIES.
+                            
+                      
+                            .width('113px').height('113px')
+
+                        .appendTo($('#imagename'));
+							/*$('#imgdiv').css('display', 'block');
+							
+							 $('#imgdiv').append('<img src='base_url + "uploads/"+myArray.image +' width="100px" height="100px"><a onClick="removeimage();" href="">Remove</a>');*/
 							 $('#imagename').val(myArray.image);
 						  }	
 					}
@@ -383,3 +392,13 @@ $(document).ready(function(){
 	{
 	$('#imgdiv').html('');
 	}
+
+
+//for search deopdown
+$(document).ready(function(){
+	$("#designation").select2();
+   });
+
+$(document).ready(function(){
+	$("#department").select2();
+   });

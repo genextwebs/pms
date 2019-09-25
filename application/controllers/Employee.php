@@ -34,10 +34,13 @@ class Employee extends CI_Controller
 			$lastdate = $this->input->post('last-date');
 			$gender = $this->input->post('gender');
 			$address = $this->input->post('address');
+			$skills = $this->input->post('skills');
 			$jobtitle = $this->input->post('job-title');
 			$hourlyrate = $this->input->post('hourly-rate');
 			$login = $this->input->post('login');
-			$insArr=array('employeename'=>$employee_name,'employeeemail'=>$employee_email,'password'=>$password,'genereterandompassword'=>$grp,'mobile'=>$mobile,'slackusername'=>$username,'joingdate'=>$joiningdate,'lastdate'=>$lastdate,'gender'=>$gender,'address'=>$address,'skills'=>$skills,'jobtitle'=>$jobtitle,'hourlyrate'=>$hourlyrate,'status'=>'Active','login'=>$login,'profilepicture'=>$profilepicture);
+			$profilepicture = $this->input->post('imagename');
+			$insArr=array('employeename'=>$employee_name,'employeeemail'=>$employee_email,'password'=>$password,'genereterandompassword'=>$grp,'mobile'=>$mobile,'slackusername'=>$username,'joingdate'=>$joiningdate,'lastdate'=>$lastdate,'gender'=>$gender,'address'=>$address,'skills'=>$skills,'jobtitle'=>$jobtitle,'hourlyrate'=>$hourlyrate,'status'=>'0','login'=>$login,'profilepicture'=>$profilepicture);
+			echo "<PRE>";print_r($insArr);die;
 			$this->common_model->insertData('tbl_employee',$insArr);
 		}			
 	}
@@ -74,6 +77,7 @@ class Employee extends CI_Controller
 		}
 	}
 
+// image upload through ajax
 	public function do_upload()
 	{
 		if(!empty($_FILES))

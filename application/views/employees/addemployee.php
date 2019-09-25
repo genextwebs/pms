@@ -23,7 +23,7 @@
 		                	</div>
 		                	<div class="card-wrapper collapse show">
 		                		<div class="card-body">
-		                			<form id="createemployee" class="aj-form" enctype="multipart/form-data">
+		                			<form id="createemployee" class="aj-form" enctype="multipart/form-data" action="<?php echo base_url().'employee/insertemployee'?>" method="post">
 		                				<div class="submit-alerts">
 		                					<div class="alert alert-success" role="alert">
 											  This is a success alert
@@ -133,7 +133,8 @@
 											            <a href="javascript:;" id="tax-settings" data-toggle="modal" data-target="#data-designation">
 											            	<i class="ti-settings text-info"></i>
 											            </a>
-											            <select class="form-control" id="designation" name="designation">
+											            <select class="form-control" id="designation" name="designation" >
+											            	
 											            	<option>--</option>
 											            	<?php foreach($designation as $row){
 											            	?>
@@ -187,7 +188,7 @@
 			                                		<div class="file-upload mb-5">
 			                                			<label>Profile Picture</label>
 			                                			<div class="image-upload-wrap">
-			                                				<input class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*" name="profilepicture"/>
+			                                				<input class="file-upload-input" type='file' name="profilepicture"/>
 			                                			</div>
 			                                				<!--<div class="drag-text">
 			                                					<h3>Drag and drop <br>a file or select add Image</h3>
@@ -200,10 +201,11 @@
 			                                				</div>-->
 			                                				<div id="errordiv" style="display:none">
 			                                				</div>
-															<div  id="imgdiv" name="imgdiv"></div>
+															<div  id="imgdiv" name="imgdiv">
 																<input type="hidden" id="imagename" name="imagename">
+
 		                                					</div>
-			                                			<button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Select Image</button>
+			                                			<!--<button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Select Image</button>-->
 			                                		</div>
 			                                	</div>
 			                                </div>
@@ -289,3 +291,5 @@
             		</div>
             	</div>
             </div>
+
+

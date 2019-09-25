@@ -149,7 +149,7 @@
 						        </div>
 						        
 						        <div class="form-actions">
-						            <input type="button" id="save-category" class="btn btn-success" name="Save" value="Save"> <i class="fa fa-check"></i> 
+						            <input type="button" id="save-product" class="btn btn-success" name="Save" value="Save"> <i class="fa fa-check"></i> 
 						        </div>
 							</form>
             			</div>
