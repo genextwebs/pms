@@ -137,8 +137,8 @@
 								<div class="row">
 									<div class="col-md-4">
 										<div class="form-group">
-											<div class="custom-control custom-checkbox my-1 mr-sm-2">
-												<input type="checkbox" class="custom-control-input" name="client-view-tasks" id="client-view-tasks" onclick="viewtask()" >
+											<div class="custom-control custom-checkbox my-1 mr-sm-2">                                                                      
+												<input type="checkbox" class="custom-control-input" name="client-view-tasks[]" id="client-view-tasks" onclick="viewtask()" <?php if(($projectinfo[0]->viewtask)=='1'){ echo 'checked';}else{} ?>" value="<?php echo ($projectinfo == '1' ? 'checked' : null);?>"> 
 												<label class="custom-control-label" for="client-view-tasks" style="padding-top: 2px;">Client can view tasks of this project</label>
 											</div>
 										</div>
@@ -229,36 +229,18 @@
 						</tr>
 						</thead>
 						<tbody>
-							<tr id="cat-1">
-								<td>1</td>
-								<td>Laravel</td>
-								<td><a href="javascript:;" data-cat-id="1" class="btn btn-sm btn-danger btn-rounded delete-category">Remove</a></td>
-							</tr>
-							<tr id="cat-2">
-								<td>2</td>
-								<td>Yii</td>
-								<td><a href="javascript:;" data-cat-id="2" class="btn btn-sm btn-danger btn-rounded delete-category">Remove</a></td>
-							</tr>
-							<tr id="cat-3">
-								<td>3</td>
-								<td>Zend</td>
-								<td><a href="javascript:;" data-cat-id="3" class="btn btn-sm btn-danger btn-rounded delete-category">Remove</a></td>
-							</tr>
-							<tr id="cat-4">
-								<td>4</td>
-								<td>CakePhp</td>
-								<td><a href="javascript:;" data-cat-id="4" class="btn btn-sm btn-danger btn-rounded delete-category">Remove</a></td>
-							</tr>
-							<tr id="cat-5">
-								<td>5</td>
-								<td>Codeigniter</td>
-								<td><a href="javascript:;" data-cat-id="5" class="btn btn-sm btn-danger btn-rounded delete-category">Remove</a></td>
-							</tr>
+								<?php foreach ($category as $row) { ?>      
+									  <tr>
+										  <td><?php echo $row->id; ?></td>
+										  <td><?php echo $row->name; ?></td>
+										  <td><a href="javascript:;" data-cat-id="1" class="btn btn-sm btn-danger btn-rounded delete-category" id='deletecat'>Remove</a></td>
+									  </tr>
+							   <?php } ?>
 						</tbody>
 					</table>
 				</div>
 				<hr>
-				<form id="" class="">
+				<form id="category" class="" name="category">
 					<div class="form-body">
 						<div class="row">
 							<div class="col-md-12 ">

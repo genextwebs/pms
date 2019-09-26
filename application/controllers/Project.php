@@ -88,6 +88,7 @@ class Project extends CI_Controller {
 				}	
 			}
 			}
+			
 			public function projectlist(){
 				if(!empty($_POST)){
 					$_GET = $_POST;
@@ -256,9 +257,11 @@ class Project extends CI_Controller {
 			
 		    public function archivetoproject(){
 				$id=base64_decode($this->uri->segment(3));
+				//echo $id;die;	
 				$updateArr = array('archive'=>0);
 				$whereArr=array('id'=>$id);
 				$data['query']=$this->common_model->updateData('tbl_project_info',$updateArr,$whereArr);
+				//echo $this->db->last_query();die;
 				redirect('project/viewarchiev');
 			}
 			
@@ -268,6 +271,147 @@ class Project extends CI_Controller {
 				$this->load->view('project/viewarchiev',$data);
 				$this->load->view('common/footer');	
 		    }
+			
+			public function archivelist(){
+				//echo('ytgvbhjn');die;
+				if(!empty($_POST)){
+					$_GET = $_POST;
+					$defaultOrderClause = "";
+					$sWhere = "";
+					$sOrder = '';
+					$aColumns = array( 'id', 'projectname', 'deadline', 'clientid', 'status');
+					//'ahrefs_dr', 
+					$totalColumns = count($aColumns);
+
+					/** Paging Start **/
+					$sLimit = "";
+					$sOffset = "";
+					if ($_GET['iDisplayStart'] < 0) {
+						$_GET['iDisplayStart'] = 0;
+					}
+					if ($_GET['iDisplayLength'] < 0) {
+						$_GET['iDisplayLength'] = 10;
+					}
+					if (isset($_GET['iDisplayStart']) && $_GET['iDisplayLength'] != '-1') {
+						$sLimit = (int) substr($_GET['iDisplayLength'], 0, 6);
+						$sOffset = (int) $_GET['iDisplayStart'];
+					} else {
+						$sLimit = 10;
+						$sOffset = (int) $_GET['iDisplayStart'];
+					}
+					/** Paging End **/
+					/** Ordering Start **/
+					$noOrderColumns = array('other_do_ext');
+					if (isset($_GET['iSortCol_0']) && !in_array($aColumns[intval($_GET['iSortCol_0'])], $noOrderColumns)) {
+						$sOrder = " ";
+						for ($i = 0; $i < intval($_GET['iSortingCols']); $i++) {
+							if ($_GET['bSortable_' . intval($_GET['iSortCol_' . $i])] == "true") {
+
+								if ($aColumns[intval($_GET['iSortCol_' . $i])] != '') {
+									$sOrder .= $aColumns[intval($_GET['iSortCol_' . $i])] . " " . $_GET['sSortDir_' . $i] . ", ";
+								} 
+								else {
+									$sOrder = $defaultOrderClause . " ";
+								}
+
+								$sortColumnName = intval($_GET['iSortCol_' . $i]).'|'.$_GET['sSortDir_' . $i];
+							}
+						}
+
+						$sOrder = substr_replace($sOrder, "", -2);
+						if ($sOrder == "ORDER BY") {
+							$sOrder = "";
+						}
+					} else {
+						$sOrder = $defaultOrderClause;
+					}
+
+					if(!empty($sOrder)){
+						$sOrder = " ORDER BY ".$sOrder;
+					}
+					/** Ordering End **/
+						
+					/** Filtering Start */
+					
+					if(!empty(trim($_GET['sSearch']))){
+						$searchTerm = trim($_GET['sSearch']);
+						$sWhere.= ' AND (tbl_project_info.projectname like "%'.$searchTerm.'%" OR tbl_project_info.note like "%'.$searchTerm.'%" OR tbl_project_info.clientid like "%'.$searchTerm.'%" OR tbl_project_info.projectsummary like "%'.$searchTerm.'%" OR clientname like "%'.$searchTerm.'%")';
+					}
+					$status=$_POST['status2'];				
+					$client=!empty($_POST['clientname2']) ? $_POST['clientname2'] : '';		
+					//$category=!empty($_POST['categoryname1']) ? $_POST['categoryname1'] : '';
+					
+					if(!empty($client)){
+							$sWhere.=' AND tbl_project_info.clientid='.$client;
+					}
+				/*	if(!empty($category)){						
+						$sWhere.=' AND projectcategoryid='.$category;
+					}*/
+					if($status=='all'){
+						}else{
+								$sWhere.=' AND tbl_project_info.status='.$status;
+						}
+					$sWhere.=' AND tbl_project_info.archive=1';	
+					if(!empty($sWhere)){
+						$sWhere = " WHERE 1 ".$sWhere;
+					}
+					/** Filtering End */
+				}
+				$query = "SELECT tbl_project_info.*,tbl_clients.clientname as clientname from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+				//echo($query);die;
+				$projectArr = $this->common_model->coreQueryObject($query);
+				$query = "SELECT tbl_project_info.*,tbl_clients.clientname as clientname from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id".$sWhere;
+				
+				$ProjectFilterArr = $this->common_model->coreQueryObject($query);
+				$iFilteredTotal = count($ProjectFilterArr);
+				$whereArr=array('archive'=>1);
+				$ProjectAllArr = $this->common_model->getData('tbl_project_info',$whereArr);
+				$iTotal = count($ProjectAllArr);
+				
+				/** Output */
+				$datarow = array();
+				$i = 1;
+				foreach($projectArr as $row) {
+					$id = $row->id;
+					if($row->status=='1'){
+								$status=$row->status='Complete';
+								}
+							else if($row->status=='0'){
+								$status=$row->status='InComplete';
+								}
+							else if($row->status=='2'){
+								$status=$row->status='InProgress';
+								}
+							else if($row->status=='3'){
+								$status=$row->status='OnHold ';
+								}
+							else{
+								$status=$row->status='Canceled';
+								}
+				$datarow[] = array(
+					$id = $i,
+					$row->projectname,
+					"<a href='".base_url()."P/template_data/".$id."'> Add Template Members</a>",
+					$row->deadline,
+					$row->clientname,
+					$status,
+					'<a href='.base_url().'Project/archivetoproject/'.base64_encode($row->id).' class="btn btn-info btn-circle revert" data-toggle="tooltip" data-user-id="14" data-original-title="Restore"><i class="fa fa-undo" aria-hidden="true"></i></a>
+					<a href='.base_url().'Project/deleteproject/'.base64_encode($row->id).' onclick="javascript:return confirm(\'Are u Sure want to delete?\');" class="btn btn-danger btn-circle sa-params" data-toggle="tooltip" data-user-id="1" data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>'
+					);
+					$i++;
+				}
+				
+				$output = array
+				(
+					"sEcho" => intval($_POST['sEcho']),
+						   "iTotalRecords" => $iTotal,
+						   "iTotalRecordsFormatted" => number_format($iTotal), //ShowLargeNumber($iTotal),
+						   "iTotalDisplayRecords" => $iFilteredTotal,
+						   "aaData" => $datarow
+				);
+				echo json_encode($output);
+				exit();
+			}
 			
 			public function editproject(){	
 				$id=base64_decode($this->uri->segment(3));
@@ -545,6 +689,34 @@ class Project extends CI_Controller {
 			}
 }
 
+			public function insertcat(){
+				if(!empty($_POST)){
+					$catname = $this->input->post('name');
+					//$rate = $this->input->post('rate');
+					$insArr = array('name'=>$catname);
+					$this->common_model->insertData('tbl_project_category',$insArr);
+					$catArray = $this->common_model->getData('tbl_project_category');
+					$str = '';
+					foreach($catArray as $row){
+						$str.='<option value="'.$row->name.'"></option>'; 
+					}
+					$totaldata = count($catArray);
+					$catArr = array();
+					$catArr['count'] = $totaldata;
+					$catArr['catdata'] = $str;
+					echo  json_encode($catArr);exit; 
+					echo  $totaldata; exit;
+				}
+			}
+			
+			public function deletecat(){
+				//$id=$this->uri->segment(3);
+				$id=$this->input->post('id');
+				$deleteArr=array('id'=>$id);
+				$this->common_model->deleteData('tbl_project_category',$deleteArr);
+				//$this->session->set_flashdata('message','Delete Succesfully....');
+				//redirect('project/viewarchiev');
+			}
 			
 				
 }		

@@ -237,28 +237,76 @@ jQuery(document).ready(function() {
 	
 	
 
-		$("#category").submit(function(event) {
-					event.preventDefault();
-					var name = $("input[name='category_name']").val();
-					//var rate = $("input[name='rate']").val();
-					var dataString = 'name='+ name;
-				$.ajax({
-				   url: base_url+"project/insertcategory",
-				   type: 'POST',
-				   data: dataString,
-				   error: function() {
-					  alert('Something is wrong');
-				   },
-				   success: function(data) {
-					window.location.reload();
-					//$("#project-category1").hide();
-						//$("tbody").append("<tr><td>"+taxname+"</td><td>"+rate+"</td></tr>");
-					   // alert("Record added successfully");  
-				   }
-				});
-
-
+$("#category").submit(function(event) {
+			event.preventDefault();
+			var name = $("input[name='category_name']").val();
+			//var rate = $("input[name='rate']").val();
+			var dataString = 'name='+ name;
+		$.ajax({
+		   url: base_url+"project/insertcategory",
+		   type: 'POST',
+		   data: dataString,
+		   error: function() {
+			  alert('Something is wrong');
+		   },
+		   success: function(data) {
+			window.location.reload();
+		  }
 		});
 
-	
 
+});
+
+// for add category in addproject
+
+$("#save-category").click(function(event) {
+			event.preventDefault();
+			var catname = $("input[name='category_name']").val();
+			var dataString = 'name='+ catname;
+			$.ajax({
+			   url: base_url+"project/insertcat",
+			   type: 'POST',
+			   dataType: 'json',
+			   data: dataString,
+			   error: function() {
+				  alert('Something is wrong');
+			},
+			success: function(data) {
+           	console.log(data);
+     	    $('select[name="category_name"]').html('');       
+            $('select[name="category_name"]').append(data.catdata);
+             //  $("tbody").append("<tr><td>"+data.count+"</td><td>"+catname+"</td> <td><a href='javascript:;' class='btn btn-sm btn-danger btn-rounded delete-category' id='deletecat'>Remove</a></td></tr>");
+			$("tbody").append("<tr><td>"+data.count+"</td><td>"+catname+"</td> <td><input type='submit' class='btn btn-sm btn-danger btn-rounded delete-category' id='deletecat' value='Remove'></tr>");
+			$('#project-category1').modal('toggle');
+            $('#category')[0].reset();
+           }
+        });
+});
+
+
+
+// for delete category in project
+
+$('#deletecat').click(function(){
+	//alert('fdbkjbc');
+	//var id_post = this.id;
+	var btn = this;
+	e.preventDefault();
+		$.ajax({
+		   type: "POST",
+		   //alert('fdbkjbc');
+		    url: base_url+"project/deletecat",
+		   //url: "<?php echo base_url()?>delete",
+		   cache: false,
+		   data: "id="+$(this),
+		   success: function(){
+			  /* if (reaksi=="true"){
+				   alert('Success delete');
+			   } else {
+				   alert('failed');
+			   }
+			}*/
+		}
+		});
+return false
+});

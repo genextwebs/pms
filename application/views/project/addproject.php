@@ -280,14 +280,14 @@
 									  <tr>
 										  <td><?php echo $row->id; ?></td>
 										  <td><?php echo $row->name; ?></td>
-										  <td><a href="javascript:;" data-cat-id="1" class="btn btn-sm btn-danger btn-rounded delete-category">Remove</a></td>
+										  <td><a href="javascript:;" data-cat-id="1" class="btn btn-sm btn-danger btn-rounded delete-category" id='deletecat'>Remove</a></td>
 									  </tr>
 							   <?php } ?>
 						</tbody>
 					</table>
 				</div>
 				<hr>
-				<form id="category" class="" name="category" method="post">
+				<form id="category" class="" id="category" name="category" method="post">
 					<div class="form-body">
 						<div class="row">
 							<div class="col-md-12 ">
@@ -329,16 +329,4 @@
 			 $('#viewnotification').hide();
 		}	
 	}
-	
-	     /*   $(document).ready(function(){
-            // Initialize select2
-            $('#project-category').select2();
-            // Read selected option
-            $('#save-category').click(function(){
-                var username = $('#project_categ option:selected').text();
-                var userid = $('#project_categ').val();
-           
-                $('#result').html("id : " + userid + ", name : " + username);
-            });
-        });*/
 </script>

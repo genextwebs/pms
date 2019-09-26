@@ -46,8 +46,9 @@
 		                						</div>
 		                				<div class="col-md-6">
 											<div class="form-group project-category">
-												<label class="control-label" for="project-category">Project Category <a class="btn btn-sm btn-outline-success ml-1" href="#"><i class="fa fa-plus"></i> Add Project Category</a></label>
-												<select class="custom-select br-0" id="project-category" name="project-category">
+												
+												<label class="control-label" for="project-category">Project Category <a class="btn btn-sm btn-outline-success ml-1" href="javascript:;" data-toggle="modal" data-target="#project-category1"><i class="fa fa-plus"></i> Add Project Category</a></label>											
+											    <select class="custom-select br-0" id="project-category" name="project-category">
 														<?php
 															foreach($category as $cat){
 																echo '<option value="'.$cat->id.'">'.$cat->name.'</option> ';
@@ -151,37 +152,19 @@
 										<th>Action</th>
 									</tr>
 									</thead>
-									<tbody>
-										<tr id="cat-1">
-											<td>1</td>
-											<td>Laravel</td>
-											<td><a href="javascript:;" data-cat-id="1" class="btn btn-sm btn-danger btn-rounded delete-category">Remove</a></td>
-										</tr>
-										<tr id="cat-2">
-											<td>2</td>
-											<td>Yii</td>
-											<td><a href="javascript:;" data-cat-id="2" class="btn btn-sm btn-danger btn-rounded delete-category">Remove</a></td>
-										</tr>
-										<tr id="cat-3">
-											<td>3</td>
-											<td>Zend</td>
-											<td><a href="javascript:;" data-cat-id="3" class="btn btn-sm btn-danger btn-rounded delete-category">Remove</a></td>
-										</tr>
-										<tr id="cat-4">
-											<td>4</td>
-											<td>CakePhp</td>
-											<td><a href="javascript:;" data-cat-id="4" class="btn btn-sm btn-danger btn-rounded delete-category">Remove</a></td>
-										</tr>
-										<tr id="cat-5">
-											<td>5</td>
-											<td>Codeigniter</td>
-											<td><a href="javascript:;" data-cat-id="5" class="btn btn-sm btn-danger btn-rounded delete-category">Remove</a></td>
-										</tr>
-									</tbody>
-								</table>
+					               <tbody>
+										<?php foreach ($category as $row) { ?>      
+											  <tr>
+												  <td><?php echo $row->id; ?></td>
+												  <td><?php echo $row->name; ?></td>
+												  <td><a href="javascript:;" data-cat-id="1" class="btn btn-sm btn-danger btn-rounded delete-category" id='deletecat'>Remove</a></td>
+											  </tr>
+									   <?php } ?>
+								</tbody>							
+							</table>
 							</div>
 							<hr>
-							<form id="" class="">
+							<form id="category" class="" name="category">
 								<div class="form-body">
 									<div class="row">
 										<div class="col-md-12 ">
