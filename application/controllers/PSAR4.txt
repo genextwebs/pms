@@ -1,0 +1,28 @@
+G06Q10/10
+
+Enterprise project management system and method 
+
+US11/267,698
+
+2005-11-04
+
+Herman J. Clarke
+
+4Sight Tech Inc
+
+limi:
+By definition, Project Managers manage projects, not their organization. Although projects are usually initiated by stakeholders/executives with a clear relation and full alignment with the overall corporate strategy, Project Managers are incapable, by themselves, to make sure that their projects are kept aligned with the company’s strategy. In order to solve this limitation in Project Management, Program Management was introduced as a higher layer of managerial control to guarantee and sustain alignment.
+
+sol:
+Using this  all method easily alll problem solved.
+
+inve:
+In one embodiment, the present invention is a computer implemented method of project management comprising providing a work breakdown structure of dependencies between project tasks, providing a resource breakdown structure of available resources, providing a calendar breakdown structure of availability of the resources, optimizing allocation of the resources to the project tasks within constraints of the resources in accordance with the work breakdown structure and calendar breakdown structure, and scheduling the resources to complete the project tasks.
+
+key:
+in this system we learn all method about project management system.
+
+summ:
+In another embodiment, the present invention is a method of managing project execution, comprising generating a set of hierarchical related task objects, generating a plurality of calendars for project resources, identifying a set of resources for performing the task objects, allocating the set of resources to perform the task objects, and optimizing the resource allocation to the task objects.
+
+We Wiil invented in future Application and gmail Configuration Also and other.

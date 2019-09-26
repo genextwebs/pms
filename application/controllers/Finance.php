@@ -32,7 +32,6 @@ class Finance extends CI_Controller
 				$currency=$this->input->post('currency');
 				$valid_till=$this->input->post('valid_till');				
 				$total=$this->input->post('finaltotal');
-				//echo $total;die;
 				$note=$this->input->post('note');
 				$insertArr=array('client' => $client,'currency' => $currency,'validtill' => $valid_till,'note' => $note,'status'=>'0','total'=>$total);
 				$this->common_model->insertData('tbl_estimates',$insertArr);
@@ -41,7 +40,7 @@ class Finance extends CI_Controller
 				$item_name=$this->input->post('item_name');
 				$quantity=$this->input->post('quantity');
 				$cost_per_item=$this->input->post('cost_per_item');
-				$taxes=$this->input->post('taxes');
+				$taxes=$this->input->post('tax');
 				$amount=$this->input->post('amount');
 				$item_Description=$this->input->post('item_Description');
 				
@@ -120,7 +119,7 @@ class Finance extends CI_Controller
             /** Filtering Start */
             if(!empty(trim($_GET['sSearch']))){
             	$searchTerm = trim($_GET['sSearch']);
-            	$sWhere .= ' AND (clientname like "%'.$searchTerm.'%" OR companyname like "%'.$searchTerm.'%" OR website like "%'.$searchTerm.'%" OR address like "%'.$searchTerm.'%" OR clientemail like "%'.$searchTerm.'%" OR facebook like "%'.$searchTerm.'%" OR note like "%'.$searchTerm.'%")';
+            	$sWhere .= ' AND (client like "%'.$searchTerm.'%" OR note like "%'.$searchTerm.'%" OR item like "%'.$searchTerm.'%" OR description like "%'.$searchTerm.'%")';
             }
 				$startdate=!empty($_POST['startdate']) ? $_POST['startdate'] : '';
 				$enddate=!empty($_POST['enddate']) ? $_POST['enddate'] : '';
@@ -132,10 +131,10 @@ class Finance extends CI_Controller
 								$sWhere.=' AND status='.$status;
 						}
 					if(!empty($startdate)){						
-						$sWhere.=' AND createdat>="'.$startdate.'"';
+						$sWhere.=' AND validtill>="'.$startdate.'"';
 					}
 					if(!empty($enddate)){						
-						$sWhere.=' AND createdat<="'.$enddate.'"';
+						$sWhere.=' AND validtill<="'.$enddate.'"';
 					}
 					
 					if(!empty($sWhere)){
@@ -149,6 +148,7 @@ class Finance extends CI_Controller
 		$estimatesArr = $this->common_model->coreQueryObject($query);
 
 		$query = "SELECT * from tbl_estimates ".$sWhere;
+		//echo $query;die;
 		$estimatesFilterArr = $this->common_model->coreQueryObject($query);
 		$iFilteredTotal = count($estimatesFilterArr);
 
@@ -176,10 +176,15 @@ class Finance extends CI_Controller
 			//$clientid = $row->clientid;
 			$create_date = date('d-m-Y', strtotime($row->created_at));
 			
-				$actionStr = "<abbr title=\"Edit\"><a class=\"btn btn-info btn-circle\" data-toggle=\"tooltip\" data-original-title=\"Edit\" href='".base_url()."Clients/editclients/".base64_encode($id)."'><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i></a></abbr>
-				<abbr title=\"View Client Details\"><a class=\"btn btn-success btn-circle\" data-toggle=\"tooltip\" data-original-title=\"View Client Details\" href='".base_url()."Clients/viewclientdetail/".base64_encode($id)."'><i class=\"fa fa-search\" aria-hidden=\"true\" ></i></a></abbr>
-				<abbr title=\"Delete\"><a  class=\"btn btn-danger btn-circle sa-params\" data-toggle=\"tooltip\"  data-original-title=\"Delete\" href=\"javascript:void();\" onclick=\"deleteclients('".base64_encode($id)."');\"><i class=\"fa fa-times\" aria-hidden=\"true\"></i></a></abbr>";	
-           
+				$actionStr = '<div class="dropdown action m-r-10">
+				                <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
+				                		<div class="dropdown-menu">
+						                    <a  class="dropdown-item" href='.base_url().'Finance/editestimate/'.base64_encode($id).'><i class="fa fa-pencil"></i> Edit</a>
+											<a  class="dropdown-item" href="javascript:void()" onclick="deleteestimates(\''.base64_encode($row->id).'\')"><i class="fa fa-trash "></i> Delete</a>
+											<a  class="dropdown-item" href='.base_url().'Finance/createinvoice/'.base64_encode($id).'><i class="ti-receipt"></i>Create Invoice</a>
+				               			 </div>
+							</div>';
+			
 			
 			$datarow[] = array(
 				$id = $i,
@@ -204,6 +209,106 @@ class Finance extends CI_Controller
 	  echo json_encode($output);
       exit();
 	}
+	public function editestimate(){
+		$id=$this->uri->segment(3);
+		$id1=base64_decode($id);
+		$whereArr=array('id'=>$id1);
+		$whereArr1=array('estimateid'=>$id1);
+		$data['client'] =$this->common_model->getData('tbl_clients');
+		$data['tax'] =$this->common_model->getData('tbl_tax');
+		$data['estimate']=$this->common_model->getData('tbl_estimates',$whereArr);
+		$data['product']=$this->common_model->getData('tbl_products',$whereArr1);
+		$this->load->view('common/header');
+		$this->load->view('Estimates/editestimate',$data);
+		$this->load->view('common/footer');
+
+		if($this->input->post('btnupdate'))
+		{
+				$client=$this->input->post('client');
+				$currency=$this->input->post('currency');
+				$valid_till=$this->input->post('valid_till');
+				$status=$this->input->post('status');
+								//echo $status;die;
+
+				$total=$this->input->post('finaltotal');
+				$note=$this->input->post('note');
+				$updateArr=array('client' => $client,'currency' => $currency,'validtill' => $valid_till,'note' => $note,'status'=>$status,'total'=>$total);
+				$this->common_model->updateData('tbl_estimates',$updateArr,$whereArr);
+				$this->common_model->deleteData('tbl_products',$whereArr1);
+			
+				$item_name=$this->input->post('item_name');
+				$quantity=$this->input->post('quantity');
+				$cost_per_item=$this->input->post('cost_per_item');
+				$taxes=$this->input->post('tax');
+				$amount=$this->input->post('amount');
+				$item_Description=$this->input->post('item_Description');
+				
+				$count=count($this->input->post('item_name'));
+				for($i=0;$i<$count;$i++)
+				{
+					$insertArr1=array('estimateid'=>$id1,'item' => $item_name[$i],'qtyhrs' => $quantity[$i], 'unitprice' => $cost_per_item[$i], 'tax' => $taxes[$i],'amount'=>$amount[$i],'description' => $item_Description[$i]);
+					$this->common_model->insertData('tbl_products',$insertArr1);
+				}
+				$this->session->set_flashdata('messagename', "Data Update Succeessfully");
+				redirect('Finance');
+			}
+	}
+	public function deleteestimate(){
+		$estimateid=base64_decode($_POST['estimateid']);
+		$whereArr=array('id'=>$estimateid);
+		$this->common_model->deleteData('tbl_estimates',$whereArr);
+		redirect('Finance');
+	}
 	
+	public function createinvoice()
+	{
+		$id=$this->uri->segment(3);
+		$id1=base64_decode($id);
+		$whereArr=array('id'=>$id1);
+		$whereArr1=array('estimateid'=>$id1);
+		$data['tax'] =$this->common_model->getData('tbl_tax');
+		$data['project'] =$this->common_model->getData('tbl_project_info');
+		$data['estimate']=$this->common_model->getData('tbl_estimates',$whereArr);
+		$data['product']=$this->common_model->getData('tbl_products',$whereArr1);
+		$sql='SELECT * FROM tbl_invoice ORDER BY tbl_invoice.id DESC LIMIT 1';
+		$data['invoice']=$this->common_model->coreQueryObject($sql);
+		$this->load->view('common/header');
+		$this->load->view('Estimates/createinvoice',$data);
+		$this->load->view('common/footer');
+
+		if($this->input->post('btnsubmit'))
+		{
+			$invoice=$this->input->post('txtinvoice');
+			$project=$this->input->post('txtproject');
+			$currency=$this->input->post('txtcurrency');
+			$invoicedate=$this->input->post('txtinvoicedate');
+			$duedate=$this->input->post('txtduedate');
+			$status=$this->input->post('txtstatus');
+			$recuringpayment=$this->input->post('txtrp');
+			$billingfrequency=$this->input->post('txtbf');
+			$billinginterval=$this->input->post('txtbi');
+			$billingcycle=$this->input->post('txtbc');
+			$total=$this->input->post('txttotal');
+			$insertArr=array('invoice' => $invoice,'project' => $project,'currency' => $currency,'invoicedate' => $invoicedate,'duedate'=>$duedate,'status'=>$status,'recuringpayment'=>$recuringpayment,'billingfrequency'=>$billingfrequency,'billinginterval'=>$billinginterval,'billingcycle'=>$billingcycle,'total'=>$total);
+			$this->common_model->insertData('tbl_invoice',$insertArr);
+			$invoiceid=$this->db->insert_id();
+			
+			$item=$this->input->post('txtitem');
+			$qtyhrs=$this->input->post('txtqtyhrs');
+			$unitprice=$this->input->post('txtunitprice');
+			$tax=$this->input->post('txttax');
+			$amount=$this->input->post('txtamount');
+			$description=$this->input->post('txtdescription');
+			$count=count($this->input->post('txtitem'));
+			for($i=0;$i<$count;$i++)
+			{
+				$insertArr1=array('invoiceid'=>$invoiceid,'item' => $item[$i],'qtyhrs' => $qtyhrs[$i], 'unitprice' => $unitprice[$i], 'tax' => $tax[$i],'amount'=>$amount[$i],'description' => $description[$i]);
+				$this->common_model->insertData('tbl_invoiceproduct',$insertArr1);
+			}
+				$this->session->set_flashdata('messagename', "Data Inserted Succeess");
+				redirect('Estimates/viewinvoicepage');
+
+			}
+	}
 }
 ?>

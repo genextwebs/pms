@@ -1,0 +1,30 @@
+G06Q10/10
+
+US09/943,628
+
+http://www.pms.ac.in//patten
+2001-08-28
+
+
+Harry Frolick,  Robert Wilson
+
+GDOX
+
+limi:
+Reduced speed – A web app will probably be slower than an application hosted on your company’s server. You need to decide if a slight reduction in speed is worth the worldwide access.
+Browser Support – Unfortunately, we do not all use one version of a browser because we are given a choice. This means you will have to make sure your web app is supported across various browsers and for various screen sizes.
+
+solu:
+Cross-browser means web application works with all versions of all browsers. To claim cross-browser compatibility, the website is nowadays expected to support browsers such as Mozilla Firefox,Google Chrome, Opera, and Safari in addition to Internet Explorer and Netscape. Here are the basic tips to make your website cross browser compatible.
+
+in:
+ Web, invented by Tim Berners-Lee as a means to access the interlinked information stored in the globally dispersed computers connected by the Internet, began operation and became the principal service delivered on the network. ... Information and knowledge became vital economic resources.
+ 
+ key:
+ in this System,We learn how web application is created easily.
+ 
+ summ:
+ The present invention satisfies these needs.
+The web-based project management system of the present invention provides a system that allows any authorized person to access member workspace information in a non-proprietary or open format easily. This system also allows access via various devices including, but not limited to, a personal computer, such as personal digital assistants (PDA) or even web-enabled phones or other non-personal computer-based web access devices.
+
+We Wiil invented in future Application and gmail Configuration Also..

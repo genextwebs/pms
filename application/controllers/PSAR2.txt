@@ -1,0 +1,27 @@
+ G06Q10/10 
+ Development processes representation and management
+
+ US10/654,640
+ http://www.development.ac.in//pattern
+ 2003-09-02
+
+ Elke Kaelicke,  Nelson Ambruoso
+ 
+ SAP SE
+ 
+ limi:
+ The limitations of the study are those characteristics of design or methodology that impacted or influenced the interpretation of the findings from your research. They are the constraints on generalizability, applications to practice, and/or utility of findings that are the result of the ways in which you initially chose to design the study or the method used to establish internal and external validity or the result of unanticipated challenges that emerged during the study.
+ 
+ Sol:
+ All the requirement is succesfuly included and  easily managed in System.
+ 
+ invention:
+ This invention may be used for projects in which there is a contractor, in which, depending on the project, there might be a manufacturer which has contracted with the contractor, and, in either case, in which there will be a plurality of subcontractors who supply goods and services to the project. With this invention, the contractor easily monitors the status of each subcontractor with respect to completion of tasks that subcontractor is to perform.
+ 
+ key:
+ in this system how requirement analysis is important in advanced.
+ 
+ summary:
+ The present application describes systems and techniques relating to the representation and management of development processes. The present inventors recognized that conventional systems and techniques for representing and managing development processes were often haphazard, inflexible, and incomplete. For example, conventional systems and techniques often omitted to represent or manage significant issues and stages that may occur during development processes and provided only a rudimentary classification of the activities in a process. Further, conventional systems and techniques are often directed only to a portion of a development process and/or directed only to specific kinds of development processes that omit certain issues. This limitation may be due, in part, to the limited information that can be included in conventional systems and techniques.
+
+Management module is very important in all System.

@@ -1,12 +1,12 @@
 <nav aria-label="breadcrumb" class="breadcrumb-nav">
                 <div class="row">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title"><i class="icon-people"></i>Estimates</h4>
+                        <h4 class="page-title"><i class="ti-receipt"></i>Invoices</h4>
                     </div>
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                         <ol class="breadcrumb">
                             <li><a href="<?php echo base_url().'dashboard'?>">Home</a></li>
-                            <li><a href="<?php echo base_url().'Finance'?>">Estimates</a></li>
+                            <li><a href="<?php echo base_url().'Finance'?>">Invoices</a></li>
                             <li class="active">Add New</li>
                         </ol>
                     </div>
@@ -19,7 +19,7 @@
                     <div class="col-md-12">
 		                <div class="card br-0">
 		                	<div class="card-header br-0 card-header-inverse">
-								CREATE ESTIMATE
+								CONVERT ESTIMATE TO INVOICE
 		                	</div>
 		                	<div class="card-wrapper collapse show">
 		                		<div class="card-body">
@@ -51,20 +51,38 @@
 		                				<div class="form-body">
 		                					<div class="row">
 		                						<div class="col-md-4">
-		                							<div class="form-group">
-		                								<label class="control-label">Client</label>
-			                                            <select name="client" id="client" class="form-control">
-															<option value="">select</option>
+													<div class="form-group">
+													<?php 
+														$invoice1=$invoice[0]->invoice;
+														$test=explode('#',$invoice1);
+														$a=$test[1]+1;
+														$inv='INV#'.$a;
+													?>
+														<label class="control-label">Invoice #</label>
+														<div class="row">
+															<div class="col-md-12">
+																<div class="input-icon">
+																	<input type="text" readonly="" class="form-control" name="invoice_number" id="invoice_number" value="<?php echo $inv ?>">
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="form-group">
+														<label class="control-label">Project</label>
+			                                            <select name="project" id="project" class="form-control">
+															<option value="">--</option>
 																<?php
-																	foreach($client as $row)
+																	foreach($project as $row)
 																	{
-																		echo '<option value="'.$row->clientname.'">'.$row->clientname.'</option>';
+																		echo '<option value="'.$row->projectname.'">'.$row->projectname.'</option>';
 																	}
 																?>
 														</select>
-		                							</div>
-		                						</div>
-		                						<div class="col-md-4">
+													</div>
+												</div>
+												<div class="col-md-4">
 		                							<div class="form-group">
 		                								<label class="control-label">Currency</label>
 														<select name="currency" id="currency" class="form-control">
@@ -74,13 +92,40 @@
 														</select>
 													</div>
 		                						</div>
+		                					</div>
+											<div class="row">
+												<div class="col-md-4">
+													<div class="form-group">
+														<label class="control-label">Invoice Date</label>
+														<div class="row">
+														<div class="col-md-12">
+															<div class="input-icon">
+																<input type="text" class="form-control" name="issue_date" id="invoice_date" value="<?php echo date('Y-m-d'); ?>">
+															</div>
+														</div>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="form-group">
+														<label class="control-label">Due Date</label>
+														<div class="input-icon">
+															<input type="text" class="form-control" name="due_date" id="due_date" value="<?php echo !empty($estimate[0]->validtill) ? $estimate[0]->validtill : ''?>">
+														</div>
+													</div>
+												</div>
 												<div class="col-md-4">
 		                							<div class="form-group">
-		                								<label class="control-label">Valid Till</label>
-														<input type="date" class="form-control" name="valid_till" id="valid_till" value="">
-		                							</div>
+		                								<label class="control-label">Currency</label>
+														<select name="currency" id="currency" class="form-control">
+															<option value="">select</option>
+															<option value="1">$(USD)</option>
+															<option value="2">R(IND)</option>
+														</select>
+													</div>
 		                						</div>
 		                					</div>
+	
 											<hr>
 											<button aria-expanded="false" data-toggle="dropdown" class="btn btn-info dropdown-toggle waves-effect waves-light" type="button">Products <span class="caret"></span></button>
 											<div id="dynamic">

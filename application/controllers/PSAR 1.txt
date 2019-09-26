@@ -1,0 +1,29 @@
+G06Q10/06
+Project management for complex construction projects by monitoring subcontractors in real time
+
+
+US09/750,350 
+
+http://www.google.co.in/pattern
+
+
+Darlene M. Freeman,  Mark Halverson  ,Stacy Lewis  ,Bronwyn Fiely-Fisher
+
+GEAMERICOM COMMUNICATIONS General Electric Capital Corp
+
+limitation:
+These project management limitations occur through variations in collected data. The mere disagreement among team members can affect a project’s control as well as past project failures. Good managers will develop control limit paths and set standards when issues such as these arise.
+
+This software is freely available.
+Admin and Client both includes in one dashboard only.
+
+invention:
+The present invention generally relates to a significant improvement in managing projects, in particular, construction projects. The invention can be applied to almost any construction project involving subcontractors. A typical application is construction of communications satellites. The more complex the project, the more likely this invention will prove effective.
+
+Learning:
+Using this System,we learn that how project is managed in IT Industries.
+
+Summary:
+Accordingly, one or more embodiments provide a computer system. The computer system includes a transceiver operable to transmit and receive communications over at least a portion of a network; and a processor cooperatively operable with the transceiver, and configured to facilitate: collecting and storing information related to a software project that uses one or more software artifacts, the information for the software project including: a project identifier for the project, artifact identifiers for any of the one or more artifacts used by the project, information about the temporal version for any of the one or more artifacts used by the project, and contact information for a user of the software project; collecting, from a software repository by communication over the transceiver, metadata associated with the one or more software artifacts, the metadata for each of the one or more software artifacts including: information identifying the respective artifact, information about security risks associated with the respective artifact, information about a license associated with the respective artifact.
+
+Ya,You can also include Budget module,that predefined the project cost in advanced,So using this module we decided that how we will gain the profit.

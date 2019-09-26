@@ -277,3 +277,42 @@ $('#btnapply').click(function(){ //button filter event click
 					oTable.draw();
 			});
 				
+
+//delete estimate
+
+function deleteestimates(estimateid){
+
+		var url = base_url+"Finance/deleteestimate";
+		swal({
+		 title: "Are you sure?",
+		 text: "You will not be able to recover this imaginary file!",
+		 type: "warning",
+		 showCancelButton: true,
+		 confirmButtonColor: "#DD6B55",
+		 confirmButtonText: "Yes, delete it!",
+		 closeOnConfirm: false
+		},
+	function(isConfirm){
+	if (isConfirm) {
+		   $.ajax({
+			   url: url,
+			   type: "POST",
+			   dataType: "JSON",
+			   data: {estimateid:estimateid},
+			  dataType: "html",
+			  
+			   success: function (data) {
+				   swal("Done!", "It was succesfully deleted!", "success");
+				   $('#estimate').DataTable().ajax.reload();
+
+				   //$("#leads").fnReloadAjax();
+					//$('#leads').DataTable.ajax.reload(null,false);
+					//window.location.reload();
+			   },
+			   error: function (xhr, ajaxOptions, thrownError) {
+				   swal("Error deleting!", "Please try again", "error");
+			   }
+		   });
+	   }
+	   });
+}
