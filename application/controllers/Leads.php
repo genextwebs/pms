@@ -20,7 +20,7 @@ class Leads extends CI_Controller
 			$defaultOrderClause = "";
 			$sWhere = "";
 			$sOrder = '';
-			$aColumns = array( 'id', 'clientname', 'companyname', 'createdon', 'status');
+			$aColumns = array( 'id', 'clientname', 'companyname', 'createdat', 'status');
 			//'ahrefs_dr', 
             $totalColumns = count($aColumns);
 

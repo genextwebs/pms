@@ -28,9 +28,13 @@
 		                					<div class="alert alert-success" role="alert">
 											  This is a success alert
 											</div>
-											<div class="alert alert-danger" role="alert">
-											  This is a danger alert
+											<?php if(!empty($error_msg['error'])) { ?>
+											<div class="alert alert-danger" role="alert" style="display: block;">
+											  <?php
+											  		echo $error_msg['error'];
+												?>
 											</div>
+											<?php  } ?>
 											<div class="alert alert-warning" role="alert">
 											  This is a warning alert
 											</div>
@@ -40,13 +44,13 @@
 		                						<div class="col-md-6">
 		                							<div class="form-group">
 		                								<label class="control-label">Employee Name</label>
-		                								<input id="employee_name" class="form-control" type="text" name="employee_name" value="">
+		                								<input id="name" class="form-control" type="text" name="employee_name" value="<?php if(!empty($sessData['employee_name'])){echo $sessData['employee_name'];}?>">
 		                							</div>
 		                						</div>
 		                						<div class="col-md-6">
 		                							<div class="form-group">
 		                								<label class="control-label">Employee Email</label>
-		                								<input id="employee_email" class="form-control" type="email" name="employee_email" value="">
+		                								<input id="employee_email" class="form-control" type="email" name="employee_email" value="<?php if(!empty($sessData['employee_email'])){echo $sessData['employee_email'];}?>">
 		                								<span class="help-desk">Employee will login using this email.</span>
 		                							</div>
 		                						</div>
@@ -62,15 +66,15 @@
 		                						<div class="col-md-4">
 		                							<div class="form-group" style="padding-top: 25px;">
 											            <div class="custom-control custom-checkbox my-1 mr-sm-2">
-														    <input type="checkbox" class="custom-control-input" name="generate-random-pass" id="randomepassword">
-														    <label class="custom-control-label" for="randomepassword" style="padding-top: 2px;">Generate Random Password</label>
+														    <input type="checkbox" class="custom-control-input" name="randompassword" id="randompassword" onclick="checkuncheck();">
+														    <label class="custom-control-label" for="randompassword" style="padding-top: 2px;">Generate Random Password</label>
 														</div>
 											        </div>
 		                						</div>
 		                						<div class="col-md-4">
 		                							<div class="form-group">
 		                								<label class="control-label">Mobile</label>
-		                								<input type="text" class="form-control" id="mobile" name="mobile">
+		                								<input type="text" class="form-control" id="mobile" name="mobile" value="<?php if(!empty($sessData['mobile'])){echo $sessData['mobile'];}?>">
 		                							</div>
 		                						</div>
 		                					</div>
@@ -82,29 +86,38 @@
 													        <div class="input-group-prepend">
 													          	<div class="input-group-text br-0">@</div>
 													        </div>
-													        <input type="text" class="form-control" id="inlineFormInputGroup" name="username" placeholder="Username">
+													        <input type="text" class="form-control" id="inlineFormInputGroup" name="username" placeholder="Username" value="<?php if(!empty($sessData['username'])){echo $sessData['username'];}?>">
 													    </div>
 		                							</div>
 		                						</div>
 											    <div class="col-lg-3">
 											        <div class="form-group">
 											            <label class="control-label">Joining Date</label>
-											            <input type="text" name="joining-date" id="startdate" autocomplete="off" class="form-control" data-date-format='yyyy-mm-dd'>
+											            <input type="text" name="joining-date" id="startdate" autocomplete="off" class="form-control" data-date-format='yyyy-mm-dd' value="<?php if(!empty($sessData['joining-date'])){echo $sessData['joining-date'];}?>">
 											        </div>
 											    </div>
 											    <div class="col-lg-3" id="deadlineBox">
 											        <div class="form-group">
 											            <label class="control-label">Last date</label>
-											            <input type="text" name="last-date" id="enddate" autocomplete="off" class="form-control" data-date-format='yyyy-mm-dd'>
+											            <input type="text" name="last-date" id="enddate" autocomplete="off" class="form-control" data-date-format='yyyy-mm-dd' value="<?php if(!empty($sessData['last-date'])){echo $sessData['last-date'];}?>">
 											        </div>
 											    </div>
 											    <div class="col-lg-3">
 											        <div class="form-group">
 											            <label class="control-label">Gender</label>
 											            <select class="form-control" name="gender">
-											            	<option value="0">Male</option>
-											            	<option value="1">Female</option>
-											            	<option value="2">Others</option>
+											            	<option value="0" <?php if(!empty($sessData['gender'])){
+																	if($sessData['gender'] == 0){
+																echo 'selected';	
+															}}?>>Male</option>
+											            	<option value="1" <?php if(!empty($sessData['gender'])){
+																	if($sessData['gender'] == 1){
+																echo 'selected';	
+															}}?>>Female</option>
+											            	<option value="2" <?php if(!empty($sessData['gender'])){
+																	if($sessData['gender'] == 2){
+																echo 'selected';	
+															}}?>>Others</option>
 											            </select>
 											        </div>
 											    </div>
@@ -114,7 +127,7 @@
                                         		<div class="col-md-12">
 		                                            <div class="form-group">
 		                                                <label class="control-label">Address</label>
-		                                                <textarea name="address" class="form-control" rows="4"></textarea>
+		                                                <textarea name="address" class="form-control" rows="4"><?php if(!empty($sessData['address'])){echo $sessData['address'];}?></textarea>
 		                                            </div>
 		                                        </div>
                                 			</div>
@@ -122,7 +135,7 @@
                                 				<div class="col-md-12">
 											        <div class="form-group">
 											            <label class="control-label">Skills</label>
-											            <input type="text" contenteditable data-placeholder="Skills" class="form-control" id="skills" name="skills" id="skills">
+											            <input type="text" contenteditable data-placeholder="Skills" class="form-control" id="skills" name="skills" id="skills" value="<?php if(!empty($sessData['skills'])){echo $sessData['skills'];}?>">
 											        </div>
 											    </div>
                                 			</div>
@@ -137,8 +150,14 @@
 											            	
 											            	<option>--</option>
 											            	<?php foreach($designation as $row){
+											            		$str = '';
+											            		if(!empty($sessData['designation'])){
+											            			if($sessData['designation'] == $row->id){
+											            				$str = 'selected';
+											            			}
+											            		}
 											            	?>
-											            		<option value="<?php echo $row->id?>">	<?php echo $row->name;?></option>
+											            		<option value="<?php echo $row->id?>" <?php echo $str;?>>	<?php echo $row->name;?></option>
 											            	<?php
 											            	}
 											            	?>
@@ -154,8 +173,14 @@
 											            <select class="form-control" id="department" name="department" id="department">
 											            	<option>--</option>
 											            	<?php foreach($department as $row){
+											            		$str = '';
+											            		if(!empty($sessData['department'])){
+											            			if($sessData['department'] == $row->id){
+											            				$str = 'selected';
+											            			}
+											            		}
 											            	?>
-											            		<option value="<?php echo $row->id?>">	<?php echo $row->name;?></option>
+											            		<option value="<?php echo $row->id?>" <?php echo $str;?>><?php echo $row->name;?></option>
 											            	<?php
 											            	}
 											            	?>
@@ -168,7 +193,7 @@
                                 				<div class="col-md-6">
 											        <div class="form-group">
 											            <label class="control-label">Hourly Rate</label>
-											            <input type="text" class="form-control" id="hourly-rate" name="hourly-rate">
+											            <input type="text" class="form-control" id="hourly-rate" name="hourly-rate" value="<?php if(!empty($sessData['hourly-rate'])){echo $sessData['hourly-rate'];}?>">
 											        </div>
 											    </div>
                                 			</div>
@@ -177,8 +202,14 @@
 			                                        <div class="form-group">
 			                                            <label>Log In</label>
 			                                            <select name="login" id="login" class="form-control">
-			                                                <option value="0">Enable</option>
-			                                                <option value="1">Disable</option>
+			                                                <option value="0" <?php if(!empty($sessData['login'])){
+																		if($sessData['login'] == 0){
+																echo 'selected';	
+															}}?>>Enable</option>
+			                                                <option value="1" <?php if(!empty($sessData['login'])){
+																	if($sessData['login'] == 1){
+																echo 'selected';	
+															}}?>>Disable</option>
 			                                            </select>
 			                                        </div>
 			                                    </div>
@@ -198,14 +229,15 @@
 			                                				<img class="file-upload-image" src="#" alt="your image" />
 			                                				<div class="image-title-wrap">
 			                                					<button type="button" onclick="removeUpload()" class="remove-image">Remove  <span class="image-title">Uploaded Image</span> </button>
-			                                				</div>-->
+			                                				</div>
 			                                				<div id="errordiv" style="display:none">
 			                                				</div>
+			                                				<input type="hidden" id="imagename" name="imagename">
 															<div  id="imgdiv" name="imgdiv">
-																<input type="hidden" id="imagename" name="imagename">
+																
 
 		                                					</div>
-			                                			<!--<button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Select Image</button>-->
+			                                			<button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Select Image</button>-->
 			                                		</div>
 			                                	</div>
 			                                </div>

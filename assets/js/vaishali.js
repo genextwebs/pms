@@ -111,6 +111,64 @@ jQuery(document).ready(function() {
 	        },
 		});
 	}
+
+	else if(controllerName == 'employee' && (functionName == 'index' || functionName == '')){
+		var oTable = jQuery('#employee').DataTable({
+			'bRetrieve': true,
+	        "bPaginate": true,
+	        "bLengthChange": true,
+	        "iDisplayLength": 10,
+	        "bFilter": true,
+	        "bSort": true,
+	        "aaSorting": [],
+	        "aLengthMenu": [[10, 25, 50, 100, 200, 500, 1000, 5000], [10, 25, 50, 100, 200, 500, 1000, 5000]],
+	        "bInfo": true,
+	        "bAutoWidth": false,
+	        "bProcessing": true,
+	        "aoColumns": [{ "sWidth": "40px", sClass: "text-left", "asSorting": [  ] }, 
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ ] }, 
+                     ],
+	        "bServerSide": true,
+	        "fixedHeader": true,
+	        "sAjaxSource": base_url+"employee/employee_list",
+	        "sServerMethod": "POST",
+	        "sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
+        	"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No Leads found<br/><br/></center>', "sZeroRecords": "<center><br/>No Leads found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ leads", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
+        	"fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
+        		oSettings.jqXHR = $.ajax( {
+	                "dataType": 'json',
+	                "type": "POST",
+	                "url": sSource,
+	                "data": aoData,
+	                "timeout": 60000, //1000 - 1 sec - wait one minute before erroring out = 30000
+	                "success": function(json) {
+	                    var oTable = $('#employee').dataTable();
+	                    var oLanguage = oTable.fnSettings().oLanguage;
+
+	                    if((json.estimateCount == true) && (json.iTotalDisplayRecords == json.limitCountQuery)){
+	                        oLanguage.sInfo = '<b>_START_ to _END_</b> of more than _TOTAL_ (<small>' + json.iTotalRecordsFormatted + ' Employees</small>)';
+	                    }
+	                    else{
+	                        oLanguage.sInfo = '<b>_START_ to _END_</b> of <b>_TOTAL_</b> (<small>' + json.iTotalRecordsFormatted + ' Employees</small>)';
+	                    }
+	                    
+	                    fnCallback(json);
+	                }
+	            });
+        	},
+        	"fnRowCallback": function( nRow, aData, iDisplayIndex ){
+                return nRow;
+	        },
+	        "fnDrawCallback": function(oSettings, json) {
+
+	        },
+		});
+	}
+
 });
 
 $(function(){
@@ -186,7 +244,6 @@ $(function(){
 
 function checkuncheck()
 {
-	
 	var checkbox = document.getElementById('randompassword');
 	var password = document.getElementById('password');
 	if(checkbox.checked == true){
@@ -349,7 +406,7 @@ $("#save-department").click(function(event) {
 });
 
 // image upload and preview
-$(document).ready(function(){
+/*$(document).ready(function(){
  
         $('#createemployee').change(function(e){
 			
@@ -372,17 +429,9 @@ $(document).ready(function(){
 						  }
 						  else
 						  {
-						  	$('<img />')
-                        .attr('src'	, base_url + "uploads/"+myArray.image)         // ADD IMAGE PROPERTIES.
-                            
-                      
-                            .width('113px').height('113px')
-
-                        .appendTo($('#imagename'));
-							/*$('#imgdiv').css('display', 'block');
-							
-							 $('#imgdiv').append('<img src='base_url + "uploads/"+myArray.image +' width="100px" height="100px"><a onClick="removeimage();" href="">Remove</a>');*/
-							 $('#imagename').val(myArray.image);
+						  	$('#imgdiv').css('display', 'block');
+							$('#imgdiv').append('<img src="'+base_url + 'uploads/'+myArray.image +'" width="100px" height="100px"><a onClick="removeimage();" href="">Remove</a>');
+							$('#imagename').val(myArray.image);
 						  }	
 					}
                  });
@@ -391,7 +440,7 @@ $(document).ready(function(){
     function removeimage()
 	{
 	$('#imgdiv').html('');
-	}
+	}*/
 
 
 //for search deopdown

@@ -52,7 +52,7 @@
             						<div class="col-md-6">
             							<div class="form-group">
             								<label class="control-label">Company Name</label>
-            								<input id="company_name" class="form-control" type="text" name="company_name" value="<?php if(!empty($sessData['company_name'])){echo $sessData['company_name'];}else{ }?>">
+            								<input id="company_name" class="form-control" type="text" name="company_name" value="<?php if(!empty($sessData['company_name'])){echo $sessData['company_name'];}?>">
             							</div>
             						</div>
             						<div class="col-md-6">
