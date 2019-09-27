@@ -143,7 +143,7 @@ class Products extends CI_Controller
 			$id = $row->id;
 			
 				$actionStr = "<abbr title=\"Edit\"><a class=\"btn btn-info btn-circle\" data-toggle=\"tooltip\" data-original-title=\"Edit\" href='".base_url()."Products/editproducts/".base64_encode($row->id)."'><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i></a></abbr>
-					<abbr title=\"Delete\"><a  class=\"btn btn-danger btn-circle sa-params\" data-toggle=\"tooltip\"  data-original-title=\"Delete\" href=\"javascript:void();\" onclick=\"deleteproducts('".base64_encode($row->id)."');\"><i class=\"fa fa-times\" aria-hidden=\"true\"></i></a></abbr>";
+					<abbr title=\"Delete\"><a  class=\"btn btn-danger btn-circle sa-params\" data-toggle=\"tooltip\"  data-original-title=\"Delete\" href=\"javascript:void(0);\" onclick=\"deleteproducts('".base64_encode($row->id)."');\"><i class=\"fa fa-times\" aria-hidden=\"true\"></i></a></abbr>";
 			
 			$datarow[] = array(
 				$id = $i,

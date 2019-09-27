@@ -52,6 +52,99 @@
 			                        </div>
                 				</div>
                 			</div>
+                			<div style="background: rgb(251, 251, 251); display: none;" id="filterdiv">
+                				<div class="col-md-12">
+                        			<h4>Filter by <a href="javascript:;" class="pull-right toggle-filter"><i class="fa fa-times-circle-o"></i></a></h4>
+                    			</div>
+                    			<form>
+                    				<div class="row">
+	                    				<div class="col-md-4">
+	                            			<div class="form-group">
+				                                <label class="control-label">Status</label>
+				                                <select class="form-control" name="status" id="status" data-style="form-control">
+				                                    <option value="">All</option>
+				                                    <option value="0">Active</option>
+				                                    <option value="1">Inactive</option>
+				                                </select>
+			                            	</div>
+	                        			</div>
+	                        			<div class="col-md-4">
+	                            			<div class="form-group">
+				                                <label class="control-label">Select Employee</label>
+				                                <select class="form-control" name="employeename" id="employeename" data-style="form-control">
+				                                    <option value="">All</option>
+				                                    <?php foreach($employee as $row){
+									            	?>
+									            	<option value="<?php echo $row->id?>"><?php echo $row->employeename;?></option>
+									            	<?php
+									            	}
+									            	?> 
+				                                </select>
+			                            	</div>
+	                        			</div>
+	                        			<div class="col-md-4">
+	                            			<div class="form-group">
+				                                <label class="control-label">Skills</label>
+				                                <select class="form-control" multiple name="skill[]" id="skill" data-style="form-control">
+				                                    <option value="">All</option>
+				                                    <?php
+														foreach($skillArr as $k=>$v)
+														{
+															echo '<option value="'.$v.'" >'.$v.'</option>';
+														}
+													?>
+				                                </select>
+			                            	</div>
+	                        			</div>
+	                        		</div>
+	                        	<div class="row">
+	                    				<!--<div class="col-md-4">
+	                            			<div class="form-group">
+				                                <label class="control-label">Role</label>
+				                                <select class="form-control" name="role" id="role" data-style="form-control">
+				                                    <option value="all">All</option>
+				                                    <option value="active">Active</option>
+				                                    <option value="deactive">Inactive</option>
+				                                </select>
+			                            	</div>
+	                        			</div>-->
+	                        			<div class="col-md-4">
+	                            			<div class="form-group">
+				                                <label class="control-label">Designation</label>
+				                                <select class="form-control" name="designation" id="designation" data-style="form-control">
+				                                    <option>--</option>
+									            	<?php foreach($designation as $row){
+									            	?>
+									            	<option value="<?php echo $row->id?>"><?php echo $row->name;?></option>
+									            	<?php
+									            	}
+									            	?>
+				                                </select>
+			                            	</div>
+	                        			</div>
+	                        			<div class="col-md-4">
+	                            			<div class="form-group">
+				                                <label class="control-label">Department</label>
+				                                <select class="form-control" name="department" id="department" data-style="form-control">
+				                                   <option>--</option>
+									            	<?php foreach($department as $row){
+									            	?>
+									            	<option value="<?php echo $row->id?>"><?php echo $row->name;?></option>
+									            	<?php
+									            	}
+									            	?> 
+				                                </select>
+			                            	</div>
+	                        			</div>
+	                        		</div>
+	                        		<div class="col-md-12">
+		                            	<div class="form-group pull-right">
+			                               <button type="button" id="btnapply" class="btn btn-success col-md-6" ><i class="fa fa-check"></i> Apply</button>
+				                            <button type="button" id="reset-filters" class="btn btn-inverse col-md-5 col-md-offset-1"><i class="fa fa-refresh"></i> Reset</button>
+		                            	</div>
+                       			 </div>
+                    			</form>
+                			</div>
 		                	<div class="table-responsive">
 			                	<table class="table table-bordered table-hover" id="employee">
 								   	<thead>
