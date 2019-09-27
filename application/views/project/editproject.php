@@ -24,17 +24,23 @@
 				<div class="card-wrapper collapse show">
 					<div class="card-body">
 						<form id="creatclient" class="aj-form" method="post" action="<?php echo base_url().'Project/editproject/'.base64_encode($editId);?>">
+							<?php
+								$mess = $this->session->flashdata('message_name');
+								if(!empty($mess)){
+									//warning 
+                            ?>
 							<div class="submit-alerts">
-								<div class="alert alert-success" role="alert">
-								  This is a success alert
+            					<div class="alert alert-success" role="alert" style="display:block;"></div>
+                            </div>
+                            <div class="submit-alerts">
+								<div class="alert alert-danger" role="alert" style="display:block;">
+									<?php echo $mess; ?>
 								</div>
-								<div class="alert alert-danger" role="alert">
-								  This is a danger alert
-								</div>
-								<div class="alert alert-warning" role="alert">
-								  This is a warning alert
-								</div>
-							</div>
+                            </div>
+									<?php  } ?>
+                            <div class="submit-alerts">
+								<div class="alert alert-warning" role="alert"> This is a warning alert</div>
+            				</div>
 							<div class="form-body">
 								<h3 class="box-title">Project Info</h3>
 								<hr>

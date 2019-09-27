@@ -83,7 +83,7 @@ class Project extends CI_Controller {
 					'tasknotification'=>$tasks,'status'=>0,'projectsummary'=>$editor1,'note'=>$notes,
 					'projectbudget'=>$budget,'currency'=>$currency,'hoursallocated'=>$hours,'archive'=>0);
 					$this->common_model->insertData('tbl_project_info',$store);
-					//$this->session->set_flashdata('message','Insert Succesfully....');
+					$this->session->set_flashdata('message_name', 'Project Insert sucessfully');
 					redirect('Project/index');
 				}	
 			}
@@ -214,7 +214,7 @@ class Project extends CI_Controller {
 					'<a href='.base_url().'Project/editproject/'.base64_encode($row->id). ' class="btn btn-info btn-circle" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
 					<a href="project-details.html" class="btn btn-success btn-circle" data-toggle="tooltip" data-original-title="View Project Details"><i class="fa fa-search" aria-hidden="true"></i></a>
 					<a href='.base_url().'Project/archivedata/'.base64_encode($row->id).' onclick="javascript:return confirm(\'Are u Sure want to Archive?\');"  class="btn btn-warning  btn-circle archive" data-toggle="tooltip" data-user-id="1" data-original-title=" Archive"><i class="fa fa-archive" aria-hidden="true"></i></a>
-					<a href='.base_url().'Project/deleteproject/'.base64_encode($row->id).' onclick="javascript:return confirm(\'Are u Sure want to delete?\');" class="btn btn-danger btn-circle sa-params" data-toggle="tooltip" data-user-id="1" data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>'							
+					<a href='.base_url().'Project/deleteproject/'.base64_encode($row->id).' href="javascript:void()" class="btn btn-danger btn-circle sa-params" data-toggle="tooltip" data-user-id="1" data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>'							
 					);
 					$i++;
 				}
@@ -252,6 +252,7 @@ class Project extends CI_Controller {
 				$updateArr = array('archive'=>1);
 				$whereArr=array('id'=>$id);
 				$data['query']=$this->common_model->updateData('tbl_project_info',$updateArr,$whereArr);
+				$this->session->set_flashdata('message_name', 'Archive Sucessfully');
 				redirect('project/index');
 			}
 			
@@ -470,6 +471,7 @@ class Project extends CI_Controller {
 					'projectbudget'=>$budget,'currency'=>$currency,'hoursallocated'=>$hours,'archive'=>0);
 					$whereArr=array('id'=>$id);
 					$this->common_model->updateData('tbl_project_info',$updateArr,$whereArr);
+					$this->session->set_flashdata('message_name', 'Projects Updated sucessfully');
 					redirect('project/index');
 				}			
 			}
@@ -577,6 +579,7 @@ class Project extends CI_Controller {
 					'viewtask'=>$view,'projectsummary'=>$editor,'note'=>$note,'tasknotification'=>$tasks);
 					$this->common_model->insertData('tbl_project_template',$insertArr);
 					$whereArr=array('id'=>$id);
+					$this->session->set_flashdata('message','Template Inserted Succesfully....');
 					redirect('Project/projecttemplate');				
 				}
 			}
@@ -681,18 +684,17 @@ class Project extends CI_Controller {
 				exit();
 			}
 	
-		    public function insertcategory(){
+		    /*public function insertcategory(){
 			if(!empty($_POST)){
 				$name = $this->input->post('name');
 				$insArr = array('name'=>$name);
 				$this->common_model->insertData('tbl_project_category',$insArr);
 			}
-}
+			}*/
 
 			public function insertcat(){
 				if(!empty($_POST)){
 					$catname = $this->input->post('name');
-					//$rate = $this->input->post('rate');
 					$insArr = array('name'=>$catname);
 					$this->common_model->insertData('tbl_project_category',$insArr);
 					$catArray = $this->common_model->getData('tbl_project_category');
@@ -710,13 +712,8 @@ class Project extends CI_Controller {
 			}
 			
 			public function deletecat(){
-				//$id=$this->uri->segment(3);
 				$id=$this->input->post('id');
 				$deleteArr=array('id'=>$id);
 				$this->common_model->deleteData('tbl_project_category',$deleteArr);
-				//$this->session->set_flashdata('message','Delete Succesfully....');
-				//redirect('project/viewarchiev');
-			}
-			
-				
+			}	
 }		

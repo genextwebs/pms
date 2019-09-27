@@ -23,18 +23,7 @@
 				</div>
 				<div class="card-wrapper collapse show">
 					<div class="card-body">
-						<form id="creatclient" class="aj-form" name="creatclient" method="post" action="<?php echo base_url().'Project/insertproject';?>">
-							<!--<div class="submit-alerts">
-								<div class="alert alert-success" role="alert">
-								  This is a success alert
-								</div>
-								<div class="alert alert-danger" role="alert">
-								  This is a danger alert
-								</div>
-								<div class="alert alert-warning" role="alert">
-								  This is a warning alert
-								</div>
-							</div>-->
+						<form id="creatclient" class="aj-form" name="creatclient" method="post" action="<?php echo base_url().'Project/insertproject';?>" onsubmit="return changeDate();">
 							<?php
                                     $mess = $this->session->flashdata('message_name');
                                     if(!empty($mess)){
@@ -93,13 +82,13 @@
 									<div class="col-md-4">
 										<div class="form-group">
 											<label class="control-label">Start Date</label>
-											<input type="date" name="start_date" id="start_date" autocomplete="off" class="form-control" value="<?php if(!empty($sessData['start_date'])){echo $sessData['start_date'];}else{ }?>">
+											<input type="text" name="start_date" id="start_date" autocomplete="off" class="form-control" value="<?php if(!empty($sessData['start_date'])){echo $sessData['start_date'];}else{ }?>">
 										</div>
 									</div>
 									<div class="col-md-4" id="deadlineBox">
 										<div class="form-group">
 											<label class="control-label">Deadline</label>
-											<input type="date" name="deadline" id="deadline" autocomplete="off" class="form-control" value="<?php if(!empty($sessData['deadline'])){echo $sessData['deadline'];}else{ }?>">
+											<input type="text" name="deadline" id="deadline" autocomplete="off" class="form-control" value="<?php if(!empty($sessData['deadline'])){echo $sessData['deadline'];}else{ }?>" >
 										</div>
 									</div>
 									<div class="col-md-4" >
@@ -194,7 +183,7 @@
 									<div class="col-md-4">
 										<div class="form-group">
 											<label class="control-label">Project Budget</label>
-											<input type="text" class="form-control" name="project-budget" value="<?php if(!empty($sessData['project-budget'])){echo $sessData['project-budget'];}else{ }?>">
+											<input type="text" class="form-control" name="project_budget" value="<?php if(!empty($sessData['project_budget'])){echo $sessData['project_budget'];}else{ }?>">
 										</div>
 									</div>
 									<div class="col-md-4">
@@ -234,7 +223,7 @@
 									<div class="col-md-4">
 										<div class="form-group">
 											<label class="control-label">Hours Allocated</label>
-											<input type="text" class="form-control" name="hours-allocated" value="<?php if(!empty($sessData['hours-allocated'])){echo $sessData['hours-allocated'];}else{ }?>">
+											<input type="text" class="form-control" name="hours_allocated" value="<?php if(!empty($sessData['hours_allocated'])){echo $sessData['hours_allocated'];}else{ }?>">
 										</div>
 									</div>
 									
@@ -287,7 +276,7 @@
 					</table>
 				</div>
 				<hr>
-				<form id="category" class="" id="category" name="category" method="post">
+				<form id="category" class="" id="category" name="category" method="post" onsubmit="return checkName();">
 					<div class="form-body">
 						<div class="row">
 							<div class="col-md-12 ">

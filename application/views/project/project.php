@@ -34,7 +34,12 @@
 			                <h3 class="box-title text-white">Completed Projects</h3>
 			                <ul class="list-inline two-wrap">
 			                    <li><i class="icon-layers text-white"></i></li>
-			                    <li class="text-right"><span id="" class="counter text-white">2</span></li>
+								<?php 
+									$whereArr=array('status'=>1);
+									$Total = $this->common_model->getData('tbl_project_info',$whereArr);
+									$total_Project = count($Total);
+								 ?>
+							   <li class="text-right"><span id="" class="counter text-white"><?php echo $total_Project;?></span></li>
 			                </ul>
 			            </div>
                     </div>
@@ -43,16 +48,26 @@
 			                <h3 class="box-title text-white">In Process Projects</h3>
 			                <ul class="list-inline two-wrap">
 			                    <li><i class="icon-layers text-white"></i></li>
-			                    <li class="text-right"><span id="" class="counter text-white">16</span></li>
+								<?php 
+									$whereArr=array('status'=>2);
+									$Total = $this->common_model->getData('tbl_project_info',$whereArr);
+									$total_Project = count($Total);
+								 ?>
+			                    <li class="text-right"><span id="" class="counter text-white"><?php echo $total_Project;?></span></li>
 			                </ul>
 			            </div>
                     </div>
                     <div class="col-md-3">
                         <div class="stats-box bg-danger pt-1 pb-1">
-			                <h3 class="box-title text-white">Overdue Projects</h3>
+			                <h3 class="box-title text-white">Cancelled Projects</h3>
 			                <ul class="list-inline two-wrap">
 			                    <li><i class="icon-layers text-white"></i></li>
-			                    <li class="text-right"><span id="" class="counter text-white">15</span></li>
+								<?php 
+									$whereArr=array('status'=>4);
+									$Total = $this->common_model->getData('tbl_project_info',$whereArr);
+									$total_Project = count($Total);
+								 ?>
+			                    <li class="text-right"><span id="" class="counter text-white"><?php echo $total_Project;?></span></li>
 			                </ul>
 			            </div>
                     </div>
@@ -97,7 +112,7 @@
 												<option value='1'>Complete </option>
 												<option value='2'>In Progress </option>
 												<option value='3'>On Hold  </option>
-												<option value='4'>Canceled </option>
+												<option value='4'>Cancelled </option>
 										   </select>
 									   </div>
                                    </div>

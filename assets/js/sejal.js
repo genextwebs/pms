@@ -200,113 +200,178 @@ jQuery(document).ready(function() {
 			});
         
 		
-	//ARCHIEVE FILTER
-	$('#clientname').change(function(){ //button filter event click
-				var oTable = $('#archievdata').DataTable();
-					oTable.draw();
-			});
-
-			$('#project_status').change(function(){ //button filter event click
-				var oTable = $('#archievdata').DataTable();
-					oTable.draw();
-			});
-        
 		
-	//add project
-	$("form[name='creatclient']").validate({
-		rules:{
-				project_name : "required",
-				start_date : "required",
-				deadline : "required",	
-				select_client:"required",
-		},			
-		submitHandler: function(form) {
-		form.submit();}
+	//ARCHIEVE FILTER
+	$('#clientname').change(function(){ 
+				var oTable = $('#archievdata').DataTable();
+					oTable.draw();
+			});
+
+			$('#project_status').change(function(){ 
+				var oTable = $('#archievdata').DataTable();
+					oTable.draw();
+			});
+
+	//addproject=> datepicker
+	$(document).ready(function(){
+		//for start date
+		$("#start_date").datepicker({
+			format: 'dd-mm-yyyy',
+			numberOfMonths: 1,
+			onSelect: function(selected) {
+					$("#deadline").datepicker("option","minDate", selected)
+			}
+     	});
+		//for end date
+		$("#deadline").datepicker({ 
+			format: 'dd-mm-yyyy',
+			numberOfMonths: 1,
+			onSelect: function(selected) {
+				$("#start_date").datepicker("option","maxDate", selected)
+			}
+		 });
 	});
-	
-	//add template
-	$("form[name='creatclient']").validate({
-		rules:{
-				project_name : "required",
-		},			
-		submitHandler: function(form) {
-		form.submit();}
-	});
-	
-	//add category
-	
-	
 
-$("#category").submit(function(event) {
-			event.preventDefault();
-			var name = $("input[name='category_name']").val();
-			//var rate = $("input[name='rate']").val();
-			var dataString = 'name='+ name;
-		$.ajax({
-		   url: base_url+"project/insertcategory",
-		   type: 'POST',
-		   data: dataString,
-		   error: function() {
-			  alert('Something is wrong');
-		   },
-		   success: function(data) {
-			window.location.reload();
-		  }
-		});
+	//addproject=> sweetalert for delete
+	/* function deleteproducts(id){
+		var url = base_url+"Project/deleteproject";
+		swal({
+		 title: "Are you sure?",
+		 text: "You will not be able to recover this imaginary file!",
+		 type: "warning",
+		 showCancelButton: true,
+		 confirmButtonColor: "#DD6B55",
+		 confirmButtonText: "Yes, delete it!",
+		 closeOnConfirm: false
+		},
+		function(isConfirm){
+		if (isConfirm) {
+			   $.ajax({
+				   url: url,
+				   type: "POST",
+				   dataType: "JSON",
+				   data: {id:id},
+				  dataType: "html",
+				  
+				   success: function (data) {
+					   swal("Done!", "It was succesfully deleted!", "success");
+					   $('#project').DataTable().ajax.reload();
+				   },
+				   error: function (xhr, ajaxOptions, thrownError) {
+					   swal("Error deleting!", "Please try again", "error");
+				   }
+			   });
+		   }
+		   });
+	}*/
 
-
-});
-
-// for add category in addproject
-
-$("#save-category").click(function(event) {
-			event.preventDefault();
-			var catname = $("input[name='category_name']").val();
-			var dataString = 'name='+ catname;
-			$.ajax({
-			   url: base_url+"project/insertcat",
-			   type: 'POST',
-			   dataType: 'json',
-			   data: dataString,
-			   error: function() {
-				  alert('Something is wrong');
-			},
-			success: function(data) {
-           	console.log(data);
-     	    $('select[name="category_name"]').html('');       
-            $('select[name="category_name"]').append(data.catdata);
-             //  $("tbody").append("<tr><td>"+data.count+"</td><td>"+catname+"</td> <td><a href='javascript:;' class='btn btn-sm btn-danger btn-rounded delete-category' id='deletecat'>Remove</a></td></tr>");
-			$("tbody").append("<tr><td>"+data.count+"</td><td>"+catname+"</td> <td><input type='submit' class='btn btn-sm btn-danger btn-rounded delete-category' id='deletecat' value='Remove'></tr>");
-			$('#project-category1').modal('toggle');
-            $('#category')[0].reset();
+	//addproject date validation
+	function changeDate(){
+			var SD = document.getElementById('start_date').value;
+			var ED = document.getElementById('deadline').value;
+			var flag=0;
+			if (SD > ED) {
+               alert("Start date should not be greater than end date");
+			  // document.getElementById('start_date').focus();
+			   flag=1;
            }
-        });
-});
+		  if(flag==1)
+		  {
+			  return false;
+		  }
+		  else{
+			  return true;
+		  }
+       }
+	
+ 
+  	//addproject validation for all input
+	$("form[name='creatclient']").validate({
+		rules:{
+				project_name : "required",
+				select_client : "required",
+				start_date : "required",
+				deadline : "required",
+				project_budget:{
+								digits: true,
+				},
+				hours_allocated:{
+								digits:true,
+				},
+		},		
+		messages:
+				{
+					project_budget : "Enter valid input",
+					hours_allocated : "Enter Valid input",
+				},
+		submitHandler: function(form) {
+		form.submit();}
+	});
+	
+	//addtemplate validation
+	$("form[name='creatclient']").validate({
+		rules:{
+				project_name : "required",
+		},			
+		submitHandler: function(form) {
+		form.submit();}
+	});
+	
+	//addcategory using jquery 
+	$("#category").submit(function(event) {
+				event.preventDefault();
+				var name = $("input[name='category_name']").val();
+				var dataString = 'name='+ name;
+				$.ajax({
+				   url: base_url+"project/insertcategory",
+				   type: 'POST',
+				   data: dataString,
+				   error: function() {
+					  alert('Something is wrong');
+				   },
+				   success: function(data) {
+					window.location.reload();
+				  }
+				});
+	});
 
-
-
-// for delete category in project
-
-$('#deletecat').click(function(){
-	//alert('fdbkjbc');
-	//var id_post = this.id;
-	var btn = this;
-	e.preventDefault();
-		$.ajax({
-		   type: "POST",
-		   //alert('fdbkjbc');
-		    url: base_url+"project/deletecat",
-		   //url: "<?php echo base_url()?>delete",
-		   cache: false,
-		   data: "id="+$(this),
-		   success: function(){
-			  /* if (reaksi=="true"){
-				   alert('Success delete');
-			   } else {
-				   alert('failed');
+	// for add category in addproject
+	$("#save-category").click(function(event) {
+				event.preventDefault();
+				var catname = $("input[name='category_name']").val();
+				var dataString = 'name='+ catname;
+				$.ajax({
+				   url: base_url+"project/insertcat",
+				   type: 'POST',
+				   dataType: 'json',
+				   data: dataString,
+				   error: function() {
+					  alert('Something is wrong');
+				},
+				success: function(data) {
+				console.log(data);
+				$('select[name="category_name"]').html('');       
+				$('select[name="category_name"]').append(data.catdata);
+				 //  $("tbody").append("<tr><td>"+data.count+"</td><td>"+catname+"</td> <td><a href='javascript:;' class='btn btn-sm btn-danger btn-rounded delete-category' id='deletecat'>Remove</a></td></tr>");
+				$("tbody").append("<tr><td>"+data.count+"</td><td>"+catname+"</td> <td><input type='submit' class='btn btn-sm btn-danger btn-rounded delete-category' id='deletecat' value='Remove'></tr>");
+				$('#project-category1').modal('toggle');
+				$('#category')[0].reset();
 			   }
-			}*/
-		}
-		});
-return false
-});
+			});
+	});
+
+	// addproject=> delete category 
+	$('#deletecat').click(function(){
+		var btn = this;
+		e.preventDefault();
+			$.ajax({
+			   type: "POST",
+			   url: base_url+"project/deletecat",
+			   cache: false,
+			   data: "id="+$(this),
+			   success: function(){
+			}
+			});
+	return false
+	});
+	

@@ -24,40 +24,48 @@
 		                	<div class="card-wrapper collapse show">
 		                		<div class="card-body">
 		                			<form id="creatclient" class="aj-form" name="creatclient" method="post" action="<?php echo base_url().'Project/inserttemplate';?>">
-		                				<div class="submit-alerts">
-		                					<div class="alert alert-success" role="alert">
-											  This is a success alert
+										<?php 
+										$mess = $this->session->flashdata('message_name');
+										if(!empty($mess)){
+											//warning 
+										?>
+										<div class="submit-alerts">
+											<div class="alert alert-success" role="alert" style="display:block;">
 											</div>
-											<div class="alert alert-danger" role="alert">
-											  This is a danger alert
+										</div>
+										<div class="submit-alerts">
+											<div class="alert alert-danger" role="alert" style="display:block;">
+											 <?php echo $mess; ?>
 											</div>
+										</div>
+										<?php  } ?>
+										<div class="submit-alerts">
 											<div class="alert alert-warning" role="alert">
 											  This is a warning alert
 											</div>
-		                				</div>
+										</div>
 		                				<div class="form-body">
 		                					<div class="row">
 		                						<div class="col-md-12">
 		                							<div class="form-group">
 		                								<label class="control-label">Project Name</label>
 		                								<input id="project_name" class="form-control" type="text" name="project_name" value="">
-		                							
-												</div>
+		                							</div>
 		                						</div>
-		                				<div class="col-md-6">
-											<div class="form-group project-category">
-												
-												<label class="control-label" for="project-category">Project Category <a class="btn btn-sm btn-outline-success ml-1" href="javascript:;" data-toggle="modal" data-target="#project-category1"><i class="fa fa-plus"></i> Add Project Category</a></label>											
-											    <select class="custom-select br-0" id="project-category" name="project-category">
-														<?php
-															foreach($category as $cat){
-																echo '<option value="'.$cat->id.'">'.$cat->name.'</option> ';
-															}
-															?>
-												</select>
+												<div class="col-md-6">
+													<div class="form-group project-category">
+														
+														<label class="control-label" for="project-category">Project Category <a class="btn btn-sm btn-outline-success ml-1" href="javascript:;" data-toggle="modal" data-target="#project-category1"><i class="fa fa-plus"></i> Add Project Category</a></label>											
+														<select class="custom-select br-0" id="project-category" name="project-category">
+																<?php
+																	foreach($category as $cat){
+																		echo '<option value="'.$cat->id.'">'.$cat->name.'</option> ';
+																	}
+																	?>
+														</select>
+													</div>
+												</div>
 											</div>
-										</div>
-										</div>
 		                					<!--<div class="row">
 											    <div class="col-md-6">
 											        <div class="form-group">

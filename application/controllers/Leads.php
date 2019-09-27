@@ -218,7 +218,7 @@ class Leads extends CI_Controller
 			$updateArr = array('clientid'=>0,'companyname'=>$companyname,'website'=>$website,'address'=>$address,'clientname'=>$clientname,'clientemail'=>$clientemail,'mobile'=>$mobile,'nextfollowup'=>$nextfollowup,'status'=>$status,'source'=>$source,'note'=>$note);
 			$whereArr = array('id'=>$id);
 			$this->common_model->updatedata('tbl_leads',$updateArr,$whereArr);
-			$this->session->set_flashdata('message_name', 'Lead Insert sucessfully');
+			$this->session->set_flashdata('message_name', 'Leads Updated sucessfully');
 			redirect('Leads');
 		}
 	}
