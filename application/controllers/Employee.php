@@ -216,18 +216,30 @@ class Employee extends CI_Controller
             	$searchTerm = trim($_GET['sSearch']);
             	$sWhere .= ' AND (employeename like "%'.$searchTerm.'%" OR address like "%'.$searchTerm.'%" OR skills like "%'.$searchTerm.'%" OR slackusername like "%'.$searchTerm.'%")';
             }
-			$status = !empty($_POST['status']) ? $_POST['status'] : '';
+			$status = $_POST['status'];
+			//echo $status;die;
 			$employee = !empty($_POST['employeename']) ? $_POST['employeename'] : '';
 			$skill = !empty($_POST['skill']) ? $_POST['skill'] : '';
-			$skill = !empty($_POST['designation']) ? $_POST['designation'] : '';
-			$skill = !empty($_POST['department']) ? $_POST['department'] : '';
+			$designation = !empty($_POST['designation']) ? $_POST['designation'] : '';
+			$department = !empty($_POST['department']) ? $_POST['department'] : '';
+
 			if(!empty($employee)){
-				$sWhere =' AND  id="'.$employee.'"';
+				$sWhere.=' AND  id="'.$employee.'"';
 			}
-			if($status=='All'){
+			if($status == 'All'){
 			}
 			else{
-				$sWhere =' AND  status='.$status;
+				$sWhere.=' AND  status='.$status;
+			}
+			if(!empty($designation)){
+				$sWhere.=' AND  designation='.$designation;
+			}
+			if(!empty($department)){
+				$sWhere.=' AND  department='.$department;
+			}
+			if(!empty($skill)){
+				$sk = 'FIND_IN_SET("'.$skill.'",skills)';
+				$sWhere.=' AND '.$sk;
 			}
             if(!empty($sWhere)){
             	$sWhere = " WHERE 1 ".$sWhere;

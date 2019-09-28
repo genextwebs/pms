@@ -62,7 +62,7 @@
 	                            			<div class="form-group">
 				                                <label class="control-label">Status</label>
 				                                <select class="form-control" name="status" id="status" data-style="form-control">
-				                                    <option value="">All</option>
+				                                    <option value="All">All</option>
 				                                    <option value="0">Active</option>
 				                                    <option value="1">Inactive</option>
 				                                </select>
@@ -112,7 +112,7 @@
 	                            			<div class="form-group">
 				                                <label class="control-label">Designation</label>
 				                                <select class="form-control" name="designation" id="designation" data-style="form-control">
-				                                    <option>--</option>
+				                                    <option value="">All</option>
 									            	<?php foreach($designation as $row){
 									            	?>
 									            	<option value="<?php echo $row->id?>"><?php echo $row->name;?></option>
@@ -126,7 +126,7 @@
 	                            			<div class="form-group">
 				                                <label class="control-label">Department</label>
 				                                <select class="form-control" name="department" id="department" data-style="form-control">
-				                                   <option>--</option>
+				                                   <option value="">All</option>
 									            	<?php foreach($department as $row){
 									            	?>
 									            	<option value="<?php echo $row->id?>"><?php echo $row->name;?></option>
