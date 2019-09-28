@@ -1,5 +1,4 @@
-
- <nav aria-label="breadcrumb" class="breadcrumb-nav">
+<nav aria-label="breadcrumb" class="breadcrumb-nav">
 	<div class="row">
 		<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
 			<h4 class="page-title"><i class="icon-layers"></i> Projects</h4>
@@ -75,7 +74,7 @@
 													?> 											
 											</select>
 										</div>
-							</div>
+								</div>
 								</div>
 								<div class="row">
 									<div class="col-md-4">
@@ -132,29 +131,29 @@
 									</div>
 								</div>
 								<h3 class="box-title mb-3 mt-2">Client Info</h3>
-									<div class="row">
-										<div class="col-md-12">
-											<div class="form-group">
-												<select class="custom-select" id="select-client" name="select_client">
-													  <option value="">--Select--</option>
-												<?php
-													foreach($client as $row)
-													{
-															$str='';
-															if(!empty($sessData['select_client'])){
-																if($sessData['select_client'] == $row->id){
-																	$str='selected';
-																}
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<select class="custom-select" id="select-client" name="select_client">
+												  <option value="">--Select--</option>
+											<?php
+												foreach($client as $row)
+												{
+														$str='';
+														if(!empty($sessData['select_client'])){
+															if($sessData['select_client'] == $row->id){
+																$str='selected';
 															}
-															?>
-															<option value="<?php echo $row->id?>" <?php echo $str;?>><?php echo $row->clientname;?></option>
-													<?php
-													} 
-													?> 		
-												</select>
-											</div>
+														}
+														?>
+														<option value="<?php echo $row->id?>" <?php echo $str;?>><?php echo $row->clientname;?></option>
+												<?php
+												} 
+												?> 		
+											</select>
 										</div>
 									</div>
+								</div>
 								<div class="row">
 									<div class="col-md-4">
 										<div class="form-group">
@@ -172,7 +171,6 @@
 											</div>
 										</div>
 									</div>	
-								</div>
 								</div>
 								<h3 class="box-title mb-3 mt-2">Budget Info</h3>
 								<div class="row">

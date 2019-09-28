@@ -116,30 +116,30 @@
 									</div>
 								</div>
 								
-									<h3 class="box-title mb-3 mt-2">Client Info</h3>
-                                			<div class="row">
-                                				<div class="col-md-12">
-                                					<div class="form-group">
-                                						<label class="control-label" for="select-client">Select Client</label>
-                                						<select class="custom-select" id="select-client" name="select-client" value="<?php echo !empty($projectinfo[0]->clientid) ? $projectinfo[0]->clientid : '' ?>">
-                                							  
+								<h3 class="box-title mb-3 mt-2">Client Info</h3>
+                    			<div class="row">
+                    				<div class="col-md-12">
+                    					<div class="form-group">
+                    						<label class="control-label" for="select-client">Select Client</label>
+                    						<select class="custom-select" id="select-client" name="select-client" value="<?php echo !empty($projectinfo[0]->clientid) ? $projectinfo[0]->clientid : '' ?>">
+                    							  
+														<?php
+															foreach($client as $row)
+															{
+																$str='';
+																if($row->id==$projectinfo->select-client)
+																{
+																	$str='selected';
+																	?>	
 																	<?php
-																		foreach($client as $row)
-																		{
-																			$str='';
-																			if($row->id==$projectinfo->select-client)
-																			{
-																				$str='selected';
-																				?>	
-																				<?php
-																			}
-																			echo '<option value="'.$row->id.'" >'.$row->clientname.'</option>';
-																		}
-																	?>
-                                						</select>
-                                					</div>
-                                				</div>
-                                			</div>
+																}
+																echo '<option value="'.$row->id.'" >'.$row->clientname.'</option>';
+															}
+														?>
+                    						</select>
+                    					</div>
+                    				</div>
+                    			</div>
 								<div class="row">
 									<div class="col-md-4">
 										<div class="form-group">
@@ -157,7 +157,6 @@
 											</div>
 										</div>
 									</div>	
-								</div>
 								</div>
 								<h3 class="box-title mb-3 mt-2">Budget Info</h3>
 								<div class="row">
