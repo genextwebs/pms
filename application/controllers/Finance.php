@@ -145,6 +145,8 @@ class Finance extends CI_Controller
 				
 		
 	    $query = "SELECT * from tbl_estimates ".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+				//echo $query;die;
+
 		$estimatesArr = $this->common_model->coreQueryObject($query);
 
 		$query = "SELECT * from tbl_estimates ".$sWhere;
@@ -298,8 +300,8 @@ class Finance extends CI_Controller
 			//echo "<pre>";print_r($data);die;
 
 			
-			$insertArr=array('invoice' => $invoice,'project' => $project,'clientname'=>$invoicedata[0]->clientid,'companyname'=>$invoicedata[0]->companyname,'currency' => $currency,'invoicedate' => $invoicedate,'duedate'=>$duedate,'status'=>$status,'recuringpayment'=>$recuringpayment,'billingfrequency'=>$billingfrequency,'billinginterval'=>$billinginterval,'billingcycle'=>$billingcycle,'total'=>$total);
-			print_r($insertArr);die;
+			$insertArr=array('invoice' => $invoice,'project' => $project,'clientname'=>$data['invoicedata'][0]->clientid,'companyname'=>$data['invoicedata'][0]->companyname,'currency' => $currency,'invoicedate' => $invoicedate,'duedate'=>$duedate,'status'=>$status,'recuringpayment'=>$recuringpayment,'billingfrequency'=>$billingfrequency,'billinginterval'=>$billinginterval,'billingcycle'=>$billingcycle,'total'=>$total);
+			//print_r($insertArr);die;
 			$this->common_model->insertData('tbl_invoice',$insertArr);
 			$invoiceid=$this->db->insert_id();
 			
