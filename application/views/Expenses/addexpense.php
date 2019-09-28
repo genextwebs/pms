@@ -50,75 +50,20 @@
 		                				</div>
 		                				<div class="form-body">
 		                					<div class="row">
-											<div class="col-md-12 ">
-                                    <div class="form-group">
-                                        <label>Choose Member</label>
-                                        <div class="select2-container select2 form-control" id="s2id_user_id"><a href="javascript:void(0)" class="select2-choice" tabindex="-1">   <span class="select2-chosen" id="select2-chosen-1">Mr. Harley Macejkovic DVM</span><abbr class="select2-search-choice-close"></abbr>   <span class="select2-arrow" role="presentation"><b role="presentation"></b></span></a><label for="s2id_autogen1" class="select2-offscreen"></label><input class="select2-focusser select2-offscreen" type="text" aria-haspopup="true" role="button" aria-labelledby="select2-chosen-1" id="s2id_autogen1"><div class="select2-drop select2-display-none select2-with-searchbox">   <div class="select2-search">       <label for="s2id_autogen1_search" class="select2-offscreen"></label>       <input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="select2-input" role="combobox" aria-expanded="true" aria-autocomplete="list" aria-owns="select2-results-1" id="s2id_autogen1_search" placeholder="">   </div>   <ul class="select2-results" role="listbox" id="select2-results-1">   </ul></div></div><select id="user_id" class="select2 form-control" data-placeholder="Choose Member" name="user_id" tabindex="-1" title="" style="display: none;">
-                                                                                            <option value="1">Mr. Harley Macejkovic DVM</option>
-                                                                                            <option value="2">Mr. Garnett Mayert Jr.</option>
-                                                                                            <option value="4">Imogene Kris</option>
-                                                                                            <option value="5">Maritza Parisian</option>
-                                                                                            <option value="6">German Fadel</option>
-                                                                                            <option value="7">Prof. Loraine Nolan Sr.</option>
-                                                                                            <option value="8">Miss Melyssa Schuster DVM</option>
-                                                                                            <option value="9">Henry Ziemann</option>
-                                                                                            <option value="10">Caleb Morar</option>
-                                                                                            <option value="11">Alec Kling</option>
-                                                                                            <option value="12">Laury Mayer PhD</option>
-                                                                                            <option value="13">Demetris Welch</option>
-                                                                                            <option value="14">Angela Cormier</option>
-                                                                                            <option value="15">Garret Stracke V</option>
-                                                                                            <option value="16">Cary McKenzie</option>
-                                                                                            <option value="17">Prof. Van Fadel IV</option>
-                                                                                            <option value="18">Prof. Ansley Crona</option>
-                                                                                            <option value="19">Dion Bartell Jr.</option>
-                                                                                            <option value="20">Prof. Lourdes Macejkovic</option>
-                                                                                            <option value="21">Alba Rosenbaum</option>
-                                                                                            <option value="22">Dr. Golda Koss</option>
-                                                                                            <option value="23">Mr. Jacinto Bernier I</option>
-                                                                                            <option value="24">Maci Lebsack</option>
-                                                                                            <option value="25">Ms. Hosea Marvin</option>
-                                                                                            <option value="26">Prof. Dalton Leannon IV</option>
-                                                                                            <option value="27">Mr. Gerald DuBuque DVM</option>
-                                                                                            <option value="28">Lyla Gusikowski</option>
-                                                                                            <option value="29">Dr. Cortney Reinger</option>
-                                                                                            <option value="30">Liza Ankunding</option>
-                                                                                            <option value="31">Allie Homenick I</option>
-                                                                                            <option value="32">Herta Dibbert</option>
-                                                                                            <option value="33">Dominique Flatley</option>
-                                                                                            <option value="64">Keven McCullough DVM</option>
-                                                                                            <option value="65">Thalia Schuster</option>
-                                                                                            <option value="66">Clement Weimann</option>
-                                                                                            <option value="67">Hallie Dooley DDS</option>
-                                                                                            <option value="68">Reva Purdy</option>
-                                                                                            <option value="69">Therese Schmidt</option>
-                                                                                            <option value="70">Prof. Ronny Cummings</option>
-                                                                                            <option value="71">Miss Marlen Pfannerstill II</option>
-                                                                                            <option value="72">Mr. Elmore Von V</option>
-                                                                                            <option value="73">Ms. Amara Dickens III</option>
-                                                                                            <option value="74">Margret Barton</option>
-                                                                                            <option value="75">Ewald Brekke</option>
-                                                                                            <option value="76">Adell Dicki DVM</option>
-                                                                                            <option value="77">Joshua Jacobs</option>
-                                                                                            <option value="78">Florencio Langosh</option>
-                                                                                            <option value="79">Kenyatta Krajcik</option>
-                                                                                            <option value="80">Ellie Turner</option>
-                                                                                            <option value="81">Brayan Williamson Sr.</option>
-                                                                                            <option value="82">Mr. Dashawn Carter IV</option>
-                                                                                            <option value="83">Etha Turcotte</option>
-                                                                                            <option value="84">Cornell Hauck PhD</option>
-                                                                                            <option value="85">Alfredo Kunde</option>
-                                                                                            <option value="86">Colton Konopelski</option>
-                                                                                            <option value="87">Clement O'Keefe III</option>
-                                                                                            <option value="88">Miss Reyna Marks Sr.</option>
-                                                                                            <option value="89">Curt Hessel</option>
-                                                                                            <option value="90">Dr. Olaf Green</option>
-                                                                                            <option value="91">Vicente Abernathy</option>
-                                                                                            <option value="92">Agustin Goyette</option>
-                                                                                            <option value="93">Miss Santina Schulist</option>
-                                                                                    </select>
-                                    </div>
-                                </div>
+												<div class="col-md-12 ">
+													<div class="form-group">
+														<label>Choose Member</label>
+														  <select id="user_id" class="select2 form-control" data-placeholder="Choose Member" name="user_id" tabindex="-1" title="" style="display: none;">
+															<option value="">select</option>
+																<?php
+																	foreach($employee as $row)
+																	{
+																		echo '<option value="'.$row->employeename.'">'.$row->employeename.'</option>';
+																	}
+																?>														   </select>
+														</div>
+												</div>
+												</div>
 		                						<div class="col-md-4">
 													<div class="form-group">
 														<label class="control-label">Project</label>
@@ -131,10 +76,7 @@
 																	}
 																?>
 														</select>
-													</div>
-												</div>
-												<div class="col-md-4">
-		                							<div class="form-group">
+									<div class="form-group">
 		                								<label class="control-label">Currency</label>
 														<select name="currency" id="currency" class="form-control">
 															<option value="">select</option>

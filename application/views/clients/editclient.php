@@ -5,9 +5,9 @@
         </div>
         <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
             <ol class="breadcrumb">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="clients.html">Clients</a></li>
-                <li class="active">Add New</li>
+                <li><a href="<?php echo base_url().'dashboard'?>">Home</a></li>
+                <li><a href=""<?php echo base_url().'Clients'?>"">Clients</a></li>
+                <li class="active">Edit</li>
             </ol>
         </div>
     </div>
@@ -73,7 +73,7 @@
             						<div class="col-md-6">
             							<div class="form-group">
             								<label class="control-label">Client Email</label>
-            								<input id="email" class="form-control" type="email" name="email" value="<?php echo !empty($clients[0]->clientemail) ?  $clients[0]->clientemail : ' '?>">
+            								<input id="email" class="form-control" type="email" name="email" value="<?php echo !empty($user[0]->emailid) ?  $user[0]->emailid : ' '?>">
             								<span class="help-block">Client will login using this email.</span>
             							</div>
             						</div>
@@ -91,7 +91,7 @@
             							<div class="form-group">
             								<div class="form-group">
 	                                            <label>Mobile</label>
-	                                            <input type="tel" name="mobile" id="mobile" value="<?php echo !empty($clients[0]->mobile) ?  $clients[0]->mobile : ' '?>" class="form-control">
+	                                            <input type="tel" name="mobile" id="mobile" value="<?php echo !empty($user[0]->mobile) ?  $user[0]->mobile : ' '?>" class="form-control">
 	                                       </div>
             							</div>
             						</div>
@@ -99,8 +99,8 @@
                                         <div class="form-group">
                                             <label>Status</label>
                                             <select name="status" id="status" class="form-control">
-                                               <option value="1" <?php if($clients[0]->status=='1'){ echo 'selected'; } ?>>Active</option>
-												<option value="0" <?php if($clients[0]->status=='0'){ echo 'selected'; }?>>DeActive</option>
+                                               <option value="1" <?php if($user[0]->status=='1'){ echo 'selected'; } ?>>Active</option>
+												<option value="0" <?php if($user[0]->status=='0'){ echo 'selected'; }?>>DeActive</option>
 											</select>
                                         </div>
                                     </div>
@@ -153,8 +153,8 @@
                                         <div class="form-group">
                                             <label>Log In</label>
                                             <select name="login" id="login" class="form-control">
-                                               <option value="1" <?php if($clients[0]->login=='1'){ echo 'selected'; } ?>>Enable</option>
-												<option value="0" <?php if($clients[0]->login=='0'){ echo 'selected'; }?>>Disable</option>
+                                               <option value="1" <?php if($user[0]->login=='1'){ echo 'selected'; } ?>>Enable</option>
+												<option value="0" <?php if($user[0]->login=='0'){ echo 'selected'; }?>>Disable</option>
 											</select>
                                         </div>
                                     </div>

@@ -45,15 +45,19 @@ class Clients extends CI_Controller
 			$gstnumber=$this->input->post('gst_number');	
 			$note=$this->input->post('note');
 			$login=$this->input->post('login');
-			$whereArr = array('clientemail' => $clientemail);
-			$data = $this->common_model->getData('tbl_clients',$whereArr);
+			$whereArr = array('emailid' => $clientemail);
+			$data = $this->common_model->getData('tbl_user',$whereArr);
 			if(count($data)==1){
 				$this->session->set_flashdata('message_name','Email already exits');
 				$this->session->set_flashdata("data",$_POST);
 				redirect('Clients/addclients');
 			}
 			else{
-				$insertArr=array('companyname' => $companyname,'website' => $website,'address' => $address,'clientname' => $clientname,'clientemail' => $clientemail,'password' => md5($password), 'generaterandompassword' => $grp, 'mobile' => $mobile,'status'=>'1','skype' => $skype,'linkedin' => $linkedin,'twitter' => $twitter,'facebook' => $facebook,'gstnumber' => $gstnumber,'note' => $note,'login' =>$login );
+				$userinsertArr=array('user_type'=>1,'emailid'=>$clientemail,'password'=>$password,'generaterandompassword'=>$grp,'mobile'=>$mobile,'status'=>1,'login'=>$login);
+				$this->common_model->insertdata('tbl_user',$userinsertArr);
+				$userid=$this->db->insert_id();
+
+				$insertArr=array('user_id'=>$userid,'companyname' => $companyname,'website' => $website,'address' => $address,'clientname' => $clientname,'skype' => $skype,'linkedin' => $linkedin,'twitter' => $twitter,'facebook' => $facebook,'gstnumber' => $gstnumber,'note' => $note);
 				$this->common_model->insertdata('tbl_clients',$insertArr);
 				$this->session->set_flashdata('message_name', "Data Inserted Succeessfully");
 				redirect('Clients/index');
@@ -67,7 +71,7 @@ class Clients extends CI_Controller
 			$defaultOrderClause = "";
 			$sWhere = "";
 			$sOrder = '';	
-			$aColumns = array( 'id', 'clientname', 'companyname', 'clientemail', 'status','createdat');
+			$aColumns = array( 'id', 'clientname', 'companyname');
 			//'ahrefs_dr', 
             $totalColumns = count($aColumns);
 
@@ -144,7 +148,7 @@ class Clients extends CI_Controller
 					if(!empty($enddate)){						
 						$sWhere.=' AND createdat<="'.$enddate.'"';
 					}
-					
+					$sWhere.=' AND tbl_user.is_deleted=0';	
 					if(!empty($sWhere)){
 						$sWhere = " WHERE 1 ".$sWhere;
 					}
@@ -152,10 +156,11 @@ class Clients extends CI_Controller
 				}
 				
 		
-	    $query = "SELECT * from tbl_clients ".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+	    $query = "SELECT tbl_user.id,tbl_user.is_deleted,tbl_clients.clientname,tbl_clients.companyname,tbl_user.emailid,tbl_user.status,tbl_user.created_at from tbl_clients INNER JOIN tbl_user ON tbl_clients.user_id=tbl_user.id ".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+		//echo $query;die;
 		$clientsArr = $this->common_model->coreQueryObject($query);
 
-		$query = "SELECT * from tbl_clients ".$sWhere;
+		$query =  "SELECT tbl_user.id,tbl_user.is_deleted,tbl_clients.clientname,tbl_clients.companyname,tbl_user.emailid,tbl_user.status,tbl_user.created_at from tbl_clients INNER JOIN tbl_user ON tbl_clients.user_id=tbl_user.id ".$sWhere;
 		$clientsFilterArr = $this->common_model->coreQueryObject($query);
 		$iFilteredTotal = count($clientsFilterArr);
 
@@ -178,18 +183,18 @@ class Clients extends CI_Controller
 
 			}
 			//$clientid = $row->clientid;
-			$create_date = date('d-m-Y', strtotime($row->createdat));
+			$create_date = date('d-m-Y', strtotime($row->created_at));
 			
 				$actionStr = "<abbr title=\"Edit\"><a class=\"btn btn-info btn-circle\" data-toggle=\"tooltip\" data-original-title=\"Edit\" href='".base_url()."Clients/editclients/".base64_encode($id)."'><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i></a></abbr>
 				<abbr title=\"View Client Details\"><a class=\"btn btn-success btn-circle\" data-toggle=\"tooltip\" data-original-title=\"View Client Details\" href='".base_url()."Clients/viewclientdetail/".base64_encode($id)."'><i class=\"fa fa-search\" aria-hidden=\"true\" ></i></a></abbr>
 				<abbr title=\"Delete\"><a  class=\"btn btn-danger btn-circle sa-params\" data-toggle=\"tooltip\"  data-original-title=\"Delete\" href=\"javascript:void();\" onclick=\"deleteclients('".base64_encode($id)."');\"><i class=\"fa fa-times\" aria-hidden=\"true\"></i></a></abbr>";	
-           
+          
 			
 			$datarow[] = array(
 				$id = $i,
                 $row->clientname,
                 $row->companyname,
-	            $row->clientemail,
+	            $row->emailid,
                 $sta,	
 				$create_date,
 				$actionStr
@@ -213,7 +218,9 @@ class Clients extends CI_Controller
 		$id=$this->uri->segment(3);
 		$id1=base64_decode($id);
 		$whereArr=array('id'=>$id1);
-		$data['clients']=$this->common_model->getData('tbl_clients',$whereArr);
+		$whereArr1=array('user_id'=>$id1);
+		$data['user']=$this->common_model->getData('tbl_user',$whereArr);
+		$data['clients']=$this->common_model->getData('tbl_clients',$whereArr1);
 		$this->load->view('common/header');
 		$this->load->view('clients/editclient',$data);
 		$this->load->view('common/footer');
@@ -238,23 +245,25 @@ class Clients extends CI_Controller
 			$note=$this->input->post('note');
 			$login=$this->input->post('login');
 					
-				$updateArr['companyname'] = $companyname;
-				$updateArr['website'] = $website;
-				$updateArr['address'] = $address;
-				$updateArr['clientname'] = $clientname;
-				$updateArr['clientemail'] = $clientemail;
+				$updateArr1['companyname'] = $companyname;
+				$updateArr1['website'] = $website;
+				$updateArr1['address'] = $address;
+				$updateArr1['clientname'] = $clientname;
+				$updateArr['emailid'] = $clientemail;
 				$updateArr[	'mobile'] = $mobile;
 				$updateArr['status']=$status;
-				$updateArr['skype'] = $skype;
-				$updateArr['linkedin'] = $linkedin;
-				$updateArr['twitter'] = $twitter;
-				$updateArr['facebook'] = $facebook;
-				$updateArr['gstnumber'] = $gstnumber;
-				$updateArr['note'] = $note;
+				$updateArr1['skype'] = $skype;
+				$updateArr1['linkedin'] = $linkedin;
+				$updateArr1['twitter'] = $twitter;
+				$updateArr1['facebook'] = $facebook;
+				$updateArr1['gstnumber'] = $gstnumber;
+				$updateArr1['note'] = $note;
 				$updateArr['login'] =$login;
 				
-				$whereArr=array('id'=>base64_decode($id));
-				$data['query']=$this->common_model->updateData('tbl_clients',$updateArr,$whereArr);
+				//$whereArr=array('id'=>base64_decode($id));
+				$data['query']=$this->common_model->updateData('tbl_user',$updateArr,$whereArr);
+				$data['query']=$this->common_model->updateData('tbl_clients',$updateArr1,$whereArr1);
+
 				$this->session->set_flashdata('messagename', "Data Update Succeessfully");
 				redirect('Clients/index');
 		}
@@ -263,6 +272,8 @@ class Clients extends CI_Controller
 	public function deleteclient(){
 		$clientid=base64_decode($_POST['clientid']);
 		$whereArr=array('id'=>$clientid);
+		$updateArr=array('is_deleted'=>1);
+		$this->common_model->updateData('tbl_user',$updateArr,$whereArr);
 		$this->common_model->deleteData('tbl_clients',$whereArr);
 		redirect('Clients/index');
 	}

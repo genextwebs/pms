@@ -102,7 +102,7 @@
 		                						<div class="col-xs-12 col-md-4 mt-4">
 		                							<div class="form-group">
 		                								<div class="checkbox checkbox-info">
-			                                                <input id="randompassword" name="randompassword" value="on" type="checkbox" onclick="checkuncheck();"  >
+			                                                <input id="randompassword" name="randompassword" type="checkbox" onclick="checkuncheck();"  >
 			                                                <label for="randompassword">Generate Random Password</label>
 			                                            </div>
 		                							</div>
@@ -171,7 +171,7 @@
 			                                </div>
 			                                <div class="form-actions">
 				                                <input type="submit" id="save-form" class="btn btn-success" name="btnsubmit" value="Save" > <i class="fa fa-check"></i>
-				                                <input type="reset" class="btn btn-default" value="Reset" >
+												<a href="<?php echo base_url().'Clients/index' ?>" class="btn btn-default">Back</a>
 				                            </div>
 		                				</div>
 		                			</form>

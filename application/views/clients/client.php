@@ -40,6 +40,7 @@
 									</div>
                 				</div>
 							</div>
+							<form>
 								<div class="row">
 		                		<div class="col-lg-3 col-md-4">
 		                			<div class="form-group">
@@ -75,11 +76,12 @@
 								<div class="col-lg-3 col-md-4">
 		                			<div class="form-group">
 										<input type="button" value="Apply" name="btnapply" id="btnapply"> 
-										<input type="reset" value="Reset">
+										<input type="reset" id="btnreset" value="Reset">
 									</div>
 		                		</div>
 		  
 		                	</div>
+						</form>
 		                
 								   <?php
 										//warning 

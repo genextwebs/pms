@@ -101,7 +101,7 @@
 														<div class="row">
 														<div class="col-md-12">
 															<div class="input-icon">
-																<input type="text" class="form-control" name="issue_date" id="invoice_date" value="<?php echo date('Y-m-d'); ?>">
+																<input type="text" class="form-control" name="invoice_date" id="invoice_date" value="<?php echo date('Y-m-d'); ?>">
 															</div>
 														</div>
 														</div>
@@ -253,10 +253,19 @@
 												<div class="row m-t-5 font-bold">
 														<div class="col-md-offset-9 col-md-1 col-xs-6 text-right p-t-10">Total</div>
 															<p class="form-control-static col-xs-6 col-md-2"  name="total" id="total">
-																<!--<span class="total">0.00</span>-->
+															<?php echo !empty($estimate[0]->total) ? $estimate[0]->total : '' ?>
 															</p>
 															<input type="hidden" class="total-field" name="finaltotal" id="finaltotal">
 												</div>
+																							<div class="row">
+											<div class="col-sm-12">
+													<div class="form-group">
+														<label class="control-label">Note</label>
+														<textarea name="note" class="form-control" rows="5"><?php echo !empty($estimate[0]->note) ? $estimate[0]->note : '' ?></textarea>
+													</div>
+												</div>
+											</div>
+
 											<div class="row">
 												<div class="col-md-12">
 													<input type="submit" id="save-form" class="btn btn-success" name="btnsubmit" value="Save" > <i class="fa fa-check"></i>

@@ -293,14 +293,14 @@ class Finance extends CI_Controller
 			$billingfrequency=$this->input->post('billing_frequency');
 			$billinginterval=$this->input->post('billing_interval');
 			$billingcycle=$this->input->post('billing_cycle');
-			$total=$this->input->post('txttotal');
+			$total=$this->input->post('finaltotal');
 			//$sql=select clientid form tbl_project_info 
 			$sql="SELECT tbl_project_info.clientid,tbl_clients.clientname,tbl_clients.companyname FROM tbl_project_info INNER JOIN tbl_clients ON tbl_project_info.clientid = tbl_clients.id where tbl_project_info.id=".$project;			
 			$data['invoicedata']=$this->common_model->coreQueryObject($sql);
 			//echo "<pre>";print_r($data);die;
 
 			
-			$insertArr=array('invoice' => $invoice,'project' => $project,'clientname'=>$data['invoicedata'][0]->clientid,'companyname'=>$data['invoicedata'][0]->companyname,'currency' => $currency,'invoicedate' => $invoicedate,'duedate'=>$duedate,'status'=>$status,'recuringpayment'=>$recuringpayment,'billingfrequency'=>$billingfrequency,'billinginterval'=>$billinginterval,'billingcycle'=>$billingcycle,'total'=>$total);
+			$insertArr=array('invoice' => $invoice,'project' => $project,'clientid'=>$data['invoicedata'][0]->clientid,'companyname'=>$data['invoicedata'][0]->companyname,'currency' => $currency,'invoicedate' => $invoicedate,'duedate'=>$duedate,'status'=>$status,'recuringpayment'=>$recuringpayment,'billingfrequency'=>$billingfrequency,'billinginterval'=>$billinginterval,'billingcycle'=>$billingcycle,'total'=>$total);
 			//print_r($insertArr);die;
 			$this->common_model->insertData('tbl_invoice',$insertArr);
 			$invoiceid=$this->db->insert_id();
@@ -337,7 +337,7 @@ class Finance extends CI_Controller
 			$defaultOrderClause = "";
 			$sWhere = "";
 			$sOrder = '';	
-			$aColumns = array( 'id', 'invoice', 'project', 'clientname','total', 'invoicedate','status');
+			$aColumns = array( 'id', 'invoice', 'project', 'clientid','total', 'invoicedate','status');
 			//'ahrefs_dr', 
             $totalColumns = count($aColumns);
 
@@ -473,7 +473,7 @@ class Finance extends CI_Controller
 				$id = $i,
                 $row->invoice,
                 $row->project,
-                $row->clientname,
+                $row->clientid,
                 $row->total,
                 $row->project,
 				$row->invoicedate,

@@ -106,6 +106,11 @@ $('#btnapply').click(function(){ //button filter event click
 				var oTable = $('#clients').DataTable();
 					oTable.draw();
 			});
+$('#btnreset').click(function(){ 
+alert('fdc');			
+table.ajax.reload();
+
+});
 				
 
 //delete clients
@@ -318,7 +323,7 @@ function deleteestimates(estimateid){
 }
 
 //show &hide
- $("select").change(function(){
+ $("#recurring_payment").change(function(){
   if ( this.value == '1')
   {
 	$(".showdiv").show();
@@ -404,4 +409,3 @@ $('#btnapply').click(function(){ //button filter event click
 				var oTable = $('#invoices').DataTable();
 					oTable.draw();
 			});
-				
