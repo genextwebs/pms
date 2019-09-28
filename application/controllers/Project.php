@@ -652,6 +652,7 @@ class Project extends CI_Controller {
 					
 						$query = "SELECT tbl_project_template.*,tbl_project_category.name from tbl_project_template INNER JOIN tbl_project_category on tbl_project_template.projectcategory = tbl_project_category.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 						$templateArr = $this->common_model->coreQueryObject($query);
+						//echo($query);die;
 						$query = "SELECT tbl_project_template.*,tbl_project_category.name from tbl_project_template INNER JOIN tbl_project_category on tbl_project_template.projectcategory = tbl_project_category.id".$sWhere;
 						$TemplateFilterArr = $this->common_model->coreQueryObject($query);
 						$iFilteredTotal = count($TemplateFilterArr);

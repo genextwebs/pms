@@ -318,7 +318,7 @@ jQuery(document).ready(function() {
 	});
 	
 	//addcategory using jquery 
-	$("#category").submit(function(event) {
+	/*$("#category").submit(function(event) {
 				event.preventDefault();
 				var name = $("input[name='category_name']").val();
 				var dataString = 'name='+ name;
@@ -333,7 +333,7 @@ jQuery(document).ready(function() {
 					window.location.reload();
 				  }
 				});
-	});
+	});*/
 
 	// for add category in addproject
 	$("#save-category").click(function(event) {

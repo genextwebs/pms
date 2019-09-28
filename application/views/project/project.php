@@ -190,7 +190,7 @@
             					<span aria-hidden="true">×</span>
             				</button>
             			</div>
-            			<div class="modal-body">
+            			<!--<div class="modal-body">
             				<div class="table-responsive">
 					            <table class="table">
 					                <thead>
@@ -228,8 +228,30 @@
 					                    </tr>
 					                </tbody>
 					            </table>
-					        </div>
-					        <hr>
+					        </div>-->
+						<div class="modal-body">
+							<div class="table-responsive">
+								<table class="table">
+									<thead>
+									<tr>
+										<th>#</th>
+										<th>Category Name</th>
+										<th>Action</th>
+									</tr>
+									</thead>
+									 <tbody>
+											<?php foreach ($category as $row) { ?>      
+												  <tr>
+													  <td><?php echo $row->id; ?></td>
+													  <td><?php echo $row->name; ?></td>
+													  <td><a href="javascript:;" data-cat-id="1" class="btn btn-sm btn-danger btn-rounded delete-category" id='deletecat'>Remove</a></td>
+												  </tr>
+										   <?php } ?>
+									</tbody>
+								</table>
+							</div>
+						</div>
+							<hr>
 					        <form id="" class="" method="post">
 						        <div class="form-body">
 						            <div class="row">

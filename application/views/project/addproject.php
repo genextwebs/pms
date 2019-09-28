@@ -62,7 +62,6 @@
 											
 												<?php
 												foreach($category as $cat){
-													//echo '<option value="'.$cat->id.'">'.$cat->name.'</option> ';
 													$str='';
 													if(!empty($sessData['project-category'])){
 														if($sessData['project-category'] == $cat->id){
@@ -141,9 +140,6 @@
 												<?php
 													foreach($client as $row)
 													{
-														//echo '<option value="'.$row->id.'" >'.$row->clientname.'</option>';
-													
-															//echo '<option value="'.$cat->id.'">'.$cat->name.'</option> ';
 															$str='';
 															if(!empty($sessData['select_client'])){
 																if($sessData['select_client'] == $row->id){
@@ -212,12 +208,6 @@
                                                             ?>>Rupee (INR)</option>
 											
 											</select>
-
-												<!--<option>Dollars (USD)</option>
-												<option>Pounds (GBP)</option>
-												<option>Euros (EUR)</option>
-												<option>Rupee (INR)</option>
-											</select>-->
 										</div>
 									</div>
 									<div class="col-md-4">

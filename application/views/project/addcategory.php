@@ -9,60 +9,42 @@
             			</div>
             			<div class="modal-body">
             				<div class="table-responsive">
-					            <table class="table">
-					                <thead>
-					                <tr>
-					                    <th>#</th>
-					                    <th>Category Name</th>
-					                    <th>Action</th>
-					                </tr>
-					                </thead>
-					                <tbody>
-					                    <tr id="cat-1">
-					                        <td>1</td>
-					                        <td>Laravel</td>
-					                        <td><a href="javascript:;" data-cat-id="1" class="btn btn-sm btn-danger btn-rounded delete-category">Remove</a></td>
-					                    </tr>
-					                    <tr id="cat-2">
-					                        <td>2</td>
-					                        <td>Yii</td>
-					                        <td><a href="javascript:;" data-cat-id="2" class="btn btn-sm btn-danger btn-rounded delete-category">Remove</a></td>
-					                    </tr>
-					                    <tr id="cat-3">
-					                        <td>3</td>
-					                        <td>Zend</td>
-					                        <td><a href="javascript:;" data-cat-id="3" class="btn btn-sm btn-danger btn-rounded delete-category">Remove</a></td>
-					                    </tr>
-					                    <tr id="cat-4">
-					                        <td>4</td>
-					                        <td>CakePhp</td>
-					                        <td><a href="javascript:;" data-cat-id="4" class="btn btn-sm btn-danger btn-rounded delete-category">Remove</a></td>
-					                    </tr>
-					                    <tr id="cat-5">
-					                        <td>5</td>
-					                        <td>Codeigniter</td>
-					                        <td><a href="javascript:;" data-cat-id="5" class="btn btn-sm btn-danger btn-rounded delete-category">Remove</a></td>
-					                    </tr>
-					                </tbody>
-					            </table>
-					        </div>
-					        <hr>
-					        <form id="" class="">
-						        <div class="form-body">
-						            <div class="row">
-						                <div class="col-md-12 ">
-						                    <div class="form-group">
-						                        <label>Category Name</label>
-						                        <input type="text" name="category_name" id="category_name" class="form-control">
-						                    </div>
-						                </div>
-						            </div>
-						        </div>
-						        <div class="form-actions">
-						            <button type="button" id="save-category" class="btn btn-success"> <i class="fa fa-check"></i> Save</button>
-						        </div>
-							</form>
-            			</div>
-            		</div>
-            	</div>
+					           <table class="table">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>Category Name</th>
+										<th>Action</th>
+									</tr>
+								</thead>
+								<tbody>
+									<?php foreach ($category as $row) { ?>      
+										  <tr>
+											  <td><?php echo $row->id; ?></td>
+											  <td><?php echo $row->name; ?></td>
+											  <td><a href="javascript:;" data-cat-id="1" class="btn btn-sm btn-danger btn-rounded delete-category" id='deletecat'>Remove</a></td>
+										  </tr>
+								   <?php } ?>
+								</tbody>
+							</table>
+					      </div>
+					   <hr>
+					<form id="category" class="" id="category" name="category" method="post" onsubmit="return checkName();">
+					<div class="form-body">
+						<div class="row">
+							<div class="col-md-12 ">
+								<div class="form-group">
+									<label>Category Name</label>
+									<input type="text" name="category_name" id="category_name" class="form-control">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-actions">
+						<input type="submit" id="save-category" class="btn btn-success" value="Save"> <i class="fa fa-check"></i>
+					</div>
+				</form>
             </div>
+         </div>
+	</div>
+</div>
