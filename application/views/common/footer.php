@@ -34,9 +34,9 @@
             CKEDITOR.replace( 'editor1' );
         });
     </script>
-	<!-- <script src="<?php echo base_url();?>assets/js/sejal.js"></script> -->
-    <!-- <script src="<?php echo base_url();?>assets/js/varsha.js"></script> -->
-    <script src="<?php echo base_url();?>assets/js/vaishali.js"></script>
+		<script src="<?php echo base_url();?>assets/js/sejal.js"></script>
+		<script src="<?php echo base_url();?>assets/js/varsha.js"></script> 
+		<script src="<?php echo base_url();?>assets/js/vaishali.js"></script>
    	
 </body>
 </html>

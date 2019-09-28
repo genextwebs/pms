@@ -495,5 +495,15 @@ class Finance extends CI_Controller
       exit();
 	}
 	
+	public function addexpenses(){
+		
+		//$data['sessData'] = $this->session->flashdata('data');
+		$data['employee'] =$this->common_model->getData('tbl_employee');
+		$data['project'] =$this->common_model->getData('tbl_project_info');
+		$this->load->view('common/header');
+		$this->load->view('Expenses/addexpense',$data);
+		$this->load->view('common/footer');
+	}
+	
 }
 ?>
