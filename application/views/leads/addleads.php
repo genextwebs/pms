@@ -122,7 +122,7 @@
 								<!-- action btn -->
                                 <div class="form-actions">
 	                                <input type="submit" id="save-form" class="btn btn-success" name="btnsave" value="Save"> <i class="fa fa-check" ></i> 
-	                                <button type="reset" class="btn btn-default">Reset</button>
+	                                <a href="<?php echo base_url().'leads'?>" class="btn btn-default">Back</a>
 	                            </div>
             				</div>
             			</form>

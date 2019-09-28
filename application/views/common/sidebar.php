@@ -15,6 +15,10 @@
             </ul>
         </li>
     </ul>
+    <?php
+    $controller = strtolower($this->uri->segment(1));
+    $functionName = strtolower($this->uri->segment(2));
+    ?>
     <ul class="list-unstyled components">
         <li>
             <a href="<?php echo base_url().'Dashboard'; ?>" class="nav-link-s">
@@ -22,19 +26,19 @@
                 <span>Dashbord</span>
             </a>
         </li>
-        <li>
+        <li <?php if($controller == 'clients' && ($functionName == 'index' || $functionName == '')) { echo 'class="active"'; } ?>>
             <a href="<?php echo base_url().'clients'?>" class="nav-link-s">
                 <i class="icon-people"></i>
                 <span>Clients</span>
             </a>
         </li>
-        <li class="active">
+        <li <?php if($controller == 'leads' && ($functionName == 'index' || $functionName == '')) { echo 'class="active"'; } ?>>
             <a href="<?php echo base_url().'leads'?>" class="nav-link-s">
                 <i class="ti-receipt"></i>
                 <span>Leads</span>
             </a>
         </li>
-        <li>
+        <li <?php if($controller == 'project' && ($functionName == 'project' || $functionName == '')) { echo 'class="active"'; } ?>>
             <a href="<?php echo base_url().'project'?>" class="nav-link-s">
                 <i class="icon-layers"></i>
                 <span>Projects</span>

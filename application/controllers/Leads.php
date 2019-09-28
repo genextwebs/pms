@@ -114,6 +114,14 @@ class Leads extends CI_Controller
 				$status = $row->status = 'Confirmed';
 			}
 			$clientid = $row->clientid;
+			if($clientid == '0'){
+				$st = 'Lead' ;
+				$str = '<label class="label label-danger">'.$st.'</label>';
+			}
+			else{
+				$st = 'Client' ;
+				$str = '<label class="label label-success">'.$st.'</label>';
+			}
 			$create_date = date('d-m-Y', strtotime($row->created_at));
 			if($clientid == '0'){
 				$actionStr = '<div class="dropdown action m-r-10">
@@ -132,14 +140,14 @@ class Leads extends CI_Controller
 				                <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
 				               		 <div class="dropdown-menu">
 						                    <a  class="dropdown-item" href='.base_url().'leads/viewleadsdetail/'.base64_encode($id).'><i class="fa fa-search"></i> View</a>
-						                    <a  class="dropdown-item" href='.base_url().'leads/editclients/'.base64_encode($clientid).'><i class="fa fa-edit"></i> Edit</a>
+						                    <a  class="dropdown-item" href='.base_url().'Clients/editclients/'.base64_encode($clientid).'><i class="fa fa-edit"></i> Edit</a>
 						                    <a  class="dropdown-item" href="javascript:void()" onclick="deleteLeadClient(\''.base64_encode($row->id).'\',\''.base64_encode($clientid).'\', \'client\')"><i class="fa fa-trash "></i> Delete</a>
 				                	</div>
 				            </div>';
 			}
 			$datarow[] = array(
 				$id = $i,
-                $row->clientname,
+                $row->clientname.'<br/>'.$str,
                 $row->companyname,
                 $create_date,
 				$next,
@@ -230,10 +238,10 @@ class Leads extends CI_Controller
 		$type = $_POST['type'];
 		$whereArr = array('id'=>$leadId);
 		$this->common_model->deleteData('tbl_leads',$whereArr);
-		if($type != 'lead'){
+		/*if($type != 'lead'){
 			$whereArr = array('id'=>$clientId);
 			$this->common_model->deleteData('tbl_clients',$whereArr);	
-		}
+		}*/
 	} 
 
 	public function changeleadtoclient(){
@@ -279,7 +287,7 @@ class Leads extends CI_Controller
 		}
 	}
 
-	public function editclients(){
+	/*public function editclients(){
 		$id = base64_decode($this->uri->segment(3));
 		$whereArr = array('id'=>$id);
 		$data['clients'] = $this->common_model->getData('tbl_clients',$whereArr);
@@ -333,7 +341,7 @@ class Leads extends CI_Controller
 			$this->session->set_flashdata('message_name', "Client Change Succeessfully");
 			redirect('Leads');
 		}
-	} 
+	} */
 
 	public function viewleadsdetail(){
 		$id = base64_decode($this->uri->segment(3));

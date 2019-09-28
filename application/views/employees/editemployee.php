@@ -23,7 +23,7 @@
 		                	</div>
 		                	<div class="card-wrapper collapse show">
 		                		<div class="card-body">
-		                			<form id="createemployee" class="aj-form" enctype="multipart/form-data"  method="post">
+		                			<form  class="aj-form" enctype="multipart/form-data"  method="post">
 		                				<div class="submit-alerts">
 		                					<div class="alert alert-success" role="alert">
 											  This is a success alert
@@ -50,7 +50,7 @@
 		                						<div class="col-md-6">
 		                							<div class="form-group">
 		                								<label class="control-label">Employee Email</label>
-		                								<input id="employee_email" class="form-control" type="email" name="employee_email" value="<?php echo !empty($employee[0]->employeeemail) ?  $employee[0]->employeeemail : ' '?>">
+		                								<input id="employee_email" class="form-control" type="email" name="employee_email" value="<?php echo !empty($user[0]->emailid) ?  $user[0]->emailid : ' '?>">
 		                								<span class="help-desk">Employee will login using this email.</span>
 		                							</div>
 		                						</div>
@@ -74,7 +74,7 @@
 		                						<div class="col-md-4">
 		                							<div class="form-group">
 		                								<label class="control-label">Mobile</label>
-		                								<input type="text" class="form-control" id="mobile" name="mobile" value="<?php echo !empty($employee[0]->mobile) ?  $employee[0]->mobile : ' '?>">
+		                								<input type="text" class="form-control" id="mobile" name="mobile" value="<?php echo !empty($user[0]->mobile) ?  $user[0]->mobile : ' '?>">
 		                							</div>
 		                						</div>
 		                					</div>
@@ -193,11 +193,11 @@
 											            <label class="control-label">Status</label>
 											            <select name="status" id="status" class="form-control">
 			                                                <option value="0" <?php 
-																	if($employee[0]->status == 0){
+																	if($user[0]->status == 0){
 																		echo 'selected';	
 															}?>>Active</option>
 			                                                <option value="1" <?php 
-																	if($employee[0]->status == 1){
+																	if($user[0]->status == 1){
 																echo 'selected';	
 															}?>>Inactive</option>
 			                                            </select>
@@ -210,11 +210,11 @@
 			                                            <label>Log In</label>
 			                                            <select name="login" id="login" class="form-control">
 			                                                <option value="0" <?php 
-																	if($employee[0]->login == 0){
+																	if($user[0]->login == 0){
 																		echo 'selected';	
 															}?>>Enable</option>
 			                                                <option value="1" <?php 
-																	if($employee[0]->login == 1){
+																	if($user[0]->login == 1){
 																echo 'selected';	
 															}?>>Disable</option>
 			                                            </select>

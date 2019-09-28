@@ -64,6 +64,20 @@ class Employee extends CI_Controller
 			$department = $this->input->post('department');
 			$hourlyrate = $this->input->post('hourly-rate');
 			$login = $this->input->post('login');
+			$whereArr = array('emailid' => $employee_email);
+			$data = $this->common_model->getData("tbl_user",$whereArr);
+			if(count($data) == 1){
+				#echo "hi";exit;
+				$error = array('error' =>'Email is already exits' );
+				$this->session->set_flashdata("error",$error);
+				$this->session->set_flashdata("data",$_POST);
+				redirect('employee/addemployee');			
+			}
+			else{
+			$userinsArr =  array('user_type' => 2, 'emailid' => $employee_email,'password' => $password,'generaterandompassword' => $grp,'mobile' => $mobile,'status' => '0','login' => $login);
+			$this->common_model->insertData('tbl_user',$userinsArr);
+			}
+			$last_inserted = $this->db->insert_id();
 			//$profilepicture = $this->input->post('imagename');
 			$config = array(
 							'upload_path' => './uploads/',
@@ -77,7 +91,7 @@ class Employee extends CI_Controller
 			$profilepicture = '';
 			if($this->upload->do_upload('profilepicture')){
 				$profilepicture = array('upload_data'=>$this->upload->data());
-				$insArr = array('employeename'=>$employee_name,'employeeemail'=>$employee_email,'password'=>md5($password),'genereterandompassword'=>$grp,'mobile'=>$mobile,'slackusername'=>$username,'joingdate'=>$joiningdate,'lastdate'=>$lastdate,'gender'=>$gender,'address'=>$address,'skills'=>$skills,'designation'=>$designation,'department'=>$department,'hourlyrate'=>$hourlyrate,'status'=>'0','login'=>$login,'profilepicture'=>$profilepicture['upload_data']['file_name']);
+				$insArr = array('user_id' =>$last_inserted,'employeename'=>$employee_name,'slackusername'=>$username,'joingdate'=>$joiningdate,'lastdate'=>$lastdate,'gender'=>$gender,'address'=>$address,'skills'=>$skills,'designation'=>$designation,'department'=>$department,'hourlyrate'=>$hourlyrate,'profilepicture'=>$profilepicture['upload_data']['file_name']);
 				
 			$this->common_model->insertData('tbl_employee',$insArr);
 			}
@@ -241,16 +255,17 @@ class Employee extends CI_Controller
 				$sk = 'FIND_IN_SET("'.$skill.'",skills)';
 				$sWhere.=' AND '.$sk;
 			}
+			$sWhere.=' AND tbl_user.is_deleted = 0';	
             if(!empty($sWhere)){
             	$sWhere = " WHERE 1 ".$sWhere;
             }
             /** Filtering End */
 		}
 		
-	    $query = "SELECT * from tbl_employee ".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+	    $query = "SELECT tbl_user.id,tbl_user.is_deleted,tbl_employee.employeename,tbl_user.emailid,tbl_user.status,tbl_user.created_at from tbl_employee inner join  tbl_user on tbl_employee.user_id = tbl_user.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 		$empsArr = $this->common_model->coreQueryObject($query);
 		//echo $this->db->last_query();die;
-		$query = "SELECT * from tbl_employee ".$sWhere;
+		$query = "SELECT tbl_user.id,tbl_user.is_deleted,tbl_employee.employeename,tbl_user.emailid,tbl_user.status,tbl_user.created_at from tbl_employee inner join  tbl_user on tbl_employee.user_id = tbl_user.id".$sWhere;
 		$empsFilterArr = $this->common_model->coreQueryObject($query);
 		$iFilteredTotal = count($empsFilterArr);
 
@@ -277,7 +292,7 @@ class Employee extends CI_Controller
 			$datarow[] = array(
 				$id = $i,
                 $row->employeename,
-                $row->employeeemail,
+                $row->emailid,
 
 				$status,
 				$create_date,
@@ -300,8 +315,10 @@ class Employee extends CI_Controller
 
 	public function editemployee(){
 		$id = base64_decode($this->uri->segment(3));
-		$whereArr=array('id'=>$id);
-		$data['employee'] = $this->common_model->getData('tbl_employee',$whereArr);
+		$whereArr = array('id'=>$id);
+		$whereArr1 = array('user_id'=>$id);
+		$data['user'] = $this->common_model->getData('tbl_user',$whereArr);
+		$data['employee'] = $this->common_model->getData('tbl_employee',$whereArr1);
 		$data['sessData'] = $this->session->flashdata('data');
 		$data['error_msg'] = $this->session->flashdata('error');
 		$data['designation'] = $this->common_model->getData('tbl_designation');
@@ -361,24 +378,26 @@ class Employee extends CI_Controller
 				$profilepicture = $this->input->post('image');
 			}
 			if($imgerror == 0){
-				$updateArr['employeename'] = $employee_name;
-				$updateArr['employeeemail'] = $employee_email;
-				$updateArr['genereterandompassword'] = $grp;
+				
+				$updateArr['emailid'] = $employee_email;
+				$updateArr['generaterandompassword'] = $grp;
 				$updateArr['mobile'] = $mobile;
-				$updateArr['slackusername'] = $username;
-				$updateArr['joingdate'] = $joiningdate;
-				$updateArr['lastdate'] = $lastdate;
-				$updateArr['gender'] = $gender;
-				$updateArr['address'] = $address;
-				$updateArr['skills'] = $skills;
-				$updateArr['designation'] = $designation;
-				$updateArr['department'] = $department;
-				$updateArr['hourlyrate'] = $hourlyrate;
 				$updateArr['status'] = $status;
 				$updateArr['login'] = $login;
-				$updateArr['profilepicture'] = $profilepicture;
-			//print_r($updateArr);die;
-			$this->common_model->updateData('tbl_employee',$updateArr,$whereArr);
+
+				$updateArr1['employeename'] = $employee_name;
+				$updateArr1['slackusername'] = $username;
+				$updateArr1['joingdate'] = $joiningdate;
+				$updateArr1['lastdate'] = $lastdate;
+				$updateArr1['gender'] = $gender;
+				$updateArr1['address'] = $address;
+				$updateArr1['skills'] = $skills;
+				$updateArr1['designation'] = $designation;
+				$updateArr1['department'] = $department;
+				$updateArr1['hourlyrate'] = $hourlyrate;
+				$updateArr1['profilepicture'] = $profilepicture;
+			$this->common_model->updateData('tbl_employee',$updateArr1,$whereArr1);
+			$this->common_model->updateData('tbl_user',$updateArr,$whereArr);
 		}
 		else{
 			$error = array('error' => $this->upload->display_errors());
@@ -394,7 +413,8 @@ class Employee extends CI_Controller
 	public function deleteemployee(){
 		$id = base64_decode($_POST['id']);
 		$whereArr = array('id'=>$id);
-		$this->common_model->deleteData('tbl_employee',$whereArr);
+		$updateArr = array('is_deleted' => '1');
+		$this->common_model->updateData('tbl_user',$updateArr,$whereArr);
 		redirect('employee');
 	}
 

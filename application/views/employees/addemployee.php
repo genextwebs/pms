@@ -23,12 +23,13 @@
 		                	</div>
 		                	<div class="card-wrapper collapse show">
 		                		<div class="card-body">
-		                			<form id="createemployee" class="aj-form" enctype="multipart/form-data" action="<?php echo base_url().'employee/insertemployee'?>" method="post">
+		                			<form id="createemployee" name="createemployee" class="aj-form" enctype="multipart/form-data" action="<?php echo base_url().'employee/insertemployee'?>" method="post">
 		                				<div class="submit-alerts">
 		                					<div class="alert alert-success" role="alert">
 											  This is a success alert
 											</div>
-											<?php if(!empty($error_msg['error'])) { ?>
+											<?php 
+											if(!empty($error_msg['error'])) { ?>
 											<div class="alert alert-danger" role="alert" style="display: block;">
 											  <?php
 											  		echo $error_msg['error'];

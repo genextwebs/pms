@@ -261,6 +261,37 @@ $(function(){
 	});
 });
 
+$(function(){
+
+		$('#createemployee').validate({
+		rules:{
+				employee_name : "required",
+				employee_email :{
+							
+							required:true,
+							email: true
+						},
+				password : "required",
+				mobile:
+					{	
+						required:true,
+						digits: true,
+						minlength:10,
+						maxlength:10
+					},
+				designation : "required",
+				department : "required",
+		},	
+		messages:
+				{
+					mobile : "Enter 10 digit",
+					
+				},	
+		submitHandler: function(form) {
+		form.submit();}
+	});
+});
+
 function checkuncheck()
 {
 	var checkbox = document.getElementById('randompassword');
@@ -504,3 +535,6 @@ if (isConfirm) {
    });
 }
 
+$(document).ready( function() {
+        $('.submit-alerts').delay(1000).fadeOut();
+      });

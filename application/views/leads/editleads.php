@@ -23,7 +23,7 @@
             	</div>
             	<div class="card-wrapper collapse show">
             		<div class="card-body">
-            			<form id="creatclient" class="aj-form" name="leads" method="post">
+            			<form id="creatclient" class="aj-form" method="post">
                             <?php
                                     $mess = $this->session->flashdata('message_name');
                                     if(!empty($mess)){
@@ -132,7 +132,7 @@
 								<!-- action btn -->
                                 <div class="form-actions">
 	                                <input type="submit" id="save-form" class="btn btn-success" name="btnupdate" value="Update"> <i class="fa fa-check" ></i> 
-	                                <button type="reset" class="btn btn-default">Reset</button>
+	                               <a href="<?php echo base_url().'leads'?>" class="btn btn-default">Back</a>
 	                            </div>
             				</div>
             			</form>
