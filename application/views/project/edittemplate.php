@@ -41,8 +41,7 @@
 		                							<div class="form-group">
 		                								<label class="control-label">Project Name</label>
 		                								<input id="project_name" class="form-control" type="text" name="project_name" value="<?php echo !empty($templateinfo[0]->projectname) ? $templateinfo[0]->projectname : '' ?>">
-		                							
-												</div>
+		                							</div>
 		                						</div>
 												<div class="col-md-6">
 													<div class="form-group project-category">
@@ -58,31 +57,47 @@
 												</div>
 										    </div>
 		                					<div class="row">
-											    <div class="col-md-6">
-											        <div class="form-group">
-											            <div class="custom-control custom-checkbox my-1 mr-sm-2">
-														    <input type="checkbox" class="custom-control-input" name="can_taks_project" id="wcan_taks_project">
-														    <label class="custom-control-label" for="can_taks_project" style="padding-top: 2px;">Client can view tasks of this project</label>
+												<div class="col-md-4">
+													<div class="form-group">
+														<div class="custom-control custom-checkbox my-1 mr-sm-2">
+															<input type="checkbox" class="custom-control-input" name="client-view-tasks" id="client-view-tasks" onclick="viewtask()" value="1" <?php if(($templateinfo[0]->viewtask)=='1'){ echo 'checked';}?> >
+															<label class="custom-control-label" for="client-view-tasks" style="padding-top: 2px;">Client can view tasks of this project</label>
 														</div>
-											        </div>
-											    </div>
-											    <div class="col-md-6">
-											        <div class="form-group">
-											            <div class="custom-control custom-checkbox my-1 mr-sm-2">
-														    <input type="checkbox" class="custom-control-input" name="manual_timelog" id="manual_timelog">
-														    <label class="custom-control-label" for="manual_timelog" style="padding-top: 2px;">Allow manual time logs?</label>
+													</div>
+												</div>	
+												<?php
+													if(($templateinfo[0]->viewtask)=='1'){
+														$status= 'display:block;';
+													}
+													else{
+														$status= 'display:none;';
+													}
+												?>
+												<div class="col-md-4">
+													<div class="form-group"  id="viewnotification" style="<?php echo $status;?>">
+														<div class="custom-control custom-checkbox my-1 mr-sm-2">
+															<input type="checkbox" class="custom-control-input" name="tasks-notification" id="tasks-notification">
+															<label class="custom-control-label" for="tasks-notification" style="padding-top: 2px;">Send task notification to client?</label>
 														</div>
-											        </div>
-											    </div>
+													</div>
+												</div>	
+												<div class="col-md-4">
+													<div class="form-group">
+														<div class="custom-control custom-checkbox my-1 mr-sm-2">
+															<input type="checkbox" class="custom-control-input" name="manual_timelog" id="manual_timelog" value="1" <?php if(($templateinfo[0]->manualtimelog)=='1'){ echo 'checked';}?>>
+															<label class="custom-control-label" for="manual_timelog" style="padding-top: 2px;">Allow manual time logs?</label>
+													</div>
+												</div>
 											</div>
-											<div class="row">
-                                        		<div class="col-md-12">
-		                                            <div class="form-group">
-		                                                <label class="control-label">Project Summary</label>
-		                                                <textarea name="editor1"><?php echo !empty($templateinfo[0]->projectname) ? $templateinfo[0]->projectname : '' ?></textarea>
-		                                            </div>
-		                                        </div>
-                                			</div>
+										</div>
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													<label class="control-label">Project Summary</label>
+													<textarea name="editor1"><?php echo !empty($templateinfo[0]->projectname) ? $templateinfo[0]->projectname : '' ?></textarea>
+												</div>
+											</div>
+                                		</div>
 											<!--<div class="row">
                                         		<div class="col-md-12"> 
 		                                            <div class="form-group">
@@ -92,28 +107,27 @@
 		                                        </div>
                                 			</div>-->
 
-                                			<div class="row">
-                                				<div class="col-md-12">
-		                                            <div class="form-group">
-		                                                <label class="control-label">Note</label>
-		                                                <textarea id="notes" class="form-control" name="notes" rows="5"><?php echo !empty($templateinfo[0]->note) ? $templateinfo[0]->note : '' ?></textarea>
-		                                            </div>
-		                                        </div>
-                                			</div>
-
-											<!-- action btn -->
-			                                <div class="form-actions">
+                                		<div class="row">
+											<div class="col-md-12">
+												<div class="form-group">
+													<label class="control-label">Note</label>
+													<textarea id="notes" class="form-control" name="notes" rows="5"><?php echo !empty($templateinfo[0]->note) ? $templateinfo[0]->note : '' ?></textarea>
+												</div>
+											</div>
+                                		</div>
+										<!-- action btn -->
+			                            <div class="form-actions">
 				                               <i class="fa fa-check"></i> <input type="submit" id="save-form" class="btn btn-success" name="btnupdate" value="UPDATE">  </button>
 				                                <button type="reset" class="btn btn-default">Reset</button>
-				                            </div>
-		                				</div>
-		                			</form>
-		                		</div>
+				                       </div>
+									</div>
+		                		</form>
 		                	</div>
 		                </div>
 		            </div>
-                </div>
-            </div>
+		       </div>
+          </div>
+     </div>
 			<!--project category--!-->
 			<div class="modal fade project-category" id="project-category1" tabindex="-1" role="dialog" aria-labelledby="project-category" aria-hidden="true">
 				<div class="modal-dialog modal-lg" role="document">

@@ -83,7 +83,7 @@ jQuery(document).ready(function() {
 			"sAjaxSource": base_url+"Project/templatelist",
 			"sServerMethod": "POST",
 			"sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
-			"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No Projects found<br/><br/></center>', "sZeroRecords": "<center><br/>No Projects found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ leads", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
+			"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No Templates found<br/><br/></center>', "sZeroRecords": "<center><br/>No Templates found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ Templates", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
 			"fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
 				oSettings.jqXHR = $.ajax( {
               		"dataType": 'json',
@@ -96,10 +96,10 @@ jQuery(document).ready(function() {
 	                	var oLanguage = oTable.fnSettings().oLanguage;
 
 	                	if((json.estimateCount == true) && (json.iTotalDisplayRecords == json.limitCountQuery)){
-	                		oLanguage.sInfo = '<b>_START_ to _END_</b> of more than _TOTAL_ (<small>' + json.iTotalRecordsFormatted + ' Leads</small>)';
+	                		oLanguage.sInfo = '<b>_START_ to _END_</b> of more than _TOTAL_ (<small>' + json.iTotalRecordsFormatted + ' Templates</small>)';
 	                	}
 	                	else{
-	                		oLanguage.sInfo = '<b>_START_ to _END_</b> of <b>_TOTAL_</b> (<small>' + json.iTotalRecordsFormatted + ' Leads</small>)';
+	                		oLanguage.sInfo = '<b>_START_ to _END_</b> of <b>_TOTAL_</b> (<small>' + json.iTotalRecordsFormatted + ' Templates</small>)';
 	                	}
 
 	                	fnCallback(json);
@@ -141,7 +141,7 @@ jQuery(document).ready(function() {
 			"sAjaxSource": base_url+"Project/archivelist",
 			"sServerMethod": "POST",
 			"sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
-			"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No Projects found<br/><br/></center>', "sZeroRecords": "<center><br/>No Projects found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ leads", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
+			"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No Templates found<br/><br/></center>', "sZeroRecords": "<center><br/>No Projects found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ leads", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
 			"fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
 				aoData.push( { "name": "status2", "value": $('#project_status').val() } );
 				aoData.push( { "name": "clientname2", "value": $('#clientname').val() } );
@@ -261,24 +261,7 @@ $(document).ready(function(){
 		   });
 	}*/
 
-//addproject date validation
-function changeDate(){
-	var SD = document.getElementById('start_date').value;
-	var ED = document.getElementById('deadline').value;
-	var flag=0;
-	if (SD > ED) {
-       alert("Start date should not be greater than end date");
-	  // document.getElementById('start_date').focus();
-	   flag=1;
-   }
-  if(flag==1)
-  {
-	  return false;
-  }
-  else{
-	  return true;
-  }
-}
+
 	
 
 //addproject validation for all input
@@ -337,23 +320,23 @@ $("#save-category").click(function(event) {
 	var catname = $("input[name='category_name']").val();
 	var dataString = 'name='+ catname;
 	$.ajax({
-	   url: base_url+"project/insertcat",
-	   type: 'POST',
-	   dataType: 'json',
-	   data: dataString,
-	   error: function() {
-		  alert('Something is wrong');
-	},
-	success: function(data) {
-	console.log(data);
-	$('select[name="category_name"]').html('');       
-	$('select[name="category_name"]').append(data.catdata);
-	 //  $("tbody").append("<tr><td>"+data.count+"</td><td>"+catname+"</td> <td><a href='javascript:;' class='btn btn-sm btn-danger btn-rounded delete-category' id='deletecat'>Remove</a></td></tr>");
-	$("tbody").append("<tr><td>"+data.count+"</td><td>"+catname+"</td> <td><input type='submit' class='btn btn-sm btn-danger btn-rounded delete-category' id='deletecat' value='Remove'></tr>");
-	$('#project-category1').modal('toggle');
-	$('#category')[0].reset();
-   }
-});
+		   url: base_url+"project/insertcat",
+		   type: 'POST',
+		   dataType: 'json',
+		   data: dataString,
+		   error: function() {
+			  alert('Something is wrong');
+		},
+		success: function(data) {
+			console.log(data);
+			$('select[name="project-category"]').html('');       
+			$('select[name="project-category"]').append(data.catdata);
+			 //  $("tbody").append("<tr><td>"+data.count+"</td><td>"+catname+"</td> <td><a href='javascript:;' class='btn btn-sm btn-danger btn-rounded delete-category' id='deletecat'>Remove</a></td></tr>");
+			$("tbody").append("<tr><td>"+data.count+"</td><td>"+catname+"</td> <td><input type='submit' class='btn btn-sm btn-danger btn-rounded delete-category' id='deletecat' value='Remove'></tr>");
+			$('#project-category1').modal('toggle');
+			$('#category')[0].reset();
+	   }
+	});
 });
 
 // addproject=> delete category 
@@ -370,4 +353,27 @@ $('#deletecat').click(function(){
 		});
 	return false
 });
+
+	function checkUncheck(){ 
+
+		var checkBox = document.getElementById("without_deadline");
+        if (checkBox.checked) {
+            $('#deadlineBox').hide().checked;
+        }
+		else{
+			 $('#deadlineBox').show();
+		}	
+	}
+	function viewtask(){ 
+
+		var checkBox = document.getElementById("client-view-tasks");
+        if (checkBox.checked) {
+            $('#viewnotification').show().checked;
+        }
+		else{
+			 $('#viewnotification').hide();
+		}	
+	}
+
+
 	

@@ -485,21 +485,14 @@ class Project extends CI_Controller {
 				$this->load->view('common/header');
 				$this->load->view('project/edittemplate',$data);
 				$this->load->view('common/footer');
-				if($this->input->post('manual_timelog')=='on'){
+				if($this->input->post('manual_timelog')=='1'){
 							$chk_value='1';
 					}
 					else{ $chk_value='0';
 					}
 					$timelog=$chk_value;
 					
-					if($this->input->post('project_member')=='on'){
-							$chk_value='1';
-					}
-					else{ $chk_value='0';
-					}
-					$member=$chk_value;
-					
-					if($this->input->post('client-view-tasks')=='on'){
+					if($this->input->post('client-view-tasks')=='1'){
 							$chk_value='1';
 					}
 					else{ $chk_value='0';
@@ -520,8 +513,9 @@ class Project extends CI_Controller {
 					$note=$this->input->post('notes');
 					$updateArr=array('projectname'=>$name,'projectcategory'=>$cat,'manualtimelog'=>$timelog,'viewtask'=>$view,'projectsummary'=>$summary,'note'=>$note,'tasknotification'=>$tasks);
 					$whereArr=array('id'=>$id);
-					//print_r($updateArr);
+					//echo "<pre>";print_r($_POST);die;
 					$this->common_model->updateData('tbl_project_template',$updateArr,$whereArr);
+					//echo $this->db->last_query();die;
 					redirect('project/projecttemplate');
 				}
 			}
@@ -669,8 +663,10 @@ class Project extends CI_Controller {
 								$row->projectname,
 								$row->name,
  								'<a href='.base_url().'Project/edittemplate/'.base64_encode($row->id). ' class="btn btn-info btn-circle" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-								 <a href="project-details.html" class="btn btn-success btn-circle" data-toggle="tooltip" data-original-title="View Project Details"><i class="fa fa-search" aria-hidden="true"></i></a>
-								 <a href='.base_url().'Project/deletetemplate/'.base64_encode($row->id).' onclick="javascript:return confirm(\'Are u Sure want to delete?\');" class="btn btn-danger btn-circle sa-params" data-toggle="tooltip" data-user-id="1" data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>'							
+								 <a href="project-details.html" class="btn btn-success btn-circle" data-toggle="tooltip" data-original-title="View Project Details"><i class="fa fa-search" aria-hidden="true"></i></a>'
+								 
+								 
+								 
 							);
 							$i++;
 							}
@@ -701,12 +697,13 @@ class Project extends CI_Controller {
 					$catArray = $this->common_model->getData('tbl_project_category');
 					$str = '';
 					foreach($catArray as $row){
-						$str.='<option value="'.$row->name.'"></option>'; 
+						$str.='<option value="'.$row->id.'">'.$row->name.'</option>'; 
 					}
 					$totaldata = count($catArray);
 					$catArr = array();
 					$catArr['count'] = $totaldata;
 					$catArr['catdata'] = $str;
+					//print_r($catArr);die;
 					echo  json_encode($catArr);exit; 
 					echo  $totaldata; exit;
 				}

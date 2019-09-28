@@ -73,13 +73,13 @@
 									<div class="col-md-4">
 										<div class="form-group">
 											<label class="control-label">Start Date</label>
-											<input type="date" name="start_date" id="start_date" autocomplete="off" class="form-control" value="<?php echo !empty($projectinfo[0]->startdate) ? $projectinfo[0]->startdate : '' ?>">
+											<input type="text" name="start_date" id="start_date" autocomplete="off" class="form-control" value="<?php echo !empty($projectinfo[0]->startdate) ? $projectinfo[0]->startdate : '' ?>">
 										</div>
 									</div>
 									<div class="col-md-4" id="deadlineBox">
 										<div class="form-group">
 											<label class="control-label">Deadline</label>
-											<input type="date" name="deadline" id="deadline" autocomplete="off" class="form-control" value="<?php echo !empty($projectinfo[0]->deadline) ? $projectinfo[0]->deadline : '' ?>">
+											<input type="text" name="deadline" id="deadline" autocomplete="off" class="form-control" value="<?php echo !empty($projectinfo[0]->deadline) ? $projectinfo[0]->deadline : '' ?>">
 										</div>
 									</div>
 									<div class="col-md-4" >
@@ -93,7 +93,7 @@
 									<div class="col-md-4">
 										<div class="form-group">
 											<div class="custom-control custom-checkbox my-1 mr-sm-2">
-												<input type="checkbox" class="custom-control-input" name="manual_timelog" id="manual_timelog">
+												<input type="checkbox" class="custom-control-input" name="manual_timelog" id="manual_timelog" value="1" <?php if(($projectinfo[0]->manualtimelog)=='1'){ echo 'checked';}?>>
 												<label class="custom-control-label" for="manual_timelog" style="padding-top: 2px;">Allow manual time logs?</label>
 											</div>
 										</div>
@@ -144,15 +144,24 @@
 									<div class="col-md-4">
 										<div class="form-group">
 											<div class="custom-control custom-checkbox my-1 mr-sm-2">                                                                      
-												<input type="checkbox" class="custom-control-input" name="client-view-tasks[]" id="client-view-tasks" onclick="viewtask()" <?php if(($projectinfo[0]->viewtask)=='1'){ echo 'checked';}else{} ?>" value="<?php echo ($projectinfo == '1' ? 'checked' : null);?>"> 
+												<input type="checkbox" class="custom-control-input" name="client-view-tasks" id="client-view-tasks" onclick="viewtask()" value="1" <?php if(($projectinfo[0]->viewtask)=='1'){ echo 'checked';}?> >
 												<label class="custom-control-label" for="client-view-tasks" style="padding-top: 2px;">Client can view tasks of this project</label>
 											</div>
 										</div>
 									</div>	
 									<div class="col-md-8">
-										<div class="form-group"  id="viewnotification" style="display:none;">
+										<?php
+											if(($projectinfo[0]->viewtask)=='1'){
+												$status= 'display:block;';
+											}
+											else{
+												$status= 'display:none;';
+											}
+				
+										?>
+										<div class="form-group"  id="viewnotification" style="<?php echo $status;?>">
 											<div class="custom-control custom-checkbox my-1 mr-sm-2">
-												<input type="checkbox" class="custom-control-input" name="tasks-notification" id="tasks-notification" >
+												<input type="checkbox" class="custom-control-input" name="tasks-notification" id="tasks-notification" value="1" <?php if(($projectinfo[0]->tasknotification)=='1'){ echo 'checked';}?> >
 												<label class="custom-control-label" for="tasks-notification" style="padding-top: 2px;">Send task notification to client?</label>
 											</div>
 										</div>
@@ -265,26 +274,4 @@
 	</div>
 </div>
 <!--end category--> 
- <script type="text/javascript">
-
-	function checkUncheck(){ 
-
-		var checkBox = document.getElementById("without_deadline");
-        if (checkBox.checked) {
-            $('#deadlineBox').hide().checked;
-        }
-		else{
-			 $('#deadlineBox').show();
-		}	
-	}
-	function viewtask(){ 
-
-		var checkBox = document.getElementById("client-view-tasks");
-        if (checkBox.checked) {
-            $('#viewnotification').show().checked;
-        }
-		else{
-			 $('#viewnotification').hide();
-		}	
-	}
-</script>
+ 

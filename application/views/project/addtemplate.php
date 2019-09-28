@@ -88,7 +88,7 @@
 												<div class="col-md-4">
 													<div class="form-group">
 														<div class="custom-control custom-checkbox my-1 mr-sm-2">
-															<input type="checkbox" class="custom-control-input" name="client-view-tasks" id="client-view-tasks" onclick="viewtask()">
+															<input type="checkbox" class="custom-control-input" name="client-view-tasks" id="client-view-tasks" onclick="viewtask()" >
 															<label class="custom-control-label" for="client-view-tasks" style="padding-top: 2px;">Client can view tasks of this project</label>
 														</div>
 													</div>
