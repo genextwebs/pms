@@ -130,7 +130,7 @@ class Leads extends CI_Controller
 						                    <a  class="dropdown-item" href='.base_url().'leads/viewleadsdetail/'.base64_encode($id).'><i class="fa fa-search"></i> View</a>
 						                    <a  class="dropdown-item" href='.base_url().'leads/editleads/'.base64_encode($id).'><i class="fa fa-edit"></i> Edit</a>
 						                    <a  class="dropdown-item" href="javascript:void()" onclick="deleteLeadClient(\''.base64_encode($row->id).'\',\''.base64_encode($clientid).'\', \'lead\')"><i class="fa fa-trash "></i> Delete</a>
-						                    <a  class="dropdown-item" href='.base_url().'leads/changeleadtoclient/'.base64_encode($id).'><i class="fa fa-user"></i> Change To Client</a>
+						                    <a  class="dropdown-item" href='.base_url().'clients/addclients/'.base64_encode($id).'><i class="fa fa-user"></i> Change To Client</a>
 						                    <a  class="dropdown-item" href="#"><i class="fa fa-thumbs-up"></i> Add Follow Up</a>
 				               			 </div>
 							</div>';
@@ -140,7 +140,7 @@ class Leads extends CI_Controller
 				                <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
 				               		 <div class="dropdown-menu">
 						                    <a  class="dropdown-item" href='.base_url().'leads/viewleadsdetail/'.base64_encode($id).'><i class="fa fa-search"></i> View</a>
-						                    <a  class="dropdown-item" href='.base_url().'Clients/editclients/'.base64_encode($clientid).'><i class="fa fa-edit"></i> Edit</a>
+						                    <a  class="dropdown-item" href="'.base_url().'Clients/editclients/'.base64_encode($clientid).'/ltoc"><i class="fa fa-edit"></i> Edit</a>
 						                    <a  class="dropdown-item" href="javascript:void()" onclick="deleteLeadClient(\''.base64_encode($row->id).'\',\''.base64_encode($clientid).'\', \'client\')"><i class="fa fa-trash "></i> Delete</a>
 				                	</div>
 				            </div>';
@@ -244,7 +244,7 @@ class Leads extends CI_Controller
 		}*/
 	} 
 
-	public function changeleadtoclient(){
+	/*public function changeleadtoclient(){
 		$id = base64_decode($this->uri->segment(3));
 		$whereArr = array('id'=>$id);
 		$data['leads'] = $this->common_model->getData('tbl_leads',$whereArr);
@@ -275,15 +275,27 @@ class Leads extends CI_Controller
 			$gst_number = $this->input->post('gst_number');
 			$note = $this->input->post('note');
 			$login = $this->input->post('login');
-			$insArr=array('companyname' => $companyname,'website' => $website,'address' => $address,'clientname' => $clientname,'clientemail' => $clientemail,'password' => md5($password), 'generaterandompassword' => $grp, 'mobile' => $mobile,'skype' => $skype,'linkedin' => $linkedin,'twitter' => $twitter,'facebook' => $facebook,'gstnumber' => $gst_number,'note' => $note,'login' =>$login );
-			//print_r($insArr);die;
-			$this->common_model->insertData('tbl_clients',$insArr);
-			$last_inserted = $this->db->insert_id();
-			$updateArr = array('clientid'=>$last_inserted);
-			$whereArr = array('id'=>$id);
-			$this->common_model->updateData('tbl_leads',$updateArr,$whereArr);
-			$this->session->set_flashdata('message_name', "Lead Change Succeessfully");
-			redirect('Leads');
+			$whereArr = array('emailid' => $clientemail);
+			$data = $this->common_model->getData('tbl_user',$whereArr);
+			if(count($data)==1){
+				$this->session->set_flashdata('message_name','Email already exits');
+				$this->session->set_flashdata("data",$_POST);
+				redirect('Clients/addclients');
+			}
+			else{
+				$userinsertArr=array('user_type'=>1,'emailid'=>$clientemail,'password'=>$password,'generaterandompassword'=>$grp,'mobile'=>$mobile,'status'=>1,'login'=>$login);
+				$this->common_model->insertdata('tbl_user',$userinsertArr);
+				$userid=$this->db->insert_id();
+
+				$insertArr=array('user_id'=>$userid,'companyname' => $companyname,'website' => $website,'address' => $address,'clientname' => $clientname,'skype' => $skype,'linkedin' => $linkedin,'twitter' => $twitter,'facebook' => $facebook,'gstnumber' => $gstnumber,'note' => $note);
+				$this->common_model->insertData('tbl_clients',$insertArr);
+				$last_inserted = $this->db->insert_id();
+				$updateArr = array('clientid'=>$last_inserted);
+				$whereArr = array('id'=>$id);
+				$this->common_model->updateData('tbl_leads',$updateArr,$whereArr);
+				$this->session->set_flashdata('message_name', "Lead Change Succeessfully");
+				redirect('Leads');
+			}
 		}
 	}
 

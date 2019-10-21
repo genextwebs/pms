@@ -23,8 +23,12 @@
 		                	</div>
 		                	<div class="card-wrapper collapse show">
 		                		<div class="card-body">
-		                			<form id="creatclient" class="aj-form" method="post" action="<?php echo base_url().'Clients/insertclients' ?>" name="client" >
-											 <?php
+		                			<?php if(!empty($editID))  { ?>
+		                			<form id="creatclient" class="aj-form" method="post" action="<?php echo base_url().'Clients/insertclients/'.base64_encode($editID)?>" name="client" >
+		                			<?php } 
+		                			else { ?>
+		                				<form id="creatclient" class="aj-form" method="post" action="<?php echo base_url().'Clients/insertclients'?>" name="client" >
+		                				<?php } 
 												$mess = $this->session->flashdata('message_name');
 												if(!empty($mess)){
 													//warning 
@@ -55,13 +59,13 @@
 		                						<div class="col-md-6">
 		                							<div class="form-group">
 		                								<label class="control-label">Company Name</label>
-		                								<input id="company_name" class="form-control" type="text" name="company_name" value="<?php if(!empty($sessData['company_name'])) { echo $sessData['company_name']; } else {} ?>">
+		                								<input id="company_name" class="form-control" type="text" name="company_name" value="<?php if(!empty($sessData['company_name'])) { echo $sessData['company_name']; } else { echo !empty($leads[0]->companyname) ?  $leads[0]->companyname : ' '; } ?>">
 		                							</div>
 		                						</div>
 		                						<div class="col-md-6">
 		                							<div class="form-group">
 		                								<label class="control-label">Website</label>
-		                								<input id="website" class="form-control" type="text" name="website" value="<?php if(!empty($sessData['website'])) { echo $sessData['website']; } else {} ?>">
+		                								<input id="website" class="form-control" type="text" name="website" value="<?php if(!empty($sessData['website'])) { echo $sessData['website']; } else { echo !empty($leads[0]->website) ?  $leads[0]->website : ' ';} ?>">
 		                							</div>
 		                						</div>
 		                					</div>
@@ -79,13 +83,13 @@
 		                						<div class="col-md-6">
 		                							<div class="form-group">
 		                								<label class="control-label">Cient Name</label>
-		                								<input id="name" class="form-control" type="text" name="name" value="<?php if(!empty($sessData['name'])) { echo $sessData['name']; } else {} ?>">
+		                								<input id="name" class="form-control" type="text" name="name" value="<?php if(!empty($sessData['name'])) { echo $sessData['name']; } else { echo !empty($leads[0]->clientname) ?  $leads[0]->clientname : ' ';} ?>">
 		                							</div>
 		                						</div>
 		                						<div class="col-md-6">
 		                							<div class="form-group">
 		                								<label class="control-label">Client Email</label>
-		                								<input id="email" class="form-control" type="email" name="email" >
+		                								<input id="email" class="form-control" type="email" name="email" value="<?php echo !empty($leads[0]->clientemail) ?  $leads[0]->clientemail : ' '?>">
 		                								<span class="help-block">Client will login using this email.</span>
 		                							</div>
 		                						</div>

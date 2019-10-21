@@ -18,7 +18,12 @@ class Clients extends CI_Controller
 	}
 	
 	public function addclients(){
+		$id = base64_decode($this->uri->segment(3));
+		//echo $id;die;
+		$whereArr = array('id'=>$id);
+		$data['editID'] = $id;
 		$data['sessData'] = $this->session->flashdata('data');
+		$data['leads']=$this->common_model->getData('tbl_leads',$whereArr);
 		$this->load->view('common/header');
 		$this->load->view('clients/addclient',$data);
 		$this->load->view('common/footer');
@@ -59,6 +64,13 @@ class Clients extends CI_Controller
 
 				$insertArr=array('user_id'=>$userid,'companyname' => $companyname,'website' => $website,'address' => $address,'clientname' => $clientname,'skype' => $skype,'linkedin' => $linkedin,'twitter' => $twitter,'facebook' => $facebook,'gstnumber' => $gstnumber,'note' => $note);
 				$this->common_model->insertdata('tbl_clients',$insertArr);
+				$last_inserted = $this->db->insert_id();
+				$updateArr = array('clientid'=>$last_inserted);
+				$id = base64_decode($this->uri->segment(3));
+				$data['editID'] = $id;
+				$whereArr = array('id'=>$id);
+				$this->common_model->updateData('tbl_leads',$updateArr,$whereArr);
+				//echo $this->db->last_query();die;
 				$this->session->set_flashdata('message_name', "Data Inserted Succeessfully");
 				redirect('Clients/index');
 			}
@@ -156,7 +168,7 @@ class Clients extends CI_Controller
 				}
 				
 		
-	    $query = "SELECT tbl_user.id,tbl_user.is_deleted,tbl_clients.clientname,tbl_clients.companyname,tbl_user.emailid,tbl_user.status,tbl_user.created_at from tbl_clients INNER JOIN tbl_user ON tbl_clients.user_id=tbl_user.id ".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+	    $query = "SELECT tbl_clients.id as clientId, tbl_user.id,tbl_user.is_deleted,tbl_clients.clientname,tbl_clients.companyname,tbl_user.emailid,tbl_user.status,tbl_user.created_at from tbl_clients INNER JOIN tbl_user ON tbl_clients.user_id=tbl_user.id ".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 		//echo $query;die;
 		$clientsArr = $this->common_model->coreQueryObject($query);
 
@@ -182,12 +194,12 @@ class Clients extends CI_Controller
 				$sta='<lable class="label label-success">'.$status.'</label>';
 
 			}
-			//$clientid = $row->clientid;
+			$clientid = $row->clientId;
 			$create_date = date('d-m-Y', strtotime($row->created_at));
 			
-				$actionStr = "<abbr title=\"Edit\"><a class=\"btn btn-info btn-circle\" data-toggle=\"tooltip\" data-original-title=\"Edit\" href='".base_url()."Clients/editclients/".base64_encode($id)."'><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i></a></abbr>
-				<abbr title=\"View Client Details\"><a class=\"btn btn-success btn-circle\" data-toggle=\"tooltip\" data-original-title=\"View Client Details\" href='".base_url()."Clients/viewclientdetail/".base64_encode($id)."'><i class=\"fa fa-search\" aria-hidden=\"true\" ></i></a></abbr>
-				<abbr title=\"Delete\"><a  class=\"btn btn-danger btn-circle sa-params\" data-toggle=\"tooltip\"  data-original-title=\"Delete\" href=\"javascript:void();\" onclick=\"deleteclients('".base64_encode($id)."');\"><i class=\"fa fa-times\" aria-hidden=\"true\"></i></a></abbr>";	
+			$actionStr = "<abbr title=\"Edit\"><a class=\"btn btn-info btn-circle\" data-toggle=\"tooltip\" data-original-title=\"Edit\" href='".base_url()."Clients/editclients/".base64_encode($clientid)."'><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i></a></abbr>
+			<abbr title=\"View Client Details\"><a class=\"btn btn-success btn-circle\" data-toggle=\"tooltip\" data-original-title=\"View Client Details\" href='".base_url()."Clients/viewclientdetail/".base64_encode($id)."'><i class=\"fa fa-search\" aria-hidden=\"true\" ></i></a></abbr>
+			<abbr title=\"Delete\"><a  class=\"btn btn-danger btn-circle sa-params\" data-toggle=\"tooltip\"  data-original-title=\"Delete\" href=\"javascript:void();\" onclick=\"deleteclients('".base64_encode($id)."');\"><i class=\"fa fa-times\" aria-hidden=\"true\"></i></a></abbr>";	
           
 			
 			$datarow[] = array(
@@ -215,12 +227,16 @@ class Clients extends CI_Controller
 	}
 	
 	public function editclients(){
-		$id=$this->uri->segment(3);
-		$id1=base64_decode($id);
-		$whereArr=array('id'=>$id1);
-		$whereArr1=array('user_id'=>$id1);
-		$data['user']=$this->common_model->getData('tbl_user',$whereArr);
-		$data['clients']=$this->common_model->getData('tbl_clients',$whereArr1);
+		$clientid = base64_decode($this->uri->segment(3));
+		$ltoc = $this->uri->segment(4);
+		//echo $ltoc;die;
+		$whereArr=array('id'=>$clientid);
+		$clientArr=$data['clients']=$this->common_model->getData('tbl_clients',$whereArr);
+		$whereArr1=array('id'=>$clientArr[0]->user_id);
+		$data['user']=$this->common_model->getData('tbl_user',$whereArr1);
+		//echo "<PRE>";print_r($data);die;
+		
+		//print_r($data);die;
 		$this->load->view('common/header');
 		$this->load->view('clients/editclient',$data);
 		$this->load->view('common/footer');
@@ -261,11 +277,16 @@ class Clients extends CI_Controller
 				$updateArr['login'] =$login;
 				
 				//$whereArr=array('id'=>base64_decode($id));
-				$data['query']=$this->common_model->updateData('tbl_user',$updateArr,$whereArr);
-				$data['query']=$this->common_model->updateData('tbl_clients',$updateArr1,$whereArr1);
-
+				$data['query']=$this->common_model->updateData('tbl_user',$updateArr,$whereArr1);
+				$data['query']=$this->common_model->updateData('tbl_clients',$updateArr1,$whereArr);
+				//echo $this->db->last_query();die;
 				$this->session->set_flashdata('messagename', "Data Update Succeessfully");
-				redirect('Clients/index');
+				if(!empty($ltoc)){
+					redirect('leads');	
+				}
+				else{
+					redirect('Clients/index');
+				}
 		}
 	}
 	
