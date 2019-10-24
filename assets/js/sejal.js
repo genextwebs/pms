@@ -318,7 +318,11 @@ $("#save-category").click(function(event) {
 			   data: "id="+id,
 			   //alert(id);
 			   success: function(){
-				  $(this).closest('tr').();	
+				//  $(this).closest('tr').();
+				 location.reload(true);
+				//$('#project-category1').modal('toggle');
+				//$('#project-category1').reload();
+	   
 			}
 			});
 		return false
@@ -347,7 +351,7 @@ $("#save-category").click(function(event) {
 	
 	//delete projects
 	function deleteproject(id){
-		alert(id);
+		//alert(id);
 		var url = base_url+"project/deleteproject";
 		swal({
 		 title: "Are you sure?",
@@ -382,6 +386,78 @@ $("#save-category").click(function(event) {
 			   }
 			   });
 		}
-
-
 	
+	//delete template
+	function deletetemplate(id){
+		//alert(id);
+		var url = base_url+"project/deletetemplate";
+		swal({
+		 title: "Are you sure?",
+		 text: "You will not be able to recover this imaginary file!",
+		 type: "warning",
+		 showCancelButton: true,
+		 confirmButtonColor: "#DD6B55",
+		 confirmButtonText: "Yes, delete it!",
+		 closeOnConfirm: false
+		},
+			function(isConfirm){
+			if (isConfirm) {
+				   $.ajax({
+					   url: url,
+					   type: "POST",
+					   dataType: "JSON",
+					   data: {id:id},
+					  dataType: "html",
+					  
+					   success: function (data) {
+						   swal("Done!", "It was succesfully deleted!", "success");
+						   $('#project').DataTable().ajax.reload();
+
+						   //$("#leads").fnReloadAjax();
+							//$('#leads').DataTable.ajax.reload(null,false);
+							//window.location.reload();
+					   },
+					   error: function (xhr, ajaxOptions, thrownError) {
+						   swal("Error deleting!", "Please try again", "error");
+					   }
+				   });
+			   }
+			   });
+		}
+
+	function archivetoproject(id){
+		//alert(id);
+		var url = base_url+"project/archivetoproject";
+		swal({
+		 title: "Are you sure?",
+		 text: "Do you want to archive this project?",
+		 type: "warning",
+		 showCancelButton: true,
+		 confirmButtonColor: "#DD6B55",
+		 confirmButtonText: "Yes, archive it!",
+		 closeOnConfirm: false
+		},
+			function(isConfirm){
+			if (isConfirm) {
+				   $.ajax({
+					   url: url,
+					   type: "POST",
+					   dataType: "JSON",
+					   data: {id:id},
+					  dataType: "html",
+					  
+					   success: function (data) {
+						   swal("Done!", "Project archived successfully..!", "success");
+						   $('#project').DataTable().ajax.reload();
+
+						   //$("#leads").fnReloadAjax();
+							//$('#leads').DataTable.ajax.reload(null,false);
+							//window.location.reload();
+					   },
+					   error: function (xhr, ajaxOptions, thrownError) {
+						   swal("Error !", "Please try again", "error");
+					   }
+				   });
+			   }
+			   });
+		}
