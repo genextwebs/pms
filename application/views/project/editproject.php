@@ -210,7 +210,8 @@
                                 </div>
 								<!-- action btn -->
 								<div class="form-actions">
-									<i class="fa fa-check"><input type="submit" id="save-form" class="btn btn-success" name="btnedit" value="Update"> </i> 
+									<button type="submit" name="btnsave" id="save-form" class="btn btn-success"> <i class="fa fa-check"></i> Update</button>
+									<!-- <i class="fa fa-check"><input type="submit" id="save-form" class="btn btn-success" name="btnedit" value="Update"> </i>  -->
 									<input type="reset" class="btn btn-default" value="Reset">
 								</div>
 							</div>

@@ -43,7 +43,7 @@
                 </ul>
             </div>
         </div>
-        <div class="col-md-3">
+        <!-- <div class="col-md-3">
             <div class="stats-box bg-warning">
                 <h3 class="box-title text-white">Total Pending Follow Up</h3>
                 <ul class="list-inline two-wrap">
@@ -51,7 +51,7 @@
                     <li class="text-right"><span id="" class="counter text-white">0</span></li>
                 </ul>
             </div>
-        </div>
+        </div> -->
         <div class="col-md-12">
             <div class="stats-box">
             	<div class="row">

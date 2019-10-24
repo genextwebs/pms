@@ -24,7 +24,7 @@
 			                <a href="add-task.html" ><span class=" m-0">Add Task</span></a>
 			            </li>
 			            <li class="dropdown-item">
-			                <a href="add-client.html" class="active"><span class=" m-0">Add Client</span></a>
+			                <a href="<?php echo base_url().'clients/addclients'; ?>" class="active"><span class=" m-0">Add Client</span></a>
 			            </li>
 			            <li class="dropdown-item">
 			                <a href="add-employee.html"><span class=" m-0">Add Employee</span></a>

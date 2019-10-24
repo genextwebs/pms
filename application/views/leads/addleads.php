@@ -121,7 +121,7 @@
                     			
 								<!-- action btn -->
                                 <div class="form-actions">
-	                                <input type="submit" id="save-form" class="btn btn-success" name="btnsave" value="Save"> <i class="fa fa-check" ></i> 
+                                    <button type="submit" name="btnsave" id="save-form" class="btn btn-success"> <i class="fa fa-check"></i> Save</button>
 	                                <a href="<?php echo base_url().'leads'?>" class="btn btn-default">Back</a>
 	                            </div>
             				</div>

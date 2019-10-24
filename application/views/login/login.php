@@ -28,6 +28,19 @@
 			</a>
 			<div class="stats-box">
 				<form id="loginform" method="post" class="form-material" action="<?php echo base_url().'login/checklogin'?>"> 
+					<?php
+						//warning 
+						$mess = $this->session->flashdata('message');
+						if(!empty($mess)){
+					?>
+				   	<div class="col-md-12">
+						<div class="submit-alerts">
+							<div class="alert alert-danger" role="alert" style="display:block;">
+								<?php echo $mess; ?>
+							</div>
+						</div>
+					</div>
+                    <?php } ?>
 					<div class="row">
 						<div class="col-md-12">
 							<div class="form-group">

@@ -5,7 +5,10 @@ class Products extends CI_Controller
 {
 	public function __construct(){
 		parent::__construct();
+		error_reporting(E_ALL);
+		ini_set('display_errors', 1);
 		$this->load->model('common_model');
+		echo "<PRE>";print_r($_POST);exit;
 	}
 	
 	public function index(){

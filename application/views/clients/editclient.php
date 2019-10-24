@@ -6,7 +6,7 @@
         <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
             <ol class="breadcrumb">
                 <li><a href="<?php echo base_url().'dashboard'?>">Home</a></li>
-                <li><a href="<?php echo base_url().'Clients'?>">Clients</a></li>
+                <li><a href="<?php echo base_url().'clients'?>">Clients</a></li>
                 <li class="active">Edit</li>
             </ol>
         </div>
@@ -160,7 +160,7 @@
                                     </div>
                                 </div>
                                 <div class="form-actions">
-	                                <input type="submit" id="save-form" class="btn btn-success" name="btnupdate" value="Update" > 
+	                                <button type="submit" name="btnupdate" id="save-form" class="btn btn-success"> <i class="fa fa-check"></i> Update</button>
 	                                <a href="<?php echo base_url().'Clients/index' ?>" class="btn btn-default">Back</a>
 	                            </div>
             				</div>

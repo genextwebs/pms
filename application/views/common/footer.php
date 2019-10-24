@@ -17,8 +17,8 @@
     <script src="<?php echo base_url();?>assets/js/responsive.bootstrap4.min.js"></script>
     <script src="<?php echo base_url();?>assets/js/dataTables.responsive.min.js"></script>
 	<script src="<?php echo base_url();?>assets/js/search-dropdown.min.js"></script>
-     <script src="<?php echo base_url();?>assets/js/datatables.bundle.min.js"></script>
-	 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="<?php echo base_url();?>assets/js/datatables.bundle.min.js"></script>
+ 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.0/js/bootstrap-datepicker.min.js"></script>
 
    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <script src="<?php echo base_url();?>assets/js/bootstrap.js"></script>
@@ -33,6 +33,10 @@
         $(document).ready(function() {
             $('#users-table').DataTable();
             CKEDITOR.replace( 'editor1' );
+
+            $('.toggle-filter').click(function () {
+                $('#ticket-filters').toggle('slide');
+            })
         });
     </script>
 		<script src="<?php echo base_url();?>assets/js/sejal.js"></script>

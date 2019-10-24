@@ -1,7 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-class Clients extends CI_Controller
-{
+class Clients extends CI_Controller{
 	public function __construct(){
 		parent::__construct();
 		$this->load->database();
@@ -58,7 +57,7 @@ class Clients extends CI_Controller
 				redirect('Clients/addclients');
 			}
 			else{
-				$userinsertArr=array('user_type'=>1,'emailid'=>$clientemail,'password'=>$password,'generaterandompassword'=>$grp,'mobile'=>$mobile,'status'=>1,'login'=>$login);
+				$userinsertArr=array('user_type'=>1,'emailid'=>$clientemail,'password'=>md5($password),'generaterandompassword'=>$grp,'mobile'=>$mobile,'status'=>1,'login'=>$login);
 				$this->common_model->insertdata('tbl_user',$userinsertArr);
 				$userid=$this->db->insert_id();
 
@@ -78,7 +77,7 @@ class Clients extends CI_Controller
 	}
 	
 	public function client_list(){
-	if(!empty($_POST)){
+		if(!empty($_POST)){
 			$_GET = $_POST;
 			$defaultOrderClause = "";
 			$sWhere = "";
@@ -140,90 +139,90 @@ class Clients extends CI_Controller
             	$searchTerm = trim($_GET['sSearch']);
             	$sWhere .= ' AND (clientname like "%'.$searchTerm.'%" OR companyname like "%'.$searchTerm.'%" OR website like "%'.$searchTerm.'%" OR address like "%'.$searchTerm.'%" OR clientemail like "%'.$searchTerm.'%" OR facebook like "%'.$searchTerm.'%" OR note like "%'.$searchTerm.'%")';
             }
-				$startdate=!empty($_POST['startdate']) ? $_POST['startdate'] : '';
-				$enddate=!empty($_POST['enddate']) ? $_POST['enddate'] : '';
-				$clientname=!empty($_POST['clientname']) ? $_POST['clientname'] : '';
-				$status=$_POST['status'];
+			$startdate=!empty($_POST['startdate']) ? $_POST['startdate'] : '';
+			$enddate=!empty($_POST['enddate']) ? $_POST['enddate'] : '';
+			$clientname=!empty($_POST['clientname']) ? $_POST['clientname'] : '';
+			$status=$_POST['status'];
 		
-					if(!empty($clientname)){
-							$sWhere.=' AND  clientname="'.$clientname.'"';
-
-					}
-					
-					if($status=='all'){
-						}else{
-								$sWhere.=' AND status='.$status;
-						}
-					if(!empty($startdate)){						
-						$sWhere.=' AND created_at>="'.$startdate.'"';
-					}
-					if(!empty($enddate)){						
-						$sWhere.=' AND created_at<="'.$enddate.'"';
-					}
-					$sWhere.=' AND tbl_user.is_deleted=0';	
-					if(!empty($sWhere)){
-						$sWhere = " WHERE 1 ".$sWhere;
-					}
-					/** Filtering End */
-				}
+			if(!empty($clientname)){
+				$sWhere.=' AND  clientname="'.$clientname.'"';
+			}
 				
+			if($status=='all'){
+
+			}
+			else{
+				$sWhere.=' AND status='.$status;
+			}
+			if(!empty($startdate)){						
+				$sWhere.=' AND created_at>="'.$startdate.'"';
+			}
+			if(!empty($enddate)){						
+				$sWhere.=' AND created_at<="'.$enddate.'"';
+			}
+			$sWhere.=' AND tbl_user.is_deleted=0';	
+			if(!empty($sWhere)){
+				$sWhere = " WHERE 1 ".$sWhere;
+			}
+				/** Filtering End */
 		
-	    $query = "SELECT tbl_clients.id as clientId, tbl_user.id,tbl_user.is_deleted,tbl_clients.clientname,tbl_clients.companyname,tbl_user.emailid,tbl_user.status,tbl_user.created_at from tbl_clients INNER JOIN tbl_user ON tbl_clients.user_id=tbl_user.id ".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
-		//echo $query;die;
-		$clientsArr = $this->common_model->coreQueryObject($query);
+		    $query = "SELECT tbl_clients.id as clientId, tbl_user.id,tbl_user.is_deleted,tbl_clients.clientname,tbl_clients.companyname,tbl_user.emailid,tbl_user.status,tbl_user.created_at from tbl_clients INNER JOIN tbl_user ON tbl_clients.user_id=tbl_user.id ".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+			//echo $query;die;
+			$clientsArr = $this->common_model->coreQueryObject($query);
 
-		$query =  "SELECT tbl_user.id,tbl_user.is_deleted,tbl_clients.clientname,tbl_clients.companyname,tbl_user.emailid,tbl_user.status,tbl_user.created_at from tbl_clients INNER JOIN tbl_user ON tbl_clients.user_id=tbl_user.id ".$sWhere;
-		$clientsFilterArr = $this->common_model->coreQueryObject($query);
-		$iFilteredTotal = count($clientsFilterArr);
+			$query =  "SELECT tbl_user.id,tbl_user.is_deleted,tbl_clients.clientname,tbl_clients.companyname,tbl_user.emailid,tbl_user.status,tbl_user.created_at from tbl_clients INNER JOIN tbl_user ON tbl_clients.user_id=tbl_user.id ".$sWhere;
+			$clientsFilterArr = $this->common_model->coreQueryObject($query);
+			$iFilteredTotal = count($clientsFilterArr);
 
-		$clientsAllArr = $this->common_model->getData('tbl_clients');
-		$iTotal = count($clientsAllArr);
+			$clientsAllArr = $this->common_model->getData('tbl_clients');
+			$iTotal = count($clientsAllArr);
 
-		/** Output */
-		$datarow = array();
-		$i = 1;
-		foreach($clientsArr as $row) {
-			$id = $row->id;
-			if($row->status == '0'){
-				$status = $row->status = 'Deactive';
-				$sta='<lable class="label label-danger">'.$status.'</label>';
+			/** Output */
+			$datarow = array();
+			$i = 1;
+			foreach($clientsArr as $row) {
+				$id = $row->id;
+				if($row->status == '0'){
+					$status = $row->status = 'Deactive';
+					$sta='<lable class="label label-danger">'.$status.'</label>';
 
-			}
-			else if($row->status == '1'){
-				$status = $row->status = 'Active';
-				$sta='<lable class="label label-success">'.$status.'</label>';
+				}
+				else if($row->status == '1'){
+					$status = $row->status = 'Active';
+					$sta='<lable class="label label-success">'.$status.'</label>';
 
-			}
-			$clientid = $row->clientId;
-			$create_date = date('d-m-Y', strtotime($row->created_at));
-			
-			$actionStr = "<abbr title=\"Edit\"><a class=\"btn btn-info btn-circle\" data-toggle=\"tooltip\" data-original-title=\"Edit\" href='".base_url()."Clients/editclients/".base64_encode($clientid)."'><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i></a></abbr>
-			<abbr title=\"View Client Details\"><a class=\"btn btn-success btn-circle\" data-toggle=\"tooltip\" data-original-title=\"View Client Details\" href='".base_url()."Clients/viewclientdetail/".base64_encode($id)."'><i class=\"fa fa-search\" aria-hidden=\"true\" ></i></a></abbr>
-			<abbr title=\"Delete\"><a  class=\"btn btn-danger btn-circle sa-params\" data-toggle=\"tooltip\"  data-original-title=\"Delete\" href=\"javascript:void();\" onclick=\"deleteclients('".base64_encode($id)."');\"><i class=\"fa fa-times\" aria-hidden=\"true\"></i></a></abbr>";	
-          
-			
-			$datarow[] = array(
-				$id = $i,
-                $row->clientname,
-                $row->companyname,
-	            $row->emailid,
-                $sta,	
-				$create_date,
-				$actionStr
-           	);
-           	$i++;
-      	}
-        
-		$output = array
-		(
-		   	"sEcho" => intval($_GET['sEcho']),
-	        "iTotalRecords" => $iTotal,
-	        "iTotalRecordsFormatted" => number_format($iTotal), //ShowLargeNumber($iTotal),
-	        "iTotalDisplayRecords" => $iFilteredTotal,
-	        "aaData" => $datarow
-		);
-	  echo json_encode($output);
-      exit();
+				}
+				$clientid = $row->clientId;
+				$create_date = date('d-m-Y', strtotime($row->created_at));
+				
+				$actionStr = "<abbr title=\"Edit\"><a class=\"btn btn-info btn-circle\" data-toggle=\"tooltip\" data-original-title=\"Edit\" href='".base_url()."Clients/editclients/".base64_encode($clientid)."'><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i></a></abbr>
+				<abbr title=\"View Client Details\"><a class=\"btn btn-success btn-circle\" data-toggle=\"tooltip\" data-original-title=\"View Client Details\" href='".base_url()."Clients/viewclientdetail/".base64_encode($id)."'><i class=\"fa fa-search\" aria-hidden=\"true\" ></i></a></abbr>
+				<abbr title=\"Delete\"><a  class=\"btn btn-danger btn-circle sa-params\" data-toggle=\"tooltip\"  data-original-title=\"Delete\" href=\"javascript:void();\" onclick=\"deleteclients('".base64_encode($id)."');\"><i class=\"fa fa-times\" aria-hidden=\"true\"></i></a></abbr>";	
+	          
+				
+				$datarow[] = array(
+					$id = $i,
+	                $row->clientname,
+	                $row->companyname,
+		            $row->emailid,
+	                $sta,	
+					$create_date,
+					$actionStr
+	           	);
+	           	$i++;
+	      	}
+	        
+			$output = array
+			(
+			   	"sEcho" => intval($_GET['sEcho']),
+		        "iTotalRecords" => $iTotal,
+		        "iTotalRecordsFormatted" => number_format($iTotal), //ShowLargeNumber($iTotal),
+		        "iTotalDisplayRecords" => $iFilteredTotal,
+		        "aaData" => $datarow
+			);
+		  	echo json_encode($output);
+	      	exit();
+	  	}
 	}
 	
 	public function editclients(){
@@ -234,15 +233,14 @@ class Clients extends CI_Controller
 		$clientArr=$data['clients']=$this->common_model->getData('tbl_clients',$whereArr);
 		$whereArr1=array('id'=>$clientArr[0]->user_id);
 		$data['user']=$this->common_model->getData('tbl_user',$whereArr1);
-		//echo "<PRE>";print_r($data);die;
+		#echo "<PRE>";print_r($_POST);die;
 		
 		//print_r($data);die;
 		$this->load->view('common/header');
 		$this->load->view('clients/editclient',$data);
 		$this->load->view('common/footer');
 
-		if($this->input->post('btnupdate'))
-		{
+		if(!empty($_POST)){
 			$companyname=$this->input->post('company_name');
 			$website=$this->input->post('website');
 			$address=$this->input->post('address');
@@ -261,32 +259,32 @@ class Clients extends CI_Controller
 			$note=$this->input->post('note');
 			$login=$this->input->post('login');
 					
-				$updateArr1['companyname'] = $companyname;
-				$updateArr1['website'] = $website;
-				$updateArr1['address'] = $address;
-				$updateArr1['clientname'] = $clientname;
-				$updateArr['emailid'] = $clientemail;
-				$updateArr[	'mobile'] = $mobile;
-				$updateArr['status']=$status;
-				$updateArr1['skype'] = $skype;
-				$updateArr1['linkedin'] = $linkedin;
-				$updateArr1['twitter'] = $twitter;
-				$updateArr1['facebook'] = $facebook;
-				$updateArr1['gstnumber'] = $gstnumber;
-				$updateArr1['note'] = $note;
-				$updateArr['login'] =$login;
-				
-				//$whereArr=array('id'=>base64_decode($id));
-				$data['query']=$this->common_model->updateData('tbl_user',$updateArr,$whereArr1);
-				$data['query']=$this->common_model->updateData('tbl_clients',$updateArr1,$whereArr);
-				//echo $this->db->last_query();die;
-				$this->session->set_flashdata('messagename', "Data Update Succeessfully");
-				if(!empty($ltoc)){
-					redirect('leads');	
-				}
-				else{
-					redirect('Clients/index');
-				}
+			$updateArr1['companyname'] = $companyname;
+			$updateArr1['website'] = $website;
+			$updateArr1['address'] = $address;
+			$updateArr1['clientname'] = $clientname;
+			$updateArr['emailid'] = $clientemail;
+			$updateArr[	'mobile'] = $mobile;
+			$updateArr['status']=$status;
+			$updateArr1['skype'] = $skype;
+			$updateArr1['linkedin'] = $linkedin;
+			$updateArr1['twitter'] = $twitter;
+			$updateArr1['facebook'] = $facebook;
+			$updateArr1['gstnumber'] = $gstnumber;
+			$updateArr1['note'] = $note;
+			$updateArr['login'] =$login;
+			
+			//$whereArr=array('id'=>base64_decode($id));
+			$data['query']=$this->common_model->updateData('tbl_user',$updateArr,$whereArr1);
+			$data['query']=$this->common_model->updateData('tbl_clients',$updateArr1,$whereArr);
+			//echo $this->db->last_query();die;
+			$this->session->set_flashdata('message_name', "Data Update Succeessfully");
+			if(!empty($ltoc)){
+				redirect('leads');	
+			}
+			else{
+				redirect('clients');
+			}
 		}
 	}
 	

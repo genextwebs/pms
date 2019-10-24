@@ -131,7 +131,6 @@ class Leads extends CI_Controller
 						                    <a  class="dropdown-item" href='.base_url().'leads/editleads/'.base64_encode($id).'><i class="fa fa-edit"></i> Edit</a>
 						                    <a  class="dropdown-item" href="javascript:void()" onclick="deleteLeadClient(\''.base64_encode($row->id).'\',\''.base64_encode($clientid).'\', \'lead\')"><i class="fa fa-trash "></i> Delete</a>
 						                    <a  class="dropdown-item" href='.base_url().'clients/addclients/'.base64_encode($id).'><i class="fa fa-user"></i> Change To Client</a>
-						                    <a  class="dropdown-item" href="#"><i class="fa fa-thumbs-up"></i> Add Follow Up</a>
 				               			 </div>
 							</div>';
 			}
