@@ -147,6 +147,10 @@ class Project extends CI_Controller {
 			if(!empty($sOrder)){
 				$sOrder = " ORDER BY ".$sOrder;
 			}
+			
+			
+			
+			
 			/** Ordering End **/
 				
 			/** Filtering Start */
@@ -214,9 +218,10 @@ class Project extends CI_Controller {
 			$row->clientname,
 			$status,
 			'<a href='.base_url().'Project/editproject/'.base64_encode($row->id). ' class="btn btn-info btn-circle" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-			<a href="project-details.html" class="btn btn-success btn-circle" data-toggle="tooltip" data-original-title="View Project Details"><i class="fa fa-search" aria-hidden="true"></i></a>
+			<a href='.base_url().'Project/searchproject/'.base64_encode($row->id). ' class="btn btn-success btn-circle" data-toggle="tooltip" data-original-title="View Project Details"><i class="fa fa-search" aria-hidden="true"></i></a>
 			<a href='.base_url().'Project/archivedata/'.base64_encode($row->id).' onclick="javascript:return confirm(\'Are u Sure want to Archive?\');"  class="btn btn-warning  btn-circle archive" data-toggle="tooltip" data-user-id="1" data-original-title=" Archive"><i class="fa fa-archive" aria-hidden="true"></i></a>
-			<a href='.base_url().'Project/deleteproject/'.base64_encode($row->id).' href="javascript:void()" class="btn btn-danger btn-circle sa-params" data-toggle="tooltip" data-user-id="1" data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>'							
+			<a href="javascript:void();" onclick="deleteproject(\''.base64_encode($id).'\');"  class="btn btn-danger btn-circle sa-params" data-toggle="tooltip"  data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>'
+		
 			);
 			$i++;
 		}
@@ -239,6 +244,14 @@ class Project extends CI_Controller {
 		$this->common_model->deleteData('tbl_project_info',$deleteArr);
 		$this->session->set_flashdata('message','Delete Succesfully....');
 		redirect('project/index');
+	}
+	
+	public function searchproject(){
+		$id=base64_decode($this->uri->segment(3));
+		$searchArr=array('id'=>$id);
+		$this->load->view('common/header');
+		$this->load->view('project/searchproject',$searchArr);
+		$this->load->view('common/footer');
 	}
 			
 	public function deletetemplate(){
@@ -687,7 +700,7 @@ class Project extends CI_Controller {
 		if(!empty($_POST)){
 			$catname = $this->input->post('name');
 			$insArr = array('name'=>$catname);
-			$this->common_model->insertData('tbl_project_category',$insArr);
+			$lastinsertid=$this->common_model->insertData('tbl_project_category',$insArr);
 			$catArray = $this->common_model->getData('tbl_project_category');
 			$str = '';
 			foreach($catArray as $row){
@@ -697,6 +710,7 @@ class Project extends CI_Controller {
 			$catArr = array();
 			$catArr['count'] = $totaldata;
 			$catArr['catdata'] = $str;
+			$catArr['lastinsertid']= $lastinsertid;
 			//print_r($catArr);die;
 			echo  json_encode($catArr);exit; 
 			echo  $totaldata; exit;
@@ -705,7 +719,8 @@ class Project extends CI_Controller {
 			
 	public function deletecat(){
 		$id=$this->input->post('id');
-		$deleteArr=array('id'=>$id);
-		$this->common_model->deleteData('tbl_project_category',$deleteArr);
+		$deleteArrdeleteArr=array('id'=>$id);
+		$this->common_model->deleteData('tbl_project_category',$deleteArrdeleteArr);
+		//echo  json_encode($id);exit; 
 	}	
 }		

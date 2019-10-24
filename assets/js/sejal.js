@@ -228,42 +228,6 @@ $(document).ready(function(){
     });
 });
 
-	//addproject=> sweetalert for delete
-	/* function deleteproducts(id){
-		var url = base_url+"Project/deleteproject";
-		swal({
-		 title: "Are you sure?",
-		 text: "You will not be able to recover this imaginary file!",
-		 type: "warning",
-		 showCancelButton: true,
-		 confirmButtonColor: "#DD6B55",
-		 confirmButtonText: "Yes, delete it!",
-		 closeOnConfirm: false
-		},
-		function(isConfirm){
-		if (isConfirm) {
-			   $.ajax({
-				   url: url,
-				   type: "POST",
-				   dataType: "JSON",
-				   data: {id:id},
-				  dataType: "html",
-				  
-				   success: function (data) {
-					   swal("Done!", "It was succesfully deleted!", "success");
-					   $('#project').DataTable().ajax.reload();
-				   },
-				   error: function (xhr, ajaxOptions, thrownError) {
-					   swal("Error deleting!", "Please try again", "error");
-				   }
-			   });
-		   }
-		   });
-	}*/
-
-
-	
-
 //addproject validation for all input
 $("form[name='creatclient']").validate({
 	rules:{
@@ -316,8 +280,9 @@ $("form[name='creatclient']").validate({
 
 // for add category in addproject
 $("#save-category").click(function(event) {
-	event.preventDefault();
+	//event.preventDefault();
 	var catname = $("input[name='category_name']").val();
+	alert("---->"+catname);
 	var dataString = 'name='+ catname;
 	$.ajax({
 		   url: base_url+"project/insertcat",
@@ -332,27 +297,32 @@ $("#save-category").click(function(event) {
 			$('select[name="project-category"]').html('');       
 			$('select[name="project-category"]').append(data.catdata);
 			 //  $("tbody").append("<tr><td>"+data.count+"</td><td>"+catname+"</td> <td><a href='javascript:;' class='btn btn-sm btn-danger btn-rounded delete-category' id='deletecat'>Remove</a></td></tr>");
-			$("tbody").append("<tr><td>"+data.count+"</td><td>"+catname+"</td> <td><input type='submit' class='btn btn-sm btn-danger btn-rounded delete-category' id='deletecat' value='Remove'></tr>");
+			$("tbody").append("<tr><td>"+data.count+"</td><td>"+catname+"</td> <td><input type='submit' class='btn btn-sm btn-danger btn-rounded delete-category' onclick='deletecat(\'"+data.lastinsertid+"\');' id='deletecat' value='Remove'></tr>");
 			$('#project-category1').modal('toggle');
 			$('#category')[0].reset();
 	   }
 	});
 });
 
+
 // addproject=> delete category 
-$('#deletecat').click(function(){
-	var btn = this;
-	e.preventDefault();
-		$.ajax({
-		   type: "POST",
-		   url: base_url+"project/deletecat",
-		   cache: false,
-		   data: "id="+$(this),
-		   success: function(){
-		}
-		});
-	return false
-});
+	function deletecat(id)
+	{
+	//alert("--->"+id);	
+		//var btn = this;
+		//e.preventDefault();
+			$.ajax({
+			   type: "POST",
+			   url: base_url+"project/deletecat",
+			   cache: false,
+			   data: "id="+id,
+			   //alert(id);
+			   success: function(){
+				  $(this).closest('tr').();	
+			}
+			});
+		return false
+	}
 
 	function checkUncheck(){ 
 
@@ -374,6 +344,44 @@ $('#deletecat').click(function(){
 			 $('#viewnotification').hide();
 		}	
 	}
+	
+	//delete projects
+	function deleteproject(id){
+		alert(id);
+		var url = base_url+"project/deleteproject";
+		swal({
+		 title: "Are you sure?",
+		 text: "You will not be able to recover this imaginary file!",
+		 type: "warning",
+		 showCancelButton: true,
+		 confirmButtonColor: "#DD6B55",
+		 confirmButtonText: "Yes, delete it!",
+		 closeOnConfirm: false
+		},
+			function(isConfirm){
+			if (isConfirm) {
+				   $.ajax({
+					   url: url,
+					   type: "POST",
+					   dataType: "JSON",
+					   data: {id:id},
+					  dataType: "html",
+					  
+					   success: function (data) {
+						   swal("Done!", "It was succesfully deleted!", "success");
+						   $('#project').DataTable().ajax.reload();
+
+						   //$("#leads").fnReloadAjax();
+							//$('#leads').DataTable.ajax.reload(null,false);
+							//window.location.reload();
+					   },
+					   error: function (xhr, ajaxOptions, thrownError) {
+						   swal("Error deleting!", "Please try again", "error");
+					   }
+				   });
+			   }
+			   });
+		}
 
 
 	

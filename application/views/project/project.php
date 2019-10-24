@@ -15,7 +15,7 @@
 <!-- contetn-wrap -->
 <div class="content-in">  
 	<div class="row">
-		<div class="col-md-3">
+		<div class="col-md-2">
 			<div class="stats-box bg-black pt-1 pb-1">
 				<h3 class="box-title text-white">Total Projects</h3>
 				<ul class="list-inline two-wrap">
@@ -28,7 +28,22 @@
 				</ul>
 			</div>
 		</div>
-		<div class="col-md-3">
+		<div class="col-md-2">
+			<div class="stats-box bg-black pt-1 pb-1">
+				<h3 class="box-title text-white">Incomplete Projects</h3>
+				<ul class="list-inline two-wrap">
+					<li><i class="icon-layers text-white"></i></li>
+					 <?php 
+						$whereArr=array('status'=>0);
+						$Total = $this->common_model->getData('tbl_project_info',$whereArr);
+						$total_Project = count($Total);
+					 ?>
+					<li class="text-right"><span id="" class="counter text-white"><?php echo $total_Project;?></span></li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="col-md-2">
 			<div class="stats-box bg-success pt-1 pb-1">
 				<h3 class="box-title text-white">Completed Projects</h3>
 				<ul class="list-inline two-wrap">
@@ -42,7 +57,7 @@
 				</ul>
 			</div>
 		</div>
-		<div class="col-md-3">
+		<div class="col-md-2">
 			<div class="stats-box bg-info pt-1 pb-1">
 				<h3 class="box-title text-white">In Process Projects</h3>
 				<ul class="list-inline two-wrap">
@@ -56,7 +71,21 @@
 				</ul>
 			</div>
 		</div>
-		<div class="col-md-3">
+		<div class="col-md-2">
+			<div class="stats-box bg-black pt-1 pb-1">
+				<h3 class="box-title text-white">OnHold Projects</h3>
+				<ul class="list-inline two-wrap">
+					<li><i class="icon-layers text-white"></i></li>
+					 <?php 
+						$whereArr=array('status'=>3);
+						$Total = $this->common_model->getData('tbl_project_info',$whereArr);
+						$total_Project = count($Total);
+					 ?>
+					<li class="text-right"><span id="" class="counter text-white"><?php echo $total_Project;?></span></li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-md-2">
 			<div class="stats-box bg-danger pt-1 pb-1">
 				<h3 class="box-title text-white">Cancelled Projects</h3>
 				<ul class="list-inline two-wrap">
@@ -79,13 +108,13 @@
 							
 							<a href="javascript:;"  class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#project-category1">Add Project Category <i class="fa fa-plus" aria-hidden="true"></i></a>
 							
-							<a href="javascript:;" class="btn btn-outline-danger btn-sm hidden-xs hidden-sm"><i class="fa fa-bar-chart" aria-hidden="true"></i> Gantt Chart</a>
+							<!--<a href="javascript:;" class="btn btn-outline-danger btn-sm hidden-xs hidden-sm"><i class="fa fa-bar-chart" aria-hidden="true"></i> Gantt Chart</a>-->
 							
 							<a href="<?php echo base_url().'Project/projecttemplate';?>"  class="btn btn-outline-primary btn-sm">Project Templates <i class="fa fa-plus" aria-hidden="true"></i></a>
 							
 							<a href="<?php echo base_url().'Project/viewarchiev';?>"  class="btn btn-outline-info btn-sm">View Archive <i class="fa fa-trash" aria-hidden="true"></i></a>
 							
-							<a href="javascript:;" onclick="exportData()" class="btn btn-info btn-sm"><i class="ti-export" aria-hidden="true"></i> Export To Excel</a>
+							<!--<a href="javascript:;" onclick="exportData()" class="btn btn-info btn-sm"><i class="ti-export" aria-hidden="true"></i> Export To Excel</a>-->
 					  </div>
 				 </div>
 			 </div>
@@ -166,53 +195,6 @@
 	</div>
 </div>
 <!-- ends of contentwrap -->
-<div class="modal fade project-category" id="project-category1" tabindex="-1" role="dialog" aria-labelledby="project-category" aria-hidden="true">
-	<div class="modal-dialog modal-lg" role="document">
-		<div class="modal-content br-0">
-			<div class="modal-header">
-				<h4 class="modal-title"> Project Category</h4>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">×</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<div class="table-responsive">
-					<table class="table">
-						<thead>
-						<tr>
-							<th>#</th>
-							<th>Category Name</th>
-							<th>Action</th>
-						</tr>
-						</thead>
-						 <tbody>
-								<?php foreach ($category as $row) { ?>      
-									  <tr>
-										  <td><?php echo $row->id; ?></td>
-										  <td><?php echo $row->name; ?></td>
-										  <td><a href="javascript:;" data-cat-id="1" class="btn btn-sm btn-danger btn-rounded delete-category" id='deletecat'>Remove</a></td>
-									  </tr>
-							   <?php } ?>
-						</tbody>
-					</table>
-				</div>
-				<hr>
-				<form id="category" class="" id="category" name="category" method="post" onsubmit="return checkName();">
-					<div class="form-body">
-						<div class="row">
-							<div class="col-md-12 ">
-								<div class="form-group">
-									<label>Category Name</label>
-									<input type="text" name="category_name" id="category_name" class="form-control">
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="form-actions">
-						<input type="submit" id="save-category" class="btn btn-success" value="Save"> <i class="fa fa-check"></i>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-</div>
+<?php 
+	$this->load->view('common/projectcategory');
+?>
