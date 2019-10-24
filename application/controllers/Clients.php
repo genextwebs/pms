@@ -137,7 +137,7 @@ class Clients extends CI_Controller{
             /** Filtering Start */
             if(!empty(trim($_GET['sSearch']))){
             	$searchTerm = trim($_GET['sSearch']);
-            	$sWhere .= ' AND (clientname like "%'.$searchTerm.'%" OR companyname like "%'.$searchTerm.'%" OR website like "%'.$searchTerm.'%" OR address like "%'.$searchTerm.'%" OR clientemail like "%'.$searchTerm.'%" OR facebook like "%'.$searchTerm.'%" OR note like "%'.$searchTerm.'%")';
+            	$sWhere .= ' AND (clientname like "%'.$searchTerm.'%" OR companyname like "%'.$searchTerm.'%" OR website like "%'.$searchTerm.'%" OR address like "%'.$searchTerm.'%" OR emailid like "%'.$searchTerm.'%" OR facebook like "%'.$searchTerm.'%" OR note like "%'.$searchTerm.'%")';
             }
 			$startdate=!empty($_POST['startdate']) ? $_POST['startdate'] : '';
 			$enddate=!empty($_POST['enddate']) ? $_POST['enddate'] : '';
@@ -196,7 +196,7 @@ class Clients extends CI_Controller{
 				$create_date = date('d-m-Y', strtotime($row->created_at));
 				
 				$actionStr = "<abbr title=\"Edit\"><a class=\"btn btn-info btn-circle\" data-toggle=\"tooltip\" data-original-title=\"Edit\" href='".base_url()."Clients/editclients/".base64_encode($clientid)."'><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i></a></abbr>
-				<abbr title=\"View Client Details\"><a class=\"btn btn-success btn-circle\" data-toggle=\"tooltip\" data-original-title=\"View Client Details\" href='".base_url()."Clients/viewclientdetail/".base64_encode($id)."'><i class=\"fa fa-search\" aria-hidden=\"true\" ></i></a></abbr>
+				<abbr title=\"View Client Details\"><a class=\"btn btn-success btn-circle\" data-toggle=\"tooltip\" data-original-title=\"View Client Details\" href='".base_url()."Clients/viewclientdetail/".base64_encode($id)."/".base64_encode($clientid)."'><i class=\"fa fa-search\" aria-hidden=\"true\" ></i></a></abbr>
 				<abbr title=\"Delete\"><a  class=\"btn btn-danger btn-circle sa-params\" data-toggle=\"tooltip\"  data-original-title=\"Delete\" href=\"javascript:void();\" onclick=\"deleteclients('".base64_encode($id)."');\"><i class=\"fa fa-times\" aria-hidden=\"true\"></i></a></abbr>";	
 	          
 				
@@ -274,10 +274,8 @@ class Clients extends CI_Controller{
 			$updateArr1['note'] = $note;
 			$updateArr['login'] =$login;
 			
-			//$whereArr=array('id'=>base64_decode($id));
 			$data['query']=$this->common_model->updateData('tbl_user',$updateArr,$whereArr1);
 			$data['query']=$this->common_model->updateData('tbl_clients',$updateArr1,$whereArr);
-			//echo $this->db->last_query();die;
 			$this->session->set_flashdata('message_name', "Data Update Succeessfully");
 			if(!empty($ltoc)){
 				redirect('leads');	
@@ -298,10 +296,13 @@ class Clients extends CI_Controller{
 	}
 	
 	public function viewclientdetail(){
-		$id=$this->uri->segment(3);
-		$id1=base64_decode($id);
-		$whereArr=array('id'=>$id1);
-		$data['clients']=$this->common_model->getData('tbl_clients',$whereArr);
+		$id=base64_decode($this->uri->segment(3));
+		$id1=base64_decode($this->uri->segment(4));
+		$whereArr=array('id'=>$id);
+		$whereArr1=array('id'=>$id1);
+		$data['clients']=$this->common_model->getData('tbl_clients',$whereArr1);
+		$data['users']=$this->common_model->getData('tbl_user',$whereArr);
+
 		$this->load->view('common/header');
 		$this->load->view('clients/viewclientdetail',$data);
 		$this->load->view('common/footer');

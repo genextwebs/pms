@@ -27,14 +27,14 @@
 	                				</div>
 	                				<div class="col-sm-6">
 	                					<strong>Mobile</strong> <br>
-	                					<p class="text-muted"><?php echo !empty($clients[0]->mobile) ?  $clients[0]->mobile : ' '?></p>
+	                					<p class="text-muted"><?php echo !empty($users[0]->mobile) ?  $users[0]->mobile : ' '?></p>
 	                				</div>
 	                			</div>
 	                			<hr>
 	                			<div class="row">
 	                				<div class="col-sm-6 b-r">
 	                					<strong>Email</strong> <br>
-                						<p class="text-muted"><?php echo !empty($clients[0]->clientemail) ?  $clients[0]->clientemail : ' '?></p>
+                						<p class="text-muted"><?php echo !empty($users[0]->emailid) ?  $users[0]->emailid : ' '?></p>
 	                				</div>
 	                				<div class="col-sm-6">
 	                					<strong>Company Name</strong> <br>
