@@ -6,8 +6,8 @@
                     </div>
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                         <ol class="breadcrumb">
-                            <li><a href="index.html">Home</a></li>
-                            <li><a href="clients.html">Clients</a></li>
+                            <li><a href="<?php echo base_url().'dashboard'?>">Home</a></li>
+                            <li><a href="<?php echo base_url().'Clients'?>">Clients</a></li>
                             <li class="active">Project</li>
                         </ol>
                     </div>
