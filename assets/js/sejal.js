@@ -18,7 +18,7 @@ jQuery(document).ready(function() {
 			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
 			{ "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
 			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
-			{ "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
+		//	{ "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
 			],
 			"bServerSide": true,
 			"fixedHeader": true,
@@ -185,7 +185,8 @@ $('#categoryname').change(function(){ //button filter event click
 	var oTable = $('#project').DataTable();
 		oTable.draw();
 });
-$('#project_status').change(function(){ //button filter event click
+$('#project_status').change(function(){
+	//button filter event click
 	var oTable = $('#project').DataTable();
 		oTable.draw();
 });		
@@ -282,7 +283,7 @@ $("form[name='creatclient']").validate({
 $("#save-category").click(function(event) {
 	//event.preventDefault();
 	var catname = $("input[name='category_name']").val();
-	alert("---->"+catname);
+	//alert("---->"+catname);
 	var dataString = 'name='+ catname;
 	$.ajax({
 		   url: base_url+"project/insertcat",
@@ -355,7 +356,7 @@ $("#save-category").click(function(event) {
 		var url = base_url+"project/deleteproject";
 		swal({
 		 title: "Are you sure?",
-		 text: "You will not be able to recover this imaginary file!",
+		 text: "Do you want to delete this project?",
 		 type: "warning",
 		 showCancelButton: true,
 		 confirmButtonColor: "#DD6B55",
@@ -374,7 +375,7 @@ $("#save-category").click(function(event) {
 					   success: function (data) {
 						   swal("Done!", "It was succesfully deleted!", "success");
 						   $('#project').DataTable().ajax.reload();
-
+						   $('#archievdata').DataTable().ajax.reload();
 						   //$("#leads").fnReloadAjax();
 							//$('#leads').DataTable.ajax.reload(null,false);
 							//window.location.reload();
@@ -393,7 +394,7 @@ $("#save-category").click(function(event) {
 		var url = base_url+"project/deletetemplate";
 		swal({
 		 title: "Are you sure?",
-		 text: "You will not be able to recover this imaginary file!",
+		 text: "Do you want to delete this project?",
 		 type: "warning",
 		 showCancelButton: true,
 		 confirmButtonColor: "#DD6B55",
@@ -411,7 +412,7 @@ $("#save-category").click(function(event) {
 					  
 					   success: function (data) {
 						   swal("Done!", "It was succesfully deleted!", "success");
-						   $('#project').DataTable().ajax.reload();
+						   $('#template').DataTable().ajax.reload();
 
 						   //$("#leads").fnReloadAjax();
 							//$('#leads').DataTable.ajax.reload(null,false);
@@ -428,6 +429,43 @@ $("#save-category").click(function(event) {
 	function archivetoproject(id){
 		//alert(id);
 		var url = base_url+"project/archivetoproject";
+		swal({
+		 title: "Are you sure?",
+		 text: "Do you want to restore this project?",
+		 type: "warning",
+		 showCancelButton: true,
+		 confirmButtonColor: "#DD6B55",
+		 confirmButtonText: "Yes, restore it!",
+		 closeOnConfirm: false
+		},
+			function(isConfirm){
+			if (isConfirm) {
+				   $.ajax({
+					   url: url,
+					   type: "POST",
+					   dataType: "JSON",
+					   data: {id:id},
+					  dataType: "html",
+					  
+					   success: function (data) {
+						   swal("Done!", "Project restored successfully..!", "success");
+						   $('#project').DataTable().ajax.reload();
+
+						   //$("#leads").fnReloadAjax();
+							//$('#leads').DataTable.ajax.reload(null,false);
+							//window.location.reload();
+					   },
+					   error: function (xhr, ajaxOptions, thrownError) {
+						   swal("Error !", "Please try again", "error");
+					   }
+				   });
+			   }
+			   });
+		}
+		
+		function archivedata(id){
+		//alert(id);
+		var url = base_url+"project/archivedata";
 		swal({
 		 title: "Are you sure?",
 		 text: "Do you want to archive this project?",

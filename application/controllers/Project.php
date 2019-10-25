@@ -67,9 +67,9 @@ class Project extends CI_Controller {
 			$editor1=$this->input->post('editor1');
 			$notes=$this->input->post('notes');
 			$client=$this->input->post('select_client');
-			$budget=$this->input->post('project-budget');
+			$budget=$this->input->post('project_budget');
 			$currency=$this->input->post('currency-id');
-			$hours=$this->input->post('hours-allocated');	
+			$hours=$this->input->post('hours_allocated');	
 			
 			$whereArr=array('projectname'=>$name);	
 			$query=$this->common_model->getData('tbl_project_info',$whereArr);
@@ -147,10 +147,6 @@ class Project extends CI_Controller {
 			if(!empty($sOrder)){
 				$sOrder = " ORDER BY ".$sOrder;
 			}
-			
-			
-			
-			
 			/** Ordering End **/
 				
 			/** Filtering Start */
@@ -159,7 +155,7 @@ class Project extends CI_Controller {
 				$searchTerm = trim($_GET['sSearch']);
 				$sWhere.= ' AND (tbl_project_info.projectname like "%'.$searchTerm.'%" OR tbl_project_info.note like "%'.$searchTerm.'%" OR tbl_project_info.clientid like "%'.$searchTerm.'%" OR tbl_project_info.projectsummary like "%'.$searchTerm.'%" OR clientname like "%'.$searchTerm.'%")';
 			}
-			$status=$_POST['status1'];				
+			$status=$_POST['status1'];	
 			$client=!empty($_POST['clientname1']) ? $_POST['clientname1'] : '';		
 			$category=!empty($_POST['categoryname1']) ? $_POST['categoryname1'] : '';
 			
@@ -173,55 +169,77 @@ class Project extends CI_Controller {
 				}else{
 						$sWhere.=' AND tbl_project_info.status='.$status;
 				}
-			$sWhere.=' AND tbl_project_info.archive=0';	
+			/*$sWhere.=' AND tbl_project_info.archive=0';	
 			if(!empty($sWhere)){
 				$sWhere = " WHERE 1 ".$sWhere;
-			}
+			}*/
 			/** Filtering End */
 		}
 		$query = "SELECT tbl_project_info.*,tbl_clients.clientname as clientname from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
-		//echo($query);die;
+		//echo($query);echo '<br/>';
 		$projectArr = $this->common_model->coreQueryObject($query);
 		$query = "SELECT tbl_project_info.*,tbl_clients.clientname as clientname from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id".$sWhere;
-		
+		//echo($query);die;
 		$ProjectFilterArr = $this->common_model->coreQueryObject($query);
 		$iFilteredTotal = count($ProjectFilterArr);
-		$whereArr=array('archive'=>0);
-		$ProjectAllArr = $this->common_model->getData('tbl_project_info',$whereArr);
+		//$whereArr=array('archive'=>0);
+		$ProjectAllArr = $this->common_model->getData('tbl_project_info');
 		$iTotal = count($ProjectAllArr);
 		
 		/** Output */
 		$datarow = array();
 		$i = 1;
 		foreach($projectArr as $row) {
-			$id = $row->id;
-			if($row->status=='1'){
+			$rowid = $row->id;
+		if($row->status=='1'){
 						$status=$row->status='Complete';
+						$showStatus = '<label class="label label-success">'.$status.'</label>';
 						}
 					else if($row->status=='0'){
 						$status=$row->status='InComplete';
+						$showStatus = '<label class="label label-warning">'.$status.'</label>';
 						}
 					else if($row->status=='2'){
 						$status=$row->status='InProgress';
+						$showStatus = '<label class="label label-inprogress">'.$status.'</label>';
 						}
 					else if($row->status=='3'){
-						$status=$row->status='OnHold ';
+						$status=$row->status='OnHold';
+						$showStatus = '<label class="label label-onhold">'.$status.'</label>';
 						}
 					else{
 						$status=$row->status='Canceled';
+						$showStatus = '<label class="label label-danger">'.$status.'</label>';
 						}
+			$archive=$row->archive;
+			$st = '';
+			$string = '';
+			if($archive == '1')
+			{
+				$st = 'Archive';
+				$string = '<label class="label label-archieve">'.ucfirst($st).'</label>';
+				$showStatus='';
+			}
+			
+			if($archive == '1'){
+				$actionstring = '<a href="javascript:void();" onclick="archivetoproject(\''.base64_encode($rowid).'\');" class="btn btn-info btn-circle revert" data-toggle="tooltip" data-user-id="14" data-original-title="Restore"><i class="fa fa-undo" aria-hidden="true"></i></a>
+								 <a href="javascript:void();" onclick="deleteproject(\''.base64_encode($rowid).'\');"  class="btn btn-danger btn-circle sa-params" data-toggle="tooltip"  data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>';
+			
+			}
+			else{
+				$actionstring = '<a href='.base_url().'Project/editproject/'.base64_encode($row->id). ' class="btn btn-info btn-circle" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+								 <a href='.base_url().'Project/searchproject/'.base64_encode($row->id). ' class="btn btn-success btn-circle" data-toggle="tooltip" data-original-title="View Project Details"><i class="fa fa-search" aria-hidden="true"></i></a>
+								 <a href="javascript:void();" onclick="archivedata(\''.base64_encode($rowid).'\');" class="btn btn-warning  btn-circle archive" data-toggle="tooltip" data-user-id="14" data-original-title="Archive"><i class="fa fa-archive" aria-hidden="true"></i></a>
+								 <a href="javascript:void();" onclick="deleteproject(\''.base64_encode($rowid).'\');"  class="btn btn-danger btn-circle sa-params" data-toggle="tooltip"  data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>';
+							}
 		$datarow[] = array(
 			$id = $i,
-			$row->projectname,
+			$row->projectname.'<br/>'.$string.'<br/>'.$showStatus,
 			"<a href='".base_url()."P/template_data/".$id."'> Add Template Members</a>",
 			$row->deadline,
 			$row->clientname,
-			$status,
-			'<a href='.base_url().'Project/editproject/'.base64_encode($row->id). ' class="btn btn-info btn-circle" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-			<a href='.base_url().'Project/searchproject/'.base64_encode($row->id). ' class="btn btn-success btn-circle" data-toggle="tooltip" data-original-title="View Project Details"><i class="fa fa-search" aria-hidden="true"></i></a>
-			<a href='.base_url().'Project/archivedata/'.base64_encode($row->id).' onclick="javascript:return confirm(\'Are u Sure want to Archive?\');"  class="btn btn-warning  btn-circle archive" data-toggle="tooltip" data-user-id="1" data-original-title=" Archive"><i class="fa fa-archive" aria-hidden="true"></i></a>
-			<a href="javascript:void();" onclick="deleteproject(\''.base64_encode($id).'\');"  class="btn btn-danger btn-circle sa-params" data-toggle="tooltip"  data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>'
-		
+			//$status,
+			$actionstring
 			);
 			$i++;
 		}
@@ -239,12 +257,11 @@ class Project extends CI_Controller {
 	}
 				
 	public function deleteproject(){
-		$id=base64_decode($this->uri->segment(3));
-		//print_r($id);
-		$deleteArr=array('id'=>$id);
-		
-		$this->common_model->deleteData('tbl_project_info',$deleteArr);
-		echo $this->db->last_query();die;
+		$id=base64_decode($_POST['id']);
+		//echo($id);die;
+		$whereArr=array('id'=>$id);
+		$this->common_model->deleteData('tbl_project_info',$whereArr);
+		//echo $this->db->last_query();die;
 		$this->session->set_flashdata('message','Delete Succesfully....');
 		redirect('project/index');
 	}
@@ -258,15 +275,15 @@ class Project extends CI_Controller {
 	}
 			
 	public function deletetemplate(){
-		$id=base64_decode($this->uri->segment(3));
-		$deleteArr=array('id'=>$id);
-		$this->common_model->deleteData('tbl_project_template',$deleteArr);
+		$id=base64_decode($_POST['id']);
+		$whereArr=array('id'=>$id);
+		$this->common_model->deleteData('tbl_project_template',$whereArr);
 		$this->session->set_flashdata('message','Delete Succesfully....');
 		redirect('project/projecttemplate');
 	}
 			
 	public function archivedata(){
-		$id=base64_decode($this->uri->segment(3));
+		$id=base64_decode($_POST['id']);
 		$updateArr = array('archive'=>1);
 		$whereArr=array('id'=>$id);
 		$data['query']=$this->common_model->updateData('tbl_project_info',$updateArr,$whereArr);
@@ -275,20 +292,28 @@ class Project extends CI_Controller {
 	}
 			
     public function archivetoproject(){
-		$id=base64_decode($this->uri->segment(3));
-		//echo $id;die;	
+		$id=base64_decode($_POST['id']);
 		$updateArr = array('archive'=>0);
 		$whereArr=array('id'=>$id);
 		$data['query']=$this->common_model->updateData('tbl_project_info',$updateArr,$whereArr);
-		//echo $this->db->last_query();die;
-		redirect('project/viewarchiev');
+		redirect('project/index');
 	}
 			
-	public function viewarchiev(){
+	/*public function viewarchiev(){
 		$data['client']=$this->common_model->getData('tbl_clients');
 		$this->load->view('common/header');
 		$this->load->view('project/viewarchiev',$data);
 		$this->load->view('common/footer');	
+    }*/
+	
+	
+	public function viewarchiev(){
+		$id=base64_decode($_POST['id']);
+		$updateArr = array('archive'=>1);
+		$whereArr=array('id'=>$id);
+		$data['query']=$this->common_model->updateData('tbl_project_info',$updateArr,$whereArr);
+		//echo $this->db->last_query();die;
+		redirect('project/index');
     }
 			
 	public function archivelist(){
@@ -391,7 +416,7 @@ class Project extends CI_Controller {
 		$datarow = array();
 		$i = 1;
 		foreach($projectArr as $row) {
-			$id = $row->id;
+			$rowid = $row->id;
 			if($row->status=='1'){
 						$status=$row->status='Complete';
 						}
@@ -414,8 +439,9 @@ class Project extends CI_Controller {
 			$row->deadline,
 			$row->clientname,
 			$status,
-			'<a href="javascript:void();" onclick="archivetoproject(\''.base64_encode($id).'\');" class="btn btn-info btn-circle revert" data-toggle="tooltip" data-user-id="14" data-original-title="Restore"><i class="fa fa-undo" aria-hidden="true"></i></a>
-			<a href="javascript:void();" onclick="deleteproject(\''.base64_encode($id).'\');"  class="btn btn-danger btn-circle sa-params" data-toggle="tooltip"  data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>'
+			'
+			<a href="javascript:void();" onclick="archivetoproject(\''.base64_encode($rowid).'\');" class="btn btn-info btn-circle revert" data-toggle="tooltip" data-user-id="14" data-original-title="Restore"><i class="fa fa-undo" aria-hidden="true"></i></a>
+			<a href="javascript:void();" onclick="deleteproject(\''.base64_encode($rowid).'\');"  class="btn btn-danger btn-circle sa-params" data-toggle="tooltip"  data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>'
 			);
 			$i++;
 		}
@@ -673,14 +699,14 @@ class Project extends CI_Controller {
 				$datarow = array();
 				$i = 1;
 				foreach($templateArr as $row) {
-					$id = $row->id;	
+					$rowid = $row->id;	
 					$datarow[] = array(
 						$id = $i,
 						$row->projectname,
 						$row->name,
 						'<a href='.base_url().'Project/edittemplate/'.base64_encode($row->id). ' class="btn btn-info btn-circle" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-						 <a href="project-details.html" class="btn btn-success btn-circle" data-toggle="tooltip" data-original-title="View Project Details"><i class="fa fa-search" aria-hidden="true"></i></a>
-						 <a href="javascript:void();" onclick="deletetemplate(\''.base64_encode($id).'\');"  class="btn btn-danger btn-circle sa-params" data-toggle="tooltip"  data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>'
+						 <a href='.base_url().'Project/searchproject/'.base64_encode($row->id). ' class="btn btn-success btn-circle" data-toggle="tooltip" data-original-title="View Project Details"><i class="fa fa-search" aria-hidden="true"></i></a>
+						 <a href="javascript:void();" onclick="deletetemplate(\''.base64_encode($rowid).'\');"  class="btn btn-danger btn-circle sa-params" data-toggle="tooltip"  data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>'
 					);
 					$i++;
 					}

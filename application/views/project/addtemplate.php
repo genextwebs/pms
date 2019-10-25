@@ -5,8 +5,8 @@
                     </div>
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                         <ol class="breadcrumb">
-                            <li><a href="index.html">Home</a></li>
-                            <li><a href="clients.html">Project Template</a></li>
+                            <li><a href="<?php echo base_url().'dashboard' ?>">Home</a></li>
+                            <li><a href="<?php echo base_url().'project/projecttemplate' ?>">Project Template</a></li>
                             <li class="active">Add New</li>
                         </ol>
                     </div>
@@ -19,7 +19,7 @@
                     <div class="col-md-12">
 		                <div class="card br-0">
 		                	<div class="card-header br-0 card-header-inverse">
-		                		Add Template Template
+		                		Add Template 
 		                	</div>
 		                	<div class="card-wrapper collapse show">
 		                		<div class="card-body">

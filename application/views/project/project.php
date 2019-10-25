@@ -5,7 +5,7 @@
 		</div>
 		<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 			<ol class="breadcrumb">
-				<li><a href="<?php echo base_url().'Project/';?>">Home</a></li>
+				<li><a href="<?php echo base_url().'dashboard' ?>">Home</a></li>
 				 <li class="active">Projects</li>
 			</ol>
 		</div>
@@ -112,7 +112,7 @@
 							
 							<a href="<?php echo base_url().'Project/projecttemplate';?>"  class="btn btn-outline-primary btn-sm">Project Templates <i class="fa fa-plus" aria-hidden="true"></i></a>
 							
-							<a href="<?php echo base_url().'Project/viewarchiev';?>"  class="btn btn-outline-info btn-sm">View Archive <i class="fa fa-trash" aria-hidden="true"></i></a>
+							<!--<a href="<?php echo base_url().'Project/viewarchiev';?>"  class="btn btn-outline-info btn-sm">View Archive <i class="fa fa-trash" aria-hidden="true"></i></a>-->
 							
 							<!--<a href="javascript:;" onclick="exportData()" class="btn btn-info btn-sm"><i class="ti-export" aria-hidden="true"></i> Export To Excel</a>-->
 					  </div>
@@ -184,7 +184,7 @@
 								 <th>Project Members</th>
 								 <th>Deadline</th>
 								 <th>Client</th>
-								 <th>Completion</th>
+								<!-- <th>Completion</th>-->
 								 <th>Action</th>
 							</tr>
 						</thead>

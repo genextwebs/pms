@@ -438,6 +438,21 @@ ul.border-none li{
 .label-success {
   background-color: #00c292;
 }
+.label-warning {
+    background-color: #fec107;
+}
+.label-archieve{
+	background-color: #ff0000;
+}
+
+.label-inprogress{
+    background-color: #03a9f3;
+}
+
+.label-onhold{
+	background-color: #33FFD4;
+}
+	
 .page-item.active .page-link {
   background-color: #ff6849;
   border-color: #ff6849;
