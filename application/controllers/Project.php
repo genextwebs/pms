@@ -8,6 +8,7 @@ class Project extends CI_Controller {
 		error_reporting(E_ALL);
 		ini_set('display_errors', 1);
 		$this->load->model('common_model');
+		func_check_login();
 	}
 			
 	public function index(){
@@ -755,7 +756,7 @@ class Project extends CI_Controller {
 	public function checkcategory(){
 		$status = 0;
 		if(!empty($_POST['category'])){
-			$where = array('name LIKE '=>$_POST['category']);
+			$where = array('name'=>$_POST['category']);
 			$checkData = $this->common_model->getData('tbl_project_category',$where);
 			if(!empty($checkData)){
 				$status = 1;

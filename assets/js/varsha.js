@@ -25,6 +25,13 @@ $(function() {
 				url: true
 			},
 			name: "required",
+			mobile:
+					{	
+						required:true,
+						digits: true,
+						minlength:10,
+						maxlength:10
+					},
 			email:{	
 				required:true,
 				email: true
@@ -33,6 +40,11 @@ $(function() {
 						minlength: 6
 					}
 	 	},
+	 	messages:
+		{
+			mobile : "Enter 10 digit Number",
+			
+		},		
 		submitHandler: function(form) {
 		form.submit();}
 	});

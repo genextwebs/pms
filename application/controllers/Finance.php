@@ -8,6 +8,7 @@ class Finance extends CI_Controller
 		$this->load->model('common_model');
 		ini_set('display_errors',1);
 		error_reporting(E_ALL);
+		func_check_login();
 	}
 	public function index(){
 		$this->load->view('common/header');

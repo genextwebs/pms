@@ -195,7 +195,7 @@ class Clients extends CI_Controller{
 				$clientid = $row->clientId;
 				$create_date = date('d-m-Y', strtotime($row->created_at));
 				
-				$actionStr = "<abbr title=\"Edit\"><a class=\"btn btn-info btn-circle\" data-toggle=\"tooltip\" data-original-title=\"Edit\" href='".base_url()."Clients/editclients/".base64_encode($clientid)."'><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i></a></abbr>
+				$actionStr = "<abbr title=\"Edit\"><a class=\"btn btn-info btn-circle\" data-toggle=\"tooltip\" data-original-title=\"Edit\" href='".base_url()."Clients/editclients/".base64_encode($id)."'><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i></a></abbr>
 				<abbr title=\"View Client Details\"><a class=\"btn btn-success btn-circle\" data-toggle=\"tooltip\" data-original-title=\"View Client Details\" href='".base_url()."Clients/viewclientdetail/".base64_encode($id)."/".base64_encode($clientid)."'><i class=\"fa fa-search\" aria-hidden=\"true\" ></i></a></abbr>
 				<abbr title=\"Delete\"><a  class=\"btn btn-danger btn-circle sa-params\" data-toggle=\"tooltip\"  data-original-title=\"Delete\" href=\"javascript:void();\" onclick=\"deleteclients('".base64_encode($id)."');\"><i class=\"fa fa-times\" aria-hidden=\"true\"></i></a></abbr>";	
 	          
@@ -227,15 +227,16 @@ class Clients extends CI_Controller{
 	
 	public function editclients(){
 		$clientid = base64_decode($this->uri->segment(3));
+		//echo $clientid;
 		$ltoc = $this->uri->segment(4);
 		//echo $ltoc;die;
 		$whereArr1=array('id'=>$clientid);
 		$clientArr=array('user_id'=>$clientid);
 		$data['clients']=$this->common_model->getData('tbl_clients',$clientArr);
+		//print_r($data);exit;
 		$clientmaniId = $data['clients'][0]->id;
 		$whereArr=array('id'=>$clientmaniId);
 		$data['user']=$this->common_model->getData('tbl_user',$whereArr1);
-		
 		//print_r($data);die;
 		if(!empty($_POST)){
 			$companyname=$this->input->post('company_name');

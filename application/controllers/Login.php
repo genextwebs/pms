@@ -27,6 +27,7 @@ class Login extends CI_Controller
             else{
 				$whereArr = array('emailid' => $email, 'password' => $password);
 				$data = $this->common_model->getData('tbl_user',$whereArr);
+				
 				$session = $data[0];
 				$this->session->set_userdata('login',$session);
 				if(count($data) == 1){
