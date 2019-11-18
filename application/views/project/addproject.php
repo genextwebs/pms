@@ -47,6 +47,7 @@
 							<div class="form-body">
 								<h3 class="box-title">Project Info</h3>
 								<hr>
+								<p id="succmsg" class="text-success"></p>
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
@@ -54,6 +55,7 @@
 											<input id="project_name" class="form-control" type="text" name="project_name" value="">
 										</div>
 									</div>
+
 									<div class="col-md-6">
 										<div class="form-group project-category">
 											<label class="control-label" for="project-category">Project Category <a class="btn btn-sm btn-outline-success ml-1" href="javascript:;" data-toggle="modal" data-target="#project-category1"><i class="fa fa-plus"></i> Add Project Category</a></label>
@@ -139,6 +141,7 @@
 											<?php
 												foreach($client as $row)
 												{
+													if(!empty(trim($row->clientname))){
 														$str='';
 														if(!empty($sessData['select_client'])){
 															if($sessData['select_client'] == $row->id){
@@ -147,7 +150,8 @@
 														}
 														?>
 														<option value="<?php echo $row->id?>" <?php echo $str;?>><?php echo $row->clientname;?></option>
-												<?php
+													<?php
+													}
 												} 
 												?> 		
 											</select>

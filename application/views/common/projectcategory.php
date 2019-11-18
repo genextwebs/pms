@@ -19,29 +19,30 @@
 						</thead>
 						 <tbody>
 								<?php foreach ($category as $row) { ?>      
-									  <tr>
+									  <tr id="cate_<?php echo $row->id;?>">
 										  <td><?php echo $row->id; ?></td>
 										  <td><?php echo $row->name; ?></td>
-										  <td><a href="javascript:;" data-cat-id="1" class="btn btn-sm btn-danger btn-rounded delete-category" onclick="deletecat('<?php echo $row->id; ?>')" id='deletecat'>Remove</a></td>
+										  <td><a href="javascript:void(0);" data-cat-id="1" class="btn btn-sm btn-danger btn-rounded delete-category" onclick="deletecat('<?php echo $row->id; ?>')" id='deletecat'>Remove</a></td>
 									  </tr>
 							   <?php } ?>
 						</tbody>
 					</table>
 				</div>
 				<hr>
-				<form id="category" class="" id="category" name="category" method="post" onsubmit="return checkName();">
+				<form id="category" class="" id="category" name="category" method="post">
 					<div class="form-body">
 						<div class="row">
 							<div class="col-md-12 ">
 								<div class="form-group">
 									<label>Category Name</label>
 									<input type="text" name="category_name" id="category_name" class="form-control">
+									<p id="errormsg" class="text-danger"></p>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="form-actions">
-						<input type="submit" id="save-category" class="btn btn-success" value="Save"> <i class="fa fa-check"></i>
+						<input type="button" id="save-category" class="btn btn-success" value="Save"> <i class="fa fa-check"></i>
 					</div>
 				</form>
 			</div>

@@ -909,3 +909,7 @@ th {
 #filter-form {
   width: 100%;
 }
+.project-category .modal-content{
+  max-height: 440px;
+  overflow: auto;
+}

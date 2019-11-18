@@ -737,15 +737,30 @@ class Project extends CI_Controller {
 			$catArr['catdata'] = $str;
 			$catArr['lastinsertid']= $lastinsertid;
 			//print_r($catArr);die;
-			echo  json_encode($catArr);exit; 
-			echo  $totaldata; exit;
+			echo json_encode($catArr);exit; 
 		}
 	}
 			
 	public function deletecat(){
-		$id=$this->input->post('id');
-		$deleteArr=array('id'=>$id);
-		$this->common_model->deleteData('tbl_project_category',$deleteArr);
-		//echo  json_encode($id);exit; 
+		$status = 0;
+		if(!empty($_POST['id'])){
+			$id=$this->input->post('id');
+			$deleteArr=array('id'=>$id);
+			$this->common_model->deleteData('tbl_project_category',$deleteArr);
+			$status = 1;
+		}
+		echo $status;exit();
 	}	
+
+	public function checkcategory(){
+		$status = 0;
+		if(!empty($_POST['category'])){
+			$where = array('name LIKE '=>$_POST['category']);
+			$checkData = $this->common_model->getData('tbl_project_category',$where);
+			if(!empty($checkData)){
+				$status = 1;
+			}
+		}
+		echo $status;exit();
+	}
 }		

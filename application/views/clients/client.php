@@ -74,7 +74,9 @@
 										<?php
 											foreach($clients as $row)
 											{
-												echo '<option value="'.$row->clientname.'" >'.$row->clientname.'</option>';
+												if(!empty(trim($row->clientname))){
+													echo '<option value="'.$row->clientname.'" >'.$row->clientname.'</option>';
+												}
 											}
 										?>
 									</select>

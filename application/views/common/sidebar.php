@@ -1,16 +1,29 @@
+<?php
+$loginName="";
+if($this->session->userdata('login')){
+    $login=$this->session->userdata('login');
+    if($login->user_type==0){
+        $loginName = substr($login->emailid,0,8);
+    }else if($login->user_type == 1){
+        $where = array('user_id'=>$login->id);
+        $getClient = $this->common_model->getData('tbl_clients',$where);
+        $loginName = trim($getClient[0]->companyname);
+    }
+}
+?>
 <div id="sidebar-scroll" class="slim-nav">
 	<ul class="list-unstyled components user">
         <li>
             <a href="#user-ico" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle collapsed">
                 <img class="img-circle" src="<?php echo base_url();?>assets/images/default-profile-3.png" alt="user-img">
-                <span>Reece Osinski</span>
+                <span><?php echo !empty($loginName)?$loginName:'User';?></span>
             </a>
             <ul class="collapse list-unstyled" id="user-ico">
-                <li>
+                <!-- <li>
                     <a href="#"><i class="fas fa-sign-in-alt"></i> <span>Login As Employee</span></a>
-                </li>
+                </li> -->
                 <li>
-                    <a href="<?php echo base_url().'Login/logout'; ?>"><i class="fas fa-power-off"></i> <span>Logout</span></a>
+                    <a href="<?php echo base_url().'Login/logout'; ?>"><i class="fa fa-power-off"></i> <span>Logout</span></a>
                 </li>
             </ul>
         </li>

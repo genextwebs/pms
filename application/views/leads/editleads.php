@@ -44,17 +44,27 @@
             				<div class="form-body">
             					<h3 class="box-title">Company Details</h3>
             					<hr>
+                                <?php
+                                if($this->session->flashdata('message_name')){?>
+                                    <div class="alert alert-danger" role="alert">
+                                        <?php echo $this->session->flashdata('message_name');?>
+                                    </div>
+                                <?php
+                                }
+                                ?>
+                                
+                                <input type="hidden" name="leadid" value="<?php echo $this->uri->segment(3);?>">
             					<div class="row">
             						<div class="col-md-6">
             							<div class="form-group">
             								<label class="control-label">Company Name</label>
-            								<input id="company_name" class="form-control" type="text" name="company_name" value="<?php echo !empty($leads[0]->companyname) ?  $leads[0]->companyname : ' '?>">
+            								<input id="company_name" class="form-control" type="text" name="company_name" value="<?php echo !empty($leads[0]->companyname)?$leads[0]->companyname:''?>">
             							</div>
             						</div>
             						<div class="col-md-6">
             							<div class="form-group">
             								<label class="control-label">Website</label>
-            								<input id="website" class="form-control" type="text" name="website" value="<?php echo !empty($leads[0]->website) ?  $leads[0]->website : ' '?>">
+            								<input id="website" class="form-control" type="text" name="website" value="<?php echo !empty($leads[0]->website)?$leads[0]->website:''?>">
             							</div>
             						</div>
             					</div>
@@ -62,7 +72,7 @@
                             		<div class="col-md-12">
                                         <div class="form-group">
                                             <label class="control-label">Address</label>
-                                            <textarea name="address" id="address" class="form-control" rows="4"><?php echo !empty($leads[0]->address) ?  $leads[0]->address : ' '?></textarea>
+                                            <textarea name="address" id="address" class="form-control" rows="4"><?php echo !empty($leads[0]->address)?$leads[0]->address:''?></textarea>
                                         </div>
                                     </div>
                     			</div>
@@ -72,13 +82,13 @@
 								    <div class="col-md-6">
 								        <div class="form-group">
 								            <label class="control-label">Client Name</label>
-								            <input type="text" name="client_name" id="client_name" class="form-control" value="<?php echo !empty($leads[0]->clientname) ?  $leads[0]->clientname : ' '?>">
+								            <input type="text" name="name" id="name" class="form-control" value="<?php echo !empty($leads[0]->clientname)?$leads[0]->clientname:''?>">
 								        </div>
 								    </div>
 								    <div class="col-md-6">
 								        <div class="form-group">
 								            <label class="control-label">Client Email</label>
-								            <input type="text" name="client_email" id="client_email" class="form-control" value="<?php echo !empty($leads[0]->clientemail) ?  $leads[0]->clientemail : ' '?>">
+								            <input type="text" name="email" id="email" class="form-control" value="<?php echo !empty($leads[0]->clientemail)?$leads[0]->clientemail:''?>">
 								            <span class="help-desk">Lead will login using this email.</span>
 								        </div>
 								    </div>
@@ -87,7 +97,7 @@
 									<div class="col-lg-4 col-md-6">
 										<div class="form-group">
 											<label class="control-label">Mobile</label>
-											<input type="text" id="mobile" name="mobile" class="form-control" value="<?php echo !empty($leads[0]->mobile) ?  $leads[0]->mobile : ' '?>">
+											<input type="text" id="mobile" name="mobile" class="form-control" value="<?php echo !empty($leads[0]->mobile)?$leads[0]->mobile:''?>">
 										</div>
 									</div>
 									<div class="col-lg-4 col-md-6">

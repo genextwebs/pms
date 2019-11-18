@@ -1,5 +1,4 @@
 <?php
-<?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Leads extends CI_Controller 
@@ -136,6 +135,9 @@ class Leads extends CI_Controller
 							</div>';
 			}
 			else{
+				$whereget = array('id'=>$clientid);
+				$getClient = $this->common_model->getData('tbl_clients',$whereget);
+				$clientid = $getClient[0]->user_id;
 				$actionStr = '<div class="dropdown action m-r-10">
 				                <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
 				               		 <div class="dropdown-menu">
@@ -181,8 +183,8 @@ class Leads extends CI_Controller
 			$companyname = $this->input->post('company_name');
 			$website = $this->input->post('website');
 			$address = $this->input->post('address');
-			$clientname = $this->input->post('client_name');
-			$clientemail = $this->input->post('client_email');
+			$clientname = $this->input->post('name');
+			$clientemail = $this->input->post('email');
 			$mobile = $this->input->post('mobile');
 			$nextfollowup = $this->input->post('follow_up');
 			$note = $this->input->post('note');
@@ -208,16 +210,14 @@ class Leads extends CI_Controller
 		$id = base64_decode($this->uri->segment(3));
 		$whereArr=array('id'=>$id);
 		$data['leads'] = $this->common_model->getData('tbl_leads',$whereArr);
-		$this->load->view('common/header');
-		$this->load->view('leads/editleads',$data);
-		$this->load->view('common/footer');
 		if(!empty($_POST))
 		{
+			$id = base64_decode($this->input->post('leadid'));
 			$companyname = $this->input->post('company_name');
 			$website = $this->input->post('website');
 			$address = $this->input->post('address');
-			$clientname = $this->input->post('client_name');
-			$clientemail = $this->input->post('client_email');
+			$clientname = $this->input->post('name');
+			$clientemail = $this->input->post('email');
 			$mobile = $this->input->post('mobile');
 			$nextfollowup = $this->input->post('follow_up');
 			$status = $this->input->post('status');
@@ -225,10 +225,20 @@ class Leads extends CI_Controller
 			$note = $this->input->post('note');
 			$updateArr = array('clientid'=>0,'companyname'=>$companyname,'website'=>$website,'address'=>$address,'clientname'=>$clientname,'clientemail'=>$clientemail,'mobile'=>$mobile,'nextfollowup'=>$nextfollowup,'status'=>$status,'source'=>$source,'note'=>$note);
 			$whereArr = array('id'=>$id);
-			$this->common_model->updatedata('tbl_leads',$updateArr,$whereArr);
-			$this->session->set_flashdata('message_name', 'Leads Updated sucessfully');
-			redirect('Leads');
+			$checkArr = array('clientemail'=>$clientemail,'id !='=>$id);
+			$checkEmail = $this->common_model->getData("tbl_leads",$checkArr);
+			if(empty($checkEmail)){
+				$this->common_model->updatedata('tbl_leads',$updateArr,$whereArr);
+				$this->session->set_flashdata('message_name', 'Leads Updated sucessfully');
+				redirect('Leads');
+			}else{
+				$this->session->set_flashdata('message_name', 'Email address already exists');
+				redirect('leads/editleads/'.base64_encode($id));
+			}
 		}
+		$this->load->view('common/header');
+		$this->load->view('leads/editleads',$data);
+		$this->load->view('common/footer');
 	}
 
 	public function deleteleads()

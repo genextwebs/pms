@@ -278,56 +278,81 @@ $("form[name='creatclient']").validate({
 			  }
 			});
 });*/
-
 // for add category in addproject
 $("#save-category").click(function(event) {
 	//event.preventDefault();
 	var catname = $("input[name='category_name']").val();
-	//alert("---->"+catname);
-	var dataString = 'name='+ catname;
-	$.ajax({
-		   url: base_url+"project/insertcat",
-		   type: 'POST',
-		   dataType: 'json',
-		   data: dataString,
-		   error: function() {
-			  alert('Something is wrong');
-		},
-		success: function(data) {
-			console.log(data);
-			$('select[name="project-category"]').html('');       
-			$('select[name="project-category"]').append(data.catdata);
-			 //  $("tbody").append("<tr><td>"+data.count+"</td><td>"+catname+"</td> <td><a href='javascript:;' class='btn btn-sm btn-danger btn-rounded delete-category' id='deletecat'>Remove</a></td></tr>");
-			$("tbody").append("<tr><td>"+data.count+"</td><td>"+catname+"</td> <td><input type='submit' class='btn btn-sm btn-danger btn-rounded delete-category' onclick='deletecat(\'"+data.lastinsertid+"\');' id='deletecat' value='Remove'></tr>");
-			$('#project-category1').modal('toggle');
-			$('#category')[0].reset();
-	   }
-	});
+	if(catname!=""){
+		$.ajax({
+			url: base_url+"project/checkcategory",
+			type: 'POST',
+			dataType: 'html',
+			data:{category:catname},
+			success: function(data) {
+				
+				if(data==0){
+					var dataString = 'name='+ catname;
+					jQuery('#errormsg').html('');
+					$.ajax({
+					    url: base_url+"project/insertcat",
+					    type: 'POST',
+					    dataType: 'json',
+					    data: dataString,
+						success: function(data) {
+							console.log(data.catdata);
+							$('select[name="project-category"]').html('');       
+							$('select[name="project-category"]').append(data.catdata);
+							 //  $("tbody").append("<tr><td>"+data.count+"</td><td>"+catname+"</td> <td><a href='javascript:;' class='btn btn-sm btn-danger btn-rounded delete-category' id='deletecat'>Remove</a></td></tr>");
+							$("tbody").append("<tr id='cate_"+data.lastinsertid+"'><td>"+data.count+"</td><td>"+catname+"</td> <td><input type='submit' class='btn btn-sm btn-danger btn-rounded delete-category' onclick='deletecat(\'"+data.lastinsertid+"\');' id='deletecat' value='Remove'></tr>");
+							$('#project-category1').removeClass('show');
+							$('.modal-backdrop').removeClass('show');
+							$('.modal-backdrop').find('div').remove();
+							$('body').removeAttr("style");
+							$('body').removeClass("modal-open");
+							$('#category')[0].reset();
+							$('#succmsg').html('');
+							$('#succmsg').html('<b>Successfully category added</b>');
+							//window.location.reload();
+					   }
+					});
+				}else{
+					jQuery('#errormsg').html('')
+					jQuery('#errormsg').html('<b>This category already exists</b>');
+				}
+			}
+		});
+	}else{
+		jQuery('#errormsg').html('')
+		jQuery('#errormsg').html('<b>Please enter category name</b>');
+	}
 });
 
-
 // addproject=> delete category 
-	function deletecat(id)
-	{
-	//alert("--->"+id);	
-		//var btn = this;
-		//e.preventDefault();
-			$.ajax({
-			   type: "POST",
-			   url: base_url+"project/deletecat",
-			   cache: false,
-			   data: "id="+id,
-			   //alert(id);
-			   success: function(){
-				//  $(this).closest('tr').();
-				 location.reload(true);
-				//$('#project-category1').modal('toggle');
-				//$('#project-category1').reload();
-	   
+function deletecat(id)
+{
+	$.ajax({
+	    type: "POST",
+	    url: base_url+"project/deletecat",
+	    cache: false,
+	    data: "id="+id,
+	    success: function(data){
+		   	if(data == 1){
+				jQuery('#cate_'+id).remove();
+				$('#project-category1').removeClass('show');
+				$('.modal-backdrop').removeClass('show');
+				$('.modal-backdrop').find('div').remove();
+				$('body').removeAttr("style");
+				$('body').removeClass("modal-open");
+				$('#category')[0].reset();
+				$('#succmsg').html('');
+				$('#succmsg').html('<b>Successfully category removed</b>');
+			}else{
+				$('#succmsg').html('');
+				$('#succmsg').html('<b>Something went to wrong</b>');
 			}
-			});
-		return false
-	}
+		}
+	});
+}
 
 	function checkUncheck(){ 
 

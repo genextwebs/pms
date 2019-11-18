@@ -20,7 +20,6 @@
             <div class="card br-0">
             	<div class="card-header br-0 card-header-inverse">
             		 UPDATE CLIENT INFO
-
             	</div>
             	<div class="card-wrapper collapse show">
             		<div class="card-body">
@@ -29,9 +28,7 @@
             					<div class="alert alert-success" role="alert">
 								  This is a success alert
 								</div>
-								<div class="alert alert-danger" role="alert">
-								  This is a danger alert
-								</div>
+                                
 								<div class="alert alert-warning" role="alert">
 								  This is a warning alert
 								</div>
@@ -39,17 +36,25 @@
             				<div class="form-body">
             					<h3 class="box-title">Company Details</h3>
             					<hr>
+                                <?php
+                                if($this->session->flashdata('message_name')){?>
+                                    <div class="alert alert-danger" role="alert">
+                                     <?php echo $this->session->flashdata('message_name');?>
+                                    </div>
+                                <?php
+                                }?>
+                                <input type="hidden" name="clientid" value="<?php echo $this->uri->segment(3);?>">
             					<div class="row">
             						<div class="col-md-6">
             							<div class="form-group">
             								<label class="control-label">Company Name</label>
-            								<input id="company_name" class="form-control" type="text" name="company_name" value="<?php echo !empty($clients[0]->companyname) ?  $clients[0]->companyname : ' '?>">
+            								<input id="company_name" class="form-control" type="text" name="company_name" value="<?php echo !empty($clients[0]->companyname) ?  $clients[0]->companyname : ''?>">
             							</div>
             						</div>
             						<div class="col-md-6">
             							<div class="form-group">
             								<label class="control-label">Website</label>
-            								<input id="website" class="form-control" type="text" name="website" value="<?php echo !empty($clients[0]->website) ?  $clients[0]->website : ' '?>">
+            								<input id="website" class="form-control" type="text" name="website" value="<?php echo !empty($clients[0]->website) ?  $clients[0]->website : ''?>">
             							</div>
             						</div>
             					</div>
@@ -57,7 +62,7 @@
             						<div class="col-md-12">
             							<div class="form-group">
             								<label class="control-label">Address</label>
-            								<textarea name="address" id="address" rows="5"  class="form-control"><?php echo !empty($clients[0]->address) ?  $clients[0]->address : ' '?></textarea>
+            								<textarea name="address" id="address" rows="5"  class="form-control"><?php echo !empty($clients[0]->address) ?  $clients[0]->address : ''?></textarea>
             							</div>
             						</div>
             					</div>
@@ -67,13 +72,13 @@
             						<div class="col-md-6">
             							<div class="form-group">
             								<label class="control-label">Client Name</label>
-            								<input id="name" class="form-control" type="text" name="name" value="<?php echo !empty($clients[0]->clientname) ?  $clients[0]->clientname : ' '?>">
+            								<input id="name" class="form-control" type="text" name="name" value="<?php echo !empty($clients[0]->clientname) ?  $clients[0]->clientname :''?>">
             							</div>
             						</div>
             						<div class="col-md-6">
             							<div class="form-group">
             								<label class="control-label">Client Email</label>
-            								<input id="email" class="form-control" type="email" name="email" value="<?php echo !empty($user[0]->emailid) ?  $user[0]->emailid : ' '?>">
+            								<input id="email" class="form-control" type="email" name="email" value="<?php echo !empty($user[0]->emailid) ?  $user[0]->emailid :''?>">
             								<span class="help-block">Client will login using this email.</span>
             							</div>
             						</div>
@@ -91,7 +96,7 @@
             							<div class="form-group">
             								<div class="form-group">
 	                                            <label>Mobile</label>
-	                                            <input type="tel" name="mobile" id="mobile" value="<?php echo !empty($user[0]->mobile) ?  $user[0]->mobile : ' '?>" class="form-control">
+	                                            <input type="tel" name="mobile" id="mobile" value="<?php echo !empty($user[0]->mobile) ?  $user[0]->mobile :''?>" class="form-control">
 	                                       </div>
             							</div>
             						</div>
@@ -110,25 +115,25 @@
             						<div class="col-md-3">
             							<div class="form-group">
             								<label class="control-label">Skype</label>
-            								<input id="skype" class="form-control" type="text" name="skype" value="<?php echo !empty($clients[0]->skype) ?  $clients[0]->skype : ' '?>">
+            								<input id="skype" class="form-control" type="text" name="skype" value="<?php echo !empty($clients[0]->skype) ?  $clients[0]->skype :' '?>">
             							</div>
             						</div>
             						<div class="col-md-3">
             							<div class="form-group">
             								<label class="control-label">Linkedin</label>
-            								<input id="linkedin" class="form-control" type="text" name="linkedin" value="<?php echo !empty($clients[0]->linkedin) ?  $clients[0]->linkedin : ' '?>">
+            								<input id="linkedin" class="form-control" type="text" name="linkedin" value="<?php echo !empty($clients[0]->linkedin) ?  $clients[0]->linkedin : ''?>">
             							</div>
             						</div>
             						<div class="col-md-3">
             							<div class="form-group">
             								<label class="control-label">Twitter</label>
-            								<input id="twitter" class="form-control" type="text" name="twitter" value="<?php echo !empty($clients[0]->twitter) ?  $clients[0]->twitter : ' '?>">
+            								<input id="twitter" class="form-control" type="text" name="twitter" value="<?php echo !empty($clients[0]->twitter) ?  $clients[0]->twitter : ''?>">
             							</div>
             						</div>
             						<div class="col-md-3">
             							<div class="form-group">
             								<label class="control-label">Facebook</label>
-            								<input id="facebook" class="form-control" type="text" name="facebook" value="<?php echo !empty($clients[0]->facebook) ?  $clients[0]->facebook : ' '?>">
+            								<input id="facebook" class="form-control" type="text" name="facebook" value="<?php echo !empty($clients[0]->facebook) ?  $clients[0]->facebook : ''?>">
             							</div>
             						</div>
             					</div>
@@ -136,7 +141,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="gst_number">GST Number</label>
-                                            <input type="text" id="gst_number" name="gst_number" class="form-control" value="<?php echo !empty($clients[0]->gstnumber) ?  $clients[0]->gstnumber : ' '?>">
+                                            <input type="text" id="gst_number" name="gst_number" class="form-control" value="<?php echo !empty($clients[0]->gstnumber) ?  $clients[0]->gstnumber : ''?>">
                                         </div>
                                     </div>
                                 </div>

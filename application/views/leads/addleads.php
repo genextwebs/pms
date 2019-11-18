@@ -76,13 +76,13 @@
 								    <div class="col-md-6">
 								        <div class="form-group">
 								            <label class="control-label">Client Name</label>
-								            <input type="text" name="client_name" id="client_name" class="form-control" value="<?php if(!empty($sessData['client_name'])){echo $sessData['client_name'];}else{ }?>">
+								            <input type="text" name="name" id="name" class="form-control" value="<?php if(!empty($sessData['client_name'])){echo $sessData['client_name'];}else{ }?>">
 								        </div>
 								    </div>
 								    <div class="col-md-6">
 								        <div class="form-group">
 								            <label class="control-label">Client Email</label>
-								            <input type="text" name="client_email" id="client_email" class="form-control" value="">
+								            <input type="text" name="email" id="email" class="form-control" value="">
 								            <span class="help-desk">Lead will login using this email.</span>
 								        </div>
 								    </div>

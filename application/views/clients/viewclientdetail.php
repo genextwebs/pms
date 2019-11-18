@@ -85,9 +85,11 @@
 		            		<div class="contetn-tab">
 		            			<div class="">
 		            				<div class="tab-content" id="myTabContent">
+
 									  	<div class="tab-pane fade show active" id="projects" role="tabpanel" aria-labelledby="projects-tab">
 					            			<div class="stats-box">
-					            				<h3 class="box-title b-b">Projects</h3>
+					            				<h3>Devlopment Mode</h3>
+					            				<!-- <h3 class="box-title b-b">Projects</h3>
 					            				<div class="table-responsive">
 		                                            <table class="table">
 		                                                <thead>
@@ -109,12 +111,13 @@
 		                                                    </tr>
 		                                                </tbody>
 		                                            </table>
-		                                        </div>
+		                                        </div> -->
 					            			</div>
 									  	</div>
 									 	<div class="tab-pane fade" id="invoice" role="tabpanel" aria-labelledby="invoice-tab">
 					            			<div class="stats-box">
-					            				<h2>Invoices</h2>
+					            				<h3>Devlopment Mode</h3>
+					            				<!-- <h2>Invoices</h2>
 					            				<ul class="list-group" id="invoices-list">
 												    <li class="list-group-item">
 												        <div class="row">
@@ -368,12 +371,13 @@
 												            </div>
 												        </div>
 												    </li>
-												</ul>
+												</ul> -->
 					            			</div>
 									 	</div>
 									  	<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
 					            			<div class="stats-box">
-					            				<div class="table-responsive">
+					            				<h3>Devlopment Mode</h3>
+					            				<!-- <div class="table-responsive">
 						            				<table class="table table-bordered" id="client-contacts">
 													    <thead>
 													        <tr role="row">
@@ -401,7 +405,7 @@
 													      </tr>
 													    </tbody>
 													</table>
-												</div>
+												</div> -->
 					            			</div>
 									  	</div>
 									</div>

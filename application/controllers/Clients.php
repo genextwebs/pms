@@ -3,7 +3,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Clients extends CI_Controller{
 	public function __construct(){
 		parent::__construct();
-		$this->load->database();
 		$this->load->model('common_model');
 		ini_set('display_errors',1);
 		error_reporting(E_ALL);
@@ -229,17 +228,14 @@ class Clients extends CI_Controller{
 		$clientid = base64_decode($this->uri->segment(3));
 		$ltoc = $this->uri->segment(4);
 		//echo $ltoc;die;
-		$whereArr=array('id'=>$clientid);
-		$clientArr=$data['clients']=$this->common_model->getData('tbl_clients',$whereArr);
-		$whereArr1=array('id'=>$clientArr[0]->user_id);
+		$whereArr1=array('id'=>$clientid);
+		$clientArr=array('user_id'=>$clientid);
+		$data['clients']=$this->common_model->getData('tbl_clients',$clientArr);
+		$clientmaniId = $data['clients'][0]->id;
+		$whereArr=array('id'=>$clientmaniId);
 		$data['user']=$this->common_model->getData('tbl_user',$whereArr1);
-		#echo "<PRE>";print_r($_POST);die;
 		
 		//print_r($data);die;
-		$this->load->view('common/header');
-		$this->load->view('clients/editclient',$data);
-		$this->load->view('common/footer');
-
 		if(!empty($_POST)){
 			$companyname=$this->input->post('company_name');
 			$website=$this->input->post('website');
@@ -258,7 +254,7 @@ class Clients extends CI_Controller{
 			$gstnumber=$this->input->post('gst_number');
 			$note=$this->input->post('note');
 			$login=$this->input->post('login');
-					
+			$clientid = base64_decode($this->input->post('clientid'));
 			$updateArr1['companyname'] = $companyname;
 			$updateArr1['website'] = $website;
 			$updateArr1['address'] = $address;
@@ -273,10 +269,21 @@ class Clients extends CI_Controller{
 			$updateArr1['gstnumber'] = $gstnumber;
 			$updateArr1['note'] = $note;
 			$updateArr['login'] =$login;
-			
-			$data['query']=$this->common_model->updateData('tbl_user',$updateArr,$whereArr1);
-			$data['query']=$this->common_model->updateData('tbl_clients',$updateArr1,$whereArr);
-			$this->session->set_flashdata('message_name', "Data Update Succeessfully");
+			$whereck = array('emailid'=>$_POST['email'],'id !='=>$clientid);
+			$checkEmail = $this->common_model->getData('tbl_user',$whereck);
+			if(empty($checkEmail)){
+				$data['query']=$this->common_model->updateData('tbl_user',$updateArr,$whereArr1);
+				$data['query']=$this->common_model->updateData('tbl_clients',$updateArr1,$whereArr);
+
+				$this->session->set_flashdata('message_name', "Data Update Succeessfully");
+			}else{
+				$this->session->set_flashdata('message_name', "Email address already exists");
+				if(!empty($ltoc)){
+					return redirect('Clients/editclients/'.base64_encode($clientid).'/'.$ltoc);
+				}else{
+					return redirect('Clients/editclients/'.base64_encode($clientid));
+				}
+			}
 			if(!empty($ltoc)){
 				redirect('leads');	
 			}
@@ -284,6 +291,9 @@ class Clients extends CI_Controller{
 				redirect('clients');
 			}
 		}
+		$this->load->view('common/header');
+		$this->load->view('clients/editclient',$data);
+		$this->load->view('common/footer');
 	}
 	
 	public function deleteclient(){

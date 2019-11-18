@@ -19,19 +19,22 @@ function checkuncheck()
 $(function() {
 	$("form[name='client']").validate({
 		rules: {
-					website :{	required: true,
-								url: true
-							},
-					name: "required",
-					client_email:{	required:true,
-									email: true
-								},
-					password:{	required: true,
-								minlength: 6
-							}
-			 	},
-				submitHandler: function(form) {
-				form.submit();}
+			company_name:'required',
+			website :{	
+				required: true,
+				url: true
+			},
+			name: "required",
+			email:{	
+				required:true,
+				email: true
+			},
+			password:{	required: true,
+						minlength: 6
+					}
+	 	},
+		submitHandler: function(form) {
+		form.submit();}
 	});
 });
 
@@ -108,9 +111,14 @@ $('#btnapply').click(function(){ //button filter event click
 	oTable.draw();
 });
 
-$('#btnreset').click(function(){ 
-	alert('fdc');			
-	table.ajax.reload();
+$('#reset-filters').click(function(){ 
+	jQuery('#startdate').val('');
+	jQuery('#enddate').val('');
+	jQuery('#status').val('all');
+	jQuery('#clientname').val('');
+	jQuery('#ticket-filters').after('<p style="color:#00B200"><b>Succesfully Reset Filters</b></p>');
+	var oTable = $('#clients').DataTable();
+	oTable.draw();
 });
 				
 //delete clients

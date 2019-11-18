@@ -59,13 +59,13 @@
             						<div class="col-md-6">
             							<div class="form-group">
             								<label class="control-label">Company Name</label>
-            								<input id="company_name" class="form-control" type="text" name="company_name" value="<?php if(!empty($sessData['company_name'])) { echo $sessData['company_name']; } else { echo !empty($leads[0]->companyname) ?  $leads[0]->companyname : ' '; } ?>">
+            								<input id="company_name" class="form-control" type="text" name="company_name" value="<?php if(!empty($sessData['company_name'])) { echo $sessData['company_name']; } else { echo !empty($leads[0]->companyname) ?  $leads[0]->companyname :''; } ?>">
             							</div>
             						</div>
             						<div class="col-md-6">
             							<div class="form-group">
             								<label class="control-label">Website</label>
-            								<input id="website" class="form-control" type="text" name="website" value="<?php if(!empty($sessData['website'])) { echo $sessData['website']; } else { echo !empty($leads[0]->website) ?  $leads[0]->website : ' ';} ?>">
+            								<input id="website" class="form-control" type="text" name="website" value="<?php if(!empty($sessData['website'])) { echo $sessData['website']; } else { echo !empty($leads[0]->website) ?  $leads[0]->website :'';} ?>">
             							</div>
             						</div>
             					</div>
@@ -82,14 +82,14 @@
             					<div class="row">
             						<div class="col-md-6">
             							<div class="form-group">
-            								<label class="control-label">Cient Name</label>
-            								<input id="name" class="form-control" type="text" name="name" value="<?php if(!empty($sessData['name'])) { echo $sessData['name']; } else { echo !empty($leads[0]->clientname) ?  $leads[0]->clientname : ' ';} ?>">
+            								<label class="control-label">Client Name</label>
+            								<input id="name" class="form-control" type="text" name="name" value="<?php if(!empty($sessData['name'])) { echo $sessData['name']; } else { echo !empty($leads[0]->clientname) ?  $leads[0]->clientname :'';} ?>">
             							</div>
             						</div>
             						<div class="col-md-6">
             							<div class="form-group">
             								<label class="control-label">Client Email</label>
-            								<input id="email" class="form-control" type="email" name="email" value="<?php echo !empty($leads[0]->clientemail) ?  $leads[0]->clientemail : ' '?>">
+            								<input id="email" class="form-control" type="email" name="email" value="<?php if(!empty($sessData['email'])) { echo $sessData['email']; } else { echo !empty($leads[0]->emailid) ?  $leads[0]->emailid :'';} ?>">
             								<span class="help-block">Client will login using this email.</span>
             							</div>
             						</div>

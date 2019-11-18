@@ -24,8 +24,11 @@
     <script src="<?php echo base_url();?>assets/js/bootstrap.js"></script>
     <script src="<?php echo base_url();?>assets/js/custome.js"></script>
 
-    <script src="https://cdn.ckeditor.com/4.12.1/standard/ckeditor.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.js"></script>
+    <script src="<?php echo base_url();?>assets/js/sejal.js"></script>
+    <script src="<?php echo base_url();?>assets/js/varsha.js"></script> 
+    <script src="<?php echo base_url();?>assets/js/vaishali.js"></script>
+    <script src="https://cdn.ckeditor.com/4.12.1/standard/ckeditor.js"></script>
     <script src="http://xoxco.com/examples/jquery.tagsinput.js"></script>
     <script type="text/javascript">
         var controllerName = '<?php echo strtolower($this->uri->segment(1)); ?>';
@@ -39,10 +42,34 @@
             })
         });
     </script>
-		<script src="<?php echo base_url();?>assets/js/sejal.js"></script>
-		<script src="<?php echo base_url();?>assets/js/varsha.js"></script> 
-		<script src="<?php echo base_url();?>assets/js/vaishali.js"></script>
-   	
+	
+    <script type="text/javascript">
+       function startTimer(duration, display) {
+        var timer = duration, minutes, seconds;
+        setInterval(function () {
+            minutes = parseInt(timer / 60, 10)
+            seconds = parseInt(timer % 60, 10);
+
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            display.text(minutes + ":" + seconds);
+            var time = minutes + ":" + seconds;
+            if (--timer < 0) {
+                timer = duration;
+            }
+            if (time == '00:00') {
+                window.location.href = '<?php echo base_url().'login/logout'; ?>';
+            }
+        }, 1000);
+    }
+
+    jQuery(function ($) {
+        var fiveMinutes = 60 * 10,
+            display = $('#timer');
+        startTimer(fiveMinutes, display);
+    });
+    </script>
 </body>
 </html>
 

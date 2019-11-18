@@ -197,18 +197,22 @@ $(function(){
 	$("#creatclient").validate({
 		rules:{
 			company_name : "required",
-			client_name : "required",
-			client_email:
-						{
-							required:true,
-							email: true
-						}
+			name : "required",
+			website:{
+				required:true,
+				url:true,
+			},
+			email:
+			{
+				required:true,
+				email: true
+			}
 		},	
 		messages:
-				{
-					mobile : "Enter 10 digit Number",
-					
-				},		
+		{
+			mobile : "Enter 10 digit Number",
+			
+		},		
 		submitHandler: function(form) {
 		form.submit();}
 	});

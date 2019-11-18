@@ -6,6 +6,7 @@ class Dashboard extends CI_Controller
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('common_model');
+		$this->login = $this->session->userdata('login');
 	}
 	
 	public function index(){

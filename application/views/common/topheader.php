@@ -18,22 +18,22 @@
 			        </a>
 			        <ul class="dropdown-menu">
 			            <li class="dropdown-item">
-			                <a href="add-project.html"><span class=" m-0">Add Project</span></a>
+			                <a href="<?php echo base_url().'project/addproject';?>"><span class=" m-0">Add Project</span></a>
 			            </li>
 			            <li class="dropdown-item">
-			                <a href="add-task.html" ><span class=" m-0">Add Task</span></a>
+			                <a href="javascript:void(0);" ><span class=" m-0">Add Task</span></a>
 			            </li>
 			            <li class="dropdown-item">
 			                <a href="<?php echo base_url().'clients/addclients'; ?>" class="active"><span class=" m-0">Add Client</span></a>
 			            </li>
 			            <li class="dropdown-item">
-			                <a href="add-employee.html"><span class=" m-0">Add Employee</span></a>
+			                <a href="<?php echo base_url().'employee/addemployee';?>"><span class=" m-0">Add Employee</span></a>
 			            </li>
 			            <li class="dropdown-item">
-			                <a href="add-payment.html"><span class=" m-0">Add Payment</span></a>
+			                <a href="javascript:void(0);"><span class=" m-0">Add Payment</span></a>
 			            </li>
 			            <li class="dropdown-item">
-			                <a href="add-ticket.html"><span class=" m-0">Add Ticket</span> </a>
+			                <a href="javascript:void(0);"><span class=" m-0">Add Ticket</span> </a>
 			            </li>
 			        </ul>
 			    </li>
@@ -41,7 +41,7 @@
             <ul class="nav navbar-nav ml-auto">
                 <li class="nav-item"> 
                     <a class="btn btn-rounded btn-light timer-modal" href="#">Active Timers 
-                        <span class="label label-danger" id="activeCurrentTimerCount"> 0 </span>
+                        <span class="label label-danger" id="timer"> 0 </span>
                     </a>
                 </li>
                 <li class="nav-item">

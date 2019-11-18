@@ -18,21 +18,23 @@ class Login extends CI_Controller
 			$password = $this->input->post('password');	
 			if(empty($email)){
                 $this->session->set_flashdata('message', '<div id="message"> Please Enter Email Address.</div>');
-                redirect('login/index');
+                redirect('login');
             }
             else if(empty($password)){
                 $this->session->set_flashdata('message', '<div id="message"> Please Enter Password.</div>');
-                redirect('login/index');
+                redirect('login');
             }
             else{
 				$whereArr = array('emailid' => $email, 'password' => $password);
 				$data = $this->common_model->getData('tbl_user',$whereArr);
+				$session = $data[0];
+				$this->session->set_userdata('login',$session);
 				if(count($data) == 1){
-					redirect('dashboard/index');
+					redirect('dashboard');
 				}
 				else{
 					$this->session->set_flashdata('message', '<div id="message">Enter valid Email Address or Password.</div>');
-					redirect('login/index');
+					redirect('login');
 				}
 			}
 		}
@@ -40,6 +42,6 @@ class Login extends CI_Controller
 	
 	function logout(){
 		$this->session->sess_destroy();
-        redirect(base_url().'login/index');
+        redirect(base_url().'login');
 	}
 }
