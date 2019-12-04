@@ -27,11 +27,22 @@ class Login extends CI_Controller
             else{
 				$whereArr = array('emailid' => $email, 'password' => $password);
 				$data = $this->common_model->getData('tbl_user',$whereArr);
+				//echo $data[0]->id;
+				//echo "<PRE>";print_r($data);die;
 				
 				$session = $data[0];
 				$this->session->set_userdata('login',$session);
 				if(count($data) == 1){
-					redirect('dashboard');
+					if($data[0]->user_type == '0'){
+						redirect('dashboard');
+					}
+					elseif($data[0]->user_type  == '1'){
+						redirect('ClientDashboard');
+					}
+					else{
+						redirect('EmpDashboard');
+					}
+
 				}
 				else{
 					$this->session->set_flashdata('message', '<div id="message">Enter valid Email Address or Password.</div>');

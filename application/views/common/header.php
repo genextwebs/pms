@@ -31,13 +31,31 @@
 </head>
 <body>
 	<div class="wrapper">
-	 <nav id="sidebar">
-            <div class="sidebar-header">
-                <h3 class="text-left logo-left"><img class="img-fluid img-logo" src="<?php echo base_url();?>assets/images/logo.png" alt="pecific school of engineering"></h3>
-                <strong><img class="img-fluid" src="<?php echo base_url();?>assets/images/small-logo.png" alt="pecific school of engineering"></strong>
-            </div>
+	   <nav id="sidebar">
+        
+        <?php 
+            $user_type = $this->session->userdata('login')->user_type;
+            if( $user_type == '0'){
+        ?>
             <div class="admin-panel">Admin Panel</div>
-            <?php $this->load->view('common/sidebar'); ?>
+        
+        <?php 
+
+            $this->load->view('common/sidebar'); 
+             }
+            else if($user_type == '1'){ 
+        ?>
+            <div class="admin-panel">Client Panel</div>
+        <?php 
+            
+            $this->load->view('common/clientsidebar'); }
+            else{ 
+        ?>
+            <div class="admin-panel">Employee Panel</div>
+        <?php
+            $this->load->view('common/empsidebar');
+                    } 
+            ?>
         </nav>
         <!-- Page Content  -->
 		 
