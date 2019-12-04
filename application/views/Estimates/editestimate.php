@@ -1,4 +1,4 @@
-<nav aria-label="breadcrumb" class="breadcrumb-nav">
+ <nav aria-label="breadcrumb" class="breadcrumb-nav">
                 <div class="row">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                         <h4 class="page-title"><i class="icon-people"></i>Estimates</h4>
@@ -180,7 +180,8 @@
 															<?php echo !empty($estimate[0]->total) ? $estimate[0]->total : '' ?>
 																<!--<span class="total">0.00</span>-->
 															</p>
-															<input type="hidden" class="total-field" name="finaltotal" id="finaltotal">
+															<input type="hidden" class="total-field" name="finaltotal" id="finaltotal"
+															value="<?php echo !empty($estimate[0]->total) ? $estimate[0]->total : ''  ?>">
 												</div>
 											<div class="row">
 												<div class="col-sm-12">

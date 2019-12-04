@@ -194,11 +194,12 @@ function countamount(counter){
 
 function counttax(counter){
 	var f3 = $('#taxes'+counter).val();
+	
 	if(f3 != ''){
 		var f = $('#amount'+counter).val();
-		var amount=f;
+		var amount=eval(f);
 		var fa=(eval(amount)*eval(f3))/100;
-		var finalamount =eval(amount)+(fa);
+		var finalamount =eval(amount)+eval(fa);
 		$('#amount'+counter).val(eval(finalamount));
 	}
 	totalamount();
@@ -212,7 +213,7 @@ function totalamount(){
 		totalAmount=eval(totalAmount) + eval(finalamount);
 	}
 	document.getElementById("total").innerHTML = totalAmount;
-	$('#finaltotal').val(totalAmount);
+	$('#finaltotal').val(eval(totalAmount));
 }
 	
 //repeat Item
@@ -221,7 +222,7 @@ $('#item-repeat').click(function(){
 	counter++;
 	$('#counter').val(eval(counter));
 	
-	$('#dynamic').append('<div id="row'+counter+'"><div class="row"><div class="form-group"><label class="control-label hidden-md hidden-lg">Item</label><div class="input-group"><div class="input-group-addon"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span></div><input type="text" class="form-control item_name" name="item_name[]">  </div></div><div class="col-md-1"><div class="form-group"><label class="control-label hidden-md hidden-lg">Qty/Hrs</label><input type="number" min="1" class="form-control quantity" name="quantity[]" id="quantity'+counter+'"></div></div><div class="col-md-2"><div class="form-group"><label class="control-label hidden-md hidden-lg">Unit Price</label><input type="text" class="form-control cost_per_item" name="cost_per_item[]" id="cost_per_item'+counter+'" onblur="countamount('+counter+');"></div></div><div class="col-md-2"><div class="form-group"><label class="control-label hidden-md hidden-lg">TaX<a href="javascript:;" id="tax-settings" data-toggle="modal" data-target="#project-tax">	<i class="ti-settings text-info"></i></a>	</label><select name="taxes[]" class="form-control  id="taxes'+counter+'" onchange="counttax('+counter+');">'+$("#taxes1").html()+'</select></div></div><div class="col-md-2 border-dark  text-center"><label class="control-label hidden-md hidden-lg">Amount</label><input type="text" name="amount[]" id="amount'+counter+'"></div><div class="col-md-1 text-right visible-md visible-lg"><button type="button" name="remove" id="'+counter+'" class="btn remove-item btn-circle btn-danger remove"><i class="fa fa-remove"></i></button></div></div><div class="row"><div class="form-group"><textarea name="item_Description[]" class="form-control" placeholder="Description" rows="2"></textarea></div></div>');
+	$('#dynamic').append('<div id="row'+counter+'"><div class="row"><div class="form-group"><label class="control-label hidden-md hidden-lg">Item</label><div class="input-group"><div class="input-group-addon"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span></div><input type="text" class="form-control item_name" name="item_name[]">  </div></div><div class="col-md-1"><div class="form-group"><label class="control-label hidden-md hidden-lg">Qty/Hrs</label><input type="number" min="1" class="form-control quantity" name="quantity[]" id="quantity'+counter+'"></div></div><div class="col-md-2"><div class="form-group"><label class="control-label hidden-md hidden-lg">Unit Price</label><input type="text" class="form-control cost_per_item" name="cost_per_item[]" id="cost_per_item'+counter+'" onblur="countamount('+counter+');"></div></div><div class="col-md-2"><div class="form-group"><label class="control-label hidden-md hidden-lg">TaX<a href="javascript:;" id="tax-settings" data-toggle="modal" data-target="#project-tax">	<i class="ti-settings text-info"></i></a>	</label><select name="tax[]" class="form-control"  id="taxes'+counter+'" onchange="counttax('+counter+');">'+$("#taxes1").html()+'</select></div></div><div class="col-md-2 border-dark  text-center"><label class="control-label hidden-md hidden-lg">Amount</label><input type="text" name="amount[]" id="amount'+counter+'"></div><div class="col-md-1 text-right visible-md visible-lg"><button type="button" name="remove" id="'+counter+'" class="btn remove-item btn-circle btn-danger remove"><i class="fa fa-remove"></i></button></div></div><div class="row"><div class="form-group"><textarea name="item_Description[]" class="form-control" placeholder="Description" rows="2"></textarea></div></div>');
 });
 
 $(document).on('click','.remove',function(){
@@ -355,7 +356,7 @@ function deleteestimates(estimateid){
 //invoicelist
 
 jQuery(document).ready(function() {
-	if(controllerName == 'finance' && (functionName == 'index' || functionName == '')){
+	if(controllerName == 'finance' && (functionName == 'invoice')){
 		var oTable = jQuery('#invoices').DataTable({
 			'bRetrieve': true,
 	        "bPaginate": true,
