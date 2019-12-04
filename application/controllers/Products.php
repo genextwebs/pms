@@ -9,7 +9,7 @@ class Products extends CI_Controller
 		ini_set('display_errors', 1);
 		$this->load->model('common_model');
 		func_check_login();
-		echo "<PRE>";print_r($_POST);exit;
+		//echo "<PRE>";print_r($_POST);exit;
 	}
 	
 	public function index(){

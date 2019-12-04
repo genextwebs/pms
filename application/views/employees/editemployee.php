@@ -221,35 +221,7 @@
 			                                        </div>
 			                                    </div>
 			                                </div>
-			                                <div class="row">
-			                                	<div class="col-md-6">
-			                                		<div class="file-upload mb-5">
-			                                			<label>Profile Picture</label>
-			                                			<div class="image-upload-wrap">
-			                                				<input class="file-upload-input" type='file' name="profilepicture"/>
-			                                			</div>
-			                                				<!--<div class="drag-text">
-			                                					<h3>Drag and drop <br>a file or select add Image</h3>
-			                                				</div>
-			                                			</div>
-			                                			<div class="file-upload-content">
-			                                				<img class="file-upload-image" src="#" alt="your image" />
-			                                				<div class="image-title-wrap">
-			                                					<button type="button" onclick="removeUpload()" class="remove-image">Remove  <span class="image-title">Uploaded Image</span> </button>
-			                                				</div>
-			                                				<div id="errordiv" style="display:none">
-			                                				</div>
-			                                				<input type="hidden" id="imagename" name="imagename">
-															<div  id="imgdiv" name="imgdiv">
-																
-
-		                                					</div>
-			                                			<button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Select Image</button>-->
-			                                			<input type="hidden" name="image" value="<?php echo $employee[0]->profilepicture; ?>">
-														<img src="<?php echo base_url().'uploads/'.$employee[0]->profilepicture?>" height="100px" width="200px">
-			                                		</div>
-			                                	</div>
-			                                </div>
+			                                
 											<!-- action btn -->
 			                                <div class="form-actions">
 				                                <input type="submit" id="save-form" class="btn btn-success"> <i class="fa fa-check" value="Update"></i> 

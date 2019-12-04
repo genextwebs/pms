@@ -94,13 +94,13 @@
 											    <div class="col-lg-3">
 											        <div class="form-group">
 											            <label class="control-label">Joining Date</label>
-											            <input type="text" name="joining-date" id="startdate" autocomplete="off" class="form-control" data-date-format='yyyy-mm-dd' value="<?php if(!empty($sessData['joining-date'])){echo $sessData['joining-date'];}?>">
+											            <input type="text" name="joining-date" id="start_date" autocomplete="off" class="form-control" data-date-format='yyyy-mm-dd' value="<?php if(!empty($sessData['joining-date'])){echo $sessData['joining-date'];}?>">
 											        </div>
 											    </div>
 											    <div class="col-lg-3" id="deadlineBox">
 											        <div class="form-group">
 											            <label class="control-label">Last date</label>
-											            <input type="text" name="last-date" id="enddate" autocomplete="off" class="form-control" data-date-format='yyyy-mm-dd' value="<?php if(!empty($sessData['last-date'])){echo $sessData['last-date'];}?>">
+											            <input type="text" name="last-date" id="deadline" autocomplete="off" class="form-control" data-date-format='yyyy-mm-dd' value="<?php if(!empty($sessData['last-date'])){echo $sessData['last-date'];}?>">
 											        </div>
 											    </div>
 											    <div class="col-lg-3">
@@ -215,33 +215,7 @@
 			                                        </div>
 			                                    </div>
 			                                </div>
-			                                <div class="row">
-			                                	<div class="col-md-6">
-			                                		<div class="file-upload mb-5">
-			                                			<label>Profile Picture</label>
-			                                			<div class="image-upload-wrap">
-			                                				<input class="file-upload-input" type='file' name="profilepicture"/>
-			                                			</div>
-			                                				<!--<div class="drag-text">
-			                                					<h3>Drag and drop <br>a file or select add Image</h3>
-			                                				</div>
-			                                			</div>
-			                                			<div class="file-upload-content">
-			                                				<img class="file-upload-image" src="#" alt="your image" />
-			                                				<div class="image-title-wrap">
-			                                					<button type="button" onclick="removeUpload()" class="remove-image">Remove  <span class="image-title">Uploaded Image</span> </button>
-			                                				</div>
-			                                				<div id="errordiv" style="display:none">
-			                                				</div>
-			                                				<input type="hidden" id="imagename" name="imagename">
-															<div  id="imgdiv" name="imgdiv">
-																
-
-		                                					</div>
-			                                			<button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Select Image</button>-->
-			                                		</div>
-			                                	</div>
-			                                </div>
+			                                
 											<!-- action btn -->
 			                                <div class="form-actions">
 				                                <input type="submit" id="save-form" class="btn btn-success"> <i class="fa fa-check" value="Save"></i> 
