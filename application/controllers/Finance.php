@@ -236,6 +236,7 @@ class Finance extends CI_Controller
 				$total=$this->input->post('finaltotal');
 				$note=$this->input->post('note');
 				$updateArr=array('client' => $client,'currency' => $currency,'validtill' => $valid_till,'note' => $note,'status'=>$status,'total'=>$total);
+				//print_r($updateArr);die;
 				$this->common_model->updateData('tbl_estimates',$updateArr,$whereArr);
 				$this->common_model->deleteData('tbl_products',$whereArr1);
 			
@@ -274,7 +275,7 @@ class Finance extends CI_Controller
 		$data['estimate']=$this->common_model->getData('tbl_estimates',$whereArr);
 		$data['product']=$this->common_model->getData('tbl_products',$whereArr1);
 		$sql='SELECT * FROM tbl_invoice ORDER BY tbl_invoice.id DESC LIMIT 1';
-		//$sql="SELECT tbl_project_info.clientid,tbl_clients.clientname,tbl_clients.companyname FROM tbl_project_info INNER JOIN tbl_clients ON tbl_project_info.clientid = tbl_clients.id where tbl_project_info.id=47";			
+		 
 
 		$data['invoice']=$this->common_model->coreQueryObject($sql);
 		//print_r($data['invoice']);die;
@@ -298,10 +299,11 @@ class Finance extends CI_Controller
 			//$sql=select clientid form tbl_project_info 
 			$sql="SELECT tbl_project_info.clientid,tbl_clients.clientname,tbl_clients.companyname FROM tbl_project_info INNER JOIN tbl_clients ON tbl_project_info.clientid = tbl_clients.id where tbl_project_info.id=".$project;			
 			$data['invoicedata']=$this->common_model->coreQueryObject($sql);
-			//echo "<pre>";print_r($data);die;
+			//echo "<pre>";print_r($data['invoicedata']);die;
 
 			
-			$insertArr=array('invoice' => $invoice,'project' => $project,'clientid'=>$data['invoicedata'][0]->clientid,'companyname'=>$data['invoicedata'][0]->companyname,'currency' => $currency,'invoicedate' => $invoicedate,'duedate'=>$duedate,'status'=>$status,'recuringpayment'=>$recuringpayment,'billingfrequency'=>$billingfrequency,'billinginterval'=>$billinginterval,'billingcycle'=>$billingcycle,'total'=>$total);
+			$insertArr=array('invoice' => $invoice,'project' => $project,'companyname'=>$data['invoicedata'][0]->companyname,'clientid'=>$data['invoicedata'][0]->clientid,
+				'currency' => $currency,'invoicedate' => $invoicedate,'duedate'=>$duedate,'status'=>$status,'recuringpayment'=>$recuringpayment,'billingfrequency'=>$billingfrequency,'billinginterval'=>$billinginterval,'billingcycle'=>$billingcycle,'total'=>$total);
 			//print_r($insertArr);die;
 			$this->common_model->insertData('tbl_invoice',$insertArr);
 			$invoiceid=$this->db->insert_id();
@@ -332,7 +334,6 @@ class Finance extends CI_Controller
 	}
 	
 	public function invoice_list(){
-	//echo "cbjkdjkcd";die;
 	if(!empty($_POST)){
 			$_GET = $_POST;
 			$defaultOrderClause = "";
@@ -390,8 +391,8 @@ class Finance extends CI_Controller
             }
             /** Ordering End **/
 
-            /** Filtering Start */
-            if(!empty(trim($_GET['sSearch']))){
+         /** Filtering Start */
+           	if(!empty(trim($_GET['sSearch']))){
             	$searchTerm = trim($_GET['sSearch']);
             	$sWhere .= ' AND (project like "%'.$searchTerm.'%" OR clientname like "%'.$searchTerm.'%" OR companyname like "%'.$searchTerm.'%" OR note like "%'.$searchTerm.'%")';
             }
@@ -476,8 +477,7 @@ class Finance extends CI_Controller
                 $row->project,
                 $row->clientid,
                 $row->total,
-                $row->project,
-				$row->invoicedate,
+             	$row->invoicedate,
                 $sta,	
 				$actionStr
            	);
@@ -505,6 +505,27 @@ class Finance extends CI_Controller
 		$this->load->view('Expenses/addexpense',$data);
 		$this->load->view('common/footer');
 	}
+
+	public function insertexpense(){
+		if(!empty($_POST))
+		{
+			$employee=$this->input->post('employee');
+			$project=$this->input->post('project');
+			$currency=$this->input->post('currency');
+			$item=$this->input->post('itemname');
+			$price=$this->input->post('price');
+			$purchasedform=$this->input->post('purchasedfrom');
+			$purchasedate=$this->input->post('purchasedate');
+			$invoice=$this->input->post('invoice');
+
+			$insertArr=array('employee'=>$employee,'project' => $project,'currency' => $currency,'item' => $item,'price' => $price,'purchasedform' => $purchasedform,'purchasedate' => $purchasedate,'invoicefile' => $invoicefile,'status' => '0');
+				$this->common_model->insertdata('tbl_expense',$insertArr);
+				
+				$this->session->set_flashdata('message_name', "Data Inserted Succeessfully");
+				redirect('Clients/index');
+			}
+		}
+	
 	
 }
 ?>

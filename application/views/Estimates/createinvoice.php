@@ -101,7 +101,7 @@
 														<div class="row">
 														<div class="col-md-12">
 															<div class="input-icon">
-																<input type="text" class="form-control" name="invoice_date" id="invoice_date" value="<?php echo date('Y-m-d'); ?>">
+																<input type="text" class="form-control" name="invoice_date" id="start_date" value="<?php echo date('Y-m-d'); ?>">
 															</div>
 														</div>
 														</div>
@@ -111,7 +111,7 @@
 													<div class="form-group">
 														<label class="control-label">Due Date</label>
 														<div class="input-icon">
-															<input type="text" class="form-control" name="due_date" id="due_date" value="<?php echo !empty($estimate[0]->validtill) ? $estimate[0]->validtill : ''?>">
+															<input type="text" class="form-control" name="due_date" id="deadline" value="<?php echo !empty($estimate[0]->validtill) ? $estimate[0]->validtill : ''?>">
 														</div>
 													</div>
 												</div>
