@@ -6,13 +6,13 @@ class Employee extends CI_Controller
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('common_model');
+		func_check_login();
 	}
 	
 	public function index(){
 		$data['designation'] = $this->common_model->getData('tbl_designation');
 		$data['department'] = $this->common_model->getData('tbl_department');
-		$query = "SELECT tbl_user.id,tbl_employee.* FROM `tbl_employee` inner join tbl_user on tbl_employee.user_id = tbl_user.id where tbl_user.is_deleted ='0' ";
-		$data['employee'] = $this->common_model->coreQueryObject($query);
+		$data['employee'] = $this->common_model->getData('tbl_employee');
 		$tempArr=array();
 		foreach($data['employee'] as $row)
 		{
@@ -80,11 +80,29 @@ class Employee extends CI_Controller
 			}
 			$last_inserted = $this->db->insert_id();
 			//$profilepicture = $this->input->post('imagename');
-			
-				$insArr = array('user_id' =>$last_inserted,'employeename'=>$employee_name,'slackusername'=>$username,'joingdate'=>$joiningdate,'lastdate'=>$lastdate,'gender'=>$gender,'address'=>$address,'skills'=>$skills,'designation'=>$designation,'department'=>$department,'hourlyrate'=>$hourlyrate);
+			$config = array(
+							'upload_path' => './uploads/',
+							'allowed_types' => 'gif|jpg|png',
+							'max_size' =>'1000',
+							'max_width'=>'1024',
+							'max_height' => '768'
+							);
+			$this->load->library('upload',$config);
+			$this->upload->initialize($config);
+			$profilepicture = '';
+			if($this->upload->do_upload('profilepicture')){
+				$profilepicture = array('upload_data'=>$this->upload->data());
+				$insArr = array('user_id' =>$last_inserted,'employeename'=>$employee_name,'slackusername'=>$username,'joingdate'=>$joiningdate,'lastdate'=>$lastdate,'gender'=>$gender,'address'=>$address,'skills'=>$skills,'designation'=>$designation,'department'=>$department,'hourlyrate'=>$hourlyrate,'profilepicture'=>$profilepicture['upload_data']['file_name']);
 				
 			$this->common_model->insertData('tbl_employee',$insArr);
-			
+			}
+			else{
+				$error = array('error' => $this->upload->display_errors());
+				//print_r($error);die;
+				$this->session->set_flashdata("error",$error);
+				$this->session->set_flashdata("data",$_POST);
+				redirect('employee/addemployee');			
+			}
 			redirect('employee');
 		}			
 	}
@@ -121,7 +139,7 @@ class Employee extends CI_Controller
 		}
 	}
 
-/* image upload through ajax
+// image upload through ajax
 	public function do_upload()
 	{
 		if(!empty($_FILES))
@@ -148,7 +166,7 @@ class Employee extends CI_Controller
 			$data['error']='Not select photo';
 		}
         echo json_encode($data);
-    }*/
+    }
 
     public function employee_list(){
 		if(!empty($_POST)){
@@ -221,7 +239,7 @@ class Employee extends CI_Controller
 			$department = !empty($_POST['department']) ? $_POST['department'] : '';
 
 			if(!empty($employee)){
-				$sWhere.=' AND  tbl_employee.id="'.$employee.'"';
+				$sWhere.=' AND  id="'.$employee.'"';
 			}
 			if($status == 'All'){
 			}
@@ -245,7 +263,7 @@ class Employee extends CI_Controller
             /** Filtering End */
 		}
 		
-	    $query = "SELECT tbl_employee.id as EmpId,tbl_user.id,tbl_user.is_deleted,tbl_employee.employeename,tbl_user.emailid,tbl_user.status,tbl_user.created_at from tbl_employee inner join  tbl_user on tbl_employee.user_id = tbl_user.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+	    $query = "SELECT tbl_user.id,tbl_user.is_deleted,tbl_employee.employeename,tbl_user.emailid,tbl_user.status,tbl_user.created_at from tbl_employee inner join  tbl_user on tbl_employee.user_id = tbl_user.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 		$empsArr = $this->common_model->coreQueryObject($query);
 		//echo $this->db->last_query();die;
 		$query = "SELECT tbl_user.id,tbl_user.is_deleted,tbl_employee.employeename,tbl_user.emailid,tbl_user.status,tbl_user.created_at from tbl_employee inner join  tbl_user on tbl_employee.user_id = tbl_user.id".$sWhere;
@@ -268,10 +286,9 @@ class Employee extends CI_Controller
 				$st = $row->status = 'Inactive';
 				$status = '<label class="label label-danger">'.$st.'</label>';
 			}
-			$empid = $row->EmpId;
 			$create_date = date('d-m-Y', strtotime($row->created_at));
 			$actionStr = "<abbr title=\"Edit\"><a class=\"btn btn-info btn-circle\" data-toggle=\"tooltip\" data-original-title=\"Edit\" href='".base_url()."employee/editemployee/".base64_encode($row->id)."'><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i></a></abbr>
-				<abbr title=\"View Employee Detail\"><a class=\"btn btn-success btn-circle\" data-toggle=\"tooltip\" data-original-title=\"search\" href='".base_url()."employee/viewemployee/".base64_encode($id)."/".base64_encode($empid)."'><i class=\"fa fa-search\" aria-hidden=\"true\"></i></a></abbr>
+				<abbr title=\"View Employee Detail\"><a class=\"btn btn-success btn-circle\" data-toggle=\"tooltip\" data-original-title=\"search\" href='".base_url()."employee/viewemployee/".base64_encode($row->id)."'><i class=\"fa fa-search\" aria-hidden=\"true\"></i></a></abbr>
 				<abbr title=\"Delete\"><a  class=\"btn btn-danger btn-circle sa-params\" data-toggle=\"tooltip\"  data-original-title=\"Delete\" href=\"javascript:void(0);\" onClick='deleteemployee(\"".base64_encode($row->id)."\");'><i class=\"fa fa-times\" aria-hidden=\"true\"></i></a></abbr>";
 			$datarow[] = array(
 				$id = $i,
@@ -337,7 +354,32 @@ class Employee extends CI_Controller
 			$hourlyrate = $this->input->post('hourly-rate');
 			$status = $this->input->post('status');
 			$login = $this->input->post('login');
-			
+			$imagename = '';
+			$imgerror = 0;
+			//print_r($_FILES);die;
+			if(!empty($_FILES['profilepicture']['name'])){
+				$config = array(
+							'upload_path' => './uploads/',
+							'allowed_types' => 'gif|jpg|png',
+							'max_size' =>'1000',
+							'max_width'=>'1024',
+							'max_height' => '768'
+							);
+			$this->load->library('upload',$config);
+			$this->upload->initialize($config);
+				if($this->upload->do_upload('profilepicture')){
+					$imagename = array('upload_data' => $this->upload->data());
+					$profilepicture = $imagename['upload_data']['file_name'];
+				}
+				else{
+					$imgerror = 1;
+				}
+			}
+			else{
+				$profilepicture = $this->input->post('image');
+			}
+			if($imgerror == 0){
+				
 				$updateArr['emailid'] = $employee_email;
 				$updateArr['generaterandompassword'] = $grp;
 				$updateArr['mobile'] = $mobile;
@@ -357,7 +399,14 @@ class Employee extends CI_Controller
 				$updateArr1['profilepicture'] = $profilepicture;
 			$this->common_model->updateData('tbl_employee',$updateArr1,$whereArr1);
 			$this->common_model->updateData('tbl_user',$updateArr,$whereArr);
-		
+		}
+		else{
+			$error = array('error' => $this->upload->display_errors());
+			$this->session->set_flashdata("error",$error);
+			$this->session->set_flashdata("data",$_POST);
+			redirect('employee/editemployee');
+
+		}
 		redirect('employee');
 	}			
 	}
@@ -368,18 +417,6 @@ class Employee extends CI_Controller
 		$updateArr = array('is_deleted' => '1');
 		$this->common_model->updateData('tbl_user',$updateArr,$whereArr);
 		redirect('employee');
-	}
-
-	public function viewemployee(){
-		$userid = base64_decode($this->uri->segment(3));
-		$empid = base64_decode($this->uri->segment(4));
-		$whereArr = array('id'=>$userid);
-		$whereArr1 = array('id'=>$empid);
-		$data['employee'] = $this->common_model->getData('tbl_employee',$whereArr1);
-		$data['user'] = $this->common_model->getData('tbl_user',$whereArr);
-		$this->load->view('common/header');
-		$this->load->view('employees/viewemployee',$data);
-		$this->load->view('common/footer');
 	}
 
 }

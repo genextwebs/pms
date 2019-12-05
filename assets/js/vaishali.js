@@ -545,6 +545,7 @@ $(document).ready( function() {
 
 // for repeat holiday item
 $('#repeate-data').click(function(){
+	alert('hi');
 	var counter=$('#counter').val();
 	counter++;
 	$('#counter').val(eval(counter));
@@ -590,6 +591,31 @@ $("#save-holiday").click(function(event) {
         });
 });
 
+//for save save-defaultholiday
+
+
+$("#save-defaultholiday").click(function(event) {
+			event.preventDefault();
+			var saturday = $("input[name='saturday']").val();
+			var sunday = $("input[name='sunday']").val();
+			alert(sunday);
+       		var dataString = 'saturday='+ saturday + 'sunday=' + sunday ;
+       		alert(dataString);
+        $.ajax({
+           url: base_url+"holiday/insert_defaultholiday",
+           type: 'POST',
+           
+           data: dataString,
+           error: function() {
+              alert('Something is wrong');
+           },
+           success: function(data) {
+           	
+               $('#data-defaultholiday').modal('toggle');
+                $('#modeldefaultholiday')[0].reset();
+           }
+        });
+});
                                     
                                                     
                                                 

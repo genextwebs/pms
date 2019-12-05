@@ -42,29 +42,52 @@ class Holiday extends CI_Controller
 	public function insert_data(){
 		$message = '';
 		if(!empty($_POST)){
-			$holidat_arr = $_POST['holiday'];
+			$holiday_arr = $_POST['holiday'];
 			$occasion_arr = $_POST['occasion'];
-			for($i=0;$i<=count($holidat_arr)-1;$i++){
-				if(!empty($holidat_arr[$i]) && !empty($occasion_arr[$i])){
-					$inserDate = date('Y-m-d', strtotime($holidat_arr[$i]));
+			for($i=0;$i<=count($holiday_arr)-1;$i++){
+				if(!empty($holiday_arr[$i]) && !empty($occasion_arr[$i])){
+					$inserDate = date('Y-m-d', strtotime($holiday_arr[$i]));
 					$insArr = array('date'=>$inserDate,'occasion'=>$occasion_arr[$i]);
 					$dateDay = date('l', strtotime($inserDate));
 					$whereArr = array('date' => $inserDate);
 					$data = $this->common_model->getData("tbl_holiday",$whereArr);
-					if(count($data) == 1 && $dateDay == 'Sunday'){
+					if(count($data) == 1){
 						$message = 1;
 						
 					}
 					else{
-						
-						$message = 2;
-					$this->common_model->insertData('tbl_holiday',$insArr);
+						if($dateDay == 'Sunday'){
+							$message = 2;
+						}
+						else{
+							$this->common_model->insertData('tbl_holiday',$insArr);
+							$message = 3;
+						}
 					}
 					//SELECT * FROM `tbl_holiday` where MONTH(date) = '01'
 				}
 			}
 		}
 		echo $message;exit;
+	}
+
+	public function insert_defaultholiday(){
+		if(!empty($_POST)){
+			print_r($_POST);exit;
+			if($this->input->post('saturday') == 'on'){
+				$chk_value='1';
+			}
+			else{ $chk_value='0';}
+			$saturday = $chk_value;
+			if($this->input->post('sunday') == 'on'){
+				$chk_value='1';
+			}
+			else{ $chk_value='0';}
+			$sunday = $chk_value;
+			$insArr = array('saturday' =>$saturday,'sunday'=>$sunday);
+			print_r($insArr);exit;
+			$this->common_model->insertData('tbl_holiday_settings',$insArr);
+			}
 	}
 }
 

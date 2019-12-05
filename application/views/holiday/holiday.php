@@ -14,11 +14,11 @@
             </nav>
             <div class="col-sm-12">
                         <div class="form-group pull-left">
-                            <a href="javahref="javascript:;" id="tax-settings" data-toggle="modal" data-target="#data-holiday">Add Holiday <i class="fa fa-plus" aria-hidden="true"></i></a>
+                            <a href="javascript:;" id="holiday" data-toggle="modal" data-target="#data-holiday">Add Holiday <i class="fa fa-plus" aria-hidden="true"></i></a>
                         </div>
                         
                         <div class="pull-right" style="margin-right: 10px">
-                            <a class="btn btn-outline btn-sm btn-primary markHoliday" onclick="showMarkHoliday()">
+                            <a class="btn btn-outline btn-sm btn-primary markHoliday" href="javascript:;" id="default-holiday" data-toggle="modal" data-target="#data-defaultholiday">
                                  Mark Default Holidays<i class="fa fa-check"></i> </a>
                         </div>
                     </div>
@@ -319,3 +319,46 @@
                     </div>
                 </div>
             </div>
+
+
+<!-- add model for default holiday -->
+<div class="modal fade defaultholiday" id="data-defaultholiday" tabindex="-1" role="dialog" aria-labelledby="holiday" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content br-0">
+                        <div class="modal-header">
+                            <h4 class="modal-title"><i class="fa fa-pencil"></i>Mark Holiday</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="modeldefaultholiday" class="" name="modelholiday" method="post" >
+                                <div class="form-body">
+                                <div id="dynamic">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                    <input type="checkbox" name="saturday" id="saturday" class="form-control">
+                                                    <label>Saturday</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">  
+                                                <div class="form-group">
+                                                    <input type="checkbox" name="sunday" id="sunday" class="form-control">
+                                                    <label>Sunday</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                               
+                                </div>
+                                
+                                <div class="form-actions">
+                                    <input type="button" id="save-defaultholiday" class="btn btn-success" name="Save" value="Save"> <i class="fa fa-check"></i> 
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
