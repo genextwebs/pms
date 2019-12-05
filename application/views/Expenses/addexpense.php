@@ -22,7 +22,7 @@
 								ADD EXPENSE				
 		                	<div class="card-wrapper collapse show">
 		                		<div class="card-body">
-		                			<form class="aj-form" method="post" action="<?php echo base_url().'Finance/insertexpense' ?>" name="expense" >
+		                			<form class="aj-form" method="post" action="<?php echo base_url().'Finance/insertexpense' ?>" name="expense" enctype="multipart/form-data">
 											 <?php
 												$mess = $this->session->flashdata('message_name');
 												if(!empty($mess)){
@@ -147,22 +147,12 @@
 		                									<label class="control-label"> Invoice
 															</label>
 															<div class="input-icon">
-																<input type="file" class="form-control" name="file" id="file">
+																<input type="file" name="file" id="file">
 															</div>
 														</div>
 		                							</div>
 												</div>
 											</div>
-											
-		       
-											
-										
-											
-	
-
-										
-											
-												
 											<div class="row">
 												<div class="col-md-12">
 													<input type="submit" id="save-form" class="btn btn-success" name="btnsubmit" value="Save" > <i class="fa fa-check"></i>

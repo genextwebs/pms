@@ -1,90 +1,198 @@
-<html>
-<body>
+<nav aria-label="breadcrumb" class="breadcrumb-nav">
+                <div class="row">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title"><i class="ti-receipt"></i>Expenses</h4>
+                    </div>
+                    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                        <ol class="breadcrumb">
+                            <li><a href="<?php echo base_url().'dashboard'?>">Home</a></li>
+                            <li><a href="<?php echo base_url().'Finance'?>">Expenses</a></li>
+                            <li class="active">Update</li>
+                        </ol>
+                    </div>
+                </div>
+            </nav>
 
-<form method="post"  enctype="multipart/form-data">
-		<div>
-				<label>Choose member</label>
-				<select name="txtmember">
-				<option value="">select</option>
-					<?php
-						foreach($employee as $row)
-						{
-							$str="";
-							if($row->employeename==$expense[0]->employee)
-							{
-								$str="selected";
-							}
-							echo '<option value="'.$row->employeename.'"'.$str.'>'.$row->employeename.'</option>';
-						}
-					?>
-				</select>
-		</div>
-		<div>
-					<label>Project</label>
-				<select name="txtproject">
-				<option value="">select</option>
-					<?php
-						foreach($project as $row)
-						{
-							$str="";
-							if($row->projectname==$expense[0]->project)
-							{
-								$str="selected";
-							}
-							
-							echo '<option value="'.$row->projectname.'"'.$str.'>'.$row->projectname.'</option>';
-						}
-					?>
-				</select>
-		</div>
-		<div>
-				<label>Currency</label>
-				<select name="txtcurrency">
-						<option value="">select</option>
-				<option value="0" <?php if($expense[0]->status=='0'){ echo 'selected'; } ?>>Dollar</option>
-				<option value="1" <?php if($expense[0]->status=='1'){ echo 'selected'; } ?>>Pound</option>
-				<option value="2" <?php if($expense[0]->status=='2'){ echo 'selected'; } ?>>Rupee</option>
-				<option value="3" <?php if($expense[0]->status=='3'){ echo 'selected'; } ?>>Europs</option>
-				</select>
-		</div>
-		<div>
-				<label>Item Name</label>
-				<input type="text" name="txtitem" value="<?php echo !empty($expense[0]->item) ? $expense[0]->item : '' ?>">
-		</div>
-		<div>
-				<label>Price</label>
-				<input type="text" name="txtprice" value="<?php echo !empty($expense[0]->price) ? $expense[0]->price : '' ?>">
-		</div>
-		<div>
-				<label>Purchased form</label>
-				<input type="text" name="txtpurchaseform" value="<?php echo !empty($expense[0]->purchasedform) ? $expense[0]->purchasedform : '' ?>">
-		</div>
-		<div>
-				<label>Purchase Date</label>
-				<input type="text" name="txtpurchasedate" value="<?php echo !empty($expense[0]->purchasedate) ? $expense[0]->purchasedate : '' ?>">
-		</div>
-		<div>
-				<label>Invoice</label>
-				<input type="file" name="file" id="file">
-				<input type="hidden" name="image_name" >
-				<label><?php echo !empty($expense[0]->invoicefile) ? $expense[0]->invoicefile : '' ?></label>
-
-		</div>
-		<div>
-			<label>Status</label>
-				<select name="txtstatus">
-				<option ="">select</option>
-				<option value="0" <?php if($expense[0]->status=='0'){ echo 'selected'; } ?>>Pending</option>
-				<option value="1" <?php if($expense[0]->status=='1'){ echo 'selected'; } ?>>Approved</option>
-				<option value="2" <?php if($expense[0]->status=='2'){ echo 'selected'; } ?>>Rejected</option>
-				</select>
-		</div>
-
-		<div>
-				<input type="submit" name="btnupdate" value="Update">
-				<input type="reset" name="btnreset" value="Reset">
-
-		</div>
-</form>
-</body>
-</html>		
+            <!-- contetn-wrap -->
+            <div class="content-in">  
+                <div class="row">
+                    <div class="col-md-12">
+		                <div class="card br-0">
+		                	
+								UPDATE EXPENSE				
+		                	<div class="card-wrapper collapse show">
+		                		<div class="card-body">
+		                			<form class="aj-form" method="post" name="expense" enctype="multipart/form-data">
+											 <?php
+												$mess = $this->session->flashdata('message_name');
+												if(!empty($mess)){
+													//warning 
+											?>
+            				
+										<div class="submit-alerts">
+		                					<div class="alert alert-success" role="alert" style="display:block;">
+											
+											  This is a success alert
+											</div>
+										</div>
+										<div class="submit-alerts">
+											<div class="alert alert-danger" role="alert" style="display:block;">
+												<?php echo $mess; ?>
+											</div>
+										</div>
+												<?php } ?>
+									
+										<div class="submit-alerts">
+											<div class="alert alert-warning" role="alert">
+											  This is a warning alert
+											</div>
+		                				</div>
+		                				<div class="form-body">
+		                					<div class="row">
+												<div class="col-md-12 ">
+													<div class="col-md-12">
+		                								<div class="form-group">
+		                									<label class="control-label">Choose Member</label>
+															<select name="employee" id="employee" class="form-control">
+															<option value="">--</option>
+																<?php
+																	foreach($employee as $row)
+																	{
+																		$str='';
+																		if($row->id==$expense[0]->employee)
+																		{
+																			$str="selected";
+																		
+																		}
+																		echo '<option value="'.$row->id.'"'.$str.'>'.$row->employeename.'</option>';
+																	}
+																?>
+															</select>
+														</div>
+		                							</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-12 ">
+													<div class="col-md-12">
+		                								<div class="form-group">
+		                									<label class="control-label">Project</label>
+															<select name="project" id="project" class="form-control">
+															<option value="">--</option>
+																<?php
+																	foreach($project as $row)
+																	{
+																		$str='';
+																		if($row->id==$expense[0]->project)
+																		{
+																			$str="selected";
+																		
+																		}
+																		echo '<option value="'.$row->id.'"'.$str.'>'.$row->projectname.'</option>';
+																	}
+																?>
+															</select>
+														</div>
+		                							</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-12 ">
+													<div class="col-md-12">
+		                								<div class="form-group">
+		                									<label class="control-label">Currency</label>
+															<select name="currency" id="currency" class="form-control">
+															<option value="">--</option>
+															<option value="1" <?php if($expense[0]->currency=='1'){ echo 'selected'; } ?>>$(USD)</option>
+															<option value="2" <?php if($expense[0]->currency=='2'){ echo 'selected'; } ?>>R(IND)</option>
+															</select>
+														</div>
+		                							</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-12 ">
+													<div class="col-md-12">
+		                								<div class="form-group">
+		                									<label class="control-label">Item Name</label>
+															<input type="text" class="form-control" name="itemname" id="itemname" value="<?php echo !empty($expense[0]->item) ? $expense[0]->item : '' ?>">
+														</div>
+		                							</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-12 ">
+													<div class="col-md-12">
+		                								<div class="form-group">
+		                									<label class="control-label">Price</label>
+															<input type="text" class="form-control" name="price" id="price" value="<?php echo !empty($expense[0]->price) ? $expense[0]->price : '' ?>">
+														</div>
+		                							</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-12 ">
+													<div class="col-md-12">
+		                								<div class="form-group">
+		                									<label class="control-label">Purchased From</label>
+															<input type="text" class="form-control" name="purchasedfrom" id="purchasedfrom" value="<?php echo !empty($expense[0]->purchasedform) ? $expense[0]->purchasedform : '' ?>">
+														</div>
+		                							</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-12 ">
+													<div class="col-md-12">
+		                								<div class="form-group">
+		                									<label class="control-label">Purchase Date</label>
+															<div class="input-icon">
+																<input type="text" class="form-control" name="purchasedate" id="start_date" value="<?php echo !empty($expense[0]->purchasedate) ? $expense[0]->purchasedate : '' ?>">
+															</div>
+														</div>
+		                							</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-12 ">
+													<div class="col-md-12">
+		                								<div class="form-group">
+		                									<label class="control-label"> Invoice
+															</label>
+															<div class="input-icon">
+																<input type="file" name="file" id="file">
+																	<input type="hidden" name="image_name" >
+																	<label><?php echo !empty($expense[0]->invoicefile) ? $expense[0]->invoicefile : '' ?></label>
+																	</div>
+														</div>
+		                							</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-12 ">
+													<div class="col-md-12">
+		                								<div class="form-group">
+		                									<label class="control-label">Status</label>
+															<select name="status" id="status" class="form-control">
+															<option value="">--</option>
+															<option value="0" <?php if($expense[0]->status=='0'){ echo 'selected'; } ?>>Pending</option>
+															<option value="1" <?php if($expense[0]->status=='1'){ echo 'selected'; } ?>>Approved</option>
+															<option value="2" <?php if($expense[0]->status=='2'){ echo 'selected'; } ?>>Rejected</option>
+															</select>
+														</div>
+		                							</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-12">
+													<input type="submit" id="save-form" class="btn btn-success" name="btnupdate" value="Update" > <i class="fa fa-check"></i>
+												</div>
+											</div>
+													
+		                				</div>
+		                			</form>
+		                		</div>
+		                	</div>
+		                </div>
+		            </div>
+                </div>
+            <!-- ends of contentwrap -->

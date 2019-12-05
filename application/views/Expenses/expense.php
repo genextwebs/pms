@@ -20,7 +20,7 @@
 							<div class="row">
                 				<div class="col-md-6">
                 					<div class="form-group">
-			                            <a class="btn btn-outline-success btn-sm"  href="<?php echo base_url().'Finance/addestimates' ?>">Create Expense <i class="fa fa-plus" aria-hidden="true"></i></a>
+			                            <a class="btn btn-outline-success btn-sm"  href="<?php echo base_url().'Finance/addexpenses' ?>">Create Expense <i class="fa fa-plus" aria-hidden="true"></i></a>
 										<a href="javascript:;" id="toggle-filter" class="btn btn-outline-danger btn-sm toggle-filter"><i class="fa fa-sliders"></i> Filter Results</a>
 									</div>
                 				</div>
@@ -36,12 +36,27 @@
 		                		</div>
 		                		<div class="col-lg-3 col-md-4">
 		                			<div class="form-group">
+            							<label class="control-label">Employee</label>
+            							<select id='employee' name="employee" class="custom-select">
+								            <option value="">--</option>
+											<?php
+												foreach($employee as $row)
+												{
+													echo '<option value="'.$row->id.'">'.$row->employeename.'</option>';
+												}
+											?>
+											
+								        </select> 
+            						</div>
+		                		</div>
+		                		<div class="col-lg-3 col-md-4">
+		                			<div class="form-group">
             							<label class="control-label">Status</label>
-            							<select id='status' class="custom-select">
+            							<select id='status' name="status" class="custom-select">
 								            <option value='all'>All</option>          
-								            <option value='0'>Waiting</option>  
-								            <option value='1'>Accepted</option> 
-								            <option value='2'>Declined</option>   
+								            <option value='0'>Pending</option>  
+								            <option value='1'>Approved</option> 
+								            <option value='2'>Rejected</option>   
 											
 								        </select> 
             						</div>

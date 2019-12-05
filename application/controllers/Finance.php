@@ -145,7 +145,7 @@ class Finance extends CI_Controller
 				}
 				
 		
-	    $query = "SELECT * from tbl_estimates ".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+	    $query = "select tbl_estimates.* , tbl_clients.clientname from tbl_estimates INNER JOIN tbl_clients ON tbl_clients.id=tbl_estimates.client".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 				//echo $query;die;
 
 		$estimatesArr = $this->common_model->coreQueryObject($query);
@@ -191,7 +191,7 @@ class Finance extends CI_Controller
 			
 			$datarow[] = array(
 				$id = $i,
-                $row->client,
+                $row->clientname,
                 $row->total,
 				$create_date,
 				$row->validtill,
@@ -280,7 +280,7 @@ class Finance extends CI_Controller
 		$data['invoice']=$this->common_model->coreQueryObject($sql);
 		//print_r($data['invoice']);die;
 		$this->load->view('common/header');
-		$this->load->view('Estimates/createinvoice',$data);
+		$this->load->view('Invoices/createinvoice',$data);
 		$this->load->view('common/footer');
 
 		if($this->input->post('btnsubmit'))
@@ -429,7 +429,7 @@ class Finance extends CI_Controller
 				}
 				
 		
-	    $query = "SELECT * from tbl_invoice ".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+	    $query = "SELECT i.* , c.clientname ,p.projectname FROM tbl_invoice i INNER JOIN tbl_clients c ON c.id = i.clientid INNER JOIN tbl_project_info p ON p.id = i.project".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 		$invoicesArr = $this->common_model->coreQueryObject($query);
 
 		$query = "SELECT * from tbl_invoice ".$sWhere;
@@ -464,9 +464,9 @@ class Finance extends CI_Controller
 				$actionStr = '<div class="dropdown action m-r-10">
 				                <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
 				                		<div class="dropdown-menu">
-						                    <a  class="dropdown-item" href='.base_url().'Finance/editestimate/'.base64_encode($id).'><i class="fa fa-pencil"></i> Edit</a>
-											<a  class="dropdown-item" href="javascript:void()" onclick="deleteestimates(\''.base64_encode($row->id).'\')"><i class="fa fa-trash "></i> Delete</a>
-											<a  class="dropdown-item" href='.base_url().'Finance/createinvoice/'.base64_encode($id).'><i class="ti-receipt"></i>Create Invoice</a>
+						       
+											<a  class="dropdown-item" href="javascript:void(0);" onclick="deleteinvoices(\''.base64_encode($id).'\')"><i class="fa fa-trash "></i> Delete</a>
+											
 				               			 </div>
 							</div>';
 			
@@ -474,8 +474,8 @@ class Finance extends CI_Controller
 			$datarow[] = array(
 				$id = $i,
                 $row->invoice,
-                $row->project,
-                $row->clientid,
+                $row->projectname,
+                $row->clientname,
                 $row->total,
              	$row->invoicedate,
                 $sta,	
@@ -495,6 +495,15 @@ class Finance extends CI_Controller
 	  echo json_encode($output);
       exit();
 	}
+
+		public function deleteinvoice(){
+		$invoiceid=base64_decode($_POST['id']);
+		$whereArr=array('id'=>$invoiceid);
+		$this->common_model->deleteData('tbl_invoice',$whereArr);
+		//echo $this->db->last_query();die;
+		redirect('Finance/invoice');
+	}
+
 	
 	public function addexpenses(){
 		
@@ -507,8 +516,8 @@ class Finance extends CI_Controller
 	}
 
 	public function insertexpense(){
-		if(!empty($_POST))
-		{
+		if($this->input->post('btnsubmit'))
+			{
 			$employee=$this->input->post('employee');
 			$project=$this->input->post('project');
 			$currency=$this->input->post('currency');
@@ -516,6 +525,7 @@ class Finance extends CI_Controller
 			$price=$this->input->post('price');
 			$purchasedform=$this->input->post('purchasedfrom');
 			$purchasedate=$this->input->post('purchasedate');
+			
 			$file = rand(1000,100000)."-".$_FILES['file']['name'];
 			$file_loc = $_FILES['file']['tmp_name'];
 			$file_size = $_FILES['file']['size'];
@@ -523,17 +533,27 @@ class Finance extends CI_Controller
 			$folder="uploads/";
 			move_uploaded_file($file_loc,$folder.$file);
 
-			$insertArr=array('employee'=>$employee,'project' => $project,'currency' => $currency,'item' => $item,'price' => $price,'purchasedform' => $purchasedform,'purchasedate' => $purchasedate,'invoicefile' => $file,'status' => '0');
+			 //print_r($_FILES);die;
+
+		
+				$insertArr=array('employee'=>$employee,'project' => $project,'currency' => $currency,'item' => $item,'price' => $price,'purchasedform' => $purchasedform,'purchasedate' => $purchasedate,'invoicefile' => $file,'status' => '0');
+					//print_r($insertArr);die;
 				$this->common_model->insertdata('tbl_expense',$insertArr);
-				
 				$this->session->set_flashdata('message_name', "Data Inserted Succeessfully");
 				redirect('Finance/expense');
+			
+				
 			}
 		}
+
+
+
 	
 		public function expense(){
+
+			$data['employee'] =$this->common_model->getData('tbl_employee');
 			$this->load->view('common/header');
-			$this->load->view('Expenses/expense');
+			$this->load->view('Expenses/expense',$data);
 			$this->load->view('common/footer');
 		}
 	
@@ -596,22 +616,17 @@ class Finance extends CI_Controller
             /** Ordering End **/
 
          /** Filtering Start */
-           /*	if(!empty(trim($_GET['sSearch']))){
+           	if(!empty(trim($_GET['sSearch']))){
             	$searchTerm = trim($_GET['sSearch']);
-            	$sWhere .= ' AND (project like "%'.$searchTerm.'%" OR clientname like "%'.$searchTerm.'%" OR companyname like "%'.$searchTerm.'%" OR note like "%'.$searchTerm.'%")';
+            	$sWhere .= ' AND (item like "%'.$searchTerm.'%" OR price like "%'.$searchTerm.'%" OR purchasedform like "%'.$searchTerm.'%" OR employee like "%'.$searchTerm.'%"  OR purchasedate like "%'.$searchTerm.'%")';
             }
 				$startdate=!empty($_POST['startdate']) ? $_POST['startdate'] : '';
 				$enddate=!empty($_POST['enddate']) ? $_POST['enddate'] : '';
-				$projectname=!empty($_POST['projectname']) ? $_POST['projectname'] : '';
-				$clientname=!empty($_POST['clientname']) ? $_POST['clientname'] : '';
+				$employee=!empty($_POST['employee']) ? $_POST['employee'] : '';
 				$status=$_POST['status'];
 		
-				if(!empty($projectname)){
-							$sWhere.=' AND  project="'.$projectname.'"';
-
-					}
-					if(!empty($clientname)){
-							$sWhere.=' AND  clientname="'.$clientname.'"';
+				if(!empty($employee)){
+							$sWhere.=' AND  employee="'.$employee.'"';
 
 					}
 					
@@ -628,12 +643,12 @@ class Finance extends CI_Controller
 					
 					if(!empty($sWhere)){
 						$sWhere = " WHERE 1 ".$sWhere;
-					}*/
+					}
 					/** Filtering End */
 				}
 				
 		
-	    $query = "SELECT * from tbl_expense ".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+	    $query = "select tbl_expense.* , tbl_employee.employeename from tbl_expense INNER JOIN tbl_employee ON tbl_employee.id=tbl_expense.employee".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 		$expensesArr = $this->common_model->coreQueryObject($query);
 
 		$query = "SELECT * from tbl_expense ".$sWhere;
@@ -661,26 +676,19 @@ class Finance extends CI_Controller
 			else if($row->status == '2'){
 				$status = $row->status = ' Rejected';
 				$sta='<lable class="label label-info">'.$status.'</label>';
-			}
+			} 
 			//$clientid = $row->clientid;
 			//$create_date = date('d-m-Y', strtotime($row->created_at));
 			
-				$actionStr = '<div class="dropdown action m-r-10">
-				                <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
-				                		<div class="dropdown-menu">
-						                    <a  class="dropdown-item" href='.base_url().'Finance/editestimate/'.base64_encode($id).'><i class="fa fa-pencil"></i> Edit</a>
-											<a  class="dropdown-item" href="javascript:void()" onclick="deleteestimates(\''.base64_encode($row->id).'\')"><i class="fa fa-trash "></i> Delete</a>
-											<a  class="dropdown-item" href='.base_url().'Finance/createinvoice/'.base64_encode($id).'><i class="ti-receipt"></i>Create Invoice</a>
-				               			 </div>
-							</div>';
-			
-			
+				$actionStr = "<abbr title=\"Edit\"><a class=\"btn btn-info btn-circle\" data-toggle=\"tooltip\" data-original-title=\"Edit\" href='".base_url()."Finance/editexpenses/".base64_encode($id)."'><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i></a></abbr>
+
+					<abbr title=\"Delete\"><a  class=\"btn btn-danger btn-circle sa-params\" data-toggle=\"tooltip\"  data-original-title=\"Delete\" href=\"javascript:void(0);\" onclick=\"deleteexpenses('".base64_encode($id)."');\"><i class=\"fa fa-times\" aria-hidden=\"true\"></i></a></abbr>";
 			$datarow[] = array(
 				$id = $i,
                 $row->item,
                 $row->price,
                 $row->purchasedform,
-                $row->employee,
+                $row->employeename,
              	$row->purchasedate,
                 $sta,	
 				$actionStr
@@ -698,6 +706,68 @@ class Finance extends CI_Controller
 		);
 	  echo json_encode($output);
       exit();
+	}
+
+	public function editexpenses(){
+		$id=base64_decode($this->uri->segment(3));
+		$whereArr=array('id'=>$id);
+		$data['employee'] =$this->common_model->getData('tbl_employee');
+		$data['project'] =$this->common_model->getData('tbl_project_info');
+		$data['expense']=$this->common_model->getData('tbl_expense',$whereArr);
+		$this->load->view('common/header');
+		$this->load->view('Expenses/editexpense',$data);
+		$this->load->view('common/footer');
+
+		if($this->input->post('btnupdate')){
+			$employee=$this->input->post('employee');
+			$project=$this->input->post('project');
+			$currency=$this->input->post('currency');
+			$item=$this->input->post('itemname');
+			$price=$this->input->post('price');
+			$purchasedform=$this->input->post('purchasedfrom');
+			$purchasedate=$this->input->post('purchasedate');
+				if(!empty($_FILES))
+				{
+					$file = rand(1000,100000)."-".$_FILES['file']['name'];
+					$file_loc = $_FILES['file']['tmp_name'];
+					$file_size = $_FILES['file']['size'];
+					$file_type = $_FILES['file']['type'];
+					$folder="uploads/";
+					move_uploaded_file($file_loc,$folder.$file);
+
+					$updateArr['invoicefile']=$file;
+				}
+				else
+				{
+					$updateArr['invoicefile']=$this->input->post('image_name');
+				}
+			$status=$this->input->post('status');	
+
+			$updateArr['employee'] = $employee;
+			$updateArr['project'] = $project;
+			$updateArr['currency'] = $currency;
+			$updateArr['item'] = $item;
+			$updateArr['price'] = $price;
+			$updateArr['purchasedform'] = $purchasedform;
+			$updateArr['purchasedate'] = $purchasedate;
+			$updateArr['status'] = $status;
+	
+				$this->common_model->updateData('tbl_expense',$updateArr,$whereArr);
+				$this->session->set_flashdata('message_name', "Data Updated Succeessfully");
+				redirect('Finance/expense');
+			
+
+
+				
+			}
+	}
+
+	public function deleteexpense(){
+		$expenseid=base64_decode($_POST['id']);
+		$whereArr=array('id'=>$expenseid);
+		$this->common_model->deleteData('tbl_expense',$whereArr);
+		//echo $this->db->last_query();die;
+		redirect('Finance/expense');
 	}
 	
 	

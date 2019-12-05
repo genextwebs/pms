@@ -430,8 +430,46 @@ $('#btnapply').click(function(){ //button filter event click
 	oTable.draw();
 });
 
+//delete invoice
 
-//expense table
+
+function deleteinvoices(invoiceid){
+		var url = base_url+"Finance/deleteinvoice";
+		swal({
+		 title: "Are you sure?",
+		 text: "You will not be able to recover this imaginary file!",
+		 type: "warning",
+		 showCancelButton: true,
+		 confirmButtonColor: "#DD6B55",
+		 confirmButtonText: "Yes, delete it!",
+		 closeOnConfirm: false
+		},
+	function(isConfirm){
+	if (isConfirm) {
+		   $.ajax({
+			   url: url,
+			   type: "POST",
+			   dataType: "JSON",
+			   data: {id:invoiceid},
+			  dataType: "html",
+			  
+			   success: function (data) {
+				   swal("Done!", "It was succesfully deleted!", "success");
+				   $('#invoices').DataTable().ajax.reload();
+
+				   //$("#leads").fnReloadAjax();
+					//$('#leads').DataTable.ajax.reload(null,false);
+					//window.location.reload();
+			   },
+			   error: function (xhr, ajaxOptions, thrownError) {
+				   swal("Error deleting!", "Please try again", "error");
+			   }
+		   });
+	   }
+	   });
+}
+
+//expense list
 
 jQuery(document).ready(function() {
 	if(controllerName == 'finance' && (functionName == 'expense')){
@@ -467,8 +505,7 @@ jQuery(document).ready(function() {
 			
 					aoData.push( { "name": "startdate", "value": $('#startdate').val() } );
 					aoData.push( { "name": "enddate", "value": $('#enddate').val() } );
-					aoData.push( { "name": "projectname", "value": $('#projectname').val() } );
-					aoData.push( { "name": "clientname", "value": $('#clientname').val() } );
+					aoData.push( { "name": "projectname", "value": $('#employee').val() } );
 					aoData.push( { "name": "status", "value": $('#status').val() } );
 					
 			
@@ -483,10 +520,10 @@ jQuery(document).ready(function() {
 	                    var oLanguage = oTable.fnSettings().oLanguage;
 
 	                    if((json.estimateCount == true) && (json.iTotalDisplayRecords == json.limitCountQuery)){
-	                        oLanguage.sInfo = '<b>_START_ to _END_</b> of more than _TOTAL_ (<small>' + json.iTotalRecordsFormatted + ' Clients</small>)';
+	                        oLanguage.sInfo = '<b>_START_ to _END_</b> of more than _TOTAL_ (<small>' + json.iTotalRecordsFormatted + ' Expenses</small>)';
 	                    }
 	                    else{
-	                        oLanguage.sInfo = '<b>_START_ to _END_</b> of <b>_TOTAL_</b> (<small>' + json.iTotalRecordsFormatted + ' Clients</small>)';
+	                        oLanguage.sInfo = '<b>_START_ to _END_</b> of <b>_TOTAL_</b> (<small>' + json.iTotalRecordsFormatted + ' Expenses</small>)';
 	                    }
 	                    
 	                    fnCallback(json);
@@ -507,3 +544,42 @@ $('#btnapply').click(function(){ //button filter event click
 	var oTable = $('#expenses').DataTable();
 	oTable.draw();
 });
+
+//expense delete
+
+//delete expenses
+function deleteexpenses(expenseid){
+		var url = base_url+"Finance/deleteexpense";
+		swal({
+		 title: "Are you sure?",
+		 text: "You will not be able to recover this imaginary file!",
+		 type: "warning",
+		 showCancelButton: true,
+		 confirmButtonColor: "#DD6B55",
+		 confirmButtonText: "Yes, delete it!",
+		 closeOnConfirm: false
+		},
+	function(isConfirm){
+	if (isConfirm) {
+		   $.ajax({
+			   url: url,
+			   type: "POST",
+			   dataType: "JSON",
+			   data: {id:expenseid},
+			  dataType: "html",
+			  
+			   success: function (data) {
+				   swal("Done!", "It was succesfully deleted!", "success");
+				   $('#expenses').DataTable().ajax.reload();
+
+				   //$("#leads").fnReloadAjax();
+					//$('#leads').DataTable.ajax.reload(null,false);
+					//window.location.reload();
+			   },
+			   error: function (xhr, ajaxOptions, thrownError) {
+				   swal("Error deleting!", "Please try again", "error");
+			   }
+		   });
+	   }
+	   });
+}
