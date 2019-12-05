@@ -147,7 +147,7 @@
 		                									<label class="control-label"> Invoice
 															</label>
 															<div class="input-icon">
-																<input type="file" class="form-control" name="invoice" id="invoice">
+																<input type="file" class="form-control" name="file" id="file">
 															</div>
 														</div>
 		                							</div>

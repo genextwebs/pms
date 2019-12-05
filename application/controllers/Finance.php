@@ -516,15 +516,189 @@ class Finance extends CI_Controller
 			$price=$this->input->post('price');
 			$purchasedform=$this->input->post('purchasedfrom');
 			$purchasedate=$this->input->post('purchasedate');
-			$invoice=$this->input->post('invoice');
+			$file = rand(1000,100000)."-".$_FILES['file']['name'];
+			$file_loc = $_FILES['file']['tmp_name'];
+			$file_size = $_FILES['file']['size'];
+			$file_type = $_FILES['file']['type'];
+			$folder="uploads/";
+			move_uploaded_file($file_loc,$folder.$file);
 
-			$insertArr=array('employee'=>$employee,'project' => $project,'currency' => $currency,'item' => $item,'price' => $price,'purchasedform' => $purchasedform,'purchasedate' => $purchasedate,'invoicefile' => $invoicefile,'status' => '0');
+			$insertArr=array('employee'=>$employee,'project' => $project,'currency' => $currency,'item' => $item,'price' => $price,'purchasedform' => $purchasedform,'purchasedate' => $purchasedate,'invoicefile' => $file,'status' => '0');
 				$this->common_model->insertdata('tbl_expense',$insertArr);
 				
 				$this->session->set_flashdata('message_name', "Data Inserted Succeessfully");
-				redirect('Clients/index');
+				redirect('Finance/expense');
 			}
 		}
+	
+		public function expense(){
+			$this->load->view('common/header');
+			$this->load->view('Expenses/expense');
+			$this->load->view('common/footer');
+		}
+	
+	public function expense_list(){
+	if(!empty($_POST)){
+			$_GET = $_POST;
+			$defaultOrderClause = "";
+			$sWhere = "";
+			$sOrder = '';	
+			$aColumns = array( 'id', 'item', 'price', 'purchasedform','employee', 'purchasedate','status');
+			//'ahrefs_dr', 
+            $totalColumns = count($aColumns);
+
+			/** Paging Start **/
+            $sLimit = "";
+            $sOffset = "";
+            if ($_GET['iDisplayStart'] < 0) {
+                $_GET['iDisplayStart'] = 0;
+            }
+            if ($_GET['iDisplayLength'] < 0) {
+                $_GET['iDisplayLength'] = 10;
+            }
+            if (isset($_GET['iDisplayStart']) && $_GET['iDisplayLength'] != '-1') {
+                $sLimit = (int) substr($_GET['iDisplayLength'], 0, 6);
+                $sOffset = (int) $_GET['iDisplayStart'];
+            } else {
+                $sLimit = 10;
+                $sOffset = (int) $_GET['iDisplayStart'];
+            }
+            /** Paging End **/
+            /** Ordering Start **/
+            $noOrderColumns = array('other_do_ext');
+            if (isset($_GET['iSortCol_0']) && !in_array($aColumns[intval($_GET['iSortCol_0'])], $noOrderColumns)) {
+                $sOrder = " ";
+                for ($i = 0; $i < intval($_GET['iSortingCols']); $i++) {
+                    if ($_GET['bSortable_' . intval($_GET['iSortCol_' . $i])] == "true") {
+
+                        if ($aColumns[intval($_GET['iSortCol_' . $i])] != '') {
+                            $sOrder .= $aColumns[intval($_GET['iSortCol_' . $i])] . " " . $_GET['sSortDir_' . $i] . ", ";
+                        } 
+                        else {
+                            $sOrder = $defaultOrderClause . " ";
+                        }
+
+                        $sortColumnName = intval($_GET['iSortCol_' . $i]).'|'.$_GET['sSortDir_' . $i];
+                    }
+                }
+
+                $sOrder = substr_replace($sOrder, "", -2);
+                if ($sOrder == "ORDER BY") {
+                    $sOrder = "";
+                }
+            } else {
+                $sOrder = $defaultOrderClause;
+            }
+
+            if(!empty($sOrder)){
+            	$sOrder = " ORDER BY ".$sOrder;
+            }
+            /** Ordering End **/
+
+         /** Filtering Start */
+           /*	if(!empty(trim($_GET['sSearch']))){
+            	$searchTerm = trim($_GET['sSearch']);
+            	$sWhere .= ' AND (project like "%'.$searchTerm.'%" OR clientname like "%'.$searchTerm.'%" OR companyname like "%'.$searchTerm.'%" OR note like "%'.$searchTerm.'%")';
+            }
+				$startdate=!empty($_POST['startdate']) ? $_POST['startdate'] : '';
+				$enddate=!empty($_POST['enddate']) ? $_POST['enddate'] : '';
+				$projectname=!empty($_POST['projectname']) ? $_POST['projectname'] : '';
+				$clientname=!empty($_POST['clientname']) ? $_POST['clientname'] : '';
+				$status=$_POST['status'];
+		
+				if(!empty($projectname)){
+							$sWhere.=' AND  project="'.$projectname.'"';
+
+					}
+					if(!empty($clientname)){
+							$sWhere.=' AND  clientname="'.$clientname.'"';
+
+					}
+					
+					if($status=='all'){
+						}else{
+								$sWhere.=' AND status='.$status;
+						}
+					if(!empty($startdate)){						
+						$sWhere.=' AND duedate>="'.$startdate.'"';
+					}
+					if(!empty($enddate)){						
+						$sWhere.=' AND duedate<="'.$enddate.'"';
+					}
+					
+					if(!empty($sWhere)){
+						$sWhere = " WHERE 1 ".$sWhere;
+					}*/
+					/** Filtering End */
+				}
+				
+		
+	    $query = "SELECT * from tbl_expense ".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+		$expensesArr = $this->common_model->coreQueryObject($query);
+
+		$query = "SELECT * from tbl_expense ".$sWhere;
+		//echo $query;die;
+		$expensesFilterArr = $this->common_model->coreQueryObject($query);
+		$iFilteredTotal = count($expensesFilterArr);
+
+		$expensesAllArr = $this->common_model->getData('tbl_expense');
+		$iTotal = count($expensesAllArr);
+
+		/** Output */
+		$datarow = array();
+		$i = 1;
+		foreach($expensesArr as $row) {
+			$id = $row->id;
+			if($row->status == '0'){
+				$status = $row->status = 'Pending';
+				$sta='<lable class="label label-danger">'.$status.'</label>';
+
+			}
+			else if($row->status == '1'){
+				$status = $row->status = 'Approved';
+				$sta='<lable class="label label-success">'.$status.'</label>';
+			}
+			else if($row->status == '2'){
+				$status = $row->status = ' Rejected';
+				$sta='<lable class="label label-info">'.$status.'</label>';
+			}
+			//$clientid = $row->clientid;
+			//$create_date = date('d-m-Y', strtotime($row->created_at));
+			
+				$actionStr = '<div class="dropdown action m-r-10">
+				                <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
+				                		<div class="dropdown-menu">
+						                    <a  class="dropdown-item" href='.base_url().'Finance/editestimate/'.base64_encode($id).'><i class="fa fa-pencil"></i> Edit</a>
+											<a  class="dropdown-item" href="javascript:void()" onclick="deleteestimates(\''.base64_encode($row->id).'\')"><i class="fa fa-trash "></i> Delete</a>
+											<a  class="dropdown-item" href='.base_url().'Finance/createinvoice/'.base64_encode($id).'><i class="ti-receipt"></i>Create Invoice</a>
+				               			 </div>
+							</div>';
+			
+			
+			$datarow[] = array(
+				$id = $i,
+                $row->item,
+                $row->price,
+                $row->purchasedform,
+                $row->employee,
+             	$row->purchasedate,
+                $sta,	
+				$actionStr
+           	);
+           	$i++;
+      	}
+        
+		$output = array
+		(
+		   	"sEcho" => intval($_GET['sEcho']),
+	        "iTotalRecords" => $iTotal,
+	        "iTotalRecordsFormatted" => number_format($iTotal), //ShowLargeNumber($iTotal),
+	        "iTotalDisplayRecords" => $iFilteredTotal,
+	        "aaData" => $datarow
+		);
+	  echo json_encode($output);
+      exit();
+	}
 	
 	
 }
