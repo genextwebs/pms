@@ -59,12 +59,12 @@
 																	foreach($client as $row)
 																	{
 																		$str='';
-																		if($row->clientname==$estimate[0]->client)
+																		if($row->id==$estimate[0]->client)
 																		{
 																			$str="selected";
 																		
 																		}
-																		echo '<option value="'.$row->clientname.'"'.$str.'>'.$row->clientname.'</option>';
+																		echo '<option value="'.$row->id.'"'.$str.'>'.$row->clientname.'</option>';
 																	}
 																?>
 														</select>

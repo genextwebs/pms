@@ -1,12 +1,12 @@
      <nav aria-label="breadcrumb" class="breadcrumb-nav">
                 <div class="row">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title"><i class="ti-file"></i> Invoices</h4>
+                        <h4 class="page-title"><i class="ti-file"></i> Expenses</h4>
                     </div>
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                         <ol class="breadcrumb">
                             <li><a href="<?php echo base_url().'dashboard'?>">Home</a></li>
-                            <li class="active">Invoices</li>
+                            <li class="active">Expenses</li>
                         </ol>
                     </div>
                 </div>
@@ -20,7 +20,7 @@
 							<div class="row">
                 				<div class="col-md-6">
                 					<div class="form-group">
-			                            <a class="btn btn-outline-success btn-sm"  href="<?php echo base_url().'Finance/createinvoice' ?>">Add Invoice <i class="fa fa-plus" aria-hidden="true"></i></a>
+			                            <a class="btn btn-outline-success btn-sm"  href="<?php echo base_url().'Finance/addexpenses' ?>">Create Expense <i class="fa fa-plus" aria-hidden="true"></i></a>
 										<a href="javascript:;" id="toggle-filter" class="btn btn-outline-danger btn-sm toggle-filter"><i class="fa fa-sliders"></i> Filter Results</a>
 									</div>
                 				</div>
@@ -34,42 +34,29 @@
 											<input type="text" placehoder="End Date" id="enddate" name="enddate" data-date-format='yyyy-mm-dd'  />
 									</div>
 		                		</div>
-								<div class="col-lg-3 col-md-4">
+		                		<div class="col-lg-3 col-md-4">
 		                			<div class="form-group">
-            							<label class="control-label">Project</label>
-            							<select id='projectname' class="custom-select">
-								         <option value="">select</option>
+            							<label class="control-label">Employee</label>
+            							<select id='employee' name="employee" class="custom-select">
+								            <option value="">--</option>
 											<?php
-												foreach($project as $row)
+												foreach($employee as $row)
 												{
-													echo '<option value="'.$row->projectname.'" >'.$row->projectname.'</option>';
+													echo '<option value="'.$row->id.'">'.$row->employeename.'</option>';
 												}
 											?>
-										</select> 
-            						</div>
-		                		</div>
-								<div class="col-lg-3 col-md-4">
-		                			<div class="form-group">
-            							<label class="control-label">Client</label>
-            							<select id='clientname' class="custom-select">
-								         <option value="">select</option>
-											<?php
-												foreach($clients as $row)
-												{
-													echo '<option value="'.$row->clientname.'" >'.$row->clientname.'</option>';
-												}
-											?>
-										</select> 
+											
+								        </select> 
             						</div>
 		                		</div>
 		                		<div class="col-lg-3 col-md-4">
 		                			<div class="form-group">
             							<label class="control-label">Status</label>
-            							<select id='status' class="custom-select">
+            							<select id='status' name="status" class="custom-select">
 								            <option value='all'>All</option>          
-								            <option value='0'>Unpaid</option>  
-								            <option value='1'>Paid</option> 
-								            <option value='2'>Partial</option>   
+								            <option value='0'>Pending</option>  
+								            <option value='1'>Approved</option> 
+								            <option value='2'>Rejected</option>   
 											
 								        </select> 
             						</div>
@@ -100,15 +87,15 @@
                             <?php } ?>
    		                	
 		                	<div class="table-responsive">
-			                	<table class="table table-bordered" id="invoices">
+			                	<table class="table table-bordered" id="expenses">
 								   	<thead>
 								      	<tr role="row">
 									         <th>Id</th>
-									         <th>Invoice#</th>
-									         <th>Project</th>
-									         <th>Client</th>
-											 <th>Total</th>
-											 <th>Invoice Date</th>
+									         <th>Item Name</th>
+									         <th>Price</th>
+									         <th>Purchased From</th>
+											 <th>Employess</th>
+											  <th>Purchase Date</th>
 											 <th>Status</th>
 											 <th>Action</th>
 								      	</tr>
