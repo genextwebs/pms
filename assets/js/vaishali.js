@@ -542,3 +542,64 @@ if (isConfirm) {
 $(document).ready( function() {
         $('.submit-alerts').delay(1000).fadeOut();
       });
+
+// for repeat holiday item
+$('#repeate-data').click(function(){
+	var counter=$('#counter').val();
+	counter++;
+	$('#counter').val(eval(counter));
+	$('#dynamic').append('<div id="row'+counter+'"><div class="row"><div class="col-md-4"><div class="form-group"><input type="text" name="holiday_name[]" id="start_date'+counter+'"  placeholder="Date" class="form-control"></div></div><div class="col-md-4"><div class="form-group"><input type="text" name="occasion[]" id="occasion1"  placeholder="Occasion" class="form-control"><div class="col-md-1 text-right visible-md visible-lg"><button type="button" name="remove" id="'+counter+'" class="btn remove-item btn-circle btn-danger remove"><i class="fa fa-remove"></i></button></div></div></div></div>');
+	$("#start_date"+counter).datepicker({  format: 'dd-mm-yyyy'});
+ });                                       
+ 
+ $(document).on('click','.remove',function(){
+	var btn_id=$(this).attr("id");
+	$("#row"+btn_id+'').remove();
+});  
+
+//add holiday
+
+$("#save-holiday").click(function(event) {
+	var holiday_arr = [];
+	var ocasion_arr = [];
+	$("input[name^='holiday_name']").each(function() {
+    holiday_arr.push($(this).val());
+});
+	$("input[name^='occasion']").each(function() {
+    ocasion_arr.push($(this).val());
+});
+	console.log(holiday_arr);
+	event.preventDefault();
+        $.ajax({
+           url: base_url+"holiday/insert_data",
+           type: 'POST',
+           
+           data: {'holiday':holiday_arr,'occasion' : ocasion_arr},
+           error: function() {
+              alert('Something is wrong');
+           },
+           success: function(data) {
+           		if(data == 1){
+           			alert('hjbgds');
+           		}
+           		else{
+           		$('#data-holiday').modal('toggle');
+                $('#modelholiday')[0].reset();
+            	}
+           	}
+        });
+});
+
+                                    
+                                                    
+                                                
+                                            
+                                            
+                                                
+                                                    
+                                               
+                                            
+                                    
+
+                                              
+	

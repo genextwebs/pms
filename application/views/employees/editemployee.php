@@ -127,7 +127,7 @@
                                         		<div class="col-md-12">
 		                                            <div class="form-group">
 		                                                <label class="control-label">Address</label>
-		                                                <textarea name="address" class="form-control" rows="4"><?php echo !empty($employee[0]->address) ?  $employee[0]->address : ' '?></textarea>
+		                                                <textarea name="address" class="form-control" rows="4"><?php 	?></textarea>
 		                                            </div>
 		                                        </div>
                                 			</div>
