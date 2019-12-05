@@ -11,6 +11,21 @@ if($this->session->userdata('login')){
     }
 }
 ?>
+ <?php
+   // $data=$this->common_model->getData('tbl_user');
+   /* $loginiddata=$this->session->userdata('login');
+    $login=$loginiddata->id;
+    print_r($login);die;*/
+    /*$where = array('id'=> $loginiddata->id);
+
+    $loginid=$this->common_model->getData('tbl_user',$where);*/
+         /*$sWhere.=' where id='.$loginiddata;
+         $query = "SELECT id  FROM `tbl_user` where id =".$sWhere;
+         echo $this->db->last_query();die;
+        $data = $this->common_model->coreQueryObject($query);*/
+
+
+?> 
 <div id="sidebar-scroll" class="slim-nav">
     <ul class="list-unstyled components user">
         <li>
@@ -18,6 +33,14 @@ if($this->session->userdata('login')){
                 <img class="img-circle" src="<?php echo base_url();?>assets/images/default-profile-3.png" alt="user-img">
                 <span><?php echo !empty($loginName)?$loginName:'User';?></span>
             </a>
+            <ul class="collapse list-unstyled" id="user-ico">
+                 <li>
+                    <a href="<?php echo base_url().'ProfileSetting/editprofile';?>"><i class="ti-user"></i> <span>Profile Settings</span></a>
+                </li> 
+                <li>
+                    <a href="<?php echo base_url().'Login/logout'; ?>"><i class="fa fa-power-off"></i> <span>Logout</span></a>
+                </li>
+            </ul>
             <ul class="collapse list-unstyled" id="user-ico">
                 <!-- <li>
                     <a href="#"><i class="fas fa-sign-in-alt"></i> <span>Login As Employee</span></a>
@@ -34,7 +57,7 @@ if($this->session->userdata('login')){
     ?>
     <ul class="list-unstyled components">
         <li>
-            <a href="<?php echo base_url().'Dashboard'; ?>" class="nav-link-s">
+            <a href="<?php echo base_url().'EmpDashboard'; ?>" class="nav-link-s">
                 <i class="icon-speedometer"></i>
                 <span>Dashbord</span>
             </a>

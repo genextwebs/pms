@@ -21,40 +21,6 @@
                     <div class="row">
                         <div class="col-sm-3">
                             <div>
-                                <span class="bg-success-gradient"><i class="icon-user"></i></span>
-                            </div>
-                        </div>
-                        <div class="col-sm-9 text-right">
-                            <span class="widget-title"> Total Clients</span><br>
-                            <span class="counter">31</span>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="col-md-3 col-sm-6">
-            <a href="#">
-                <div class="stats-box">
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <div>
-                                <span class="bg-success-gradient"><i class="icon-people"></i></span>
-                            </div>
-                        </div>
-                        <div class="col-sm-9 text-right">
-                            <span class="widget-title"> Total Employees</span><br>
-                            <span class="counter">32</span>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="col-md-3 col-sm-6">
-            <a href="#">
-                <div class="stats-box">
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <div>
                                 <span class="bg-success-gradient"><i class="icon-layers"></i></span>
                             </div>
                         </div>
@@ -66,24 +32,6 @@
                 </div>
             </a>
         </div>
-        <div class="col-md-3 col-sm-6">
-            <a href="#">
-                <div class="stats-box">
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <div>
-                                <span class="bg-success-gradient"><i class="icon-user"></i></span>
-                            </div>
-                        </div>
-                        <div class="col-sm-9 text-right">
-                            <span class="widget-title">  Unpaid Invoices</span><br>
-                            <span class="counter">131</span>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
-
         <div class="col-md-3 col-sm-6">
             <a href="#">
                 <div class="stats-box">
@@ -135,63 +83,14 @@
                 </div>
             </a>
         </div>
-        <div class="col-md-3 col-sm-6">
-            <a href="#">
-                <div class="stats-box">
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <div>
-                                <span class="bg-danger-gradient"><i class="fa fa-percent" style="display: inherit;"></i></span>
-                            </div>
-                        </div>
-                        <div class="col-sm-9 text-right">
-                            <span class="widget-title"> Today Attendance</span><br>
-                            <span class="counter">18.75</span>% 
-                            <span class="text-muted">(6/32)</span>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
+        
     </div>
     <div class="row">
-        <div class="col-md-6">
+        <!-- <div class="col-md-6">
             <div class="row">
-                <div class="col-md-6 col-sm-12 db-stats"> 
-                    <a href="#">
-                        <div class="stats-box">
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <div>
-                                        <span class="bg-success-gradient"><i class="ti-ticket"></i></span>
-                                    </div>
-                                </div>
-                                <div class="col-sm-9 text-right">
-                                    <span class="widget-title"> Resolved Tickets</span><br>
-                                    <span class="counter">13</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-6 col-sm-12 db-stats"> 
-                    <a href="#">
-                        <div class="stats-box">
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <div>
-                                        <span class="bg-success-gradient"><i class="ti-ticket"></i></span>
-                                    </div>
-                                </div>
-                                <div class="col-sm-9 text-right">
-                                    <span class="widget-title"> Unresolved Tickets</span><br>
-                                    <span class="counter">17</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <!--  -->
+                
+              
+              
                 <div class="col-md-12">
                     <div class="bg-theme-blue m-b-15">
                         <div id="carouselExampleIndicators" class="carousel slide p-3" data-ride="carousel">
@@ -225,9 +124,9 @@
                         </div>
                     </div>
                 </div>
-                <!--  -->
+                
             </div>
-        </div>
+        </div> -->
         <div class="col-md-6">
             <div class="row">
                 <div class="col-md-12">
@@ -272,23 +171,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="card c-wrapp">
-                <div class="card-header">Pending FollowUp</div>
-                <div class="card-wrapper collapse show">
-                    <div class="card-body">
-                        <ul class="list-task list-group border-none" data-role="tasklist">
-                            <li class="list-group-item" data-role="task">
-                                <strong>Title</strong> <span class="pull-right"><strong>Follow Up Date</strong></span>
-                            </li>
-                            <li class="list-group-item" data-role="task">
-                                    No pending follow-up.                                    
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
+       
     </div>
 </div>
 <!-- ends of contentwrap -->

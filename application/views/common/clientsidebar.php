@@ -34,7 +34,7 @@ if($this->session->userdata('login')){
     ?>
     <ul class="list-unstyled components">
         <li>
-            <a href="<?php echo base_url().'Dashboard'; ?>" class="nav-link-s">
+            <a href="<?php echo base_url().'ClientDashboard'; ?>" class="nav-link-s">
                 <i class="icon-speedometer"></i>
                 <span>Dashbord</span>
             </a>
