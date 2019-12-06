@@ -23,11 +23,8 @@
 				</div>
 				<div class="card-wrapper collapse show">
 					<div class="card-body">
-						<form id="creatclient" class="aj-form" name="" method="post" action=" " onsubmit="return changeDate();">
-							
-  
-
-							<?php
+						<form id="creatclient" class="aj-form" name="upload_form" id="upload_form" method="post" enctype="multipart/form-data"  method="post"> 
+						<?php
                                     $mess = $this->session->flashdata('message_name');
                                     if(!empty($mess)){
                                         //warning 
@@ -88,47 +85,25 @@
 								</div>
 							
 								<div class="row">
-			                                	<div class="col-md-6">
-			                                		<div class="file-upload mb-5">
-			                                			<label>Profile Picture</label>
-			                                			<div class="image-upload-wrap">
-			                                				<input class="file-upload-input" type='file' onchange="" accept="" />
-			                                				<div class="drag-text">
+			                        <div class="col-md-6">
+                                		<div class="file-upload mb-5">
+                                			<label>Profile Picture</label>
+                                				<div class="image-upload-wrap">
+                           							<input type='file'class="file-upload-input" name="image_file" id="image_file"/>
+			                                				<!-- <div class="drag-text">
 			                                					<h3>Drag and drop <br>a file or select add Image</h3>
-			                                				</div>
-			                                			</div>
-			                                			<div class="file-upload-content">
-			                                				 <?php echo form_open_multipart('ProfileSetting/do_upload');?>
- 
-			                                				<img class="file-upload-image" src="#" alt="your image" />
-			                                				<div class="image-title-wrap">
-			                                					<!-- <button type="button" onclick="removeUpload()" class="remove-image">Remove
-			                                						</button> -->
-
-			                                					 <!-- <span class="image-title">Uploaded Image</span> -->			                                				</div>
-			                                			</div>
-			                                			<button class="file-upload-btn" type="button" onclick="">Select Image</button>
-			                                		</div>
+			                                				</div> -->
 			                                	</div>
-			                                </div>
-								<!-- <div class="row">
-									<div class="col-md-6">
-										<div class="form-group">
-											<label class="control-label">Profile Picture</label>
-											<input id="project_name" class="form-control" type="text" name="project_name" value="">
-										</div>
-									</div>
-								</div>
-								
-								
-								<div class="row">
-									<div class="col-md-6">
-										<div class="form-group">
-											<button type="submit" name="btnsave" id="save-form" class="btn btn-success"> <i class="fa fa-check"></i>  Select Image </button>
-										</div>
-									</div>
-								</div> -->
-								
+			                                	<input type="hidden" value="<?php echo  $profile[0]->profileimg; ?>" name="image_name">
+			                                	<img src="<?php echo base_url().'upload/'.$profile[0]->profileimg;?>" height="100px" width="100px">
+			                                	
+			                                	
+			                                	
+			                            </div>
+			                           <!--   <button class="file-upload-btn" type="submit" name="upload" id="upload">Select Image</button> -->
+			                        </div>
+			                    </div>
+			                </div>
 								<div class="form-actions">
 									<div class="form-group">
 										<button type="submit" name="btnsave" id="save-form" class="btn btn-success"> <i class="fa fa-check"></i> Update</button>
@@ -144,4 +119,3 @@
 	</div>
 </div>
 <!-- ends of contentwrap -->
-

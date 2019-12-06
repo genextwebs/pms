@@ -7,7 +7,7 @@
 
     <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,300i,400,400i,500,500i,600,600i,700,700i,800,900|Roboto:300,300i,400,400i,500,500i,700,700i,900&display=swap" rel="stylesheet"> 
 
-	<title>Project Menagement - Leads</title>
+	<title>Project Management</title>
 
 	<link rel="stylesheet" href="<?php echo base_url();?>assets/css/bootstrap.css">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/fixedHeader.bootstrap4.min.css">

@@ -327,32 +327,34 @@ $("#save-category").click(function(event) {
 	}
 });
 
+
+
 // addproject=> delete category 
-function deletecat(id)
-{
-	$.ajax({
-	    type: "POST",
-	    url: base_url+"project/deletecat",
-	    cache: false,
-	    data: "id="+id,
-	    success: function(data){
-		   	if(data == 1){
-				jQuery('#cate_'+id).remove();
-				$('#project-category1').removeClass('show');
-				$('.modal-backdrop').removeClass('show');
-				$('.modal-backdrop').find('div').remove();
-				$('body').removeAttr("style");
-				$('body').removeClass("modal-open");
-				$('#category')[0].reset();
-				$('#succmsg').html('');
-				$('#succmsg').html('<b>Successfully category removed</b>');
-			}else{
-				$('#succmsg').html('');
-				$('#succmsg').html('<b>Something went to wrong</b>');
+	function deletecat(id)
+	{
+		$.ajax({
+		    type: "POST",
+		    url: base_url+"project/deletecat",
+		    cache: false,
+		    data: "id="+id,
+		    success: function(data){
+			   	if(data == 1){
+					jQuery('#cate_'+id).remove();
+					$('#project-category1').removeClass('show');
+					$('.modal-backdrop').removeClass('show');
+					$('.modal-backdrop').find('div').remove();
+					$('body').removeAttr("style");
+					$('body').removeClass("modal-open");
+					$('#category')[0].reset();
+					$('#succmsg').html('');
+					$('#succmsg').html('<b>Successfully category removed</b>');
+				}else{
+					$('#succmsg').html('');
+					$('#succmsg').html('<b>Something went to wrong</b>');
+				}
 			}
-		}
-	});
-}
+		});
+	}
 
 	function checkUncheck(){ 
 
@@ -524,3 +526,4 @@ function deletecat(id)
 			   }
 			   });
 		}
+
