@@ -38,6 +38,11 @@
     <li><a data-toggle="tab" href="#December">December</a></li>
   </ul>
   <div class="tab-content">
+    <?php
+        $data = $this->common_model->getData('tbl_holiday_settings');
+        $SaturdayChk = $data[0]->saturday;
+        $SundayChk = $data[0]->sunday;
+    ?>
     <div id="January" class="tab-pane fade in active">
       <h3>January</h3>
         <table class="table table-hover">
@@ -52,8 +57,6 @@
             </thead>
             <tbody>
                 <?php
-                    $SaturdayChk = 1;
-                    $SundayChk = 1;
                     $j = 1;
                     for($i=1;$i<=31;$i++){
                         $date = date('Y-m-d', strtotime('2019-01-'.$i));
@@ -63,7 +66,84 @@
                             <tr>
                                 <td><?php echo $j; ?></td>
                                 <td><?php echo $date; ?></td>
-                                <td><?php echo $janArr[$date]; ?></td>
+                                <td><?php
+                                    if(($dateDay == 'Saturday' || $dateDay == 'Sunday') && ($SundayChk == 1 || $SaturdayChk == 1)){
+                                        echo $janArr[$date].','.$dateDay;
+                                    }
+                                    else{
+                                        echo $janArr[$date];
+                                    } 
+                                ?></td>
+                                <td><?php echo $dateDay; ?></td>
+                                <td></td>
+                            </tr>
+                            <?php
+                            $j++; 
+                        }
+                        else if($dateDay == 'Saturday' && $SaturdayChk == 1){
+                            ?>
+                            <tr>
+                                <td><?php echo $j; ?></td>
+                                <td><?php echo $date; ?></td>
+                                <td><?php echo 'Saturday'; ?></td>
+                                <td><?php echo $dateDay; ?></td>
+                                <td></td>
+                            </tr>
+                            <?php
+                            $j++;
+                        }
+                        else if($dateDay == 'Sunday' && $SundayChk == 1){
+                            ?>
+                            <tr>
+                                <td><?php echo $j; ?></td>
+                                <td><?php echo $date; ?></td>
+                                <td><?php echo 'Sunday'; ?></td>
+                                <td><?php echo $dateDay; ?></td>
+                                <td></td>
+                            </tr>
+                            <?php
+                            $j++;
+                        }
+                        
+                            
+                    }
+                ?>
+            </tbody>
+        </table>
+    </div>
+    <div id="February" class="tab-pane fade">
+      <h3> February </h3>
+      <table class="table table-hover">
+            <thead>
+            <tr>
+                <th> # </th>
+                <th> Date </th>
+                <th> Occasion </th>
+                <th> Day </th>
+                <th> Action </th>
+            </tr>
+            </thead>
+            <tbody>
+                <?php
+                    $j = 1;
+                    for($i=1;$i<=31;$i++){
+                        $date = date('Y-m-d', strtotime('2019-02-'.$i));
+                        $dateDay = date('l', strtotime($date));
+                        if(!empty($febArr[$date])){
+                            ?>
+                            <tr>
+                                <td><?php echo $j; ?></td>
+                                <td><?php echo $date; ?></td>
+                                <td>
+                                <?php
+                                    if(($dateDay == 'Saturday' || $dateDay == 'Sunday') && ($SundayChk == 1 || $SaturdayChk == 1)){
+                                        echo $febArr[$date].','.$dateDay;
+                                    }
+                                    else{
+                                        echo $febArr[$date];
+                                    } 
+                                ?>
+                                 </td>
                                 <td><?php echo $dateDay; ?></td>
                                 <td></td>
                             </tr>
@@ -99,22 +179,6 @@
             </tbody>
         </table>
     </div>
-    <div id="February" class="tab-pane fade">
-      <h3> February </h3>
-      <table class="table table-hover">
-            <thead>
-            <tr>
-                <th> # </th>
-                <th> Date </th>
-                <th> Occasion </th>
-                <th> Day </th>
-                <th> Action </th>
-            </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
-    </div>
     <div id="March" class="tab-pane fade">
       <h3>March</h3>
       <table class="table table-hover">
@@ -128,6 +192,58 @@
             </tr>
             </thead>
             <tbody>
+                <?php
+                    $j = 1;
+                    for($i=1;$i<=31;$i++){
+                        $date = date('Y-m-d', strtotime('2019-03-'.$i));
+                        $dateDay = date('l', strtotime($date));
+                        if(!empty($marArr[$date])){
+                            ?>
+                            <tr>
+                                <td><?php echo $j; ?></td>
+                                <td><?php echo $date; ?></td>
+                                <td>
+                                <?php
+                                if(($dateDay == 'Saturday' || $dateDay == 'Sunday') && ($SundayChk == 1 || $SaturdayChk == 1)){
+                                    echo $marArr[$date].','.$dateDay;
+                                }
+                                else{
+                                    echo $marArr[$date];
+                                } 
+                                ?>
+                                </td>
+                                <td><?php echo $dateDay; ?></td>
+                                <td></td>
+                            </tr>
+                            <?php
+                            $j++; 
+                        }
+                        else if($dateDay == 'Saturday' && $SaturdayChk == 1){
+                            ?>
+                            <tr>
+                                <td><?php echo $j; ?></td>
+                                <td><?php echo $date; ?></td>
+                                <td><?php echo 'Saturday'; ?></td>
+                                <td><?php echo $dateDay; ?></td>
+                                <td></td>
+                            </tr>
+                            <?php
+                            $j++;
+                        }
+                        else if($dateDay == 'Sunday' && $SundayChk == 1){
+                            ?>
+                            <tr>
+                                <td><?php echo $j; ?></td>
+                                <td><?php echo $date; ?></td>
+                                <td><?php echo 'Sunday'; ?></td>
+                                <td><?php echo $dateDay; ?></td>
+                                <td></td>
+                            </tr>
+                            <?php
+                            $j++;
+                        }
+                    }
+                ?>
             </tbody>
         </table>
     </div>
@@ -144,6 +260,58 @@
             </tr>
             </thead>
             <tbody>
+                <?php
+                    $j = 1;
+                    for($i=1;$i<=31;$i++){
+                        $date = date('Y-m-d', strtotime('2019-04-'.$i));
+                        $dateDay = date('l', strtotime($date));
+                        if(!empty($aprilArr[$date])){
+                            ?>
+                            <tr>
+                                <td><?php echo $j; ?></td>
+                                <td><?php echo $date; ?></td>
+                                <td>
+                                <?php
+                                if(($dateDay == 'Saturday' || $dateDay == 'Sunday') && ($SundayChk == 1 || $SaturdayChk == 1)){
+                                    echo $aprilArr[$date].','.$dateDay;
+                                }
+                                else{
+                                    echo $aprilArr[$date];
+                                } 
+                                ?>
+                                </td>
+                                <td><?php echo $dateDay; ?></td>
+                                <td></td>
+                            </tr>
+                            <?php
+                            $j++; 
+                        }
+                        else if($dateDay == 'Saturday' && $SaturdayChk == 1){
+                            ?>
+                            <tr>
+                                <td><?php echo $j; ?></td>
+                                <td><?php echo $date; ?></td>
+                                <td><?php echo 'Saturday'; ?></td>
+                                <td><?php echo $dateDay; ?></td>
+                                <td></td>
+                            </tr>
+                            <?php
+                            $j++;
+                        }
+                        else if($dateDay == 'Sunday' && $SundayChk == 1){
+                            ?>
+                            <tr>
+                                <td><?php echo $j; ?></td>
+                                <td><?php echo $date; ?></td>
+                                <td><?php echo 'Sunday'; ?></td>
+                                <td><?php echo $dateDay; ?></td>
+                                <td></td>
+                            </tr>
+                            <?php
+                            $j++;
+                        }
+                    }
+                ?>
             </tbody>
         </table>
     </div>
@@ -160,6 +328,58 @@
             </tr>
             </thead>
             <tbody>
+                <?php
+                    $j = 1;
+                    for($i=1;$i<=31;$i++){
+                        $date = date('Y-m-d', strtotime('2019-05-'.$i));
+                        $dateDay = date('l', strtotime($date));
+                        if(!empty($mayArr[$date])){
+                            ?>
+                            <tr>
+                                <td><?php echo $j; ?></td>
+                                <td><?php echo $date; ?></td>
+                                <td>
+                                <?php
+                                if(($dateDay == 'Saturday' || $dateDay == 'Sunday') && ($SundayChk == 1 || $SaturdayChk == 1)){
+                                    echo $mayArr[$date].','.$dateDay;
+                                }
+                                else{
+                                    echo $mayArr[$date];
+                                } 
+                                ?>
+                                </td>
+                                <td><?php echo $dateDay; ?></td>
+                                <td></td>
+                            </tr>
+                            <?php
+                            $j++; 
+                        }
+                        else if($dateDay == 'Saturday' && $SaturdayChk == 1){
+                            ?>
+                            <tr>
+                                <td><?php echo $j; ?></td>
+                                <td><?php echo $date; ?></td>
+                                <td><?php echo 'Saturday'; ?></td>
+                                <td><?php echo $dateDay; ?></td>
+                                <td></td>
+                            </tr>
+                            <?php
+                            $j++;
+                        }
+                        else if($dateDay == 'Sunday' && $SundayChk == 1){
+                            ?>
+                            <tr>
+                                <td><?php echo $j; ?></td>
+                                <td><?php echo $date; ?></td>
+                                <td><?php echo 'Sunday'; ?></td>
+                                <td><?php echo $dateDay; ?></td>
+                                <td></td>
+                            </tr>
+                            <?php
+                            $j++;
+                        }
+                    }
+                ?>
             </tbody>
         </table>
     </div>
@@ -176,6 +396,58 @@
             </tr>
             </thead>
             <tbody>
+                <?php
+                    $j = 1;
+                    for($i=1;$i<=31;$i++){
+                        $date = date('Y-m-d', strtotime('2019-06-'.$i));
+                        $dateDay = date('l', strtotime($date));
+                        if(!empty($juneArr[$date])){
+                            ?>
+                            <tr>
+                                <td><?php echo $j; ?></td>
+                                <td><?php echo $date; ?></td>
+                                <td>
+                                <?php
+                                if(($dateDay == 'Saturday' || $dateDay == 'Sunday') && ($SundayChk == 1 || $SaturdayChk == 1)){
+                                    echo $juneArr[$date].','.$dateDay;
+                                }
+                                else{
+                                    echo $juneArr[$date];
+                                } 
+                                ?>
+                                </td>
+                                <td><?php echo $dateDay; ?></td>
+                                <td></td>
+                            </tr>
+                            <?php
+                            $j++; 
+                        }
+                        else if($dateDay == 'Saturday' && $SaturdayChk == 1){
+                            ?>
+                            <tr>
+                                <td><?php echo $j; ?></td>
+                                <td><?php echo $date; ?></td>
+                                <td><?php echo 'Saturday'; ?></td>
+                                <td><?php echo $dateDay; ?></td>
+                                <td></td>
+                            </tr>
+                            <?php
+                            $j++;
+                        }
+                        else if($dateDay == 'Sunday' && $SundayChk == 1){
+                            ?>
+                            <tr>
+                                <td><?php echo $j; ?></td>
+                                <td><?php echo $date; ?></td>
+                                <td><?php echo 'Sunday'; ?></td>
+                                <td><?php echo $dateDay; ?></td>
+                                <td></td>
+                            </tr>
+                            <?php
+                            $j++;
+                        }
+                    }
+                ?>
             </tbody>
         </table>
     </div>
@@ -192,6 +464,58 @@
             </tr>
             </thead>
             <tbody>
+                <?php
+                    $j = 1;
+                    for($i=1;$i<=31;$i++){
+                        $date = date('Y-m-d', strtotime('2019-07-'.$i));
+                        $dateDay = date('l', strtotime($date));
+                        if(!empty($julyArr[$date])){
+                            ?>
+                            <tr>
+                                <td><?php echo $j; ?></td>
+                                <td><?php echo $date; ?></td>
+                                <td>
+                                <?php
+                                if(($dateDay == 'Saturday' || $dateDay == 'Sunday') && ($SundayChk == 1 || $SaturdayChk == 1)){
+                                    echo $julyArr[$date].','.$dateDay;
+                                }
+                                else{
+                                    echo $julyArr[$date];
+                                } 
+                                ?>
+                                </td>
+                                <td><?php echo $dateDay; ?></td>
+                                <td></td>
+                            </tr>
+                            <?php
+                            $j++; 
+                        }
+                        else if($dateDay == 'Saturday' && $SaturdayChk == 1){
+                            ?>
+                            <tr>
+                                <td><?php echo $j; ?></td>
+                                <td><?php echo $date; ?></td>
+                                <td><?php echo 'Saturday'; ?></td>
+                                <td><?php echo $dateDay; ?></td>
+                                <td></td>
+                            </tr>
+                            <?php
+                            $j++;
+                        }
+                        else if($dateDay == 'Sunday' && $SundayChk == 1){
+                            ?>
+                            <tr>
+                                <td><?php echo $j; ?></td>
+                                <td><?php echo $date; ?></td>
+                                <td><?php echo 'Sunday'; ?></td>
+                                <td><?php echo $dateDay; ?></td>
+                                <td></td>
+                            </tr>
+                            <?php
+                            $j++;
+                        }
+                    }
+                ?>
             </tbody>
         </table>
     </div>
@@ -208,6 +532,58 @@
             </tr>
             </thead>
             <tbody>
+                <?php
+                    $j = 1;
+                    for($i=1;$i<=31;$i++){
+                        $date = date('Y-m-d', strtotime('2019-08-'.$i));
+                        $dateDay = date('l', strtotime($date));
+                        if(!empty($augestArr[$date])){
+                            ?>
+                            <tr>
+                                <td><?php echo $j; ?></td>
+                                <td><?php echo $date; ?></td>
+                                <td>
+                                <?php
+                                if(($dateDay == 'Saturday' || $dateDay == 'Sunday') && ($SundayChk == 1 || $SaturdayChk == 1)){
+                                    echo $augestArr[$date].','.$dateDay;
+                                }
+                                else{
+                                    echo $augestArr[$date];
+                                } 
+                                ?>
+                                </td>
+                                <td><?php echo $dateDay; ?></td>
+                                <td></td>
+                            </tr>
+                            <?php
+                            $j++; 
+                        }
+                        else if($dateDay == 'Saturday' && $SaturdayChk == 1){
+                            ?>
+                            <tr>
+                                <td><?php echo $j; ?></td>
+                                <td><?php echo $date; ?></td>
+                                <td><?php echo 'Saturday'; ?></td>
+                                <td><?php echo $dateDay; ?></td>
+                                <td></td>
+                            </tr>
+                            <?php
+                            $j++;
+                        }
+                        else if($dateDay == 'Sunday' && $SundayChk == 1){
+                            ?>
+                            <tr>
+                                <td><?php echo $j; ?></td>
+                                <td><?php echo $date; ?></td>
+                                <td><?php echo 'Sunday'; ?></td>
+                                <td><?php echo $dateDay; ?></td>
+                                <td></td>
+                            </tr>
+                            <?php
+                            $j++;
+                        }
+                    }
+                ?>
             </tbody>
         </table>
     </div>
@@ -224,6 +600,58 @@
             </tr>
             </thead>
             <tbody>
+                <?php
+                    $j = 1;
+                    for($i=1;$i<=31;$i++){
+                        $date = date('Y-m-d', strtotime('2019-09-'.$i));
+                        $dateDay = date('l', strtotime($date));
+                        if(!empty($sepArr[$date])){
+                            ?>
+                            <tr>
+                                <td><?php echo $j; ?></td>
+                                <td><?php echo $date; ?></td>
+                                <td>
+                                <?php
+                                if(($dateDay == 'Saturday' || $dateDay == 'Sunday') && ($SundayChk == 1 || $SaturdayChk == 1)){
+                                    echo $sepArr[$date].','.$dateDay;
+                                }
+                                else{
+                                    echo $sepArr[$date];
+                                } 
+                                ?>
+                                </td>
+                                <td><?php echo $dateDay; ?></td>
+                                <td></td>
+                            </tr>
+                            <?php
+                            $j++; 
+                        }
+                        else if($dateDay == 'Saturday' && $SaturdayChk == 1){
+                            ?>
+                            <tr>
+                                <td><?php echo $j; ?></td>
+                                <td><?php echo $date; ?></td>
+                                <td><?php echo 'Saturday'; ?></td>
+                                <td><?php echo $dateDay; ?></td>
+                                <td></td>
+                            </tr>
+                            <?php
+                            $j++;
+                        }
+                        else if($dateDay == 'Sunday' && $SundayChk == 1){
+                            ?>
+                            <tr>
+                                <td><?php echo $j; ?></td>
+                                <td><?php echo $date; ?></td>
+                                <td><?php echo 'Sunday'; ?></td>
+                                <td><?php echo $dateDay; ?></td>
+                                <td></td>
+                            </tr>
+                            <?php
+                            $j++;
+                        }
+                    }
+                ?>
             </tbody>
         </table>
     </div>
@@ -240,6 +668,58 @@
             </tr>
             </thead>
             <tbody>
+                <?php
+                    $j = 1;
+                    for($i=1;$i<=31;$i++){
+                        $date = date('Y-m-d', strtotime('2019-10-'.$i));
+                        $dateDay = date('l', strtotime($date));
+                        if(!empty($octArr[$date])){
+                            ?>
+                            <tr>
+                                <td><?php echo $j; ?></td>
+                                <td><?php echo $date; ?></td>
+                                <td>
+                                <?php
+                                if(($dateDay == 'Saturday' || $dateDay == 'Sunday') && ($SundayChk == 1 || $SaturdayChk == 1)){
+                                    echo $octArr[$date].','.$dateDay;
+                                }
+                                else{
+                                    echo $octArr[$date];
+                                } 
+                                ?>
+                                </td>
+                                <td><?php echo $dateDay; ?></td>
+                                <td></td>
+                            </tr>
+                            <?php
+                            $j++; 
+                        }
+                        else if($dateDay == 'Saturday' && $SaturdayChk == 1){
+                            ?>
+                            <tr>
+                                <td><?php echo $j; ?></td>
+                                <td><?php echo $date; ?></td>
+                                <td><?php echo 'Saturday'; ?></td>
+                                <td><?php echo $dateDay; ?></td>
+                                <td></td>
+                            </tr>
+                            <?php
+                            $j++;
+                        }
+                        else if($dateDay == 'Sunday' && $SundayChk == 1){
+                            ?>
+                            <tr>
+                                <td><?php echo $j; ?></td>
+                                <td><?php echo $date; ?></td>
+                                <td><?php echo 'Sunday'; ?></td>
+                                <td><?php echo $dateDay; ?></td>
+                                <td></td>
+                            </tr>
+                            <?php
+                            $j++;
+                        }
+                    }
+                ?>
             </tbody>
         </table>
     </div>
@@ -256,6 +736,58 @@
             </tr>
             </thead>
             <tbody>
+                <?php
+                    $j = 1;
+                    for($i=1;$i<=31;$i++){
+                        $date = date('Y-m-d', strtotime('2019-11-'.$i));
+                        $dateDay = date('l', strtotime($date));
+                        if(!empty($novArr[$date])){
+                            ?>
+                            <tr>
+                                <td><?php echo $j; ?></td>
+                                <td><?php echo $date; ?></td>
+                                <td>
+                                <?php
+                                if(($dateDay == 'Saturday' || $dateDay == 'Sunday') && ($SundayChk == 1 || $SaturdayChk == 1)){
+                                    echo $novArr[$date].','.$dateDay;
+                                }
+                                else{
+                                    echo $novArr[$date];
+                                } 
+                                ?>
+                                </td>
+                                <td><?php echo $dateDay; ?></td>
+                                <td></td>
+                            </tr>
+                            <?php
+                            $j++; 
+                        }
+                        else if($dateDay == 'Saturday' && $SaturdayChk == 1){
+                            ?>
+                            <tr>
+                                <td><?php echo $j; ?></td>
+                                <td><?php echo $date; ?></td>
+                                <td><?php echo 'Saturday'; ?></td>
+                                <td><?php echo $dateDay; ?></td>
+                                <td></td>
+                            </tr>
+                            <?php
+                            $j++;
+                        }
+                        else if($dateDay == 'Sunday' && $SundayChk == 1){
+                            ?>
+                            <tr>
+                                <td><?php echo $j; ?></td>
+                                <td><?php echo $date; ?></td>
+                                <td><?php echo 'Sunday'; ?></td>
+                                <td><?php echo $dateDay; ?></td>
+                                <td></td>
+                            </tr>
+                            <?php
+                            $j++;
+                        }
+                    }
+                ?>
             </tbody>
         </table>
     </div>
@@ -272,6 +804,58 @@
             </tr>
             </thead>
             <tbody>
+                <?php
+                    $j = 1;
+                    for($i=1;$i<=31;$i++){
+                        $date = date('Y-m-d', strtotime('2019-12-'.$i));
+                        $dateDay = date('l', strtotime($date));
+                        if(!empty($decArr[$date])){
+                            ?>
+                            <tr>
+                                <td><?php echo $j; ?></td>
+                                <td><?php echo $date; ?></td>
+                                <td>
+                                <?php
+                                if(($dateDay == 'Saturday' || $dateDay == 'Sunday') && ($SundayChk == 1 || $SaturdayChk == 1)){
+                                    echo $decArr[$date].','.$dateDay;
+                                }
+                                else{
+                                    echo $decArr[$date];
+                                } 
+                                ?>
+                                </td>
+                                <td><?php echo $dateDay; ?></td>
+                                <td></td>
+                            </tr>
+                            <?php
+                            $j++; 
+                        }
+                        else if($dateDay == 'Saturday' && $SaturdayChk == 1){
+                            ?>
+                            <tr>
+                                <td><?php echo $j; ?></td>
+                                <td><?php echo $date; ?></td>
+                                <td><?php echo 'Saturday'; ?></td>
+                                <td><?php echo $dateDay; ?></td>
+                                <td></td>
+                            </tr>
+                            <?php
+                            $j++;
+                        }
+                        else if($dateDay == 'Sunday' && $SundayChk == 1){
+                            ?>
+                            <tr>
+                                <td><?php echo $j; ?></td>
+                                <td><?php echo $date; ?></td>
+                                <td><?php echo 'Sunday'; ?></td>
+                                <td><?php echo $dateDay; ?></td>
+                                <td></td>
+                            </tr>
+                            <?php
+                            $j++;
+                        }
+                    }
+                ?>
             </tbody>
         </table>
     </div>
@@ -291,7 +875,7 @@
                         <div class="modal-body">
                             <form id="modelholiday" class="" name="modelholiday" method="post" >
                                 <div class="form-body">
-                                <div id="dynamic">
+                               
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
@@ -304,6 +888,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                <div id="dynamic">
                                 </div>
                                 <input type="hidden" id="counter" value="1">
                                         <button type="button" id="repeate-data" class="btn btn-sm btn-info" style="margin-bottom: 20px">
@@ -312,6 +897,7 @@
                                 </div>
                                 
                                 <div class="form-actions">
+                                    <button type="button" class="btn btn-white waves-effect" data-dismiss="modal" name="close">Close</button>
                                     <input type="button" id="save-holiday" class="btn btn-success" name="Save" value="Save"> <i class="fa fa-check"></i> 
                                 </div>
                             </form>
@@ -332,7 +918,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form id="modeldefaultholiday" class="" name="modelholiday" method="post" >
+                            <form id="modeldefaultholiday" class="" name="modeldefaultholiday" method="post" >
                                 <div class="form-body">
                                 <div id="dynamic">
                                     <div class="row">
@@ -349,11 +935,13 @@
                                                 </div>
                                             </div>
                                         </div>
+
                                 </div>
                                
                                 </div>
                                 
                                 <div class="form-actions">
+                                    <button type="button" class="btn btn-white waves-effect" data-dismiss="modal" id="close" name="closedata">Close</button>
                                     <input type="button" id="save-defaultholiday" class="btn btn-success" name="Save" value="Save"> <i class="fa fa-check"></i> 
                                 </div>
                             </form>

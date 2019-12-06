@@ -255,10 +255,10 @@ $(function(){
 
 $(function(){
 
-		$('#tax').validate({
+		$('#tax').validate({	
 		rules:{
 				tax_name : "required",
-				rate : "required"
+				rate : "required",
 		},			
 		submitHandler: function(form) {
 		form.submit();}
@@ -291,6 +291,22 @@ $(function(){
 					mobile : "Enter 10 digit",
 					
 				},	
+		submitHandler: function(form) {
+		form.submit();}
+	});
+});
+
+$(function(){
+
+		$("form[name='modelholiday']").validate({
+		rules:{
+				'holiday_name[]': {
+                required: true
+            	},
+            	'occasion[]': {
+                required: true
+            	}
+		},			
 		submitHandler: function(form) {
 		form.submit();}
 	});
@@ -545,7 +561,7 @@ $(document).ready( function() {
 
 // for repeat holiday item
 $('#repeate-data').click(function(){
-	alert('hi');
+	
 	var counter=$('#counter').val();
 	counter++;
 	$('#counter').val(eval(counter));
@@ -569,19 +585,18 @@ $("#save-holiday").click(function(event) {
 	$("input[name^='occasion']").each(function() {
     ocasion_arr.push($(this).val());
 });
-	console.log(holiday_arr);
+	//console.log(holiday_arr);
 	event.preventDefault();
         $.ajax({
            url: base_url+"holiday/insert_data",
            type: 'POST',
-           
            data: {'holiday':holiday_arr,'occasion' : ocasion_arr},
            error: function() {
               alert('Something is wrong');
            },
            success: function(data) {
            		if(data == 1){
-           			alert('hjbgds');
+           			alert('Already assign Occasion');
            		}
            		else{
            		$('#data-holiday').modal('toggle');
@@ -596,29 +611,47 @@ $("#save-holiday").click(function(event) {
 
 $("#save-defaultholiday").click(function(event) {
 			event.preventDefault();
-			var saturday = $("input[name='saturday']").val();
-			var sunday = $("input[name='sunday']").val();
-			alert(sunday);
-       		var dataString = 'saturday='+ saturday + 'sunday=' + sunday ;
-       		alert(dataString);
+			//var saturday = $("input[name='saturday']").val();
+			 if ($("input[name='saturday']").prop('checked')== true) { 
+			 	saturday = '1';
+			 }
+			 else{
+			 	saturday = '0';
+			 }
+			 if ($("input[name='sunday']").prop('checked')== true) { 
+			 	sunday = '1';
+			 }
+			 else{
+			 	sunday = '0';
+			 }
+       		//var dataString = 'saturday='+ saturday +'sunday=' + sunday ;
+       		//alert(dataString);
         $.ajax({
            url: base_url+"holiday/insert_defaultholiday",
            type: 'POST',
            
-           data: dataString,
+           data: {saturday : saturday , sunday : sunday},
            error: function() {
               alert('Something is wrong');
            },
            success: function(data) {
            	
                $('#data-defaultholiday').modal('toggle');
-                $('#modeldefaultholiday')[0].reset();
+               $('#modeldefaultholiday')[0].reset();
            }
         });
 });
-                                    
-                                                    
-                                                
+
+$("close").click(function() {
+	$('#data-holiday').modal('toggle');
+    $('#modelholiday')[0].reset();
+    $('#dynamic').html('');
+ });   
+                                 
+$("closedata").click(function() {                                                   
+$('#data-defaultholiday').modal('toggle');
+    $('#modeldefaultholiday')[0].reset();  
+});                                               
                                             
                                             
                                                 
