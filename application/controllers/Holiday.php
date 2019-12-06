@@ -125,6 +125,10 @@ class Holiday extends CI_Controller
 		$this->load->view('common/footer');
 	}
 
+	public function display_data(){
+		
+	}
+	
 	public function insert_data(){
 		$message = '';
 		if(!empty($_POST)){

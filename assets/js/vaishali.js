@@ -601,6 +601,7 @@ $("#save-holiday").click(function(event) {
            		else{
            		$('#data-holiday').modal('toggle');
                 $('#modelholiday')[0].reset();
+                displayData();
             	}
            	}
         });
@@ -652,7 +653,28 @@ $("closedata").click(function() {
 $('#data-defaultholiday').modal('toggle');
     $('#modeldefaultholiday')[0].reset();  
 });                                               
-                                            
+ 
+
+function displayData(){
+	$.ajax({
+           url: base_url+"holiday/index",
+           type: 'POST',
+           data: {'holiday':holiday_arr,'occasion' : ocasion_arr},
+           error: function() {
+              alert('Something is wrong');
+           },
+           success: function(data) {
+           		if(data == 1){
+           			alert('Already assign Occasion');
+           		}
+           		else{
+           		$('#data-holiday').modal('toggle');
+                $('#modelholiday')[0].reset();
+                displayData();
+            	}
+           	}
+        });
+}                                           
                                             
                                                 
                                                     
