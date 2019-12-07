@@ -45,6 +45,20 @@
         $data = $this->common_model->getData('tbl_holiday_settings',$wherArr);
         $SaturdayChk = $data[0]->saturday;
         $SundayChk = $data[0]->sunday;
+        $tempArr = array();
+        foreach($data[0]->extract as $row){
+
+            $date_data = $row->extract;
+            $array = explode(",",$date_data);
+            if(!empty($tempArr)){
+                $tempArr = array_merge($array,$tempArr);
+            }
+            else{
+                $tempArr = $array;
+            }
+
+
+        }
     ?>
     <div id="January" class="tab-pane fade in active">
       <h3>January</h3>
@@ -85,26 +99,27 @@
                             <?php
                             $j++; 
                         }
-                        else if($dateDay == 'Saturday' && $SaturdayChk == 1){
+
+                        else if($dateDay == 'Saturday' && $SaturdayChk == 1  && !(in_array($date, $tempArr))){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Saturday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td><button type="button" onclick="del('<?php echo $date; ?>','1')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>
+                                <td><button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>
                             </tr>
                             <?php
                             $j++;
                         }
-                        else if($dateDay == 'Sunday' && $SundayChk == 1){
+                        else if($dateDay == 'Sunday' && $SundayChk == 1 && !(in_array($date, $tempArr))){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Sunday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td><button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>
+                                <td><button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>
                             </tr>
                             <?php
                             $j++;
