@@ -345,7 +345,7 @@ $("#save-category").click(function(event) {
 					$('.modal-backdrop').find('div').remove();
 					$('body').removeAttr("style");
 					$('body').removeClass("modal-open");
-					$('#category')[0].reset();
+					$('#leavecategory')[0].reset();
 					$('#succmsg').html('');
 					$('#succmsg').html('<b>Successfully category removed</b>');
 				}else{
@@ -366,6 +366,7 @@ $("#save-category").click(function(event) {
 			 $('#deadlineBox').show();
 		}	
 	}
+
 	function viewtask(){ 
 
 		var checkBox = document.getElementById("client-view-tasks");
@@ -490,7 +491,7 @@ $("#save-category").click(function(event) {
 			   });
 		}
 		
-		function archivedata(id){
+		function archivedata(id) {
 		//alert(id);
 		var url = base_url+"project/archivedata";
 		swal({
@@ -527,3 +528,52 @@ $("#save-category").click(function(event) {
 			   });
 		}
 
+	//+addleaves 
+
+	$("#save_leave").click(function(event) {
+		//event.preventDefault();
+		var leave_name = $("input[name='leavename']").val();
+		if(catname!=""){
+			$.ajax({
+				url: base_url+"Leaves/checkleave",
+				type: 'POST',
+				dataType: 'html',
+				data:{passleave:leave_name},
+				success: function(data) {
+					
+					if(data==0){
+						var dataString = 'name='+ leave_name;
+						jQuery('#errormsg').html('');
+						$.ajax({
+						    url: base_url+"Leaves/insertleavestype",
+						    type: 'POST',
+						    dataType: 'json',
+						    data: dataString,
+							success: function(data) {
+								console.log(data.catdata);
+								$('select[name="leave_type"]').html('');       
+								$('select[name="leave_type"]').append(data.catdata);
+								 //  $("tbody").append("<tr><td>"+data.count+"</td><td>"+catname+"</td> <td><a href='javascript:;' class='btn btn-sm btn-danger btn-rounded delete-category' id='deletecat'>Remove</a></td></tr>");
+								$("tbody").append("<tr id='cate_"+data.lastinsertid+"'><td>"+data.count+"</td><td>"+leave_name+"</td> <td><input type='submit' class='btn btn-sm btn-danger btn-rounded delete-category' onclick='deleteleave(\'"+data.lastinsertid+"\');' id='deleteleave' value='Remove'></tr>");
+								$('#leave_type1').removeClass('show');
+								$('.modal-backdrop').removeClass('show');
+								$('.modal-backdrop').find('div').remove();
+								$('body').removeAttr("style");
+								$('body').removeClass("modal-open");
+								$('#category')[0].reset();
+								$('#succmsg').html('');
+								$('#succmsg').html('<b>Successfully category added</b>');
+								//window.location.reload();
+						   }
+						});
+					}else{
+						jQuery('#errormsg').html('')
+						jQuery('#errormsg').html('<b>This category already exists</b>');
+					}
+				}
+			});
+		}else{
+			jQuery('#errormsg').html('')
+			jQuery('#errormsg').html('<b>Please enter category name</b>');
+		}
+	});

@@ -34,7 +34,7 @@
 						<div class="row">
 							<div class="col-md-12 ">
 								<div class="form-group">
-									<label>Category Name</label>
+									<label>Leave Type</label>
 									<input type="text" name="category_name" id="category_name" class="form-control">
 								</div>
 							</div>
