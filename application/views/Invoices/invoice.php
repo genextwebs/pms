@@ -20,7 +20,7 @@
 							<div class="row">
                 				<div class="col-md-6">
                 					<div class="form-group">
-			                            <a class="btn btn-outline-success btn-sm"  href="<?php echo base_url().'Finance/createinvoice' ?>">Add Invoice <i class="fa fa-plus" aria-hidden="true"></i></a>
+			                            <a class="btn btn-outline-success btn-sm"  href="<?php echo base_url().'Finance/addinvoices' ?>">Add Invoice <i class="fa fa-plus" aria-hidden="true"></i></a>
 										<a href="javascript:;" id="toggle-filter" class="btn btn-outline-danger btn-sm toggle-filter"><i class="fa fa-sliders"></i> Filter Results</a>
 									</div>
                 				</div>

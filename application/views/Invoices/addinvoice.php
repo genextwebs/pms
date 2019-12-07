@@ -7,7 +7,7 @@
                         <ol class="breadcrumb">
                             <li><a href="<?php echo base_url().'dashboard'?>">Home</a></li>
                             <li><a href="<?php echo base_url().'Finance'?>">Invoices</a></li>
-                            <li class="active">Create Invoice</li>
+                            <li class="active">Add New</li>
                         </ol>
                     </div>
                 </div>
@@ -19,11 +19,11 @@
                     <div class="col-md-12">
 		                <div class="card br-0">
 		                	<div class="card-header br-0 card-header-inverse">
-								CONVERT ESTIMATE TO INVOICE
+								ADD INVOICE
 		                	</div>
 		                	<div class="card-wrapper collapse show">
 		                		<div class="card-body">
-		                			<form class="aj-form" method="post" action="<?php echo base_url().'Finance/createinvoice/'.base64_encode($EId).'/'.base64_encode($CId) ?>" name="createinvoice" >
+		                			<form class="aj-form" method="post" action="<?php echo base_url().'Finance/insertinvoice' ?>" name="addinvoice" >
 											 <?php
 												$mess = $this->session->flashdata('message_name');
 												if(!empty($mess)){
@@ -70,32 +70,41 @@
 												</div>
 												<div class="col-md-4">
 													<div class="form-group">
-														<label class="control-label">Project</label>
-			                                            <select name="project" id="project" class="form-control">
-															<option value="">--</option>
+													<label class="control-label">Client</label>
+			                                            <select name="client" id="client" class="form-control" onchange="getprojectbyclient(this.value);">
+															<option value="">select</option>
 																<?php
-																	foreach($project as $row)
+																	foreach($client as $row)
 																	{
-																		echo '<option value="'.$row->id.'">'.$row->projectname.'</option>';
+																		echo '<option value="'.$row->id.'">'.$row->clientname.'</option>';
 																	}
 																?>
 														</select>
 													</div>
 												</div>
+												
 												<div class="col-md-4">
+													<div class="form-group">
+														<label class="control-label">Project</label>
+			                                            <select name="project" id="project" class="form-control">
+															<option value="">--</option>
+														</select>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-3">
 		                							<div class="form-group">
 		                								<label class="control-label">Currency</label>
 														<select name="currency" id="currency" class="form-control">
 															<option value="">select</option>
-															<option value="1" <?php if($estimate[0]->currency=='1'){ echo 'selected'; } ?>>$(USD)</option>
-															<option value="2" <?php if($estimate[0]->currency=='2'){ echo 'selected'; } ?>>R(IND)</option>
+															<option value="1">$(USD)</option>
+															<option value="2">R(IND)</option>
 
 														</select>
 													</div>
 		                						</div>
-		                					</div>
-											<div class="row">
-												<div class="col-md-4">
+												<div class="col-md-3">
 													<div class="form-group">
 														<label class="control-label">Invoice Date</label>
 														<div class="row">
@@ -107,15 +116,15 @@
 														</div>
 													</div>
 												</div>
-												<div class="col-md-4">
+												<div class="col-md-3">
 													<div class="form-group">
 														<label class="control-label">Due Date</label>
 														<div class="input-icon">
-															<input type="text" class="form-control" name="due_date" id="deadline" value="<?php echo !empty($estimate[0]->validtill) ? $estimate[0]->validtill : ''?>">
+															<input type="text" class="form-control" name="due_date" id="deadline">
 														</div>
 													</div>
 												</div>
-												<div class="col-md-4">
+												<div class="col-md-3">
 													<div class="form-group">
 														<label class="control-label">Status</label>
 														<select class="form-control" name="status" id="status">
@@ -160,7 +169,7 @@
 													<div class="form-group">
 														<label class="control-label">Billing Interval</label>
 														<div class="input-icon">
-															<input type="text" class="form-control" name="billing_interval" id="billing_interval" value="">
+															<input type="text" class="form-control" name="billing_interval" id="billing_interval">
 														</div>
 													</div>
 												</div>
@@ -168,39 +177,33 @@
 													<div class="form-group">
 														<label class="control-label">Billing Cycle</label>
 														<div class="input-icon">
-															<input type="text" class="form-control" name="billing_cycle" id="billing_cycle" value="">
+															<input type="text" class="form-control" name="billing_cycle" id="billing_cycle">
 														</div>
 													</div>
 												</div>
 											
 											</div>
 											<hr>
-											<button aria-expanded="false" data-toggle="dropdown" class="btn btn-info dropdown-toggle waves-effect waves-light" type="button">Products <span class="caret"></span></button>
+											<button aria-expanded="false" data-toggle="dropdown" class="btn btn-info dropdown-toggle waves-effect waves-light" type="button">Products<span class="caret"></span></button>
 											<div id="dynamic">
-											<?php
-												$j=0;
-												for($i=0;$i<count($product);$i++)
-												{	
-													$j++;
-											?>
 											<div class="row" >
 												<div class="form-group">
                                                     <label class="control-label hidden-md hidden-lg">Item</label>
                                                     <div class="input-group">
                                                         <div class="input-group-addon"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span></div>
-                                                        <input type="text" class="form-control item_name" name="item_name[]" value="<?php echo !empty($product[$i]->item) ? $product[$i]->item : '' ?>">
+                                                        <input type="text" class="form-control item_name" name="item_name[]">
                                                     </div>
                                                 </div>
 												<div class="col-md-1">
 													<div class="form-group">
 														<label class="control-label hidden-md hidden-lg">Qty/Hrs</label>
-														<input type="number" min="1" class="form-control quantity" name="quantity[]" id="quantity<?php echo $j; ?>" value="<?php echo !empty($product[$i]->qtyhrs) ? $product[$i]->qtyhrs : '' ?>">
+														<input type="number" min="1" class="form-control quantity" name="quantity[]" id="quantity1">
 													</div>
 												</div>
 												<div class="col-md-2">
 													<div class="form-group">
 														<label class="control-label hidden-md hidden-lg">Unit Price</label>
-														<input type="text" class="form-control cost_per_item" name="cost_per_item[]" id="cost_per_item<?php echo $j; ?>" value="<?php echo !empty($product[$i]->unitprice) ? $product[$i]->unitprice : '' ?>"  onblur="countamount(1);">
+														<input type="text" class="form-control cost_per_item" name="cost_per_item[]" id="cost_per_item1"   onblur="countamount(1);">
 													</div>
 												</div>
 												<div class="col-md-2">
@@ -211,25 +214,19 @@
 											            	</a>
 											            	
 														</label>
-														<select name="tax[]" class="form-control type" id="taxes<?php echo $j; ?>" onchange="counttax(1);">
+														<select name="tax[]" class="form-control type" id="taxes1" onchange="counttax(1);">
 															<option value="">Select Tax</option>
-															<?php
-																foreach($tax as $row1)
-																{
-																	$str="";
-																	if($row1->rate==$product[$i]->tax)
-																	{
-																		$str="selected";
-																	}
-																	echo '<option value="'.$row1->rate.'"'.$str.'>'.$row1->taxname."(".$row1->rate."%)".'</option>';
-																}
-															?>
+															<?php foreach($tax as $row) { ?>
+												            	<option value="<?php echo $row->rate?>" ><?php echo $row->taxname;?>(<?php echo $row->rate?>%)</option>
+												            <?php
+												            	}
+												            ?>
 														</select>
 													</div>	
 												</div>
 												<div class="col-md-2 border-dark  text-center">
 													<label class="control-label hidden-md hidden-lg">Amount</label>
-												<input type="text" name="amount[]" id="amount<?php echo $j; ?>"  value="<?php echo !empty($product[$i]->amount) ? $product[$i]->amount : '' ?>">
+												<input type="text" name="amount[]" id="amount1" >
 
 													<!--<p class="form-control-static" id="amountdisplay"><span class="amount-html">0.00</span></p>
 													<input type="hidden" class="amount" name="amount[]" id="amount1">-->
@@ -237,13 +234,12 @@
 											</div>
 											<div class="row">
 												<div class="form-group">
-													<textarea name="item_Description[]" class="form-control" placeholder="Description" rows="2"><?php echo !empty($product[$i]->description) ? $product[$i]->description : '' ?></textarea>
+													<textarea name="item_Description[]" class="form-control" placeholder="Description" rows="2"></textarea>
 												</div>
 											</div>
-										<?php } ?>
 
 										</div>
-											<input type="hidden" id="counter" value="<?php echo count($product); ?>">
+											<input type="hidden" id="counter" value="1">
 
 											<div class="row">
 												<div class="col-xs-12 m-t-5">
@@ -253,15 +249,15 @@
 												<div class="row m-t-5 font-bold">
 														<div class="col-md-offset-9 col-md-1 col-xs-6 text-right p-t-10">Total</div>
 															<p class="form-control-static col-xs-6 col-md-2"  name="total" id="total">
-															<?php echo !empty($estimate[0]->total) ? $estimate[0]->total : '' ?>
+															
 															</p>
-															<input type="hidden" class="total-field" name="finaltotal" id="finaltotal" value="<?php echo !empty($estimate[0]->total) ? $estimate[0]->total : '' ?>">
+															<input type="hidden" class="total-field" name="finaltotal" id="finaltotal">
 												</div>
 																							<div class="row">
 											<div class="col-sm-12">
 													<div class="form-group">
 														<label class="control-label">Note</label>
-														<textarea name="note" class="form-control" rows="5"><?php echo !empty($estimate[0]->note) ? $estimate[0]->note : '' ?></textarea>
+													<textarea name="note" class="form-control" rows="5"></textarea>
 													</div>
 												</div>
 											</div>

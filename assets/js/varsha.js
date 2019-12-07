@@ -603,10 +603,9 @@ $(function() {
 //invoice validation
 
 $(function() {
-  $("form[name='createinvoice']").validate({
+  $("form[name='createinvoice11']").validate({
       rules: {
       invoice_number: "required",
-      project: "required",
 	  currency:"required",
 	  invoice_date:"required",
 		due_date:"required",
@@ -622,7 +621,7 @@ $(function() {
 //invoice validation
 
 $(function() {
-  $("form[name='createinvoice']").validate({
+  $("form[name='createinvoice11']").validate({
       rules: {
       invoice_number: "required",
       project: "required",
@@ -658,3 +657,23 @@ $(function() {
   });
 });
 
+//client wise project
+
+function getprojectbyclient(projectid){
+	//alert("fghg");
+ 	var url = base_url+"Finance/getproject";
+        //var projectid = $this.val();
+        if(projectid){
+            $.ajax({
+                type:'POST',
+                url:url,
+                dataType:'json',
+                data:'id='+projectid,
+                success:function(html){
+                		//console.log(html);
+                		//alert("ht");
+                	$('select[name="project"]').html(" ");
+					 $('select[name="project"]').append(html.projectdata);                }
+            }); 
+        }
+}

@@ -163,6 +163,7 @@ class Finance extends CI_Controller
 		$i = 1;
 		foreach($estimatesArr as $row) {
 			$id = $row->id;
+			$clientid = $row->client;
 			if($row->status == '0'){
 				$status = $row->status = 'Waiting';
 				//$sta='<lable class="label label-warning">'.$status.'</label>';
@@ -184,7 +185,7 @@ class Finance extends CI_Controller
 				                		<div class="dropdown-menu">
 						                    <a  class="dropdown-item" href='.base_url().'Finance/editestimate/'.base64_encode($id).'><i class="fa fa-pencil"></i> Edit</a>
 											<a  class="dropdown-item" href="javascript:void(0)" onclick="deleteestimates(\''.base64_encode($row->id).'\')"><i class="fa fa-trash "></i> Delete</a>
-											<a  class="dropdown-item" href='.base_url().'Finance/createinvoice/'.base64_encode($id).'><i class="ti-receipt"></i>Create Invoice</a>
+											<a  class="dropdown-item" href="'.base_url().'Finance/createinvoice/'.base64_encode($id).'/'.base64_encode($clientid).'"><i class="ti-receipt"></i>Create Invoice</a>
 				               			 </div>
 							</div>';
 			
@@ -266,17 +267,19 @@ class Finance extends CI_Controller
 	
 	public function createinvoice()
 	{
-		$id=$this->uri->segment(3);
-		$id1=base64_decode($id);
-		$whereArr=array('id'=>$id1);
-		$whereArr1=array('estimateid'=>$id1);
+		$id=base64_decode($this->uri->segment(3));
+		$clientid=base64_decode($this->uri->segment(4));
+		$whereArr=array('id'=>$id);
+		$whereArr1=array('estimateid'=>$id);
+		$data['EId']=$id;
+		$data['CId']=$clientid;
 		$data['tax'] =$this->common_model->getData('tbl_tax');
-		$data['project'] =$this->common_model->getData('tbl_project_info');
+		$sql1='select id,projectname from tbl_project_info where clientid='.$clientid;
+		$data['project'] =$this->common_model->coreQueryObject($sql1);
 		$data['estimate']=$this->common_model->getData('tbl_estimates',$whereArr);
+	
 		$data['product']=$this->common_model->getData('tbl_products',$whereArr1);
 		$sql='SELECT * FROM tbl_invoice ORDER BY tbl_invoice.id DESC LIMIT 1';
-		 
-
 		$data['invoice']=$this->common_model->coreQueryObject($sql);
 		//print_r($data['invoice']);die;
 		$this->load->view('common/header');
@@ -285,8 +288,10 @@ class Finance extends CI_Controller
 
 		if($this->input->post('btnsubmit'))
 		{
+			//echo "gnhjn"; exit();
 			$invoice=$this->input->post('invoice_number');
 			$project=$this->input->post('project');
+			//echo $project;die;
 			$currency=$this->input->post('currency');
 			$invoicedate=$this->input->post('invoice_date');
 			$duedate=$this->input->post('due_date');
@@ -299,7 +304,9 @@ class Finance extends CI_Controller
 			$note=$this->input->post('note');
 
 			//$sql=select clientid form tbl_project_info 
-			$sql="SELECT tbl_project_info.clientid,tbl_clients.clientname,tbl_clients.companyname FROM tbl_project_info INNER JOIN tbl_clients ON tbl_project_info.clientid = tbl_clients.id where tbl_project_info.id=".$project;			
+			$sql="SELECT tbl_project_info.clientid,tbl_clients.clientname,tbl_clients.companyname FROM tbl_project_info INNER JOIN tbl_clients ON tbl_project_info.clientid = tbl_clients.id where tbl_project_info.id=".$project;	
+			//echo $sql;die;
+
 			$data['invoicedata']=$this->common_model->coreQueryObject($sql);
 			//echo "<pre>";print_r($data['invoicedata']);die;
 
@@ -328,10 +335,75 @@ class Finance extends CI_Controller
 
 			}
 	}
-	
-	public function invoice(){
+
+	public function addinvoices(){
+		
+		$sql='SELECT * FROM tbl_invoice ORDER BY tbl_invoice.id DESC LIMIT 1';
+		$data['invoice']=$this->common_model->coreQueryObject($sql);
+		$data['client']=$this->common_model->getData('tbl_clients');
+		$data['employee'] =$this->common_model->getData('tbl_employee');
+		$data['project'] =$this->common_model->getData('tbl_project_info');
+		$data['tax'] =$this->common_model->getData('tbl_tax');
+
+		//$data['product']=$this->common_model->getData('tbl_products');
+		//print_r($data['product']);die;
 		$this->load->view('common/header');
-		$this->load->view('Invoices/invoice');
+		$this->load->view('Invoices/addinvoice',$data);
+		$this->load->view('common/footer');
+	}
+	
+	public function insertinvoice()
+	{
+		if($this->input->post('btnsubmit'))
+		{
+			$invoice=$this->input->post('invoice_number');
+			$client=$this->input->post('client');
+			$project=$this->input->post('project');
+			$currency=$this->input->post('currency');
+			$invoicedate=$this->input->post('invoice_date');
+			$duedate=$this->input->post('due_date');
+			$status=$this->input->post('status');
+			$recuringpayment=$this->input->post('recurring_payment');
+			$billingfrequency=$this->input->post('billing_frequency');
+			$billinginterval=$this->input->post('billing_interval');
+			$billingcycle=$this->input->post('billing_cycle');
+			$total=$this->input->post('finaltotal');
+			$note=$this->input->post('note');
+
+			$sql="SELECT tbl_project_info.clientid,tbl_clients.clientname,tbl_clients.companyname FROM tbl_project_info INNER JOIN tbl_clients ON tbl_project_info.clientid = tbl_clients.id where tbl_project_info.id=".$project;	
+
+			$data['invoicedata']=$this->common_model->coreQueryObject($sql);
+			
+			$insertArr=array('invoice' => $invoice,'project' => $project,'companyname'=>$data['invoicedata'][0]->companyname,'client'=>$client,'currency' => $currency,'invoicedate' => $invoicedate,'duedate'=>$duedate,'status'=>$status,'recuringpayment'=>$recuringpayment,'billingfrequency'=>$billingfrequency,'billinginterval'=>$billinginterval,'billingcycle'=>$billingcycle,'total'=>$total,'note'=>$note);
+			//print_r($insertArr);die;
+			$this->common_model->insertData('tbl_invoice',$insertArr);
+			$invoiceid=$this->db->insert_id();
+			
+			$item=$this->input->post('item_name');
+			$qtyhrs=$this->input->post('quantity');
+			$unitprice=$this->input->post('cost_per_item');
+			$tax=$this->input->post('tax');
+			$amount=$this->input->post('amount');
+			$description=$this->input->post('item_Description');
+			$count=count($this->input->post('item_name'));
+			for($i=0;$i<$count;$i++)
+			{
+				$insertArr1=array('invoiceid'=>$invoiceid,'item' => $item[$i],'qtyhrs' => $qtyhrs[$i], 'unitprice' => $unitprice[$i], 'tax' => $tax[$i],'amount'=>$amount[$i],'description' => $description[$i]);
+				//print_r($insertArr1);die;
+				$this->common_model->insertData('tbl_invoiceproduct',$insertArr1);
+			}
+				$this->session->set_flashdata('messagename', "Data Inserted Succeess");
+				redirect('Finance/invoice');
+
+
+			}
+	}
+	public function invoice(){
+
+		$data['project'] =$this->common_model->getData('tbl_project_info');
+		$data['clients']=$this->common_model->getData('tbl_clients');
+		$this->load->view('common/header');
+		$this->load->view('Invoices/invoice',$data);
 		$this->load->view('common/footer');
 	}
 	
@@ -431,9 +503,9 @@ class Finance extends CI_Controller
 				}
 				
 		
-	    $query = "SELECT i.* , c.client ,p.projectname FROM tbl_invoice i INNER JOIN tbl_clients c ON c.id = i.client INNER JOIN tbl_project_info p ON p.id = i.project".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+	    $query = "SELECT i.* , c.id as clientid,c.clientname,p.projectname FROM tbl_invoice i INNER JOIN tbl_clients c ON c.id = i.client INNER JOIN tbl_project_info p ON p.id = i.project".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 		$invoicesArr = $this->common_model->coreQueryObject($query);
-
+		//print_r(invoicesArr);die;
 		$query = "SELECT * from tbl_invoice ".$sWhere;
 		//echo $query;die;
 		$invoicesFilterArr = $this->common_model->coreQueryObject($query);
@@ -447,6 +519,7 @@ class Finance extends CI_Controller
 		$i = 1;
 		foreach($invoicesArr as $row) {
 			$id = $row->id;
+			//echo $id;die;
 			if($row->status == '0'){
 				$status = $row->status = 'Unpaid';
 				$sta='<lable class="label label-danger">'.$status.'</label>';
@@ -477,7 +550,7 @@ class Finance extends CI_Controller
 				$id = $i,
                 $row->invoice,
                 $row->projectname,
-                $row->client,
+                $row->clientname,
                 $row->total,
              	$row->invoicedate,
                 $sta,	
@@ -502,7 +575,7 @@ class Finance extends CI_Controller
 		$invoiceid=base64_decode($_POST['id']);
 		$whereArr=array('id'=>$invoiceid);
 		$this->common_model->deleteData('tbl_invoice',$whereArr);
-		//echo $this->db->last_query();die;
+		echo $this->db->last_query();die;
 		redirect('Finance/invoice');
 	}
 
@@ -770,6 +843,24 @@ class Finance extends CI_Controller
 		$this->common_model->deleteData('tbl_expense',$whereArr);
 		//echo $this->db->last_query();die;
 		redirect('Finance/expense');
+	}
+	
+	public function getproject(){
+		//echo "gf";die;
+		//echo "<pre>";print_r($_POST);die;
+		$clientid=$_POST['id'];
+		$whereArr=array('clientid'=>$clientid);
+		$projectArr=$this->common_model->getData('tbl_project_info',$whereArr);
+		//print_r($projectArr);die;
+		$str = '';
+			foreach($projectArr as $row){
+				$str.='<option value="'.$row->id.'">'.$row->projectname.'</option>'; 
+			}
+
+			$projectArr = array();
+			$projectArr['projectdata'] = $str;
+			echo json_encode($projectArr);exit();
+			//print_r($projectArr);die;
 	}
 	
 	
