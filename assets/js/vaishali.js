@@ -255,7 +255,7 @@ $(function(){
 
 $(function(){
 
-		$('#tax').validate({	
+		$("form[name='tax']").validate({	
 		rules:{
 				tax_name : "required",
 				rate : "required",
@@ -579,6 +579,7 @@ $('#repeate-data').click(function(){
 $("#save-holiday").click(function(event) {
 	var holiday_arr = [];
 	var ocasion_arr = [];
+
 	$("input[name^='holiday_name']").each(function() {
     holiday_arr.push($(this).val());
 });
@@ -639,6 +640,7 @@ $("#save-defaultholiday").click(function(event) {
            	
                $('#data-defaultholiday').modal('toggle');
                $('#modeldefaultholiday')[0].reset();
+               displayData();
            }
         });
 });
@@ -657,28 +659,76 @@ $('#data-defaultholiday').modal('toggle');
 
 function displayData(){
 	$.ajax({
-           url: base_url+"holiday/index",
-           type: 'POST',
-           data: {'holiday':holiday_arr,'occasion' : ocasion_arr},
-           error: function() {
+           	url: base_url+"holiday/displayData",
+           	type: 'POST',
+           	dataType:'JSON',
+           	error: function() {
               alert('Something is wrong');
-           },
-           success: function(data) {
-           		if(data == 1){
-           			alert('Already assign Occasion');
-           		}
-           		else{
-           		$('#data-holiday').modal('toggle');
-                $('#modelholiday')[0].reset();
-                displayData();
-            	}
-           	}
-        });
+           	},
+      	 	success: function(data) {
+
+	           	jQuery('#janTbody').html('');
+	       		jQuery('#janTbody').append(data.janStr);
+	       		jQuery('#febTbody').html('');
+	       		jQuery('#febTbody').append(data.febStr);
+	       		jQuery('#marTbody').html('');
+	       		jQuery('#marTbody').append(data.marStr);
+	       		jQuery('#aprilTbody').html('');
+	       		jQuery('#aprilTbody').append(data.aprilStr);
+	       		jQuery('#mayTbody').html('');
+	       		jQuery('#mayTbody').append(data.mayStr);
+	       		jQuery('#juneTbody').html('');
+	       		jQuery('#juneTbody').append(data.juneStr);
+	       		jQuery('#julyTbody').html('');
+	       		jQuery('#julyTbody').append(data.julyStr);
+	       		jQuery('#augTbody').html('');
+	       		jQuery('#augTbody').append(data.augStr);
+	       		jQuery('#sepTbody').html('');
+	       		jQuery('#sepTbody').append(data.sepStr);
+	       		jQuery('#octTbody').html('');
+	       		jQuery('#octTbody').append(data.octStr);
+	       		jQuery('#novTbody').html('');
+	       		jQuery('#novTbody').append(data.novStr);
+	       		jQuery('#decTbody').html('');
+	       		jQuery('#decTbody').append(data.decStr);
+	       	}
+    	});
 }                                           
+function deleteHoliday(id,type){
+		
+	var url = base_url+"holiday/deleteholiday";
+	swal({
+	 title: "Are you sure?",
+	 text: "You will not be able to recover this imaginary file!",
+	 type: "warning",
+	 showCancelButton: true,
+	 confirmButtonColor: "#DD6B55",
+	 confirmButtonText: "Yes, delete it!",
+	 closeOnConfirm: false
+	},
+function(isConfirm){
+if (isConfirm) {
+       $.ajax({
+           url: url,
+           type: "POST",
+           dataType: "JSON",
+           data: {id:id,type:type},
+          dataType: "html",
+		  
+           success: function (data) {
+               swal("Done!", "It was succesfully deleted!", "success");
+			   displayData();
+           },
+           error: function (xhr, ajaxOptions, thrownError) {
+               swal("Error deleting!", "Please try again", "error");
+           }
+       });
+   }
+   });
+}
                                             
                                                 
-                                                    
-                                               
+                                                                                             
                                             
                                     
 
