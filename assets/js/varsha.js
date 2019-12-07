@@ -583,3 +583,78 @@ function deleteexpenses(expenseid){
 	   }
 	   });
 }
+
+//estimate validation
+
+$(function() {
+  $("form[name='estimate']").validate({
+      rules: {
+      client: "required",
+      currency: "required",
+	  valid_till:"required"
+	  
+      },
+    submitHandler: function(form) {
+      form.submit();
+    }
+  });
+});
+
+//invoice validation
+
+$(function() {
+  $("form[name='createinvoice']").validate({
+      rules: {
+      invoice_number: "required",
+      project: "required",
+	  currency:"required",
+	  invoice_date:"required",
+		due_date:"required",
+		status:"required"
+	  
+      },
+    submitHandler: function(form) {
+      form.submit();
+    }
+  });
+});
+
+//invoice validation
+
+$(function() {
+  $("form[name='createinvoice']").validate({
+      rules: {
+      invoice_number: "required",
+      project: "required",
+	  currency:"required",
+	  invoice_date:"required",
+		due_date:"required",
+		status:"required"
+	  
+      },
+    submitHandler: function(form) {
+      form.submit();
+    }
+  });
+});
+
+//expense validation
+
+$(function() {
+  $("form[name='expense']").validate({
+      rules: {
+      employee: "required",
+      project: "required",
+	  currency:"required",
+	  itemname:"required",
+		price:"required",
+		purchasedfrom:"required",
+		purchasedate:"required"
+	  
+      },
+    submitHandler: function(form) {
+      form.submit();
+    }
+  });
+});
+

@@ -23,7 +23,8 @@
 		                	</div>
 		                	<div class="card-wrapper collapse show">
 		                		<div class="card-body">
-		                			<form class="aj-form" method="post" action="<?php echo base_url().'Finance/insertEstimates' ?>" name="estimate" >
+		                			<form class="aj-form" method="post" action="<?php echo base_url().'Finance/insertEstimates' ?>"
+		                			 name="estimate" >
 											 <?php
 												$mess = $this->session->flashdata('message_name');
 												if(!empty($mess)){
