@@ -296,14 +296,16 @@ class Finance extends CI_Controller
 			$billinginterval=$this->input->post('billing_interval');
 			$billingcycle=$this->input->post('billing_cycle');
 			$total=$this->input->post('finaltotal');
+			$note=$this->input->post('note');
+
 			//$sql=select clientid form tbl_project_info 
 			$sql="SELECT tbl_project_info.clientid,tbl_clients.clientname,tbl_clients.companyname FROM tbl_project_info INNER JOIN tbl_clients ON tbl_project_info.clientid = tbl_clients.id where tbl_project_info.id=".$project;			
 			$data['invoicedata']=$this->common_model->coreQueryObject($sql);
 			//echo "<pre>";print_r($data['invoicedata']);die;
 
 			
-			$insertArr=array('invoice' => $invoice,'project' => $project,'companyname'=>$data['invoicedata'][0]->companyname,'clientid'=>$data['invoicedata'][0]->clientid,
-				'currency' => $currency,'invoicedate' => $invoicedate,'duedate'=>$duedate,'status'=>$status,'recuringpayment'=>$recuringpayment,'billingfrequency'=>$billingfrequency,'billinginterval'=>$billinginterval,'billingcycle'=>$billingcycle,'total'=>$total);
+			$insertArr=array('invoice' => $invoice,'project' => $project,'companyname'=>$data['invoicedata'][0]->companyname,'client'=>$data['invoicedata'][0]->clientid,
+				'currency' => $currency,'invoicedate' => $invoicedate,'duedate'=>$duedate,'status'=>$status,'recuringpayment'=>$recuringpayment,'billingfrequency'=>$billingfrequency,'billinginterval'=>$billinginterval,'billingcycle'=>$billingcycle,'total'=>$total,'note'=>$note);
 			//print_r($insertArr);die;
 			$this->common_model->insertData('tbl_invoice',$insertArr);
 			$invoiceid=$this->db->insert_id();
@@ -339,7 +341,7 @@ class Finance extends CI_Controller
 			$defaultOrderClause = "";
 			$sWhere = "";
 			$sOrder = '';	
-			$aColumns = array( 'id', 'invoice', 'project', 'clientid','total', 'invoicedate','status');
+			$aColumns = array( 'id', 'invoice', 'project', 'client','total', 'invoicedate','status');
 			//'ahrefs_dr', 
             $totalColumns = count($aColumns);
 
@@ -394,7 +396,7 @@ class Finance extends CI_Controller
          /** Filtering Start */
            	if(!empty(trim($_GET['sSearch']))){
             	$searchTerm = trim($_GET['sSearch']);
-            	$sWhere .= ' AND (project like "%'.$searchTerm.'%" OR clientname like "%'.$searchTerm.'%" OR companyname like "%'.$searchTerm.'%" OR note like "%'.$searchTerm.'%")';
+            	$sWhere .= ' AND (project like "%'.$searchTerm.'%" OR client like "%'.$searchTerm.'%" OR companyname like "%'.$searchTerm.'%" OR note like "%'.$searchTerm.'%")';
             }
 				$startdate=!empty($_POST['startdate']) ? $_POST['startdate'] : '';
 				$enddate=!empty($_POST['enddate']) ? $_POST['enddate'] : '';
@@ -407,7 +409,7 @@ class Finance extends CI_Controller
 
 					}
 					if(!empty($clientname)){
-							$sWhere.=' AND  clientname="'.$clientname.'"';
+							$sWhere.=' AND  client="'.$clientname.'"';
 
 					}
 					
@@ -429,7 +431,7 @@ class Finance extends CI_Controller
 				}
 				
 		
-	    $query = "SELECT i.* , c.clientname ,p.projectname FROM tbl_invoice i INNER JOIN tbl_clients c ON c.id = i.clientid INNER JOIN tbl_project_info p ON p.id = i.project".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+	    $query = "SELECT i.* , c.client ,p.projectname FROM tbl_invoice i INNER JOIN tbl_clients c ON c.id = i.client INNER JOIN tbl_project_info p ON p.id = i.project".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 		$invoicesArr = $this->common_model->coreQueryObject($query);
 
 		$query = "SELECT * from tbl_invoice ".$sWhere;
@@ -475,7 +477,7 @@ class Finance extends CI_Controller
 				$id = $i,
                 $row->invoice,
                 $row->projectname,
-                $row->clientname,
+                $row->client,
                 $row->total,
              	$row->invoicedate,
                 $sta,	

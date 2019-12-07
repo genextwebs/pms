@@ -90,13 +90,13 @@ if($this->session->userdata('login')){
                     <a href="<?php echo base_url().'finance' ?>">Estimates</a>
                 </li>
                 <li>
-                    <a href="#">Invoices</a>
+                    <a href="<?php echo base_url().'finance/invoice' ?>">Invoices</a>
                 </li>
                 <li>
                     <a href="#">Payments</a>
                 </li>
                 <li>
-                    <a href="#">Expenses</a>
+                    <a href="<?php echo base_url().'finance/expense' ?>">Expenses</a>
                 </li>
             </ul>
         </li>
@@ -133,7 +133,7 @@ if($this->session->userdata('login')){
             </a>
         </li>
         <li>
-            <a href="#" class="nav-link-s">
+            <a href="<?php echo base_url().'holiday'?>" class="nav-link-s">
                 <i class="ti-calendar"></i>
                 <span>Holiday</span>
             </a>
