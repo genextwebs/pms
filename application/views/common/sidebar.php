@@ -151,7 +151,7 @@ if($this->session->userdata('login')){
             </a>
         </li>
         <li>
-            <a href="#" class="nav-link-s">
+            <a href="<?php echo base_url().'Leaves'?>" class="nav-link-s">
                 <i class="icon-logout"></i>
                 <span>Leaves</span>
             </a>

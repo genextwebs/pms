@@ -13,10 +13,10 @@ class ProfileSetting extends CI_Controller
 	}
 
 
-	/*public function editprofile(){	
+	public function editprofile(){	
 		$whereArr=array('id'=>$this->user_id);
 		$data['profile']=$this->common_model->getData('tbl_user',$whereArr);
-		//print_r($data['profile']);die;
+		/*echo '<pre>';print_r($_FILES);die;*/
 		$this->load->view('common/header');
 		$this->load->view('profile/profilesetting',$data);
 		$this->load->view('common/footer');
@@ -26,7 +26,10 @@ class ProfileSetting extends CI_Controller
 					$email=$this->input->post('email_id');
 					$pass=$this->input->post('password');
 					$mobile=$this->input->post('mobile_no');
-					$config = array(
+					$profilepicture = '';
+					
+					if(!empty($_FILES['image_file']['name'])){
+						$config = array(
 									'upload_path' => './upload/',
 									'allowed_types' => 'gif|jpg|png|jpeg',
 									'max_size' =>'1000',
@@ -35,71 +38,30 @@ class ProfileSetting extends CI_Controller
 									);
 					$this->load->library('upload',$config);
 					$this->upload->initialize($config);
-					$profilepicture = '';
 
-					if($this->upload->do_upload('image_file')){
-						$profilepicture = array('upload_data'=>$this->upload->data());
-						$updateArr=array('name'=>$name,'emailid'=>$email,'password'=>$pass,'mobile'=>$mobile,'profileimg'=>$profilepicture['upload_data']['file_name']
-						);
-						//print_r($updateArr);die;
-					$this->common_model->updateData('tbl_user',$updateArr,$whereArr);
-					$this->session->set_flashdata('message_name', 'Projects Updated sucessfully');
+						if($this->upload->do_upload('image_file')){
+
+							$profilepicture = array('upload_data'=>$this->upload->data());
+							$updateArr=array('name'=>$name,'emailid'=>$email,'password'=>$pass,'mobile'=>$mobile,'profileimg'=>$profilepicture['upload_data']['file_name']);
+							$this->common_model->updateData('tbl_user',$updateArr,$whereArr);
+							$this->session->set_flashdata('message_name', 'Projects Updated sucessfully');
+						}
+
+						else{
+								$error = array('error' => $this->upload->display_errors());
+					
+						}
 					}
 					else{
-						$error = array('error' => $this->upload->display_errors());
-					
+						
+						$hiddenfile = $this->input->post('image_name');
+						$updateArr=array('name'=>$name,'emailid'=>$email,'password'=>$pass,'			  mobile'=>$mobile,'profileimg'=>$hiddenfile);
+						$this->common_model->updateData('tbl_user',$updateArr,$whereArr);
+						$this->session->set_flashdata('message_name', 'Projects Updated sucessfully');
 					}
+				}
 			}
-	}*/
-	public function editprofile(){	
-		$whereArr=array('id'=>$this->user_id);
-		$data['profile']=$this->common_model->getData('tbl_user',$whereArr);
-		
-	//	print_r($data['profile']);die;
-		$this->load->view('common/header');
-		$this->load->view('profile/profilesetting',$data);
-		$this->load->view('common/footer');
-		if(empty($_FILES)){
-		if(!empty($_POST)){
-			$name=$this->input->post('profile_name');
-			$email=$this->input->post('email_id');
-			$pass=$this->input->post('password');
-			$mobile=$this->input->post('mobile_no');
-			
-				
-			$config = array(
-							'upload_path' => './upload/',
-							'allowed_types' => 'gif|jpg|png|jpeg',
-							'max_size' =>'1000',
-							'max_width'=>'1024',
-							'max_height' => '768'
-							);
-		
-			$this->load->library('upload',$config);
-			$this->upload->initialize($config);
-			$profilepicture = '';
-				
-			
+} 
 
-					if($this->upload->do_upload('image_file')){
-						$profilepicture = array('upload_data'=>$this->upload->data());
-						$updateArr=array('name'=>$name,'emailid'=>$email,'password'=>$pass,'mobile'=>$mobile,'profileimg'=>$profilepicture['upload_data']['file_name']
-						);
-						//print_r($updateArr);die;
-					$this->common_model->updateData('tbl_user',$updateArr,$whereArr);
-					$this->session->set_flashdata('message_name', 'Projects Updated sucessfully');
-					}
-					else{
-						$error = array('error' => $this->upload->display_errors());
-					
-					}
-			}
-			else{
-				$existimg=$this->input->post('image_name');
-				$updateArr=array('name'=>$name,'emailid'=>$email,'password'=>$pass,'mobile'=>$mobile,'profileimg'=>$existimg
-						);
-				$this->common_model->updateData('tbl_user',$updateArr,$whereArr);
-			}
-		}
-	}
-}
+	
+

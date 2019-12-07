@@ -39,7 +39,10 @@
   </ul>
   <div class="tab-content">
     <?php
-        $data = $this->common_model->getData('tbl_holiday_settings');
+        $this->login = $this->session->userdata('login');
+        $this->user_id = $this->login->id;
+        $wherArr = array('user_id' => $this->user_id);
+        $data = $this->common_model->getData('tbl_holiday_settings',$wherArr);
         $SaturdayChk = $data[0]->saturday;
         $SundayChk = $data[0]->sunday;
     ?>
@@ -55,11 +58,11 @@
                 <th> Action </th>
             </tr>
             </thead>
-            <tbody>
+            <tbody id="janTbody">
                 <?php
                     $j = 1;
                     for($i=1;$i<=31;$i++){
-                        $date = date('Y-m-d', strtotime('2019-01-'.$i));
+                        $date = date('Y-m-d', strtotime($selYear.'-01-'.$i));
                         $dateDay = date('l', strtotime($date));
                         if(!empty($janArr[$date])){
                             ?>
@@ -75,7 +78,9 @@
                                     } 
                                 ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td></td>
+                                <td>
+                                    <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                </td>
                             </tr>
                             <?php
                             $j++; 
@@ -87,7 +92,7 @@
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Saturday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td></td>
+                                <td><button type="button" onclick="del('<?php echo $date; ?>','1')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>
                             </tr>
                             <?php
                             $j++;
@@ -99,7 +104,7 @@
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Sunday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td></td>
+                                <td><button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>
                             </tr>
                             <?php
                             $j++;
@@ -123,7 +128,7 @@
                 <th> Action </th>
             </tr>
             </thead>
-            <tbody>
+            <tbody id="febTbody">
                 <?php
                     $j = 1;
                     for($i=1;$i<=31;$i++){
@@ -145,7 +150,9 @@
                                 ?>
                                  </td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td></td>
+                                <td>
+                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                </td>
                             </tr>
                             <?php
                             $j++; 
@@ -157,7 +164,9 @@
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Saturday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td></td>
+                                <td>
+                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                </td>
                             </tr>
                             <?php
                             $j++;
@@ -169,7 +178,9 @@
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Sunday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td></td>
+                                <td>
+                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                </td>
                             </tr>
                             <?php
                             $j++;
@@ -191,7 +202,7 @@
                 <th> Action </th>
             </tr>
             </thead>
-            <tbody>
+            <tbody id="marTbody">
                 <?php
                     $j = 1;
                     for($i=1;$i<=31;$i++){
@@ -213,7 +224,9 @@
                                 ?>
                                 </td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td></td>
+                                <td>
+                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                </td>
                             </tr>
                             <?php
                             $j++; 
@@ -225,7 +238,9 @@
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Saturday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td></td>
+                                <td>
+                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                </td>
                             </tr>
                             <?php
                             $j++;
@@ -237,7 +252,9 @@
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Sunday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td></td>
+                                <td>
+                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                </td>
                             </tr>
                             <?php
                             $j++;
@@ -259,7 +276,7 @@
                 <th> Action </th>
             </tr>
             </thead>
-            <tbody>
+            <tbody id="aprilTbody">
                 <?php
                     $j = 1;
                     for($i=1;$i<=31;$i++){
@@ -281,7 +298,9 @@
                                 ?>
                                 </td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td></td>
+                                <td>
+                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                </td>
                             </tr>
                             <?php
                             $j++; 
@@ -293,7 +312,9 @@
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Saturday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td></td>
+                                <td>
+                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                </td>
                             </tr>
                             <?php
                             $j++;
@@ -305,7 +326,9 @@
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Sunday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td></td>
+                                <td>
+                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                </td>
                             </tr>
                             <?php
                             $j++;
@@ -327,7 +350,7 @@
                 <th> Action </th>
             </tr>
             </thead>
-            <tbody>
+            <tbody id="mayTbody">
                 <?php
                     $j = 1;
                     for($i=1;$i<=31;$i++){
@@ -349,7 +372,9 @@
                                 ?>
                                 </td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td></td>
+                                <td>
+                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                </td>
                             </tr>
                             <?php
                             $j++; 
@@ -361,7 +386,9 @@
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Saturday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td></td>
+                                <td>
+                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                </td>
                             </tr>
                             <?php
                             $j++;
@@ -373,7 +400,9 @@
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Sunday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td></td>
+                                <td>
+                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                </td>
                             </tr>
                             <?php
                             $j++;
@@ -395,7 +424,7 @@
                 <th> Action </th>
             </tr>
             </thead>
-            <tbody>
+            <tbody id="juneTbody"> 
                 <?php
                     $j = 1;
                     for($i=1;$i<=31;$i++){
@@ -417,7 +446,9 @@
                                 ?>
                                 </td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td></td>
+                                <td>
+                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                </td>
                             </tr>
                             <?php
                             $j++; 
@@ -429,7 +460,9 @@
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Saturday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td></td>
+                                <td>
+                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                </td>
                             </tr>
                             <?php
                             $j++;
@@ -441,7 +474,9 @@
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Sunday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td></td>
+                                <td>
+                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                </td>
                             </tr>
                             <?php
                             $j++;
@@ -463,7 +498,7 @@
                 <th> Action </th>
             </tr>
             </thead>
-            <tbody>
+            <tbody id="julyTbody">
                 <?php
                     $j = 1;
                     for($i=1;$i<=31;$i++){
@@ -485,7 +520,9 @@
                                 ?>
                                 </td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td></td>
+                                <td>
+                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                </td>
                             </tr>
                             <?php
                             $j++; 
@@ -497,7 +534,9 @@
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Saturday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td></td>
+                                <td>
+                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                </td>
                             </tr>
                             <?php
                             $j++;
@@ -509,7 +548,9 @@
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Sunday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td></td>
+                                <td>
+                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                </td>
                             </tr>
                             <?php
                             $j++;
@@ -531,7 +572,7 @@
                 <th> Action </th>
             </tr>
             </thead>
-            <tbody>
+            <tbody id="augTbody">
                 <?php
                     $j = 1;
                     for($i=1;$i<=31;$i++){
@@ -553,7 +594,9 @@
                                 ?>
                                 </td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td></td>
+                                <td>
+                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                </td>
                             </tr>
                             <?php
                             $j++; 
@@ -565,7 +608,9 @@
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Saturday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td></td>
+                                <td>
+                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                </td>
                             </tr>
                             <?php
                             $j++;
@@ -577,7 +622,9 @@
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Sunday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td></td>
+                                <td>
+                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                </td>
                             </tr>
                             <?php
                             $j++;
@@ -599,7 +646,7 @@
                 <th> Action </th>
             </tr>
             </thead>
-            <tbody>
+            <tbody id="sepTbody">
                 <?php
                     $j = 1;
                     for($i=1;$i<=31;$i++){
@@ -621,7 +668,9 @@
                                 ?>
                                 </td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td></td>
+                                <td>
+                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                </td>
                             </tr>
                             <?php
                             $j++; 
@@ -633,7 +682,9 @@
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Saturday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td></td>
+                                <td>
+                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                </td>
                             </tr>
                             <?php
                             $j++;
@@ -645,7 +696,9 @@
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Sunday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td></td>
+                                <td>
+                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                </td>
                             </tr>
                             <?php
                             $j++;
@@ -667,7 +720,7 @@
                 <th> Action </th>
             </tr>
             </thead>
-            <tbody>
+            <tbody id="octTbody">
                 <?php
                     $j = 1;
                     for($i=1;$i<=31;$i++){
@@ -689,7 +742,9 @@
                                 ?>
                                 </td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td></td>
+                                <td>
+                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                </td>
                             </tr>
                             <?php
                             $j++; 
@@ -701,7 +756,9 @@
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Saturday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td></td>
+                                <td>
+                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                </td>
                             </tr>
                             <?php
                             $j++;
@@ -713,7 +770,9 @@
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Sunday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td></td>
+                                <td>
+                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                </td>
                             </tr>
                             <?php
                             $j++;
@@ -735,7 +794,7 @@
                 <th> Action </th>
             </tr>
             </thead>
-            <tbody>
+            <tbody id="novTbody">
                 <?php
                     $j = 1;
                     for($i=1;$i<=31;$i++){
@@ -757,7 +816,9 @@
                                 ?>
                                 </td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td></td>
+                                <td>
+                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                </td>
                             </tr>
                             <?php
                             $j++; 
@@ -769,7 +830,9 @@
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Saturday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td></td>
+                                <td>
+                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                </td>
                             </tr>
                             <?php
                             $j++;
@@ -781,7 +844,9 @@
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Sunday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td></td>
+                                <td>
+                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                </td>
                             </tr>
                             <?php
                             $j++;
@@ -803,7 +868,7 @@
                 <th> Action </th>
             </tr>
             </thead>
-            <tbody>
+            <tbody id="decTbody">
                 <?php
                     $j = 1;
                     for($i=1;$i<=31;$i++){
@@ -825,7 +890,9 @@
                                 ?>
                                 </td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td></td>
+                                <td>
+                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                </td>
                             </tr>
                             <?php
                             $j++; 
@@ -837,7 +904,9 @@
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Saturday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td></td>
+                                <td>
+                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                </td>
                             </tr>
                             <?php
                             $j++;
@@ -849,7 +918,9 @@
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Sunday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td></td>
+                                <td>
+                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                </td>
                             </tr>
                             <?php
                             $j++;
