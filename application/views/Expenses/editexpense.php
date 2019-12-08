@@ -159,10 +159,10 @@
 		                									<label class="control-label"> Invoice
 															</label>
 															<div class="input-icon">
-																<input type="file" name="file" id="file">
-																	<input type="hidden" name="image_name" >
-																	<label><?php echo !empty($expense[0]->invoicefile) ? $expense[0]->invoicefile : '' ?></label>
-																	</div>
+																<input type="file" name="file" id="file"  >
+																<input type="hidden" name="image_name" value="<?php echo !empty($expense[0]->invoicefile) ? $expense[0]->invoicefile : '' ?>" >
+														
+															</div>
 														</div>
 		                							</div>
 												</div>
