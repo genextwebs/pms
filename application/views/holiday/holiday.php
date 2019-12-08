@@ -52,9 +52,11 @@
             $array = explode(",",$date_data);
             if(!empty($tempArr)){
                 $tempArr = array_merge($array,$tempArr);
+                echo "<PRE>";print_r($tempArr);
             }
             else{
                 $tempArr = $array;
+                 echo "<PRE>";print_r($tempArr);
             }
 
 
@@ -100,7 +102,7 @@
                             $j++; 
                         }
 
-                        else if($dateDay == 'Saturday' && $SaturdayChk == 1  && !(in_array($date, $tempArr))){
+                        else if($dateDay == 'Saturday' && $SaturdayChk == 1  && (in_array($date, $tempArr))){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>

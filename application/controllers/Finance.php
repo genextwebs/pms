@@ -303,12 +303,12 @@ class Finance extends CI_Controller
 			$total=$this->input->post('finaltotal');
 			$note=$this->input->post('note');
 
-			//$sql=select clientid form tbl_project_info 
+			$updateArr=array('status'=>1);
+			$this->common_model->updateData('tbl_estimates',$updateArr,$whereArr);
+
 			$sql="SELECT tbl_project_info.clientid,tbl_clients.clientname,tbl_clients.companyname FROM tbl_project_info INNER JOIN tbl_clients ON tbl_project_info.clientid = tbl_clients.id where tbl_project_info.id=".$project;	
-			//echo $sql;die;
 
 			$data['invoicedata']=$this->common_model->coreQueryObject($sql);
-			//echo "<pre>";print_r($data['invoicedata']);die;
 
 			
 			$insertArr=array('invoice' => $invoice,'project' => $project,'companyname'=>$data['invoicedata'][0]->companyname,'client'=>$data['invoicedata'][0]->clientid,
@@ -468,13 +468,14 @@ class Finance extends CI_Controller
          /** Filtering Start */
            	if(!empty(trim($_GET['sSearch']))){
             	$searchTerm = trim($_GET['sSearch']);
-            	$sWhere .= ' AND (project like "%'.$searchTerm.'%" OR client like "%'.$searchTerm.'%" OR companyname like "%'.$searchTerm.'%" OR note like "%'.$searchTerm.'%")';
+            	$sWhere .= ' AND (projectname like "%'.$searchTerm.'%" OR clientname like "%'.$searchTerm.'%" OR companyname like "%'.$searchTerm.'%" OR note like "%'.$searchTerm.'%")';
             }
 				$startdate=!empty($_POST['startdate']) ? $_POST['startdate'] : '';
 				$enddate=!empty($_POST['enddate']) ? $_POST['enddate'] : '';
 				$projectname=!empty($_POST['projectname']) ? $_POST['projectname'] : '';
 				$clientname=!empty($_POST['clientname']) ? $_POST['clientname'] : '';
 				$status=$_POST['status'];
+				//echo $status;die;
 		
 				if(!empty($projectname)){
 							$sWhere.=' AND  project="'.$projectname.'"';
@@ -504,6 +505,7 @@ class Finance extends CI_Controller
 				
 		
 	    $query = "SELECT i.* , c.id as clientid,c.clientname,p.projectname FROM tbl_invoice i INNER JOIN tbl_clients c ON c.id = i.client INNER JOIN tbl_project_info p ON p.id = i.project".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+	    //echo $query;die;
 		$invoicesArr = $this->common_model->coreQueryObject($query);
 		//print_r(invoicesArr);die;
 		$query = "SELECT * from tbl_invoice ".$sWhere;
@@ -710,10 +712,10 @@ class Finance extends CI_Controller
 								$sWhere.=' AND status='.$status;
 						}
 					if(!empty($startdate)){						
-						$sWhere.=' AND duedate>="'.$startdate.'"';
+						$sWhere.=' AND purchasedate>="'.$startdate.'"';
 					}
 					if(!empty($enddate)){						
-						$sWhere.=' AND duedate<="'.$enddate.'"';
+						$sWhere.=' AND purchasedate<="'.$enddate.'"';
 					}
 					
 					if(!empty($sWhere)){
@@ -724,6 +726,7 @@ class Finance extends CI_Controller
 				
 		
 	    $query = "select tbl_expense.* , tbl_employee.employeename from tbl_expense INNER JOIN tbl_employee ON tbl_employee.id=tbl_expense.employee".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+	    //echo $query;die;
 		$expensesArr = $this->common_model->coreQueryObject($query);
 
 		$query = "SELECT * from tbl_expense ".$sWhere;
@@ -801,6 +804,8 @@ class Finance extends CI_Controller
 			$price=$this->input->post('price');
 			$purchasedform=$this->input->post('purchasedfrom');
 			$purchasedate=$this->input->post('purchasedate');
+			//$a=$this->input->post('image_name');
+			//echo $a;die;
 				if(!empty($_FILES))
 				{
 					$file = rand(1000,100000)."-".$_FILES['file']['name'];

@@ -174,6 +174,7 @@ $(document).ready(function(){
   	$("#startdate").datepicker({
 	   todayBtn:  1,
 		autoclose: true,
+		 dateFormat: 'dd-mm-yy'
 	   }).on('changeDate', function (selected) {
 		/*var minDate = new Date(selected.date.valueOf());
 		$('#enddate').datetimepicker('setStartDate', minDate);*/
@@ -505,7 +506,7 @@ jQuery(document).ready(function() {
 			
 					aoData.push( { "name": "startdate", "value": $('#startdate').val() } );
 					aoData.push( { "name": "enddate", "value": $('#enddate').val() } );
-					aoData.push( { "name": "projectname", "value": $('#employee').val() } );
+					aoData.push( { "name": "employee", "value": $('#employee').val() } );
 					aoData.push( { "name": "status", "value": $('#status').val() } );
 					
 			
@@ -603,32 +604,15 @@ $(function() {
 //invoice validation
 
 $(function() {
-  $("form[name='createinvoice11']").validate({
+  $("form[name='addinvoice']").validate({
       rules: {
       invoice_number: "required",
-	  currency:"required",
-	  invoice_date:"required",
-		due_date:"required",
-		status:"required"
-	  
-      },
-    submitHandler: function(form) {
-      form.submit();
-    }
-  });
-});
-
-//invoice validation
-
-$(function() {
-  $("form[name='createinvoice11']").validate({
-      rules: {
-      invoice_number: "required",
+	  client: "required",
       project: "required",
 	  currency:"required",
 	  invoice_date:"required",
-		due_date:"required",
-		status:"required"
+	due_date:"required",
+	status:"required"
 	  
       },
     submitHandler: function(form) {
@@ -660,7 +644,6 @@ $(function() {
 //client wise project
 
 function getprojectbyclient(projectid){
-	//alert("fghg");
  	var url = base_url+"Finance/getproject";
         //var projectid = $this.val();
         if(projectid){
