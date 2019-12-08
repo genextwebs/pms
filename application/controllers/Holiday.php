@@ -832,7 +832,7 @@ class Holiday extends CI_Controller
 			$insArr = array('saturday' =>$saturday,'sunday'=>$sunday,'user_id' =>$this->user_id);
 			$data = $this->common_model->getData('tbl_holiday_settings');
 			if(!empty($data[0]->user_id)){
-				$updateArr = array('saturday' =>$saturday,'sunday'=>$sunday);
+				$updateArr = array('saturday' =>$saturday,'sunday'=>$sunday,'extract' => null);
 				$whereArr = array('user_id' => $data[0]->user_id);
 				$this->common_model->updateData('tbl_holiday_settings',$updateArr,$whereArr);
 			}
