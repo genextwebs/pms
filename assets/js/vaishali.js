@@ -726,6 +726,23 @@ if (isConfirm) {
    }
    });
 }
+
+/*$('#selectyear').change(function(){
+	alert('hii');
+	year = $(this).val();
+	$.ajax({
+		url : base_url+"holiday/check_year",
+        type : 'POST',
+        data : {year: year}	
+        error: function() {
+              alert('Something is wrong');
+           },
+        success: function(){
+
+        }
+	});
+
+});*/
                                             
                                                 
                                                                                              

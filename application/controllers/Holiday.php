@@ -817,7 +817,7 @@ class Holiday extends CI_Controller
 							$this->common_model->insertData('tbl_holiday',$insArr);
 							$message = 2;
 					}
-					//SELECT * FROM `tbl_holiday` where MONTH(date) = '01'
+					
 				}
 			}
 		}
@@ -863,6 +863,13 @@ class Holiday extends CI_Controller
 			$this->common_model->updateData('tbl_holiday_settings',$updateArr,$whereArr);
 		}
 
+	}
+
+	public function check_year(){
+		if(empty($_POST['type'])){
+			$year = $_POST['year'];
+			echo $year;die;	
+		}
 	}
 }
 

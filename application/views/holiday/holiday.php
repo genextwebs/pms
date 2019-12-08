@@ -13,15 +13,27 @@
                 </div>
             </nav>
             <div class="col-sm-12">
-                        <div class="form-group pull-left">
-                            <a href="javascript:;" id="holiday" data-toggle="modal" data-target="#data-holiday">Add Holiday <i class="fa fa-plus" aria-hidden="true"></i></a>
-                        </div>
-                        
-                        <div class="pull-right" style="margin-right: 10px">
-                            <a class="btn btn-outline btn-sm btn-primary markHoliday" href="javascript:;" id="default-holiday" data-toggle="modal" data-target="#data-defaultholiday">
-                                 Mark Default Holidays<i class="fa fa-check"></i> </a>
-                        </div>
-                    </div>
+                <div class="form-group pull-left">
+                    <a href="javascript:;" id="holiday" data-toggle="modal" data-target="#data-holiday">Add Holiday <i class="fa fa-plus" aria-hidden="true"></i></a>
+                </div>
+                
+                <div class="pull-right" style="margin-right: 10px">
+                    <a class="btn btn-outline btn-sm btn-primary markHoliday" href="javascript:;" id="default-holiday" data-toggle="modal" data-target="#data-defaultholiday">
+                         Mark Default Holidays<i class="fa fa-check"></i> </a>
+                </div>
+            </div>
+            <!--<div class="col-md-12">
+                <div class="form-group col-md-2 pull-right">
+                    <label class="control-label">Select Year(s)</label>
+                    <select  class="select2 form-control"  id="selectyear" name="year">
+                </div>
+                <option value="2019">2019</option> 
+                <option value="2020">2020</option>
+                <option value="2021">2021</option>
+                <option value="2022">2022</option>  
+                <option value="2023">2023</option> 
+                </select>       
+            </div>-->
    <br/>                 
   <ul class="nav nav-tabs">
     <li class="active"><a data-toggle="tab" href="#January">January</a></li>
@@ -42,25 +54,16 @@
         $this->login = $this->session->userdata('login');
         $this->user_id = $this->login->id;
         $wherArr = array('user_id' => $this->user_id);
-        $data = $this->common_model->getData('tbl_holiday_settings',$wherArr);
-        $SaturdayChk = $data[0]->saturday;
-        $SundayChk = $data[0]->sunday;
+        $data['holiday'] = $this->common_model->getData('tbl_holiday_settings',$wherArr);
         $tempArr = array();
-        foreach($data[0]->extract as $row){
-
+        foreach($data['holiday'] as $row){
             $date_data = $row->extract;
             $array = explode(",",$date_data);
-            if(!empty($tempArr)){
-                $tempArr = array_merge($array,$tempArr);
-                echo "<PRE>";print_r($tempArr);
-            }
-            else{
-                $tempArr = $array;
-                 echo "<PRE>";print_r($tempArr);
-            }
-
-
+            $tempArr = $array;
         }
+        $SaturdayChk = $row->saturday;
+        $SundayChk = $row->sunday;
+       
     ?>
     <div id="January" class="tab-pane fade in active">
       <h3>January</h3>
@@ -78,7 +81,8 @@
                 <?php
                     $j = 1;
                     for($i=1;$i<=31;$i++){
-                        $date = date('Y-m-d', strtotime($selYear.'-01-'.$i));
+                        //$date = date('Y-m-d', strtotime($selYear.'-01-'.$i));
+                        $date = date('Y-m-d', strtotime('2019-01-'.$i));
                         $dateDay = date('l', strtotime($date));
                         if(!empty($janArr[$date])){
                             ?>
@@ -102,7 +106,7 @@
                             $j++; 
                         }
 
-                        else if($dateDay == 'Saturday' && $SaturdayChk == 1  && (in_array($date, $tempArr))){
+                        else if($dateDay == 'Saturday' && $SaturdayChk == 1  && !in_array($date, $tempArr)){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
@@ -114,7 +118,7 @@
                             <?php
                             $j++;
                         }
-                        else if($dateDay == 'Sunday' && $SundayChk == 1 && !(in_array($date, $tempArr))){
+                        else if($dateDay == 'Sunday' && $SundayChk == 1 && !in_array($date, $tempArr)){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
@@ -168,13 +172,13 @@
                                  </td>
                                 <td><?php echo $dateDay; ?></td>
                                 <td>
-                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
                             <?php
                             $j++; 
                         }
-                        else if($dateDay == 'Saturday' && $SaturdayChk == 1){
+                        else if($dateDay == 'Saturday' && $SaturdayChk == 1 && !in_array($date, $tempArr)){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
@@ -182,13 +186,13 @@
                                 <td><?php echo 'Saturday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
                                 <td>
-                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
                             <?php
                             $j++;
                         }
-                        else if($dateDay == 'Sunday' && $SundayChk == 1){
+                        else if($dateDay == 'Sunday' && $SundayChk == 1 && !in_array($date, $tempArr)){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
@@ -196,7 +200,7 @@
                                 <td><?php echo 'Sunday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
                                 <td>
-                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
                             <?php
@@ -242,13 +246,13 @@
                                 </td>
                                 <td><?php echo $dateDay; ?></td>
                                 <td>
-                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
                             <?php
                             $j++; 
                         }
-                        else if($dateDay == 'Saturday' && $SaturdayChk == 1){
+                        else if($dateDay == 'Saturday' && $SaturdayChk == 1 && !in_array($date, $tempArr)){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
@@ -256,13 +260,13 @@
                                 <td><?php echo 'Saturday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
                                 <td>
-                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
                             <?php
                             $j++;
                         }
-                        else if($dateDay == 'Sunday' && $SundayChk == 1){
+                        else if($dateDay == 'Sunday' && $SundayChk == 1 && !in_array($date, $tempArr)){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
@@ -270,7 +274,7 @@
                                 <td><?php echo 'Sunday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
                                 <td>
-                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
                             <?php
@@ -316,13 +320,13 @@
                                 </td>
                                 <td><?php echo $dateDay; ?></td>
                                 <td>
-                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
                             <?php
                             $j++; 
                         }
-                        else if($dateDay == 'Saturday' && $SaturdayChk == 1){
+                        else if($dateDay == 'Saturday' && $SaturdayChk == 1 && !in_array($date, $tempArr)){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
@@ -330,13 +334,13 @@
                                 <td><?php echo 'Saturday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
                                 <td>
-                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
                             <?php
                             $j++;
                         }
-                        else if($dateDay == 'Sunday' && $SundayChk == 1){
+                        else if($dateDay == 'Sunday' && $SundayChk == 1 && !in_array($date, $tempArr)){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
@@ -344,7 +348,7 @@
                                 <td><?php echo 'Sunday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
                                 <td>
-                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
                             <?php
@@ -390,13 +394,13 @@
                                 </td>
                                 <td><?php echo $dateDay; ?></td>
                                 <td>
-                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
                             <?php
                             $j++; 
                         }
-                        else if($dateDay == 'Saturday' && $SaturdayChk == 1){
+                        else if($dateDay == 'Saturday' && $SaturdayChk == 1 && !in_array($date, $tempArr)){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
@@ -404,13 +408,13 @@
                                 <td><?php echo 'Saturday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
                                 <td>
-                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
                             <?php
                             $j++;
                         }
-                        else if($dateDay == 'Sunday' && $SundayChk == 1){
+                        else if($dateDay == 'Sunday' && $SundayChk == 1 && !in_array($date, $tempArr)){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
@@ -418,7 +422,7 @@
                                 <td><?php echo 'Sunday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
                                 <td>
-                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
                             <?php
@@ -464,13 +468,13 @@
                                 </td>
                                 <td><?php echo $dateDay; ?></td>
                                 <td>
-                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
                             <?php
                             $j++; 
                         }
-                        else if($dateDay == 'Saturday' && $SaturdayChk == 1){
+                        else if($dateDay == 'Saturday' && $SaturdayChk == 1 && !in_array($date, $tempArr)){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
@@ -478,13 +482,13 @@
                                 <td><?php echo 'Saturday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
                                 <td>
-                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
                             <?php
                             $j++;
                         }
-                        else if($dateDay == 'Sunday' && $SundayChk == 1){
+                        else if($dateDay == 'Sunday' && $SundayChk == 1 && !in_array($date, $tempArr)){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
@@ -492,7 +496,7 @@
                                 <td><?php echo 'Sunday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
                                 <td>
-                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
                             <?php
@@ -538,13 +542,13 @@
                                 </td>
                                 <td><?php echo $dateDay; ?></td>
                                 <td>
-                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
                             <?php
                             $j++; 
                         }
-                        else if($dateDay == 'Saturday' && $SaturdayChk == 1){
+                        else if($dateDay == 'Saturday' && $SaturdayChk == 1 && !in_array($date, $tempArr)){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
@@ -552,13 +556,13 @@
                                 <td><?php echo 'Saturday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
                                 <td>
-                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
                             <?php
                             $j++;
                         }
-                        else if($dateDay == 'Sunday' && $SundayChk == 1){
+                        else if($dateDay == 'Sunday' && $SundayChk == 1 && !in_array($date, $tempArr)){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
@@ -566,7 +570,7 @@
                                 <td><?php echo 'Sunday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
                                 <td>
-                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
                             <?php
@@ -612,13 +616,13 @@
                                 </td>
                                 <td><?php echo $dateDay; ?></td>
                                 <td>
-                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
                             <?php
                             $j++; 
                         }
-                        else if($dateDay == 'Saturday' && $SaturdayChk == 1){
+                        else if($dateDay == 'Saturday' && $SaturdayChk == 1 && !in_array($date, $tempArr)){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
@@ -626,13 +630,13 @@
                                 <td><?php echo 'Saturday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
                                 <td>
-                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
                             <?php
                             $j++;
                         }
-                        else if($dateDay == 'Sunday' && $SundayChk == 1){
+                        else if($dateDay == 'Sunday' && $SundayChk == 1 && !in_array($date, $tempArr)){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
@@ -640,7 +644,7 @@
                                 <td><?php echo 'Sunday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
                                 <td>
-                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
                             <?php
@@ -686,13 +690,13 @@
                                 </td>
                                 <td><?php echo $dateDay; ?></td>
                                 <td>
-                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
                             <?php
                             $j++; 
                         }
-                        else if($dateDay == 'Saturday' && $SaturdayChk == 1){
+                        else if($dateDay == 'Saturday' && $SaturdayChk == 1 && !in_array($date, $tempArr)){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
@@ -700,13 +704,13 @@
                                 <td><?php echo 'Saturday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
                                 <td>
-                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
                             <?php
                             $j++;
                         }
-                        else if($dateDay == 'Sunday' && $SundayChk == 1){
+                        else if($dateDay == 'Sunday' && $SundayChk == 1 && !in_array($date, $tempArr)){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
@@ -714,7 +718,7 @@
                                 <td><?php echo 'Sunday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
                                 <td>
-                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
                             <?php
@@ -760,13 +764,13 @@
                                 </td>
                                 <td><?php echo $dateDay; ?></td>
                                 <td>
-                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
                             <?php
                             $j++; 
                         }
-                        else if($dateDay == 'Saturday' && $SaturdayChk == 1){
+                        else if($dateDay == 'Saturday' && $SaturdayChk == 1 && !in_array($date, $tempArr)){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
@@ -774,13 +778,13 @@
                                 <td><?php echo 'Saturday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
                                 <td>
-                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
                             <?php
                             $j++;
                         }
-                        else if($dateDay == 'Sunday' && $SundayChk == 1){
+                        else if($dateDay == 'Sunday' && $SundayChk == 1 && !in_array($date, $tempArr)){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
@@ -788,7 +792,7 @@
                                 <td><?php echo 'Sunday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
                                 <td>
-                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
                             <?php
@@ -834,13 +838,13 @@
                                 </td>
                                 <td><?php echo $dateDay; ?></td>
                                 <td>
-                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
                             <?php
                             $j++; 
                         }
-                        else if($dateDay == 'Saturday' && $SaturdayChk == 1){
+                        else if($dateDay == 'Saturday' && $SaturdayChk == 1 && !in_array($date, $tempArr)){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
@@ -848,13 +852,13 @@
                                 <td><?php echo 'Saturday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
                                 <td>
-                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
                             <?php
                             $j++;
                         }
-                        else if($dateDay == 'Sunday' && $SundayChk == 1){
+                        else if($dateDay == 'Sunday' && $SundayChk == 1 && !in_array($date, $tempArr)){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
@@ -862,7 +866,7 @@
                                 <td><?php echo 'Sunday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
                                 <td>
-                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
                             <?php
@@ -908,13 +912,13 @@
                                 </td>
                                 <td><?php echo $dateDay; ?></td>
                                 <td>
-                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
                             <?php
                             $j++; 
                         }
-                        else if($dateDay == 'Saturday' && $SaturdayChk == 1){
+                        else if($dateDay == 'Saturday' && $SaturdayChk == 1 && !in_array($date, $tempArr)){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
@@ -922,13 +926,13 @@
                                 <td><?php echo 'Saturday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
                                 <td>
-                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
                             <?php
                             $j++;
                         }
-                        else if($dateDay == 'Sunday' && $SundayChk == 1){
+                        else if($dateDay == 'Sunday' && $SundayChk == 1 && !in_array($date, $tempArr)){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
@@ -936,7 +940,7 @@
                                 <td><?php echo 'Sunday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
                                 <td>
-                                <button type="button" onclick="del('52',' 07-12-2019')" href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
                             <?php
