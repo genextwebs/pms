@@ -296,7 +296,7 @@ $(function(){
 	});
 });
 
-$(function(){
+/*$(function(){
 
 		$("form[name='modelholiday']").validate({
 		rules:{
@@ -310,7 +310,7 @@ $(function(){
 		submitHandler: function(form) {
 		form.submit();}
 	});
-});
+});*/
 
 function checkuncheck()
 {
@@ -579,14 +579,32 @@ $('#repeate-data').click(function(){
 $("#save-holiday").click(function(event) {
 	var holiday_arr = [];
 	var ocasion_arr = [];
-
+	var holiday_err = 0;
+	var occasion_err = 0;
 	$("input[name^='holiday_name']").each(function() {
+		var holiday_date = $(this).val();
+		if(holiday_date.trim() == ''){
+			holiday_err = 1;
+		}
     holiday_arr.push($(this).val());
 });
 	$("input[name^='occasion']").each(function() {
+		var occasion = $(this).val();
+		if(occasion.trim() == ''){
+			 occasion_err = 1;
+		}
     ocasion_arr.push($(this).val());
 });
-	//console.log(holiday_arr);
+	
+	if(holiday_err == 1){
+		alert('enter holiday');
+		return false;
+	}
+	if(occasion_err == 1){
+		alert('enter occasion');
+		return false;
+	}
+	
 	event.preventDefault();
         $.ajax({
            url: base_url+"holiday/insert_data",
@@ -637,22 +655,22 @@ $("#save-defaultholiday").click(function(event) {
               alert('Something is wrong');
            },
            success: function(data) {
-           	
-               $('#data-defaultholiday').modal('toggle');
-               $('#modeldefaultholiday')[0].reset();
+	               $('#data-defaultholiday').modal('toggle');
+	               $('#modeldefaultholiday')[0].reset();
+           		
                displayData();
            }
         });
 });
 
-$("close").click(function() {
+$(".close").click(function() {
 	$('#data-holiday').modal('toggle');
     $('#modelholiday')[0].reset();
     $('#dynamic').html('');
  });   
                                  
-$("closedata").click(function() {                                                   
-$('#data-defaultholiday').modal('toggle');
+$(".closedata").click(function() {                                                  
+	$('#data-defaultholiday').modal('toggle');
     $('#modeldefaultholiday')[0].reset();  
 });                                               
  
@@ -727,24 +745,24 @@ if (isConfirm) {
    });
 }
 
-/*$('#selectyear').change(function(){
-	alert('hii');
+$('#selectyear').change(function(){
 	year = $(this).val();
 	$.ajax({
 		url : base_url+"holiday/check_year",
         type : 'POST',
-        data : {year: year}	
+        data : {year: year},
         error: function() {
               alert('Something is wrong');
            },
         success: function(){
-
+        	displayData();
         }
 	});
 
-});*/
+});
                                             
-                                                
+ 
+                         
                                                                                              
                                             
                                     

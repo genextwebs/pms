@@ -7,8 +7,15 @@
                     </div>
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                         <ol class="breadcrumb">
-                            <li><a href="index.html">Home</a></li>
-                            <li><a href="#">Leads</a></li>
+                            <li><a href="<?php echo base_url().'dashboard'?>">Home</a></li>
+                            <li><a href="<?php echo base_url().'project'?>">Projects</a></li>
+                            <?php
+                            $controller = $this->uri->segment(1);
+                            $function = $this->uri->segment(2);
+                            if($controller == 'Project' && $function == 'searchproject'){
+                            ?>
+                            <li><a>Members</a></li>
+                        <?php } ?>
                         </ol>
                     </div>
                 </div>
@@ -24,14 +31,14 @@
 								  	<li class="nav-item">
 								    	<a class="nav-link" id="overview-tab" data-toggle="tab" href="#overview" role="tab" aria-controls="overview" aria-selected="true">Overview</a>
 								  	</li>
-								  	<li class="nav-item">
-								    	<a class="nav-link" id="members-tab" data-toggle="tab" href="#members" role="tab" aria-controls="members" aria-selected="false">Members</a>
+								  	<li class="nav-item" >
+								    	<a class="nav-link <?php if($controller == 'Project' && $function == 'searchproject') { echo "active";}?>" id="members-tab" data-toggle="tab" href="#members" role="tab" aria-controls="members" aria-selected="false">Members</a>
 								  	</li>
 								  	<li class="nav-item">
 								    	<a class="nav-link" id="milestones-tab" data-toggle="tab" href="#milestones" role="tab" aria-controls="milestones" aria-selected="false">Milestones</a>
 								  	</li>
 								  	<li class="nav-item">
-								    	<a class="nav-link active" id="tasks-tab" data-toggle="tab" href="#tasks" role="tab" aria-controls="tasks" aria-selected="false">Tasks</a>
+								    	<a class="nav-link " id="tasks-tab" data-toggle="tab" href="#tasks" role="tab" aria-controls="tasks" aria-selected="false">Tasks</a>
 								  	</li>
 								  	<li class="nav-item">
 								    	<a class="nav-link" id="files-tab" data-toggle="tab" href="#files" role="tab" aria-controls="files" aria-selected="false">Files</a>
@@ -398,7 +405,7 @@
 		            						</div>
 									  	</div>
 									  	<!-- tab2 -->
-									 	<div class="tab-pane fade section-2" id="members" role="tabpanel" aria-labelledby="members-tab">
+									 	<div class="tab-pane fade section-2 <?php if($controller == 'Project' && $function == 'searchproject') { echo "active show";}?>" id="members" role="tabpanel" aria-labelledby="members-tab">
 					            			<div class="row">
 					            				<div class="col-md-6">
 					            					<div class="card">
@@ -445,7 +452,15 @@
 					            						<h3>Add Project Members</h3>
 					            						<form>
 					            							<div class="form-group">
-					            								<input type="text" class="form-control" name="choose_mamber" placeholder="choose Members">
+					            								<select class="form-control" name="choose_mamber" placeholder="choose Members">
+					            								<option value="">All</option>
+							                                    <?php foreach($employee as $row){
+												            	?>
+												            	<option value="<?php echo $row->id?>"><?php echo $row->employeename;?></option>
+												            	<?php
+												            	}
+												            	?> 
+					            								</select>
 					            							</div>
 					            							<div class="form-actions">
 				                                                <button type="submit" id="save-members" class="btn btn-success"><i class="fa fa-check"></i> Save</button>
@@ -557,7 +572,7 @@
 					            			</div>
 									  	</div>
 									  	<!-- tab4 -->
-									  	<div class="tab-pane fade show active" id="tasks" role="tabpanel" aria-labelledby="tasks-tab">
+									  	<div class="tab-pane fade" id="tasks" role="tabpanel" aria-labelledby="tasks-tab">
 									  		<div class="row mb-2">
 									  			<div id="new-tadk-panel" class="col-md-12">
 									  				<div class="card">
@@ -1068,33 +1083,7 @@
         </div>
     </div>
 
-    <script src="js/jquery-3.2.1.slim.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/jquery.dataTables.min.js"></script>
-    <script src="js/dataTables.fixedHeader.min.js"></script>
-    <script src="js/dataTables.bootstrap4.min.js"></script>
-    <script src="js/responsive.bootstrap4.min.js"></script>
-    <script src="js/dataTables.responsive.min.js"></script>
-	<script src="js/search-dropdown.min.js"></script>
-	<script src="https://cdn.ckeditor.com/4.12.1/standard/ckeditor.js"></script>
-    <script src="js/bootstrap.js"></script>
-    <script src="js/custome.js"></script>
-
-    <!-- sidebar -->
-    <script type="text/javascript">
-        $(document).ready(function() {
-		    $('#tasks-table').DataTable();
-		    $('#timelogs-table').DataTable();
-		} );
-    </script>
-    <script>
-    	$(document).ready(function () {
-		    CKEDITOR.replace( 'editor3' );
-		});
-	</script>
-</body>
-</html>
-
+    
 
 
 

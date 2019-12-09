@@ -22,18 +22,15 @@
                          Mark Default Holidays<i class="fa fa-check"></i> </a>
                 </div>
             </div>
-            <!--<div class="col-md-12">
-                <div class="form-group col-md-2 pull-right">
-                    <label class="control-label">Select Year(s)</label>
-                    <select  class="select2 form-control"  id="selectyear" name="year">
-                </div>
-                <option value="2019">2019</option> 
-                <option value="2020">2020</option>
-                <option value="2021">2021</option>
-                <option value="2022">2022</option>  
-                <option value="2023">2023</option> 
+            <div class="col-md-12">
+                <select id="selectyear" class="pull-right">
+                <option value="2019" <?php if($selYear == '2019'){ echo 'selected'; }?>>2019</option> 
+                <option value="2020" <?php if($selYear == '2020'){ echo 'selected'; }?>>2020</option>
+                <option value="2021" <?php if($selYear == '2021'){ echo 'selected'; }?>>2021</option>
+                <option value="2022" <?php if($selYear == '2022'){ echo 'selected'; }?>>2022</option>  
+                <option value="2023" <?php if($selYear == '2023'){ echo 'selected'; }?>>2023</option> 
                 </select>       
-            </div>-->
+            </div>
    <br/>                 
   <ul class="nav nav-tabs">
     <li class="active"><a data-toggle="tab" href="#January">January</a></li>
@@ -55,12 +52,18 @@
         $this->user_id = $this->login->id;
         $wherArr = array('user_id' => $this->user_id);
         $data['holiday'] = $this->common_model->getData('tbl_holiday_settings',$wherArr);
-        $tempArr = array();
+        $SatArr = array();
+        $SunArr = array();
         foreach($data['holiday'] as $row){
-            $date_data = $row->extract;
-            $array = explode(",",$date_data);
-            $tempArr = $array;
+            $date_sat_data = $row->extract_sat_day;
+            $sat_array = explode(",",$date_sat_data);
+            $SatArr = $sat_array;
+            $date_sun_data = $row->extract_sun_day;
+            $sun_array = explode(",",$date_sun_data);
+            $SunArr = $sun_array;
+
         }
+
         $SaturdayChk = $row->saturday;
         $SundayChk = $row->sunday;
        
@@ -81,8 +84,7 @@
                 <?php
                     $j = 1;
                     for($i=1;$i<=31;$i++){
-                        //$date = date('Y-m-d', strtotime($selYear.'-01-'.$i));
-                        $date = date('Y-m-d', strtotime('2019-01-'.$i));
+                        $date = date('Y-m-d', strtotime($selYear.'-01-'.$i));
                         $dateDay = date('l', strtotime($date));
                         if(!empty($janArr[$date])){
                             ?>
@@ -106,7 +108,7 @@
                             $j++; 
                         }
 
-                        else if($dateDay == 'Saturday' && $SaturdayChk == 1  && !in_array($date, $tempArr)){
+                        else if($dateDay == 'Saturday' && $SaturdayChk == 1  && !in_array($date, $SatArr)){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
@@ -118,7 +120,7 @@
                             <?php
                             $j++;
                         }
-                        else if($dateDay == 'Sunday' && $SundayChk == 1 && !in_array($date, $tempArr)){
+                        else if($dateDay == 'Sunday' && $SundayChk == 1 && !in_array($date, $SunArr)){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
@@ -153,7 +155,7 @@
                 <?php
                     $j = 1;
                     for($i=1;$i<=31;$i++){
-                        $date = date('Y-m-d', strtotime('2019-02-'.$i));
+                        $date = date('Y-m-d', strtotime($selYear.'-02-'.$i));
                         $dateDay = date('l', strtotime($date));
                         if(!empty($febArr[$date])){
                             ?>
@@ -178,7 +180,7 @@
                             <?php
                             $j++; 
                         }
-                        else if($dateDay == 'Saturday' && $SaturdayChk == 1 && !in_array($date, $tempArr)){
+                        else if($dateDay == 'Saturday' && $SaturdayChk == 1 && !in_array($date, $SatArr)){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
@@ -192,7 +194,7 @@
                             <?php
                             $j++;
                         }
-                        else if($dateDay == 'Sunday' && $SundayChk == 1 && !in_array($date, $tempArr)){
+                        else if($dateDay == 'Sunday' && $SundayChk == 1 && !in_array($date, $SunArr)){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
@@ -227,7 +229,7 @@
                 <?php
                     $j = 1;
                     for($i=1;$i<=31;$i++){
-                        $date = date('Y-m-d', strtotime('2019-03-'.$i));
+                        $date = date('Y-m-d', strtotime($selYear.'-03-'.$i));
                         $dateDay = date('l', strtotime($date));
                         if(!empty($marArr[$date])){
                             ?>
@@ -252,7 +254,7 @@
                             <?php
                             $j++; 
                         }
-                        else if($dateDay == 'Saturday' && $SaturdayChk == 1 && !in_array($date, $tempArr)){
+                        else if($dateDay == 'Saturday' && $SaturdayChk == 1 && !in_array($date, $SatArr)){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
@@ -266,7 +268,7 @@
                             <?php
                             $j++;
                         }
-                        else if($dateDay == 'Sunday' && $SundayChk == 1 && !in_array($date, $tempArr)){
+                        else if($dateDay == 'Sunday' && $SundayChk == 1 && !in_array($date, $SunArr)){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
@@ -301,7 +303,7 @@
                 <?php
                     $j = 1;
                     for($i=1;$i<=31;$i++){
-                        $date = date('Y-m-d', strtotime('2019-04-'.$i));
+                        $date = date('Y-m-d', strtotime($selYear.'-04-'.$i));
                         $dateDay = date('l', strtotime($date));
                         if(!empty($aprilArr[$date])){
                             ?>
@@ -326,7 +328,7 @@
                             <?php
                             $j++; 
                         }
-                        else if($dateDay == 'Saturday' && $SaturdayChk == 1 && !in_array($date, $tempArr)){
+                        else if($dateDay == 'Saturday' && $SaturdayChk == 1 && !in_array($date, $SatArr)){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
@@ -340,7 +342,7 @@
                             <?php
                             $j++;
                         }
-                        else if($dateDay == 'Sunday' && $SundayChk == 1 && !in_array($date, $tempArr)){
+                        else if($dateDay == 'Sunday' && $SundayChk == 1 && !in_array($date, $SunArr)){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
@@ -375,7 +377,7 @@
                 <?php
                     $j = 1;
                     for($i=1;$i<=31;$i++){
-                        $date = date('Y-m-d', strtotime('2019-05-'.$i));
+                        $date = date('Y-m-d', strtotime($selYear.'-05-'.$i));
                         $dateDay = date('l', strtotime($date));
                         if(!empty($mayArr[$date])){
                             ?>
@@ -400,7 +402,7 @@
                             <?php
                             $j++; 
                         }
-                        else if($dateDay == 'Saturday' && $SaturdayChk == 1 && !in_array($date, $tempArr)){
+                        else if($dateDay == 'Saturday' && $SaturdayChk == 1 && !in_array($date, $SatArr)){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
@@ -414,7 +416,7 @@
                             <?php
                             $j++;
                         }
-                        else if($dateDay == 'Sunday' && $SundayChk == 1 && !in_array($date, $tempArr)){
+                        else if($dateDay == 'Sunday' && $SundayChk == 1 && !in_array($date, $SunArr)){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
@@ -449,7 +451,7 @@
                 <?php
                     $j = 1;
                     for($i=1;$i<=31;$i++){
-                        $date = date('Y-m-d', strtotime('2019-06-'.$i));
+                        $date = date('Y-m-d', strtotime($selYear.'-06-'.$i));
                         $dateDay = date('l', strtotime($date));
                         if(!empty($juneArr[$date])){
                             ?>
@@ -474,7 +476,7 @@
                             <?php
                             $j++; 
                         }
-                        else if($dateDay == 'Saturday' && $SaturdayChk == 1 && !in_array($date, $tempArr)){
+                        else if($dateDay == 'Saturday' && $SaturdayChk == 1 && !in_array($date, $SatArr)){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
@@ -488,7 +490,7 @@
                             <?php
                             $j++;
                         }
-                        else if($dateDay == 'Sunday' && $SundayChk == 1 && !in_array($date, $tempArr)){
+                        else if($dateDay == 'Sunday' && $SundayChk == 1 && !in_array($date, $SunArr)){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
@@ -523,7 +525,7 @@
                 <?php
                     $j = 1;
                     for($i=1;$i<=31;$i++){
-                        $date = date('Y-m-d', strtotime('2019-07-'.$i));
+                        $date = date('Y-m-d', strtotime($selYear.'-07-'.$i));
                         $dateDay = date('l', strtotime($date));
                         if(!empty($julyArr[$date])){
                             ?>
@@ -548,7 +550,7 @@
                             <?php
                             $j++; 
                         }
-                        else if($dateDay == 'Saturday' && $SaturdayChk == 1 && !in_array($date, $tempArr)){
+                        else if($dateDay == 'Saturday' && $SaturdayChk == 1 && !in_array($date, $SatArr)){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
@@ -562,7 +564,7 @@
                             <?php
                             $j++;
                         }
-                        else if($dateDay == 'Sunday' && $SundayChk == 1 && !in_array($date, $tempArr)){
+                        else if($dateDay == 'Sunday' && $SundayChk == 1 && !in_array($date, $SunArr)){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
@@ -597,7 +599,7 @@
                 <?php
                     $j = 1;
                     for($i=1;$i<=31;$i++){
-                        $date = date('Y-m-d', strtotime('2019-08-'.$i));
+                        $date = date('Y-m-d', strtotime($selYear.'-08-'.$i));
                         $dateDay = date('l', strtotime($date));
                         if(!empty($augestArr[$date])){
                             ?>
@@ -622,7 +624,7 @@
                             <?php
                             $j++; 
                         }
-                        else if($dateDay == 'Saturday' && $SaturdayChk == 1 && !in_array($date, $tempArr)){
+                        else if($dateDay == 'Saturday' && $SaturdayChk == 1 && !in_array($date, $SatArr)){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
@@ -636,7 +638,7 @@
                             <?php
                             $j++;
                         }
-                        else if($dateDay == 'Sunday' && $SundayChk == 1 && !in_array($date, $tempArr)){
+                        else if($dateDay == 'Sunday' && $SundayChk == 1 && !in_array($date, $SunArr)){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
@@ -671,7 +673,7 @@
                 <?php
                     $j = 1;
                     for($i=1;$i<=31;$i++){
-                        $date = date('Y-m-d', strtotime('2019-09-'.$i));
+                        $date = date('Y-m-d', strtotime($selYear.'-09-'.$i));
                         $dateDay = date('l', strtotime($date));
                         if(!empty($sepArr[$date])){
                             ?>
@@ -696,7 +698,7 @@
                             <?php
                             $j++; 
                         }
-                        else if($dateDay == 'Saturday' && $SaturdayChk == 1 && !in_array($date, $tempArr)){
+                        else if($dateDay == 'Saturday' && $SaturdayChk == 1 && !in_array($date, $SatArr)){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
@@ -710,7 +712,7 @@
                             <?php
                             $j++;
                         }
-                        else if($dateDay == 'Sunday' && $SundayChk == 1 && !in_array($date, $tempArr)){
+                        else if($dateDay == 'Sunday' && $SundayChk == 1 && !in_array($date, $SunArr)){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
@@ -745,7 +747,7 @@
                 <?php
                     $j = 1;
                     for($i=1;$i<=31;$i++){
-                        $date = date('Y-m-d', strtotime('2019-10-'.$i));
+                        $date = date('Y-m-d', strtotime($selYear.'-10-'.$i));
                         $dateDay = date('l', strtotime($date));
                         if(!empty($octArr[$date])){
                             ?>
@@ -770,7 +772,7 @@
                             <?php
                             $j++; 
                         }
-                        else if($dateDay == 'Saturday' && $SaturdayChk == 1 && !in_array($date, $tempArr)){
+                        else if($dateDay == 'Saturday' && $SaturdayChk == 1 && !in_array($date, $SatArr)){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
@@ -784,7 +786,7 @@
                             <?php
                             $j++;
                         }
-                        else if($dateDay == 'Sunday' && $SundayChk == 1 && !in_array($date, $tempArr)){
+                        else if($dateDay == 'Sunday' && $SundayChk == 1 && !in_array($date, $SunArr)){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
@@ -819,7 +821,7 @@
                 <?php
                     $j = 1;
                     for($i=1;$i<=31;$i++){
-                        $date = date('Y-m-d', strtotime('2019-11-'.$i));
+                        $date = date('Y-m-d', strtotime($selYear.'-11-'.$i));
                         $dateDay = date('l', strtotime($date));
                         if(!empty($novArr[$date])){
                             ?>
@@ -844,7 +846,7 @@
                             <?php
                             $j++; 
                         }
-                        else if($dateDay == 'Saturday' && $SaturdayChk == 1 && !in_array($date, $tempArr)){
+                        else if($dateDay == 'Saturday' && $SaturdayChk == 1 && !in_array($date, $SatArr)){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
@@ -858,7 +860,7 @@
                             <?php
                             $j++;
                         }
-                        else if($dateDay == 'Sunday' && $SundayChk == 1 && !in_array($date, $tempArr)){
+                        else if($dateDay == 'Sunday' && $SundayChk == 1 && !in_array($date, $SunArr)){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
@@ -893,7 +895,7 @@
                 <?php
                     $j = 1;
                     for($i=1;$i<=31;$i++){
-                        $date = date('Y-m-d', strtotime('2019-12-'.$i));
+                        $date = date('Y-m-d', strtotime($selYear.'-12-'.$i));
                         $dateDay = date('l', strtotime($date));
                         if(!empty($decArr[$date])){
                             ?>
@@ -918,7 +920,7 @@
                             <?php
                             $j++; 
                         }
-                        else if($dateDay == 'Saturday' && $SaturdayChk == 1 && !in_array($date, $tempArr)){
+                        else if($dateDay == 'Saturday' && $SaturdayChk == 1 && !in_array($date, $SatArr)){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
@@ -932,7 +934,7 @@
                             <?php
                             $j++;
                         }
-                        else if($dateDay == 'Sunday' && $SundayChk == 1 && !in_array($date, $tempArr)){
+                        else if($dateDay == 'Sunday' && $SundayChk == 1 && !in_array($date, $SunArr)){
                             ?>
                             <tr>
                                 <td><?php echo $j; ?></td>
@@ -965,7 +967,7 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form id="modelholiday" class="" name="modelholiday" method="post" >
+                            <form id="modelholiday" class="" name="modelholiday" method="post">
                                 <div class="form-body">
                                
                                     <div class="row">
@@ -989,7 +991,7 @@
                                 </div>
                                 
                                 <div class="form-actions">
-                                    <button type="button" class="btn btn-white waves-effect" data-dismiss="modal" name="close">Close</button>
+                                    <button type="button" class="btn btn-white waves-effect close" data-dismiss="modal">Close</button>
                                     <input type="button" id="save-holiday" class="btn btn-success" name="Save" value="Save"> <i class="fa fa-check"></i> 
                                 </div>
                             </form>
@@ -1005,12 +1007,12 @@
                     <div class="modal-content br-0">
                         <div class="modal-header">
                             <h4 class="modal-title"><i class="fa fa-pencil"></i>Mark Holiday</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <button type="button" class="closedata" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form id="modeldefaultholiday" class="" name="modeldefaultholiday" method="post" >
+                            <form id="modeldefaultholiday" class="" name="modeldefaultholiday" method="post">
                                 <div class="form-body">
                                 <div id="dynamic">
                                     <div class="row">
@@ -1033,7 +1035,7 @@
                                 </div>
                                 
                                 <div class="form-actions">
-                                    <button type="button" class="btn btn-white waves-effect" data-dismiss="modal" id="close" name="closedata">Close</button>
+                                    <button type="button" class="btn btn-white waves-effect closedata" data-dismiss="modal"  name="closedata" >Close</button>
                                     <input type="button" id="save-defaultholiday" class="btn btn-success" name="Save" value="Save"> <i class="fa fa-check"></i> 
                                 </div>
                             </form>

@@ -8,7 +8,12 @@ class Holiday extends CI_Controller
 		$this->load->model('common_model');
 		$this->login = $this->session->userdata('login');
 		$this->user_id = $this->login->id;
-		$this->year = date('Y');
+		if(!$this->session->userdata('year_data')){
+			$this->year = date('Y');
+		}
+		else{
+			$this->year = $this->session->userdata('year_data');
+		}
 		func_check_login();
 	}
 
@@ -131,9 +136,23 @@ class Holiday extends CI_Controller
 
 	public function displayData(){
 		$wherArr = array('user_id' =>$this->user_id);
-        $data = $this->common_model->getData('tbl_holiday_settings',$wherArr);
-        $SaturdayChk = $data[0]->saturday;
-        $SundayChk = $data[0]->sunday;
+        $data['holiday'] = $this->common_model->getData('tbl_holiday_settings',$wherArr);
+        $SatArr = array();
+        $SunArr = array();
+        foreach($data['holiday'] as $row){
+            $date_sat_data = $row->extract_sat_day;
+            $sat_array = explode(",",$date_sat_data);
+            $SatArr = $sat_array;
+            $date_sun_data = $row->extract_sun_day;
+            $sun_array = explode(",",$date_sun_data);
+            $SunArr = $sun_array;
+
+        }
+
+        $SaturdayChk = $row->saturday;
+        $SundayChk = $row->sunday;
+       	$selYear = $this->year;
+
 		$janQuery = $this->db->query("SELECT * FROM `tbl_holiday` where MONTH(date) = '01' order BY DAY(date) ASC");
 		$janTempArr = $janQuery->result_array();
 		$finalJanArr = array();
@@ -143,11 +162,10 @@ class Holiday extends CI_Controller
 			}
 		}
 		$janArr = $finalJanArr;
-
 		$j = 1;
 		$janStr = '';
         for($i=1;$i<=31;$i++){
-            $date = date('Y-m-d', strtotime('2019-01-'.$i));
+            $date = date('Y-m-d', strtotime($selYear.'-01-'.$i));
             $dateDay = date('l', strtotime($date));
             if(!empty($janArr[$date])){
                 $janStr .= '<tr>';
@@ -162,27 +180,27 @@ class Holiday extends CI_Controller
                 } 
                 $janStr .= '</td>';
                 $janStr .= '<td>'.$dateDay.'</td>';
-                $janStr .= '<td><button type="button" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
+                $janStr .= '<td><button type="button" onclick="deleteHoliday(\''.$date.'\',\'\')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
             	$janStr .= '</tr>';
                 $j++; 
             }
-            else if($dateDay == 'Saturday' && $SaturdayChk == 1){
+            else if($dateDay == 'Saturday' && $SaturdayChk == 1 && !in_array($date, $SatArr)){
                 $janStr .= '<tr>';
                 $janStr .= '<td>'.$j.'</td>';
                 $janStr .= '<td>'.$date.'</td>';
                 $janStr .= '<td>Saturday</td>';
                 $janStr .= '<td>'.$dateDay.'</td>';
-                $janStr .= '<td><button type="button" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
+                $janStr .= '<td><button type="button" onclick="deleteHoliday(\''.$date.'\',\'1\')" href="javascript:void(0);"class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
                 $janStr .= '</tr>';
                 $j++;
             }
-            else if($dateDay == 'Sunday' && $SundayChk == 1){
+            else if($dateDay == 'Sunday' && $SundayChk == 1 && !in_array($date, $SunArr)){
                 $janStr .= '<tr>';
                 $janStr .= '<td>'.$j.'</td>';
                 $janStr .= '<td>'.$date.'</td>';
                 $janStr .= '<td>Sunday</td>';
                 $janStr .= '<td>'.$dateDay.'</td>';
-                $janStr .= '<td><button type="button" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
+                $janStr .= '<td><button type="button" onclick="deleteHoliday(\''.$date.'\',\'1\')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
                 $janStr .= '</tr>';
                 $j++;
             }   
@@ -200,7 +218,7 @@ class Holiday extends CI_Controller
 		$j = 1;
 		$febStr = '';
         for($i=1;$i<=31;$i++){
-            $date = date('Y-m-d', strtotime('2019-02-'.$i));
+            $date = date('Y-m-d', strtotime($selYear.'-02-'.$i));
             $dateDay = date('l', strtotime($date));
             if(!empty($febArr[$date])){
                 $febStr .= '<tr>';
@@ -215,27 +233,27 @@ class Holiday extends CI_Controller
                 } 
                 $febStr .= '</td>';
                 $febStr .= '<td>'.$dateDay.'</td>';
-                $febStr .= '<td><button type="button" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
+                $febStr .= '<td><button type="button" onclick="deleteHoliday(\''.$date.'\',\'\')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
             	$febStr .= '</tr>';
                 $j++; 
             }
-            else if($dateDay == 'Saturday' && $SaturdayChk == 1){
+            else if($dateDay == 'Saturday' && $SaturdayChk == 1 && !in_array($date, $SatArr)){
                 $febStr .= '<tr>';
                 $febStr .= '<td>'.$j.'</td>';
                 $febStr .= '<td>'.$date.'</td>';
                 $febStr .= '<td>Saturday</td>';
                 $febStr .= '<td>'.$dateDay.'</td>';
-                $febStr .= '<td><button type="button" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
+                $febStr .= '<td><button type="button" onclick="deleteHoliday(\''.$date.'\',\'1\')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
                 $febStr .= '</tr>';
                 $j++;
             }
-            else if($dateDay == 'Sunday' && $SundayChk == 1){
+            else if($dateDay == 'Sunday' && $SundayChk == 1 && !in_array($date, $SunArr)){
                 $febStr .= '<tr>';
                 $febStr .= '<td>'.$j.'</td>';
                 $febStr .= '<td>'.$date.'</td>';
                 $febStr .= '<td>Sunday</td>';
                 $febStr .= '<td>'.$dateDay.'</td>';
-                $febStr .= '<td><button type="button" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
+                $febStr .= '<td><button type="button" onclick="deleteHoliday(\''.$date.'\',\'1\')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
                 $febStr .= '</tr>';
                 $j++;
             }   
@@ -254,7 +272,7 @@ class Holiday extends CI_Controller
 		$j = 1;
 		$marStr = '';
         for($i=1;$i<=31;$i++){
-            $date = date('Y-m-d', strtotime('2019-03-'.$i));
+            $date = date('Y-m-d', strtotime($selYear.'-03-'.$i));
             $dateDay = date('l', strtotime($date));
             if(!empty($marArr[$date])){
                 $marStr .= '<tr>';
@@ -269,27 +287,27 @@ class Holiday extends CI_Controller
                 } 
                 $marStr .= '</td>';
                 $marStr .= '<td>'.$dateDay.'</td>';
-                $marStr .= '<td><button type="button" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
+                $marStr .= '<td><button type="button" onclick="deleteHoliday(\''.$date.'\',\'\')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
             	$marStr .= '</tr>';
                 $j++; 
             }
-            else if($dateDay == 'Saturday' && $SaturdayChk == 1){
+            else if($dateDay == 'Saturday' && $SaturdayChk == 1 && !in_array($date, $SatArr)){
                 $marStr .= '<tr>';
                 $marStr .= '<td>'.$j.'</td>';
                 $marStr .= '<td>'.$date.'</td>';
                 $marStr .= '<td>Saturday</td>';
                 $marStr .= '<td>'.$dateDay.'</td>';
-                $marStr .= '<td><button type="button" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
+                $marStr .= '<td><button type="button" onclick="deleteHoliday(\''.$date.'\',\'1\')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
                 $marStr .= '</tr>';
                 $j++;
             }
-            else if($dateDay == 'Sunday' && $SundayChk == 1){
+            else if($dateDay == 'Sunday' && $SundayChk == 1 && !in_array($date, $SunArr)){
                 $marStr .= '<tr>';
                 $marStr .= '<td>'.$j.'</td>';
                 $marStr .= '<td>'.$date.'</td>';
                 $marStr .= '<td>Sunday</td>';
                 $marStr .= '<td>'.$dateDay.'</td>';
-                $marStr .= '<td><button type="button" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
+                $marStr .= '<td><button type="button" onclick="deleteHoliday(\''.$date.'\',\'1\')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
                 $marStr .= '</tr>';
                 $j++;
             }   
@@ -308,7 +326,7 @@ class Holiday extends CI_Controller
 		$j = 1;
 		$aprilStr = '';
         for($i=1;$i<=31;$i++){
-            $date = date('Y-m-d', strtotime('2019-04-'.$i));
+            $date = date('Y-m-d', strtotime($selYear.'-04-'.$i));
             $dateDay = date('l', strtotime($date));
             if(!empty($aprilArr[$date])){
                 $aprilStr .= '<tr>';
@@ -323,27 +341,27 @@ class Holiday extends CI_Controller
                 } 
                 $aprilStr .= '</td>';
                 $aprilStr .= '<td>'.$dateDay.'</td>';
-                $aprilStr .= '<td><button type="button" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
+                $aprilStr .= '<td><button type="button" onclick="deleteHoliday(\''.$date.'\',\'\')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
             	$aprilStr .= '</tr>';
                 $j++; 
             }
-            else if($dateDay == 'Saturday' && $SaturdayChk == 1){
+            else if($dateDay == 'Saturday' && $SaturdayChk == 1 && !in_array($date, $SatArr)){
                 $aprilStr .= '<tr>';
                 $aprilStr .= '<td>'.$j.'</td>';
                 $aprilStr .= '<td>'.$date.'</td>';
                 $aprilStr .= '<td>Saturday</td>';
                 $aprilStr .= '<td>'.$dateDay.'</td>';
-                $aprilStr .= '<td><button type="button" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
+                $aprilStr .= '<td><button type="button" onclick="deleteHoliday(\''.$date.'\',\'1\')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
                 $aprilStr .= '</tr>';
                 $j++;
             }
-            else if($dateDay == 'Sunday' && $SundayChk == 1){
+            else if($dateDay == 'Sunday' && $SundayChk == 1 && !in_array($date, $SunArr)){
                 $aprilStr .= '<tr>';
                 $aprilStr .= '<td>'.$j.'</td>';
                 $aprilStr .= '<td>'.$date.'</td>';
                 $aprilStr .= '<td>Sunday</td>';
                 $aprilStr .= '<td>'.$dateDay.'</td>';
-                $aprilStr .= '<td><button type="button" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
+                $aprilStr .= '<td><button type="button" onclick="deleteHoliday(\''.$date.'\',\'1\')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
                 $aprilStr .= '</tr>';
                 $j++;
             }   
@@ -362,7 +380,7 @@ class Holiday extends CI_Controller
 		$j = 1;
 		$mayStr = '';
         for($i=1;$i<=31;$i++){
-            $date = date('Y-m-d', strtotime('2019-05-'.$i));
+            $date = date('Y-m-d', strtotime($selYear.'-05-'.$i));
             $dateDay = date('l', strtotime($date));
             if(!empty($mayArr[$date])){
                 $mayStr .= '<tr>';
@@ -377,17 +395,17 @@ class Holiday extends CI_Controller
                 } 
                 $mayStr .= '</td>';
                 $mayStr .= '<td>'.$dateDay.'</td>';
-                $mayStr .= '<td></td>';
+                $mayStr .= '<td><button type="button" onclick="deleteHoliday(\''.$date.'\',\'\')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
             	$mayStr .= '</tr>';
                 $j++; 
             }
-            else if($dateDay == 'Saturday' && $SaturdayChk == 1){
+            else if($dateDay == 'Saturday' && $SaturdayChk == 1 && !in_array($date, $SunArr)){
                 $mayStr .= '<tr>';
                 $mayStr .= '<td>'.$j.'</td>';
                 $mayStr .= '<td>'.$date.'</td>';
                 $mayStr .= '<td>Saturday</td>';
                 $mayStr .= '<td>'.$dateDay.'</td>';
-                $mayStr .= '<td><button type="button" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
+                $mayStr .= '<td><button type="button" onclick="deleteHoliday(\''.$date.'\',\'1\')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
                 $mayStr .= '</tr>';
                 $j++;
             }
@@ -397,7 +415,7 @@ class Holiday extends CI_Controller
                 $mayStr .= '<td>'.$date.'</td>';
                 $mayStr .= '<td>Sunday</td>';
                 $mayStr .= '<td>'.$dateDay.'</td>';
-                $mayStr .= '<td><button type="button" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
+                $mayStr .= '<td><button type="button" onclick="deleteHoliday(\''.$date.'\',\'1\')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
                 $mayStr .= '</tr>';
                 $j++;
             }   
@@ -418,7 +436,7 @@ class Holiday extends CI_Controller
 			$j = 1;
 		$juneStr = '';
         for($i=1;$i<=31;$i++){
-            $date = date('Y-m-d', strtotime('2019-06-'.$i));
+            $date = date('Y-m-d', strtotime($selYear.'-06-'.$i));
             $dateDay = date('l', strtotime($date));
             if(!empty($juneArr[$date])){
                 $juneStr .= '<tr>';
@@ -433,27 +451,27 @@ class Holiday extends CI_Controller
                 } 
                 $juneStr .= '</td>';
                 $juneStr .= '<td>'.$dateDay.'</td>';
-                $juneStr .= '<td><button type="button" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
+                $juneStr .= '<td><button type="button" onclick="deleteHoliday(\''.$date.'\',\'\')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
             	$juneStr .= '</tr>';
                 $j++; 
             }
-            else if($dateDay == 'Saturday' && $SaturdayChk == 1){
+            else if($dateDay == 'Saturday' && $SaturdayChk == 1 && !in_array($date, $SatArr)){
                 $juneStr .= '<tr>';
                 $juneStr .= '<td>'.$j.'</td>';
                 $juneStr .= '<td>'.$date.'</td>';
                 $juneStr .= '<td>Saturday</td>';
                 $juneStr .= '<td>'.$dateDay.'</td>';
-                $juneStr .= '<td><button type="button" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
+                $juneStr .= '<td><button type="button" onclick="deleteHoliday(\''.$date.'\',\'1\')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
                 $juneStr .= '</tr>';
                 $j++;
             }
-            else if($dateDay == 'Sunday' && $SundayChk == 1){
+            else if($dateDay == 'Sunday' && $SundayChk == 1 && !in_array($date, $SunArr)){
                 $juneStr .= '<tr>';
                 $juneStr .= '<td>'.$j.'</td>';
                 $juneStr .= '<td>'.$date.'</td>';
                 $juneStr .= '<td>Sunday</td>';
                 $juneStr .= '<td>'.$dateDay.'</td>';
-                $juneStr .= '<td><button type="button" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
+                $juneStr .= '<td><button type="button" onclick="deleteHoliday(\''.$date.'\',\'1\')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
                 $juneStr .= '</tr>';
                 $j++;
             }   
@@ -472,7 +490,7 @@ class Holiday extends CI_Controller
 		$j = 1;
 		$julyStr = '';
         for($i=1;$i<=31;$i++){
-            $date = date('Y-m-d', strtotime('2019-07-'.$i));
+            $date = date('Y-m-d', strtotime($selYear.'-07-'.$i));
             $dateDay = date('l', strtotime($date));
             if(!empty($julyArr[$date])){
                 $julyStr .= '<tr>';
@@ -487,27 +505,27 @@ class Holiday extends CI_Controller
                 } 
                 $julyStr .= '</td>';
                 $julyStr .= '<td>'.$dateDay.'</td>';
-                $julyStr .= '<td><button type="button" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
+                $julyStr .= '<td><button type="button" onclick="deleteHoliday(\''.$date.'\',\'\')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
             	$julyStr .= '</tr>';
                 $j++; 
             }
-            else if($dateDay == 'Saturday' && $SaturdayChk == 1){
+            else if($dateDay == 'Saturday' && $SaturdayChk == 1 && !in_array($date, $SatArr)){
                 $julyStr .= '<tr>';
                 $julyStr .= '<td>'.$j.'</td>';
                 $julyStr .= '<td>'.$date.'</td>';
                 $julyStr .= '<td>Saturday</td>';
                 $julyStr .= '<td>'.$dateDay.'</td>';
-                $julyStr .= '<td><button type="button" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
+                $julyStr .= '<td><button type="button" onclick="deleteHoliday(\''.$date.'\',\'1\')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
                 $julyStr .= '</tr>';
                 $j++;
             }
-            else if($dateDay == 'Sunday' && $SundayChk == 1){
+            else if($dateDay == 'Sunday' && $SundayChk == 1 && !in_array($date, $SunArr)){
                 $julyStr .= '<tr>';
                 $julyStr .= '<td>'.$j.'</td>';
                 $julyStr .= '<td>'.$date.'</td>';
                 $julyStr .= '<td>Sunday</td>';
                 $julyStr .= '<td>'.$dateDay.'</td>';
-                $julyStr .= '<td><button type="button" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
+                $julyStr .= '<td><button type="button" onclick="deleteHoliday(\''.$date.'\',\'1\')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
                 $julyStr .= '</tr>';
                 $j++;
             }   
@@ -526,7 +544,7 @@ class Holiday extends CI_Controller
 		$j = 1;
 		$augStr = '';
         for($i=1;$i<=31;$i++){
-            $date = date('Y-m-d', strtotime('2019-08-'.$i));
+            $date = date('Y-m-d', strtotime($selYear.'-08-'.$i));
             $dateDay = date('l', strtotime($date));
             if(!empty($augestArr[$date])){
                 $augStr .= '<tr>';
@@ -541,27 +559,27 @@ class Holiday extends CI_Controller
                 } 
                 $augStr .= '</td>';
                 $augStr .= '<td>'.$dateDay.'</td>';
-                $augStr .= '<td><button type="button" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
+                $augStr .= '<td><button type="button" onclick="deleteHoliday(\''.$date.'\',\'\')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
             	$augStr .= '</tr>';
                 $j++; 
             }
-            else if($dateDay == 'Saturday' && $SaturdayChk == 1){
+            else if($dateDay == 'Saturday' && $SaturdayChk == 1 && !in_array($date, $SatArr)){
                 $augStr .= '<tr>';
                 $augStr .= '<td>'.$j.'</td>';
                 $augStr .= '<td>'.$date.'</td>';
                 $augStr .= '<td>Saturday</td>';
                 $augStr .= '<td>'.$dateDay.'</td>';
-                $augStr .= '<td><button type="button" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
+                $augStr .= '<td><button type="button" onclick="deleteHoliday(\''.$date.'\',\'1\')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
                 $augStr .= '</tr>';
                 $j++;
             }
-            else if($dateDay == 'Sunday' && $SundayChk == 1){
+            else if($dateDay == 'Sunday' && $SundayChk == 1 && !in_array($date, $SunArr)){
                 $augStr .= '<tr>';
                 $augStr .= '<td>'.$j.'</td>';
                 $augStr .= '<td>'.$date.'</td>';
                 $augStr .= '<td>Sunday</td>';
                 $augStr .= '<td>'.$dateDay.'</td>';
-                $augStr .= '<td><button type="button" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
+                $augStr .= '<td><button type="button" onclick="deleteHoliday(\''.$date.'\',\'1\')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
                 $augStr .= '</tr>';
                 $j++;
             }   
@@ -580,7 +598,7 @@ class Holiday extends CI_Controller
 		$j = 1;
 		$sepStr = '';
         for($i=1;$i<=31;$i++){
-            $date = date('Y-m-d', strtotime('2019-09-'.$i));
+            $date = date('Y-m-d', strtotime($selYear.'-09-'.$i));
             $dateDay = date('l', strtotime($date));
             if(!empty($sepArr[$date])){
                 $sepStr .= '<tr>';
@@ -595,27 +613,27 @@ class Holiday extends CI_Controller
                 } 
                 $sepStr .= '</td>';
                 $sepStr .= '<td>'.$dateDay.'</td>';
-                $sepStr .= '<td><button type="button" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
+                $sepStr .= '<td><button type="button" onclick="deleteHoliday(\''.$date.'\',\'\')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
             	$sepStr .= '</tr>';
                 $j++; 
             }
-            else if($dateDay == 'Saturday' && $SaturdayChk == 1){
+            else if($dateDay == 'Saturday' && $SaturdayChk == 1 && !in_array($date, $SatArr)){
                 $sepStr .= '<tr>';
                 $sepStr .= '<td>'.$j.'</td>';
                 $sepStr .= '<td>'.$date.'</td>';
                 $sepStr .= '<td>Saturday</td>';
                 $sepStr .= '<td>'.$dateDay.'</td>';
-                $sepStr .= '<td><button type="button" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
+                $sepStr .= '<td><button type="button" onclick="deleteHoliday(\''.$date.'\',\'1\')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
                 $sepStr .= '</tr>';
                 $j++;
             }
-            else if($dateDay == 'Sunday' && $SundayChk == 1){
+            else if($dateDay == 'Sunday' && $SundayChk == 1 && !in_array($date, $SunArr)){
                 $sepStr .= '<tr>';
                 $sepStr .= '<td>'.$j.'</td>';
                 $sepStr .= '<td>'.$date.'</td>';
                 $sepStr .= 'sepStr<td>Sunday</td>';
                 $sepStr .= '<td>'.$dateDay.'</td>';
-                $sepStr .= '<td><button type="button" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
+                $sepStr .= '<td><button type="button" onclick="deleteHoliday(\''.$date.'\',\'1\')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
                 $sepStr .= '</tr>';
                 $j++;
             }   
@@ -634,7 +652,7 @@ class Holiday extends CI_Controller
 		$j = 1;
 		$octStr = '';
         for($i=1;$i<=31;$i++){
-            $date = date('Y-m-d', strtotime('2019-10-'.$i));
+            $date = date('Y-m-d', strtotime($selYear.'-10-'.$i));
             $dateDay = date('l', strtotime($date));
             if(!empty($octArr[$date])){
                 $octStr .= '<tr>';
@@ -649,27 +667,27 @@ class Holiday extends CI_Controller
                 } 
                 $octStr .= '</td>';
                 $octStr .= '<td>'.$dateDay.'</td>';
-                $octStr .= '<td><button type="button" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
+                $octStr .= '<td><button type="button" onclick="deleteHoliday(\''.$date.'\',\'\')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
             	$octStr .= '</tr>';
                 $j++; 
             }
-            else if($dateDay == 'Saturday' && $SaturdayChk == 1){
+            else if($dateDay == 'Saturday' && $SaturdayChk == 1 && !in_array($date, $SatArr)){
                 $octStr .= '<tr>';
                 $octStr .= '<td>'.$j.'</td>';
                 $octStr .= '<td>'.$date.'</td>';
                 $octStr .= '<td>Saturday</td>';
                 $octStr .= '<td>'.$dateDay.'</td>';
-                $octStr .= '<td><button type="button" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
+                $octStr .= '<td><button type="button" onclick="deleteHoliday(\''.$date.'\',\'1\')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
                 $octStr .= '</tr>';
                 $j++;
             }
-            else if($dateDay == 'Sunday' && $SundayChk == 1){
+            else if($dateDay == 'Sunday' && $SundayChk == 1 && !in_array($date, $SunArr)){
                 $octStr .= '<tr>';
                 $octStr .= '<td>'.$j.'</td>';
                 $octStr .= '<td>'.$date.'</td>';
                 $octStr .= '<td>Sunday</td>';
                 $octStr .= '<td>'.$dateDay.'</td>';
-                $octStr .= '<td><button type="button" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
+                $octStr .= '<td><button type="button" onclick="deleteHoliday(\''.$date.'\',\'1\')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
                 $octStr .= '</tr>';
                 $j++;
             }   
@@ -688,7 +706,7 @@ class Holiday extends CI_Controller
 		$j = 1;
 		$novStr = '';
         for($i=1;$i<=31;$i++){
-            $date = date('Y-m-d', strtotime('2019-11-'.$i));
+            $date = date('Y-m-d', strtotime($selYear.'-11-'.$i));
             $dateDay = date('l', strtotime($date));
             if(!empty($novArr[$date])){
                 $novStr .= '<tr>';
@@ -703,27 +721,27 @@ class Holiday extends CI_Controller
                 } 
                 $novStr .= '</td>';
                 $novStr .= '<td>'.$dateDay.'</td>';
-                $novStr .= '<td><button type="button" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
+                $novStr .= '<td><button type="button" onclick="deleteHoliday(\''.$date.'\',\'\')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
             	$novStr .= '</tr>';
                 $j++; 
             }
-            else if($dateDay == 'Saturday' && $SaturdayChk == 1){
+            else if($dateDay == 'Saturday' && $SaturdayChk == 1 && !in_array($date, $SatArr)){
                 $novStr .= '<tr>';
                 $novStr .= '<td>'.$j.'</td>';
                 $novStr .= '<td>'.$date.'</td>';
                 $novStr .= '<td>Saturday</td>';
                 $novStr .= '<td>'.$dateDay.'</td>';
-                $novStr .= '<td><button type="button" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
+                $novStr .= '<td><button type="button" onclick="deleteHoliday(\''.$date.'\',\'1\')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
                 $novStr .= '</tr>';
                 $j++;
             }
-            else if($dateDay == 'Sunday' && $SundayChk == 1){
+            else if($dateDay == 'Sunday' && $SundayChk == 1 && !in_array($date, $SunArr)){
                 $novStr .= '<tr>';
                 $novStr .= '<td>'.$j.'</td>';
                 $novStr .= '<td>'.$date.'</td>';
                 $novStr .= '<td>Sunday</td>';
                 $novStr .= '<td>'.$dateDay.'</td>';
-                $novStr .= '<td><button type="button" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
+                $novStr .= '<td><button type="button" onclick="deleteHoliday(\''.$date.'\',\'1\')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
                 $novStr .= '</tr>';
                 $j++;
             }   
@@ -741,7 +759,7 @@ class Holiday extends CI_Controller
 		$j = 1;
 		$decStr = '';
         for($i=1;$i<=31;$i++){
-            $date = date('Y-m-d', strtotime('2019-12-'.$i));
+            $date = date('Y-m-d', strtotime($selYear.'-12-'.$i));
             $dateDay = date('l', strtotime($date));
             if(!empty($decArr[$date])){
                 $decStr .= '<tr>';
@@ -756,27 +774,27 @@ class Holiday extends CI_Controller
                 } 
                 $decStr .= '</td>';
                 $decStr .= '<td>'.$dateDay.'</td>';
-                $decStr .= '<td><button type="button" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
+                $decStr .= '<td><button type="button" onclick="deleteHoliday(\''.$date.'\',\'\')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
             	$decStr .= '</tr>';
                 $j++; 
             }
-            else if($dateDay == 'Saturday' && $SaturdayChk == 1){
+            else if($dateDay == 'Saturday' && $SaturdayChk == 1 && !in_array($date, $SatArr)){
                 $decStr .= '<tr>';
                 $decStr .= '<td>'.$j.'</td>';
                 $decStr .= '<td>'.$date.'</td>';
                 $decStr .= '<td>Saturday</td>';
                 $decStr .= '<td>'.$dateDay.'</td>';
-                $decStr .= '<td><button type="button" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
+                $decStr .= '<td><button type="button" onclick="deleteHoliday(\''.$date.'\',\'1\')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
                 $decStr .= '</tr>';
                 $j++;
             }
-            else if($dateDay == 'Sunday' && $SundayChk == 1){
+            else if($dateDay == 'Sunday' && $SundayChk == 1 && !in_array($date, $SunArr)){
                 $decStr .= '<tr>';
                 $decStr .= '<td>'.$j.'</td>';
                 $decStr .= '<td>'.$date.'</td>';
                 $decStr .= '<td>Sunday</td>';
                 $decStr .= '<td>'.$dateDay.'</td>';
-                $decStr .= '<td><button type="button" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
+                $decStr .= '<td><button type="button" onclick="deleteHoliday(\''.$date.'\',\'1\')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>';
                 $decStr .= '</tr>';
                 $j++;
             }   
@@ -817,7 +835,7 @@ class Holiday extends CI_Controller
 							$this->common_model->insertData('tbl_holiday',$insArr);
 							$message = 2;
 					}
-					
+					//SELECT * FROM `tbl_holiday` where MONTH(date) = '01'
 				}
 			}
 		}
@@ -831,8 +849,18 @@ class Holiday extends CI_Controller
 			$sunday = $this->input->post('sunday');
 			$insArr = array('saturday' =>$saturday,'sunday'=>$sunday,'user_id' =>$this->user_id);
 			$data = $this->common_model->getData('tbl_holiday_settings');
+			$sat_data = $data[0]->saturday;
+			$sun_data = $data[0]->sunday;
 			if(!empty($data[0]->user_id)){
-				$updateArr = array('saturday' =>$saturday,'sunday'=>$sunday,'extract' => null);
+				if($saturday == '1' && $sunday == '1'){
+					$updateArr = array('saturday' =>$saturday,'sunday'=>$sunday ,'extract_sat_day' => null , 'extract_sun_day' => null);
+				}
+				else if($sat_data != $saturday){
+					$updateArr = array('saturday' =>$saturday,'extract_sat_day' => null);
+				}
+				else if($sun_data != $sunday){
+					$updateArr = array('sunday'=>$sunday, 'extract_sun_day' => null);
+				}
 				$whereArr = array('user_id' => $data[0]->user_id);
 				$this->common_model->updateData('tbl_holiday_settings',$updateArr,$whereArr);
 			}
@@ -843,32 +871,51 @@ class Holiday extends CI_Controller
 	}
 
 	public function deleteholiday(){
+		$date = $_POST['id'];
+		$day = date('l', strtotime($date));
 		if(empty($_POST['type'])){
-			$date = $_POST['id'];
+			
 			$whereArr = array('date'=>$date);
 			$this->common_model->deleteData('tbl_holiday',$whereArr);
 		}
 		else{ 
 			$whereArr = array('user_id' => $this->user_id);
 			$data = $this->common_model->getData('tbl_holiday_settings',$whereArr);
-			if(empty($data[0]->extract)){
-				$final_date = $_POST['id'];	
+			if($day == 'Saturday'){
+				if(empty($data[0]->extract_sat_day) && $day == 'Saturday'){
+				$final_sat_date = $_POST['id'];	
+				}
+				else{
+					$db_date = $data[0]->extract_sat_day;
+					$final_sat_date = $db_date.','.$date; 
+				}
 			}
-			else{
-				$date = $_POST['id'];
-				$db_date = $data[0]->extract;
-				$final_date = $db_date.','.$date;
+			if($day == 'Sunday'){
+				if(empty($data[0]->extract_sun_day) && $day == 'Sunday'){
+				$final_sun_date = $_POST['id'];	
+				}
+				else{
+					$db_date = $data[0]->extract_sun_day;
+					$final_sun_date = $db_date.','.$date; 
+				}
 			}
-			$updateArr = array('extract' => $final_date);
-			$this->common_model->updateData('tbl_holiday_settings',$updateArr,$whereArr);
+			
+			$updateSatArr = array('extract_sat_day' => $final_sat_date);
+			$updateSunArr = array('extract_sun_day' => $final_sun_date);
+			if(!empty($final_sat_date)){
+				$this->common_model->updateData('tbl_holiday_settings',$updateSatArr,$whereArr);
+			}
+			if(!empty($final_sun_date)){
+				$this->common_model->updateData('tbl_holiday_settings',$updateSunArr,$whereArr);
+			}
 		}
 
 	}
 
 	public function check_year(){
-		if(empty($_POST['type'])){
+		if(!empty($_POST)){
 			$year = $_POST['year'];
-			echo $year;die;	
+			$this->session->set_userdata('year_data',$year);
 		}
 	}
 }
