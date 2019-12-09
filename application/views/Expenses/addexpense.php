@@ -134,7 +134,7 @@
 		                								<div class="form-group">
 		                									<label class="control-label">Purchase Date</label>
 															<div class="input-icon">
-																<input type="text" class="form-control" name="purchasedate" id="start_date" value="<?php echo date('Y-m-d'); ?>">
+																<input type="text" class="form-control" name="purchasedate" id="startdate" value="<?php echo date('Y-m-d'); ?>">
 															</div>
 														</div>
 		                							</div>

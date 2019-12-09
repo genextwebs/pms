@@ -108,7 +108,8 @@
 												{	
 													$j++;
 											?>
-											<div class="row" >
+											<div class="row" id="row<?php echo $j; ?>">
+												<div class="row">
 												<div class="form-group">
                                                     <label class="control-label hidden-md hidden-lg">Item</label>
                                                     <div class="input-group">
@@ -156,8 +157,7 @@
 													<label class="control-label hidden-md hidden-lg">Amount</label>
 												<input type="text" name="amount[]" id="amount<?php echo $j ?>" value="<?php echo !empty($product[$i]->amount) ? $product[$i]->amount : '' ?>">
 
-													<!--<p class="form-control-static" id="amountdisplay"><span class="amount-html">0.00</span></p>
-													<input type="hidden" class="amount" name="amount[]" id="amount1">-->
+													<div class="col-md-1 text-right visible-md visible-lg"><button type="button" name="remove" id="<?php echo $j; ?>" class="btn remove-item btn-circle btn-danger remove"><i class="fa fa-remove"></i></button></div>
 												</div>
 											</div>
 											<div class="row">
@@ -165,7 +165,9 @@
 													<textarea name="item_Description[]" class="form-control" placeholder="Description" rows="2"><?php echo !empty($product[$i]->description) ? $product[$i]->description : '' ?></textarea>
 												</div>
 											</div>
+											</div>
 											<?php } ?>
+
 										</div>
 											<input type="hidden" id="counter" value="<?php echo count($product) ?>">
 

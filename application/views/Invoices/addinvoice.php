@@ -110,7 +110,7 @@
 														<div class="row">
 														<div class="col-md-12">
 															<div class="input-icon">
-																<input type="text" class="form-control" name="invoice_date" id="start_date" value="<?php echo date('Y-m-d'); ?>">
+																<input type="text" class="form-control" name="invoice_date" id="startdate" value="<?php echo date('Y-m-d'); ?>">
 															</div>
 														</div>
 														</div>
@@ -120,7 +120,7 @@
 													<div class="form-group">
 														<label class="control-label">Due Date</label>
 														<div class="input-icon">
-															<input type="text" class="form-control" name="due_date" id="deadline">
+															<input type="text" class="form-control" name="due_date" id="enddate" data-date-format='yyyy-mm-dd'>
 														</div>
 													</div>
 												</div>

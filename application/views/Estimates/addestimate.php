@@ -86,6 +86,7 @@
 											<button aria-expanded="false" data-toggle="dropdown" class="btn btn-info dropdown-toggle waves-effect waves-light" type="button">Products <span class="caret"></span></button>
 											<div id="dynamic">
 											<div class="row" >
+												<div class="row" >
 												<div class="form-group">
                                                     <label class="control-label hidden-md hidden-lg">Item</label>
                                                     <div class="input-group">
@@ -136,6 +137,7 @@
 													<textarea name="item_Description[]" class="form-control" placeholder="Description" rows="2"></textarea>
 												</div>
 											</div>
+										</div>
 										</div>
 											<input type="hidden" id="counter" value="1">
 

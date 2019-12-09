@@ -146,7 +146,7 @@
 		                								<div class="form-group">
 		                									<label class="control-label">Purchase Date</label>
 															<div class="input-icon">
-																<input type="text" class="form-control" name="purchasedate" id="start_date" value="<?php echo !empty($expense[0]->purchasedate) ? $expense[0]->purchasedate : '' ?>">
+																<input type="text" class="form-control" name="purchasedate" id="startdate" value="<?php echo !empty($expense[0]->purchasedate) ? $expense[0]->purchasedate : '' ?>" data-date-format='yyyy-mm-dd'>
 															</div>
 														</div>
 		                							</div>

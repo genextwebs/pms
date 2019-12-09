@@ -172,15 +172,13 @@ function deleteclients(clientid){
 //datepicker	
 $(document).ready(function(){
   	$("#startdate").datepicker({
-	   todayBtn:  1,
-		autoclose: true,
-		 dateFormat: 'dd-mm-yy'
-	   }).on('changeDate', function (selected) {
-		/*var minDate = new Date(selected.date.valueOf());
-		$('#enddate').datetimepicker('setStartDate', minDate);*/
-	});
+			 dateFormat: 'Y-m-d'
+	   });
 		
-	$("#enddate").datepicker();
+		$("#enddate").datepicker({
+	  		 dateFormat: 'Y-m-d'
+	 	});
+		
 });
 
 //count amount
@@ -219,16 +217,29 @@ function totalamount(){
 	
 //repeat Item
 $('#item-repeat').click(function(){
+
 	var counter=$('#counter').val();
+
 	counter++;
 	$('#counter').val(eval(counter));
-	
-	$('#dynamic').append('<div id="row'+counter+'"><div class="row"><div class="form-group"><label class="control-label hidden-md hidden-lg">Item</label><div class="input-group"><div class="input-group-addon"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span></div><input type="text" class="form-control item_name" name="item_name[]">  </div></div><div class="col-md-1"><div class="form-group"><label class="control-label hidden-md hidden-lg">Qty/Hrs</label><input type="number" min="1" class="form-control quantity" name="quantity[]" id="quantity'+counter+'"></div></div><div class="col-md-2"><div class="form-group"><label class="control-label hidden-md hidden-lg">Unit Price</label><input type="text" class="form-control cost_per_item" name="cost_per_item[]" id="cost_per_item'+counter+'" onblur="countamount('+counter+');"></div></div><div class="col-md-2"><div class="form-group"><label class="control-label hidden-md hidden-lg">TaX<a href="javascript:;" id="tax-settings" data-toggle="modal" data-target="#project-tax">	<i class="ti-settings text-info"></i></a>	</label><select name="tax[]" class="form-control"  id="taxes'+counter+'" onchange="counttax('+counter+');">'+$("#taxes1").html()+'</select></div></div><div class="col-md-2 border-dark  text-center"><label class="control-label hidden-md hidden-lg">Amount</label><input type="text" name="amount[]" id="amount'+counter+'"></div><div class="col-md-1 text-right visible-md visible-lg"><button type="button" name="remove" id="'+counter+'" class="btn remove-item btn-circle btn-danger remove"><i class="fa fa-remove"></i></button></div></div><div class="row"><div class="form-group"><textarea name="item_Description[]" class="form-control" placeholder="Description" rows="2"></textarea></div></div>');
+	//alert($("#taxes'+counter+'").html());
+	$('#dynamic').append('<div id="row'+counter+'"><div class="row"><div class="form-group"><label class="control-label hidden-md hidden-lg">Item</label><div class="input-group"><div class="input-group-addon"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span></div><input type="text" class="form-control item_name" name="item_name[]">  </div></div><div class="col-md-1"><div class="form-group"><label class="control-label hidden-md hidden-lg">Qty/Hrs</label><input type="number" min="1" class="form-control quantity" name="quantity[]" id="quantity'+counter+'"></div></div><div class="col-md-2"><div class="form-group"><label class="control-label hidden-md hidden-lg">Unit Price</label><input type="text" class="form-control cost_per_item" name="cost_per_item[]" id="cost_per_item'+counter+'" onblur="countamount('+counter+');"></div></div><div class="col-md-2"><div class="form-group"><label class="control-label hidden-md hidden-lg">TaX<a href="javascript:;" id="tax-settings" data-toggle="modal" data-target="#project-tax">	<i class="ti-settings text-info"></i></a>	</label><select name="tax[]" class="form-control"  id="taxes'+counter+'" onchange="counttax('+counter+');">'+$("#taxes1").html()+'</select></div></div><div class="col-md-2 border-dark  text-center"><label class="control-label hidden-md hidden-lg">Amount</label><input type="text" name="amount[]" id="amount'+counter+'"></div><div class="col-md-1 text-right visible-md visible-lg"><button type="button" name="remove" id="'+counter+'" class="btn remove-item btn-circle btn-danger remove"><i class="fa fa-remove"></i></button></div></div><div class="row"><div class="form-group"><textarea name="item_Description[]" class="form-control" placeholder="Description" rows="2"></textarea></div></div></div>');
+	$("#taxes"+counter).val('');
 });
 
 $(document).on('click','.remove',function(){
 	var btn_id=$(this).attr("id");
+	var amount1=$('#amount'+btn_id).val();
+
 	$("#row"+btn_id+'').remove();
+		
+	
+	 var ftotal1=$('#finaltotal').val();
+
+	var  finaltotal1=(eval(ftotal1))-(eval(amount1));
+		document.getElementById("total").innerHTML = finaltotal1;
+	$('#finaltotal').val(eval(finaltotal1));
+	
 });
 
 //estimate table
@@ -600,7 +611,22 @@ $(function() {
     }
   });
 });
-
+// createinvoice validation
+$(function() {
+  $("form[name='createinvoice']").validate({
+      rules: {
+      invoice_number: "required",
+      project: "required",
+	  currency:"required",
+	  invoice_date:"required",
+		due_date:"required",
+		status:"required"
+      },
+    submitHandler: function(form) {
+      form.submit();
+    }
+  });
+});
 //invoice validation
 
 $(function() {
@@ -640,6 +666,7 @@ $(function() {
     }
   });
 });
+
 
 //client wise project
 

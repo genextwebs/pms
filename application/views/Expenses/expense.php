@@ -25,19 +25,25 @@
 									</div>
                 				</div>
 							</div>
-							
+							<div class="row filter-from" id="ticket-filters" style="display: none;">
+	              			  <div class="col-md-12">
+	                    		<h4>Filter by <a href="javascript:;" class="pull-right toggle-filter"><i class="fa fa-times-circle-o"></i></a></h4>
+	              			  </div>
+	                <form action="" id="filter-form">
 							<div class="row">
-		                		<div class="col-lg-3 col-md-4">
-		                			<div class="form-group">
+		                		<div class="col-md-4">
+		                			
             							<label class="control-label">Select Date Range</label>
-											<input type="text" placehoder="Start Date" id="startdate" name="startdate" data-date-format='yyyy-mm-dd' /><spam>TO</spam>
-											<input type="text" placehoder="End Date" id="enddate" name="enddate" data-date-format='yyyy-mm-dd'  />
-									</div>
+											<input type="text" class="start-date form-control br-0" id="startdate" name="startdate" data-date-format='yyyy-mm-dd' /><div class="input-group-prepend">
+										      <span class="input-group-text bg-info text-white">To</span>
+										    </div>
+											<input type="text" class="end-date form-control br-0" id="enddate" name="enddate" data-date-format='yyyy-mm-dd'  />
 		                		</div>
-		                		<div class="col-lg-3 col-md-4">
-		                			<div class="form-group">
+		                		<div class="col-md-2">
+		                			
             							<label class="control-label">Employee</label>
-            							<select id='employee' name="employee" class="custom-select">
+            							<div class="form-group">
+            							<select id='employee' name="employee"class="select2 form-control">
 								            <option value="">--</option>
 											<?php
 												foreach($employee as $row)
@@ -49,10 +55,10 @@
 								        </select> 
             						</div>
 		                		</div>
-		                		<div class="col-lg-3 col-md-4">
+		                		<div class="col-md-2">
 		                			<div class="form-group">
             							<label class="control-label">Status</label>
-            							<select id='status' name="status" class="custom-select">
+            							<select name="status"class="select2 form-control" id='status' data-placeholder="Select Status">
 								            <option value='all'>All</option>          
 								            <option value='0'>Pending</option>  
 								            <option value='1'>Approved</option> 
@@ -61,13 +67,16 @@
 								        </select> 
             						</div>
 		                		</div>
-		                		<div class="col-lg-3 col-md-4">
-		                			<div class="form-group">
-										<input type="button" value="Apply" name="btnapply" id="btnapply"> 
-										<input type="reset" value="Reset">
-									</div>
-		                		</div>
+		                		<div class="col-md-4">
+		                        <div class="form-group m-t-10">
+		                            <label class="control-label col-12 mb-3">&nbsp;</label>
+		                            <button type="button" id="btnapply" class="btn btn-success col-lg-4 co-md-5"><i class="fa fa-check"></i> Apply</button>
+		                            <button type="button" id="reset-filters" class="btn btn-inverse col-lg-4 co-md-5 offset-md-1"><i class="fa fa-refresh"></i> Reset</button>
+		                        </div>
+		                    </div>
 							</div>
+						</form>
+					</div>
 		                
 
 							

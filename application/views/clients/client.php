@@ -59,7 +59,7 @@
 		                    <div class="col-md-2">
 		                        <h5>Select Status</h5>
 		                        <div class="form-group">
-		                        	<select class="select2 form-control" id='status' data-placeholder="Select Status" id="project_id">
+		                        	<select class="select2 form-control" id='status' data-placeholder="Select Status" >
 		                        		<option value='all'>All</option>          
 							            <option value='1'>Active</option>  
 							            <option value='0'>Deactive</option>
@@ -69,7 +69,7 @@
 		                    <div class="col-md-2">
 		                        <h5>Select Client</h5>
 		                        <div class="form-group">
-		                        	<select class="select2 form-control" id='clientname' data-placeholder="Select Status" id="project_id">
+		                        	<select class="select2 form-control" id='clientname'>
 			                        	<option value="">Select</option>
 										<?php
 											foreach($clients as $row)

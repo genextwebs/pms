@@ -164,6 +164,7 @@ class Finance extends CI_Controller
 		foreach($estimatesArr as $row) {
 			$id = $row->id;
 			$clientid = $row->client;
+				$checkstatus=$row->status;
 			if($row->status == '0'){
 				$status = $row->status = 'Waiting';
 				//$sta='<lable class="label label-warning">'.$status.'</label>';
@@ -180,14 +181,31 @@ class Finance extends CI_Controller
 			//$clientid = $row->clientid;
 			$create_date = date('d-m-Y', strtotime($row->created_at));
 			
+				if($checkstatus =='1')
+				{
 				$actionStr = '<div class="dropdown action m-r-10">
+				                <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
+				                		<div class="dropdown-menu">
+						                    
+											<a  class="dropdown-item" href="javascript:void(0)" onclick="deleteestimates(\''.base64_encode($row->id).'\')"><i class="fa fa-trash "></i> Delete</a>
+									
+				               			 </div>
+				
+							</div>';
+					}
+					else
+					{
+
+						$actionStr = '<div class="dropdown action m-r-10">
 				                <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
 				                		<div class="dropdown-menu">
 						                    <a  class="dropdown-item" href='.base_url().'Finance/editestimate/'.base64_encode($id).'><i class="fa fa-pencil"></i> Edit</a>
 											<a  class="dropdown-item" href="javascript:void(0)" onclick="deleteestimates(\''.base64_encode($row->id).'\')"><i class="fa fa-trash "></i> Delete</a>
 											<a  class="dropdown-item" href="'.base_url().'Finance/createinvoice/'.base64_encode($id).'/'.base64_encode($clientid).'"><i class="ti-receipt"></i>Create Invoice</a>
 				               			 </div>
+				
 							</div>';
+					}
 			
 			
 			$datarow[] = array(
@@ -304,7 +322,9 @@ class Finance extends CI_Controller
 			$note=$this->input->post('note');
 
 			$updateArr=array('status'=>1);
+			//print_r($updateArr);die;
 			$this->common_model->updateData('tbl_estimates',$updateArr,$whereArr);
+
 
 			$sql="SELECT tbl_project_info.clientid,tbl_clients.clientname,tbl_clients.companyname FROM tbl_project_info INNER JOIN tbl_clients ON tbl_project_info.clientid = tbl_clients.id where tbl_project_info.id=".$project;	
 
@@ -327,6 +347,7 @@ class Finance extends CI_Controller
 			for($i=0;$i<$count;$i++)
 			{
 				$insertArr1=array('invoiceid'=>$invoiceid,'item' => $item[$i],'qtyhrs' => $qtyhrs[$i], 'unitprice' => $unitprice[$i], 'tax' => $tax[$i],'amount'=>$amount[$i],'description' => $description[$i]);
+				//print_r($insertArr1);die;
 				$this->common_model->insertData('tbl_invoiceproduct',$insertArr1);
 			}
 				$this->session->set_flashdata('messagename', "Data Inserted Succeess");
@@ -488,7 +509,7 @@ class Finance extends CI_Controller
 					
 					if($status=='all'){
 						}else{
-								$sWhere.=' AND status='.$status;
+								$sWhere.=' AND i.status='.$status;
 						}
 					if(!empty($startdate)){						
 						$sWhere.=' AND duedate>="'.$startdate.'"';
@@ -507,10 +528,11 @@ class Finance extends CI_Controller
 	    $query = "SELECT i.* , c.id as clientid,c.clientname,p.projectname FROM tbl_invoice i INNER JOIN tbl_clients c ON c.id = i.client INNER JOIN tbl_project_info p ON p.id = i.project".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 	    //echo $query;die;
 		$invoicesArr = $this->common_model->coreQueryObject($query);
-		//print_r(invoicesArr);die;
-		$query = "SELECT * from tbl_invoice ".$sWhere;
-		//echo $query;die;
+		//print_r($invoicesArr);die;
+		$query = "SELECT * from tbl_invoice i ".$sWhere;
+	
 		$invoicesFilterArr = $this->common_model->coreQueryObject($query);
+	
 		$iFilteredTotal = count($invoicesFilterArr);
 
 		$invoicesAllArr = $this->common_model->getData('tbl_invoice');
@@ -521,7 +543,8 @@ class Finance extends CI_Controller
 		$i = 1;
 		foreach($invoicesArr as $row) {
 			$id = $row->id;
-			//echo $id;die;
+			//$a=$row->status;
+			//echo $row->status;die;
 			if($row->status == '0'){
 				$status = $row->status = 'Unpaid';
 				$sta='<lable class="label label-danger">'.$status.'</label>';
@@ -804,9 +827,9 @@ class Finance extends CI_Controller
 			$price=$this->input->post('price');
 			$purchasedform=$this->input->post('purchasedfrom');
 			$purchasedate=$this->input->post('purchasedate');
-			//$a=$this->input->post('image_name');
-			//echo $a;die;
-				if(!empty($_FILES))
+	
+
+				if(!empty($_FILES['file']['name']))
 				{
 					$file = rand(1000,100000)."-".$_FILES['file']['name'];
 					$file_loc = $_FILES['file']['tmp_name'];
