@@ -292,13 +292,7 @@ class Project extends CI_Controller {
 		redirect('project/index');
 	}
 			
-    public function archivetoproject(){
-		$id=base64_decode($_POST['id']);
-		$updateArr = array('archive'=>0);
-		$whereArr=array('id'=>$id);
-		$data['query']=$this->common_model->updateData('tbl_project_info',$updateArr,$whereArr);
-		redirect('project/index');
-	}
+  
 			
 	/*public function viewarchiev(){
 		$data['client']=$this->common_model->getData('tbl_clients');

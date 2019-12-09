@@ -6,7 +6,7 @@
 		<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 			<ol class="breadcrumb">
 				<li><a href="<?php echo base_url().'dashboard' ?>">Home</a></li>
-				 <li class="active">Projects</li>
+				 <li class="active">Leaves</li>
 			</ol>
 		</div>
 	</div>
@@ -21,10 +21,10 @@
 				<ul class="list-inline two-wrap">
 					<li><i class="icon-logout text-white"></i></li>
 					 <?php 
-						$Total = $this->common_model->getData('tbl_project_info');
-						$total_Project = count($Total);
+						$Total = $this->common_model->getData('tbl_leaves');
+						$total_leaves = count($Total);
 					 ?>
-					<li class="text-right"><span id="" class="counter text-white"><?php echo $total_Project;?></span></li>
+					<li class="text-right"><span id="" class="counter text-white"><?php echo $total_leaves;?></span></li>
 				</ul>
 			</div>
 		</div>
@@ -61,12 +61,12 @@
 					<div class="form-group">
 						<label class="control-label">EMPLOYEE NAME
 						</label>
-						<select id="clientname" class="custom-select" name="clientname">
+						<select id="empname" class="custom-select" name="empname">
 							<option value="">--Select--</option>
 								<?php
-									foreach($client as $row)
+									foreach($employee as $row)
 									{
-										echo '<option value="'.$row->id.'" >'.$row->clientname.'</option>';
+										echo '<option value="'.$row->empid.'" >'.$row->employeename.'</option>';
 									}
 								?>
 						</select>
@@ -88,7 +88,7 @@
 				<?php } ?>
  
 				<div class="table-responsive">
-					<table class="table table-bordered table-hover" id="project">
+					<table class="table table-bordered table-hover" id="leaves">
 						<thead>
 							<tr role="row">
 								 <th>Id</th>
