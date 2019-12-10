@@ -38,7 +38,7 @@ jQuery(document).ready(function() {
 					"data": aoData,
 	                "timeout": 60000, //1000 - 1 sec - wait one minute before erroring out = 30000
 	                "success": function(json) {
-	                	var oTable = $('#leaves').dataTable();
+	                	var oTable = $('#project').dataTable();
 	                	var oLanguage = oTable.fnSettings().oLanguage;
 
 	                	if((json.estimateCount == true) && (json.iTotalDisplayRecords == json.limitCountQuery)){
