@@ -646,10 +646,7 @@ class Finance extends CI_Controller
 			}
 		}
 
-
-
-	
-		public function expense(){
+	public function expense(){
 
 			$data['employee'] =$this->common_model->getData('tbl_employee');
 			$this->load->view('common/header');
@@ -658,7 +655,8 @@ class Finance extends CI_Controller
 		}
 	
 	public function expense_list(){
-	if(!empty($_POST)){
+
+		if(!empty($_POST)){
 			$_GET = $_POST;
 			$defaultOrderClause = "";
 			$sWhere = "";
@@ -751,8 +749,8 @@ class Finance extends CI_Controller
 	    $query = "select tbl_expense.* , tbl_employee.employeename from tbl_expense INNER JOIN tbl_employee ON tbl_employee.id=tbl_expense.employee".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 	    //echo $query;die;
 		$expensesArr = $this->common_model->coreQueryObject($query);
-
-		$query = "SELECT * from tbl_expense ".$sWhere;
+		//echo "<PRE>";print_r($expensesArr);exit;
+		$query = "SELECT * from tbl_expense".$sWhere;
 		//echo $query;die;
 		$expensesFilterArr = $this->common_model->coreQueryObject($query);
 		$iFilteredTotal = count($expensesFilterArr);
@@ -768,7 +766,6 @@ class Finance extends CI_Controller
 			if($row->status == '0'){
 				$status = $row->status = 'Pending';
 				$sta='<lable class="label label-danger">'.$status.'</label>';
-
 			}
 			else if($row->status == '1'){
 				$status = $row->status = 'Approved';
@@ -776,7 +773,7 @@ class Finance extends CI_Controller
 			}
 			else if($row->status == '2'){
 				$status = $row->status = ' Rejected';
-				$sta='<lable class="label label-info">'.$status.'</label>';
+				$sta='<lable class="label label-danger">'.$status.'</label>';
 			} 
 			//$clientid = $row->clientid;
 			//$create_date = date('d-m-Y', strtotime($row->created_at));
@@ -792,7 +789,7 @@ class Finance extends CI_Controller
                 $row->employeename,
              	$row->purchasedate,
                 $sta,	
-				$actionStr
+				$actionStr,
            	);
            	$i++;
       	}
