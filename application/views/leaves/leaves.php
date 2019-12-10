@@ -110,3 +110,41 @@
 <?php 
 	$this->load->view('common/projectcategory');
 ?>
+
+<!--model for leaves data-->
+
+<div class="modal fade project-category" id="leaves-popup" tabindex="-1" role="dialog" aria-labelledby="project-category" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content br-0">
+			<div class="modal-header">
+				<h4 class="modal-title"> Project Category</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="table-responsive" id="leave-preview">
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--Edit Leaves-->
+
+<div class="modal fade project-category" id="editleaves" tabindex="-1" role="dialog" aria-labelledby="project-category" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content br-0">
+			<div class="modal-header">
+				<h4 class="modal-title">Edit Leaves </h4>
+			
+			</div>
+			<div class="modal-body">
+				<div class="table-responsive" id="leave-edit">
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

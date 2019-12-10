@@ -1,17 +1,4 @@
-<nav aria-label="breadcrumb" class="breadcrumb-nav">
-	<div class="row">
-		<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-			<h4 class="page-title"><i class="icon-layers"></i> Projects</h4>
-		</div>
-		<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-			<ol class="breadcrumb">
-				<li><a href="<?php echo base_url().'Dashboard/';?>">Home</a></li>
-				<li><a href="<?php echo base_url().'Project/';?>">Projects</a></li>
-				<li class="active">Add New</li>
-			</ol>
-		</div>
-	</div>
-</nav>
+
  <!-- contetn-wrap -->
 <div class="content-in">  
 	<div class="row">

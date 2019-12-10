@@ -77,7 +77,8 @@ jQuery(document).ready(function() {
 						{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
 						{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
 						{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] },
-                      ],
+						{ "sWidth": "250px", sClass: "text-center", "asSorting": [ ] },
+					  ],
 			"bServerSide": true,
 			"fixedHeader": true,
 			"sAjaxSource": base_url+"Project/templatelist",
@@ -175,7 +176,7 @@ jQuery(document).ready(function() {
 		});
 	}	
 	else if(controllerName == 'leaves' && (functionName == 'index' || functionName == '')){
-		alert('fgh');
+		
 		var oTable = jQuery('#leaves').DataTable({
 			'bRetrieve': true,
 			"bPaginate": true,
@@ -391,6 +392,8 @@ $("#save-category").click(function(event) {
 
 
 
+
+
 // addproject=> delete category 
 	function deletecat(id)
 	{
@@ -417,6 +420,25 @@ $("#save-category").click(function(event) {
 			}
 		});
 	}
+
+	function searchleaves(id)
+	{
+		
+		$.ajax({
+		    type: "POST",
+		    url: base_url+"leaves/searchleaves",
+		    cache: false,
+		    dataType: 'json',
+		    data: "id="+id,
+		   success: function(data){
+		   	$('#leave-preview').html('');
+		   	$('#leave-preview').append(data);
+
+			}
+		});
+
+	}
+
 
 	function checkUncheck(){ 
 
@@ -515,6 +537,69 @@ $("#save-category").click(function(event) {
 			   }
 			   });
 		}
+
+	//delete leaves
+	function deleteleaves(id){
+		//alert(id);
+		var url = base_url+"Leaves/deleteleaves";
+		swal({
+		 title: "Are you sure?",
+		 text: "Do you want to delete this leaves?",
+		 type: "warning",
+		 showCancelButton: true,
+		 confirmButtonColor: "#DD6B55",
+		 confirmButtonText: "Yes, delete it!",
+		 closeOnConfirm: false
+		},
+			function(isConfirm){
+			if (isConfirm) {
+				   $.ajax({
+					   url: url,
+					   type: "POST",
+					   dataType: "JSON",
+					   data: {id:id},
+					  dataType: "html",
+					  
+					   success: function (data) {
+						   swal("Done!", "It was succesfully deleted!", "success");
+						   $('#leaves').DataTable().ajax.reload();
+						 //  $('#archievdata').DataTable().ajax.reload();
+						   //$("#leads").fnReloadAjax();
+							//$('#leads').DataTable.ajax.reload(null,false);
+							//window.location.reload();
+					   },
+					   error: function (xhr, ajaxOptions, thrownError) {
+						   swal("Error deleting!", "Please try again", "error");
+					   }
+				   });
+			   }
+			   });
+		}
+
+
+
+	//edit leaves
+	function editleaves(id){
+		$('#leaves-popup').modal('toggle');
+		$('#editleaves').modal('show');
+		var url = base_url+"Leaves/editleaves";
+
+				   $.ajax({
+					   url: url,
+					   type: "POST",
+					   dataType: "JSON",
+					   data: {id:id},
+					  dataType: "html",
+					  
+					   success: function (data) {
+						  
+					   },
+					   error: function (xhr, ajaxOptions, thrownError) {
+						   
+					   }
+				   });
+			   }
+			 
 
 	function archivetoproject(id){
 		//alert(id);
