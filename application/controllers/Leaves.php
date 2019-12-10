@@ -134,9 +134,9 @@ class Leaves extends CI_Controller {
 			}*/
 			/** Filtering End */
 		}
-		$query = "SELECT tbl_leaves.*,tbl_employee.employeename as empname,tbl_leavetype.id as leavestype from tbl_leaves inner join tbl_employee on tbl_leaves.empid = tbl_employee.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+		/*$query = "SELECT tbl_leaves.*,tbl_employee.employeename as empname,tbl_leavetype.id as leavestype from tbl_leaves inner join tbl_employee on tbl_leaves.empid = tbl_employee.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 		echo($query);echo '<br/>';
-		$LeavesArr = $this->common_model->coreQueryObject($query);
+		$LeavesArr = $this->common_model->coreQueryObject($query);*/
 		/*$query = "SELECT tbl_project_info.*,tbl_clients.clientname as clientname from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id".$sWhere;*/
 		//echo($query);die;
 	/*	$ProjectFilterArr = $this->common_model->coreQueryObject($query);
@@ -148,20 +148,21 @@ class Leaves extends CI_Controller {
 		/** Output */
 		$datarow = array();
 		$i = 1;
-		foreach($LeavesArr as $row) {
+		foreach($ProjectAllArr as $row) {
+		/*foreach($LeavesArr as $row) {*/
 			$rowid = $row->id;
 	
 		
 		$datarow[] = array(
 			$id = $i,
-			$row->empid.'<br/>'.$string.'<br/>'.$showStatus,
+			$row->empid,
 			$row->leavetypeid,
 			$row->duration,
 			$row->date,
 			$row->reasonforabsence,
 			$row->status,
 			//$status,
-			$actionstring
+			//$actionstring
 			);
 			$i++;
 		}
@@ -171,7 +172,7 @@ class Leaves extends CI_Controller {
 			"sEcho" => intval($_POST['sEcho']),
 				   "iTotalRecords" => $iTotal,
 				   "iTotalRecordsFormatted" => number_format($iTotal), //ShowLargeNumber($iTotal),
-				   "iTotalDisplayRecords" => $iFilteredTotal,
+				//   "iTotalDisplayRecords" => $iFilteredTotal,
 				   "aaData" => $datarow
 		);
 		echo json_encode($output);

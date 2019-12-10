@@ -174,7 +174,8 @@ jQuery(document).ready(function() {
 			},
 		});
 	}	
-	else if(controllerName == 'Leaves' && (functionName == 'index' || functionName == '')){
+	else if(controllerName == 'leaves' && (functionName == 'index' || functionName == '')){
+		alert('fgh');
 		var oTable = jQuery('#leaves').DataTable({
 			'bRetrieve': true,
 			"bPaginate": true,
