@@ -189,29 +189,41 @@ class Project extends CI_Controller {
 		
 		/** Output */
 		$datarow = array();
+
 		$i = 1;
 		foreach($projectArr as $row) {
 			$rowid = $row->id;
+			$whereArr = array('project_id' => $rowid);
+			$p_member = $this->common_model->getData('tbl_project_member',$whereArr);
+			$emp_str = '';
+			foreach($p_member as $pm){
+				$emp_id = $pm->emp_id;
+				$whereArrEmp = array('id' => $emp_id);
+				$emp_arr = $this->common_model->getData('tbl_employee',$whereArrEmp);
+				$emp_name = substr($emp_arr[0]->employeename,0,1);
+				$emp_str.= ucfirst($emp_name);
+				
+			}
 		if($row->status=='1'){
-						$status=$row->status='Complete';
-						$showStatus = '<label class="label label-success">'.$status.'</label>';
-						}
-					else if($row->status=='0'){
-						$status=$row->status='InComplete';
-						$showStatus = '<label class="label label-warning">'.$status.'</label>';
-						}
-					else if($row->status=='2'){
-						$status=$row->status='InProgress';
-						$showStatus = '<label class="label label-inprogress">'.$status.'</label>';
-						}
-					else if($row->status=='3'){
-						$status=$row->status='OnHold';
-						$showStatus = '<label class="label label-onhold">'.$status.'</label>';
-						}
-					else{
-						$status=$row->status='Canceled';
-						$showStatus = '<label class="label label-danger">'.$status.'</label>';
-						}
+			$status=$row->status='Complete';
+			$showStatus = '<label class="label label-success">'.$status.'</label>';
+		}
+		else if($row->status=='0'){
+			$status=$row->status='InComplete';
+			$showStatus = '<label class="label label-warning">'.$status.'</label>';
+		}
+		else if($row->status=='2'){
+			$status=$row->status='InProgress';
+			$showStatus = '<label class="label label-inprogress">'.$status.'</label>';
+		}
+		else if($row->status=='3'){
+			$status=$row->status='OnHold';
+			$showStatus = '<label class="label label-onhold">'.$status.'</label>';
+		}
+		else{
+			$status=$row->status='Canceled';
+			$showStatus = '<label class="label label-danger">'.$status.'</label>';
+		}
 			$archive=$row->archive;
 			$st = '';
 			$string = '';
@@ -236,7 +248,8 @@ class Project extends CI_Controller {
 		$datarow[] = array(
 			$id = $i,
 			$row->projectname.'<br/>'.$string.'<br/>'.$showStatus,
-			"<a href='".base_url()."Project/searchproject/".base64_encode($rowid)."'> Add Template Members</a>",
+			"<a href='".base_url()."Project/searchproject/".base64_encode($rowid)."'> Add Project  Members</a>"
+			.'<br/>'.$emp_str,
 			$row->deadline,
 			$row->clientname,
 			//$status,
@@ -268,11 +281,13 @@ class Project extends CI_Controller {
 	}
 	
 	public function searchproject(){
-		$id = base64_decode($this->uri->segment(3));
-		$searchArr = array('id'=>$id);
+		$data['id'] = base64_decode($this->uri->segment(3));
+		$sql = "SELECT tbl_project_member.emp_id , tbl_employee.id ,tbl_employee.employeename from tbl_project_member inner join tbl_employee on tbl_project_member.emp_id = tbl_employee.id where project_id =".$data['id'];
+		$data['member'] = $this->common_model->coreQueryObject($sql);
+		$data['emp_count'] = count($data['member']);
 		$data['employee'] = $this->common_model->getData('tbl_employee');
 		$this->load->view('common/header');
-		$this->load->view('project/searchproject',$searchArr,$data);
+		$this->load->view('project/searchproject',$data);
 		$this->load->view('common/footer');
 	}
 			
@@ -312,7 +327,7 @@ class Project extends CI_Controller {
 		redirect('project/index');
     }
 			
-	public function archivelist(){
+	/*public function archivelist(){
 		//echo('ytgvbhjn');die;
 		if(!empty($_POST)){
 			$_GET = $_POST;
@@ -323,7 +338,7 @@ class Project extends CI_Controller {
 			//'ahrefs_dr', 
 			$totalColumns = count($aColumns);
 
-			/** Paging Start **/
+			/** Paging Start 
 			$sLimit = "";
 			$sOffset = "";
 			if ($_GET['iDisplayStart'] < 0) {
@@ -340,7 +355,7 @@ class Project extends CI_Controller {
 				$sOffset = (int) $_GET['iDisplayStart'];
 			}
 			/** Paging End **/
-			/** Ordering Start **/
+			/** Ordering Start 
 			$noOrderColumns = array('other_do_ext');
 			if (isset($_GET['iSortCol_0']) && !in_array($aColumns[intval($_GET['iSortCol_0'])], $noOrderColumns)) {
 				$sOrder = " ";
@@ -371,7 +386,7 @@ class Project extends CI_Controller {
 			}
 			/** Ordering End **/
 				
-			/** Filtering Start */
+			/** Filtering Start 
 			
 			if(!empty(trim($_GET['sSearch']))){
 				$searchTerm = trim($_GET['sSearch']);
@@ -386,7 +401,7 @@ class Project extends CI_Controller {
 			}
 		/*	if(!empty($category)){						
 				$sWhere.=' AND projectcategoryid='.$category;
-			}*/
+			}
 			if($status=='all'){
 				}else{
 						$sWhere.=' AND tbl_project_info.status='.$status;
@@ -395,7 +410,7 @@ class Project extends CI_Controller {
 			if(!empty($sWhere)){
 				$sWhere = " WHERE 1 ".$sWhere;
 			}
-			/** Filtering End */
+			/** Filtering End 
 		}
 		$query = "SELECT tbl_project_info.*,tbl_clients.clientname as clientname from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 		//echo($query);die;
@@ -408,7 +423,6 @@ class Project extends CI_Controller {
 		$ProjectAllArr = $this->common_model->getData('tbl_project_info',$whereArr);
 		$iTotal = count($ProjectAllArr);
 		
-		/** Output */
 		$datarow = array();
 		$i = 1;
 		foreach($projectArr as $row) {
@@ -452,7 +466,7 @@ class Project extends CI_Controller {
 		);
 		echo json_encode($output);
 		exit();
-	}
+	}*/
 			
 	public function editproject(){	
 		$id=base64_decode($this->uri->segment(3));
@@ -699,6 +713,8 @@ class Project extends CI_Controller {
 					$datarow[] = array(
 						$id = $i,
 						$row->projectname,
+						"<a href='".base_url()."Project/searchproject/".base64_encode($rowid)."'> Add Project  Members</a>",
+						
 						$row->name,
 						'<a href='.base_url().'Project/edittemplate/'.base64_encode($row->id). ' class="btn btn-info btn-circle" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
 						 <a href='.base_url().'Project/searchproject/'.base64_encode($row->id). ' class="btn btn-success btn-circle" data-toggle="tooltip" data-original-title="View Project Details"><i class="fa fa-search" aria-hidden="true"></i></a>
@@ -758,6 +774,20 @@ class Project extends CI_Controller {
 			}
 		}
 		echo $status;exit();
+	}
+
+	public function insertProjectMember(){
+		if(!empty($_POST)){
+			$data['employee'] = $this->input->post('choose_member');
+			$emp_count = count($data['employee']);
+			$project_id = $this->input->post('projectid');
+			for($i=0 ; $i<$emp_count; $i++){
+				$emp_id = $data['employee'][$i];
+				$insArr = array('project_id' => $project_id , 'emp_id' => $emp_id);
+				$this->common_model->insertData('tbl_project_member',$insArr);
+			}
+		}
+		redirect('Project/searchproject/'.$this->uri->segment(3));
 	}
 
 	

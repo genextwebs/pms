@@ -30,7 +30,7 @@
 							<tr role="row">
 								<th>Id</th>
 								<th>Template Name</th>
-							   <!-- <th>Template Members</th>-->
+							   	<th>Template Members</th>
 								<th>Category</th>
 								<th>Action</th>
 							</tr>

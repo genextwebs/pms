@@ -422,6 +422,9 @@
 															        </tr>
 															    </thead>
 															    <tbody>
+															    	<?php
+															    		for($i=0 ; $i<$emp_count;$i++){
+															    	?>
 															        <tr>
 															            <td>
 															                <div class="row">
@@ -429,7 +432,8 @@
 															                        <img src="images/user-avtar.png" alt="user" class="img-circle" width="40">
 															                    </div>
 															                    <div class="col-sm-9 col-xs-8">
-															                        Opal Kassulke<br>
+
+															                        <?php echo $member[$i]->employeename?><br>
 															                        <span class="text-muted font-12">Developer</span>
 															                    </div>
 															                </div>
@@ -442,6 +446,7 @@
 															            </td>
 															            <td><a href="javascript:;" data-member-id="56" class="btn btn-sm btn-danger btn-rounded delete-members"><i class="fa fa-times"></i> Remove</a></td>
 															        </tr>
+															    <?php } ?>
 															    </tbody>
 															</table>
 					            						</div>
@@ -450,9 +455,9 @@
 					            				<div class="col-md-6">
 					            					<div class="stats-box">
 					            						<h3>Add Project Members</h3>
-					            						<form>
+					            						<form method="post" action="<?php echo base_url().'project/insertProjectMember/'.base64_encode($id) ?>">
 					            							<div class="form-group">
-					            								<select class="form-control" name="choose_mamber" placeholder="choose Members">
+					            								<select multiple class="form-control" name="choose_member[]" placeholder="choose Members">
 					            								<option value="">All</option>
 							                                    <?php foreach($employee as $row){
 												            	?>
@@ -462,8 +467,9 @@
 												            	?> 
 					            								</select>
 					            							</div>
+					            							<input type="hidden" value="<?php echo $id;?>" name="projectid">
 					            							<div class="form-actions">
-				                                                <button type="submit" id="save-members" class="btn btn-success"><i class="fa fa-check"></i> Save</button>
+				                                                <input type="submit" value="submit" id="save-members" class="btn btn-success"><i class="fa fa-check"></i>
 				                                            </div>
 					            						</form>
 					            						<hr>
