@@ -710,10 +710,20 @@ class Project extends CI_Controller {
 				$i = 1;
 				foreach($templateArr as $row) {
 					$rowid = $row->id;	
+					$whereArr = array('template_id' => $rowid);
+					$temp_member = $this->common_model->getData('tbl_template_member',$whereArr);
+					$emp_str = '';
+					foreach($temp_member as $temp){
+						$emp_id = $temp->emp_id;
+						$whereArrEmp = array('id' => $emp_id);
+						$emp_arr = $this->common_model->getData('tbl_employee',$whereArrEmp);
+						$emp_name = substr($emp_arr[0]->employeename,0,1);
+						$emp_str.= ucfirst($emp_name);
+					}
 					$datarow[] = array(
 						$id = $i,
 						$row->projectname,
-						"<a href='".base_url()."Project/searchproject/".base64_encode($rowid)."'> Add Project  Members</a>",
+						"<a href='".base_url()."Project/searchtemplate/".base64_encode($rowid)."'> Add Project  Members</a>".'<br/>'.$emp_str,
 						
 						$row->name,
 						'<a href='.base_url().'Project/edittemplate/'.base64_encode($row->id). ' class="btn btn-info btn-circle" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
@@ -731,6 +741,17 @@ class Project extends CI_Controller {
 							);
 		echo json_encode($output);
 		exit();
+	}
+
+	public function searchtemplate(){
+		$data['id'] = base64_decode($this->uri->segment(3));
+		$sql = "SELECT tbl_template_member.emp_id , tbl_employee.id ,tbl_employee.employeename from tbl_template_member inner join tbl_employee on tbl_template_member.emp_id = tbl_employee.id where template_id =".$data['id'];
+		$data['temp_member'] = $this->common_model->coreQueryObject($sql);
+		$data['emp_count'] = count($data['temp_member']);
+		$data['employee'] = $this->common_model->getData('tbl_employee');
+		$this->load->view('common/header');
+		$this->load->view('project/searchtemplate',$data);
+		$this->load->view('common/footer');
 	}
 
 	public function insertcat(){
@@ -788,6 +809,21 @@ class Project extends CI_Controller {
 			}
 		}
 		redirect('Project/searchproject/'.$this->uri->segment(3));
+	}
+
+	public function insertTemplateMember(){
+		if(!empty($_POST)){
+			$data['employee'] = $this->input->post('choose_member');
+			$emp_count = count($data['employee']);
+			$template_id = $this->input->post('templateid');
+			for($i=0 ; $i<$emp_count; $i++){
+				$emp_id = $data['employee'][$i];
+				$insArr = array('template_id' => $template_id , 'emp_id' => $emp_id);
+				$this->common_model->insertData('tbl_template_member',$insArr);
+			}
+		}
+		redirect('Project/searchtemplate/'.$this->uri->segment(3));
+
 	}
 
 	
