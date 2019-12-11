@@ -13,6 +13,18 @@ class Attendance extends CI_Controller
 	public function index(){
 
 		$data['employee'] =$this->common_model->getData('tbl_employee');
+		//$data['countemp']=count($data['employee']); tbl_department
+		$data['department'] =$this->common_model->getData('tbl_department');
+		//echo $countemp;die;
+		//print_r($data);die;
+		$this->load->view('common/header');
+		$this->load->view('Attendance/attendance',$data);
+		$this->load->view('common/footer');
+	}
+
+	public function addattendance(){
+
+		$data['employee'] =$this->common_model->getData('tbl_employee');
 		$data['countemp']=count($data['employee']);
 		//echo $countemp;die;
 		//print_r($data);die;
@@ -20,7 +32,6 @@ class Attendance extends CI_Controller
 		$this->load->view('Attendance/addattendance',$data);
 		$this->load->view('common/footer');
 	}
-
 	public function insertattendance(){
 
 		if(!empty($_POST)){

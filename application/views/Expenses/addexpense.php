@@ -1,4 +1,4 @@
-<nav aria-label="breadcrumb" class="breadcrumb-nav">
+F<nav aria-label="breadcrumb" class="breadcrumb-nav">
                 <div class="row">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                         <h4 class="page-title"><i class="ti-receipt"></i>Expenses</h4>
@@ -134,7 +134,7 @@
 		                								<div class="form-group">
 		                									<label class="control-label">Purchase Date</label>
 															<div class="input-icon">
-																<input type="text" class="form-control" name="purchasedate" id="startdate" value="<?php echo date('Y-m-d'); ?>">
+																<input type="text" class="form-control" name="purchasedate" id="start_date" value="<?php echo date('Y-m-d'); ?>">
 															</div>
 														</div>
 		                							</div>

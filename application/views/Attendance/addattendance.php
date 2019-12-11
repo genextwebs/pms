@@ -6,7 +6,8 @@
         <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
             <ol class="breadcrumb">
                 <li><a href="<?php echo base_url().'dashboard'?>">Home</a></li>
-                <li class="active">Attendance</li>
+                <li><a href="<?php echo base_url().'Attendance'?>">Attendance</a></li>
+                <li class="active"> Mark Attendance</li>
             </ol>
         </div>
     </div>
@@ -14,20 +15,14 @@
 
 
 
-<div class="row">
-        <div class="col-sm-6">
-            <div class="form-group">
-                <a href="https://demo.worksuite.biz/admin/attendances/create" class="btn btn-success btn-sm">Mark Attendance <i class="fa fa-plus" aria-hidden="true"></i></a>
-            </div>
-        </div>
-</div>
-
         <div class="table-responsive">
              <table class="table table-bordered" id="Attendance">
                  <thead>
                     
                     <th>Employee</th>
                     <th>Attendance</th> 
+
+
                  </thead>
                 <tbody>
                    <form class="aj-form" method="post" action="<?php echo base_url().'Attendance/insertattendance' ?>" name="addattendance" >
