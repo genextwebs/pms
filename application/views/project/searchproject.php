@@ -1,4 +1,6 @@
-<nav aria-label="breadcrumb" class="breadcrumb-nav">
+
+
+            <nav aria-label="breadcrumb" class="breadcrumb-nav">
                 <div class="row">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                         <h4 class="page-title"><i class="icon-speedometer"></i> Dashboard</h4>
@@ -10,7 +12,7 @@
                             <?php
                             $controller = $this->uri->segment(1);
                             $function = $this->uri->segment(2);
-                            if($controller == 'Project' && $function == 'searchtemplate'){
+                            if($controller == 'Project' && $function == 'searchproject'){
                             ?>
                             <li><a>Members</a></li>
                         <?php } ?>
@@ -30,15 +32,23 @@
 								    	<a class="nav-link" id="overview-tab" data-toggle="tab" href="#overview" role="tab" aria-controls="overview" aria-selected="true">Overview</a>
 								  	</li>
 								  	<li class="nav-item" >
-								    	<a class="nav-link <?php if($controller == 'Project' && $function == 'searchtemplate') { echo "active";}?>" id="members-tab" data-toggle="tab" href="#members" role="tab" aria-controls="members" aria-selected="false">Members</a>
+								    	<a class="nav-link <?php if($controller == 'Project' && $function == 'searchproject') { echo "active";}?>" id="members-tab" data-toggle="tab" href="#members" role="tab" aria-controls="members" aria-selected="false">Members</a>
 								  	</li>
-								  	
+								  	<li class="nav-item">
+								    	<a class="nav-link" id="milestones-tab" data-toggle="tab" href="#milestones" role="tab" aria-controls="milestones" aria-selected="false">Milestones</a>
+								  	</li>
 								  	<li class="nav-item">
 								    	<a class="nav-link " id="tasks-tab" data-toggle="tab" href="#tasks" role="tab" aria-controls="tasks" aria-selected="false">Tasks</a>
 								  	</li>
-								  	
-								  	
-
+								  	<li class="nav-item">
+								    	<a class="nav-link" id="files-tab" data-toggle="tab" href="#files" role="tab" aria-controls="files" aria-selected="false">Files</a>
+								  	</li>
+								  	<li class="nav-item">
+								    	<a class="nav-link" id="invoices-tab" data-toggle="tab" href="#invoices" role="tab" aria-controls="invoices" aria-selected="false">Invoices</a>
+								  	</li>
+								  	<li class="nav-item">
+								    	<a class="nav-link" id="timelogs-tab" data-toggle="tab" href="#timelogs" role="tab" aria-controls="timelogs" aria-selected="false">Time Logs</a>
+								  	</li>
 								</ul>
 			                </div>
 			                <div class="contetn-tab">
@@ -395,7 +405,7 @@
 		            						</div>
 									  	</div>
 									  	<!-- tab2 -->
-									 	<div class="tab-pane fade section-2 <?php if($controller == 'Project' && $function == 'searchtemplate') { echo "active show";}?>" id="members" role="tabpanel" aria-labelledby="members-tab">
+									 	<div class="tab-pane fade section-2 <?php if($controller == 'Project' && $function == 'searchproject') { echo "active show";}?>" id="members" role="tabpanel" aria-labelledby="members-tab">
 					            			<div class="row">
 					            				<div class="col-md-6">
 					            					<div class="card">
@@ -407,16 +417,16 @@
 															    <thead>
 															        <tr>
 															            <th>Name</th>
-															            
+															            <th>User Role</th>
 															            <th>Action</th>
 															        </tr>
 															    </thead>
 															    <tbody>
 															    	<?php
 															    		for($i=0 ; $i<$emp_count;$i++){
-															    			$temp_id = $temp_member[$i]->memberid;
+															    			$project_member_id = $member[$i]->memberid;
 															    	?>
-															        <tr id="<?php echo $temp_id; ?>-tr">
+															        <tr id="<?php echo $project_member_id; ?>-tr">
 															            <td>
 															                <div class="row">
 															                    <div class="col-sm-3 col-xs-4">
@@ -424,12 +434,18 @@
 															                    </div>
 															                    <div class="col-sm-9 col-xs-8">
 
-															                        <?php echo $temp_member[$i]->employeename?><br>
-															                        
+															                        <?php echo $member[$i]->employeename?><br>
+															                        <span class="text-muted font-12">Developer</span>
 															                    </div>
 															                </div>
 															            </td>
-															            <td><a href="javascript:;" class="btn btn-sm btn-danger btn-rounded delete-members" onclick="deleteTemplateM('<?php echo base64_encode($temp_id); ?>')"><i class="fa fa-times"></i> Remove</a></td>
+															            <td>
+															                <div class="custom-control custom-radio radio-info">
+																			    <input type="radio" class="custom-control-input" id="pro-admin" name="radio-stacked" required>
+																			    <label class="custom-control-label" for="pro-admin">Project Admin</label>
+																			</div>
+															            </td>
+															            <td><a href="javascript:;" class="btn btn-sm btn-danger btn-rounded delete-members" onclick="deleteProjectM('<?php echo base64_encode($project_member_id); ?>')"><i class="fa fa-times"></i> Remove</a></td>
 															        </tr>
 															    <?php } ?>
 															    </tbody>
@@ -450,8 +466,8 @@
 					                            </div>
 					                            <?php  } ?>
 					            					<div class="stats-box">
-					            						<h3>Add Template Members</h3>
-					            						<form method="post" action="<?php echo base_url().'project/insertTemplateMember/'.base64_encode($id) ?>">
+					            						<h3>Add Project Members</h3>
+					            						<form method="post" action="<?php echo base_url().'project/insertProjectMember/'.base64_encode($id) ?>">
 					            							<div class="form-group">
 					            								<select multiple class="form-control" name="choose_member[]" placeholder="choose Members">
 					            								<option value="">All</option>
@@ -463,11 +479,9 @@
 												            	?> 
 					            								</select>
 					            							</div>
-					            							<input type="hidden" value="<?php echo $id;?>" name="templateid">
+					            							<input type="hidden" value="<?php echo $id;?>" name="projectid">
 					            							<div class="form-actions">
-					            								<input type="submit" value="submit" id="save-members" class="btn btn-success"><i class="fa fa-check"></i>
-					            								<!--<i class="fa fa-check"></i><a href="javascript:void();" onclick="" class="btn btn-success">Remove</a>-->
-				                                                
+				                                                <input type="submit" value="submit" id="save-members" class="btn btn-success"><i class="fa fa-check"></i>
 				                                            </div>
 					            						</form>
 					            						<hr>
