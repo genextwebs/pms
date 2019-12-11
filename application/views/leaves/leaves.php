@@ -52,9 +52,13 @@
 				<div class="col-md-4">
 					<div class="form-group">
 						<label class="control-label">SELECT DATE RANGE</label>
-						<input type="text" class="form-control" id="start-date" placeholder="Start Date" value="30-11-2019">
-						<span class="input-group-addon bg-info b-0 text-white">To</span>
-						<input type="text" class="form-control" id="end-date" placeholder="End Date" value="06-01-2020">
+					    <div class="input-group input-daterange">
+								    <input type="text" class="start-date form-control br-0" id="startdate" name="startdate" value="" data-date-format='yyyy-mm-dd'>
+								    <div class="input-group-prepend">
+								      <span class="input-group-text bg-info text-white">To</span>
+								    </div>
+								    <input type="text" class="end-date form-control br-0" id="enddate" name="enddate" data-date-format='yyyy-mm-dd' value="">
+						</div>
 				   </div>
 				</div>
 				<div class="col-lg-3 col-md-4">
@@ -66,12 +70,19 @@
 								<?php
 									foreach($employee as $row)
 									{
-										echo '<option value="'.$row->empid.'" >'.$row->employeename.'</option>';
+										echo '<option value="'.$row->id.'" >'.$row->employeename.'</option>';
 									}
 								?>
 					     </select>
 					</div>
 				</div>
+					 <div class="col-md-4">
+		                        <div class="form-group m-t-10">
+		                            <label class="control-label col-12 mb-3">&nbsp;</label>
+		                            <button type="button" id="btnApplyLeaves" class="btn btn-success col-lg-4 co-md-5"><i class="fa fa-check"></i> Apply</button>
+		                          <!--   <button type="button" id="reset-filters" class="btn btn-inverse col-lg-4 co-md-5 offset-md-1"><i class="fa fa-refresh"></i> Reset</button> -->
+		                        </div>
+		                    </div>
 			</div>
 				<?php
 					$mess = $this->session->flashdata('message_name');
@@ -131,14 +142,15 @@
 	</div>
 </div>
 
-<!--Edit Leaves-->
 
-<div class="modal fade project-category" id="editleaves" tabindex="-1" role="dialog" aria-labelledby="project-category" aria-hidden="true">
+<div class="modal fade edit" id="editleaves" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content br-0">
 			<div class="modal-header">
-				<h4 class="modal-title">Edit Leaves </h4>
-			
+				<h4 class="modal-title"> Edit Leaves</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
 			</div>
 			<div class="modal-body">
 				<div class="table-responsive" id="leave-edit">

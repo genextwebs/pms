@@ -117,43 +117,43 @@ class Leaves extends CI_Controller {
 				$sOrder = " ORDER BY ".$sOrder;
 			}
 			/** Ordering End **/
-				
+
 			/** Filtering Start */
 			
-		/*	if(!empty(trim($_GET['sSearch']))){
+			if(!empty(trim($_GET['sSearch']))){
 				$searchTerm = trim($_GET['sSearch']);
-				$sWhere.= ' AND (tbl_project_info.projectname like "%'.$searchTerm.'%" OR tbl_project_info.note like "%'.$searchTerm.'%" OR tbl_project_info.clientid like "%'.$searchTerm.'%" OR tbl_project_info.projectsummary like "%'.$searchTerm.'%" OR clientname like "%'.$searchTerm.'%")';
+				$sWhere.= ' AND (tbl_employee.employeename like "%'.$searchTerm.'%")';
 			}
-			$status=$_POST['status1'];	
-			$client=!empty($_POST['clientname1']) ? $_POST['clientname1'] : '';		
-			$category=!empty($_POST['categoryname1']) ? $_POST['categoryname1'] : '';
+				
 			
-			if(!empty($client)){
-					$sWhere.=' AND tbl_project_info.clientid='.$client;
-			}
-			if(!empty($category)){						
-				$sWhere.=' AND projectcategoryid='.$category;
-			}
-			if($status=='all'){
-				}else{
-						$sWhere.=' AND tbl_project_info.status='.$status;
-				}*/
-			/*$sWhere.=' AND tbl_project_info.archive=0';	
-			if(!empty($sWhere)){
-				$sWhere = " WHERE 1 ".$sWhere;
-			}*/
-			/** Filtering End */
-		}
-		$query = "SELECT tbl_leaves.id,empid,date,status,leavetypeid,tbl_employee.employeename as empname from tbl_leaves inner join tbl_employee on tbl_leaves.empid = tbl_employee.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
-		//echo($query);die;
-		$LeavesArr = $this->common_model->coreQueryObject($query);
-	//echo $this->db->last_query();die;
-		/*$query = "SELECT tbl_project_info.*,tbl_clients.clientname as clientname from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id".$sWhere;*/
-		//echo($query);die;
-	/*	$ProjectFilterArr = $this->common_model->coreQueryObject($query);
-		$iFilteredTotal = count($ProjectFilterArr);*/
-		//$whereArr=array('archive'=>0);
+			$startdate=!empty($_POST['sdate']) ? $_POST['sdate'] : '';
 
+			$enddate=!empty($_POST['edate']) ? $_POST['edate'] : '';
+			$empname=!empty($_POST['ename']) ? $_POST['ename'] : '';
+		//   echo($startdate);die;	
+			if(!empty($startdate)){						
+				$sWhere.=' AND date>="'.$startdate.'"';
+			}
+			if(!empty($enddate)){						
+				$sWhere.=' AND date<="'.$enddate.'"';
+			}
+			if(!empty($empname)){						
+				$sWhere.=' AND tbl_employee.employeename='.$empname;
+			}
+		}
+		$query = "SELECT tbl_leaves.id,empid,tbl_leaves.date,status,leavetypeid,tbl_employee.employeename as empname from tbl_leaves inner join tbl_employee on tbl_leaves.empid = tbl_employee.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+		$LeavesArr = $this->common_model->coreQueryObject($query);
+		
+		$projectArr = $this->common_model->coreQueryObject($query);
+		$querysearch = "SELECT tbl_leaves.date,tbl_employee.employeename as empname from tbl_leaves inner join tbl_employee on tbl_leaves.empid = tbl_employee.id".
+		$sWhere;
+	//	echo $this->db->last_query();die;
+
+/*	echo $this->db->last_query();
+		$query = "SELECT tbl_project_info.*,tbl_clients.clientname as clientname from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id".$sWhere;*/
+		$LeavesFilterArr = $this->common_model->coreQueryObject($querysearch);
+	
+		$iFilteredTotal = count($LeavesFilterArr);
 		$ProjectAllArr = $this->common_model->getData('tbl_leaves');
 		$iTotal = count($ProjectAllArr);
 		
@@ -248,21 +248,93 @@ class Leaves extends CI_Controller {
 	public function editleaves(){
 		$id=base64_decode($_POST['id']);
 		$whereArr=array('id'=>$id);
-		$data =$this->common_model->getData('tbl_leaves',$whereArr);
-			$id= $data[0]->id;
-		$str = '';
-		$str.= '<select>'.
-					foreach($employee as $emp){
-						$str='';
-						if(!empty($sessData['choose_mem'])){
-							if($sessData['choose_mem'] == $emp->id){
-								$str='selected';
-							}
-						}
-						.'<option value="<?php echo $emp->id?>" <?php echo $str;?>><?php echo $emp->employeename;?></option>'.
-						
-						} 
-				.'</select>';
+		$leaves =$this->common_model->getData('tbl_leaves',$whereArr);
+		$emp['employee'] =$this->common_model->getData('tbl_employee',$whereArr);
+		//print_r($leaves);die;
+		$id= $leaves[0]->id;
+		 //$leaves[0]->empid;
+		//$date=$leaves[0]->date;
+		//echo($date);die;
+		$string = '';
+					$empid='';
+					if(	!empty($leaves[0]->empid)){
+						$date = $leaves[0]->empid;
+					}
+		$string.= '<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<label class="control-label">Choose Member</label>
+									<select class="custom-select br-0" id="choose_mem" name="choose_mem">';
+									foreach($emp['employee'] as $emp){
+										$str='';
+											if($emp->id==$leaves[0]->empid){
+												$str='selected';
+												}
+											
+									$string.= '<option value="'.$emp->id.''.$str.'">'. 
+										$emp->employeename.'</option>';
+													}
+														
+									$string.= '</select>
+
+										</div>
+								</div>
+							</div>';
+		$string.= '	<div class="row">
+									<div class="col-md-12">
+										<div class="form-group project-category">
+											<label class="control-label" for="leave_type">
+											Leave Type
+											<a class="btn btn-sm btn-outline-success ml-1" href="javascript:;" data-toggle="modal" data-target="#leave_type1"><i class="fa fa-plus"></i> Add Leave Type</a></label>
+											
+											<select class="custom-select br-0" id="leave_type" name="leave_type">
+											
+												
+																							
+											</select>
+										</div>
+									</div>
+								</div>';
+								$date='';
+								if(	!empty($leaves[0]->date)){
+									$date = $leaves[0]->date;
+								}
+		$string.=   '<div class="row">'
+						.'<div class="col-md-4" id="deadlineBox">'
+							.'<div class="form-group">'
+								.'<label class="control-label">Date</label>'
+									.'<input type="text" name="date" id="date" autocomplete="off" class="form-control" value="'.$date.'">'
+								.'</div>'
+							.'</div>'
+				   .'</div>';
+				   if(	!empty($leaves[0]->reasonforabsence)){
+									$reasonforabsence = $leaves[0]->reasonforabsence;
+								}
+		$string.= '	<div class="row">'
+						.'<div class="col-md-6">'
+							.'<div class="form-group">'
+								.'<label class="control-label">Reason for absence</label>'
+										.'<textarea id="absence" class="form-control" name="absence" rows="5">'.$reasonforabsence.'</textarea>'
+							.'</div>'
+						.'</div>';
+		$string.=    '<div class="col-md-6">'
+							.'<div class="form-group">'
+								.'<label class="control-label">Status</label>'
+									.'<select id="" class="form-control" name="status">'
+										.'<option></option>'
+
+											
+									.'</select>'
+								.'</div>'
+							.'</div>'
+						.'</div>';
+		$string.= '<div class="form-actions">
+									<button type="submit" name="btnupdate" id="save-form" class="btn btn-success"> <i class="fa fa-check"></i> Update</button>
+									
+									<input type="button" class="btn btn-default" value="Close">
+								</div>';
+		/*$str.= '<td><button onclick="editleaves(\''.base64_encode($id).'\')" class="fa fa-edit" value="Edit"></button></td></tr>';*/
+		echo json_encode($string);exit;
 		
 /*		if(!empty($_POST))
 		{	
@@ -289,8 +361,6 @@ class Leaves extends CI_Controller {
 		redirect('Leaves/index');
 		
 	}
-
-
 
 	public function deleteleaves(){
 		$id=base64_decode($_POST['id']);

@@ -204,9 +204,9 @@ jQuery(document).ready(function() {
 			"sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
 			"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No Projects found<br/><br/></center>', "sZeroRecords": "<center><br/>No Projects found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ leads", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
 			"fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
-				aoData.push( { "name": "sdate", "value": $('#start_date').val() } );
-				aoData.push( { "name": "edate", "value": $('#end_date').val() } );
-				aoData.push( { "name": "empname", "value": $('#employeename').val() } );
+				aoData.push( { "name": "sdate", "value": $('#startdate').val() } );
+				aoData.push( { "name": "edate", "value": $('#enddate').val() } );
+				aoData.push( { "name": "ename", "value": $('#empname').val() } );
 
 				oSettings.jqXHR = $.ajax( {
 					"dataType": 'json',
@@ -263,6 +263,16 @@ $('#clientname').change(function(){
 $('#project_status').change(function(){ 
 	var oTable = $('#archievdata').DataTable();
 		oTable.draw();
+});
+
+$('#btnApplyLeaves').click(function(){ 
+	jQuery('#startdate').val('');
+	jQuery('#enddate').val('');
+	jQuery('#empname').val('all');
+	// jQuery('#clientname').val('');
+	// jQuery('#ticket-filters').after('<p style="color:#00B200"><b>Succesfully Reset Filters</b></p>');
+	var oTable = $('#leaves').DataTable();
+	oTable.draw();
 });
 
 //addproject=> datepicker
@@ -585,14 +595,15 @@ $("#save-category").click(function(event) {
 		var url = base_url+"Leaves/editleaves";
 
 				   $.ajax({
-					   url: url,
-					   type: "POST",
-					   dataType: "JSON",
-					   data: {id:id},
-					  dataType: "html",
-					  
+				   		type: 'POST',
+					   	url: url,
+					     cache: false,
+		    			dataType: 'json',
+					   dataType: 'json',
+					/*   data: {id:id},*/
+					 data: "id="+id,
 					   success: function (data) {
-						  
+						  	$('#leave-edit').append(data);
 					   },
 					   error: function (xhr, ajaxOptions, thrownError) {
 						   
