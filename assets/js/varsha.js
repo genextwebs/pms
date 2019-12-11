@@ -840,48 +840,27 @@ $("select[name^='status']").each(function() {
 });	
 
 	
+
+
 //insert attendance
-
-$("#attendancghtyfthftgheform").click(function(event) {
-	alert("dfd");
-	var url = base_url+"Attendance/insertattendance";
-		var employee = $('#employee').val();
-
-		var attendance = $('input:radio[name=attendance]:checked').val();
-		
-       if(employee!="" && attendance!=""){
-
-			$.ajax({
-				url: url,
-				type: "POST",
-				data: {
-					employee: employee,
-					attendance: attendance,				
-				},
-				cache: false,
-				success: function(dataResult){
-			}
-		});
-	}
-});
-
-
-//
 
 function insertAttendance(employeeid){
 	//alert('hj');
  	var url = base_url+"Attendance/insertattendance";
-
+ 	var attendancedate = $('#startdate').val();
+		//alert(attendancedate);
 		var attendance = $('input:radio[name=attendance]:checked').val();
-		
+		//alert(attendance);
       
        	 if(employeeid){
 			$.ajax({
 				url: url,
 				type: "POST",
 				data: {
+					attendancedate: attendancedate,		
 					employee: employeeid,
-					attendance: attendance,				
+					attendance: attendance
+							
 				},
 				cache: false,
 				success: function(dataResult){
@@ -889,4 +868,36 @@ function insertAttendance(employeeid){
 		
 	});
 }
+}
+
+function getattendance(){
+	//alert("year");
+	//alert(month);
+	var year = document.getElementById("year").value;
+	var month = document.getElementById("month").value;
+	
+	var url = base_url+"Attendance/getdata";
+ 	 
+
+      
+       	 if(year){
+       				
+			$.ajax({
+				url: url,
+				type: "POST",
+				dataType:'json',
+				data: {
+						year:year,
+						month:month,
+							
+				},
+				cache: false,
+				success: function(data){
+					 $('#att').append(data);  
+
+			}
+		
+		});
+	
+	}
 }

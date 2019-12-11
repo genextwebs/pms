@@ -12,11 +12,22 @@
         </div>
     </div>
 </nav>
-
-
+ <form class="aj-form" method="post" action="<?php echo base_url().'Attendance/insertattendance' ?>" name="addattendance" >
+<div class="col-md-3">
+    <div class="form-group">
+        <label class="control-label">Attendance Date</label>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="input-icon">
+                        <input type="text" class="form-control" name="attendancedate" id="startdate" value="<?php echo date('Y-m-d'); ?>" data-date-format='yyyy-mm-dd'>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>
 
         <div class="table-responsive">
-             <table class="table table-bordered" id="Attendance">
+             <table class="table table-bordered" id="Attendancetable">
                  <thead>
                     
                     <th>Employee</th>
@@ -25,7 +36,7 @@
 
                  </thead>
                 <tbody>
-                   <form class="aj-form" method="post" action="<?php echo base_url().'Attendance/insertattendance' ?>" name="addattendance" >
+                  
                         <?php foreach($employee as $row) { 
                              $id=$row->id;
                             ?>
@@ -39,7 +50,7 @@
                                 <td>
                                     <input type="radio" name="attendance" value="2">Late<br>
                                     <input type="radio" name="attendance" value="1">Present<br>
-                                    <input type="radio" name="attendance" value="0">Absent<br>
+                                    <input type="radio" name="attendance" value="3">Absent<br>
                                 </td>
                                 <td>
                                     <input type="button" id="attendanceform" onclick="insertAttendance('<?php echo $id ?>')" class="btn btn-success" name="btnsubmit" value="Save" > <i class="fa fa-check"></i>
@@ -48,7 +59,8 @@
                             </tr>
                             
                         <?php } ?>
-                    </form>
+                   
                 </tbody>
              </table>
         </div>
+    </form>
