@@ -901,3 +901,23 @@ function getattendance(){
 	
 	}
 }
+
+
+//attendance filter   apply-filter
+
+$("#apply-filter").click(function() {
+	var month = $('#month').val();
+	//alert(month);
+	$.ajax({
+		url : base_url+"Attendance/getfilterdata",
+        type : 'POST',
+        data : {month: month},
+        error: function() {
+              alert('Something is wrong');
+           },
+        success: function(data){
+        	
+        }
+	});
+
+	});

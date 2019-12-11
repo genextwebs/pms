@@ -53,23 +53,11 @@
                                 </select> 
                             </div>
                     </div>
-                    <div class="col-md-2">
-                        <label class="control-label">Select Year(S)</label>
-                            <div class="form-group">
-                                <select id='year' name="year" class="select2 form-control" onchange="getattendance(); ">
-                                    <option value="2019">2019</option>
-                                    <option value="2018">2018</option>
-                                    <option value="2017">2017</option>
-                                    <option value="2016">2016</option>
-                                    <option value="2015">2015</option>
-                                    
-                                </select> 
-                            </div>
-                    </div>
+                    
                     <div class="col-md-2">
                         <label class="control-label">Select Month</label>
                             <div class="form-group">
-                                <select id='month' name="month" class="select2 form-control"  onchange="getattendance(); ">
+                                <select id='month' name="month" class="select2 form-control">
                                     <option value="01">January</option>
                                     <option value="02">February</option>
                                     <option value="03">March</option>
@@ -85,10 +73,22 @@
                                 </select> 
                             </div>
                     </div>
-                     
+                     <div class="col-md-2">
+                        <label class="control-label">Select Year(S)</label>
+                            <div class="form-group">
+                                <select id='year' name="year" class="select2 form-control" onchange="getattendance(); ">
+                                    <option value="2019">2019</option>
+                                    <option value="2018">2018</option>
+                                    <option value="2017">2017</option>
+                                    <option value="2016">2016</option>
+                                    <option value="2015">2015</option>
+                                    
+                                </select> 
+                            </div>
+                    </div>
                     <div class="col-md-2">
                         <div class="form-group m-t-25">
-                            <button type="button" id="apply-filter" class="btn btn-success btn-block">Apply</button>
+                            <button type="button" id="apply-filter"  class="btn btn-success btn-block">Apply</button>
                         </div>
                     </div>
             </div>
@@ -104,6 +104,7 @@
                     <thead>
                         <tr>
                             <th>Employee</th>
+
                             <?php for($i=1;$i<=31;$i++)  { ?>
                             <th><?php echo $i; ?></th>   
                             <?php } ?>                  

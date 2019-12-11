@@ -8,6 +8,7 @@ class Attendance extends CI_Controller
 		$this->load->model('common_model');
 		ini_set('display_errors',1);
 		error_reporting(E_ALL);
+		
 		func_check_login();
 	}
 	public function index(){
@@ -45,38 +46,12 @@ class Attendance extends CI_Controller
 		}
 	}
 
-	public function getdatayuy(){
-		//echo "ghtgb";die;
-			$year = $_POST['year'];
+	public function getfilterdata(){
+		//echo "ggf";die;
+		if(!empty($_POST)){
 			$month = $_POST['month'];
-			echo $year;
-			echo $month;die;
-			$query="SELECT * FROM tbl_attendance WHERE DATE_FORMAT(attendancedate,'%Y-%m') = '2019-12'";
-
-			$attendance= $this->common_model->coreQueryObject($query);
-
-			for($i=1;$i<=31;$i++){
-           		 $date = date('Y-m-d', strtotime('2019'.'-12-'.$i));
-           		 foreach($attendance as $row)
-           		 {
-           		 	$checkattendancedate=$row->attendancedate;
-           		 	$checkattendance=$row->attendance;
-           		 	if($checkattendancedate = $date)
-           		 	{
-           		 		if($checkattendance == '1')
-           		 		{$str= "p";}
-           		 		else if($checkattendance == '0')
-           		 		{$str= "a";}
-           		 		else 
-           		 		{$str= "l";}
-						echo json_encode($str);exit();
-
-           		 	}
-
-           		 }
-        	}
-
-
-			
+			$this->session->set_userdata('month_data',$month);
+		}
 	}
+       
 }
