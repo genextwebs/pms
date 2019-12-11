@@ -69,7 +69,7 @@
 										echo '<option value="'.$row->empid.'" >'.$row->employeename.'</option>';
 									}
 								?>
-						</select>
+					     </select>
 					</div>
 				</div>
 			</div>
