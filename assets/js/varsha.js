@@ -115,13 +115,16 @@ jQuery(document).ready(function() {
 
 	        },
 		});
+
+		$('#btnApplyClients').click(function(){ //button filter event click
+	
+			var oTable = $('#clients').DataTable();
+			oTable.draw();
+		});
 	}
 });
 
-$('#btnapply').click(function(){ //button filter event click
-	var oTable = $('#clients').DataTable();
-	oTable.draw();
-});
+
 
 $('#reset-filters').click(function(){ 
 	jQuery('#startdate').val('');
@@ -290,10 +293,10 @@ jQuery(document).ready(function() {
 	                    var oLanguage = oTable.fnSettings().oLanguage;
 
 	                    if((json.estimateCount == true) && (json.iTotalDisplayRecords == json.limitCountQuery)){
-	                        oLanguage.sInfo = '<b>_START_ to _END_</b> of more than _TOTAL_ (<small>' + json.iTotalRecordsFormatted + ' entries</small>)';
+	                        oLanguage.sInfo = '<b>_START_ to _END_</b> of more than _TOTAL_ (<small>' + json.iTotalRecordsFormatted + ' Estimates</small>)';
 	                    }
 	                    else{
-	                        oLanguage.sInfo = '<b>_START_ to _END_</b> of <b>_TOTAL_</b> (<small>' + json.iTotalRecordsFormatted + ' entries</small>)';
+	                        oLanguage.sInfo = '<b>_START_ to _END_</b> of <b>_TOTAL_</b> (<small>' + json.iTotalRecordsFormatted + ' Estimates</small>)';
 	                    }
 	                    
 	                    fnCallback(json);
@@ -307,14 +310,15 @@ jQuery(document).ready(function() {
 
 	        },
 		});
+		$('#btnApplyEstimates').click(function(){ //button filter event click
+			var oTable = $('#estimate').DataTable();
+			oTable.draw();
+});
+	
 	}
 });
 
-$('#btnapply').click(function(){ //button filter event click
-	var oTable = $('#estimate').DataTable();
-	oTable.draw();
-});
-				
+			
 //delete estimate
 function deleteestimates(estimateid){
 
@@ -417,10 +421,10 @@ jQuery(document).ready(function() {
 	                    var oLanguage = oTable.fnSettings().oLanguage;
 
 	                    if((json.estimateCount == true) && (json.iTotalDisplayRecords == json.limitCountQuery)){
-	                        oLanguage.sInfo = '<b>_START_ to _END_</b> of more than _TOTAL_ (<small>' + json.iTotalRecordsFormatted + ' Clients</small>)';
+	                        oLanguage.sInfo = '<b>_START_ to _END_</b> of more than _TOTAL_ (<small>' + json.iTotalRecordsFormatted + ' Invoices</small>)';
 	                    }
 	                    else{
-	                        oLanguage.sInfo = '<b>_START_ to _END_</b> of <b>_TOTAL_</b> (<small>' + json.iTotalRecordsFormatted + ' Clients</small>)';
+	                        oLanguage.sInfo = '<b>_START_ to _END_</b> of <b>_TOTAL_</b> (<small>' + json.iTotalRecordsFormatted + ' Invoices</small>)';
 	                    }
 	                    
 	                    fnCallback(json);
@@ -434,13 +438,15 @@ jQuery(document).ready(function() {
 
 	        },
 		});
+
+		$('#btnApplyInvoices').click(function(){ //button filter event click
+	var oTable = $('#invoices').DataTable();
+	oTable.draw();
+	});
 	}
 });
 
-$('#btnapply').click(function(){ //button filter event click
-	var oTable = $('#invoices').DataTable();
-	oTable.draw();
-});
+
 
 //delete invoice
 
@@ -482,7 +488,6 @@ function deleteinvoices(invoiceid){
 }
 
 //expense list
-
 jQuery(document).ready(function() {
 	if(controllerName == 'finance' && (functionName == 'expense')){
 		var oTable = jQuery('#expenses').DataTable({
@@ -549,15 +554,18 @@ jQuery(document).ready(function() {
 
 	        },
 		});
+
+		$('#btnApplyExpanse').click(function(){ //button filter event click
+			var oTable = $('#expenses').DataTable();
+			oTable.draw();
+		});
 	}
 });
 
-$('#btnapply').click(function(){ //button filter event click
-	var oTable = $('#expenses').DataTable();
-	oTable.draw();
-});
 
-//expense delete
+
+
+
 
 //delete expenses
 function deleteexpenses(expenseid){
@@ -596,56 +604,9 @@ function deleteexpenses(expenseid){
 	   });
 }
 
-//estimate validation
 
-$(function() {
-  $("form[name='estimate']").validate({
-      rules: {
-      client: "required",
-      currency: "required",
-	  valid_till:"required"
-	  
-      },
-    submitHandler: function(form) {
-      form.submit();
-    }
-  });
-});
-// createinvoice validation
-$(function() {
-  $("form[name='createinvoice']").validate({
-      rules: {
-      invoice_number: "required",
-      project: "required",
-	  currency:"required",
-	  invoice_date:"required",
-		due_date:"required",
-		status:"required"
-      },
-    submitHandler: function(form) {
-      form.submit();
-    }
-  });
-});
-//invoice validation
 
-$(function() {
-  $("form[name='addinvoice']").validate({
-      rules: {
-      invoice_number: "required",
-	  client: "required",
-      project: "required",
-	  currency:"required",
-	  invoice_date:"required",
-	due_date:"required",
-	status:"required"
-	  
-      },
-    submitHandler: function(form) {
-      form.submit();
-    }
-  });
-});
+
 
 //expense validation
 
@@ -686,4 +647,246 @@ function getprojectbyclient(projectid){
 					 $('select[name="project"]').append(html.projectdata);                }
             }); 
         }
+}
+
+//estimate-invoice validation
+
+$("#estimate-invoice").click(function(event) {
+	
+	var client_name_err  = 0;
+	var currency_name_err  = 0;
+	var validtill_err  = 0;
+
+	var project_name_err  = 0;
+	var invoice_err  = 0;
+	var invoicedate_err  = 0;
+	var duedate_err  = 0;
+	var status_err  = 0;
+
+	var item_name_err  = 0;
+	var quantity_err  = 0;
+	var cost_per_item_err  = 0;
+	var tax_err  = 0;
+	var amount_err  = 0;
+	
+
+	$("select[name^='client']").each(function() {
+		var client = $(this).val();
+		if(client == ''){
+			client_name_err = 1;
+		}
+ 
+  
+});
+
+
+	
+	$("select[name^='currency']").each(function() {
+		var currency = $(this).val();
+		if(currency.trim() == ''){
+			currency_name_err = 1;
+		}
+   
+  
+});
+	$("input[name^='valid_till']").each(function() {
+		var valid_till = $(this).val();
+		if(valid_till.trim() == ''){
+			validtill_err = 1;
+		}
+   
+  
+});
+	$("select[name^='project']").each(function() {
+		var project = $(this).val();
+		if(project == ''){
+			project_name_err = 1;
+		}
+ 
+});
+
+	$("input[name^='invoice_number']").each(function() {
+		var invoice_number = $(this).val();
+		if(invoice_number == ''){
+			invoice_err = 1;
+		}
+ 
+});
+
+$("input[name^='invoice_date']").each(function() {
+		var invoice_date = $(this).val();
+		if(invoice_date == ''){
+			invoicedate_err = 1;
+		}
+ 
+});
+
+$("input[name^='due_date']").each(function() {
+		var due_date = $(this).val();
+		if(due_date == ''){
+			duedate_err = 1;
+		}
+ 
+});
+
+$("select[name^='status']").each(function() {
+		var status = $(this).val();
+		if(status == ''){
+			status_err = 1;
+		}
+ 
+});
+
+	
+
+	$("input[name^='item_name']").each(function() {
+		var item_name = $(this).val();
+		if(item_name.trim() == ''){
+			item_name_err = 1;
+		}
+   
+  
+});
+	$("input[name^='quantity']").each(function() {
+		var quantity = $(this).val();
+		if(quantity.trim() == ''){
+			quantity_err = 1;
+		}
+   
+   
+});
+	$("input[name^='cost_per_item']").each(function() {
+		var cost_per_item = $(this).val();
+		if(cost_per_item.trim() == ''){
+			cost_per_item_err = 1;
+		}
+  
+    
+
+});
+	
+	$("input[name^='amount']").each(function() {
+	var amount = $(this).val();
+	if(amount.trim() == ''){
+		amount_err = 1;
+	}
+   
+   
+});
+
+	  if(client_name_err == 1){
+		alert('enter Client name');
+		return false;
+	}
+
+	
+
+	  if(currency_name_err == 1){
+		alert('enter Currency');
+		return false;
+	}
+
+	  if(validtill_err == 1){
+		alert('enter ValidTill Date');
+		return false;
+	}
+
+	if(project_name_err == 1){
+		alert('enter project name');
+		return false;
+	}
+
+	if(invoice_err == 1){
+		alert('enter Invoice Number');
+		return false;
+	}
+
+	if(invoicedate_err == 1){
+		alert('enter invoice date');
+		return false;
+	}
+
+	if(duedate_err == 1){
+		alert('enter Due Date');
+		return false;
+	}
+
+	if(status_err == 1){
+		alert('enter Status');
+		return false;
+	}
+
+	  if(item_name_err == 1){
+		alert('enter item name');
+		return false;
+	}
+	
+	 if(quantity_err == 1){
+		alert('enter quantity');
+		return false;
+	}
+
+	if(cost_per_item_err == 1){
+		alert('enter cost per item');
+		return false;
+	}
+
+	
+
+	 if(amount_err == 1){
+		alert('enter amount');
+		return false;
+	}
+});	
+
+	
+//insert attendance
+
+$("#attendancghtyfthftgheform").click(function(event) {
+	alert("dfd");
+	var url = base_url+"Attendance/insertattendance";
+		var employee = $('#employee').val();
+
+		var attendance = $('input:radio[name=attendance]:checked').val();
+		
+       if(employee!="" && attendance!=""){
+
+			$.ajax({
+				url: url,
+				type: "POST",
+				data: {
+					employee: employee,
+					attendance: attendance,				
+				},
+				cache: false,
+				success: function(dataResult){
+			}
+		});
+	}
+});
+
+
+//
+
+function insertAttendance(employeeid){
+	//alert('hj');
+ 	var url = base_url+"Attendance/insertattendance";
+
+		var attendance = $('input:radio[name=attendance]:checked').val();
+		
+      
+       	 if(employeeid){
+			$.ajax({
+				url: url,
+				type: "POST",
+				data: {
+					employee: employeeid,
+					attendance: attendance,				
+				},
+				cache: false,
+				success: function(dataResult){
+			}
+		
+	});
+}
 }

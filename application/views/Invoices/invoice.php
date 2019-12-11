@@ -85,7 +85,7 @@
 		                		 <div class="col-md-2">
 		                        <div class="form-group m-t-10">
 		                            <label class="control-label col-12 mb-3">&nbsp;</label>
-		                            <button type="button" id="btnapply" class="btn btn-success col-lg-4 co-md-5"><i class="fa fa-check"></i> Apply</button>
+		                            <button type="button" id="btnApplyInvoices" class="btn btn-success col-lg-4 co-md-5"><i class="fa fa-check"></i> Apply</button>
 		                            <button type="button" id="reset-filters" class="btn btn-inverse col-lg-4 co-md-5 offset-md-1"><i class="fa fa-refresh"></i> Reset</button>
 		                        </div>
 		                    </div>

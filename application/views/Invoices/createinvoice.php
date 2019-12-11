@@ -271,7 +271,7 @@
 
 											<div class="row">
 												<div class="col-md-12">
-													<input type="submit" id="save-form" class="btn btn-success" name="btnsubmit" value="Save" > <i class="fa fa-check"></i>
+													<input type="submit" id="estimate-invoice" class="btn btn-success" name="btnsubmit" value="Save" > <i class="fa fa-check"></i>
 												</div>
 											</div>
 													

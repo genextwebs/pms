@@ -20,65 +20,65 @@
 							<div class="row">
                 				<div class="col-md-6">
                 					<div class="form-group">
-			                            <a class="btn btn-outline-success btn-sm"  href="<?php echo base_url().'Finance/addexpenses' ?>">Create Expense <i class="fa fa-plus" aria-hidden="true"></i></a>
+			                            <a class="btn btn-outline-success btn-sm"  href="<?php echo base_url().'Finance/addexpenses' ?>">Add Expense <i class="fa fa-plus" aria-hidden="true"></i></a>
 										<a href="javascript:;" id="toggle-filter" class="btn btn-outline-danger btn-sm toggle-filter"><i class="fa fa-sliders"></i> Filter Results</a>
 									</div>
                 				</div>
 							</div>
 							<div class="row filter-from" id="ticket-filters" style="display: none;">
-	              			  <div class="col-md-12">
+	             			 <div class="col-md-12">
 	                    		<h4>Filter by <a href="javascript:;" class="pull-right toggle-filter"><i class="fa fa-times-circle-o"></i></a></h4>
-	              			  </div>
-	                <form action="" id="filter-form">
+	               			 </div>
+	                		<form action="" id="filter-form">
 							<div class="row">
 		                		<div class="col-md-4">
 		                			
             							<label class="control-label">Select Date Range</label>
-											<input type="text" class="start-date form-control br-0" id="startdate" name="startdate" data-date-format='yyyy-mm-dd' /><div class="input-group-prepend">
-										      <span class="input-group-text bg-info text-white">To</span>
-										    </div>
+											<input type="text"class="start-date form-control br-0" id="startdate" name="startdate" data-date-format='yyyy-mm-dd' />
+											<div class="input-group-prepend">
+											      <span class="input-group-text bg-info text-white">To</span>
+											    </div>
 											<input type="text" class="end-date form-control br-0" id="enddate" name="enddate" data-date-format='yyyy-mm-dd'  />
+									
 		                		</div>
+		                		<div class="col-md-2">
+		                			<label class="control-label">Employee</label>
+            							<div class="form-group">
+            								<select id='employee' name="employee" class="select2 form-control">
+								        	 <option value="">select</option>
+												<?php
+													foreach($employee as $row)
+													{
+														echo '<option value="'.$row->id.'" >'.$row->employeename.'</option>';
+													}
+												?>
+											</select> 
+            							</div>
+		                		</div>
+								
 		                		<div class="col-md-2">
 		                			
-            							<label class="control-label">Employee</label>
+            							<h5 class="control-label">Status</label>
             							<div class="form-group">
-            							<select id='employee' name="employee"class="select2 form-control">
-								            <option value="">--</option>
-											<?php
-												foreach($employee as $row)
-												{
-													echo '<option value="'.$row->id.'">'.$row->employeename.'</option>';
-												}
-											?>
-											
-								        </select> 
-            						</div>
-		                		</div>
-		                		<div class="col-md-2">
-		                			<div class="form-group">
-            							<label class="control-label">Status</label>
-            							<select name="status"class="select2 form-control" id='status' data-placeholder="Select Status">
+            							<select class="select2 form-control" id='status' data-placeholder="Select Status" name="status" >
 								            <option value='all'>All</option>          
 								            <option value='0'>Pending</option>  
 								            <option value='1'>Approved</option> 
-								            <option value='2'>Rejected</option>   
+								            <option value='2'>Rejected</option>  
 											
 								        </select> 
             						</div>
 		                		</div>
-		                		<div class="col-md-4">
+		                		 <div class="col-md-2">
 		                        <div class="form-group m-t-10">
 		                            <label class="control-label col-12 mb-3">&nbsp;</label>
-		                            <button type="button" id="btnapply" class="btn btn-success col-lg-4 co-md-5"><i class="fa fa-check"></i> Apply</button>
+		                            <button type="button" id="btnApplyExpanse" class="btn btn-success col-lg-4 co-md-5"><i class="fa fa-check"></i> Apply</button>
 		                            <button type="button" id="reset-filters" class="btn btn-inverse col-lg-4 co-md-5 offset-md-1"><i class="fa fa-refresh"></i> Reset</button>
 		                        </div>
 		                    </div>
 							</div>
-						</form>
-					</div>
-		                
-
+		                </form>
+		            </div>
 							
 							
 								   <?php
@@ -104,7 +104,7 @@
 									         <th>Price</th>
 									         <th>Purchased From</th>
 											 <th>Employess</th>
-											  <th>Purchase Date</th>
+											 <th>Purchase Date</th>
 											 <th>Status</th>
 											 <th>Action</th>
 								      	</tr>
