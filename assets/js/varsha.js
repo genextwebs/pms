@@ -907,16 +907,19 @@ function getattendance(){
 
 $("#apply-filter").click(function() {
 	var month = $('#month').val();
-	//alert(month);
+	var year = $('#year').val();
+	var department = $('#department').val();
+	var employee = $('#employee').val();
+	//alert(employee);
 	$.ajax({
 		url : base_url+"Attendance/getfilterdata",
         type : 'POST',
-        data : {month: month},
+        data : {month: month,year:year,department:department,employee:employee},
         error: function() {
               alert('Something is wrong');
            },
         success: function(data){
-        	
+			window.location.reload();
         }
 	});
 

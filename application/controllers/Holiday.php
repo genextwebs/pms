@@ -14,6 +14,7 @@ class Holiday extends CI_Controller
 		}
 		else{
 			$this->year = $this->session->userdata('year_data');
+            
 		}
 		func_check_login();
 	}
