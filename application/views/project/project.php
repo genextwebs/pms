@@ -21,8 +21,8 @@
 				<ul class="list-inline two-wrap">
 					<li><i class="icon-layers text-white"></i></li>
 					 <?php 
-						$Total = $this->common_model->getData('tbl_project_info');
-						$total_Project = count($Total);
+						$Totals = $this->common_model->getData('tbl_project_info');
+						$total_Project = count($Totals);
 					 ?>
 					<li class="text-right"><span id="" class="counter text-white"><?php echo $total_Project;?></span></li>
 				</ul>

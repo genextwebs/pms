@@ -80,7 +80,7 @@ class Employee extends CI_Controller
 			}
 			$last_inserted = $this->db->insert_id();
 			//$profilepicture = $this->input->post('imagename');
-			$config = array(
+			/*$config = array(
 							'upload_path' => './uploads/',
 							'allowed_types' => 'gif|jpg|png',
 							'max_size' =>'1000',
@@ -91,18 +91,18 @@ class Employee extends CI_Controller
 			$this->upload->initialize($config);
 			$profilepicture = '';
 			if($this->upload->do_upload('profilepicture')){
-				$profilepicture = array('upload_data'=>$this->upload->data());
-				$insArr = array('user_id' =>$last_inserted,'employeename'=>$employee_name,'slackusername'=>$username,'joingdate'=>$joiningdate,'lastdate'=>$lastdate,'gender'=>$gender,'address'=>$address,'skills'=>$skills,'designation'=>$designation,'department'=>$department,'hourlyrate'=>$hourlyrate,'profilepicture'=>$profilepicture['upload_data']['file_name']);
+				$profilepicture = array('upload_data'=>$this->upload->data());*/
+				$insArr = array('user_id' =>$last_inserted,'employeename'=>$employee_name,'slackusername'=>$username,'joingdate'=>$joiningdate,'lastdate'=>$lastdate,'gender'=>$gender,'address'=>$address,'skills'=>$skills,'designation'=>$designation,'department'=>$department,'hourlyrate'=>$hourlyrate);
 				
 			$this->common_model->insertData('tbl_employee',$insArr);
-			}
+			/*}
 			else{
 				$error = array('error' => $this->upload->display_errors());
 				//print_r($error);die;
 				$this->session->set_flashdata("error",$error);
 				$this->session->set_flashdata("data",$_POST);
 				redirect('employee/addemployee');			
-			}
+			}*/
 			redirect('employee');
 		}			
 	}
@@ -271,6 +271,7 @@ class Employee extends CI_Controller
 		$iFilteredTotal = count($empsFilterArr);
 
 		$empsAllArr = $this->common_model->getData('tbl_employee');
+		//print_r($empsAllArr);die;
 		$iTotal = count($empsAllArr);
 
 		/** Output */

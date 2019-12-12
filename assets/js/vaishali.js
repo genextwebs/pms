@@ -145,6 +145,7 @@ jQuery(document).ready(function() {
 					}).get();
 					//console.log(selected);
 					aoData.push( { "name": "status", "value": $('#status').val() } );
+					
 					aoData.push( { "name": "employeename", "value": $('#employeename').val() } );
 					aoData.push( { "name": "skill", "value": $('#skill').val() } );
 					aoData.push( { "name": "designation", "value": $('#designation').val() } );
@@ -828,7 +829,12 @@ if (isConfirm) {
    }
    });
 }                          
-                                                                                             
+
+// add category in task
+
+save-task-category
+
+                                                                                     
                                             
                                     
 

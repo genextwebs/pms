@@ -248,7 +248,7 @@ class Project extends CI_Controller {
 		$datarow[] = array(
 			$id = $i,
 			$row->projectname.'<br/>'.$string.'<br/>'.$showStatus,
-			"<a href='".base_url()."Project/searchproject/".base64_encode($rowid)."'> Add Project  Members</a>"
+			"<a href='".base_url()."Project/member/".base64_encode($rowid)."'> Add Project  Members</a>"
 			.'<br/>'.$emp_str,
 			$row->deadline,
 			$row->clientname,
@@ -280,16 +280,7 @@ class Project extends CI_Controller {
 		redirect('project/index');
 	}
 	
-	public function searchproject(){
-		$data['id'] = base64_decode($this->uri->segment(3));
-		$sql = "SELECT tbl_project_member.id as memberid , tbl_project_member.emp_id , tbl_employee.id ,tbl_employee.employeename from tbl_project_member inner join tbl_employee on tbl_project_member.emp_id = tbl_employee.id where project_id =".$data['id'];
-		$data['member'] = $this->common_model->coreQueryObject($sql);
-		$data['emp_count'] = count($data['member']);
-		$data['employee'] = $this->common_model->getData('tbl_employee');
-		$this->load->view('common/header');
-		$this->load->view('project/searchproject',$data);
-		$this->load->view('common/footer');
-	}
+	
 			
 	public function deletetemplate(){
 		$id=base64_decode($_POST['id']);
@@ -809,7 +800,7 @@ class Project extends CI_Controller {
 				$projectM = $this->common_model->getData('tbl_project_member', $whereArr);
 				if(count($projectM) == 1){
 					$this->session->set_flashdata('message_name', 'Alredy add this member');
-					redirect('Project/searchproject/'.$this->uri->segment(3));
+					redirect('Project/member/'.$this->uri->segment(3));
 				}
 				else{
 					$insArr = array('project_id' => $project_id , 'emp_id' => $emp_id);
@@ -817,7 +808,7 @@ class Project extends CI_Controller {
 				}
 			}
 		}
-		redirect('Project/searchproject/'.$this->uri->segment(3));
+		redirect('Project/member/'.$this->uri->segment(3));
 	}
 
 	public function insertTemplateMember(){
@@ -853,5 +844,23 @@ class Project extends CI_Controller {
 		$id = base64_decode($_POST['id']);
 		$whereArr = array('id' => $id);
 		$this->common_model->deleteData('tbl_project_member',$whereArr);
+	}
+
+	public function member(){
+		$data['id'] = base64_decode($this->uri->segment(3));
+		$sql = "SELECT tbl_project_member.id as memberid , tbl_project_member.emp_id , tbl_employee.id ,tbl_employee.employeename from tbl_project_member inner join tbl_employee on tbl_project_member.emp_id = tbl_employee.id where project_id =".$data['id'];
+		$data['member'] = $this->common_model->coreQueryObject($sql);
+		$data['emp_count'] = count($data['member']);
+		$data['employee'] = $this->common_model->getData('tbl_employee');
+		$this->load->view('common/header');
+		$this->load->view('project/searchproject',$data);
+		$this->load->view('common/footer');
+	}
+
+	public function task(){
+		$data['id'] = base64_decode($this->uri->segment(3));
+		$this->load->view('common/header');
+		$this->load->view('project/searchproject',$data);
+		$this->load->view('common/footer');
 	}
 }		

@@ -12,7 +12,7 @@
                             <?php
                             $controller = $this->uri->segment(1);
                             $function = $this->uri->segment(2);
-                            if($controller == 'Project' && $function == 'searchproject'){
+                            if($controller == 'Project' && $function == 'member'){
                             ?>
                             <li><a>Members</a></li>
                         <?php } ?>
@@ -32,13 +32,11 @@
 								    	<a class="nav-link" id="overview-tab" data-toggle="tab" href="#overview" role="tab" aria-controls="overview" aria-selected="true">Overview</a>
 								  	</li>
 								  	<li class="nav-item" >
-								    	<a class="nav-link <?php if($controller == 'Project' && $function == 'searchproject') { echo "active";}?>" id="members-tab" data-toggle="tab" href="#members" role="tab" aria-controls="members" aria-selected="false">Members</a>
+								    	<a class="nav-link <?php if($controller == 'Project' && $function == 'member') { echo "active";}?>" id="members-tab"  href="<?php echo base_url().'Project/member/'.$id?>" role="tab" aria-controls="members" aria-selected="false">Members</a>
 								  	</li>
+								  	
 								  	<li class="nav-item">
-								    	<a class="nav-link" id="milestones-tab" data-toggle="tab" href="#milestones" role="tab" aria-controls="milestones" aria-selected="false">Milestones</a>
-								  	</li>
-								  	<li class="nav-item">
-								    	<a class="nav-link " id="tasks-tab" data-toggle="tab" href="#tasks" role="tab" aria-controls="tasks" aria-selected="false">Tasks</a>
+								    	<a class="nav-link <?php if($controller == 'Project' && $function == 'task') { echo "active";}?>" id="tasks-tab"  href="<?php echo base_url().'Project/task/'.base64_encode($id)?>" role="tab" aria-controls="tasks" aria-selected="false">Tasks</a>
 								  	</li>
 								  	<li class="nav-item">
 								    	<a class="nav-link" id="files-tab" data-toggle="tab" href="#files" role="tab" aria-controls="files" aria-selected="false">Files</a>
@@ -405,7 +403,7 @@
 		            						</div>
 									  	</div>
 									  	<!-- tab2 -->
-									 	<div class="tab-pane fade section-2 <?php if($controller == 'Project' && $function == 'searchproject') { echo "active show";}?>" id="members" role="tabpanel" aria-labelledby="members-tab">
+									 	<div class="tab-pane section-2 <?php if($controller == 'Project' && $function == 'member') { echo "active show";}?>" id="members" role="tabpanel" aria-labelledby="members-tab">
 					            			<div class="row">
 					            				<div class="col-md-6">
 					            					<div class="card">
@@ -499,98 +497,9 @@
 					            			</div>
 									 	</div>
 									 	<!-- tab3 -->
-									  	<div class="tab-pane fade section-3" id="milestones" role="tabpanel" aria-labelledby="milestones-tab">
-					            			<div class="stats-box">
-					            				<h2>Milestone</h2>
-					            				<div class="row m-b-10">
-		                                            <div class="col-md-12">
-		                                                <a href="javascript:;" id="showadd-form" class="btn btn-outline-success"><i class="fa fa-flag"></i> Create Milestone</a> 
-		                                            </div>
-		                                        </div>
-		                                        <div class="row">
-		                                        	<div class="col-md-12">
-		                                        		<form class=""> 
-		                                        			<div class="form-body">
-		                                        				<div class="row mt-4">
-																    <div class="col-md-6 ">
-																        <div class="form-group">
-																            <label>Milestone Title</label>
-																            <input id="milestone_title" name="milestone_title" type="text" class="form-control">
-																        </div>
-																    </div>
-																    <div class="col-md-4 ">
-																        <div class="form-group">
-																            <label>Status</label>
-																            <select name="status" id="status" class="form-control">
-																                <option value="incomplete">Incomplete</option>
-																                <option value="complete">Complete</option>
-																            </select>
-																        </div>
-																    </div>
-																    <div class="col-md-6 ">
-																        <div class="form-group">
-																            <label>Currency</label>
-																            <select name="currency_id" id="currency_id" class="form-control">
-																                <option value="">--</option>
-																                <option value="1">USD ($)</option>           
-																                <option value="2">GBP (£)</option>           
-																                <option value="3">EUR (€)</option>           
-																                <option value="4">INR (₹)</option>           
-																            </select>
-																        </div>
-																    </div>
-																    <div class="col-md-6 ">
-																        <div class="form-group">
-																            <label>Milestone Cost</label>
-																            <input id="cost" name="cost" type="number" class="form-control" value="0" min="0" step=".01">
-																        </div>
-																    </div>
-																</div>
-																<div class="row mt-2">
-			                                                        <div class="col-md-6">
-			                                                            <div class="form-group">
-			                                                                <label for="memo">Milestone Summary</label>
-			                                                                <textarea name="summary" id="" rows="4" class="form-control"></textarea>
-			                                                            </div>
-			                                                        </div>
-			                                                    </div>
-		                                        			</div>
-		                                        			<div class="form-actions mt-5">
-			                                                    <button type="button" id="save-form" class="btn btn-success"><i class="fa fa-check"></i> Save</button>
-			                                                    <button type="button" id="close-form" class="btn btn-default"><i class="fa fa-times"></i> Close</button>
-			                                                </div>
-		                                        		</form>
-		                                        		<hr>
-		                                        		<div class="table-responsive mt-4">
-														    <table class="table table-bordered" id="milestone-table">
-														        <thead>
-														            <tr role="row">
-														                <th>Id</th>
-														                <th>Milestone Title</th>
-														                <th>Milestone Cost</th>
-														                <th>Status</th>
-														                
-
-														                <th>Action</th>
-														            </tr>
-														        </thead>
-														        <tbody>
-														            <tr>
-														                <td></td>
-														                <td></td>
-														                <td></td>
-														                <td></td>
-														                <td></td>
-														            </tr>
-														        </tbody>
-														    </table>
-														</div>
-		                                        	</div>
-		                                        </div>
-					            			</div>
-									  	</div>
+									  	
 									  	<!-- tab4 -->
-									  	<div class="tab-pane fade" id="tasks" role="tabpanel" aria-labelledby="tasks-tab">
+									  	<div class="tab-pane <?php if($controller == 'Project' && $function == 'task') { echo "active show";}?>"" id="tasks" role="tabpanel" aria-labelledby="tasks-tab">
 									  		<div class="row mb-2">
 									  			<div id="new-tadk-panel" class="col-md-12">
 									  				<div class="card">
@@ -602,7 +511,7 @@
 									  					</div>
 									  					<div class="card-wrapper collapse show">
 													        <div class="card-body">
-													           	<form class="">
+													           	<form method="post" >
 													           		<div class="form-body">
 													           			<div class="row">
 													           				<div class="col-md-12">
@@ -614,7 +523,7 @@
 									                						<div class="col-md-12">
 									                							<div class="form-group">
 									                							 	<label class="control-label">Description</label>
-									                							 	<textarea name="editor3"></textarea>
+									                							 	<textarea name="editor1"></textarea>
 									                							</div>
 									                						</div>
 									                						<div class="col-md-12">
@@ -626,35 +535,24 @@
 									                						<div class="col-md-12">
 									                							<div class="form-group">
 									                								<label class="control-label">Due Date</label>
-									                								<input id="due_date" type="text" class="form-control" name="due_date">
+									                								<input id="deadline" type="text" class="form-control" name="due_date">
 									                							</div>
 									                						</div>
-									                						<div class="col-md-12">
-									                							<div class="form-group sm-box">
-									                								<label class="control-label">Milestones</label>
-									                							 	<select class="custom-select br-0">
-										                								<option selected="">--</option>
-										                							</select>
-									                							</div>
-									                						</div>
+
 									                						<div class="col-md-12">
 									                							<div class="form-group sm-box">
 									                								<label class="control-label">Assigned To</label>
 									                							 	<select class="custom-select br-0">
-										                								<option selected="">Choose Assignee</option>
-										                								<option>Lian Morissette</option>
+										                								<?php foreach($employee as $row){
+												            							?>
+																	            		<option value="<?php echo $row->id?>"><?php echo $row->employeename;?></option>
+																	            		<?php
+																	            		}
+																	            		?> 
 										                							</select>
 									                							</div>
 									                						</div>
-									                						<div class="col-md-12">
-									                							<div class="form-group">
-									                								<label class="control-label">Assigned To</label>
-									                							 	<select class="custom-select br-0">
-										                								<option selected="">Choose Assignee</option>
-										                								<option>Lian Morissette</option>
-										                							</select>
-									                							</div>
-									                						</div>
+									                						
 									                						<div class="col-md-12">
 										                						<div class="form-group">
 										                							<label class="control-label">
@@ -683,12 +581,13 @@
 																					    <input type="radio" class="custom-control-input" id="low-rad" name="radio-stacked" required="">
 																					    <label class="custom-control-label text-success" for="low-rad">Low</label>
 																					</div>
+																					<input type="hidden" value="<?php echo $id; ?>" name="projectid">
 										                						</div>
 										                					</div>
 													           			</div>
 													           		</div>
 													           		<div class="form-actions">
-													           			
+													           			<button type="submit" id="save-task" class="btn btn-success"><i class="fa fa-check"></i> Save</button>
 													           		</div>
 													           	</form>
 													        </div>
@@ -1090,7 +989,7 @@
 						            </div>
 						        </div>
 						        <div class="form-actions">
-						            <button type="button" id="save-category" class="btn btn-success"> <i class="fa fa-check"></i> Save</button>
+						            <button type="button" id="save-task-category" class="btn btn-success"> <i class="fa fa-check"></i> Save</button>
 						        </div>
 						    </form>
             			</div>
