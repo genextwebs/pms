@@ -120,17 +120,18 @@ class Leaves extends CI_Controller {
 
 			/** Filtering Start */
 			
-			if(!empty(trim($_GET['sSearch']))){
+			/*if(!empty(trim($_GET['sSearch']))){
 				$searchTerm = trim($_GET['sSearch']);
 				$sWhere.= ' AND (tbl_employee.employeename like "%'.$searchTerm.'%")';
-			}
+			}*/
 				
 			
 			$startdate=!empty($_POST['sdate']) ? $_POST['sdate'] : '';
-
+	
 			$enddate=!empty($_POST['edate']) ? $_POST['edate'] : '';
 			$empname=!empty($_POST['ename']) ? $_POST['ename'] : '';
-		//   echo($startdate);die;	
+			 //echo($empname);die;
+		
 			if(!empty($startdate)){						
 				$sWhere.=' AND date>="'.$startdate.'"';
 			}
@@ -180,7 +181,7 @@ class Leaves extends CI_Controller {
 			if($mystatus=='1'){
 			//echo($row->status);die;
 		
-						 $actionstring= '<a href='.base_url().'Leaves/searchproject/'.base64_encode($row->id). ' class="btn btn-success btn-circle" data-toggle="tooltip" data-original-title="View Project Details"><i class="fa fa-search" aria-hidden="true"></i></a>';
+						 $actionstring= '<a href="javascript:;" onclick="searchleaves(\''.base64_encode($rowid).'\');"  class="btn btn-success btn-circle" data-toggle="modal" data-target="#leaves-popup" data-original-title="View Project Details"><i class="fa fa-search" aria-hidden="true"></i></a>';
 		  		;		 
 								 
 			}
@@ -245,53 +246,49 @@ class Leaves extends CI_Controller {
 
 	}
 
-	public function editleaves(){
+	public function editleavesbtn(){
 		$id=base64_decode($_POST['id']);
 		$whereArr=array('id'=>$id);
 		$leaves =$this->common_model->getData('tbl_leaves',$whereArr);
-		$emp['employee'] =$this->common_model->getData('tbl_employee',$whereArr);
-		//print_r($leaves);die;
+		$emp['employee'] =$this->common_model->getData('tbl_employee');
+		$leavetype['leave'] =$this->common_model->getData('tbl_leavetype');
 		$id= $leaves[0]->id;
-		 //$leaves[0]->empid;
-		//$date=$leaves[0]->date;
-		//echo($date);die;
 		$string = '';
-					$empid='';
-					if(	!empty($leaves[0]->empid)){
-						$date = $leaves[0]->empid;
-					}
 		$string.= '<div class="row">
 						<div class="col-md-12">
 							<div class="form-group">
-								<label class="control-label">Choose Member</label>
-									<select class="custom-select br-0" id="choose_mem" name="choose_mem">';
-									foreach($emp['employee'] as $emp){
-										$str='';
-											if($emp->id==$leaves[0]->empid){
+								<label class="control-label" for="choosemem">Choose Member</label>
+									<select class="custom-select br-0" id="choose_mem" name="choose_mem" value="">';
+										foreach($emp['employee'] as $emp){
+											$str='';
+												if($emp->id==$leaves[0]->empid){	
+													$str='selected';
+												}
+													$string.= '<option value="'.$emp->id.'" '.$str.'>'.$emp->employeename.'</option>';
+										}
+
+					$string.= 	   '</select>
+							</div>
+						</div>
+					</div>';
+		$string.= '	<div class="row">
+						<div class="col-md-12">
+							<div class="form-group project-category">
+								<label class="control-label" for="leave_type">Leave Type
+											<a class="btn btn-sm btn-outline-success ml-1" href="javascript:;" data-toggle="modal" data-target="#leave_type1"><i class="fa fa-plus"></i> Add Leave Type</a></label>
+											
+									<select class="custom-select br-0" id="leave_type" name="leave_type">';	
+										foreach($leavetype['leave'] as $lea){
+											$str='';
+											if($lea->id==$leaves[0]->leavetypeid){
 												$str='selected';
 												}
 											
-									$string.= '<option value="'.$emp->id.''.$str.'">'. 
-										$emp->employeename.'</option>';
-													}
-														
-									$string.= '</select>
-
-										</div>
-								</div>
-							</div>';
-		$string.= '	<div class="row">
-									<div class="col-md-12">
-										<div class="form-group project-category">
-											<label class="control-label" for="leave_type">
-											Leave Type
-											<a class="btn btn-sm btn-outline-success ml-1" href="javascript:;" data-toggle="modal" data-target="#leave_type1"><i class="fa fa-plus"></i> Add Leave Type</a></label>
-											
-											<select class="custom-select br-0" id="leave_type" name="leave_type">
-											
-												
+												$string.= '<option value="'.$lea->id.'"'.$str.'>'. 
+										$lea->name.'</option>';
+									}
 																							
-											</select>
+								$string.=	'</select>
 										</div>
 									</div>
 								</div>';
@@ -317,25 +314,36 @@ class Leaves extends CI_Controller {
 										.'<textarea id="absence" class="form-control" name="absence" rows="5">'.$reasonforabsence.'</textarea>'
 							.'</div>'
 						.'</div>';
-		$string.=    '<div class="col-md-6">'
-							.'<div class="form-group">'
-								.'<label class="control-label">Status</label>'
-									.'<select id="" class="form-control" name="status">'
-										.'<option></option>'
+		$string.=    '<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Status</label>
+									<select id="status" class="form-control" name="status">'.
+									$str=''.';
 
+										<option value="1"';
+										if($leaves[0]->status==1)
+										{ 
+											 $str= 'selected';
+										}
+									$string.=''.$str.'>Approved</option>';
 											
-									.'</select>'
-								.'</div>'
-							.'</div>'
-						.'</div>';
+									$string.='<option value="0" ';
+									if($leaves[0]->status==0)
+									{
+										 $str= 'selected';
+									}
+									$string.= ''.$str.'>Pending</option>
+									</select>
+								</div>
+							</div>
+						</div>';
 		$string.= '<div class="form-actions">
-									<button type="submit" name="btnupdate" id="save-form" class="btn btn-success"> <i class="fa fa-check"></i> Update</button>
-									
-									<input type="button" class="btn btn-default" value="Close">
-								</div>';
+						<button type="button" onclick="editdata(\''.base64_encode($id).'\')" name="btnupdate" id="save-form" class="btn btn-success"> <i class="fa fa-check"></i> Update</button>		
+						<input type="button" class="btn btn-default" value="Close">
+					</div>';
 		/*$str.= '<td><button onclick="editleaves(\''.base64_encode($id).'\')" class="fa fa-edit" value="Edit"></button></td></tr>';*/
 		echo json_encode($string);exit;
-		
+ 		
 /*		if(!empty($_POST))
 		{	
 			$mem = $this->input->post('choose_mem');
@@ -350,7 +358,7 @@ class Leaves extends CI_Controller {
 			$this->common_model->updateData('tbl_project_info',$updateArr,$whereArr);
 		     echo'<pre>';
 		     echo $this->db->last_query();die;
-		 }*/
+		 }*/ 
 	}
 
 	public function approveleaves(){
@@ -360,6 +368,23 @@ class Leaves extends CI_Controller {
 		$this->common_model->updateData('tbl_leaves',$updateArr,$whereArr);
 		redirect('Leaves/index');
 		
+	}
+
+	public function updateleaves(){
+		$id=base64_decode($_POST['id']);
+		
+		$whereArr=array('id'=>$id);
+		$mem  =   $this->input->post('mem');
+		$type =   $this->input->post('ltype');
+		$date =   $this->input->post('date');
+		$abs  =   $this->input->post('abs');
+		$status =   $this->input->post('sta');
+		$updateArr = array('empid'=>$mem,'leavetypeid'=>$type,'date'=>$date,'reasonforabsence'=>$abs,'status'=>$status);
+		$whereArr=array('id'=>$id);
+
+		$this->common_model->updateData('tbl_leaves',$updateArr,$whereArr);
+			/*redirect('project/viewarchiev');*/
+
 	}
 
 	public function deleteleaves(){

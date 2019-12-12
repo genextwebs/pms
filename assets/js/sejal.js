@@ -205,8 +205,10 @@ jQuery(document).ready(function() {
 			"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No Projects found<br/><br/></center>', "sZeroRecords": "<center><br/>No Projects found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ leads", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
 			"fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
 				aoData.push( { "name": "sdate", "value": $('#startdate').val() } );
+				echo(sdate);die;
 				aoData.push( { "name": "edate", "value": $('#enddate').val() } );
 				aoData.push( { "name": "ename", "value": $('#empname').val() } );
+
 
 				oSettings.jqXHR = $.ajax( {
 					"dataType": 'json',
@@ -325,6 +327,7 @@ $("form[name='creatclient']").validate({
 	form.submit();}
 });
 	
+
 //addtemplate validation
 $("form[name='creatclient']").validate({
 	rules:{
@@ -333,6 +336,7 @@ $("form[name='creatclient']").validate({
 	submitHandler: function(form) {
 	form.submit();}
 });
+
 	
 //addcategory using jquery 
 /*$("#category").submit(function(event) {
@@ -351,6 +355,7 @@ $("form[name='creatclient']").validate({
 			  }
 			});
 });*/
+
 // for add category in addproject
 $("#save-category").click(function(event) {
 	//event.preventDefault();
@@ -401,9 +406,6 @@ $("#save-category").click(function(event) {
 });
 
 
-
-
-
 // addproject=> delete category 
 	function deletecat(id)
 	{
@@ -433,7 +435,6 @@ $("#save-category").click(function(event) {
 
 	function searchleaves(id)
 	{
-		
 		$.ajax({
 		    type: "POST",
 		    url: base_url+"leaves/searchleaves",
@@ -451,7 +452,6 @@ $("#save-category").click(function(event) {
 
 
 	function checkUncheck(){ 
-
 		var checkBox = document.getElementById("without_deadline");
         if (checkBox.checked) {
             $('#deadlineBox').hide().checked;
@@ -462,7 +462,6 @@ $("#save-category").click(function(event) {
 	}
 
 	function viewtask(){ 
-
 		var checkBox = document.getElementById("client-view-tasks");
         if (checkBox.checked) {
             $('#viewnotification').show().checked;
@@ -498,9 +497,6 @@ $("#save-category").click(function(event) {
 						   swal("Done!", "It was succesfully deleted!", "success");
 						   $('#project').DataTable().ajax.reload();
 						   $('#archievdata').DataTable().ajax.reload();
-						   //$("#leads").fnReloadAjax();
-							//$('#leads').DataTable.ajax.reload(null,false);
-							//window.location.reload();
 					   },
 					   error: function (xhr, ajaxOptions, thrownError) {
 						   swal("Error deleting!", "Please try again", "error");
@@ -512,7 +508,6 @@ $("#save-category").click(function(event) {
 	
 	//delete template
 	function deletetemplate(id){
-		//alert(id);
 		var url = base_url+"project/deletetemplate";
 		swal({
 		 title: "Are you sure?",
@@ -535,10 +530,6 @@ $("#save-category").click(function(event) {
 					   success: function (data) {
 						   swal("Done!", "It was succesfully deleted!", "success");
 						   $('#template').DataTable().ajax.reload();
-
-						   //$("#leads").fnReloadAjax();
-							//$('#leads').DataTable.ajax.reload(null,false);
-							//window.location.reload();
 					   },
 					   error: function (xhr, ajaxOptions, thrownError) {
 						   swal("Error deleting!", "Please try again", "error");
@@ -550,7 +541,6 @@ $("#save-category").click(function(event) {
 
 	//delete leaves
 	function deleteleaves(id){
-		//alert(id);
 		var url = base_url+"Leaves/deleteleaves";
 		swal({
 		 title: "Are you sure?",
@@ -573,10 +563,6 @@ $("#save-category").click(function(event) {
 					   success: function (data) {
 						   swal("Done!", "It was succesfully deleted!", "success");
 						   $('#leaves').DataTable().ajax.reload();
-						 //  $('#archievdata').DataTable().ajax.reload();
-						   //$("#leads").fnReloadAjax();
-							//$('#leads').DataTable.ajax.reload(null,false);
-							//window.location.reload();
 					   },
 					   error: function (xhr, ajaxOptions, thrownError) {
 						   swal("Error deleting!", "Please try again", "error");
@@ -586,34 +572,49 @@ $("#save-category").click(function(event) {
 			   });
 		}
 
-
-
 	//edit leaves
 	function editleaves(id){
 		$('#leaves-popup').modal('toggle');
 		$('#editleaves').modal('show');
-		var url = base_url+"Leaves/editleaves";
-
-				   $.ajax({
-				   		type: 'POST',
-					   	url: url,
-					     cache: false,
-		    			dataType: 'json',
-					   dataType: 'json',
-					/*   data: {id:id},*/
-					 data: "id="+id,
-					   success: function (data) {
-						  	$('#leave-edit').append(data);
-					   },
-					   error: function (xhr, ajaxOptions, thrownError) {
-						   
-					   }
-				   });
+		var url = base_url+"Leaves/editleavesbtn";
+		   $.ajax({
+		   		type: 'POST',
+			   	url: url,
+			     cache: false,
+    			dataType: 'json',
+			 data: "id="+id,
+			   success: function (data) {
+			   		$('#leave-edit').html('');
+				  	$('#leave-edit').append(data);
+			   },
+			   error: function (xhr, ajaxOptions, thrownError) {
+				   
 			   }
-			 
+		   });
+		 }
+			
+    //edidt btn clicking
+    function editdata(id){
+		var mem = $('#choose_mem').val();
+		var ltype = $('#leave_type').val();
+		var date = $('#date').val();
+		var abs = $('#absence').val();
+		var sta = $('#status').val();
+		    $.ajax({
+      			url: base_url+"Leaves/updateleaves",
+				type: "POST",
+				dataType: "JSON",
+				data: {id : id  , mem : mem ,ltype : ltype , date : date , abs : abs, sta : sta},
+				dataType: "html",
+			    success: function (data) {
+					$('#editleaves').modal('toggle');
+						window.location.reload();
+				   },
+		    });
+		 }
+	
 
 	function archivetoproject(id){
-		//alert(id);
 		var url = base_url+"project/archivetoproject";
 		swal({
 		 title: "Are you sure?",
@@ -624,7 +625,7 @@ $("#save-category").click(function(event) {
 		 confirmButtonText: "Yes, restore it!",
 		 closeOnConfirm: false
 		},
-			function(isConfirm){
+	    function(isConfirm){
 			if (isConfirm) {
 				   $.ajax({
 					   url: url,
@@ -661,7 +662,7 @@ $("#save-category").click(function(event) {
 		 confirmButtonText: "Yes, archive it!",
 		 closeOnConfirm: false
 		},
-			function(isConfirm){
+		function(isConfirm){
 			if (isConfirm) {
 				   $.ajax({
 					   url: url,
@@ -669,25 +670,20 @@ $("#save-category").click(function(event) {
 					   dataType: "JSON",
 					   data: {id:id},
 					  dataType: "html",
-					  
 					   success: function (data) {
 						   swal("Done!", "Project archived successfully..!", "success");
 						   $('#project').DataTable().ajax.reload();
-
-						   //$("#leads").fnReloadAjax();
-							//$('#leads').DataTable.ajax.reload(null,false);
-							//window.location.reload();
 					   },
 					   error: function (xhr, ajaxOptions, thrownError) {
 						   swal("Error !", "Please try again", "error");
 					   }
 				   });
-			   }
-			   });
+			    }
+		   });
 		}
 
 	//+addleaves 
-
+/*
 	$("#save_leave").click(function(event) {
 		//event.preventDefault();
 		var leave_name = $("input[name='leavename']").val();
@@ -734,4 +730,4 @@ $("#save-category").click(function(event) {
 			jQuery('#errormsg').html('')
 			jQuery('#errormsg').html('<b>Please enter category name</b>');
 		}
-	});
+	});*/

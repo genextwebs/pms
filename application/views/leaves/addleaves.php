@@ -134,13 +134,13 @@
 											<label class="control-label">Status</label>
 											<select id="" class="form-control" name="status">
 												<option selected value="1" <?php if(!empty($sessData['status'])){
-                                                            if($sessData['status'] == 0){
+                                                            if($sessData['status'] == 1){
                                                                 echo 'selected';    
                                                             }}
                                                             ?>>Approved</option>
 												<option value="0" <?php if(!empty($sessData['status'])){
-                                                            if($sessData['status'] == 1){
-                                                                echo 'selected';    
+                                                            if($sessData['status'] == 0){
+                                                                $str;    
                                                             }}
                                                             ?>>Pending</option>
 
