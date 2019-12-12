@@ -9,11 +9,11 @@ class Holiday extends CI_Controller
 		$this->load->model('common_model');
 		$this->login = $this->session->userdata('login');
 		$this->user_id = $this->login->id;
-		if(!$this->session->userdata('year_data')){
+		if(!$this->session->userdata('holiday_year')){
 			$this->year = date('Y');
 		}
 		else{
-			$this->year = $this->session->userdata('year_data');
+			$this->year = $this->session->userdata('holiday_year');
             
 		}
 		func_check_login();
@@ -831,7 +831,6 @@ class Holiday extends CI_Controller
 					$data = $this->common_model->getData("tbl_holiday",$whereArr);
 					if(count($data) == 1){
 						$message = 1;
-						
 					}
 					else{
 							$this->common_model->insertData('tbl_holiday',$insArr);
@@ -876,7 +875,6 @@ class Holiday extends CI_Controller
 		$date = $_POST['id'];
 		$day = date('l', strtotime($date));
 		if(empty($_POST['type'])){
-			
 			$whereArr = array('date'=>$date);
 			$this->common_model->deleteData('tbl_holiday',$whereArr);
 		}
@@ -917,7 +915,7 @@ class Holiday extends CI_Controller
 	public function check_year(){
 		if(!empty($_POST)){
 			$year = $_POST['year'];
-			$this->session->set_userdata('year_data',$year);
+			$this->session->set_userdata('holiday_year',$year);
 		}
 	}
 }

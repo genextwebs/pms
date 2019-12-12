@@ -440,11 +440,11 @@ $("#save-designation").click(function(event) {
      			/*$.each(data.taxdata, function(key, value) {
                            $('select[name="tax"]').append('<option value="'+ value.id +'">'+ value.rate +'</option>');
                        })*/
-                $('select[name="designation"]').html('');
-                $('select[name="designation"]').append(data.taxdata);
+               $('select[name="designation"]').html('');
+               $('select[name="designation"]').append(data.desData);
               // $("tbody").append("<tr><td>"+data.count+"</td><td>"+taxname+"</td><td>"+rate+"</td></tr>");
                $('#data-designation').modal('toggle');
-                $('#modeldesignation')[0].reset();
+               $('#modeldesignation')[0].reset();
            }
         });
 });
@@ -467,11 +467,11 @@ $("#save-department").click(function(event) {
      			/*$.each(data.taxdata, function(key, value) {
                            $('select[name="tax"]').append('<option value="'+ value.id +'">'+ value.rate +'</option>');
                        })*/
-                $('select[name="department"]').html('');
-                $('select[name="department"]').append(data.taxdata);
+               $('select[name="department"]').html('');
+               $('select[name="department"]').append(data.depData);
               // $("tbody").append("<tr><td>"+data.count+"</td><td>"+taxname+"</td><td>"+rate+"</td></tr>");
                $('#data-department').modal('toggle');
-                $('#modaldepartment')[0].reset();
+               $('#modaldepartment')[0].reset();
            }
         });
 });
@@ -646,7 +646,7 @@ $("#save-defaultholiday").click(function(event) {
 			 	sunday = '0';
 			 }
        		//var dataString = 'saturday='+ saturday +'sunday=' + sunday ;
-       		//alert(dataString);
+       		//alert(saturday);
         $.ajax({
            url: base_url+"holiday/insert_defaultholiday",
            type: 'POST',
@@ -832,7 +832,10 @@ if (isConfirm) {
 
 // add category in task
 
-save-task-category
+$('#save-task-category').click(function(){
+	var task_cat_name = $("input[name='category_name']").val();
+	alert(task_cat_name);
+});
 
                                                                                      
                                             

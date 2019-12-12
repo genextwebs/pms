@@ -242,17 +242,12 @@ class Leads extends CI_Controller
 		$this->load->view('common/footer');
 	}
 
-	public function deleteleads()
-	{
+	public function deleteleads(){
 		$leadId = base64_decode($_POST['leadId']);
 		$clientId = base64_decode($_POST['clientId']);
 		$type = $_POST['type'];
 		$whereArr = array('id'=>$leadId);
 		$this->common_model->deleteData('tbl_leads',$whereArr);
-		/*if($type != 'lead'){
-			$whereArr = array('id'=>$clientId);
-			$this->common_model->deleteData('tbl_clients',$whereArr);	
-		}*/
 	} 
 
 	/*public function changeleadtoclient(){
@@ -308,67 +303,12 @@ class Leads extends CI_Controller
 				redirect('Leads');
 			}
 		}
-	}
+	}*/
 
-	/*public function editclients(){
-		$id = base64_decode($this->uri->segment(3));
-		$whereArr = array('id'=>$id);
-		$data['clients'] = $this->common_model->getData('tbl_clients',$whereArr);
-		$this->load->view('common/header');
-		$this->load->view('leads/editclients',$data);
-		$this->load->view('common/footer');
-		if(!empty($_POST))
-		{
-			$companyname = $this->input->post('company_name');
-			$website = $this->input->post('website');
-			$address = $this->input->post('address');
-			$clientname = $this->input->post('name');
-			$clientemail = $this->input->post('email');
-			$password = $this->input->post('password');
-			$updateArr=array();
-			if($this->input->post('password') != '')
-			{
-				$updateArr['password'] = md5($this->input->post('password'));
-			}
-			if($this->input->post('randompassword')=='on'){
-				$randompassword='1';
-			}
-			else{ 
-				$randompassword='0';
-			}
-			$grp = $randompassword;
-			$mobile = $this->input->post('mobile');
-			$skype = $this->input->post('skype');
-			$linkedin = $this->input->post('linkedin');
-			$twitter = $this->input->post('twitter');
-			$facebook = $this->input->post('facebook');
-			$gst_number = $this->input->post('gst_number');
-			$note = $this->input->post('note');
-			$login = $this->input->post('login');
-			$updateArr['companyname'] = $companyname;
-			$updateArr['website'] = $website;
-			$updateArr['address'] = $address;
-			$updateArr['clientname'] = $clientname;
-			$updateArr['clientemail'] = $clientemail;
-			$updateArr['generaterandompassword'] = $grp;
-			$updateArr['mobile'] = $mobile;
-			$updateArr['skype'] = $skype;
-			$updateArr['linkedin'] = $linkedin;
-			$updateArr['twitter'] = $twitter;
-			$updateArr['facebook'] = $facebook;
-			$updateArr['gstnumber'] = $gst_number;
-			$updateArr['note'] = $note;
-			$updateArr['login'] = $login ;
-			$whereArr = array('id'=>$id);
-			$this->common_model->updatedata('tbl_clients',$updateArr,$whereArr);
-			$this->session->set_flashdata('message_name', "Client Change Succeessfully");
-			redirect('Leads');
-		}
-	} */
-
+	
 	public function viewleadsdetail(){
 		$id = base64_decode($this->uri->segment(3));
-		$whereArr=array('id'=>$id);
+		$whereArr = array('id'=>$id);
 		$data['leads'] = $this->common_model->getData('tbl_leads',$whereArr);
 		$this->load->view('common/header');
 		$this->load->view('leads/viewlead',$data);

@@ -30,9 +30,8 @@ class Products extends CI_Controller
 			$name = $this->input->post('name');
 			$price = $this->input->post('price');
 			$tax = $this->input->post('tax');
-
-			$price1=($price*$tax)/100;
-			$total=$price+$price1;
+			$price1 = ($price*$tax)/100;
+			$total = $price+$price1;
 			$description = $this->input->post('description');
 			$insArr = array('name'=>$name,'price'=>$total,'tax'=>$tax,'description'=>$description);
 			$this->common_model->insertData('tbl_product',$insArr);

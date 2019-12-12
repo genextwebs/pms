@@ -32,7 +32,7 @@
 								    	<a class="nav-link" id="overview-tab" data-toggle="tab" href="#overview" role="tab" aria-controls="overview" aria-selected="true">Overview</a>
 								  	</li>
 								  	<li class="nav-item" >
-								    	<a class="nav-link <?php if($controller == 'Project' && $function == 'member') { echo "active";}?>" id="members-tab"  href="<?php echo base_url().'Project/member/'.$id?>" role="tab" aria-controls="members" aria-selected="false">Members</a>
+								    	<a class="nav-link <?php if($controller == 'Project' && $function == 'member') { echo "active";}?>" id="members-tab"  href="<?php echo base_url().'Project/member/'.base64_encode($id)?>" role="tab" aria-controls="members" aria-selected="false">Members</a>
 								  	</li>
 								  	
 								  	<li class="nav-item">

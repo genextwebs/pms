@@ -14,11 +14,9 @@ class Employee extends CI_Controller
 		$data['department'] = $this->common_model->getData('tbl_department');
 		$data['employee'] = $this->common_model->getData('tbl_employee');
 		$tempArr=array();
-		foreach($data['employee'] as $row)
-		{
+		foreach($data['employee'] as $row){
 			$skill = $row->skills;
 			$array = explode(",",$skill);
-			
 			if(!empty($tempArr)){
 				$tempArr = array_merge($array,$tempArr);
 			}
@@ -34,7 +32,7 @@ class Employee extends CI_Controller
 
 	public function addemployee(){
 		$this->load->view('common/header');
-		$data['sessData'] = $this->session->flashdata('data');
+		$data['sessData'] = $this->session->flashdata('emp_data');
 		$data['error_msg'] = $this->session->flashdata('error');
 		$data['designation'] = $this->common_model->getData('tbl_designation');
 		$data['department'] = $this->common_model->getData('tbl_department');
@@ -71,7 +69,7 @@ class Employee extends CI_Controller
 				#echo "hi";exit;
 				$error = array('error' =>'Email is already exits' );
 				$this->session->set_flashdata("error",$error);
-				$this->session->set_flashdata("data",$_POST);
+				$this->session->set_flashdata("emp_data",$_POST);
 				redirect('employee/addemployee');			
 			}
 			else{
@@ -92,9 +90,8 @@ class Employee extends CI_Controller
 			$profilepicture = '';
 			if($this->upload->do_upload('profilepicture')){
 				$profilepicture = array('upload_data'=>$this->upload->data());*/
-				$insArr = array('user_id' =>$last_inserted,'employeename'=>$employee_name,'slackusername'=>$username,'joingdate'=>$joiningdate,'lastdate'=>$lastdate,'gender'=>$gender,'address'=>$address,'skills'=>$skills,'designation'=>$designation,'department'=>$department,'hourlyrate'=>$hourlyrate);
-				
-			$this->common_model->insertData('tbl_employee',$insArr);
+			$insArr = array('user_id' =>$last_inserted,'employeename'=>$employee_name,'slackusername'=>$username,'joingdate'=>$joiningdate,'lastdate'=>$lastdate,'gender'=>$gender,'address'=>$address,'skills'=>$skills,'designation'=>$designation,'department'=>$department,'hourlyrate'=>$hourlyrate);
+				$this->common_model->insertData('tbl_employee',$insArr);
 			/*}
 			else{
 				$error = array('error' => $this->upload->display_errors());
@@ -109,39 +106,38 @@ class Employee extends CI_Controller
 
 	public function insert_designation(){
 		if(!empty($_POST)){
-			$name = $this->input->post('name');
-			$insArr = array('name'=>$name);
+			$designName = $this->input->post('name');
+			$insArr = array('name'=>$designName);
 			$this->common_model->insertData('tbl_designation',$insArr);
 			$designationArray = $this->common_model->getData('tbl_designation');
 			$str = '';
 			foreach($designationArray as $row){
 				$str.='<option value="'.$row->id.'">'.$row->name.'</option>'; 
 			}
-			$txtArr = array();
-			$txtArr['taxdata'] = $str;
-			echo  json_encode($txtArr);exit; 
+			$desArr = array();
+			$desArr['desData'] = $str;
+			echo  json_encode($desArr);exit; 
 		}
 	}
 
 	public function insert_department(){
 		if(!empty($_POST)){
-			$name = $this->input->post('name');
-			$insArr = array('name'=>$name);
+			$desName = $this->input->post('name');
+			$insArr = array('name'=>$desName);
 			$this->common_model->insertData('tbl_department',$insArr);
 			$designationArray = $this->common_model->getData('tbl_department');
 			$str = '';
 			foreach($designationArray as $row){
 				$str.='<option value="'.$row->id.'">'.$row->name.'</option>'; 
 			}
-			$txtArr = array();
-			$txtArr['taxdata'] = $str;
-			echo  json_encode($txtArr);exit; 
+			$depArr = array();
+			$depArr['depData'] = $str;
+			echo  json_encode($depArr);exit; 
 		}
 	}
 
-// image upload through ajax
-	public function do_upload()
-	{
+/* image upload through ajax
+	public function do_upload(){
 		if(!empty($_FILES))
 		{
 			$config['upload_path']= './uploads/';
@@ -166,7 +162,7 @@ class Employee extends CI_Controller
 			$data['error']='Not select photo';
 		}
         echo json_encode($data);
-    }
+    }*/
 
     public function employee_list(){
 		if(!empty($_POST)){
@@ -295,7 +291,6 @@ class Employee extends CI_Controller
 				$id = $i,
                 $row->employeename,
                 $row->emailid,
-
 				$status,
 				$create_date,
 				$actionStr
@@ -332,8 +327,7 @@ class Employee extends CI_Controller
 			$employee_name = $this->input->post('employee_name');
 			$employee_email = $this->input->post('employee_email');
 			$updateArr=array();
-			if($this->input->post('password') != '')
-			{
+			if($this->input->post('password') != ''){
 				$updateArr['password'] = md5($this->input->post('password'));
 			}
 			if($this->input->post('randompassword')=='on'){
@@ -355,61 +349,28 @@ class Employee extends CI_Controller
 			$hourlyrate = $this->input->post('hourly-rate');
 			$status = $this->input->post('status');
 			$login = $this->input->post('login');
-			$imagename = '';
-			$imgerror = 0;
-			//print_r($_FILES);die;
-			if(!empty($_FILES['profilepicture']['name'])){
-				$config = array(
-							'upload_path' => './uploads/',
-							'allowed_types' => 'gif|jpg|png',
-							'max_size' =>'1000',
-							'max_width'=>'1024',
-							'max_height' => '768'
-							);
-			$this->load->library('upload',$config);
-			$this->upload->initialize($config);
-				if($this->upload->do_upload('profilepicture')){
-					$imagename = array('upload_data' => $this->upload->data());
-					$profilepicture = $imagename['upload_data']['file_name'];
-				}
-				else{
-					$imgerror = 1;
-				}
-			}
-			else{
-				$profilepicture = $this->input->post('image');
-			}
-			if($imgerror == 0){
 				
-				$updateArr['emailid'] = $employee_email;
-				$updateArr['generaterandompassword'] = $grp;
-				$updateArr['mobile'] = $mobile;
-				$updateArr['status'] = $status;
-				$updateArr['login'] = $login;
+			$updateArr['emailid'] = $employee_email;
+			$updateArr['generaterandompassword'] = $grp;
+			$updateArr['mobile'] = $mobile;
+			$updateArr['status'] = $status;
+			$updateArr['login'] = $login;
 
-				$updateArr1['employeename'] = $employee_name;
-				$updateArr1['slackusername'] = $username;
-				$updateArr1['joingdate'] = $joiningdate;
-				$updateArr1['lastdate'] = $lastdate;
-				$updateArr1['gender'] = $gender;
-				$updateArr1['address'] = $address;
-				$updateArr1['skills'] = $skills;
-				$updateArr1['designation'] = $designation;
-				$updateArr1['department'] = $department;
-				$updateArr1['hourlyrate'] = $hourlyrate;
-				$updateArr1['profilepicture'] = $profilepicture;
+			$updateArr1['employeename'] = $employee_name;
+			$updateArr1['slackusername'] = $username;
+			$updateArr1['joingdate'] = $joiningdate;
+			$updateArr1['lastdate'] = $lastdate;
+			$updateArr1['gender'] = $gender;
+			$updateArr1['address'] = $address;
+			$updateArr1['skills'] = $skills;
+			$updateArr1['designation'] = $designation;
+			$updateArr1['department'] = $department;
+			$updateArr1['hourlyrate'] = $hourlyrate;
+			
 			$this->common_model->updateData('tbl_employee',$updateArr1,$whereArr1);
 			$this->common_model->updateData('tbl_user',$updateArr,$whereArr);
-		}
-		else{
-			$error = array('error' => $this->upload->display_errors());
-			$this->session->set_flashdata("error",$error);
-			$this->session->set_flashdata("data",$_POST);
-			redirect('employee/editemployee');
-
-		}
-		redirect('employee');
-	}			
+			redirect('employee');
+		}			
 	}
 
 	public function deleteemployee(){
