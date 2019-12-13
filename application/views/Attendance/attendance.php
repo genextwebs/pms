@@ -48,6 +48,10 @@
                                         <?php
                                             foreach($department as $row)
                                             {
+                                                 $sel = '';
+                                                if($row->department == $selDepartment){
+                                                    $sel = 'selected=selected';
+                                                }
                                                 echo '<option value="'.$row->id.'" >'.$row->name.'</option>';
                                             }
                                         ?>
@@ -77,7 +81,7 @@
                          <div class="col-md-2">
                             <label class="control-label">Select Year(S)</label>
                                 <div class="form-group">
-                                    <select id='year' name="year" class="select2 form-control" onchange="getattendance(); ">
+                                    <select id='year' name="year" class="select2 form-control">
                                         <option value="2019" <?php if($selYear == '2019'){ echo 'selected'; }?>>2019</option>
                                         <option value="2018" <?php if($selYear == '2018'){ echo 'selected'; }?>>2018</option>
                                         <option value="2017" <?php if($selYear == '2017'){ echo 'selected'; }?>>2017</option>

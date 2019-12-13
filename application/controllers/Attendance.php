@@ -9,6 +9,8 @@ class Attendance extends CI_Controller{
 		error_reporting(E_ALL);
 		if(!$this->session->userdata('year_data')){          
 			$this->year =date('Y');
+			$this->department = $this->session->userdata('department_data');
+            $this->employee = $this->session->userdata('employee_data');
 		}
 		else{
             $this->year = $this->session->userdata('year_data');
@@ -17,6 +19,8 @@ class Attendance extends CI_Controller{
 		}
 		if(!$this->session->userdata('month_data')){
           	$this->month =date('m');
+          	$this->department = $this->session->userdata('department_data');
+            $this->employee = $this->session->userdata('employee_data');
 		}
 		else{
             $this->month = $this->session->userdata('month_data');
@@ -33,8 +37,15 @@ class Attendance extends CI_Controller{
 		$data['selDepartment'] =  $this->department;
 		$data['selEmployee'] =  $this->employee;
 		$data['employee'] =$this->common_model->getData('tbl_employee');
+		if(!empty($data['selDepartment'])){
+			$checkdept=$data['selDepartment'];
+			//echo $checkdept;die;
+			$whereArr=array('department'=>$checkdept);
+			$data['selEmployeeArr'] =$this->common_model->getData('tbl_employee',$whereArr);
+			//print_r($data['selEmployeeArr'] );die;
 
-		if(!empty($data['selEmployee'])){
+		}
+		elseif(!empty($data['selEmployee'])){
 			$checkempid=$data['selEmployee'];
 			$whereArr=array('id'=>$checkempid);
 			$data['selEmployeeArr'] =$this->common_model->getData('tbl_employee',$whereArr);
@@ -77,16 +88,23 @@ class Attendance extends CI_Controller{
 			$year = $_POST['year'];
 			$department = $_POST['department'];
 			$employee = $_POST['employee'];
+			if($department != 'all'){
+				$this->session->set_userdata('department_data',$department);
+			}
+			else{
+				$this->session->set_userdata('department_data', '');
+			}
 			if($employee != 'all'){
 				$this->session->set_userdata('employee_data',$employee);
 			}
 			else{
 				$this->session->set_userdata('employee_data', '');
 			}
+
 			//echo $month;die;
 			$this->session->set_userdata('month_data',$month);
 			$this->session->set_userdata('year_data',$year);
-			$this->session->set_userdata('department_data',$department);
+			
 		}
 	}
 }
