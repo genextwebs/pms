@@ -20,7 +20,30 @@
                 <a href="<?php echo base_url().'Attendance/addattendance' ?>" class="btn btn-success btn-sm">Mark Attendance <i class="fa fa-plus" aria-hidden="true"></i></a>
             </div>
         </div>
+        <?php 
+        $controller = $this->uri->segment(1);
+        $function = $this->uri->segment(2);
+        ?>
+
         <div class="col-md-12">
+                        <section class="cview-detai seven-tab">
+                            <div class="stats-box">
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link <?php if($controller == 'Attendance' && $function == 'summaary') { echo 'active'; } ?>" id="overview-tab"  href="<?php echo base_url().'Attendance/summaary'?>" role="tab" aria-controls="overview" aria-selected="true">Summaary</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link <?php if($controller == 'Attendance' && $function == 'AttendanceByMember') { echo 'active'; } ?>" id="overview-tab"  href="<?php echo base_url().'Attendance/AttendanceByMember'?>" role="tab" aria-controls="overview" aria-selected="true">Attendance By Member</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="contetn-tab">
+                                <div id="" class="">
+                                    <div class="tab-content" id="myTabContent">
+                                        <!-- tab1 -->
+                                        <div class="tab-pane section-1 <?php if($controller == 'Attendance' && $function == 'summaary') { echo 'active show'; } ?>" id="overview" aria-labelledby="overview-tab" role="tabpanel">
+                                            <div class="row">
+                                                 <div class="col-md-12">
                 <div>
                     <div class="row">
                         <div class="col-md-3">
@@ -100,7 +123,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-12" id="attendance-data">
+             <div class="col-md-12" id="attendance-data">
             <div class="white-box">
                 <div class="table-responsive tableFixHead">
                     <table class="table table-nowrap mb-0">
@@ -122,7 +145,7 @@
                                         $endLoopIndex = 28;
                                     }
                                 }
-                                for($i=1;$i<=31;$i++)  {
+                                for($i=1;$i<=$endLoopIndex;$i++)  {
                                     echo '<th>'.$i.'</th>';
                                 }
                                 ?>                 
@@ -188,6 +211,164 @@
                 </div>
             </div>
         </div>
+                                                
+    </div>
+</div>
+                                        <!-- tab2 -->
+    <div class="tab-pane section-1 <?php if($controller == 'Attendance' && $function == 'AttendanceByMember') { echo 'active show'; } ?>" id="overview" aria-labelledby="overview-tab" role="tabpanel">
+    <div class="row">
+        <div class="col-md-12">
+           <div class="row">
+                            <div class="col-md-4">
+                                <h5>Select Date Range</h5>
+                                <div class="input-group input-daterange">
+                                    <input type="text" class="start-date form-control br-0" id="startdate" name="startdate" value="" data-date-format='yyyy-mm-dd'>
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text bg-info text-white">To</span>
+                                    </div>
+                                    <input type="text" class="end-date form-control br-0" id="enddate" name="enddate" data-date-format='yyyy-mm-dd' value="">
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-2">
+                                <h5>Employee Name</h5>
+                                 <div class="form-group">
+                                    <select id='member' name="employee" class="select2 form-control">
+                                        <option value="all">All Employee</option>
+                                        <?php
+                                            foreach($employee as $row){
+                                                $sel = '';
+                                                if($row->id == $selEmployee){
+                                                    $sel = 'selected=selected';
+                                                }
+                                                echo '<option value="'.$row->id.'" '.$sel.'>'.$row->employeename.'</option>';
+                                            }
+                                        ?>
+                                    </select> 
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group m-t-10">
+                                    <label class="control-label col-12 mb-3">&nbsp;</label>
+                                    <button type="button" id="applybyMember"
+                                     class="btn btn-success col-lg-4 co-md-5"><i class="fa fa-check"></i> Apply</button>
+                                </div>
+                            </div>
+                        </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-3">
+                  
+                        <h3>Total Working Days</h3>
+                        <ul class="list-inline two-part">
+                            
+                            <li class="text-right"><span id="totalWorkingDays">10</span></li>
+                        </ul>
+                   
+                </div>
+
+                <div class="col-md-3">
+                    <div class="white-box bg-success">
+                        <h3 class="box-title text-white">Days Present</h3>
+                        <ul class="list-inline two-part">
+                            <li><i class="icon-clock text-white"></i></li>
+                            <li class="text-right"><span id="daysPresent" class="counter text-white">6</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="white-box bg-danger">
+                        <h3 class="box-title text-white">Days(s) Late</h3>
+                        <ul class="list-inline two-part">
+                            <li><i class="icon-clock text-white"></i></li>
+                            <li class="text-right"><span id="daysLate" class="counter text-white">3</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="white-box bg-warning">
+                        <h3 class="box-title text-white">Half Day</h3>
+                        <ul class="list-inline two-part">
+                            <li><i class="icon-clock text-white"></i></li>
+                            <li class="text-right"><span id="halfDays" class="counter text-white">0</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="white-box bg-info">
+                        <h3 class="box-title text-white">Days(s) Absent</h3>
+                        <ul class="list-inline two-part">
+                            <li><i class="icon-clock text-white"></i></li>
+                            <li class="text-right"><span id="absentDays" class="counter text-white">4</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="white-box bg-primary">
+                        <h3 class="box-title text-white"> Holidays</h3>
+                        <ul class="list-inline two-part">
+                            <li><i class="icon-clock text-white"></i></li>
+                            <li class="text-right"><span id="holidayDays" class="counter text-white">0</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-12">
+            <div class="white-box">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Status</th>
+                            
+                        </tr>
+                        </thead>
+                        <tbody id="attendanceData">
+                            <tr><?php foreach($membersArr as $row) {?>
+                                <td><?php echo $row->attendancedate; ?></td>
+                                <td><?php echo $row->attendance; ?></td>
+                                <?php }?>
+                            </tr>
+                        </tbody>
+                    </table>
+            
+            
+         
+        
+    
+                    
+                </div>
+            </div>
+
+        </div>
+
+    </div>                                        
+</div>
+                                    
+                                       
+                                       
+                                      
+                        
+                                       
+                                        
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+  
+   
     </div>
 </div>
 

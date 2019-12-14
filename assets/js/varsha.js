@@ -870,38 +870,6 @@ function insertAttendance(employeeid){
 }
 }
 
-function getattendance(){
-	//alert("year");
-	//alert(month);
-	var year = document.getElementById("year").value;
-	var month = document.getElementById("month").value;
-	
-	var url = base_url+"Attendance/getdata";
- 	 
-
-      
-       	 if(year){
-       				
-			$.ajax({
-				url: url,
-				type: "POST",
-				dataType:'json',
-				data: {
-						year:year,
-						month:month,
-							
-				},
-				cache: false,
-				success: function(data){
-					 $('#att').append(data);  
-
-			}
-		
-		});
-	
-	}
-}
-
 
 //attendance filter   apply-filter
 
@@ -915,6 +883,27 @@ $("#apply-filter").click(function() {
 		url : base_url+"Attendance/getfilterdata",
         type : 'POST',
         data : {month: month,year:year,department:department,employee:employee},
+        error: function() {
+              alert('Something is wrong');
+           },
+        success: function(data){
+			window.location.reload();
+        }
+	});
+
+	});
+
+//apply by member
+
+$("#applybyMember").click(function() {
+	var startdate = $('#startdate').val();
+	var enddate = $('#enddate').val();
+	var member = $('#member').val();
+	//alert(employee);
+	$.ajax({
+		url : base_url+"Attendance/index",
+        type : 'POST',
+        data : {startdate:startdate,enddate:enddate,member:member},
         error: function() {
               alert('Something is wrong');
            },

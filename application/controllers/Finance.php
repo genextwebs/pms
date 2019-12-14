@@ -526,7 +526,7 @@ class Finance extends CI_Controller
 				
 		
 	    $query = "SELECT i.* , c.id as clientid,c.clientname,p.projectname FROM tbl_invoice i INNER JOIN tbl_clients c ON c.id = i.client INNER JOIN tbl_project_info p ON p.id = i.project".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
-	    //echo $query;die;
+	    echo $query;die;
 		$invoicesArr = $this->common_model->coreQueryObject($query);
 		//print_r($invoicesArr);die;
 		$query = "SELECT * from tbl_invoice i ".$sWhere;

@@ -32,6 +32,12 @@ class Attendance extends CI_Controller{
 	}
 	
 	public function index(){
+		$this->load->view('common/header');
+		$this->load->view('Attendance/attendance');
+		$this->load->view('common/footer');
+	}
+
+	public function summaary(){
 		$data['selMonth'] =  $this->month;
 		$data['selYear'] =  $this->year;
 		$data['selDepartment'] =  $this->department;
@@ -58,22 +64,36 @@ class Attendance extends CI_Controller{
 			$whereArr=array('id'=>$checkempid);
 			$data['selEmployeeArr'] =$this->common_model->getData('tbl_employee',$whereArr);
 		}
-
-		
-		
 		else{
 			$data['selEmployeeArr'] =$this->common_model->getData('tbl_employee');
 		}
+		$this->load->view('common/header');
+		$this->load->view('Attendance/attendance',$data);
+		$this->load->view('common/footer');
 
+	}
+	public function AttendanceByMember(){
+		$data['employee'] =$this->common_model->getData('tbl_employee');
+		$data['selSdate']= $this->input->post('startdate');
+		$data['selEdate']= $this->input->post('enddate');
+		$data['selMember']= $this->input->post('member');
+		if(!empty( $data['selSdate'])){
+			$query="SELECT * from tbl_attendance"; 
+		$data['membersArr'] = $this->common_model->coreQueryObject($query);
+
+		}
 		$this->load->view('common/header');
 		$this->load->view('Attendance/attendance',$data);
 		$this->load->view('common/footer');
 	}
-
 	public function addattendance(){
 		$data['employee'] =$this->common_model->getData('tbl_employee');
 		$data['countemp']=count($data['employee']);
-
+		//$whereArr = array('attendancedate' => $attendancedate,'employee'=>$employee);
+		$date = date('Y-m-d');
+		//$whereArr=array('attendancedate'=>$date);
+		//$data['todayAttenData'] = $this->common_model->getData('tbl_attendance',$whereArr);
+		//print_r($data['todayAttenData']);die;
 		$this->load->view('common/header');
 		$this->load->view('Attendance/addattendance',$data);
 		$this->load->view('common/footer');
@@ -121,6 +141,19 @@ class Attendance extends CI_Controller{
 			//echo $month;die;
 			$this->session->set_userdata('month_data',$month);
 			$this->session->set_userdata('year_data',$year);
+			
+		}
+	}
+	public function filterByMember(){
+		//echo "ggf";die;
+		if(!empty($_POST)){
+			$startdate = $_POST['startdate'];
+			$enddate = $_POST['enddate'];
+			$member = $_POST['member'];
+			
+			$this->session->set_userdata('startdate',$startdate);
+			$this->session->set_userdata('enddate',$enddate);
+			$this->session->set_userdata('member',$member);
 			
 		}
 	}

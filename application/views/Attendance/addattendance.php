@@ -36,17 +36,31 @@
                         <?php foreach($employee as $row) { 
                              $id=$row->id;
                             ?>
-                          
+                            
                             <tr>
                                
                                
-                                <td> <?php  echo $row->employeename;  ?>
+                                <td> <?php  echo $row->employeename;  
+                                ?>
                                     <input type="hidden" value="<?php echo $row->id; ?>" id="employee" >
                                  </td>
-                                <td>
-                                    <input type="radio" name="attendance" value="2">Late<br>
-                                    <input type="radio" name="attendance" value="1">Present<br>
-                                    <input type="radio" name="attendance" value="3">Absent<br>
+                                 <?php 
+                                        $Tdate=date('Y-m-d'); 
+                                        $todayData=$this->db->query("select * from tbl_attendance where attendancedate='".$Tdate."' and employee=".$id);
+                                      // echo $this->db->last_query()."<br/>";
+
+                                        $todayAttenData = $todayData->result_array(); 
+                                print_r($todayAttenData);
+                                    
+                          ?>
+                                <td><?php  ?>
+                                    <input type="radio" name="attendance" value="2" 
+                                    <?php if(!empty($todayAttenData[0]['attendance']) == 2) 
+                                    { echo 'checked'; }?>>Late<br>
+                                    <input type="radio" name="attendance" value="1"  
+                                    <?php if(!empty($todayAttenData[0]['attendance']) == 1){ echo 'checked'; } ?>>Present<br>
+                                    <input type="radio" name="attendance" value="3"  
+                                    <?php if(!empty($todayAttenData[0]['attendance']) == 3) { echo 'checked'; } ?>>Absent<br>
                                 </td>
                                 <td>
                                     <input type="button" id="attendanceform" onclick="insertAttendance('<?php echo $id ?>')" class="btn btn-success" name="btnsubmit" value="Save" > <i class="fa fa-check"></i>
