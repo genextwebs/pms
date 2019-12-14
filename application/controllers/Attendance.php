@@ -37,7 +37,15 @@ class Attendance extends CI_Controller{
 		$data['selDepartment'] =  $this->department;
 		$data['selEmployee'] =  $this->employee;
 		$data['employee'] =$this->common_model->getData('tbl_employee');
-		if(!empty($data['selDepartment'])){
+		$data['department'] =$this->common_model->getData('tbl_department');
+		if(!empty($data['selEmployee']) && !empty($data['selDepartment']))
+		 {	
+			$checkempid=$data['selEmployee'];
+			$checkdept=$data['selDepartment'];
+			$whereArr=array('id'=>$checkempid,'department'=>$checkdept);
+			$data['selEmployeeArr'] =$this->common_model->getData('tbl_employee',$whereArr);
+		}
+		elseif(!empty($data['selDepartment'])){
 			$checkdept=$data['selDepartment'];
 			//echo $checkdept;die;
 			$whereArr=array('department'=>$checkdept);
@@ -50,10 +58,12 @@ class Attendance extends CI_Controller{
 			$whereArr=array('id'=>$checkempid);
 			$data['selEmployeeArr'] =$this->common_model->getData('tbl_employee',$whereArr);
 		}
+
+		
+		
 		else{
 			$data['selEmployeeArr'] =$this->common_model->getData('tbl_employee');
 		}
-		$data['department'] =$this->common_model->getData('tbl_department');
 
 		$this->load->view('common/header');
 		$this->load->view('Attendance/attendance',$data);
@@ -74,10 +84,17 @@ class Attendance extends CI_Controller{
 			$attendancedate = $_POST['attendancedate'];
 			$employee = $_POST['employee'];
 			$attendance = $_POST['attendance'];
-			
+			$whereArr = array('attendancedate' => $attendancedate,'employee'=>$employee);
+			$data = $this->common_model->getData('tbl_attendance',$whereArr);
+			if(count($data)==1){
+				$updateArr=array('attendancedate'=>$attendancedate,'employee'=> $employee,'attendance'=>$attendance);
+			$this->common_model->updateData('tbl_attendance',$updateArr,$whereArr);
+			}
+			else{
 			$insertArr=array('attendancedate'=>$attendancedate,'employee'=> $employee,'attendance'=>$attendance);
 			$this->common_model->insertData('tbl_attendance',$insertArr);
 			//$this->session->set_flashdata('message_name', "Data Updated Succeessfully");
+		}
 		}
 	}
 

@@ -48,11 +48,11 @@
                                         <?php
                                             foreach($department as $row)
                                             {
-                                                 $sel = '';
-                                                if($row->department == $selDepartment){
-                                                    $sel = 'selected=selected';
+                                                 $seldep = '';
+                                            if($row->id == $selDepartment){
+                                                    $seldep = 'selected=selected';
                                                 }
-                                                echo '<option value="'.$row->id.'" >'.$row->name.'</option>';
+                                                echo '<option value="'.$row->id.'" '.$seldep.'>'.$row->name.'</option>';
                                             }
                                         ?>
                                     </select> 
@@ -93,7 +93,8 @@
                         </div>
                         <div class="col-md-2">
                             <div class="form-group m-t-25">
-                                <button type="button" id="apply-filter"  class="btn btn-success btn-block">Apply</button>
+                                <button type="button" id="apply-filter"  class="btn btn-success btn-block"><i class="fa fa-check"></i>Apply</button>
+                                <button type="button" id="reset-filters"  class="btn btn-inverse btn-block"><i class="fa fa-refresh"></i>Reset</button>
                             </div>
                         </div>
                 </div>
