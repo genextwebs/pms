@@ -131,6 +131,7 @@ class Holiday extends CI_Controller
 	
 		$data['decArr'] = $finaldecArr;
 		$data['selYear'] = $this->year;
+        $data['default_holiday'] = $this->common_model->getData('tbl_holiday_settings');
 		$this->load->view('common/header');
 		$this->load->view('holiday/holiday',$data);
 		$this->load->view('common/footer');
@@ -853,15 +854,18 @@ class Holiday extends CI_Controller
 			$sat_data = $data[0]->saturday;
 			$sun_data = $data[0]->sunday;
 			if(!empty($data[0]->user_id)){
-				if($saturday == '1' && $sunday == '1'){
+                if($saturday == 0 && $sunday == 0){
+                    $updateArr = array('saturday' =>$saturday,'sunday'=>$sunday);
+                }
+				else if($saturday == '1'  &&  $sunday == '1'){
 					$updateArr = array('saturday' =>$saturday,'sunday'=>$sunday ,'extract_sat_day' => null , 'extract_sun_day' => null);
 				}
-				else if($sat_data != $saturday){
-					$updateArr = array('saturday' =>$saturday,'extract_sat_day' => null);
-				}
-				else if($sun_data != $sunday){
-					$updateArr = array('sunday'=>$sunday, 'extract_sun_day' => null);
-				}
+                else if($saturday == '1' || $sunday == '0'){
+                    $updateArr = array('saturday' =>$saturday,'sunday'=>$sunday ,'extract_sat_day' => null);
+                }
+                else if($saturday == '0'||  $sunday == '1'){
+                    $updateArr = array('saturday' =>$saturday,'sunday'=>$sunday ,'extract_sun_day' => null);
+                }
 				$whereArr = array('user_id' => $data[0]->user_id);
 				$this->common_model->updateData('tbl_holiday_settings',$updateArr,$whereArr);
 			}

@@ -145,8 +145,9 @@ jQuery(document).ready(function() {
 					}).get();
 					//console.log(selected);
 					aoData.push( { "name": "status", "value": $('#status').val() } );
-					
+
 					aoData.push( { "name": "employeename", "value": $('#employeename').val() } );
+					
 					aoData.push( { "name": "skill", "value": $('#skill').val() } );
 					aoData.push( { "name": "designation", "value": $('#designation').val() } );
 					aoData.push( { "name": "department", "value": $('#department').val() } );
@@ -440,11 +441,11 @@ $("#save-designation").click(function(event) {
      			/*$.each(data.taxdata, function(key, value) {
                            $('select[name="tax"]').append('<option value="'+ value.id +'">'+ value.rate +'</option>');
                        })*/
-               $('select[name="designation"]').html('');
-               $('select[name="designation"]').append(data.desData);
+                $('select[name="designation"]').html('');
+                $('select[name="designation"]').append(data.taxdata);
               // $("tbody").append("<tr><td>"+data.count+"</td><td>"+taxname+"</td><td>"+rate+"</td></tr>");
                $('#data-designation').modal('toggle');
-               $('#modeldesignation')[0].reset();
+                $('#modeldesignation')[0].reset();
            }
         });
 });
@@ -467,11 +468,11 @@ $("#save-department").click(function(event) {
      			/*$.each(data.taxdata, function(key, value) {
                            $('select[name="tax"]').append('<option value="'+ value.id +'">'+ value.rate +'</option>');
                        })*/
-               $('select[name="department"]').html('');
-               $('select[name="department"]').append(data.depData);
+                $('select[name="department"]').html('');
+                $('select[name="department"]').append(data.taxdata);
               // $("tbody").append("<tr><td>"+data.count+"</td><td>"+taxname+"</td><td>"+rate+"</td></tr>");
                $('#data-department').modal('toggle');
-               $('#modaldepartment')[0].reset();
+                $('#modaldepartment')[0].reset();
            }
         });
 });
@@ -646,7 +647,7 @@ $("#save-defaultholiday").click(function(event) {
 			 	sunday = '0';
 			 }
        		//var dataString = 'saturday='+ saturday +'sunday=' + sunday ;
-       		//alert(saturday);
+       		//alert(dataString);
         $.ajax({
            url: base_url+"holiday/insert_defaultholiday",
            type: 'POST',
@@ -834,7 +835,24 @@ if (isConfirm) {
 
 $('#save-task-category').click(function(){
 	var task_cat_name = $("input[name='category_name']").val();
-	alert(task_cat_name);
+	var dataString = 'task_cat_name='+ task_cat_name;
+	$.ajax({
+		url: base_url+"project/insert_task_category",
+		type: 'POST',
+		dataType: 'JSON',
+		data: dataString,
+		success: function(data){
+			$('select[name="task-category"]').html('');
+			$('select[name="task-category"]').append(data.task_cat);
+			$('#taxCategory').append("<tr><td>"+data.count+"</td><td>"+task_cat_name+"</td><td><input type='submit' class='btn btn-sm btn-danger btn-rounded delete-category' onclick='' id='deletecat' value='Remove'></td></tr>");
+			$('#add-task-categ').modal('toggle');
+			$('#createTaskCategoryForm')[0].reset();  
+		},
+		error: function() {
+              alert('Something is wrong');
+        }
+	});
+
 });
 
                                                                                      

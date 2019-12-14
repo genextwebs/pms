@@ -561,8 +561,14 @@
 																			         		<i class="fa fa-plus"></i> Add Task Category</i>
 																			         	</a>
 										                							</label>
-										                							<select class="custom-select br-0">
-										                								<option selected="">No task category added.</option>
+										                							<select class="custom-select br-0" id="task-category" name="task-category">
+										                							<?php
+										                								foreach($taskCat as $catData){
+										                							?>
+										                								<option value="<?php echo $catData->id; ?>"><?php echo $catData->task_category_name; ?></option>
+										                							<?php
+										                								}
+										                							?>	
 										                							</select>
 										                						</div>
 										                					</div>
@@ -969,10 +975,19 @@
 						                    <th>Action</th>
 						                </tr>
 					                </thead>
-					                <tbody>
-					                    <tr>
-					                        <td colspan="3">No task category found.</td>
-					                    </tr>
+					                <tbody id="taxCategory">
+					                    <?php
+					             			$i = 1; 
+					                    	foreach($taskCat as $catData) { ?>
+					                    		<tr>
+					                    			<td><?php echo $i; ?></td>
+					                    			<td><?php echo $catData->task_category_name?></td>
+					                    			<td><a href="javascript:;" data-cat-id="1" class="btn btn-sm btn-danger btn-rounded delete-category" id='deletecat'>Remove</a></td>
+					                    		</tr>
+					                    <?php 
+					                    	$i++;
+					                    	}
+					                    ?>
 					                </tbody>
 					            </table>
 					        </div>

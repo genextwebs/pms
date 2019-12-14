@@ -1018,13 +1018,13 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                    <input type="checkbox" name="saturday" id="saturday" class="form-control">
+                                                    <input type="checkbox" name="saturday" id="saturday" class="form-control" <?php if($default_holiday[0]->saturday == 1) { echo 'checked'; } ?>>
                                                     <label>Saturday</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">  
                                                 <div class="form-group">
-                                                    <input type="checkbox" name="sunday" id="sunday" class="form-control">
+                                                    <input type="checkbox" name="sunday" id="sunday" class="form-control" <?php if($default_holiday[0]->sunday == 1) { echo 'checked'; } ?>>
                                                     <label>Sunday</label>
                                                 </div>
                                             </div>

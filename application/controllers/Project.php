@@ -859,8 +859,25 @@ class Project extends CI_Controller {
 
 	public function task(){
 		$data['id'] = base64_decode($this->uri->segment(3));
+		$data['taskCat'] = $this->common_model->getData('tbl_task_category');
 		$this->load->view('common/header');
 		$this->load->view('project/searchproject',$data);
 		$this->load->view('common/footer');
+	}
+
+	public function insert_task_category(){
+		$task_cat = $this->input->post('task_cat_name');
+		$insArr = array('task_category_name' => $task_cat);
+		$this->common_model->insertData('tbl_task_category',$insArr);
+		$task_catArray = $this->common_model->getData('tbl_task_category');
+		$str = '';
+		foreach($task_catArray as $taskCat){
+			$str.= '<option value="'.$taskCat->id.'">'.$taskCat->task_category_name.'</option>';
+		}
+		$totalCatdata = count($task_catArray);
+		$task_CatArr = array();
+		$task_CatArr['count'] = $totalCatdata;
+		$task_CatArr['task_cat'] = $str;
+		echo json_encode($task_CatArr);exit();
 	}
 }		
