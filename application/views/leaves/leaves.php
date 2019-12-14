@@ -36,11 +36,12 @@
 						<div class="form-group custom-action">
 							<a href="<?php echo base_url().'Project/addproject'?>" class="btn btn-outline-success btn-sm"> <i class="fa fa-list" aria-hidden="true"></i>All Leaves </a>
 							
-							<a href="javascript:;"  class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#project-category1"><i class="fa fa-calendar" aria-hidden="true"></i> Calendar View </a>
+							<a href=""  class="btn btn-outline-info btn-sm"><i class="fa fa-calendar" aria-hidden="true"></i> Calendar View </a>
 							
 							<!--<a href="javascript:;" class="btn btn-outline-danger btn-sm hidden-xs hidden-sm"><i class="fa fa-bar-chart" aria-hidden="true"></i> Gantt Chart</a>-->
 							
 							<a href="<?php echo base_url().'Leaves/addleaves';?>"  class="btn btn-outline-primary btn-sm"><i class="ti-plus" aria-hidden="true"></i>Assign Leave </a>
+							
 							
 							<!--<a href="<?php echo base_url().'Project/viewarchiev';?>"  class="btn btn-outline-info btn-sm">View Archive <i class="fa fa-trash" aria-hidden="true"></i></a>-->
 							
@@ -61,6 +62,7 @@
 						</div>
 				   </div>
 				</div>
+
 				<div class="col-lg-3 col-md-4">
 					<div class="form-group">
 						<label class="control-label">EMPLOYEE NAME
@@ -80,7 +82,6 @@
 		                        <div class="form-group m-t-10">
 		                            <label class="control-label col-12 mb-3">&nbsp;</label>
 		                            <button type="button" id="btnApplyLeaves" class="btn btn-success col-lg-4 co-md-5"><i class="fa fa-check"></i> Apply</button>
-		                          <!--   <button type="button" id="reset-filters" class="btn btn-inverse col-lg-4 co-md-5 offset-md-1"><i class="fa fa-refresh"></i> Reset</button> -->
 		                        </div>
 		                    </div>
 			</div>
@@ -124,6 +125,7 @@
 
 <!--model for leaves data-->
 
+
 <div class="modal fade project-category" id="leaves-popup" tabindex="-1" role="dialog" aria-labelledby="project-category" aria-hidden="true">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content br-0">
@@ -159,4 +161,4 @@
 			</div>
 		</div>
 	</div>
-</div>
+</div> 

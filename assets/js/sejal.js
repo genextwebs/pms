@@ -204,11 +204,12 @@ jQuery(document).ready(function() {
 			"sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
 			"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No Projects found<br/><br/></center>', "sZeroRecords": "<center><br/>No Projects found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ leads", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
 			"fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
-				aoData.push( { "name": "sdate", "value": $('#startdate').val() } );
-				echo(sdate);die;
-				aoData.push( { "name": "edate", "value": $('#enddate').val() } );
+			
+				aoData.push( { "name": "startdate", "value": $('#startdate').val() } );
+				aoData.push( { "name": "enddate", "value": $('#enddate').val() } );
 				aoData.push( { "name": "ename", "value": $('#empname').val() } );
-
+				//aoData.push( { "name": "absence", "value": $('#reason').val() } );
+		
 
 				oSettings.jqXHR = $.ajax( {
 					"dataType": 'json',
@@ -268,11 +269,6 @@ $('#project_status').change(function(){
 });
 
 $('#btnApplyLeaves').click(function(){ 
-	jQuery('#startdate').val('');
-	jQuery('#enddate').val('');
-	jQuery('#empname').val('all');
-	// jQuery('#clientname').val('');
-	// jQuery('#ticket-filters').after('<p style="color:#00B200"><b>Succesfully Reset Filters</b></p>');
 	var oTable = $('#leaves').DataTable();
 	oTable.draw();
 });
@@ -327,7 +323,21 @@ $("form[name='creatclient']").validate({
 	form.submit();}
 });
 	
+//Leaves Validation
 
+/*$("$form[name='creatleave']").validate({
+	rules:{
+		date: "required",
+		absence : "required",
+	},	
+	messages:{
+		date    : "Enter valid date",
+		absence : "Enter Reason",
+	},
+	submitHandler:function(form){
+	form.submit();
+	}
+});*/
 //addtemplate validation
 $("form[name='creatclient']").validate({
 	rules:{
@@ -336,25 +346,6 @@ $("form[name='creatclient']").validate({
 	submitHandler: function(form) {
 	form.submit();}
 });
-
-	
-//addcategory using jquery 
-/*$("#category").submit(function(event) {
-			event.preventDefault();
-			var name = $("input[name='category_name']").val();
-			var dataString = 'name='+ name;
-			$.ajax({
-			   url: base_url+"project/insertcategory",
-			   type: 'POST',
-			   data: dataString,
-			   error: function() {
-				  alert('Something is wrong');
-			   },
-			   success: function(data) {
-				window.location.reload();
-			  }
-			});
-});*/
 
 // for add category in addproject
 $("#save-category").click(function(event) {
@@ -405,6 +396,41 @@ $("#save-category").click(function(event) {
 	}
 });
 
+// for add leaves
+$("#save_leave").click(function() {
+	//event.preventDefault();
+	var leavename = $("input[name='leavename']").val();
+		var dataString = 'name='+ leavename;
+		//alert(dataString);
+		$.ajax({
+		    url: base_url+"leaves/insertleavestype",
+		    type: 'POST',
+		    dataType: 'Json',
+		    data: dataString,
+			success: function(data) {
+				/*console.log(data.taskdata);*/
+				$('select[name="leave_type"]').html('');       
+				$('select[name="leave_type"]').append(data.leavedata);
+				$("tbody").append("<tr><td>"+data.count+"</td><td>"+leavename+"</td> <td><a href='javascript:;' class='btn btn-sm btn-danger btn-rounded delete-category' id='deletecat'>Remove</a></td></tr>");
+				$('#leave_type1').modal('toggle');
+				$('#leave')[0].reset();
+				/*$("tbody").append("<tr id='cate_"+data.lastinsertid+"'><td>"+data.count+"</td><td>"+catname+"</td> <td><input type='submit' class='btn btn-sm btn-danger btn-rounded delete-category' onclick='deletecat(\'"+data.lastinsertid+"\');' id='deletecat' value='Remove'></tr>");*/
+				/*$('#project-category1').removeClass('show');
+				$('.modal-backdrop').removeClass('show');
+				$('.modal-backdrop').find('div').remove();
+				$('body').removeAttr("style");
+				$('body').removeClass("modal-open");
+				$('#category')[0].reset();
+				$('#succmsg').html('');
+				$('#succmsg').html('<b>Successfully category added</b>');*/
+				//window.location.reload();
+		   },
+		   error: function() {
+              alert('Something is wrong');
+           }
+		});
+	});
+
 
 // addproject=> delete category 
 	function deletecat(id)
@@ -450,7 +476,6 @@ $("#save-category").click(function(event) {
 
 	}
 
-
 	function checkUncheck(){ 
 		var checkBox = document.getElementById("without_deadline");
         if (checkBox.checked) {
@@ -470,7 +495,7 @@ $("#save-category").click(function(event) {
 			 $('#viewnotification').hide();
 		}	
 	}
-	
+
 	//delete projects
 	function deleteproject(id){
 		//alert(id);
@@ -593,6 +618,8 @@ $("#save-category").click(function(event) {
 		   });
 		 }
 			
+
+	 
     //edidt btn clicking
     function editdata(id){
 		var mem = $('#choose_mem').val();
@@ -617,31 +644,28 @@ $("#save-category").click(function(event) {
 	function archivetoproject(id){
 		var url = base_url+"project/archivetoproject";
 		swal({
-		 title: "Are you sure?",
-		 text: "Do you want to restore this project?",
-		 type: "warning",
-		 showCancelButton: true,
-		 confirmButtonColor: "#DD6B55",
-		 confirmButtonText: "Yes, restore it!",
-		 closeOnConfirm: false
+				 title: "Are you sure?",
+				 text: "Do you want to restore this project?",
+				 type: "warning",
+				 showCancelButton: true,
+				 confirmButtonColor: "#DD6B55",
+				 confirmButtonText: "Yes, restore it!",
+				 closeOnConfirm: false
 		},
 	    function(isConfirm){
 			if (isConfirm) {
 				   $.ajax({
-					   url: url,
-					   type: "POST",
-					   dataType: "JSON",
-					   data: {id:id},
-					  dataType: "html",
+						   url: url,
+						   type: "POST",
+						   dataType: "JSON",
+						   data: {id:id},
+						   dataType: "html",
 					  
-					   success: function (data) {
-						   swal("Done!", "Project restored successfully..!", "success");
-						   $('#project').DataTable().ajax.reload();
+					success: function (data) {
+								swal("Done!", "Project restored successfully..!", "success");
+								$('#project').DataTable().ajax.reload();
+							},
 
-						   //$("#leads").fnReloadAjax();
-							//$('#leads').DataTable.ajax.reload(null,false);
-							//window.location.reload();
-					   },
 					   error: function (xhr, ajaxOptions, thrownError) {
 						   swal("Error !", "Please try again", "error");
 					   }
@@ -680,54 +704,6 @@ $("#save-category").click(function(event) {
 				   });
 			    }
 		   });
-		}
+	}
 
-	//+addleaves 
-/*
-	$("#save_leave").click(function(event) {
-		//event.preventDefault();
-		var leave_name = $("input[name='leavename']").val();
-		if(catname!=""){
-			$.ajax({
-				url: base_url+"Leaves/checkleave",
-				type: 'POST',
-				dataType: 'html',
-				data:{passleave:leave_name},
-				success: function(data) {
-					
-					if(data==0){
-						var dataString = 'name='+ leave_name;
-						jQuery('#errormsg').html('');
-						$.ajax({
-						    url: base_url+"Leaves/insertleavestype",
-						    type: 'POST',
-						    dataType: 'json',
-						    data: dataString,
-							success: function(data) {
-								console.log(data.catdata);
-								$('select[name="leave_type"]').html('');       
-								$('select[name="leave_type"]').append(data.catdata);
-								 //  $("tbody").append("<tr><td>"+data.count+"</td><td>"+catname+"</td> <td><a href='javascript:;' class='btn btn-sm btn-danger btn-rounded delete-category' id='deletecat'>Remove</a></td></tr>");
-								$("tbody").append("<tr id='cate_"+data.lastinsertid+"'><td>"+data.count+"</td><td>"+leave_name+"</td> <td><input type='submit' class='btn btn-sm btn-danger btn-rounded delete-category' onclick='deleteleave(\'"+data.lastinsertid+"\');' id='deleteleave' value='Remove'></tr>");
-								$('#leave_type1').removeClass('show');
-								$('.modal-backdrop').removeClass('show');
-								$('.modal-backdrop').find('div').remove();
-								$('body').removeAttr("style");
-								$('body').removeClass("modal-open");
-								$('#category')[0].reset();
-								$('#succmsg').html('');
-								$('#succmsg').html('<b>Successfully category added</b>');
-								//window.location.reload();
-						   }
-						});
-					}else{
-						jQuery('#errormsg').html('')
-						jQuery('#errormsg').html('<b>This category already exists</b>');
-					}
-				}
-			});
-		}else{
-			jQuery('#errormsg').html('')
-			jQuery('#errormsg').html('<b>Please enter category name</b>');
-		}
-	});*/
+	

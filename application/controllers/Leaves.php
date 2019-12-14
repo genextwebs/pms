@@ -120,40 +120,40 @@ class Leaves extends CI_Controller {
 
 			/** Filtering Start */
 			
-			/*if(!empty(trim($_GET['sSearch']))){
+			if(!empty(trim($_GET['sSearch']))){
 				$searchTerm = trim($_GET['sSearch']);
 				$sWhere.= ' AND (tbl_employee.employeename like "%'.$searchTerm.'%")';
-			}*/
-				
-			
-			$startdate=!empty($_POST['sdate']) ? $_POST['sdate'] : '';
-	
-			$enddate=!empty($_POST['edate']) ? $_POST['edate'] : '';
+			}
+			$startdate=!empty($_POST['startdate']) ? $_POST['startdate'] : '';
+		//echo($startdate);exit;
+			$enddate=!empty($_POST['enddate']) ? $_POST['enddate'] : '';
 			$empname=!empty($_POST['ename']) ? $_POST['ename'] : '';
-			 //echo($empname);die;
+			//$enddate=!empty($_POST['enddate']) ? $_POST['enddate'] : '';
+			//$test=!empty($_POST['absence']) ? $_POST['absence'] : '';
+			 //echo($enddate);die;
 		
 			if(!empty($startdate)){						
 				$sWhere.=' AND date>="'.$startdate.'"';
 			}
+
 			if(!empty($enddate)){						
 				$sWhere.=' AND date<="'.$enddate.'"';
 			}
 			if(!empty($empname)){						
-				$sWhere.=' AND tbl_employee.employeename='.$empname;
+				$sWhere.=' AND tbl_leaves.empid='.$empname;
+			}
+			if(!empty($sWhere)){
+				$sWhere = " WHERE 1 ".$sWhere;
 			}
 		}
-		$query = "SELECT tbl_leaves.id,empid,tbl_leaves.date,status,leavetypeid,tbl_employee.employeename as empname from tbl_leaves inner join tbl_employee on tbl_leaves.empid = tbl_employee.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+		$query = "SELECT tbl_leaves.*,tbl_employee.employeename as empname from tbl_leaves INNER JOIN tbl_employee on tbl_leaves.empid = tbl_employee.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 		$LeavesArr = $this->common_model->coreQueryObject($query);
-		
-		$projectArr = $this->common_model->coreQueryObject($query);
-		$querysearch = "SELECT tbl_leaves.date,tbl_employee.employeename as empname from tbl_leaves inner join tbl_employee on tbl_leaves.empid = tbl_employee.id".
-		$sWhere;
-	//	echo $this->db->last_query();die;
-
-/*	echo $this->db->last_query();
-		$query = "SELECT tbl_project_info.*,tbl_clients.clientname as clientname from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id".$sWhere;*/
-		$LeavesFilterArr = $this->common_model->coreQueryObject($querysearch);
+		$query = "SELECT date,tbl_employee.employeename as empname from tbl_leaves inner join tbl_employee on tbl_leaves.empid = tbl_employee.id".$sWhere;
 	
+		//echo $sWhere;die;
+		$LeavesFilterArr = $this->common_model->coreQueryObject($query);
+		//print_r($LeavesFilterArr);die;
+		//echo $this->db->last_query();die;
 		$iFilteredTotal = count($LeavesFilterArr);
 		$ProjectAllArr = $this->common_model->getData('tbl_leaves');
 		$iTotal = count($ProjectAllArr);
@@ -229,19 +229,18 @@ class Leaves extends CI_Controller {
 		$data =$this->common_model->getData('tbl_leaves',$whereArr);
 		$id= $data[0]->id;
 		$str = '';
-		$str.= '<p>Date</p>';
+		$str.= '<p><b>Date</b></p>';
 		$str.= '<p>'.$data[0]->date.'</p>';
-		$str.= '<p>Reason for absence</p>';
+		$str.= '<p><b>Reason for absence</b></p>';
 		$str.= '<p>'.$data[0]->reasonforabsence.'</p>';
-		$str.= '<p>Status</p>'; 
+		$str.= '<p><b>Status</b></p>'; 
 		$str.= '<p>'.$data[0]->status.'</p>';
-		$str.= '<p><a href="javascript:void();" >Close</a></p>';
-		$str.= '<p><button onclick="editleaves(\''.base64_encode($id).'\')" class="fa fa-edit" value="Edit"></button></p>';
-		/*$str.= '<p><a href="javascript:void();" class="fa fa-times" >Delete</a></p>';*/
-		/*$str.= '<p>	<a href="javascript:void();" onclick="deleteleaves(\''.base64_encode($rowid).'\');"  class="btn btn-danger btn-circle sa-params" data-toggle="tooltip"  data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a></p>'; 
-	/*	$str.= '<p></p>';
-		$str.='<p></p>';*/
+		$str.= '<p><a href="javascript:void();" class="btn btn-white waves-effect" >Close</a></p>';
+		$str.= '<p><button onclick="editleaves(\''.base64_encode($id).'\')" class="btn btn-success"><i class="fa fa-edit">Edit</i> </button></p>';
+		$str.= '<p><a href='.base_url().'Leaves/deleteSearchLeaves/'.base64_encode($row->id).' class="btn btn-danger"><i class="fa fa-times">Delete</i> </a></p>';
 
+
+	/*	<button type="button" onclick="editdata('Mg==')" name="btnupdate" id="save-form" class="btn btn-success"> <i class="fa fa-check"></i> Update</button>*/
 		echo json_encode($str);exit;
 
 	}
@@ -343,22 +342,7 @@ class Leaves extends CI_Controller {
 					</div>';
 		/*$str.= '<td><button onclick="editleaves(\''.base64_encode($id).'\')" class="fa fa-edit" value="Edit"></button></td></tr>';*/
 		echo json_encode($string);exit;
- 		
-/*		if(!empty($_POST))
-		{	
-			$mem = $this->input->post('choose_mem');
-			$type  = $this->input->post('leave_type');
-			$date = $this->input->post('date');
-			$abs  = $this->input->post('absence');
-			$status = $this->input->post('status');
-		
-			//echo($date);die;
-		
-			$updateArr = array('empid'=>$mem,'leavetypeid'=>$type,'date'=>$date,'reasonforabsence'=>$abs,'status'=>$status);
-			$this->common_model->updateData('tbl_project_info',$updateArr,$whereArr);
-		     echo'<pre>';
-		     echo $this->db->last_query();die;
-		 }*/ 
+ 	
 	}
 
 	public function approveleaves(){
@@ -387,6 +371,21 @@ class Leaves extends CI_Controller {
 
 	}
 
+/*	public function deleteSearchLeaves(){
+		$id=base64_decode($_POST['id']);
+		$whereArr=array('id'=>$id);
+		$mem  =   $this->input->post('mem');
+		$type =   $this->input->post('ltype');
+		$date =   $this->input->post('date');
+		$abs  =   $this->input->post('abs');
+		$status =   $this->input->post('sta');
+		$deleteArr = array('empid'=>$mem,'leavetypeid'=>$type,'date'=>$date,
+			'reasonforabsence'=>$abs,'status'=>$status);
+		$whereArr=array('id'=>$id);
+
+		$this->common_model->deleteData('tbl_leaves',$deleteArr,$whereArr);
+	}*/
+
 	public function deleteleaves(){
 		$id=base64_decode($_POST['id']);
 		//echo($id);die;
@@ -396,37 +395,41 @@ class Leaves extends CI_Controller {
 		redirect('Leaves/index');
 	}
 
-	public function checkleave(){
-		$status = 0;
-		if(!empty($_POST['leavecategory'])){
-			$where = array('name'=>$_POST['leavecategory']);
-			$checkData = $this->common_model->getData('tbl_leavetype',$where);
+/*	public function checkleaves(){
+		
+		if(!empty($_POST['leaves'])){
+			$whereArr = array('name'=>$_POST['leavecategory']);
+			//echo $whereArr;
+			$checkData = $this->common_model->getData('tbl_leavetype',$whereArr);
 			if(!empty($checkData)){
 				$status = 1;
 			}
-		}
+		/*}
 		echo $status;exit();
-	}
+	}*/
 
 	public function insertleavestype(){
 		if(!empty($_POST)){
-			$name = $this->input->post('leavename');
-			$insArr = array('name'=>$name);
-			$lastinsertid=$this->common_model->insertData('tbl_leavetype',$insArr);
-			$leaArray = $this->common_model->getData('tbl_leavetype');
+			$leaveName = $this->input->post('name');
+			//echo($leaveName);die;
+			$insArr = array('name'=>$leaveName);
+			$this->common_model->insertData('tbl_leavetype',$insArr);
+			$leaveArray = $this->common_model->getData('tbl_leavetype');
 			$str = '';
-			foreach($leaArray as $row){
+			foreach($leaveArray as $row){
 				$str.='<option value="'.$row->id.'">'.$row->name.'</option>'; 
 			}
-			$totaldata = count($leaArray);
-			$leaArr = array();
-			$leaArr['count'] = $totaldata;
-			$leaArr['catdata'] = $str;
-			$leaArr['lastinsertid']= $lastinsertid;
+			$totaldata = count($leaveArray);
+			$leaveArr = array();
+			$leaveArr['count'] = $totaldata;
+			$leaveArr['leavedata'] = $str;
+			//$leaveArr['lastinsertid']= $lastinsertid;
 			//print_r($catArr);die;
-			echo json_encode($leaArr);exit; 
+			echo json_encode($leaveArr);exit; 
 		}
 	}
+
+
 
 
 

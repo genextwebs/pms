@@ -87,14 +87,9 @@
 											
 												<?php
 												foreach($leavecategory as $leave){
-													$str='';
-													if(!empty($sessData['leave_type'])){
-														if($sessData['leave_type'] == $leave->id){
-															$str='selected';
-														}
-													}
-													?>
-													<option value="<?php echo $leave->id?>" <?php echo $str;?>><?php echo $leave->name;?></option>
+												?>
+													
+													<option value="<?php echo $leave->id?>"><?php echo $leave->name;?></option>
 													<?php
 													} 
 													?> 											
@@ -107,7 +102,7 @@
 										<div class="form-group">
 											<label class="control-label">Select Duration
 											</label>
-											Single<input id="radio_group1" class="form-control" type="radio" name="duration_radio" value="0">
+											Single<input id="radio_group1" class="form-control" type="radio" name="duration_radio" value="0" checked>
 											
 											 Multiple<input id="radio_group2" class="form-control" type="radio" name="duration_radio" value="1">
 											Half Day<input id="radio_group3" class="form-control" type="radio" name="duration_radio" value="2"> 
@@ -189,18 +184,19 @@
 						</thead>
 						 <tbody>
 								<?php 	
+								$i=1;
 									foreach($leavecategory as $leave) { ?>      
 									  <tr>
-										  <td><?php echo $leave->id; ?></td>
+										  <td><?php echo $i; ?></td>
 										  <td><?php echo $leave->name; ?></td>
 										  <td><a href="javascript:;" data-cat-id="1" class="btn btn-sm btn-danger btn-rounded delete-category" id='deleteleave'>Remove</a></td>
 									  </tr>
-							   <?php } ?>
+							   <?php $i++; } ?>
 						</tbody>
 					</table>
 				</div>
 				<hr>
-				<form id="leave" class=""  name="leave" method="post" onsubmit="return checkName();">
+				<form id="leave" class=""  name="leave" method="post">
 					<div class="form-body">
 						<div class="row">
 							<div class="col-md-12 ">
@@ -212,7 +208,7 @@
 						</div>
 					</div>
 					<div class="form-actions">
-						<input type="submit" id="save_leave" class="btn btn-success" value="Save"> <i class="fa fa-check"></i>
+						<input type="button" id="save_leave" class="btn btn-success" value="Save"> <i class="fa fa-check"></i>
 					</div>
 				</form>
 			</div>
