@@ -499,7 +499,7 @@
 									 	<!-- tab3 -->
 									  	
 									  	<!-- tab4 -->
-									  	<div class="tab-pane <?php if($controller == 'Project' && $function == 'task') { echo "active show";}?>"" id="tasks" role="tabpanel" aria-labelledby="tasks-tab">
+									  	<div class="tab-pane <?php if($controller == 'Project' && $function == 'task') { echo "active show";}?>" id="tasks" role="tabpanel" aria-labelledby="tasks-tab">
 									  		<div class="row mb-2">
 									  			<div id="new-tadk-panel" class="col-md-12">
 									  				<div class="card">
@@ -511,7 +511,7 @@
 									  					</div>
 									  					<div class="card-wrapper collapse show">
 													        <div class="card-body">
-													           	<form method="post" >
+													           	<form method="post" action="<?php echo base_url().'project/insertTask'?>">
 													           		<div class="form-body">
 													           			<div class="row">
 													           				<div class="col-md-12">
@@ -529,7 +529,7 @@
 									                						<div class="col-md-12">
 									                							<div class="form-group">
 									                								<label class="control-label">start Date</label>
-									                								<input id="start_date" type="text" class="form-control" name="">
+									                								<input id="start_date" type="text" class="form-control" name="startdate">
 									                							</div>
 									                						</div>
 									                						<div class="col-md-12">
@@ -542,7 +542,7 @@
 									                						<div class="col-md-12">
 									                							<div class="form-group sm-box">
 									                								<label class="control-label">Assigned To</label>
-									                							 	<select class="custom-select br-0">
+									                							 	<select class="custom-select br-0" name="assignemp">
 										                								<?php foreach($employee as $row){
 												            							?>
 																	            		<option value="<?php echo $row->id?>"><?php echo $row->employeename;?></option>
@@ -576,15 +576,15 @@
 										                						<div class="form-group">
 										                							<label class="control-label">Priority</label>
 										                							<div class="custom-control custom-radio radio-danger">
-																					    <input type="radio" class="custom-control-input" id="high-rad" name="radio-stacked" required="">
+																					    <input type="radio" class="custom-control-input" id="high-rad" name="radio-stacked" value="0"required="">
 																					    <label class="custom-control-label text-danger" for="high-rad">High</label>
 																					</div>
 																					<div class="custom-control custom-radio radio-warning">
-																					    <input type="radio" class="custom-control-input" id="medium-rad" name="radio-stacked" required="">
+																					    <input type="radio" class="custom-control-input" id="medium-rad" name="radio-stacked" value="1"required="">
 																					    <label class="custom-control-label text-warning" for="medium-rad">Medium</label>
 																					</div>
 																					<div class="custom-control custom-radio radio-success">
-																					    <input type="radio" class="custom-control-input" id="low-rad" name="radio-stacked" required="">
+																					    <input type="radio" class="custom-control-input" id="low-rad" name="radio-stacked" value="2"required="">
 																					    <label class="custom-control-label text-success" for="low-rad">Low</label>
 																					</div>
 																					<input type="hidden" value="<?php echo $id; ?>" name="projectid">
@@ -617,16 +617,16 @@
 												            <tr role="row">
 												                <th>Id</th>
 												                <th>Task</th>
-												                <th>Client</th>
+												               <!-- <th>Client</th>-->
 												                <th>Assigned To</th>
-												                <th>Assigned By</th>
+												               <!-- <th>Assigned By</th>-->
 												                <th>Due Date</th>
 												                <th>Status</th>
 												                <th>Action</th>
 												            </tr>
 												        </thead>
 												        <tbody>
-												            <tr>
+												            <!--<tr>
 												                <td>69</td>
 												                <td><a href="javascript:;">Gryphon said to.</a></td>
 												                <td>Alice Gerlach</td>
@@ -638,7 +638,7 @@
 												                    <a href="javascript:;" class="btn btn-info btn-circle edit-task" data-toggle="tooltip" data-task-id="69" data-original-title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a> &nbsp;
 												                    <a href="javascript:;" class="btn btn-danger btn-circle sa-params" data-toggle="tooltip" data-task-id="69" data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>
 												                </td>
-												            </tr>
+												            </tr>-->
 												        </tbody>
 												    </table>
 												</div>
@@ -982,7 +982,7 @@
 					                    		<tr>
 					                    			<td><?php echo $i; ?></td>
 					                    			<td><?php echo $catData->task_category_name?></td>
-					                    			<td><a href="javascript:;" data-cat-id="1" class="btn btn-sm btn-danger btn-rounded delete-category" id='deletecat'>Remove</a></td>
+					                    			<td><a href="javascript:;" data-cat-id="1" class="btn btn-sm btn-danger btn-rounded delete-category" id='deletetaskCat'>Remove</a></td>
 					                    		</tr>
 					                    <?php 
 					                    	$i++;

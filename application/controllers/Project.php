@@ -860,24 +860,174 @@ class Project extends CI_Controller {
 	public function task(){
 		$data['id'] = base64_decode($this->uri->segment(3));
 		$data['taskCat'] = $this->common_model->getData('tbl_task_category');
+		$data['employee'] = $this->common_model->getData('tbl_employee');
 		$this->load->view('common/header');
 		$this->load->view('project/searchproject',$data);
 		$this->load->view('common/footer');
 	}
 
 	public function insert_task_category(){
-		$task_cat = $this->input->post('task_cat_name');
-		$insArr = array('task_category_name' => $task_cat);
-		$this->common_model->insertData('tbl_task_category',$insArr);
-		$task_catArray = $this->common_model->getData('tbl_task_category');
-		$str = '';
-		foreach($task_catArray as $taskCat){
-			$str.= '<option value="'.$taskCat->id.'">'.$taskCat->task_category_name.'</option>';
+		if(!empty($_POST)){
+			$task_cat = $this->input->post('task_cat_name');
+			$insArr = array('task_category_name' => $task_cat);
+			$lastTaskCatinsertid = $this->common_model->insertData('tbl_task_category',$insArr);
+			$task_catArray = $this->common_model->getData('tbl_task_category');
+			$str = '';
+			foreach($task_catArray as $taskCat){
+				$str.= '<option value="'.$taskCat->id.'">'.$taskCat->task_category_name.'</option>';
+			}
+			$totalCatdata = count($task_catArray);
+			$task_CatArr = array();
+			$task_CatArr['count'] = $totalCatdata;
+			$task_CatArr['task_cat'] = $str;
+			$task_CatArr['lastTaskCatinsertid'] = $lastTaskCatinsertid;
+			echo json_encode($task_CatArr);exit();
 		}
-		$totalCatdata = count($task_catArray);
-		$task_CatArr = array();
-		$task_CatArr['count'] = $totalCatdata;
-		$task_CatArr['task_cat'] = $str;
-		echo json_encode($task_CatArr);exit();
 	}
-}		
+
+	public function deletetaskCat(){
+		$status = 0;
+		if(!empty($_POST['id'])){
+			$id=$this->input->post('id');
+			$deleteArr=array('id'=>$id);
+			$this->common_model->deleteData('tbl_project_category',$deleteArr);
+			$status = 1;
+		}
+		echo $status;exit();
+	}
+
+	public function insertTask(){
+		if(!empty($_POST)){
+			$title = $this->input->post('title-task');
+			$projectid = $this->input->post('projectid');
+			$description = $this->input->post('editor1');
+			//echo $description;die;
+			$startdate = $this->input->post('startdate');
+			$duedate = $this->input->post('due_date');
+			$assignemp = $this->input->post('assignemp');
+			$taskcategory = $this->input->post('task-category');
+			$priority = $this->input->post('radio-stacked');
+			$insArr = array('projectid' => $projectid, 'title' => $title , 'description' => $description , 'startdate' => $startdate , 'duedate' => $duedate , 'assignedto' => $assignemp , 'taskcategory' => $taskcategory , 'status' => 0, 'priority' => $priority);
+			$this->common_model->insertData('tbl_task',$insArr);
+		}
+	}
+
+	public function task_list(){
+		if(!empty($_POST)){
+			$_GET = $_POST;
+			$defaultOrderClause = "";
+			$sWhere = "";
+			$sOrder = '';
+			$aColumns = array( 'id', 'title', 'assignedto', 'duedate', 'status');
+			//'ahrefs_dr', 
+            $totalColumns = count($aColumns);
+
+			/** Paging Start **/
+            $sLimit = "";
+            $sOffset = "";
+            if ($_GET['iDisplayStart'] < 0) {
+                $_GET['iDisplayStart'] = 0;
+            }
+            if ($_GET['iDisplayLength'] < 0) {
+                $_GET['iDisplayLength'] = 10;
+            }
+            if (isset($_GET['iDisplayStart']) && $_GET['iDisplayLength'] != '-1') {
+                $sLimit = (int) substr($_GET['iDisplayLength'], 0, 6);
+                $sOffset = (int) $_GET['iDisplayStart'];
+            } else {
+                $sLimit = 10;
+                $sOffset = (int) $_GET['iDisplayStart'];
+            }
+            /** Paging End **/
+            /** Ordering Start **/
+            $noOrderColumns = array('other_do_ext');
+            if (isset($_GET['iSortCol_0']) && !in_array($aColumns[intval($_GET['iSortCol_0'])], $noOrderColumns)) {
+                $sOrder = " ";
+                for ($i = 0; $i < intval($_GET['iSortingCols']); $i++) {
+                    if ($_GET['bSortable_' . intval($_GET['iSortCol_' . $i])] == "true") {
+
+                        if ($aColumns[intval($_GET['iSortCol_' . $i])] != '') {
+                            $sOrder .= $aColumns[intval($_GET['iSortCol_' . $i])] . " " . $_GET['sSortDir_' . $i] . ", ";
+                        } 
+                        else {
+                            $sOrder = $defaultOrderClause . " ";
+                        }
+
+                        $sortColumnName = intval($_GET['iSortCol_' . $i]).'|'.$_GET['sSortDir_' . $i];
+                    }
+                }
+
+                $sOrder = substr_replace($sOrder, "", -2);
+                if ($sOrder == "ORDER BY") {
+                    $sOrder = "";
+                }
+            } else {
+                $sOrder = $defaultOrderClause;
+            }
+
+            if(!empty($sOrder)){
+            	$sOrder = " ORDER BY ".$sOrder;
+            }
+            /** Ordering End **/
+
+            /** Filtering Start */
+            if(!empty(trim($_GET['sSearch']))){
+            	$searchTerm = trim($_GET['sSearch']);
+            	$sWhere .= ' AND (title like "%'.$searchTerm.'%" OR description like "%'.$searchTerm.'%" OR startdate like "%'.$searchTerm.'%" OR duedate like "%'.$searchTerm.'%")';
+            }
+            if(!empty($sWhere)){
+            	$sWhere = " WHERE 1 ".$sWhere;
+            }
+            /** Filtering End */
+		}
+		
+	    $query = "SELECT tbl_task.* , tbl_employee.employeename from tbl_task inner JOIN tbl_employee on tbl_task.assignedto = tbl_employee.id ".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+		$taskArr = $this->common_model->coreQueryObject($query);
+
+		$query = "SELECT * from tbl_task ".$sWhere;
+		$taskFilterArr = $this->common_model->coreQueryObject($query);
+		$iFilteredTotal = count($taskFilterArr);
+
+		$taskAllArr = $this->common_model->getData('tbl_task');
+		$iTotal = count($taskAllArr);
+
+		/** Output */
+		$datarow = array();
+		$i = 1;
+		foreach($taskArr as $row) {
+			
+				$actionStr = '<div class="dropdown action m-r-10">
+				                <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
+				                		<div class="dropdown-menu">
+						                    <a  class="dropdown-item" href='.base_url().'leads/viewleadsdetail/'.base64_encode($row->id).'><i class="fa fa-search"></i> View</a>
+						                    <a  class="dropdown-item" href='.base_url().'leads/editleads/'.base64_encode($row->id).'><i class="fa fa-edit"></i> Edit</a>
+						                    <a  class="dropdown-item" href="javascript:void()" onclick="deleteLeadClient(\''.base64_encode($row->id).'\',\''.base64_encode($row->id).'\', \'lead\')"><i class="fa fa-trash "></i> Delete</a>
+						                    <a  class="dropdown-item" href='.base_url().'clients/addclients/'.base64_encode($row->id).'><i class="fa fa-user"></i> Change To Client</a>
+				               			 </div>
+							</div>';
+			
+			$datarow[] = array(
+				$id = $i,
+                //$row->clientname.'<br/>'.$str,
+                $row->title,
+                $row->employeename,
+				$row->duedate,
+				$row->status,
+				$actionStr
+           	);
+           	$i++;
+      	}
+        
+		$output = array
+		(
+		   	"sEcho" => intval($_GET['sEcho']),
+	        "iTotalRecords" => $iTotal,
+	        "iTotalRecordsFormatted" => number_format($iTotal), //ShowLargeNumber($iTotal),
+	        "iTotalDisplayRecords" => $iFilteredTotal,
+	        "aaData" => $datarow
+		);
+	  echo json_encode($output);
+      exit();
+	}	
+}	
+
