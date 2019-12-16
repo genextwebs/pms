@@ -354,21 +354,22 @@ $(function(){
 	});
 });
 
-/*$(function(){
+$(function(){
 
-		$("form[name='modelholiday']").validate({
+		$("form[name='task_category']").validate({
 		rules:{
-				'holiday_name[]': {
-                required: true
-            	},
-            	'occasion[]': {
-                required: true
-            	}
+				title_task : "required",
+				startdate : "required" ,
+				due_date : "required" ,
+				assignemp : "required"
+		},	
+		messages:{
+				assignemp : "Choose an assignee",
 		},			
 		submitHandler: function(form) {
 		form.submit();}
 	});
-});*/
+});
 
 function checkuncheck()
 {
@@ -911,6 +912,15 @@ $('#save-task-category').click(function(){
 
 });
 
+//for show add new task
+$('#show-new-task-panel').click(function(){
+	$('#task_show').show();
+});
+
+//for close add task div
+$('#hide-new-task-panel').click(function(){
+	$('#task_show').hide();
+});
                                                                                      
                                             
                                     

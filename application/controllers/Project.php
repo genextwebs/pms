@@ -871,6 +871,7 @@ class Project extends CI_Controller {
 			$task_cat = $this->input->post('task_cat_name');
 			$insArr = array('task_category_name' => $task_cat);
 			$lastTaskCatinsertid = $this->common_model->insertData('tbl_task_category',$insArr);
+			echo $lastTaskCatinsertid;die;
 			$task_catArray = $this->common_model->getData('tbl_task_category');
 			$str = '';
 			foreach($task_catArray as $taskCat){
@@ -880,7 +881,7 @@ class Project extends CI_Controller {
 			$task_CatArr = array();
 			$task_CatArr['count'] = $totalCatdata;
 			$task_CatArr['task_cat'] = $str;
-			$task_CatArr['lastTaskCatinsertid'] = $lastTaskCatinsertid;
+			$task_CatArr['lastTaskCatinsertid'] =  $lastTaskCatinsertid;
 			echo json_encode($task_CatArr);exit();
 		}
 	}
@@ -898,7 +899,7 @@ class Project extends CI_Controller {
 
 	public function insertTask(){
 		if(!empty($_POST)){
-			$title = $this->input->post('title-task');
+			$title = $this->input->post('title_task');
 			$projectid = $this->input->post('projectid');
 			$description = $this->input->post('editor1');
 			//echo $description;die;
@@ -909,6 +910,7 @@ class Project extends CI_Controller {
 			$priority = $this->input->post('radio-stacked');
 			$insArr = array('projectid' => $projectid, 'title' => $title , 'description' => $description , 'startdate' => $startdate , 'duedate' => $duedate , 'assignedto' => $assignemp , 'taskcategory' => $taskcategory , 'status' => 0, 'priority' => $priority);
 			$this->common_model->insertData('tbl_task',$insArr);
+			redirect('project/task/'.base64_encode($projectid));
 		}
 	}
 
@@ -973,7 +975,7 @@ class Project extends CI_Controller {
             /** Filtering Start */
             if(!empty(trim($_GET['sSearch']))){
             	$searchTerm = trim($_GET['sSearch']);
-            	$sWhere .= ' AND (title like "%'.$searchTerm.'%" OR description like "%'.$searchTerm.'%" OR startdate like "%'.$searchTerm.'%" OR duedate like "%'.$searchTerm.'%")';
+            	$sWhere .= ' AND (title like "%'.$searchTerm.'%" OR description like "%'.$searchTerm.'%" OR startdate like "%'.$searchTerm.'%" OR duedate like "%'.$searchTerm.'%" OR assignedto like "%'.$searchTerm.'%")';
             }
             if(!empty($sWhere)){
             	$sWhere = " WHERE 1 ".$sWhere;
@@ -985,6 +987,7 @@ class Project extends CI_Controller {
 		$taskArr = $this->common_model->coreQueryObject($query);
 
 		$query = "SELECT * from tbl_task ".$sWhere;
+		//echo $this->db->last_query();die;
 		$taskFilterArr = $this->common_model->coreQueryObject($query);
 		$iFilteredTotal = count($taskFilterArr);
 
@@ -995,24 +998,20 @@ class Project extends CI_Controller {
 		$datarow = array();
 		$i = 1;
 		foreach($taskArr as $row) {
+			if($row->status == 0){
+				$status = $row->status = 'Incomplete';
+				$str = '<label class="label label-danger">'.$status.'</label>';
+			}
 			
-				$actionStr = '<div class="dropdown action m-r-10">
-				                <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
-				                		<div class="dropdown-menu">
-						                    <a  class="dropdown-item" href='.base_url().'leads/viewleadsdetail/'.base64_encode($row->id).'><i class="fa fa-search"></i> View</a>
-						                    <a  class="dropdown-item" href='.base_url().'leads/editleads/'.base64_encode($row->id).'><i class="fa fa-edit"></i> Edit</a>
-						                    <a  class="dropdown-item" href="javascript:void()" onclick="deleteLeadClient(\''.base64_encode($row->id).'\',\''.base64_encode($row->id).'\', \'lead\')"><i class="fa fa-trash "></i> Delete</a>
-						                    <a  class="dropdown-item" href='.base_url().'clients/addclients/'.base64_encode($row->id).'><i class="fa fa-user"></i> Change To Client</a>
-				               			 </div>
-							</div>';
-			
+				$actionStr = '<a href="javascript:;" class="btn btn-info btn-circle edit-task" data-toggle="tooltip" 						data-task-id="69" data-original-title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a> 			&nbsp;
+							<a href="javascript:;" class="btn btn-danger btn-circle sa-params" data-toggle="tooltip" data-task-id="69" data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>';
 			$datarow[] = array(
 				$id = $i,
                 //$row->clientname.'<br/>'.$str,
                 $row->title,
                 $row->employeename,
 				$row->duedate,
-				$row->status,
+				$str,
 				$actionStr
            	);
            	$i++;

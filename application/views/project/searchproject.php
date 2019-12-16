@@ -500,7 +500,7 @@
 									  	
 									  	<!-- tab4 -->
 									  	<div class="tab-pane <?php if($controller == 'Project' && $function == 'task') { echo "active show";}?>" id="tasks" role="tabpanel" aria-labelledby="tasks-tab">
-									  		<div class="row mb-2">
+									  		<div class="row mb-2" style="display:none;" id="task_show">
 									  			<div id="new-tadk-panel" class="col-md-12">
 									  				<div class="card">
 									  					<div class="card-header">
@@ -511,13 +511,13 @@
 									  					</div>
 									  					<div class="card-wrapper collapse show">
 													        <div class="card-body">
-													           	<form method="post" action="<?php echo base_url().'project/insertTask'?>">
+													           	<form method="post" action="<?php echo base_url().'project/insertTask'?>" name="task_category">
 													           		<div class="form-body">
 													           			<div class="row">
 													           				<div class="col-md-12">
 									                							<div class="form-group">
 										                							<label class="control-label">Title</label>
-										                							<input type="text" class="form-control" id="title-task" name="title-task">
+										                							<input type="text" class="form-control" id="title-task" name="title_task">
 										                						</div>
 									                						</div>
 									                						<div class="col-md-12">
@@ -543,6 +543,7 @@
 									                							<div class="form-group sm-box">
 									                								<label class="control-label">Assigned To</label>
 									                							 	<select class="custom-select br-0" name="assignemp">
+									                							 		>
 										                								<?php foreach($employee as $row){
 												            							?>
 																	            		<option value="<?php echo $row->id?>"><?php echo $row->employeename;?></option>
