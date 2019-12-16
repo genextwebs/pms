@@ -18,7 +18,6 @@ jQuery(document).ready(function() {
 			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
 			{ "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
 			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
-		//	{ "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
 			],
 			"bServerSide": true,
 			"fixedHeader": true,
@@ -60,6 +59,7 @@ jQuery(document).ready(function() {
 			},
 		});
 	}
+
 	else if(controllerName == 'project' && functionName == 'projecttemplate'){
 		var oTable = jQuery('#template').DataTable({    
 			'bRetrieve': true,
@@ -115,6 +115,7 @@ jQuery(document).ready(function() {
           	},
       	});
 	}
+
 	else if(controllerName == 'project' && functionName == 'viewarchiev'){
 		var oTable = jQuery('#archievdata').DataTable({    
 			'bRetrieve': true,
@@ -175,6 +176,7 @@ jQuery(document).ready(function() {
 			},
 		});
 	}	
+
 	else if(controllerName == 'leaves' && (functionName == 'index' || functionName == '')){
 		
 		var oTable = jQuery('#leaves').DataTable({
@@ -195,7 +197,6 @@ jQuery(document).ready(function() {
 			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
 			{ "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
 			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
-		//	{ "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
 			],
 			"bServerSide": true,
 			"fixedHeader": true,
@@ -208,8 +209,6 @@ jQuery(document).ready(function() {
 				aoData.push( { "name": "startdate", "value": $('#startdate').val() } );
 				aoData.push( { "name": "enddate", "value": $('#enddate').val() } );
 				aoData.push( { "name": "ename", "value": $('#empname').val() } );
-				//aoData.push( { "name": "absence", "value": $('#reason').val() } );
-		
 
 				oSettings.jqXHR = $.ajax( {
 					"dataType": 'json',
@@ -232,6 +231,7 @@ jQuery(document).ready(function() {
 	                }
 	            });
 			},
+
 			"fnRowCallback": function( nRow, aData, iDisplayIndex ){
 				return nRow;
 			},
@@ -324,8 +324,7 @@ $("form[name='creatclient']").validate({
 });
 	
 //Leaves Validation
-
-/*$("$form[name='creatleave']").validate({
+$("form[name='creatleave']").validate({
 	rules:{
 		date: "required",
 		absence : "required",
@@ -337,7 +336,22 @@ $("form[name='creatclient']").validate({
 	submitHandler:function(form){
 	form.submit();
 	}
+});
+
+//Leaves editleaves validation
+/*$("form[name='leave-edit']").validate({
+	rules:{
+		absence : "required",
+	},	
+	messages:{
+		absence : "Enter Reason",
+	},
+	submitHandler:function(form){
+	form.submit();
+	}
 });*/
+
+
 //addtemplate validation
 $("form[name='creatclient']").validate({
 	rules:{
@@ -349,7 +363,6 @@ $("form[name='creatclient']").validate({
 
 // for add category in addproject
 $("#save-category").click(function(event) {
-	//event.preventDefault();
 	var catname = $("input[name='category_name']").val();
 	if(catname!=""){
 		$.ajax({
@@ -373,7 +386,8 @@ $("#save-category").click(function(event) {
 							$('select[name="project-category"]').append(data.catdata);
 							 //  $("tbody").append("<tr><td>"+data.count+"</td><td>"+catname+"</td> <td><a href='javascript:;' class='btn btn-sm btn-danger btn-rounded delete-category' id='deletecat'>Remove</a></td></tr>");
 							$("tbody").append("<tr id='cate_"+data.lastinsertid+"'><td>"+data.count+"</td><td>"+catname+"</td> <td><input type='submit' class='btn btn-sm btn-danger btn-rounded delete-category' onclick='deletecat(\'"+data.lastinsertid+"\');' id='deletecat' value='Remove'></tr>");
-							$('#project-category1').removeClass('show');
+							//alert(data.lastinsertiddata.lastinsertid);
+						    $('#project-category1').removeClass('show');
 							$('.modal-backdrop').removeClass('show');
 							$('.modal-backdrop').find('div').remove();
 							$('body').removeAttr("style");
@@ -381,7 +395,6 @@ $("#save-category").click(function(event) {
 							$('#category')[0].reset();
 							$('#succmsg').html('');
 							$('#succmsg').html('<b>Successfully category added</b>');
-							//window.location.reload();
 					   }
 					});
 				}else{
@@ -396,22 +409,27 @@ $("#save-category").click(function(event) {
 	}
 });
 
-// for add leaves
+
+// for add leaves tefgdjhgkjdghbkjfhdckghfvngbkvjnc
 $("#save_leave").click(function() {
 	//event.preventDefault();
 	var leavename = $("input[name='leavename']").val();
-		var dataString = 'name='+ leavename;
-		//alert(dataString);
+	var dataString = 'name='+ leavename;
 		$.ajax({
+			url: base_url+"project/checkcategory",
 		    url: base_url+"leaves/insertleavestype",
 		    type: 'POST',
 		    dataType: 'Json',
 		    data: dataString,
 			success: function(data) {
+				//console.log(data.catdata);
 				/*console.log(data.taskdata);*/
 				$('select[name="leave_type"]').html('');       
-				$('select[name="leave_type"]').append(data.leavedata);
-				$("tbody").append("<tr><td>"+data.count+"</td><td>"+leavename+"</td> <td><a href='javascript:;' class='btn btn-sm btn-danger btn-rounded delete-category' id='deletecat'>Remove</a></td></tr>");
+				$('select[name="leave_type"]').append(data.deleteleavetype);
+				//alert(dataString);
+				$("tbody").append("<tr id='leave"+data.leaveData+"'><td>"+data.count+"</td><td>"+leavename+"</td> <td><input type='submit' class='btn btn-sm btn-danger btn-rounded delete-category' onclick='deleteleavetype(\""+data.leaveData+"\");' id='deletesearchLeave' value='Remove'></td></tr>");
+				//$("tbody").append("<tr><td>"+data.count+"</td><td>"+leavename+"</td> <td><a href='javascript:;' class='btn btn-sm btn-danger btn-rounded delete-category' id='deletecat'>Remove</a></td></tr>");
+				//alert(dataString);
 				$('#leave_type1').modal('toggle');
 				$('#leave')[0].reset();
 				/*$("tbody").append("<tr id='cate_"+data.lastinsertid+"'><td>"+data.count+"</td><td>"+catname+"</td> <td><input type='submit' class='btn btn-sm btn-danger btn-rounded delete-category' onclick='deletecat(\'"+data.lastinsertid+"\');' id='deletecat' value='Remove'></tr>");*/
@@ -432,7 +450,40 @@ $("#save_leave").click(function() {
 	});
 
 
+
 // addproject=> delete category 
+	function deleteleavetype(id)
+	{
+		
+		$.ajax({
+		    type: "POST",
+		    url: base_url+"leaves/deleteleavetype",
+		    cache: false,
+		    data: "id="+id,
+
+		    success: function(data){
+			   	if(data == 1){
+			   		//alert(id);
+					jQuery('#leave'+id).remove();
+					$('#leave_type1').removeClass('show');
+					$('.modal-backdrop').removeClass('show');
+					$('.modal-backdrop').find('div').remove();
+					$('body').removeAttr("style");
+					$('body').removeClass("modal-open");
+					$('#leave')[0].reset();
+					$('#succmsg').html('');
+					$('#succmsg').html('<b>Successfully category removed</b>');
+				}else{
+					$('#succmsg').html('');
+					$('#succmsg').html('<b>Something went to wrong</b>');
+				}
+			}
+		});
+	}
+
+
+
+	// addleaves=> addleavestype => deleteleaves 
 	function deletecat(id)
 	{
 		$.ajax({
@@ -498,7 +549,6 @@ $("#save_leave").click(function() {
 
 	//delete projects
 	function deleteproject(id){
-		//alert(id);
 		var url = base_url+"project/deleteproject";
 		swal({
 		 title: "Are you sure?",
@@ -528,7 +578,7 @@ $("#save_leave").click(function() {
 					   }
 				   });
 			   }
-			   });
+			});
 		}
 	
 	//delete template
@@ -554,7 +604,7 @@ $("#save_leave").click(function() {
 					  
 					   success: function (data) {
 						   swal("Done!", "It was succesfully deleted!", "success");
-						   $('#template').DataTable().ajax.reload();
+						 //  $('#template').DataTable().ajax.reload();
 					   },
 					   error: function (xhr, ajaxOptions, thrownError) {
 						   swal("Error deleting!", "Please try again", "error");
@@ -602,23 +652,68 @@ $("#save_leave").click(function() {
 		$('#leaves-popup').modal('toggle');
 		$('#editleaves').modal('show');
 		var url = base_url+"Leaves/editleavesbtn";
-		   $.ajax({
-		   		type: 'POST',
-			   	url: url,
-			     cache: false,
-    			dataType: 'json',
-			 data: "id="+id,
-			   success: function (data) {
+		  	$.ajax({
+
+	   			type: 'POST',
+		   		url: url,
+		        cache: false,
+			    dataType: 'json',
+			    data: "id="+id,
+			    success: function (data) {
 			   		$('#leave-edit').html('');
 				  	$('#leave-edit').append(data);
-			   },
+			    },
 			   error: function (xhr, ajaxOptions, thrownError) {
-				   
-			   }
-		   });
-		 }
-			
+			    }
+	        });
+	}
+	
 
+	function deleteSearchLeaves(id){
+		var url = base_url+"Leaves/deleteSearchLeaves";
+		swal({
+			 title: "Are you sure?",
+			 text: "Do you want to delete this leaves?",
+			 type: "warning",
+			 showCancelButton: true,
+			 confirmButtonColor: "#DD6B55",
+			 confirmButtonText: "Yes, delete it!",
+			 closeOnConfirm: false
+		},
+		function(isConfirm){
+			if (isConfirm) {
+				$.ajax({
+					      
+				    url: url,
+				    type: "POST",
+				    dataType: "JSON",
+					data: {id:id},
+					dataType: "html",
+				    success: function (data) {
+						   swal("Done!", "It was succesfully deleted!", "success");
+						   $('#edileaves').modal('toggle');
+						   window.location.reload();
+					},
+					error: function (xhr, ajaxOptions, thrownError) {
+						swal("Error deleting!", "Please try again", "error");
+					}
+				});
+			}
+		});
+    }
+
+    //closeleaves
+
+    function closeleaves(){
+    	$.ajax({
+    	    success: function (data) {
+			    $('#edileaves').modal('toggle');
+			    window.location.reload();
+			},
+			error: function (xhr, ajaxOptions, thrownError) {
+			}
+		});
+    }
 	 
     //edidt btn clicking
     function editdata(id){
@@ -636,9 +731,9 @@ $("#save_leave").click(function() {
 			    success: function (data) {
 					$('#editleaves').modal('toggle');
 						window.location.reload();
-				   },
+				},
 		    });
-		 }
+	}
 	
 
 	function archivetoproject(id){
@@ -671,36 +766,35 @@ $("#save_leave").click(function() {
 					   }
 				   });
 			   }
-			   });
-		}
+	    });
+	}
 		
-		function archivedata(id) {
-		//alert(id);
+	function archivedata(id) {
 		var url = base_url+"project/archivedata";
-		swal({
-		 title: "Are you sure?",
-		 text: "Do you want to archive this project?",
-		 type: "warning",
-		 showCancelButton: true,
-		 confirmButtonColor: "#DD6B55",
-		 confirmButtonText: "Yes, archive it!",
-		 closeOnConfirm: false
-		},
-		function(isConfirm){
-			if (isConfirm) {
-				   $.ajax({
-					   url: url,
-					   type: "POST",
-					   dataType: "JSON",
-					   data: {id:id},
-					  dataType: "html",
-					   success: function (data) {
-						   swal("Done!", "Project archived successfully..!", "success");
-						   $('#project').DataTable().ajax.reload();
-					   },
-					   error: function (xhr, ajaxOptions, thrownError) {
-						   swal("Error !", "Please try again", "error");
-					   }
+			swal({
+			 		title: "Are you sure?",
+					text: "Do you want to archive this project?",
+					type: "warning",
+				    showCancelButton: true,
+				    confirmButtonColor: "#DD6B55",
+				    confirmButtonText: "Yes, archive it!",
+				    closeOnConfirm: false
+		    },
+			function(isConfirm){
+				if (isConfirm) {
+				   	$.ajax({
+				   			url: url,
+					  		type: "POST",
+					        dataType: "JSON",
+					        data: {id:id},
+					        dataType: "html",
+					        success: function (data) {
+						   		swal("Done!", "Project archived successfully..!", "success");
+						        $('#project').DataTable().ajax.reload();
+					        },
+					        error: function (xhr, ajaxOptions, thrownError) {
+						   		swal("Error !", "Please try again", "error");
+					   		}
 				   });
 			    }
 		   });

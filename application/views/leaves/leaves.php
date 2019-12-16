@@ -130,7 +130,7 @@
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content br-0">
 			<div class="modal-header">
-				<h4 class="modal-title"> Project Category</h4>
+				<h4 class="modal-title">  Leaves Details</h4>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">×</span>
 				</button>

@@ -12,17 +12,8 @@ class Leaves extends CI_Controller {
 	}
 
 	public function index(){
-		/*$id=base64_decode($_POST['id']);
-		echo($id);die;*/
-		/*whereArr=array('id'=>$id);
-			$data['allleavesdata']=$this->common_model->getData('tbl_leaves',$whereArr);
-			
-		*/
-	
 		$data['leavecategory']=$this->common_model->getData('tbl_leavetype');
-		
-		//print_r($data['allleavesdata']) ;die;
-			$data['employee']=$this->common_model->getData('tbl_employee'); 
+		$data['employee']=$this->common_model->getData('tbl_employee'); 
 		$this->load->view('common/header');
 		$this->load->view('leaves/leaves',$data);
 		$this->load->view('common/footer');
@@ -32,14 +23,12 @@ class Leaves extends CI_Controller {
 		
 		$data['employee']=$this->common_model->getData('tbl_employee');
 		$data['leavecategory']=$this->common_model->getData('tbl_leavetype');
-	
 		$this->load->view('common/header');
 		$this->load->view('leaves/addleaves',$data);
 		$this->load->view('common/footer');
 	}
 
 	public function insertleaves(){
-
 		if(!empty($_POST))
 		{	
 			$mem = $this->input->post('choose_mem');
@@ -47,16 +36,13 @@ class Leaves extends CI_Controller {
 			$radio = $this->input->post('duration_radio');
 			$date = $this->input->post('date');
 			$abs  = $this->input->post('absence');
-			//echo($date);die;
 			$status = $this->input->post('status');
+
 			$whereArr = array('empid'=>$mem,'leavetypeid'=>$type,'duration'=>$radio,'date'=>$date,'reasonforabsence'=>$abs,'status'=>$status);
-		     echo'<pre>';
-		//print_r($whereArr);die;
+
 			$this->common_model->insertData('tbl_leaves',$whereArr);
 			$this->session->set_flashdata('message_name', 'Project Insert sucessfully');
 			redirect('Leaves/index');
-			//echo $this->db->last_query();die;
-			//print_r($hh);die;
 		}
 	}
 		
@@ -67,7 +53,6 @@ class Leaves extends CI_Controller {
 			$sWhere = "";
 			$sOrder = '';
 			$aColumns = array( 'id', 'empid', 'leaveid', 'duration', 'date','reasonforabsence','status');
-			//'ahrefs_dr', 
 			$totalColumns = count($aColumns);
 
 			/** Paging Start **/
@@ -87,6 +72,7 @@ class Leaves extends CI_Controller {
 				$sOffset = (int) $_GET['iDisplayStart'];
 			}
 			/** Paging End **/
+
 			/** Ordering Start **/
 			$noOrderColumns = array('other_do_ext');
 			if (isset($_GET['iSortCol_0']) && !in_array($aColumns[intval($_GET['iSortCol_0'])], $noOrderColumns)) {
@@ -119,23 +105,17 @@ class Leaves extends CI_Controller {
 			/** Ordering End **/
 
 			/** Filtering Start */
-			
 			if(!empty(trim($_GET['sSearch']))){
 				$searchTerm = trim($_GET['sSearch']);
 				$sWhere.= ' AND (tbl_employee.employeename like "%'.$searchTerm.'%")';
 			}
 			$startdate=!empty($_POST['startdate']) ? $_POST['startdate'] : '';
-		//echo($startdate);exit;
 			$enddate=!empty($_POST['enddate']) ? $_POST['enddate'] : '';
 			$empname=!empty($_POST['ename']) ? $_POST['ename'] : '';
-			//$enddate=!empty($_POST['enddate']) ? $_POST['enddate'] : '';
-			//$test=!empty($_POST['absence']) ? $_POST['absence'] : '';
-			 //echo($enddate);die;
-		
+
 			if(!empty($startdate)){						
 				$sWhere.=' AND date>="'.$startdate.'"';
 			}
-
 			if(!empty($enddate)){						
 				$sWhere.=' AND date<="'.$enddate.'"';
 			}
@@ -149,11 +129,8 @@ class Leaves extends CI_Controller {
 		$query = "SELECT tbl_leaves.*,tbl_employee.employeename as empname from tbl_leaves INNER JOIN tbl_employee on tbl_leaves.empid = tbl_employee.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 		$LeavesArr = $this->common_model->coreQueryObject($query);
 		$query = "SELECT date,tbl_employee.employeename as empname from tbl_leaves inner join tbl_employee on tbl_leaves.empid = tbl_employee.id".$sWhere;
-	
-		//echo $sWhere;die;
+
 		$LeavesFilterArr = $this->common_model->coreQueryObject($query);
-		//print_r($LeavesFilterArr);die;
-		//echo $this->db->last_query();die;
 		$iFilteredTotal = count($LeavesFilterArr);
 		$ProjectAllArr = $this->common_model->getData('tbl_leaves');
 		$iTotal = count($ProjectAllArr);
@@ -162,65 +139,52 @@ class Leaves extends CI_Controller {
 		$datarow = array();
 		$i = 1;
 		foreach($LeavesArr as $row) {
-		/*foreach($LeavesArr as $row) 
-		$mystatus=$row->status;{*/
 			$rowid = $row->id;
 			$mystatus=$row->status;
 
 			if($row->status=='1'){
-						$status=$row->status='Approved';
-						$showStatus = '<label class="label label-success">'.$status.'</label>';
-						}
-				
-					else{
-						$status=$row->status='Pending';
-						$showStatus = '<label class="label label-danger">'.$status.'</label>';
-						}
-						
-					//echo($mystatus);die;
+					$status=$row->status='Approved';
+					$showStatus = '<label class="label label-success">'.$status.'</label>';
+			}
+			else{
+					$status=$row->status='Pending';
+					$showStatus = '<label class="label label-danger">'.$status.'</label>';
+				}
+					
 			if($mystatus=='1'){
-			//echo($row->status);die;
 		
-						 $actionstring= '<a href="javascript:;" onclick="searchleaves(\''.base64_encode($rowid).'\');"  class="btn btn-success btn-circle" data-toggle="modal" data-target="#leaves-popup" data-original-title="View Project Details"><i class="fa fa-search" aria-hidden="true"></i></a>';
-		  		;		 
-								 
+					$actionstring= '<a href="javascript:;" onclick="searchleaves(\''.base64_encode($rowid).'\');"  class="btn btn-success btn-circle" data-toggle="modal" data-target="#leaves-popup" data-original-title="View Project Details"><i class="fa fa-search" aria-hidden="true"></i></a>';				 
 			}
 			else{
 
-				$actionstring= '
-					<a href='.base_url().'Leaves/approveleaves/'.base64_encode($row->id). ' class="btn btn-success btn-circle" data-toggle="tooltip" data-original-title="View Project Details"><i class="fa fa-check" aria-hidden="true"></i></a>
+					$actionstring= 
+
+					'<a href='.base_url().'Leaves/approveleaves/'.base64_encode($row->id). ' class="btn btn-success btn-circle" data-toggle="tooltip" data-original-title="View Project Details"><i class="fa fa-check" aria-hidden="true"></i></a>
 
 					<a href="javascript:void();" onclick="deleteleaves(\''.base64_encode($rowid).'\');"  class="btn btn-danger btn-circle sa-params" data-toggle="tooltip"  data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>
 
-					<a href="javascript:;" onclick="searchleaves(\''.base64_encode($rowid).'\');"  class="btn btn-success btn-circle" data-toggle="modal" data-target="#leaves-popup" data-original-title="View Project Details"><i class="fa fa-search" aria-hidden="true"></i></a>'
-					  		;
-								
-					
+				    <a href="javascript:;" onclick="searchleaves(\''.base64_encode($rowid).'\');"  class="btn btn-success btn-circle" data-toggle="modal" data-target="#leaves-popup" data-original-title="View Project Details"><i class="fa fa-search" aria-hidden="true"></i></a>';			
 			}
-		$datarow[] = array(
-			$id = $i,
-			$row->empname,
-			$row->date,
-			$showStatus,
-			$row->leavetypeid,
+			$datarow[] = array(
+				$id = $i,
+				$row->empname,
+				$row->date,
+				$showStatus,
+				$row->leavetypeid,
+				$actionstring
+				);
+				$i++;
+			}
 			
-			//$status,
-			$actionstring
+			$output = array
+			(
+				"sEcho" => intval($_POST['sEcho']),
+					   "iTotalRecords" => $iTotal,
+					   "iTotalRecordsFormatted" => number_format($iTotal),
+					   "aaData" => $datarow
 			);
-			$i++;
-		}
-		
-		$output = array
-		(
-			"sEcho" => intval($_POST['sEcho']),
-				   "iTotalRecords" => $iTotal,
-				   "iTotalRecordsFormatted" => number_format($iTotal), //ShowLargeNumber($iTotal),
-				//   "iTotalDisplayRecords" => $iFilteredTotal,
-				   "aaData" => $datarow
-		);
-		echo json_encode($output);
-		exit();
-
+			echo json_encode($output);
+			exit();
 	}
 
 	public function searchleaves(){
@@ -235,14 +199,10 @@ class Leaves extends CI_Controller {
 		$str.= '<p>'.$data[0]->reasonforabsence.'</p>';
 		$str.= '<p><b>Status</b></p>'; 
 		$str.= '<p>'.$data[0]->status.'</p>';
-		$str.= '<p><a href="javascript:void();" class="btn btn-white waves-effect" >Close</a></p>';
+		$str.= '<p><button onclick="closeleaves()" class="btn btn-white waves-effect" >Close</button>  </p>';  
 		$str.= '<p><button onclick="editleaves(\''.base64_encode($id).'\')" class="btn btn-success"><i class="fa fa-edit">Edit</i> </button></p>';
-		$str.= '<p><a href='.base_url().'Leaves/deleteSearchLeaves/'.base64_encode($row->id).' class="btn btn-danger"><i class="fa fa-times">Delete</i> </a></p>';
-
-
-	/*	<button type="button" onclick="editdata('Mg==')" name="btnupdate" id="save-form" class="btn btn-success"> <i class="fa fa-check"></i> Update</button>*/
+		$str.= '<p><button onclick="deleteSearchLeaves(\''.base64_encode($id).'\')" class="btn btn-danger"><i class="fa fa-times">Delete</i> </button></p>';
 		echo json_encode($str);exit;
-
 	}
 
 	public function editleavesbtn(){
@@ -266,85 +226,96 @@ class Leaves extends CI_Controller {
 													$string.= '<option value="'.$emp->id.'" '.$str.'>'.$emp->employeename.'</option>';
 										}
 
-					$string.= 	   '</select>
-							</div>
+		$string.= 	               '</select>
+						   	</div>
 						</div>
 					</div>';
 		$string.= '	<div class="row">
 						<div class="col-md-12">
 							<div class="form-group project-category">
-								<label class="control-label" for="leave_type">Leave Type
-											<a class="btn btn-sm btn-outline-success ml-1" href="javascript:;" data-toggle="modal" data-target="#leave_type1"><i class="fa fa-plus"></i> Add Leave Type</a></label>
-											
+								<label class="control-label" for="leave_type">Leave Type</label> 
 									<select class="custom-select br-0" id="leave_type" name="leave_type">';	
-										foreach($leavetype['leave'] as $lea){
+									    foreach($leavetype['leave'] as $lea){
+
 											$str='';
+
 											if($lea->id==$leaves[0]->leavetypeid){
 												$str='selected';
-												}
-											
+												}  
 												$string.= '<option value="'.$lea->id.'"'.$str.'>'. 
-										$lea->name.'</option>';
-									}
+									       	  	$lea->name.'</option>';
+								        }
 																							
-								$string.=	'</select>
-										</div>
-									</div>
-								</div>';
-								$date='';
-								if(	!empty($leaves[0]->date)){
-									$date = $leaves[0]->date;
-								}
-		$string.=   '<div class="row">'
-						.'<div class="col-md-4" id="deadlineBox">'
-							.'<div class="form-group">'
-								.'<label class="control-label">Date</label>'
-									.'<input type="text" name="date" id="date" autocomplete="off" class="form-control" value="'.$date.'">'
-								.'</div>'
-							.'</div>'
-				   .'</div>';
-				   if(	!empty($leaves[0]->reasonforabsence)){
-									$reasonforabsence = $leaves[0]->reasonforabsence;
-								}
-		$string.= '	<div class="row">'
-						.'<div class="col-md-6">'
-							.'<div class="form-group">'
-								.'<label class="control-label">Reason for absence</label>'
-										.'<textarea id="absence" class="form-control" name="absence" rows="5">'.$reasonforabsence.'</textarea>'
-							.'</div>'
-						.'</div>';
-		$string.=    '<div class="col-md-6">
+		$string.=	               '</select>
+							</div>
+						</div>
+				</div>';
+
+		//For Date
+		$date='';
+		if(	!empty($leaves[0]->date)){
+			$date = $leaves[0]->date;
+		}
+
+		$string.=   '<div class="row">
+						<div class="col-md-4" id="deadlineBox">
+							<div class="form-group">
+								<label class="control-label">Date</label>
+									<input type="date" name="date" id="date" autocomplete="off" class="form-control" value="'.$date.'">
+								</div>
+							</div>
+				     </div>';
+
+		//For Reason for absence
+		if(	!empty($leaves[0]->reasonforabsence)){
+			$reasonforabsence = $leaves[0]->reasonforabsence;
+		}
+
+		$string.=  '<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">Reason for absence</label>
+								<textarea id="absence" class="form-control" name="absence" rows="5">'.$reasonforabsence.'
+								</textarea>
+							</div>
+						</div>';
+	      
+		$string.=      '<div class="col-md-6">
 							<div class="form-group">
 								<label class="control-label">Status</label>
-									<select id="status" class="form-control" name="status">'.
-									$str=''.';
+									<select id="status" class="form-control" name="status">'
+
+									   .$str=''.';
 
 										<option value="1"';
-										if($leaves[0]->status==1)
-										{ 
-											 $str= 'selected';
-										}
-									$string.=''.$str.'>Approved</option>';
+											if($leaves[0]->status==1)
+											{ 
+												 $str= 'selected';
+											}
+									       $string.=''.$str.'>Approved</option>';
 											
-									$string.='<option value="0" ';
-									if($leaves[0]->status==0)
-									{
-										 $str= 'selected';
-									}
-									$string.= ''.$str.'>Pending</option>
+		$string.=                      '<option value="0" ';
+											if($leaves[0]->status==0)
+											{
+												 $str= 'selected';
+											}
+											$string.= ''.$str.'>Pending</option>
 									</select>
 								</div>
 							</div>
-						</div>';
-		$string.= '<div class="form-actions">
+					</div>';
+
+
+		$string.=   '<div class="form-actions">
 						<button type="button" onclick="editdata(\''.base64_encode($id).'\')" name="btnupdate" id="save-form" class="btn btn-success"> <i class="fa fa-check"></i> Update</button>		
 						<input type="button" class="btn btn-default" value="Close">
 					</div>';
-		/*$str.= '<td><button onclick="editleaves(\''.base64_encode($id).'\')" class="fa fa-edit" value="Edit"></button></td></tr>';*/
-		echo json_encode($string);exit;
+		            
+		 echo json_encode($string);exit;
  	
 	}
 
+	//leaves list approveleaves
 	public function approveleaves(){
 		$id = base64_decode($this->uri->segment(3));
 		$whereArr = array('id'=>$id);
@@ -354,66 +325,50 @@ class Leaves extends CI_Controller {
 		
 	}
 
+	//leaves list updateleaves
 	public function updateleaves(){
+
 		$id=base64_decode($_POST['id']);
-		
 		$whereArr=array('id'=>$id);
 		$mem  =   $this->input->post('mem');
 		$type =   $this->input->post('ltype');
 		$date =   $this->input->post('date');
 		$abs  =   $this->input->post('abs');
 		$status =   $this->input->post('sta');
-		$updateArr = array('empid'=>$mem,'leavetypeid'=>$type,'date'=>$date,'reasonforabsence'=>$abs,'status'=>$status);
+		$updateArr = array('empid'=>$mem,'leavetypeid'=>$type,'date'=>$date,'reasonforabsence'=>
+			$abs,'status'=>$status);
 		$whereArr=array('id'=>$id);
-
 		$this->common_model->updateData('tbl_leaves',$updateArr,$whereArr);
-			/*redirect('project/viewarchiev');*/
-
 	}
 
-/*	public function deleteSearchLeaves(){
-		$id=base64_decode($_POST['id']);
-		$whereArr=array('id'=>$id);
-		$mem  =   $this->input->post('mem');
-		$type =   $this->input->post('ltype');
-		$date =   $this->input->post('date');
-		$abs  =   $this->input->post('abs');
-		$status =   $this->input->post('sta');
-		$deleteArr = array('empid'=>$mem,'leavetypeid'=>$type,'date'=>$date,
-			'reasonforabsence'=>$abs,'status'=>$status);
-		$whereArr=array('id'=>$id);
+	//Leave list search button click->After deleteSearchLeaves
+	public function deleteSearchLeaves(){
 
-		$this->common_model->deleteData('tbl_leaves',$deleteArr,$whereArr);
-	}*/
-
-	public function deleteleaves(){
 		$id=base64_decode($_POST['id']);
-		//echo($id);die;
 		$whereArr=array('id'=>$id);
 		$this->common_model->deleteData('tbl_leaves',$whereArr);
 		$this->session->set_flashdata('message','Delete Succesfully....');
 		redirect('Leaves/index');
 	}
 
-/*	public function checkleaves(){
-		
-		if(!empty($_POST['leaves'])){
-			$whereArr = array('name'=>$_POST['leavecategory']);
-			//echo $whereArr;
-			$checkData = $this->common_model->getData('tbl_leavetype',$whereArr);
-			if(!empty($checkData)){
-				$status = 1;
-			}
-		/*}
-		echo $status;exit();
-	}*/
+	//leave list deleteleaves 
+	public function deleteleaves(){
 
+		$id=base64_decode($_POST['id']);
+		$whereArr=array('id'=>$id);
+		$this->common_model->deleteData('tbl_leaves',$whereArr);
+		$this->session->set_flashdata('message','Delete Succesfully....');
+		redirect('Leaves/index');
+	}
+
+    //leave list insertleavestype 
 	public function insertleavestype(){
+
 		if(!empty($_POST)){
 			$leaveName = $this->input->post('name');
-			//echo($leaveName);die;
 			$insArr = array('name'=>$leaveName);
-			$this->common_model->insertData('tbl_leavetype',$insArr);
+			$leaveData=$this->common_model->insertData('tbl_leavetype',$insArr);
+
 			$leaveArray = $this->common_model->getData('tbl_leavetype');
 			$str = '';
 			foreach($leaveArray as $row){
@@ -422,16 +377,38 @@ class Leaves extends CI_Controller {
 			$totaldata = count($leaveArray);
 			$leaveArr = array();
 			$leaveArr['count'] = $totaldata;
-			$leaveArr['leavedata'] = $str;
-			//$leaveArr['lastinsertid']= $lastinsertid;
-			//print_r($catArr);die;
+			$leaveArr['deleteleavetype'] = $str;
+			$leaveArr['leaveData'] = $leaveData;
+			
 			echo json_encode($leaveArr);exit; 
 		}
 	}
 
+	public function checkleaves(){
+				$status = 0;
+		if(!empty($_POST['leave'])){
+			$where = array('name'=>$_POST['leave']);
+			$checkData = $this->common_model->getData('tbl_leavetype',$where);
+			if(!empty($checkData)){
+				$status = 1;
+			}
+		}
+		//echo($status);die;
+		echo $status;exit();
 
 
+	}
 
-
+	public function deleteleavetype(){
+		
+		$status = 0;
+		if(!empty($_POST['id'])){
+			$id=$this->input->post('id');
+			$deleteArr=array('id'=>$id);
+			$this->common_model->deleteData('tbl_leavetype',$deleteArr);
+			$status = 1;
+		}
+		echo $status;exit();
+	}
 
 }

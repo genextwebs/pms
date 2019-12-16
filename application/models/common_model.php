@@ -2,6 +2,7 @@
 class Common_model extends CI_Model{
 	function insertData($tablename,$store){
 		$this->db->insert($tablename,$store);
+		return $this->db->insert_id();
 	}
 
 	function updateData($tableName, $updateArr, $whereArr){

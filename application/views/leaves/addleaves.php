@@ -81,7 +81,7 @@
 										<div class="form-group project-category">
 											<label class="control-label" for="leave_type">
 											Leave Type
-											<a class="btn btn-sm btn-outline-success ml-1" href="javascript:;" data-toggle="modal" data-target="#leave_type1"><i class="fa fa-plus"></i> Add Leave Type</a></label>
+											<a class="btn btn-sm btn-outline-success ml-1" href="javascript:;" data-toggle="modal" data-target="#leave_type1" name="leave-category"><i class="fa fa-plus"></i> Add Leave Type</a></label>
 											
 											<select class="custom-select br-0" id="leave_type" name="leave_type">
 											
@@ -186,11 +186,11 @@
 								<?php 	
 								$i=1;
 									foreach($leavecategory as $leave) { ?>      
-									  <tr>
-										  <td><?php echo $i; ?></td>
-										  <td><?php echo $leave->name; ?></td>
-										  <td><a href="javascript:;" data-cat-id="1" class="btn btn-sm btn-danger btn-rounded delete-category" id='deleteleave'>Remove</a></td>
-									  </tr>
+									    <tr>
+											<td><?php echo $i; ?></td>
+											<td><?php echo $leave->name; ?></td>
+											<td><a href="javascript:;" data-cat-id="1" class="btn btn-sm btn-danger btn-rounded delete-category" id="deletecat">Remove</a></td>
+									    </tr>
 							   <?php $i++; } ?>
 						</tbody>
 					</table>

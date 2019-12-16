@@ -58,7 +58,10 @@
 
 									<div class="col-md-6">
 										<div class="form-group project-category">
-											<label class="control-label" for="project-category">Project Category <a class="btn btn-sm btn-outline-success ml-1" href="javascript:;" data-toggle="modal" data-target="#project-category1"><i class="fa fa-plus"></i> Add Project Category</a></label>
+											
+											<label class="control-label" for="project-category">Project Category <a class="btn btn-sm btn-outline-success ml-1" href="javascript:;" data-toggle="modal" data-target="#project-category1">
+
+											<i class="fa fa-plus"></i> Add Project Category</a></label>
 											<select class="custom-select br-0" id="project-category" name="project-category">
 											
 												<?php
