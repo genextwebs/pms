@@ -73,15 +73,24 @@ class Attendance extends CI_Controller{
 
 	}
 	public function AttendanceByMember(){
-		$data['employee'] =$this->common_model->getData('tbl_employee');
-		$data['selSdate']= $this->input->post('startdate');
-		$data['selEdate']= $this->input->post('enddate');
-		$data['selMember']= $this->input->post('member');
-		if(!empty( $data['selSdate'])){
-			$query="SELECT * from tbl_attendance"; 
+		$selSdate='';
+		$selEdate='';
+		$selMember='';
+		if(!empty($_POST))
+		{
+		$selSdate= $this->input->post('startdate');
+		$selEdate= $this->input->post('enddate');
+		$selMember= $this->input->post('member');
+		$query="select * from tbl_attendance where employee=".$selMember."AND attendancedate>=".$selSdate." AND attendancedate<=".$selEdate; 
+			//AND duedate>="2019-07-11" AND duedate<="2020-01-01"  l
 		$data['membersArr'] = $this->common_model->coreQueryObject($query);
 
+
 		}
+		
+			
+		
+			$data['employee'] =$this->common_model->getData('tbl_employee');
 		$this->load->view('common/header');
 		$this->load->view('Attendance/attendance',$data);
 		$this->load->view('common/footer');
@@ -144,10 +153,11 @@ class Attendance extends CI_Controller{
 			
 		}
 	}
-	public function filterByMember(){
+	public function filterByMemberjk(){
 		//echo "ggf";die;
 		if(!empty($_POST)){
 			$startdate = $_POST['startdate'];
+			//echo $startdate;die;
 			$enddate = $_POST['enddate'];
 			$member = $_POST['member'];
 			

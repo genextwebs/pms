@@ -895,8 +895,9 @@ $("#apply-filter").click(function() {
 
 //apply by member
 
-$("#applybyMember").click(function() {
+$("#applybyMemberdd").click(function() {
 	var startdate = $('#startdate').val();
+	//alert(startdate);
 	var enddate = $('#enddate').val();
 	var member = $('#member').val();
 	//alert(employee);

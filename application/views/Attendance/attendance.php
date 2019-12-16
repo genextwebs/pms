@@ -218,11 +218,12 @@
     <div class="tab-pane section-1 <?php if($controller == 'Attendance' && $function == 'AttendanceByMember') { echo 'active show'; } ?>" id="overview" aria-labelledby="overview-tab" role="tabpanel">
     <div class="row">
         <div class="col-md-12">
+            <form method="POST" action="<?php echo base_url().'Attendance/AttendanceByMember'?>">
            <div class="row">
                             <div class="col-md-4">
                                 <h5>Select Date Range</h5>
                                 <div class="input-group input-daterange">
-                                    <input type="text" class="start-date form-control br-0" id="startdate" name="startdate" value="" data-date-format='yyyy-mm-dd'>
+                                    <input type="text" class="start-date form-control br-0" id="startdate" name="startdate" data-date-format='yyyy-mm-dd'>
                                     <div class="input-group-prepend">
                                       <span class="input-group-text bg-info text-white">To</span>
                                     </div>
@@ -233,7 +234,7 @@
                             <div class="col-md-2">
                                 <h5>Employee Name</h5>
                                  <div class="form-group">
-                                    <select id='member' name="employee" class="select2 form-control">
+                                    <select id='member' name="member" class="select2 form-control">
                                         <option value="all">All Employee</option>
                                         <?php
                                             foreach($employee as $row){
@@ -250,7 +251,7 @@
                             <div class="col-md-4">
                                 <div class="form-group m-t-10">
                                     <label class="control-label col-12 mb-3">&nbsp;</label>
-                                    <button type="button" id="applybyMember"
+                                    <button type="submit" id="applybyMember"
                                      class="btn btn-success col-lg-4 co-md-5"><i class="fa fa-check"></i> Apply</button>
                                 </div>
                             </div>
@@ -333,12 +334,14 @@
                             
                         </tr>
                         </thead>
-                        <tbody id="attendanceData">
-                            <tr><?php foreach($membersArr as $row) {?>
+                        <tbody id="attendanceData"><?php if(!empty($membersArr)
+                ) { foreach($membersArr as $row) {?>
+                            <tr>
                                 <td><?php echo $row->attendancedate; ?></td>
                                 <td><?php echo $row->attendance; ?></td>
-                                <?php }?>
+                                
                             </tr>
+                            <?php } }?>
                         </tbody>
                     </table>
             
