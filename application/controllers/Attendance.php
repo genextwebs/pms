@@ -32,12 +32,6 @@ class Attendance extends CI_Controller{
 	}
 	
 	public function index(){
-		$this->load->view('common/header');
-		$this->load->view('Attendance/attendance');
-		$this->load->view('common/footer');
-	}
-
-	public function summaary(){
 		$data['selMonth'] =  $this->month;
 		$data['selYear'] =  $this->year;
 		$data['selDepartment'] =  $this->department;
@@ -70,27 +64,75 @@ class Attendance extends CI_Controller{
 		$this->load->view('common/header');
 		$this->load->view('Attendance/attendance',$data);
 		$this->load->view('common/footer');
-
 	}
+	
 	public function AttendanceByMember(){
 		$selSdate='';
 		$selEdate='';
 		$selMember='';
+
+		$year=date('Y');
+		$month=date('m');
+		//$month=date('d');
+		$selSdate=$year.'-'.$month.'-01';
+		$selEdate=date('Y-m-d');
+		$data['employee'] =$this->common_model->getData('tbl_employee');
+		$selMember=$data['employee'][0]->id;
+		
+		$query="select * from tbl_attendance where employee=".$selMember." AND attendancedate>'".$selSdate."' AND attendancedate<'".$selEdate."'  ORDER BY attendancedate";
+		$data['membersArr'] = $this->common_model->coreQueryObject($query);
+
 		if(!empty($_POST))
 		{
 		$selSdate= $this->input->post('startdate');
 		$selEdate= $this->input->post('enddate');
 		$selMember= $this->input->post('member');
-		$query="select * from tbl_attendance where employee=".$selMember."AND attendancedate>=".$selSdate." AND attendancedate<=".$selEdate; 
+		$this->session->set_userdata('selSdate',$selSdate);
+		$this->session->set_userdata('selEdate',$selEdate);
+		$this->session->set_userdata('selMember',$selMember);
+
+
+		$query="select * from tbl_attendance where employee=".$selMember." AND attendancedate>='".$selSdate."' AND attendancedate<='".$selEdate."'  ORDER BY attendancedate"; 
 			//AND duedate>="2019-07-11" AND duedate<="2020-01-01"  l
 		$data['membersArr'] = $this->common_model->coreQueryObject($query);
+	}
+
+		$pquery="select * from tbl_attendance where employee=".$selMember." AND attendancedate>='".$selSdate."' AND attendancedate<='".$selEdate."'and attendance=1" ; 
+		$data['present'] = $this->common_model->coreQueryObject($pquery);
+		$data['pday']=count($data['present']);
+
+		$lquery="select * from tbl_attendance where employee=".$selMember." AND attendancedate>='".$selSdate."' AND attendancedate<='".$selEdate."'and attendance=2" ; 
+		$data['late'] = $this->common_model->coreQueryObject($lquery);
+		$data['lday']=count($data['late']);
+		
+
+		$aquery="select * from tbl_attendance where employee=".$selMember." AND attendancedate>='".$selSdate."' AND attendancedate<='".$selEdate."'and attendance=3" ; 
+		$data['absent'] = $this->common_model->coreQueryObject($aquery);
+		$data['aday']=count($data['absent']);
 
 
-		}
+		$tquery="select * from tbl_attendance where employee=".$selMember." AND attendancedate>='".$selSdate."' AND attendancedate<='".$selEdate."'" ; 
+		$data['tday'] = $this->common_model->coreQueryObject($tquery);
+		$data['totalday']=count($data['tday']);
+
+
+	
+	function dateDiff($selSdate, $selEdate) 
+	{
+	  $date1_ts = strtotime($selSdate);
+	  $date2_ts = strtotime($selEdate);
+	  $diff = $date2_ts - $date1_ts;
+	  return round($diff / 86400);
+	}
+	$dateDiff= dateDiff($selSdate, $selEdate);
+	//echo $dateDiff;
+  
+		$oquery="select * from tbl_holiday where date>='".$selSdate."' AND date<='".$selEdate."'";
+		$data['oday'] = $this->common_model->coreQueryObject($oquery);
+		$data['ocaday']=count($data['oday']);
+
+		$data['wday']=$dateDiff-$data['ocaday'];
 		
-			
-		
-			$data['employee'] =$this->common_model->getData('tbl_employee');
 		$this->load->view('common/header');
 		$this->load->view('Attendance/attendance',$data);
 		$this->load->view('common/footer');

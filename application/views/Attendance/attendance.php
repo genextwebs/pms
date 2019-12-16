@@ -30,7 +30,7 @@
                             <div class="stats-box">
                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link <?php if($controller == 'Attendance' && $function == 'summaary') { echo 'active'; } ?>" id="overview-tab"  href="<?php echo base_url().'Attendance/summaary'?>" role="tab" aria-controls="overview" aria-selected="true">Summaary</a>
+                                        <a class="nav-link <?php if($controller == 'Attendance' && ($function == 'summaary' || $function == '')) { echo 'active'; } ?>" id="overview-tab"  href="<?php echo base_url().'Attendance'?>" role="tab" aria-controls="overview" aria-selected="true">Summaary</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link <?php if($controller == 'Attendance' && $function == 'AttendanceByMember') { echo 'active'; } ?>" id="overview-tab"  href="<?php echo base_url().'Attendance/AttendanceByMember'?>" role="tab" aria-controls="overview" aria-selected="true">Attendance By Member</a>
@@ -41,7 +41,7 @@
                                 <div id="" class="">
                                     <div class="tab-content" id="myTabContent">
                                         <!-- tab1 -->
-                                        <div class="tab-pane section-1 <?php if($controller == 'Attendance' && $function == 'summaary') { echo 'active show'; } ?>" id="overview" aria-labelledby="overview-tab" role="tabpanel">
+                                        <div class="tab-pane section-1 <?php if($controller == 'Attendance' && ($function == 'summaary' || $function == '')) { echo 'active show'; } ?>" id="overview" aria-labelledby="overview-tab" role="tabpanel">
                                             <div class="row">
                                                  <div class="col-md-12">
                 <div>
@@ -221,13 +221,22 @@
             <form method="POST" action="<?php echo base_url().'Attendance/AttendanceByMember'?>">
            <div class="row">
                             <div class="col-md-4">
-                                <h5>Select Date Range</h5>
+                                 <h5>Select Date Range</h5>
+                            <?php $year=date('Y');
+                                $month=date('m');
+                                //$month=date('d');
+                                $date=$year.'-'.$month.'-01';
+                                //echo $date;
+                              
+                                 
+                            ?>
+
                                 <div class="input-group input-daterange">
-                                    <input type="text" class="start-date form-control br-0" id="startdate" name="startdate" data-date-format='yyyy-mm-dd'>
+                                    <input type="text" class="start-date form-control br-0" id="startdate" name="startdate" data-date-format='yyyy-mm-dd' value="<?php if(!$this->session->userdata('selSdate')) { echo $date; } else { echo $this->session->userdata('selSdate'); }   ?>">
                                     <div class="input-group-prepend">
                                       <span class="input-group-text bg-info text-white">To</span>
                                     </div>
-                                    <input type="text" class="end-date form-control br-0" id="enddate" name="enddate" data-date-format='yyyy-mm-dd' value="">
+                                    <input type="text" class="end-date form-control br-0" id="enddate" name="enddate" data-date-format='yyyy-mm-dd' value="<?php if(!$this->session->userdata('selEdate')) { echo date('Y-m-d'); } else { echo $this->session->userdata('selEdate'); } ?>">
                                 </div>
                             </div>
                             
@@ -235,11 +244,12 @@
                                 <h5>Employee Name</h5>
                                  <div class="form-group">
                                     <select id='member' name="member" class="select2 form-control">
-                                        <option value="all">All Employee</option>
+                                     
                                         <?php
+                                       $selMember= $this->session->userdata('selMember');
                                             foreach($employee as $row){
                                                 $sel = '';
-                                                if($row->id == $selEmployee){
+                                                if($row->id == $selMember){
                                                     $sel = 'selected=selected';
                                                 }
                                                 echo '<option value="'.$row->id.'" '.$sel.'>'.$row->employeename.'</option>';
@@ -265,7 +275,7 @@
                         <h3>Total Working Days</h3>
                         <ul class="list-inline two-part">
                             
-                            <li class="text-right"><span id="totalWorkingDays">10</span></li>
+                            <li class="text-right"><span id="totalWorkingDays"><?php echo $wday; ?></span></li>
                         </ul>
                    
                 </div>
@@ -275,7 +285,7 @@
                         <h3 class="box-title text-white">Days Present</h3>
                         <ul class="list-inline two-part">
                             <li><i class="icon-clock text-white"></i></li>
-                            <li class="text-right"><span id="daysPresent" class="counter text-white">6</span></li>
+                            <li class="text-right"><span id="daysPresent" class="counter text-white"><?php echo $pday; ?></span></li>
                         </ul>
                     </div>
                 </div>
@@ -285,17 +295,7 @@
                         <h3 class="box-title text-white">Days(s) Late</h3>
                         <ul class="list-inline two-part">
                             <li><i class="icon-clock text-white"></i></li>
-                            <li class="text-right"><span id="daysLate" class="counter text-white">3</span></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="white-box bg-warning">
-                        <h3 class="box-title text-white">Half Day</h3>
-                        <ul class="list-inline two-part">
-                            <li><i class="icon-clock text-white"></i></li>
-                            <li class="text-right"><span id="halfDays" class="counter text-white">0</span></li>
+                            <li class="text-right"><span id="daysLate" class="counter text-white"><?php echo $lday; ?></span></li>
                         </ul>
                     </div>
                 </div>
@@ -305,7 +305,7 @@
                         <h3 class="box-title text-white">Days(s) Absent</h3>
                         <ul class="list-inline two-part">
                             <li><i class="icon-clock text-white"></i></li>
-                            <li class="text-right"><span id="absentDays" class="counter text-white">4</span></li>
+                            <li class="text-right"><span id="absentDays" class="counter text-white"><?php echo $aday; ?></span></li>
                         </ul>
                     </div>
                 </div>
@@ -314,7 +314,7 @@
                         <h3 class="box-title text-white"> Holidays</h3>
                         <ul class="list-inline two-part">
                             <li><i class="icon-clock text-white"></i></li>
-                            <li class="text-right"><span id="holidayDays" class="counter text-white">0</span></li>
+                            <li class="text-right"><span id="holidayDays" class="counter text-white"><?php echo $ocaday; ?></span></li>
                         </ul>
                     </div>
                 </div>
@@ -336,9 +336,31 @@
                         </thead>
                         <tbody id="attendanceData"><?php if(!empty($membersArr)
                 ) { foreach($membersArr as $row) {?>
+                    <?php
+                            $date=$row->attendancedate;
+                            $dateDay = date('l', strtotime($date));
+                            $day='<lable class="label label-success">'.$dateDay.'</label>';
+
+
+                                    if($row->attendance == '1'){
+                                        $attenstatus = $row->attndance = 'Present';
+                                        $attendance='<lable class="label label-success">'.$attenstatus.'</label>';
+
+                                    }
+                                    else if($row->attendance == '2'){
+                                        $attenstatus = $row->attndance = 'Late';
+                                        $attendance='<lable class="label label-success">'.$attenstatus.'</label>';
+                                    }
+                                    else if($row->attendance == '3'){
+                                        $attenstatus = $row->attendance = 'Absent';
+                                        $attendance='<lable class="label label-danger">'.$attenstatus.'</label>';
+                                    }
+                                ?>
+
                             <tr>
-                                <td><?php echo $row->attendancedate; ?></td>
-                                <td><?php echo $row->attendance; ?></td>
+                                <td><?php echo $row->attendancedate."<br/>".$day ?></td>
+                                
+                                <td><?php echo $attendance;?></td>
                                 
                             </tr>
                             <?php } }?>

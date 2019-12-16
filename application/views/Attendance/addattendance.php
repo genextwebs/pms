@@ -17,7 +17,8 @@
     <div class="col-md-4">
         <div class="form-group">
             <label class="control-label">Attendance Date</label>
-            <input type="text" class="form-control" name="attendancedate" id="startdate" value="<?php echo date('Y-m-d'); ?>" data-date-format='yyyy-mm-dd'>
+            <?php $date=date('Y-m-d');  $dateDay = date('l', strtotime($date)); ?>
+            <input type="text" class="form-control" name="attendancedate" id="startdate" value="<?php echo $date; ?>" data-date-format='yyyy-mm-dd'>
         </div>
     </div>
 
@@ -47,12 +48,11 @@
                                  <?php 
                                         $Tdate=date('Y-m-d'); 
                                         $todayData=$this->db->query("select * from tbl_attendance where attendancedate='".$Tdate."' and employee=".$id);
-                                      // echo $this->db->last_query()."<br/>";
-
-                                        $todayAttenData = $todayData->result_array(); 
-                                print_r($todayAttenData);
+                                             // echo $this->db->last_query()."<br/>";
+                                          $todayAttenData = $todayData->result_array(); 
+                                           // echo "<PRE>"; print_r($todayAttenData);
                                     
-                          ?>
+                                 ?>
                                 <td><?php  ?>
                                     <input type="radio" name="attendance" value="2" 
                                     <?php if(!empty($todayAttenData[0]['attendance']) == 2) 
@@ -62,10 +62,18 @@
                                     <input type="radio" name="attendance" value="3"  
                                     <?php if(!empty($todayAttenData[0]['attendance']) == 3) { echo 'checked'; } ?>>Absent<br>
                                 </td>
+                            </tr>
+                                <?php
+                                if($dateDay == 'Sunday')
+                                { ?>
+                                    <td><lable class="label label-danger"><?php echo "Today is sunday"; ?></lable></td>
+                               <?php  }
+                                else
+                                { ?>
                                 <td>
                                     <input type="button" id="attendanceform" onclick="insertAttendance('<?php echo $id ?>')" class="btn btn-success" name="btnsubmit" value="Save" > <i class="fa fa-check"></i>
                                 </td>
-                               
+                              <?php  } ?>
                             </tr>
                             
                         <?php } ?>
