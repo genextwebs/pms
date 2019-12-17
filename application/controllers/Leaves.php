@@ -107,7 +107,7 @@ class Leaves extends CI_Controller {
 			/** Filtering Start */
 			if(!empty(trim($_GET['sSearch']))){
 				$searchTerm = trim($_GET['sSearch']);
-				$sWhere.= ' AND (tbl_employee.employeename like "%'.$searchTerm.'%")';
+				$sWhere.= ' AND (tbl_employee.employeename like "%'.$searchTerm.'%" OR  tbl_leavetype.name like "%'.$searchTerm.'%")';
 			}
 			$startdate=!empty($_POST['startdate']) ? $_POST['startdate'] : '';
 			$enddate=!empty($_POST['enddate']) ? $_POST['enddate'] : '';
@@ -126,9 +126,14 @@ class Leaves extends CI_Controller {
 				$sWhere = " WHERE 1 ".$sWhere;
 			}
 		}
-		$query = "SELECT tbl_leaves.*,tbl_employee.employeename as empname from tbl_leaves INNER JOIN tbl_employee on tbl_leaves.empid = tbl_employee.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+		//$query = "SELECT tbl_leaves.*,tbl_employee.employeename as empname from tbl_leaves INNER JOIN tbl_employee on tbl_leaves.empid = tbl_employee.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+		$query = "SELECT tbl_leaves.*,tbl_employee.employeename as empname,tbl_leavetype.name as leavetype from tbl_leaves INNER JOIN tbl_employee on tbl_leaves.empid = tbl_employee.id INNER JOIN tbl_leavetype ON tbl_leavetype.id = tbl_leaves.leavetypeid".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+		//	echo $this->db->last_query();
 		$LeavesArr = $this->common_model->coreQueryObject($query);
-		$query = "SELECT date,tbl_employee.employeename as empname from tbl_leaves inner join tbl_employee on tbl_leaves.empid = tbl_employee.id".$sWhere;
+		$query = "SELECT tbl_leaves.*,tbl_employee.employeename as empname,tbl_leavetype.name as leavetype from tbl_leaves INNER JOIN tbl_employee on tbl_leaves.empid = tbl_employee.id INNER JOIN tbl_leavetype ON tbl_leavetype.id = tbl_leaves.leavetypeid".$sWhere;
+		//print_r($LeavesArr);die;
+		//echo $this->db->last_query();
+		/*$query = "SELECT date,tbl_employee.employeename as empname from tbl_leaves inner join tbl_employee on tbl_leaves.empid = tbl_employee.id".$sWhere;*/
 
 		$LeavesFilterArr = $this->common_model->coreQueryObject($query);
 		$iFilteredTotal = count($LeavesFilterArr);
@@ -141,7 +146,15 @@ class Leaves extends CI_Controller {
 		foreach($LeavesArr as $row) {
 			$rowid = $row->id;
 			$mystatus=$row->status;
-
+			//$leavetype=$row->leavetypeid;
+			/*if($row->leavetypeid=='1'){
+					$status=$row->status='Approved';
+					$showStatus = '<label class="label label-success">'.$status.'</label>';
+			}
+			else{
+					$status=$row->status='Pending';
+					$showStatus = '<label class="label label-danger">'.$status.'</label>';
+				}*/
 			if($row->status=='1'){
 					$status=$row->status='Approved';
 					$showStatus = '<label class="label label-success">'.$status.'</label>';
@@ -170,7 +183,7 @@ class Leaves extends CI_Controller {
 				$row->empname,
 				$row->date,
 				$showStatus,
-				$row->leavetypeid,
+				$row->leavetype,
 				$actionstring
 				);
 				$i++;
@@ -303,12 +316,13 @@ class Leaves extends CI_Controller {
 									</select>
 								</div>
 							</div>
+
 					</div>';
 
 
 		$string.=   '<div class="form-actions">
 						<button type="button" onclick="editdata(\''.base64_encode($id).'\')" name="btnupdate" id="save-form" class="btn btn-success"> <i class="fa fa-check"></i> Update</button>		
-						<input type="button" class="btn btn-default" value="Close">
+						<input type="button" onclick="closeleaves()" class="btn btn-default" value="Close">
 					</div>';
 		            
 		 echo json_encode($string);exit;
@@ -317,6 +331,7 @@ class Leaves extends CI_Controller {
 
 	//leaves list approveleaves
 	public function approveleaves(){
+
 		$id = base64_decode($this->uri->segment(3));
 		$whereArr = array('id'=>$id);
 		$updateArr= array('status'=>1);

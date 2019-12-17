@@ -338,8 +338,9 @@ $("form[name='creatleave']").validate({
 	}
 });
 
-//Leaves editleaves validation
-/*$("form[name='leave-edit']").validate({
+//Leaves editleaves validation testing 
+
+/*$("form[name='leave_edit_data']").validate({
 	rules:{
 		absence : "required",
 	},	
@@ -350,7 +351,6 @@ $("form[name='creatleave']").validate({
 	form.submit();
 	}
 });*/
-
 
 //addtemplate validation
 $("form[name='creatclient']").validate({
@@ -660,8 +660,8 @@ $("#save_leave").click(function() {
 			    dataType: 'json',
 			    data: "id="+id,
 			    success: function (data) {
-			   		$('#leave-edit').html('');
-				  	$('#leave-edit').append(data);
+			   		$('#leave_edit').html('');
+				  	$('#leave_edit').append(data);
 			    },
 			   error: function (xhr, ajaxOptions, thrownError) {
 			    }
@@ -715,14 +715,30 @@ $("#save_leave").click(function() {
 		});
     }
 	 
-    //edidt btn clicking
+    //edidt btn clicking Remaing ----
     function editdata(id){
-		var mem = $('#choose_mem').val();
+    	/*var mem = $('#choose_mem').val();
 		var ltype = $('#leave_type').val();
 		var date = $('#date').val();
 		var abs = $('#absence').val();
 		var sta = $('#status').val();
-		    $.ajax({
+
+		$("input[name^='absence']").each(function() {
+		var absent = $(this).val();
+		if(absent == ''){
+			absent = 1;
+		}}
+
+		var absence = 0;
+    	if(absence == ''){
+    		absence = 1;
+    	}
+    	if(absence == 1){
+		alert('Enter Reason for absence');
+		return false;
+		}
+*/
+		$.ajax({
       			url: base_url+"Leaves/updateleaves",
 				type: "POST",
 				dataType: "JSON",
@@ -733,7 +749,8 @@ $("#save_leave").click(function() {
 						window.location.reload();
 				},
 		    });
-	}
+		}
+	
 	
 
 	function archivetoproject(id){

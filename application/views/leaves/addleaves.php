@@ -1,12 +1,12 @@
 <nav aria-label="breadcrumb" class="breadcrumb-nav">
 	<div class="row">
 		<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-			<h4 class="page-title"><i class="icon-layers"></i> Projects</h4>
+			<h4 class="page-title"><i class="icon-layers"></i> Leaves</h4>
 		</div>
 		<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 			<ol class="breadcrumb">
 				<li><a href="<?php echo base_url().'Dashboard/';?>">Home</a></li>
-				<li><a href="<?php echo base_url().'Project/';?>">Projects</a></li>
+				<li><a href="<?php echo base_url().'Leaves/';?>">Leaves</a></li>
 				<li class="active">Add New</li>
 			</ol>
 		</div>
@@ -152,7 +152,8 @@
 								<div class="form-actions">
 									<button type="submit" name="btnsave" id="save-form" class="btn btn-success"> <i class="fa fa-check"></i> Save</button>
 									<!-- <i class="fa fa-check"><input type="submit" id="save-form" class="btn btn-success" name="btnsave" value="Save"> </i>  -->
-									<input type="reset" class="btn btn-default" value="Reset">
+									<button type="reset" name="btnreset" class="btn btn-default" 
+									>Reset</button>
 								</div>
 							</div>
 						</form>

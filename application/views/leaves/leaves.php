@@ -1,7 +1,7 @@
 <nav aria-label="breadcrumb" class="breadcrumb-nav">
 	<div class="row">
 		<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-			<h4 class="page-title"><i class="icon-speedometer"></i> Projects</h4>
+			<h4 class="page-title"><i class="icon-speedometer"></i>  Leaves</h4>
 		</div>
 		<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 			<ol class="breadcrumb">
@@ -34,10 +34,10 @@
 				<div class="row">
 					<div class="col-sm-12">
 						<div class="form-group custom-action">
-							<a href="<?php echo base_url().'Project/addproject'?>" class="btn btn-outline-success btn-sm"> <i class="fa fa-list" aria-hidden="true"></i>All Leaves </a>
-							
+							<a href="<?php echo base_url().'Leaves/'?>" class="btn btn-outline-success btn-sm"> <i class="fa fa-list" aria-hidden="true"></i>All Leaves </a>
+					<!-- 		
 							<a href=""  class="btn btn-outline-info btn-sm"><i class="fa fa-calendar" aria-hidden="true"></i> Calendar View </a>
-							
+							 -->
 							<!--<a href="javascript:;" class="btn btn-outline-danger btn-sm hidden-xs hidden-sm"><i class="fa fa-bar-chart" aria-hidden="true"></i> Gantt Chart</a>-->
 							
 							<a href="<?php echo base_url().'Leaves/addleaves';?>"  class="btn btn-outline-primary btn-sm"><i class="ti-plus" aria-hidden="true"></i>Assign Leave </a>
@@ -155,7 +155,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<div class="table-responsive" id="leave-edit">
+				<div class="table-responsive" id="leave_edit">
 
 				</div>
 			</div>
