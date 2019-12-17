@@ -602,6 +602,7 @@
 									  				</div>
 									  			</div>
 									  		</div>
+									  		
 					            			<div class="stats-box">
 					            				<h2>Tasks</h2>
 					            				<div class="row mb-2">
