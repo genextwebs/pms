@@ -914,3 +914,15 @@ $("#applybyMemberdd").click(function() {
 	});
 
 	});
+
+
+//datepicker validation 
+
+$(document).ready(function(){
+  	$("#atsdate").datepicker({
+			 dateFormat: 'Y-m-d',
+			  autoclose: true,
+        	orientation: "top",
+        	endDate: "today"
+	   });
+});

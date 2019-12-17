@@ -84,6 +84,7 @@ class Attendance extends CI_Controller{
 
 		if(!empty($_POST))
 		{
+			//echo "fggf";
 		$selSdate= $this->input->post('startdate');
 		$selEdate= $this->input->post('enddate');
 		$selMember= $this->input->post('member');
@@ -93,8 +94,9 @@ class Attendance extends CI_Controller{
 
 
 		$query="select * from tbl_attendance where employee=".$selMember." AND attendancedate>='".$selSdate."' AND attendancedate<='".$selEdate."'  ORDER BY attendancedate"; 
-			//AND duedate>="2019-07-11" AND duedate<="2020-01-01"  l
 		$data['membersArr'] = $this->common_model->coreQueryObject($query);
+
+
 	}
 
 		$pquery="select * from tbl_attendance where employee=".$selMember." AND attendancedate>='".$selSdate."' AND attendancedate<='".$selEdate."'and attendance=1" ; 
@@ -117,7 +119,7 @@ class Attendance extends CI_Controller{
 
 
 	
-	function dateDiff($selSdate, $selEdate) 
+	/*function dateDiff($selSdate, $selEdate) 
 	{
 	  $date1_ts = strtotime($selSdate);
 	  $date2_ts = strtotime($selEdate);
@@ -125,13 +127,55 @@ class Attendance extends CI_Controller{
 	  return round($diff / 86400);
 	}
 	$dateDiff= dateDiff($selSdate, $selEdate);
-	//echo $dateDiff;
-  
+	//echo $dateDiff;*/
+	function getDatesFromRange($start, $end){
+    $dates = array($start);
+    while(end($dates) < $end){
+        $dates[] = date('Y-m-d', strtotime(end($dates).' +1 day'));
+   		 }
+    return $dates;
+		}
+	$data['total']=getDatesFromRange($selSdate,$selEdate);
+	$totalday=count($data['total']);
+		$daysun=0;$daysat=0;
+	for($i=0;$i<=$totalday;$i++) {
+		$date=$data['total'][$i];
+		$dateDay = date('l', strtotime($date));
+		if($dateDay == 'Sunday')
+		{
+			$daysun=$daysun+1;
+		}
+			
+		elseif($dateDay == 'Saturday')
+		{
+			$daysat=$daysat+1;
+		}
+			
+		
+	}
+	
 		$oquery="select * from tbl_holiday where date>='".$selSdate."' AND date<='".$selEdate."'";
 		$data['oday'] = $this->common_model->coreQueryObject($oquery);
-		$data['ocaday']=count($data['oday']);
+		$data['ocday']=count($data['oday']);
 
-		$data['wday']=$dateDiff-$data['ocaday'];
+
+		$hquery="select * from tbl_holiday_settings";
+		$data['hday'] = $this->common_model->coreQueryObject($hquery);
+		if($data['hday'][0]->saturday == 1 &&  $data['hday'][0]->sunday == 1)
+		{
+			$data['holiday']=$data['ocday']+$daysat+$daysun;
+			$data['wday']=$totalday-$data['holiday'];
+		}
+		elseif($data['hday'][0]->saturday == 1)
+		{
+			$data['holiday']=$data['ocday']+$daysat;
+			$data['wday']=$totalday-$data['holiday'];
+		}
+		elseif($data['hday'][0]->sunday == 1)
+		{
+			$data['holiday']=$data['ocday']+$daysun;
+			$data['wday']=$totalday-$data['holiday'];
+		}
 		
 		$this->load->view('common/header');
 		$this->load->view('Attendance/attendance',$data);

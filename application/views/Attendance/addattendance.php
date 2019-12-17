@@ -18,7 +18,7 @@
         <div class="form-group">
             <label class="control-label">Attendance Date</label>
             <?php $date=date('Y-m-d');  $dateDay = date('l', strtotime($date)); ?>
-            <input type="text" class="form-control" name="attendancedate" id="startdate" value="<?php echo $date; ?>" data-date-format='yyyy-mm-dd'>
+            <input type="text" class="form-control" name="attendancedate" id="atsdate" value="<?php echo $date; ?>" data-date-format='yyyy-mm-dd'>
         </div>
     </div>
 

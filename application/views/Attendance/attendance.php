@@ -314,7 +314,7 @@
                         <h3 class="box-title text-white"> Holidays</h3>
                         <ul class="list-inline two-part">
                             <li><i class="icon-clock text-white"></i></li>
-                            <li class="text-right"><span id="holidayDays" class="counter text-white"><?php echo $ocaday; ?></span></li>
+                            <li class="text-right"><span id="holidayDays" class="counter text-white"><?php echo $holiday; ?></span></li>
                         </ul>
                     </div>
                 </div>
