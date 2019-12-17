@@ -952,9 +952,9 @@
             <!-- ends of contentwrap -->
 
             <!-- footer -->
-            <footer>
+           <!--  <footer>
                 <p>2019 &copy; PMS</p>
-            </footer>
+            </footer> -->
             <!-- ends of footer -->
             <!-- add task category -->
             <div class="modal fade" id="add-task-categ" tabindex="-1" role="dialog" aria-labelledby="add-task-categtitle" aria-hidden="true">
