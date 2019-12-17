@@ -12,6 +12,21 @@
         </div>
     </div>
 </nav>
+
+                                <?php
+                                    //warning 
+                                    $mess = $this->session->flashdata('message_name');
+                                    if(!empty($mess)){
+                                ?>
+                            <div class="col-md-12">
+                                <div class="submit-alerts">
+                                    <div class="alert alert-success" role="alert" style="display:block;">
+                                        <?php echo $mess; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php } ?>
+
 <form class="aj-form" method="post" action="<?php echo base_url().'Attendance/insertattendance' ?>" name="addattendance" >
 
     <div class="col-md-4">
@@ -62,7 +77,7 @@
                                     <input type="radio" name="attendance" value="3"  
                                     <?php if(!empty($todayAttenData[0]['attendance']) == 3) { echo 'checked'; } ?>>Absent<br>
                                 </td>
-                            </tr>
+                            
                                 <?php
                                 if($dateDay == 'Sunday')
                                 { ?>
@@ -71,7 +86,7 @@
                                 else
                                 { ?>
                                 <td>
-                                    <input type="button" id="attendanceform" onclick="insertAttendance('<?php echo $id ?>')" class="btn btn-success" name="btnsubmit" value="Save" > <i class="fa fa-check"></i>
+                                    <input type="button" id="attendanceform" onclick="insertAttendance('<?php echo $id ?>')" class="btn btn-success" name="btnsubmit" value="Save" > <i class="fa fa-check"></i><p id="suceessmsg"></p>
                                 </td>
                               <?php  } ?>
                             </tr>

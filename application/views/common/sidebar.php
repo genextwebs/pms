@@ -127,7 +127,7 @@ if($this->session->userdata('login')){
             </ul>
         </li>
         <li>
-            <a href="<?php echo base_url().'attendance '?>" class="nav-link-s">
+            <a href="<?php echo base_url().'Attendance'?>" class="nav-link-s">
                 <i class="icon-clock"></i>
                 <span>Attendance</span>
             </a>

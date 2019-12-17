@@ -845,13 +845,11 @@ $("select[name^='status']").each(function() {
 //insert attendance
 
 function insertAttendance(employeeid){
-	//alert('hj');
+	
  	var url = base_url+"Attendance/insertattendance";
- 	var attendancedate = $('#startdate').val();
-		//alert(attendancedate);
-		var attendance = $('input:radio[name=attendance]:checked').val();
-		//alert(attendance);
-      
+ 	var attendancedate = $('#atsdate').val();
+	var attendance = $('input:radio[name=attendance]:checked').val();
+	
        	 if(employeeid){
 			$.ajax({
 				url: url,
@@ -864,6 +862,9 @@ function insertAttendance(employeeid){
 				},
 				cache: false,
 				success: function(dataResult){
+					//alert("fg");
+					//$('#suceessmsg').html('');
+					$('#suceessmsg').append('<b>Attendance Saved Successfully</b>');
 			}
 		
 	});
@@ -926,3 +927,16 @@ $(document).ready(function(){
         	endDate: "today"
 	   });
 });
+
+//reset filter attendance
+
+$('#reset-filtersAttendance').click(function(){ 
+	jQuery('#employee').val('All');
+	jQuery('#department').val('All');
+	jQuery('#month').val('');
+	jQuery('#year').val('');
+	jQuery('#ticket-filters').after('<p style="color:#00B200"><b>Succesfully Reset Filters</b></p>');
+	var oTable = $('#clients').DataTable();
+	oTable.draw();
+});
+	

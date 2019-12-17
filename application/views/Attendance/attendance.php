@@ -20,32 +20,36 @@
                 <a href="<?php echo base_url().'Attendance/addattendance' ?>" class="btn btn-success btn-sm">Mark Attendance <i class="fa fa-plus" aria-hidden="true"></i></a>
             </div>
         </div>
+
         <?php 
         $controller = $this->uri->segment(1);
         $function = $this->uri->segment(2);
         ?>
 
+
         <div class="col-md-12">
-                        <section class="cview-detai seven-tab">
-                            <div class="stats-box">
-                                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                    <li class="nav-item">
-                                        <a class="nav-link <?php if($controller == 'Attendance' && ($function == 'summaary' || $function == '')) { echo 'active'; } ?>" id="overview-tab"  href="<?php echo base_url().'Attendance'?>" role="tab" aria-controls="overview" aria-selected="true">Summaary</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link <?php if($controller == 'Attendance' && $function == 'AttendanceByMember') { echo 'active'; } ?>" id="overview-tab"  href="<?php echo base_url().'Attendance/AttendanceByMember'?>" role="tab" aria-controls="overview" aria-selected="true">Attendance By Member</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="contetn-tab">
-                                <div id="" class="">
-                                    <div class="tab-content" id="myTabContent">
+            <section class="cview-detai seven-tab">
+                <div class="stats-box">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link <?php if($controller == 'Attendance' && ($function == 'index' || $function == '')) { echo 'active'; } ?>" id="overview-tab"  href="<?php echo base_url().'Attendance'?>" role="tab" aria-controls="overview" aria-selected="true">Summaary</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link <?php if($controller == 'Attendance' && $function == 'AttendanceByMember') { echo 'active'; } ?>" id="overview-tab"  href="<?php echo base_url().'Attendance/AttendanceByMember'?>" role="tab" aria-controls="overview" aria-selected="true">Attendance By Member</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="contetn-tab">
+                    <div id="" class="">
+                        <div class="tab-content" id="myTabContent">
                                         <!-- tab1 -->
-                                        <div class="tab-pane section-1 <?php if($controller == 'Attendance' && ($function == 'summaary' || $function == '')) { echo 'active show'; } ?>" id="overview" aria-labelledby="overview-tab" role="tabpanel">
-                                            <div class="row">
-                                                 <div class="col-md-12">
-                <div>
+                                <div class="tab-pane section-1 <?php if($controller == 'Attendance' && ($function == 'index' || $function == '')) { echo 'active show'; } ?>" id="overview" aria-labelledby="overview-tab" role="tabpanel">
+                               
                     <div class="row">
+                        <div class="col-md-12">
+                            <div class="white-box p-b-0 bg-inverse " >
+                                <div class="row">
                         <div class="col-md-3">
                             <label >Employee</label>
                                 <div class="form-group">
@@ -123,8 +127,12 @@
                 </div>
             </div>
         </div>
+    </div>
+           
+        
+            <div class="row">
              <div class="col-md-12" id="attendance-data">
-            <div class="white-box">
+            <div class="stats-box">
                 <div class="table-responsive tableFixHead">
                     <table class="table table-nowrap mb-0">
                         <thead>
@@ -158,7 +166,7 @@
                                 ?>
                                 <tr>
                                     <td>
-                                        <img src="https://demo.worksuite.biz/img/default-profile-2.png" alt="user" class="img-circle" width="30">
+                                        <img src="https://demo.worksuite.biz/img/default-profile-2.png" alt="user" class="img-circle" width="30"><br/>
                                         <?php echo $row->employeename; ?>
                                     </td>
                                     <?php 
@@ -206,69 +214,57 @@
                             <?php } ?>      
                         </tbody>
                     </table>
-
-
                 </div>
             </div>
         </div>
-                                                
     </div>
 </div>
+                                                
+   
                                         <!-- tab2 -->
     <div class="tab-pane section-1 <?php if($controller == 'Attendance' && $function == 'AttendanceByMember') { echo 'active show'; } ?>" id="overview" aria-labelledby="overview-tab" role="tabpanel">
-    <div class="row">
-        <div class="col-md-12">
-            <form method="POST" action="<?php echo base_url().'Attendance/AttendanceByMember'?>">
+       <form method="POST" action="<?php echo base_url().'Attendance/AttendanceByMember'?>">
            <div class="row">
-                            <div class="col-md-4">
-                                 <h5>Select Date Range</h5>
+                <div class="col-md-4">
+                    <h5>Select Date Range</h5>
                             <?php $year=date('Y');
                                 $month=date('m');
-                                //$month=date('d');
-                                $date=$year.'-'.$month.'-01';
-                                //echo $date;
-                              
-                                 
+                                $date=$year.'-'.$month.'-01';   
                             ?>
-
-                                <div class="input-group input-daterange">
+                        <div class="input-group input-daterange">
                                     <input type="text" class="start-date form-control br-0" id="startdate" name="startdate" data-date-format='yyyy-mm-dd' value="<?php if(!$this->session->userdata('selSdate')) { echo $date; } else { echo $this->session->userdata('selSdate'); }   ?>">
                                     <div class="input-group-prepend">
                                       <span class="input-group-text bg-info text-white">To</span>
                                     </div>
                                     <input type="text" class="end-date form-control br-0" id="enddate" name="enddate" data-date-format='yyyy-mm-dd' value="<?php if(!$this->session->userdata('selEdate')) { echo date('Y-m-d'); } else { echo $this->session->userdata('selEdate'); } ?>">
-                                </div>
                             </div>
-                            
-                            <div class="col-md-2">
-                                <h5>Employee Name</h5>
-                                 <div class="form-group">
-                                    <select id='member' name="member" class="select2 form-control">
-                                     
-                                        <?php
-                                       $selMember= $this->session->userdata('selMember');
-                                            foreach($employee as $row){
-                                                $sel = '';
-                                                if($row->id == $selMember){
-                                                    $sel = 'selected=selected';
-                                                }
-                                                echo '<option value="'.$row->id.'" '.$sel.'>'.$row->employeename.'</option>';
-                                            }
-                                        ?>
-                                    </select> 
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group m-t-10">
-                                    <label class="control-label col-12 mb-3">&nbsp;</label>
-                                    <button type="submit" id="applybyMember"
-                                     class="btn btn-success col-lg-4 co-md-5"><i class="fa fa-check"></i> Apply</button>
-                                </div>
-                            </div>
+                </div>
+                <div class="col-md-2">
+                    <h5>Employee Name</h5>
+                        <div class="form-group">
+                            <select id='member' name="member" class="select2 form-control">
+                                <?php 
+                                    $selMember= $this->session->userdata('selMember');
+                                    foreach($employee as $row){
+                                        $sel = '';
+                                        if($row->id == $selMember){
+                                            $sel = 'selected=selected';
+                                        }
+                                        echo '<option value="'.$row->id.'" '.$sel.'>'.$row->employeename.'</option>';
+                                    }
+                                ?>
+                            </select> 
                         </div>
-        </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group m-t-10">
+                        <label class="control-label col-12 mb-3">&nbsp;</label>
+                            <button type="submit" id="applybyMember" class="btn btn-success col-lg-4 co-md-5"><i class="fa fa-check"></i> Apply</button>
+                    </div>
+                </div>
+            </div>
+        </form>
 
-        <div class="col-md-12">
             <div class="row">
                 <div class="col-md-3">
                   
@@ -318,13 +314,12 @@
                         </ul>
                     </div>
                 </div>
-
             </div>
 
-        </div>
-
+            
+        <div class="row">
         <div class="col-md-12">
-            <div class="white-box">
+            <div class="stats-box">
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
@@ -366,35 +361,18 @@
                             <?php } }?>
                         </tbody>
                     </table>
-            
-            
-         
-        
-    
-                    
                 </div>
             </div>
-
-        </div>
-
-    </div>                                        
-</div>
-                                    
-                                       
-                                       
-                                      
-                        
-                                       
-                                        
-                                       
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-  
-   
+        </div> 
     </div>
+</div> 
+
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
 </div>
 
     

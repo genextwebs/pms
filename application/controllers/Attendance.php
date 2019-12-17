@@ -137,8 +137,9 @@ class Attendance extends CI_Controller{
 		}
 	$data['total']=getDatesFromRange($selSdate,$selEdate);
 	$totalday=count($data['total']);
+	//echo "<pre>";print_r($data['total']);
 		$daysun=0;$daysat=0;
-	for($i=0;$i<=$totalday;$i++) {
+	for($i=0;$i<=$totalday-1;$i++) {
 		$date=$data['total'][$i];
 		$dateDay = date('l', strtotime($date));
 		if($dateDay == 'Sunday')
@@ -176,7 +177,11 @@ class Attendance extends CI_Controller{
 			$data['holiday']=$data['ocday']+$daysun;
 			$data['wday']=$totalday-$data['holiday'];
 		}
-		
+		else
+		{
+			$data['holiday']=$data['ocday'];
+			$data['wday']=$totalday-$data['holiday'];
+		}
 		$this->load->view('common/header');
 		$this->load->view('Attendance/attendance',$data);
 		$this->load->view('common/footer');
@@ -208,7 +213,8 @@ class Attendance extends CI_Controller{
 			else{
 			$insertArr=array('attendancedate'=>$attendancedate,'employee'=> $employee,'attendance'=>$attendance);
 			$this->common_model->insertData('tbl_attendance',$insertArr);
-			//$this->session->set_flashdata('message_name', "Data Updated Succeessfully");
+			//echo $this->db->last_query();die;
+			
 		}
 		}
 	}

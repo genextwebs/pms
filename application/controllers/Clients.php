@@ -171,8 +171,9 @@ class Clients extends CI_Controller{
 			$clientsArr = $this->common_model->coreQueryObject($query);
 
 			$query =  "SELECT tbl_user.id,tbl_user.is_deleted,tbl_clients.clientname,tbl_clients.companyname,tbl_user.emailid,tbl_user.status,tbl_user.created_at from tbl_clients INNER JOIN tbl_user ON tbl_clients.user_id=tbl_user.id ".$sWhere;
+			//echo $this->db->last_query();
 			$clientsFilterArr = $this->common_model->coreQueryObject($query);
-			echo $this->db->last_query();die;
+			
 			$iFilteredTotal = count($clientsFilterArr);
 
 			$clientsAllArr = $this->common_model->getData('tbl_clients');
