@@ -1001,6 +1001,7 @@
 						                    <div class="form-group">
 						                        <label>Category Name</label>
 						                        <input type="text" name="category_name" id="category_name" class="form-control">
+						                        <p id="errormsg" class="text-danger"></p>
 						                    </div>
 						                </div>
 						            </div>

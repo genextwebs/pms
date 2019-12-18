@@ -892,24 +892,39 @@ if (isConfirm) {
 
 $('#save-task-category').click(function(){
 	var task_cat_name = $("input[name='category_name']").val();
-	var dataString = 'task_cat_name='+ task_cat_name;
-	$.ajax({
-		url: base_url+"project/insert_task_category",
-		type: 'POST',
-		dataType: 'JSON',
-		data: dataString,
-		success: function(data){
-			$('select[name="task-category"]').html('');
-			$('select[name="task-category"]').append(data.task_cat);
-			$('#taxCategory').append("<tr id='taskCat_"+data.lastTaskCatinsertid+"'><td>"+data.count+"</td><td>"+task_cat_name+"</td><td><input type='submit' class='btn btn-sm btn-danger btn-rounded delete-category' onclick='deletetaskCat(\'"+data.lastTaskCatinsertid+"\');' value='Remove'' id='deletetaskCat'></td></tr>");
-			$('#add-task-categ').modal('toggle');
-			$('#createTaskCategoryForm')[0].reset();  
-		},
-		error: function() {
-              alert('Something is wrong');
-        }
-	});
-
+	if(task_cat_name != ''){
+		$.ajax({
+			url: base_url+"project/checkTaskCategory",
+			type: 'POST',
+			dataType: 'html',
+			data:{task_cat_name:task_cat_name},
+			success: function(data) {
+				if(data == 0){
+					var dataString = 'task_cat_name='+ task_cat_name;
+					$.ajax({
+						url: base_url+"project/insert_task_category",
+						type: 'POST',
+						dataType: 'JSON',
+						data: dataString,
+						success: function(data){
+							$('select[name="task-category"]').html('');
+							$('select[name="task-category"]').append(data.task_cat);
+							$('#taxCategory').append("<tr id='taskCat_"+data.lastTaskCatinsertid+"'><td>"+data.count+"</td><td>"+task_cat_name+"</td><td><input type='submit' class='btn btn-sm btn-danger btn-rounded delete-category' onclick='deletetaskCat(\'"+data.lastTaskCatinsertid+"\');' value='Remove'' id='deletetaskCat'></td></tr>");
+							$('#add-task-categ').modal('toggle');
+							$('#createTaskCategoryForm')[0].reset();  
+						}
+					});		
+				}else{
+					jQuery('#errormsg').html('')
+					jQuery('#errormsg').html('<b>This task category already exists</b>');
+				}
+			}
+		});
+	}
+		else{
+			jQuery('#errormsg').html('')
+			jQuery('#errormsg').html('<b>Please enter taxk category name</b>');
+		}
 });
 
 //for show add new task

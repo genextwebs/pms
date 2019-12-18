@@ -871,7 +871,7 @@ class Project extends CI_Controller {
 			$task_cat = $this->input->post('task_cat_name');
 			$insArr = array('task_category_name' => $task_cat);
 			$lastTaskCatinsertid = $this->common_model->insertData('tbl_task_category',$insArr);
-			echo $lastTaskCatinsertid;die;
+			//echo $lastTaskCatinsertid;die;
 			$task_catArray = $this->common_model->getData('tbl_task_category');
 			$str = '';
 			foreach($task_catArray as $taskCat){
@@ -1027,6 +1027,18 @@ class Project extends CI_Controller {
 		);
 	  echo json_encode($output);
       exit();
+	}
+
+	public function checkTaskCategory(){
+		$status = 0;
+		if(!empty($_POST['task_cat_name'])){
+			$where = array('task_category_name' => $_POST['task_cat_name']);
+			$checkData = $this->common_model->getData('tbl_task_category',$where);
+			if(!empty($checkData)){
+				$status = 1;
+			}
+		}
+		echo $status;exit();
 	}	
 }	
 
