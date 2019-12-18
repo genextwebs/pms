@@ -844,11 +844,11 @@ $("select[name^='status']").each(function() {
 
 //insert attendance
 
-function insertAttendance(employeeid){
-	
+function insertAttendance(employeeid,counter){
+	//alert('fghh');
  	var url = base_url+"Attendance/insertattendance";
  	var attendancedate = $('#atsdate').val();
-	var attendance = $('input:radio[name=attendance]:checked').val();
+	var attendance = $('input:radio[name=attendance'+counter+']:checked').val();
 	
        	 if(employeeid){
 			$.ajax({
@@ -864,12 +864,15 @@ function insertAttendance(employeeid){
 				success: function(dataResult){
 					//alert("fg");
 					//$('#suceessmsg').html('');
-					$('#suceessmsg').append('<b>Attendance Saved Successfully</b>');
+					$('#suceessmsg'+counter).append('<b>Attendance Saved Successfully</b>');
+					$('#suceessmsg'+counter).fadeOut(5000);  
 			}
+
 		
 	});
 }
 }
+
 
 
 //attendance filter   apply-filter
@@ -940,3 +943,5 @@ $('#reset-filtersAttendance').click(function(){
 	oTable.draw();
 });
 	
+
+

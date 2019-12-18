@@ -27,7 +27,7 @@
                             </div>
                         <?php } ?>
 
-<form class="aj-form" method="post" action="<?php echo base_url().'Attendance/insertattendance' ?>" name="addattendance" >
+<form class="aj-form" method="post" action="<?php echo base_url().'Attendance/insertallattendance' ?>" name="addattendance" >
 
     <div class="col-md-4">
         <div class="form-group">
@@ -41,12 +41,12 @@
         <div class="table-responsive">
              <table class="table table-bordered" id="Attendance">
                  <thead>
-                    
                     <th>Employee</th>
                     <th>Attendance</th> 
-
-
-                 </thead>
+                    <th> <input type="submit" id="allattendance" class="btn btn-success" name="btnsubmit" value="SaveAll" > <i class="fa fa-check"></i></th>
+                </thead>
+                <?php $counter=1; ?>
+              
                 <tbody>
                    
                         <?php foreach($employee as $row) { 
@@ -54,10 +54,10 @@
                             ?>
                             
                             <tr>
-                             <?php   $counter=1; ?>
+                             
                                 <td> <?php  echo $row->employeename;  
                                 ?>
-                                    <input type="hidden" value="<?php echo $row->id; ?>" id="employee" >
+                                    <input type="hidden" value="<?php echo $row->id; ?>" id="employee" name="employee<?php echo $counter ?>" >
                                  </td>
                                  <?php 
                                         $Tdate=date('Y-m-d'); 
@@ -65,16 +65,15 @@
                                              // echo $this->db->last_query()."<br/>";
                                           $todayAttenData = $todayData->result_array(); 
                                            // echo "<PRE>"; print_r($todayAttenData);
+
+                                          /*if(!empty($todayAttenData[0]['attendance']) == 2) 
+                                    { echo 'checked'; }?>*/
                                     
                                  ?>
                                 <td><?php  ?>
-                                    <input type="radio" name="attendance<?php echo $counter ?>" value="2" 
-                                    <?php if(!empty($todayAttenData[0]['attendance']) == 2) 
-                                    { echo 'checked'; }?>>Late<br>
-                                    <input type="radio" name="attendace<?php echo $counter ?>" value="1"  
-                                    <?php if(!empty($todayAttenData[0]['attendance']) == 1){ echo 'checked'; } ?>>Present<br>
-                                    <input type="radio" name="attendance<?php echo $counter ?>" value="3"  
-                                    <?php if(!empty($todayAttenData[0]['attendance']) == 3) { echo 'checked'; } ?>>Absent<br>
+                                    <input type="radio" name="attendance<?php echo $counter ?>" value="2">Late<br>
+                                    <input type="radio" name="attendance<?php echo $counter ?>" value="1">Present<br>
+                                    <input type="radio" name="attendance<?php echo $counter ?>" value="3">Absent<br>
                                 </td>
                             
                                 <?php
@@ -85,11 +84,11 @@
                                 else
                                 { ?>
                                 <td>
-                                    <input type="button" id="attendanceform" onclick="insertAttendance('<?php echo $id ?>')" class="btn btn-success" name="btnsubmit" value="Save" > <i class="fa fa-check"></i><p id="suceessmsg"></p>
+                                    <input type="button" id="attendanceform" onclick="insertAttendance('<?php echo $id ?>','<?php echo $counter ?>')" class="btn btn-success" name="btnsubmit" value="Save" > <i class="fa fa-check"></i><p id="suceessmsg<?php echo $counter ?>"></p>
                                 </td>
                               <?php  } ?>
                             </tr>
-                             <?php $counter++; ?>
+                             <?php $counter=$counter+1; ?>
 
                         <?php } ?>
 

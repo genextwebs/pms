@@ -200,6 +200,7 @@ class Attendance extends CI_Controller{
 	}
 
 	public function insertattendance(){
+
 		if(!empty($_POST)){
 			$attendancedate = $_POST['attendancedate'];
 			$employee = $_POST['employee'];
@@ -213,6 +214,7 @@ class Attendance extends CI_Controller{
 			else{
 			$insertArr=array('attendancedate'=>$attendancedate,'employee'=> $employee,'attendance'=>$attendance);
 			$this->common_model->insertData('tbl_attendance',$insertArr);
+			
 			//echo $this->db->last_query();die;
 			
 		}
@@ -245,18 +247,42 @@ class Attendance extends CI_Controller{
 			
 		}
 	}
-	public function filterByMemberjk(){
-		//echo "ggf";die;
-		if(!empty($_POST)){
-			$startdate = $_POST['startdate'];
-			//echo $startdate;die;
-			$enddate = $_POST['enddate'];
-			$member = $_POST['member'];
+	
+
+	public function insertallattendance(){
+	
+		$attendance_array=array();
+		$employee_array=array();
+		$i=1;
+		if(!empty($_POST))
+		{
+			$attendancedate=$this->input->post('attendancedate');
+			while(isset($_POST['attendance'.$i]))
+			{
+				array_push($attendance_array,$_POST['attendance'.$i]);
+				array_push($employee_array,$_POST['employee'.$i]);
+				$i++;
+			}
+	
+			//print_r($employee_array);die;
+			$totalemployee=count($employee_array);
 			
-			$this->session->set_userdata('startdate',$startdate);
-			$this->session->set_userdata('enddate',$enddate);
-			$this->session->set_userdata('member',$member);
+			for($j=0;$j<=$totalemployee-1;$j++)
+			{
+				$insertArr=array('attendancedate'=>$attendancedate,'employee'=>$employee_array[$j],'attendance'=>$attendance_array[$j]);
+				$this->common_model->insertData('tbl_attendance',$insertArr);
+
+			}
+			$this->session->set_flashdata('message_name', "All Attendance Saved Succeessfully");
+				redirect('Attendance/addattendance');
+			//print_r($answer_array);
 			
+			
+    			
+      		
+
+      	
 		}
 	}
+	
 }
