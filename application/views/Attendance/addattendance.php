@@ -54,8 +54,7 @@
                             ?>
                             
                             <tr>
-                               
-                               
+                             <?php   $counter=1; ?>
                                 <td> <?php  echo $row->employeename;  
                                 ?>
                                     <input type="hidden" value="<?php echo $row->id; ?>" id="employee" >
@@ -69,12 +68,12 @@
                                     
                                  ?>
                                 <td><?php  ?>
-                                    <input type="radio" name="attendance" value="2" 
+                                    <input type="radio" name="attendance<?php echo $counter ?>" value="2" 
                                     <?php if(!empty($todayAttenData[0]['attendance']) == 2) 
                                     { echo 'checked'; }?>>Late<br>
-                                    <input type="radio" name="attendance" value="1"  
+                                    <input type="radio" name="attendace<?php echo $counter ?>" value="1"  
                                     <?php if(!empty($todayAttenData[0]['attendance']) == 1){ echo 'checked'; } ?>>Present<br>
-                                    <input type="radio" name="attendance" value="3"  
+                                    <input type="radio" name="attendance<?php echo $counter ?>" value="3"  
                                     <?php if(!empty($todayAttenData[0]['attendance']) == 3) { echo 'checked'; } ?>>Absent<br>
                                 </td>
                             
@@ -90,8 +89,11 @@
                                 </td>
                               <?php  } ?>
                             </tr>
-                            
+                             <?php $counter++; ?>
+
                         <?php } ?>
+
+
                     
                 </tbody>
              </table>
