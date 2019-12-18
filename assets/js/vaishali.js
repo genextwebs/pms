@@ -909,23 +909,41 @@ $('#save-task-category').click(function(){
 						success: function(data){
 							$('select[name="task-category"]').html('');
 							$('select[name="task-category"]').append(data.task_cat);
-							$('#taxCategory').append("<tr id='taskCat_"+data.lastTaskCatinsertid+"'><td>"+data.count+"</td><td>"+task_cat_name+"</td><td><input type='submit' class='btn btn-sm btn-danger btn-rounded delete-category' onclick='deletetaskCat(\'"+data.lastTaskCatinsertid+"\');' value='Remove'' id='deletetaskCat'></td></tr>");
+							$('#taxCategory').append("<tr id='taskCat_"+data.lastTaskCatinsertid+"'><td>"+data.count+"</td><td>"+task_cat_name+"</td><td><input type='submit' class='btn btn-sm btn-danger btn-rounded delete-category' onclick='deletetaskCat(\""+data.lastTaskCatinsertid+"\");' value='Remove' id='deletetaskCat'></td></tr>");
 							$('#add-task-categ').modal('toggle');
-							$('#createTaskCategoryForm')[0].reset();  
+							$('#createTaskCategoryForm')[0].reset();
 						}
 					});		
 				}else{
-					jQuery('#errormsg').html('')
+					jQuery('#errormsg').html('');
 					jQuery('#errormsg').html('<b>This task category already exists</b>');
 				}
 			}
 		});
 	}
 		else{
-			jQuery('#errormsg').html('')
+			jQuery('#errormsg').html('');
 			jQuery('#errormsg').html('<b>Please enter taxk category name</b>');
 		}
 });
+
+function deletetaskCat(id){
+	$.ajax({
+	    type: "POST",
+	    url: base_url+"project/deletetaskCat",
+	    cache: false,
+	    data: "id="+id,
+	    success: function(data){
+		   	if(data == 1){
+		   		jQuery('#taskCat_'+id).remove();
+		   	}
+		   	else{
+		   		$('#succmsg').html('');
+				$('#succmsg').html('<b>Something went to wrong</b>');
+		   	}
+		}
+	});
+}
 
 //for show add new task
 $('#show-new-task-panel').click(function(){

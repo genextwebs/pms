@@ -981,10 +981,10 @@
 					                    <?php
 					             			$i = 1; 
 					                    	foreach($taskCat as $catData) { ?>
-					                    		<tr>
+					                    		<tr id="taskCat_<?php echo $catData->id;?>">
 					                    			<td><?php echo $i; ?></td>
 					                    			<td><?php echo $catData->task_category_name?></td>
-					                    			<td><a href="javascript:;" data-cat-id="1" class="btn btn-sm btn-danger btn-rounded delete-category" id='deletetaskCat'>Remove</a></td>
+					                    			<td><a href="javascript:;" data-cat-id="1" class="btn btn-sm btn-danger btn-rounded delete-category" id='deletetaskCat' onclick="deletetaskCat('<?php echo $catData->id; ?>')">Remove</a></td>
 					                    		</tr>
 					                    <?php 
 					                    	$i++;

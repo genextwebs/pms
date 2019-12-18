@@ -889,9 +889,9 @@ class Project extends CI_Controller {
 	public function deletetaskCat(){
 		$status = 0;
 		if(!empty($_POST['id'])){
-			$id=$this->input->post('id');
-			$deleteArr=array('id'=>$id);
-			$this->common_model->deleteData('tbl_project_category',$deleteArr);
+			$id = $this->input->post('id');
+			$deleteArr = array('id' => $id);
+			$this->common_model->deleteData('tbl_task_category',$deleteArr);
 			$status = 1;
 		}
 		echo $status;exit();
