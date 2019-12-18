@@ -107,7 +107,7 @@ if($this->session->userdata('login')){
             </a>
         </li>
         <li>
-            <a href="#" class="nav-link-s">
+            <a href="<?php echo base_url().'ticket/'?>" class="nav-link-s">
                 <i class="ti-ticket"></i>
                 <span>Tickets</span>
             </a>

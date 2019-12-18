@@ -204,6 +204,7 @@
 								<div class="form-group">
 									<label>Leave Type</label>
 									<input type="text" name="leavename" id="leavename" class="form-control">
+									<p id="errormsg" class="text-danger"></p>
 								</div>
 							</div>
 						</div>

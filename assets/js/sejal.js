@@ -240,8 +240,69 @@ jQuery(document).ready(function() {
 			},
 		});
 	}
-});
 
+	else if(controllerName == 'ticket' && (functionName == 'index' || functionName == '')){
+	//alert('rfdg');
+		var oTable = jQuery('#tickets').DataTable({
+			'bRetrieve': true,
+			"bPaginate": true,
+			"bLengthChange": true,
+			"iDisplayLength": 10,
+			"bFilter": true,
+			"bSort": true,
+			"aaSorting": [],
+			"aLengthMenu": [[10, 25, 50, 100, 200, 500, 1000, 5000], [10, 25, 50, 100, 200, 500, 1000, 5000]],
+			"bInfo": true,
+			"bAutoWidth": false,
+			"bProcessing": true,
+			"aoColumns": [{ "sWidth": "40px", sClass: "text-left", "asSorting": [  ] }, 
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] },
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] } 
+		     ],
+			"bServerSide": true,
+			"fixedHeader": true,
+			"sAjaxSource": base_url+"Ticket/ticketlist",
+			"sServerMethod": "POST",
+			"sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
+			"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No Projects found<br/><br/></center>', "sZeroRecords": "<center><br/>No Projects found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ leads", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
+			"fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
+			
+		    	/*	aoData.push( { "name": "startdate", "value": $('#startdate').val() } );
+				aoData.push( { "name": "enddate", "value": $('#enddate').val() } );
+				aoData.push( { "name": "ename", "value": $('#empname').val() } );
+				*/
+				oSettings.jqXHR = $.ajax( {
+					"dataType": 'json',
+					"type": "POST",
+					"url": sSource,
+					"data": aoData,
+	                "timeout": 60000, //1000 - 1 sec - wait one minute before erroring out = 30000
+	                "success": function(json) {
+	                	var oTable = $('#tickets').dataTable();
+	                	var oLanguage = oTable.fnSettings().oLanguage;
+
+	                	if((json.estimateCount == true) && (json.iTotalDisplayRecords == json.limitCountQuery)){
+	                		oLanguage.sInfo = '<b>_START_ to _END_</b> of more than _TOTAL_ (<small>' + json.iTotalRecordsFormatted + ' Leaves</small>)';
+	                	}
+	                	else{
+	                		oLanguage.sInfo = '<b>_START_ to _END_</b> of <b>_TOTAL_</b> (<small>' + json.iTotalRecordsFormatted + ' Leaves </small>)';
+	                	}
+
+	                	fnCallback(json);
+	                }
+	            });
+			},
+
+			"fnRowCallback": function( nRow, aData, iDisplayIndex ){
+				return nRow;
+			},
+			"fnDrawCallback": function(oSettings, json) {
+
+			},
+		});
+	}
+
+});
 //PROJECT FILTER
 $('#clientname').change(function(){ //button filter event click
 	var oTable = $('#project').DataTable();
@@ -338,20 +399,6 @@ $("form[name='creatleave']").validate({
 	}
 });
 
-//Leaves editleaves validation testing 
-
-/*$("form[name='leave_edit_data']").validate({
-	rules:{
-		absence : "required",
-	},	
-	messages:{
-		absence : "Enter Reason",
-	},
-	submitHandler:function(form){
-	form.submit();
-	}
-});*/
-
 //addtemplate validation
 $("form[name='creatclient']").validate({
 	rules:{
@@ -384,9 +431,7 @@ $("#save-category").click(function(event) {
 							console.log(data.catdata);
 							$('select[name="project-category"]').html('');       
 							$('select[name="project-category"]').append(data.catdata);
-							 //  $("tbody").append("<tr><td>"+data.count+"</td><td>"+catname+"</td> <td><a href='javascript:;' class='btn btn-sm btn-danger btn-rounded delete-category' id='deletecat'>Remove</a></td></tr>");
 							$("tbody").append("<tr id='cate_"+data.lastinsertid+"'><td>"+data.count+"</td><td>"+catname+"</td> <td><input type='submit' class='btn btn-sm btn-danger btn-rounded delete-category' onclick='deletecat(\'"+data.lastinsertid+"\');' id='deletecat' value='Remove'></tr>");
-							//alert(data.lastinsertiddata.lastinsertid);
 						    $('#project-category1').removeClass('show');
 							$('.modal-backdrop').removeClass('show');
 							$('.modal-backdrop').find('div').remove();
@@ -410,46 +455,44 @@ $("#save-category").click(function(event) {
 });
 
 
-// for add leaves tefgdjhgkjdghbkjfhdckghfvngbkvjnc
+// for add leaves 
 $("#save_leave").click(function() {
-	//event.preventDefault();
 	var leavename = $("input[name='leavename']").val();
-	var dataString = 'name='+ leavename;
+	if(leavename != ''){
+
 		$.ajax({
-			url: base_url+"project/checkcategory",
-		    url: base_url+"leaves/insertleavestype",
-		    type: 'POST',
-		    dataType: 'Json',
-		    data: dataString,
-			success: function(data) {
-				//console.log(data.catdata);
-				/*console.log(data.taskdata);*/
-				$('select[name="leave_type"]').html('');       
-				$('select[name="leave_type"]').append(data.deleteleavetype);
-				//alert(dataString);
-				$("tbody").append("<tr id='leave"+data.leaveData+"'><td>"+data.count+"</td><td>"+leavename+"</td> <td><input type='submit' class='btn btn-sm btn-danger btn-rounded delete-category' onclick='deleteleavetype(\""+data.leaveData+"\");' id='deletesearchLeave' value='Remove'></td></tr>");
-				//$("tbody").append("<tr><td>"+data.count+"</td><td>"+leavename+"</td> <td><a href='javascript:;' class='btn btn-sm btn-danger btn-rounded delete-category' id='deletecat'>Remove</a></td></tr>");
-				//alert(dataString);
-				$('#leave_type1').modal('toggle');
-				$('#leave')[0].reset();
-				/*$("tbody").append("<tr id='cate_"+data.lastinsertid+"'><td>"+data.count+"</td><td>"+catname+"</td> <td><input type='submit' class='btn btn-sm btn-danger btn-rounded delete-category' onclick='deletecat(\'"+data.lastinsertid+"\');' id='deletecat' value='Remove'></tr>");*/
-				/*$('#project-category1').removeClass('show');
-				$('.modal-backdrop').removeClass('show');
-				$('.modal-backdrop').find('div').remove();
-				$('body').removeAttr("style");
-				$('body').removeClass("modal-open");
-				$('#category')[0].reset();
-				$('#succmsg').html('');
-				$('#succmsg').html('<b>Successfully category added</b>');*/
-				//window.location.reload();
-		   },
-		   error: function() {
-              alert('Something is wrong');
-           }
+				url: base_url+"leaves/checkleaves",
+			    type: 'POST',
+			    dataType: 'Json',
+			    data: {leave:leavename},
+				success: function(data){
+					if(data == 0){
+						var dataString = 'name='+ leavename;
+							$.ajax({
+						   		url: base_url+"leaves/insertleavestype",
+						  		type: 'POST',
+						    	dataType: 'json',
+						  		data: dataString,
+								success: function(data){
+										$('select[name="leave_type"]').html('');       
+										$('select[name="leave_type"]').append(data.deleteleavetype);
+										$("tbody").append("<tr id='leave"+data.leaveData+"'><td>"+data.count+"</td><td>"+leavename+"</td> <td><input type='submit' class='btn btn-sm btn-danger btn-rounded delete-category' onclick='deleteleavetype(\""+data.leaveData+"\");' id='deletesearchLeave' value='Remove'></td></tr>");
+										$('#leave_type1').modal('toggle');
+										$('#leave')[0].reset();
+		    			
+								 }
+							});
+					}else{
+						jQuery('#errormsg').html('')
+						jQuery('#errormsg').html('<b>This Leaves already exists</b>');
+					}	
+				}
 		});
-	});
-
-
+	}else{
+			jQuery('#errormsg').html('')
+			jQuery('#errormsg').html('<b>Please enter Leaves name</b>');
+	}
+});
 
 // addproject=> delete category 
 	function deleteleavetype(id)
@@ -717,27 +760,26 @@ $("#save_leave").click(function() {
 	 
     //edidt btn clicking Remaing ----
     function editdata(id){
-    	/*var mem = $('#choose_mem').val();
+    	var mem = $('#choose_mem').val();
 		var ltype = $('#leave_type').val();
 		var date = $('#date').val();
-		var abs = $('#absence').val();
+        var abs = $('#absence').val();
 		var sta = $('#status').val();
-
-		$("input[name^='absence']").each(function() {
+		///var abs=0;
+	//alert(abs);
+	/*	$("input[id='absence']").each(function() {
 		var absent = $(this).val();
-		if(absent == ''){
+		if(absent.trim()  == ''){
 			absent = 1;
-		}}
-
-		var absence = 0;
-    	if(absence == ''){
-    		absence = 1;
-    	}
-    	if(absence == 1){
+		}
+	});
+*/
+    	if(abs.trim() == ''){
 		alert('Enter Reason for absence');
 		return false;
 		}
-*/
+		else{
+
 		$.ajax({
       			url: base_url+"Leaves/updateleaves",
 				type: "POST",
@@ -750,7 +792,7 @@ $("#save_leave").click(function() {
 				},
 		    });
 		}
-	
+	}
 	
 
 	function archivetoproject(id){
