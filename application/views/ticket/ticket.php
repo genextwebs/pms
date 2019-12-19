@@ -141,9 +141,9 @@
 							<tr role="row">
 								 <th>Id</th>
 								 <th>Ticket Subject</th>
-								<!--  <th>Requester Name</th>
-								 <th>Requested On</th> -->
-								 <!-- <th>Others</th> -->
+								<th>Requester Name</th>
+								 <th>Requested On</th> 
+								 <th>Others</th> 
 								 <th>Action</th>
 							</tr>
 						</thead>
@@ -153,3 +153,34 @@
 			
 <!-- ends of contentwrap -->
 
+<!--For +add type-->
+
+<div class="modal fade project-category" id="type1" tabindex="-1" role="dialog" aria-labelledby="project-category" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content br-0">
+			<div class="modal-header">
+				<h4 class="modal-title"> Project Category</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+					</button>
+			</div>
+			<div class="modal-body">
+				<form class="" id="ticket" name="ticket" method="post" onsubmit="return checkName();">
+					<div class="form-body">
+						<div class="row">
+							<div class="col-md-12 ">
+								<div class="form-group">
+									<label>Ticket Type</label>
+									<input type="text" name="category_name" id="ticket_type" class="form-control">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-actions">
+						<input type="submit" id="save_ticket" class="btn btn-success" value="Save"> <i class="fa fa-check"></i>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

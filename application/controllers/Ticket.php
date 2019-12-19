@@ -29,8 +29,15 @@ class Ticket extends CI_Controller {
 			$t_subject = $this->input->post('ticket_subject'); 
 			$t_editor  = $this->input->post('editor1');
 			$t_image   = $this->input->post('ticket_Image');
-			$whereArr  = array('ticketsubject'=>$t_subject,'ticketdescription'=>$t_editor,
-				          'ticketimage'=>$t_image);
+			$t_requestname = $this->input->post('requestername');
+			$t_agentname = $this->input->post('agentname');
+			$t_question = $this->input->post('question');
+			$t_priority = $this->input->post('priority');
+			$t_channel = $this->input->post('channel');
+			$t_tags =  $this->input->post('tags');
+			
+			    
+			$whereArr  = array('ticketsubject'=>$t_subject,'ticketdescription'=>$t_editor, 'ticketimage'=>$t_image,'requestername'=>$t_requestname,'agent'=>$t_agentname,'type'=>$t_question,'priority'=>$t_priority,'channelname'=>$t_channel,'tags'=>$t_tags);
 			$query  =  $this->common_model->insertData('tbl_ticket',$whereArr);
 			$this->session->set_flashdata('message_name','Inserted Successfully........');
 			redirect('ticket/index');
@@ -44,7 +51,7 @@ class Ticket extends CI_Controller {
 			$defaultOrderClause = "";
 			$sWhere = "";
 			$sOrder = '';
-			$aColumns = array( 'id', 'ticketsubject', 'ticketdescription', 'ticketimage');
+			$aColumns = array( 'id', 'ticketsubject', 'ticketdescription', 'ticketimage', 'requestername' ,'agent' , 'type' , 'priority' ,'channelname' , 'tags');
 			$totalColumns = count($aColumns);
 
 			/** Paging Start **/
@@ -119,10 +126,11 @@ class Ticket extends CI_Controller {
 			}*/
 		}
 		
-		$query = "SELECT ticketsubject from tbl_ticket".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
-		//echo $this->db->last_query();
+		$query = "SELECT id,ticketsubject,requestername,created_at,agent,priority,tags FROM tbl_ticket".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+		//echo $query;die;
 		$TicketArr = $this->common_model->coreQueryObject($query);
-		$query = "SELECT ticketsubject from tbl_ticket".$sWhere;
+
+		$query = "SELECT * from tbl_ticket".$sWhere;
 		//echo $this->db->last_query();
 		$TicketFilterArr = $this->common_model->coreQueryObject($query);
 		$iFilteredTotal = count($TicketFilterArr);
@@ -133,32 +141,36 @@ class Ticket extends CI_Controller {
 		$datarow = array();
 		$i = 1;
 		foreach($TicketArr as $row) {
-		//	$rowid = $row->id;
-			$actionstring= /*'<div class="dropdown action m-r-10">
+			$rowid = $row->id;
+			//echo($rowid);die;
+			$actionstring = '<div class="dropdown action m-r-10">
 				                <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
 				                		<div class="dropdown-menu">
-						                    <a href=""> Edit</a>
-						                    <a href=""> Delete</a>
-						                </div>
-							</div>';*/
-							'<div class="dropdown action m-r-10">
-				                <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
-				                		<div class="dropdown-menu">
-						                   
-						                    <a  class="dropdown-item" href=""><i class="fa fa-edit"></i> Edit</a>
+						                    <a  class="dropdown-item" href="'.base_url().'ticket/editticket/'.base64_encode($row->id).'";><i class="fa fa-edit"></i> Edit</a>
 
-						                    <a  class="dropdown-item" href="javascript:void()"><i class="fa fa-trash "></i> Delete</a>
+						                    <a  href="javascript:void();" onclick="deleteticket(\''.base64_encode($row->id).'\');" class="dropdown-item" href="javascript:void()"><i class="fa fa-trash" ></i> Delete</a>
 						                    
 				               			 </div>
 							</div>';
+//echo($row->created_at);die;
 
 			$datarow[] = array(
 				$id = $i,
 				$row->ticketsubject,
-				/*
-				$row->date,
-				$showStatus,
-				$row->leavetype,*/
+				$row->requestername,
+				$row->created_at,
+			   
+			    '
+			    	<b>Agent:</b>'.$row->agent.
+			    	'<br/> <b>Staus:</b> <label class="label label-success">'/* $row->status*/.'</label><br/>
+			        <label><b>Priority:</b></label>'.$row->priority,
+				/*$row->ticketimage,
+				$row->requestername,
+				$row->agent,
+				$row->type,
+				$row->priority,
+				$row->channelname,
+				$row->tags,*/
 				$actionstring
 				);
 				$i++;
@@ -174,4 +186,78 @@ class Ticket extends CI_Controller {
 			echo json_encode($output);
 			exit();
 	}
+
+	public function editticket(){
+		$id=base64_decode($this->uri->segment(3));
+		$whereArr=array('id'=>$id);
+		$data['editticketId']=$id;
+	    $data['ticketinfo']=$this->common_model->getData('tbl_ticket',$whereArr);
+		$this->load->view('common/header');
+		$this->load->view('ticket/editticket',$data);
+		$this->load->view('common/footer');
+
+	    if(!empty($_POST))
+		{
+			$t_subject = $this->input->post('ticket_subject'); 
+			$t_editor  = $this->input->post('editor1');
+			$t_image   = $this->input->post('ticket_Image');
+			$t_requestname = $this->input->post('requestername');
+			$t_agentname = $this->input->post('agentname');
+			$t_question = $this->input->post('question');
+			$t_priority = $this->input->post('priority');
+			$t_channel = $this->input->post('channel');
+			$t_tags =  $this->input->post('tags');
+
+			$updateArr  = array('ticketsubject'=>$t_subject,'ticketdescription'=>$t_editor, 'ticketimage'=>$t_image,'requestername'=>$t_requestname,'agent'=>$t_agentname,'type'=>$t_question,'priority'=>$t_priority,'channelname'=>$t_channel,'tags'=>$t_tags);
+
+			$this->common_model->updateData('tbl_ticket',$updateArr,$whereArr);
+			$this->session->set_flashdata('message_name', 'Ticket Updated sucessfully....');
+			redirect('ticket/index');
+		}
+	}
+
+	public function deleteticket(){
+
+		$id = base64_decode($_POST['id']);
+		$whereArr = array('id' => $id);
+		$this->common_model->deleteData('tbl_ticket',$whereArr);
+		$this->session->set_flashdata('message','Delete Succesfully....');
+		redirect('ticket/index');
+	}
+
+	public function insert_t_type(){
+		if(!empty($_POST)){
+			$tname = $this->input->post('name');
+			$insArr = array('name'=>$tname);
+			$typeid=$this->common_model->insertData('tbl_ticket',$insArr);
+			echo $this->db->last_query();die;
+			//$catArray = $this->common_model->getData('tbl_ticket');
+			$str = '';
+			foreach($catArray as $row){
+				$str.='<option value="'.$row->id.'">'.$row->name.'</option>'; 
+			}
+			$totaldata = count($catArray);
+			$catArr = array();
+			$catArr['count'] = $totaldata;
+			$catArr['ticketdata'] = $str;
+			$catArr['typeid']= $typeid;
+			//print_r($catArr);die;
+			echo json_encode($catArr);exit; 
+		}
+	}
+
+	public function check_t_type(){
+		$status = 0;
+		if(!empty($_POST['ticket'])){
+			$where = array('name'=>$_POST['ticket']);
+			$checkData = $this->common_model->getData('tbl_ticket',$where);
+			if(!empty($checkData)){
+				$status = 1;
+			}
+		}
+		echo $status;exit();
+	}
+
+
+	
 }

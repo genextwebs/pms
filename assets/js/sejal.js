@@ -257,7 +257,11 @@ jQuery(document).ready(function() {
 			"bProcessing": true,
 			"aoColumns": [{ "sWidth": "40px", sClass: "text-left", "asSorting": [  ] }, 
 			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] },
-			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] } 
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] },
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+
 		     ],
 			"bServerSide": true,
 			"fixedHeader": true,
@@ -428,8 +432,8 @@ $("#save-category").click(function(event) {
 					    dataType: 'json',
 					    data: dataString,
 						success: function(data) {
-							console.log(data.catdata);
-							$('select[name="project-category"]').html('');       
+							console.log(data.ticketdata);
+							/*$('select[name="project-category"]').html('');       
 							$('select[name="project-category"]').append(data.catdata);
 							$("tbody").append("<tr id='cate_"+data.lastinsertid+"'><td>"+data.count+"</td><td>"+catname+"</td> <td><input type='submit' class='btn btn-sm btn-danger btn-rounded delete-category' onclick='deletecat(\'"+data.lastinsertid+"\');' id='deletecat' value='Remove'></tr>");
 						    $('#project-category1').removeClass('show');
@@ -437,7 +441,7 @@ $("#save-category").click(function(event) {
 							$('.modal-backdrop').find('div').remove();
 							$('body').removeAttr("style");
 							$('body').removeClass("modal-open");
-							$('#category')[0].reset();
+							$('#category')[0].reset();*/
 							$('#succmsg').html('');
 							$('#succmsg').html('<b>Successfully category added</b>');
 					   }
@@ -494,6 +498,53 @@ $("#save_leave").click(function() {
 	}
 });
 
+// add ticket type
+$("#save_ticket").click(function(event) {
+	var t_name = $("input[name='ticket_type']").val();
+//	alert(tname);
+	if(t_name!=""){
+		alert(t_name);
+		$.ajax({
+			url: base_url+"ticket/check_t_type",
+			type: 'POST',
+			dataType: 'html',
+			data:{ticket:t_name},
+			success: function(data) {
+				//alert(t_name);
+				if(data==0){
+					var dataString = 'name='+ t_name;
+					jQuery('#errormsg').html('');
+					$.ajax({
+					    url: base_url+"ticket/insert_t_type",
+					    type: 'POST',
+					    dataType: 'json',
+					    data: dataString,
+						success: function(data) {
+							console.log(data.ticketdata);
+						    $('select[name="question"]').html('');       
+							$('select[name="question"]').append(data.ticketdata);
+							$("tbody").append("<tr id='cate_"+data.typeid+"'><td>"+data.count+"</td><td>"+catname+"</td> <td><input type='submit' class='btn btn-sm btn-danger btn-rounded delete-category' onclick='deletecat(\'"+data.typeid+"\');' id='deletecat' value='Remove'></tr>");
+						   /* $('#project-category1').removeClass('show');
+							$('.modal-backdrop').removeClass('show');
+							$('.modal-backdrop').find('div').remove();
+							$('body').removeAttr("style");
+							$('body').removeClass("modal-open");
+							$('#category')[0].reset();*/
+							$('#succmsg').html('');
+							$('#succmsg').html('<b>Successfully category added</b>');
+					   }
+					});
+				}else{
+					jQuery('#errormsg').html('')
+					jQuery('#errormsg').html('<b>This category already exists</b>');
+				}
+			}
+		});
+	}else{
+		jQuery('#errormsg').html('')
+		jQuery('#errormsg').html('<b>Please enter category name</b>');
+	}
+});
 // addproject=> delete category 
 	function deleteleavetype(id)
 	{
@@ -527,8 +578,7 @@ $("#save_leave").click(function() {
 
 
 	// addleaves=> addleavestype => deleteleaves 
-	function deletecat(id)
-	{
+	function deletecat(id){
 		$.ajax({
 		    type: "POST",
 		    url: base_url+"project/deletecat",
@@ -553,6 +603,7 @@ $("#save_leave").click(function() {
 		});
 	}
 
+   
 	function searchleaves(id)
 	{
 		$.ajax({
@@ -622,9 +673,44 @@ $("#save_leave").click(function() {
 				   });
 			   }
 			});
-		}
+	}
 	
-	//delete template
+	// deleteticket
+   function deleteticket(id){
+		var url = base_url+"ticket/deleteticket";
+		swal({
+		 title: "Are you sure?",
+		 text: "Do you want to delete this Ticket?",
+		 type: "warning",
+		 showCancelButton: true,
+		 confirmButtonColor: "#DD6B55",
+		 confirmButtonText: "Yes, delete it!",
+		 closeOnConfirm: false
+		},
+			function(isConfirm){
+			if (isConfirm) {
+				   $.ajax({
+					   url: url,
+					   type: "POST",
+					   dataType: "JSON",
+					   data: {id:id},
+					  dataType: "html",
+					  
+					   success: function (data) {
+						   swal("Done!", "It was succesfully deleted!", "success");
+						   $('#tickets').DataTable().ajax.reload();
+					   },
+					   error: function (xhr, ajaxOptions, thrownError) {
+						   swal("Error deleting!", "Please try again", "error");
+					   }
+				   });
+			   }
+			});
+		}
+
+
+
+	//deletetemplate
 	function deletetemplate(id){
 		var url = base_url+"project/deletetemplate";
 		swal({

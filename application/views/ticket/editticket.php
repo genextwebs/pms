@@ -14,7 +14,7 @@
 </nav>
 <!-- contetn-wrap -->
 <div class="content-in">
-	<form id="addticket" class="aj-form" method="post" action="<?php echo base_url().'ticket/insertticket'; ?>">  
+	<form id="editticket" class="aj-form" method="post" action="<?php echo base_url().'ticket/editticket/'.base64_encode($editticketId); ?>">  
 		<?php
 	        $mess = $this->session->flashdata('message_name');
 	        if(!empty($mess)){
@@ -61,7 +61,7 @@
                 						<div class="col-md-12">
                 							<div class="form-group">
                 								<label class="control-label">Ticket Subject <span class="text-danger">*</span></label>
-                								<input id="ticket_subject" class="form-control" type="text" name="ticket_subject" value="">
+                								<input id="ticket_subject" class="form-control" type="text" name="ticket_subject" value="<?php echo !empty($ticketinfo[0]->ticketsubject) ? $ticketinfo[0]->ticketsubject : '' ?>">
                 							</div>
                 						</div>
                 					</div>
@@ -69,7 +69,7 @@
                                 		<div class="col-md-12">
                                             <div class="form-group">
                                                 <label class="control-label">Ticket Description <span class="text-danger">*</span></label>
-                                                <textarea name="editor1" id="editor1"></textarea>
+                                                <textarea name="editor1" id="editor1" ><?php echo !empty($ticketinfo[0]->ticketdescription) ? $ticketinfo[0]->ticketdescription : '' ?>></textarea>
                                             </div>
                                         </div>
                         			</div>
@@ -142,7 +142,7 @@
 	            					</div>
 	            					<div class="col-md-6">
 	            						<div class="form-group type">
-	            							<label>Type <a class="btn btn-sm btn-outline-info  ml-1" href="javascript:;" data-toggle="modal" data-target="#type1"><i class="fa fa-plus"></i> Add Type</a></label>
+	            							<label>Type <a class="btn btn-sm btn-outline-info  ml-1" href="#"><i class="fa fa-plus"></i> Add Type</a></label>
 	            							<select class="custom-select br-0" name="question" id="question">
 	            								<option selected>Question</option>
 	            								<option>Problem</option>
@@ -174,7 +174,7 @@
 	            					<div class="col-md-12">
 	            						<div class="form-group">
 	            							<label class="control-label">Tags</label>
-	            							<input type="text" id="tags" class="form-control" name="tags">
+	            							<input type="text" id="tags" class="form-control" name="tags" value="<?php echo !empty($ticketinfo[0]->tags) ? $ticketinfo[0]->tags : '' ?>">
 	            						</div>
 	            					</div>
 	            				</div>
@@ -187,35 +187,3 @@
     </form>
 </div>	
 <!-- ends of contentwrap -->
-
-<!--For +add type-->
-
-<div class="modal fade project-category" id="type1" tabindex="-1" role="dialog" aria-labelledby="project-category" aria-hidden="true">
-	<div class="modal-dialog modal-lg" role="document">
-		<div class="modal-content br-0">
-			<div class="modal-header">
-				<h4 class="modal-title"> Project Category</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">×</span>
-					</button>
-			</div>
-			<div class="modal-body">
-				<form class="" id="ticket" name="ticket" method="post" onsubmit="return checkName();">
-					<div class="form-body">
-						<div class="row">
-							<div class="col-md-12 ">
-								<div class="form-group">
-									<label>Ticket Type</label>
-									<input type="text" name="ticket_type" id="ticket_type" class="form-control">
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="form-actions">
-						<input type="submit" id="save_ticket" class="btn btn-success" value="Save"> <i class="fa fa-check"></i>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-</div>
