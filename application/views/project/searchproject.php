@@ -646,6 +646,123 @@
 												</div>
 					            			</div>
 									  	</div>
+									  	<!-- upadte task -->
+									  	<div class="tab-pane <?php if($controller == 'Project' && $function == 'updateTask') { echo "active show";}?>" id="tasks" role="tabpanel" aria-labelledby="tasks-tab">
+									  		<div class="row mb-2" style="display:none;" id="update_task_show">
+									  			<div id="new-tadk-panel" class="col-md-12">
+									  				<div class="card">
+									  					<div class="card-header">
+									  						<i class="ti-plus"></i> New Task 
+									  						<div class="card-action">
+	                                                            <a href="javascript:;" id="hide-new-task-panel"><i class="ti-close"></i></a>
+	                                                        </div>
+									  					</div>
+									  					<div class="card-wrapper collapse show">
+													        <div class="card-body">
+													           	<form method="post" action="<?php echo base_url().'project/insertTask'?>" name="task_category">
+													           		<div class="form-body">
+													           			<div class="row">
+													           				<div class="col-md-12">
+									                							<div class="form-group">
+										                							<label class="control-label">Title</label>
+										                							<input type="text" class="form-control" id="title-task" name="title_task">
+										                						</div>
+									                						</div>
+									                						<div class="col-md-12">
+									                							<div class="form-group">
+									                							 	<label class="control-label">Description</label>
+									                							 	<textarea name="editor1"></textarea>
+									                							</div>
+									                						</div>
+									                						<div class="col-md-12">
+									                							<div class="form-group">
+									                								<label class="control-label">start Date</label>
+									                								<input id="start_date" type="text" class="form-control" name="startdate">
+									                							</div>
+									                						</div>
+									                						<div class="col-md-12">
+									                							<div class="form-group">
+									                								<label class="control-label">Due Date</label>
+									                								<input id="deadline" type="text" class="form-control" name="due_date">
+									                							</div>
+									                						</div>
+
+									                						<div class="col-md-12">
+									                							<div class="form-group sm-box">
+									                								<label class="control-label">Assigned To</label>
+									                							 	<select class="custom-select br-0" name="assignemp">
+									                							 		>
+										                								<?php foreach($employee as $row){
+												            							?>
+																	            		<option value="<?php echo $row->id?>"><?php echo $row->employeename;?></option>
+																	            		<?php
+																	            		}
+																	            		?> 
+										                							</select>
+									                							</div>
+									                						</div>
+									                						
+									                						<div class="col-md-12">
+										                						<div class="form-group">
+										                							<label class="control-label">
+										                								Task Category
+										                								<a href="javascript:void(0);" class="btn btn-sm btn-outline-success ml-1" data-original-title="Edit" data-toggle="modal" data-target="#add-task-categ">
+																			         		<i class="fa fa-plus"></i> Add Task Category</i>
+																			         	</a>
+										                							</label>
+										                							<select class="custom-select br-0" id="task-category" name="task-category">
+										                							<?php
+										                								foreach($taskCat as $catData){
+										                							?>
+										                								<option value="<?php echo $catData->id; ?>"><?php echo $catData->task_category_name; ?></option>
+										                							<?php
+										                								}
+										                							?>	
+										                							</select>
+										                						</div>
+										                					</div>
+										                					<div class="col-md-12">
+										                						<div class="form-group">
+										                							<label class="control-label">Priority</label>
+										                							<div class="custom-control custom-radio radio-danger">
+																					    <input type="radio" class="custom-control-input" id="high-rad" name="radio-stacked" value="0"required="">
+																					    <label class="custom-control-label text-danger" for="high-rad">High</label>
+																					</div>
+																					<div class="custom-control custom-radio radio-warning">
+																					    <input type="radio" class="custom-control-input" id="medium-rad" name="radio-stacked" value="1"required="">
+																					    <label class="custom-control-label text-warning" for="medium-rad">Medium</label>
+																					</div>
+																					<div class="custom-control custom-radio radio-success">
+																					    <input type="radio" class="custom-control-input" id="low-rad" name="radio-stacked" value="2"required="">
+																					    <label class="custom-control-label text-success" for="low-rad">Low</label>
+																					</div>
+																					<input type="hidden" value="<?php echo $id; ?>" name="projectid">
+										                						</div>
+										                					</div>
+													           			</div>
+													           		</div>
+													           		<div class="form-actions">
+													           			<button type="submit" id="save-task" class="btn btn-success"><i class="fa fa-check"></i> Save</button>
+													           		</div>
+													           	</form>
+													        </div>
+													    </div>
+									  				</div>
+									  			</div>
+									  		</div>
+									  		
+					            			<div class="stats-box">
+					            				<h2>Tasks</h2>
+					            				<div class="row mb-2">
+												    <div class="col-md-6">
+												        <a href="javascript:void(0);" id="show-new-task-panel" class="btn btn-outline-success btn-sm"> <i class="fa fa-plus"></i> New Task</a>
+												        <a href="javascript:void(0);" class="btn btn-sm btn-outline-info ml-1" data-original-title="Edit" data-toggle="modal" data-target="#add-task-categ">
+											         		<i class="fa fa-plus"></i> Add Task Category</i>
+											         	</a>
+												    </div>
+												</div>
+					            			</div>
+									  	</div>
 									  	<!-- tab5 -->
 									  	<div class="tab-pane fade" id="files" role="tabpanel" aria-labelledby="files-tab">
 					            			<div class="stats-box">
