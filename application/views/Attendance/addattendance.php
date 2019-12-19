@@ -71,7 +71,8 @@
                                     
                                  ?>
                                 <td><?php  ?>
-                                    <input type="radio" name="attendance<?php echo $counter ?>" value="2">Late<br>
+                                    <input type="radio" name="attendance<?php echo $counter ?>" value="2"
+                                    >Late<br>
                                     <input type="radio" name="attendance<?php echo $counter ?>" value="1">Present<br>
                                     <input type="radio" name="attendance<?php echo $counter ?>" value="3">Absent<br>
                                 </td>

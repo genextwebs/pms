@@ -264,13 +264,30 @@ class Attendance extends CI_Controller{
 				$i++;
 			}
 	
-			//print_r($employee_array);die;
+			//print_r($employee_array);
+
+			$whereArr = array('attendancedate' => $attendancedate,'employee'=>$emplo);
+			$data = $this->common_model->getData('tbl_attendance',$whereArr);
+
 			$totalemployee=count($employee_array);
 			
 			for($j=0;$j<=$totalemployee-1;$j++)
 			{
+
+				$whereArr = array('attendancedate' => $attendancedate,'employee'=>$employee_array[$j]);
+				$data = $this->common_model->getData('tbl_attendance',$whereArr);
+				//echo "<pre";print_r($data);die;
+				if(count($data)	== 1)
+				{
+					$updateArr=array('attendancedate'=>$attendancedate,'employee'=>$employee_array[$j],'attendance'=>$attendance_array[$j]);
+					$this->common_model->insertData('tbl_attendance',$updateArr,$whereArr);
+
+				}
+				else
+				{
 				$insertArr=array('attendancedate'=>$attendancedate,'employee'=>$employee_array[$j],'attendance'=>$attendance_array[$j]);
 				$this->common_model->insertData('tbl_attendance',$insertArr);
+				}
 
 			}
 			$this->session->set_flashdata('message_name', "All Attendance Saved Succeessfully");
