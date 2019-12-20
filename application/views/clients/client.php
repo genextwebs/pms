@@ -29,8 +29,7 @@
             </div>
         </div>
 
-
-        <div class="col-md-12">
+		<div class="col-md-12">
             <div class="stats-box">
 				<div class="row">
     				<div class="col-md-6">
@@ -92,12 +91,11 @@
 		                </div>
 	                </form>
 	            </div>
-            
-			   <?php
-					//warning 
-					$mess = $this->session->flashdata('message_name');
-					if(!empty($mess)){
-				?>
+            		<?php
+						//warning 
+						$mess = $this->session->flashdata('message_name');
+						if(!empty($mess)){
+					?>
 				   <div class="col-md-12">
 						<div class="submit-alerts">
 							<div class="alert alert-success" role="alert" style="display:block;">
@@ -105,7 +103,7 @@
 							</div>
 						</div>
 					</div>
-		        <?php } ?>
+		        	<?php } ?>
                 	
             	<div class="table-responsive">
                 	<table class="table table-bordered" id="clients">

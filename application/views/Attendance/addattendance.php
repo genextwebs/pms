@@ -54,17 +54,15 @@
                                 <td> <?php  echo $row->employeename; ?>
                                     <input type="hidden" value="<?php echo $row->id; ?>" id="employee" name="employee<?php echo $counter ?>">
                                 </td>
+                                <td>
                                     <?php 
                                         $Tdate=date('Y-m-d'); 
                                         $todayData=$this->db->query("select * from tbl_attendance where attendancedate='".$Tdate."' and employee=".$id);
-                                            $todayAttenData = $todayData->result_array(); 
-                                           // echo "<PRE>"; print_r($todayAttenData);
-                                            /*if(!empty($todayAttenData[0]['attendance']) == 2) { echo 'checked'; }?>*/
+                                        $todayAttenData = $todayData->result_array(); 
                                     ?>
-                                <td>
-                                    <input type="radio" name="attendance<?php echo $counter ?>" value="2" <?php if(!empty($todayAttenData[0]['attendance']) == 2) { echo 'checked'; } else { echo '';}?>>Late<br>
-                                    <input type="radio" name="attendance<?php echo $counter ?>" value="1" <?php if(!empty($todayAttenData[0]['attendance']) == 1) { echo 'checked'; } else { echo '';}?>>Present<br>
-                                    <input type="radio" name="attendance<?php echo $counter ?>" value="3" <?php if(!empty($todayAttenData[0]['attendance']) == 3) { echo 'checked'; } else { echo '';}?>>Absent<br>
+                                    <input type="radio" name="attendance<?php echo $counter ?>" value="2" <?php if(!empty($todayAttenData)) { if(($todayAttenData[0]['attendance']) == 2) { echo 'checked=checked'; }} else { echo '';}?>>Late<br>
+                                    <input type="radio" name="attendance<?php echo $counter ?>" value="1" <?php if(!empty($todayAttenData)) { if(($todayAttenData[0]['attendance']) == 1) { echo 'checked=checked'; }} else { echo '';}?>>Present<br>
+                                    <input type="radio" name="attendance<?php echo $counter ?>" value="3" <?php if(!empty($todayAttenData)){ if(($todayAttenData[0]['attendance']) == 3) { echo 'checked=checked'; }} else { echo '';}?>>Absent<br>
                                 </td>
                                     <?php
                                     if($dateDay == 'Sunday'){ ?>
