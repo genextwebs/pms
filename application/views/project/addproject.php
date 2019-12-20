@@ -140,7 +140,7 @@
 									<div class="col-md-12">
 										<div class="form-group">
 											<select class="custom-select" id="select-client" name="select_client">
-												  <option value="">--Select--</option>
+											<option value="">--Select--</option>
 											<?php
 												foreach($client as $row)
 												{

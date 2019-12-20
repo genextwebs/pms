@@ -64,6 +64,8 @@
 													{
 														echo '<option value="'.$cat->id.'">'.$cat->name.'</option>';
 													}
+
+													
 												?>
 											</select>
 										</div>

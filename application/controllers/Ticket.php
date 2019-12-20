@@ -12,14 +12,18 @@ class Ticket extends CI_Controller {
 	}
 
 	public function index(){
+		//$data['tickettype']=$this->common_model->getData('tbl_ticket_type');
+		//$data['ticketchannel']=$this->common_model->getData('tbl_ticket_channel');
 		$this->load->view('common/header');
 		$this->load->view('ticket/ticket');
 		$this->load->view('common/footer');
 	}
 
 	public function addticket(){
+		$data['tickettype']=$this->common_model->getData('tbl_ticket_type');
+		$data['ticketchannel']=$this->common_model->getData('tbl_ticket_channel');
 		$this->load->view('common/header');
-		$this->load->view('ticket/addticket');
+		$this->load->view('ticket/addticket',$data);
 		$this->load->view('common/footer');
 	}
 
@@ -192,6 +196,8 @@ class Ticket extends CI_Controller {
 		$whereArr=array('id'=>$id);
 		$data['editticketId']=$id;
 	    $data['ticketinfo']=$this->common_model->getData('tbl_ticket',$whereArr);
+	    $data['tickettype']=$this->common_model->getData('tbl_ticket_type');
+		$data['ticketchannel']=$this->common_model->getData('tbl_ticket_channel');
 		$this->load->view('common/header');
 		$this->load->view('ticket/editticket',$data);
 		$this->load->view('common/footer');
@@ -229,8 +235,8 @@ class Ticket extends CI_Controller {
 		if(!empty($_POST)){
 			$tname = $this->input->post('name');
 			$insArr = array('name'=>$tname);
-			$typeid=$this->common_model->insertData('tbl_ticket',$insArr);
-			echo $this->db->last_query();die;
+			$typeid=$this->common_model->insertData('tbl_ticket_type',$insArr);
+//echo $this->db->last_query();die;
 			//$catArray = $this->common_model->getData('tbl_ticket');
 			$str = '';
 			foreach($catArray as $row){
@@ -250,13 +256,50 @@ class Ticket extends CI_Controller {
 		$status = 0;
 		if(!empty($_POST['ticket'])){
 			$where = array('name'=>$_POST['ticket']);
-			$checkData = $this->common_model->getData('tbl_ticket',$where);
+			$checkData = $this->common_model->getData('tbl_ticket_type',$where);
 			if(!empty($checkData)){
 				$status = 1;
 			}
 		}
 		echo $status;exit();
 	}
+
+	public function insert_t_channel(){
+		//echo('ds');die;
+		if(!empty($_POST)){
+			$cname = $this->input->post('name');
+			$insArr = array('name'=>$cname);
+			$typeid=$this->common_model->insertData('tbl_ticket_channel',$insArr);
+			//echo $this->db->last_query();die;
+			$catArray = $this->common_model->getData('tbl_ticket_channel');
+			$str = '';
+			foreach($catArray as $row){
+				$str.='<option value="'.$row->id.'">'.$row->name.'</option>'; 
+			}
+			$totaldata = count($catArray);
+			$channelArr = array();
+			$channelArr['count'] = $totaldata;
+			$channelArr['ticketcdata'] = $str;
+			$channelArr['typeid']= $typeid;
+			//print_r($catArr);die;
+			echo json_encode($channelArr);exit; 
+		}
+	}
+
+	public function check_t_channel(){
+		$status = 0;
+		if(!empty($_POST['channel'])){
+			$where = array('name'=>$_POST['channel']);
+			$checkData = $this->common_model->getData('tbl_ticket_channel',$where);
+			
+			//echo $this->db->last_query();
+			if(!empty($checkData)){
+				$status = 1;
+			}
+		}
+		echo $status;exit();
+	}
+
 
 
 	

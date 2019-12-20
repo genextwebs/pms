@@ -144,8 +144,7 @@
 	            						<div class="form-group type">
 	            							<label>Type <a class="btn btn-sm btn-outline-info  ml-1" href="#"><i class="fa fa-plus"></i> Add Type</a></label>
 	            							<select class="custom-select br-0" name="question" id="question">
-	            								<option selected>Question</option>
-	            								<option>Problem</option>
+	            								
 	            							</select>
 	            						</div>
 	            					</div>
@@ -164,10 +163,9 @@
 	            						<div class="form-group channel">
 	            							<label class="control-label">Channel Name <a class="btn btn-sm btn-outline-info  ml-1" href="#"><i class="fa fa-plus"></i> Add channel</a></label>
 	            							<select class="custom-select br-0" name="channel" id="channel">
-	            								<option selected>Email</option>
-	            								<option>Phone</option>
-	            								<option>Twitter</option>
-	            								<option>Facebook</option>
+	            								<?php
+													
+												?>
 	            							</select>
 	            						</div>
 	            					</div>

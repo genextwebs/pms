@@ -503,7 +503,7 @@ $("#save_ticket").click(function(event) {
 	var t_name = $("input[name='ticket_type']").val();
 //	alert(tname);
 	if(t_name!=""){
-		alert(t_name);
+		//alert(t_name);
 		$.ajax({
 			url: base_url+"ticket/check_t_type",
 			type: 'POST',
@@ -521,9 +521,13 @@ $("#save_ticket").click(function(event) {
 					    data: dataString,
 						success: function(data) {
 							console.log(data.ticketdata);
-						    $('select[name="question"]').html('');       
-							$('select[name="question"]').append(data.ticketdata);
-							$("tbody").append("<tr id='cate_"+data.typeid+"'><td>"+data.count+"</td><td>"+catname+"</td> <td><input type='submit' class='btn btn-sm btn-danger btn-rounded delete-category' onclick='deletecat(\'"+data.typeid+"\');' id='deletecat' value='Remove'></tr>");
+						    $('#question').html('');       
+							$('#question').append(data.ticketdata);
+							$('#type1').modal('toggle');
+							//	$('#type1').modal('toggle');
+							//$('#leave')[0].reset();
+
+							//$("tbody").append("<tr id='cate_"+data.typeid+"'><td>"+data.count+"</td><td>"+dataString+"</td> <td><input type='submit' class='btn btn-sm btn-danger btn-rounded delete-category' onclick='deletecat(\'"+data.typeid+"\');' id='deletecat' value='Remove'></tr>");
 						   /* $('#project-category1').removeClass('show');
 							$('.modal-backdrop').removeClass('show');
 							$('.modal-backdrop').find('div').remove();
@@ -545,6 +549,62 @@ $("#save_ticket").click(function(event) {
 		jQuery('#errormsg').html('<b>Please enter category name</b>');
 	}
 });
+
+
+//add channel 
+$("#save_tchannel").click(function(event) {
+	var c_name = $("input[name='channel_name']").val();
+	//alert(c_name);
+	if(c_name!=""){
+		//alert(c_name);
+		$.ajax({
+			url: base_url+"ticket/check_t_channel",
+			type: 'POST',
+			dataType: 'html',
+			data:{channel:c_name},
+			success: function(data) {
+				//alert(t_name);
+				if(data==0){
+					var dataString = 'name='+ c_name;
+					//alert(c_name);
+					jQuery('#errormsg').html('');
+					$.ajax({
+				       // alert(dataString);
+					    url: base_url+"ticket/insert_t_channel",
+					    type: 'POST',
+					    dataType: 'json',
+					    data: dataString,
+						success: function(data) {
+							console.log(data.ticketcdata);
+						    $('#channel').html('');       
+							$('#channel').append(data.ticketcdata);
+							$('#channel1').modal('toggle');
+							 //$("#channel").modal("hide");
+
+							//$("tbody").append("<tr id='cate_"+data.typeid+"'><td>"+data.count+"</td><td>"+dataString+"</td> <td><input type='submit' class='btn btn-sm btn-danger btn-rounded delete-category' onclick='deletecat(\'"+data.typeid+"\');' id='deletecat' value='Remove'></tr>");
+						   /* $('#project-category1').removeClass('show');
+							$('.modal-backdrop').removeClass('show');
+							$('.modal-backdrop').find('div').remove();
+							$('body').removeAttr("style");
+							$('body').removeClass("modal-open");
+							$('#category')[0].reset();*/
+							$('#succmsg').html('');
+							$('#succmsg').html('<b>Successfully Channel added</b>');
+					   }
+					});
+				}else{
+					jQuery('#errormsg').html('')
+					jQuery('#errormsg').html('<b>This Channel already exists</b>');
+				}
+			}
+		});
+	}else{
+		jQuery('#errormsg').html('')
+		jQuery('#errormsg').html('<b>Please enter category name</b>');
+	}
+});
+
+
 // addproject=> delete category 
 	function deleteleavetype(id)
 	{
