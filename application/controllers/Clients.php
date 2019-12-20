@@ -18,7 +18,6 @@ class Clients extends CI_Controller{
 	
 	public function addclients(){
 		$id = base64_decode($this->uri->segment(3));
-		//echo $id;die;
 		$whereArr = array('id'=>$id);
 		$data['editID'] = $id;
 		$data['sessData'] = $this->session->flashdata('data');
@@ -29,8 +28,7 @@ class Clients extends CI_Controller{
 	}
 	
 	public function insertclients(){
-		if(!empty($_POST))
-		{
+		if(!empty($_POST)){
 			$companyname=$this->input->post('company_name');
 			$website=$this->input->post('website');
 			$address=$this->input->post('address');
@@ -82,7 +80,7 @@ class Clients extends CI_Controller{
 			$defaultOrderClause = "";
 			$sWhere = "";
 			$sOrder = '';	
-			$aColumns = array( 'id', 'clientname', 'companyname');
+			$aColumns = array('id','clientname','companyname','emailid','status', 'created_at');
 			//'ahrefs_dr', 
             $totalColumns = count($aColumns);
 
@@ -125,62 +123,60 @@ class Clients extends CI_Controller{
                 if ($sOrder == "ORDER BY") {
                     $sOrder = "";
                 }
-            } else {
+            }
+             	else {
                 $sOrder = $defaultOrderClause;
-            }
-
-            if(!empty($sOrder)){
+            	}
+				if(!empty($sOrder)){
             	$sOrder = " ORDER BY ".$sOrder;
-            }
-            /** Ordering End **/
+            	}
+            	/** Ordering End **/
 
-            /** Filtering Start */
-            if(!empty(trim($_GET['sSearch']))){
-            	$searchTerm = trim($_GET['sSearch']);
-            	$sWhere .= ' AND (clientname like "%'.$searchTerm.'%" OR companyname like "%'.$searchTerm.'%" OR website like "%'.$searchTerm.'%" OR address like "%'.$searchTerm.'%" OR emailid like "%'.$searchTerm.'%" OR facebook like "%'.$searchTerm.'%" OR note like "%'.$searchTerm.'%")';
-            }
-			$startdate=!empty($_POST['startdate']) ? $_POST['startdate'] : '';
-			$enddate=!empty($_POST['enddate']) ? $_POST['enddate'] : '';
-			$clientname=!empty($_POST['clientname']) ? $_POST['clientname'] : '';
-			$status=$_POST['status'];
+        	 /** Filtering Start */
+           		if(!empty(trim($_GET['sSearch']))){
+            		$searchTerm = trim($_GET['sSearch']);
+            		$sWhere .= ' AND (clientname like "%'.$searchTerm.'%" OR companyname like "%'.$searchTerm.'%" OR emailid like "%'.$searchTerm.'%" OR note like "%'.$searchTerm.'%")';
+            	}
+				$startdate=!empty($_POST['startdate']) ? $_POST['startdate'] : '';
+				$enddate=!empty($_POST['enddate']) ? $_POST['enddate'] : '';
+				$clientname=!empty($_POST['clientname']) ? $_POST['clientname'] : '';
+				$status=$_POST['status'];
 		
-			if(!empty($clientname)){
-				$sWhere.=' AND  clientname="'.$clientname.'"';
-			}
+					if(!empty($clientname)){
+						$sWhere.=' AND  clientname="'.$clientname.'"';
+					}
+					if($status=='all'){
+					}
+					else{
+						$sWhere.=' AND status='.$status;
+					}
+					if(!empty($startdate)){						
+						$sWhere.=' AND created_at>="'.$startdate.'"';
+					}
+					if(!empty($enddate)){						
+						$sWhere.=' AND created_at<="'.$enddate.'"';
+					}
+					$sWhere.=' AND tbl_user.is_deleted=0';
+					if(!empty($sWhere)){
+						$sWhere = " WHERE 1 ".$sWhere;
+					}
+					/** Filtering End */
+		}
 				
-			if($status=='all'){
-
-			}
-			else{
-				$sWhere.=' AND status='.$status;
-			}
-			if(!empty($startdate)){						
-				$sWhere.=' AND created_at>="'.$startdate.'"';
-			}
-			if(!empty($enddate)){						
-				$sWhere.=' AND created_at<="'.$enddate.'"';
-			}
-			$sWhere.=' AND tbl_user.is_deleted=0';	
-			if(!empty($sWhere)){
-				$sWhere = " WHERE 1 ".$sWhere;
-			}
-				/** Filtering End */
 		
-		    $query = "SELECT tbl_clients.id as clientId, tbl_user.id,tbl_user.is_deleted,tbl_clients.clientname,tbl_clients.companyname,tbl_user.emailid,tbl_user.status,tbl_user.created_at from tbl_clients INNER JOIN tbl_user ON tbl_clients.user_id=tbl_user.id ".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
-			//echo $query;die;
-			$clientsArr = $this->common_model->coreQueryObject($query);
+	   	$query = "SELECT tbl_clients.id as clientId, tbl_user.id,tbl_user.is_deleted,tbl_clients.clientname,tbl_clients.companyname,tbl_user.emailid,tbl_user.status,tbl_user.created_at from tbl_clients INNER JOIN tbl_user ON tbl_clients.user_id=tbl_user.id ".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+	    $clientsArr = $this->common_model->coreQueryObject($query);
+		
+		$query =  "SELECT tbl_user.id,tbl_user.is_deleted,tbl_clients.clientname,tbl_clients.companyname,tbl_user.emailid,tbl_user.status,tbl_user.created_at from tbl_clients INNER JOIN tbl_user ON tbl_clients.user_id=tbl_user.id ".$sWhere;	
+		$clientsFilterArr = $this->common_model->coreQueryObject($query);
+	
+		$iFilteredTotal = count($clientsFilterArr);
 
-			$query =  "SELECT tbl_user.id,tbl_user.is_deleted,tbl_clients.clientname,tbl_clients.companyname,tbl_user.emailid,tbl_user.status,tbl_user.created_at from tbl_clients INNER JOIN tbl_user ON tbl_clients.user_id=tbl_user.id ".$sWhere;
-			//echo $this->db->last_query();
-			$clientsFilterArr = $this->common_model->coreQueryObject($query);
-			
-			$iFilteredTotal = count($clientsFilterArr);
+		$clientsAllarr = $this->common_model->getData('tbl_clients');
+		$iTotal = count($clientsAllarr);
 
-			$clientsAllArr = $this->common_model->getData('tbl_clients');
-			$iTotal = count($clientsAllArr);
-
-			/** Output */
-			$datarow = array();
+		/** Output */
+		$datarow = array();
 			$i = 1;
 			foreach($clientsArr as $row) {
 				$id = $row->id;
@@ -189,7 +185,7 @@ class Clients extends CI_Controller{
 					$sta='<lable class="label label-danger">'.$status.'</label>';
 
 				}
-				else if($row->status == '1'){
+				elseif($row->status == '1'){
 					$status = $row->status = 'Active';
 					$sta='<lable class="label label-success">'.$status.'</label>';
 
@@ -201,7 +197,6 @@ class Clients extends CI_Controller{
 				<abbr title=\"View Client Details\"><a class=\"btn btn-success btn-circle\" data-toggle=\"tooltip\" data-original-title=\"View Client Details\" href='".base_url()."Clients/viewclientdetail/".base64_encode($id)."/".base64_encode($clientid)."'><i class=\"fa fa-search\" aria-hidden=\"true\" ></i></a></abbr>
 				<abbr title=\"Delete\"><a  class=\"btn btn-danger btn-circle sa-params\" data-toggle=\"tooltip\"  data-original-title=\"Delete\" href=\"javascript:void();\" onclick=\"deleteclients('".base64_encode($id)."');\"><i class=\"fa fa-times\" aria-hidden=\"true\"></i></a></abbr>";	
 	          
-				
 				$datarow[] = array(
 					$id = $i,
 	                $row->clientname,
@@ -224,22 +219,17 @@ class Clients extends CI_Controller{
 			);
 		  	echo json_encode($output);
 	      	exit();
-	  	}
 	}
 	
 	public function editclients(){
 		$clientid = base64_decode($this->uri->segment(3));
-		//echo $clientid;
 		$ltoc = $this->uri->segment(4);
-		//echo $ltoc;die;
 		$whereArr1=array('id'=>$clientid);
 		$clientArr=array('user_id'=>$clientid);
 		$data['clients']=$this->common_model->getData('tbl_clients',$clientArr);
-		//print_r($data);exit;
 		$clientmaniId = $data['clients'][0]->id;
 		$whereArr=array('id'=>$clientmaniId);
 		$data['user']=$this->common_model->getData('tbl_user',$whereArr1);
-		//print_r($data);die;
 		if(!empty($_POST)){
 			$companyname=$this->input->post('company_name');
 			$website=$this->input->post('website');
@@ -280,7 +270,8 @@ class Clients extends CI_Controller{
 				$data['query']=$this->common_model->updateData('tbl_clients',$updateArr1,$whereArr);
 
 				$this->session->set_flashdata('message_name', "Data Update Succeessfully");
-			}else{
+			}
+			else{
 				$this->session->set_flashdata('message_name', "Email address already exists");
 				if(!empty($ltoc)){
 					return redirect('Clients/editclients/'.base64_encode($clientid).'/'.$ltoc);
@@ -321,6 +312,5 @@ class Clients extends CI_Controller{
 		$this->load->view('clients/viewclientdetail',$data);
 		$this->load->view('common/footer');
 	}
-
 }
 ?>

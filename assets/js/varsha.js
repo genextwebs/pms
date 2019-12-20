@@ -81,10 +81,10 @@ jQuery(document).ready(function() {
         	"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No Leads found<br/><br/></center>', "sZeroRecords": "<center><br/>No Leads found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ leads", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
         	"fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
 			
-			aoData.push( { "name": "startdate", "value": $('#startdate').val() } );
+					aoData.push( { "name": "startdate", "value": $('#startdate').val() } );
 					aoData.push( { "name": "enddate", "value": $('#enddate').val() } );
-					aoData.push( { "name": "clientname", "value": $('#clientname').val() } );
 					aoData.push( { "name": "status", "value": $('#status').val() } );
+					aoData.push( { "name": "clientname", "value": $('#clientname').val() } );
 					
 			
         		oSettings.jqXHR = $.ajax( {
