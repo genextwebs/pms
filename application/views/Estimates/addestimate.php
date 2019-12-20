@@ -1,54 +1,50 @@
 <nav aria-label="breadcrumb" class="breadcrumb-nav">
-                <div class="row">
-                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title"><i class="icon-people"></i>Estimates</h4>
-                    </div>
-                    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-                        <ol class="breadcrumb">
-                            <li><a href="<?php echo base_url().'dashboard'?>">Home</a></li>
-                            <li><a href="<?php echo base_url().'Finance'?>">Estimates</a></li>
-                            <li class="active">Add New</li>
-                        </ol>
-                    </div>
-                </div>
-            </nav>
+    <div class="row">
+        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+            <h4 class="page-title"><i class="icon-people"></i>Estimates</h4>
+        </div>
+        <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+            <ol class="breadcrumb">
+                <li><a href="<?php echo base_url().'dashboard'?>">Home</a></li>
+                <li><a href="<?php echo base_url().'Finance'?>">Estimates</a></li>
+                <li class="active">Add New</li>
+            </ol>
+        </div>
+    </div>
+</nav>
 
-            <!-- contetn-wrap -->
-            <div class="content-in">  
-                <div class="row">
-                    <div class="col-md-12">
-		                <div class="card br-0">
-		                	<div class="card-header br-0 card-header-inverse">
-								CREATE ESTIMATE
-		                	</div>
-		                	<div class="card-wrapper collapse show">
-		                		<div class="card-body">
-		                			<form class="aj-form" method="post" action="<?php echo base_url().'Finance/insertEstimates' ?>"
-		                			 name="estimate" >
-											 <?php
-												$mess = $this->session->flashdata('message_name');
-												if(!empty($mess)){
-													//warning 
-											?>
-            				
-										<div class="submit-alerts">
-		                					<div class="alert alert-success" role="alert" style="display:block;">
-											
-											  This is a success alert
-											</div>
+    <!-- contetn-wrap -->
+<div class="content-in">  
+	<div class="row">
+		<div class="col-md-12">
+    		<div class="card br-0">
+    			<div class="card-header br-0 card-header-inverse">
+					CREATE ESTIMATE
+    			</div>
+    			<div class="card-wrapper collapse show">
+    				<div class="card-body">
+    					<form class="aj-form" method="post" action="<?php echo base_url().'Finance/insertEstimates' ?>" name="estimate" >
+								<?php 	//warning 
+									$mess = $this->session->flashdata('message_name');
+									if(!empty($mess)){
+								?>
+            						<div class="submit-alerts">
+	                					<div class="alert alert-success" role="alert" style="display:block;">
+										 This is a success alert
 										</div>
-										<div class="submit-alerts">
-											<div class="alert alert-danger" role="alert" style="display:block;">
+									</div>
+									<div class="submit-alerts">
+										<div class="alert alert-danger" role="alert" style="display:block;">
 												<?php echo $mess; ?>
-											</div>
 										</div>
-												<?php } ?>
+									</div>
+								<?php } ?>
 									
-										<div class="submit-alerts">
-											<div class="alert alert-warning" role="alert">
-											  This is a warning alert
-											</div>
-		                				</div>
+									<div class="submit-alerts">
+										<div class="alert alert-warning" role="alert">
+											 This is a warning alert
+										</div>
+		                			</div>
 		                				<div class="form-body">
 		                					<div class="row">
 		                						<div class="col-md-4">
@@ -84,7 +80,7 @@
 		                					</div>
 											<hr>
 											<button aria-expanded="false" data-toggle="dropdown" class="btn btn-info dropdown-toggle waves-effect waves-light" type="button">Products <span class="caret"></span></button>
-											<div id="dynamic">
+										<div id="dynamic">
 											<div class="row" >
 												<div class="row" >
 												<div class="form-group">
@@ -126,18 +122,15 @@
 												</div>
 												<div class="col-md-2 border-dark  text-center">
 													<label class="control-label hidden-md hidden-lg">Amount</label>
-												<input type="text" name="amount[]" id="amount1">
-
-													<!--<p class="form-control-static" id="amountdisplay"><span class="amount-html">0.00</span></p>
-													<input type="hidden" class="amount" name="amount[]" id="amount1">-->
+														<input type="text" name="amount[]" id="amount1">
 												</div>
 											</div>
-											<div class="row">
-												<div class="form-group">
-													<textarea name="item_Description[]" class="form-control" placeholder="Description" rows="2"></textarea>
+													<div class="row">
+														<div class="form-group">
+															<textarea name="item_Description[]" class="form-control" placeholder="Description" rows="2"></textarea>
+														</div>
+													</div>
 												</div>
-											</div>
-										</div>
 										</div>
 											<input type="hidden" id="counter" value="1">
 
@@ -146,13 +139,11 @@
 													<button type="button" class="btn btn-info" id="item-repeat"><i class="fa fa-plus"></i> Add Item</button>
 												</div>
 											</div>
-												<div class="row m-t-5 font-bold">
-														<div class="col-md-offset-9 col-md-1 col-xs-6 text-right p-t-10">Total</div>
-															<p class="form-control-static col-xs-6 col-md-2"  name="total" id="total">
-																<!--<span class="total">0.00</span>-->
-															</p>
-															<input type="hidden" class="total-field" name="finaltotal" id="finaltotal">
-												</div>
+											<div class="row m-t-5 font-bold">
+												<div class="col-md-offset-9 col-md-1 col-xs-6 text-right p-t-10">Total</div>
+													<p class="form-control-static col-xs-6 col-md-2"  name="total" id="total"></p>
+													<input type="hidden" class="total-field" name="finaltotal" id="finaltotal">
+											</div>
 											<div class="row">
 												<div class="col-sm-12">
 													<div class="form-group">
@@ -168,74 +159,71 @@
 											</div>
 													
 		                				</div>
-		                			</form>
-		                		</div>
-		                	</div>
-		                </div>
+		               	</form>
 		            </div>
-                </div>
-            <!-- ends of contentwrap -->
+		        </div>
+		    </div>
+		</div>
+	</div>
+</div>
+ <!-- ends of contentwrap -->
 
-			<!-- Modal -->
+<!-- Modal -->
 			
-			<div class="modal fade project-tax" id="project-tax" tabindex="-1" role="dialog" aria-labelledby="project-tax" aria-hidden="true">
-            	<div class="modal-dialog modal-lg" role="document">
-            		<div class="modal-content br-0">
-            			<div class="modal-header">
-            				<h4 class="modal-title">Tax</h4>
-            				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            					<span aria-hidden="true">×</span>
-            				</button>
-            			</div>
-            			<div class="modal-body">
-            				<div class="table-responsive">
-					            <table class="table">
-					                <thead>
-					                <tr>
-					                    <th>#</th>
-					                    <th>Tax Name</th>
-					                    <th>Rate %</th>
-					                </tr>
-					                </thead>
-					                <tbody>
-					                    <?php 
-										$i = 1;
-										foreach ($tax as $row) { ?>      
-										      <tr>
-										      	  <td><?php echo $i; ?></td>
-										          <td><?php echo $row->taxname; ?></td>
-										          <td><?php echo $row->rate; ?></td>
-										      </tr>
-										   <?php
-											$i++;
-										   } ?>
-									</tbody>
-					            </table>
-					        </div>
-					        <hr>
-					        <form id="tax" class="" name="tax" method="post" >
-						        <div class="form-body">
-						            <div class="row">
-						                <div class="col-md-6 ">
-						                    <div class="form-group">
-						                        <label>Tax Name</label>
-						                        <input type="text" name="tax_name" id="tax_name" class="form-control">
-						                    </div>
-						                </div>
-						                <div class="col-md-6 ">
-						                    <div class="form-group">
-						                        <label>Rate %</label>
-						                        <input type="text" name="rate" id="rate" class="form-control">
-						                    </div>
-						                </div>
-						            </div>
-						        </div>
-						        
-						        <div class="form-actions">
-						            <input type="submit" id="save-category" class="btn btn-success" name="btnsubmit" value="Save"> <i class="fa fa-check"></i> 
-						        </div>
-							</form>
-            			</div>
-            		</div>
-            	</div>
+<div class="modal fade project-tax" id="project-tax" tabindex="-1" role="dialog" aria-labelledby="project-tax" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content br-0">
+           	<div class="modal-header">
+            	<h4 class="modal-title">Tax</h4>
+            	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            		<span aria-hidden="true">×</span>
+            	</button>
             </div>
+            <div class="modal-body">
+            	<div class="table-responsive">
+					<table class="table">
+					    <thead>
+					        <tr>
+					            <th>#</th>
+				                <th>Tax Name</th>
+				                <th>Rate %</th>
+					        </tr>
+					    </thead>
+					    <tbody>
+				            <?php $i = 1;
+							foreach ($tax as $row) { ?>      
+							<tr>
+								<td><?php echo $i; ?></td>
+								<td><?php echo $row->taxname; ?></td>
+								<td><?php echo $row->rate; ?></td>
+							</tr>
+							<?php $i++; } ?>
+						</tbody>
+					</table>
+				</div>
+				<hr>
+				 <form id="tax" class="" name="tax" method="post" >
+				    <div class="form-body">
+				        <div class="row">
+				            <div class="col-md-6 ">
+				                <div class="form-group">
+				                    <label>Tax Name</label>
+				                     <input type="text" name="tax_name" id="tax_name" class="form-control">
+				                 </div>
+				            </div>
+				            <div class="col-md-6 ">
+				               <div class="form-group">
+				                    <label>Rate %</label>
+				                     <input type="text" name="rate" id="rate" class="form-control">
+				                </div>
+				           	</div>
+				        </div>
+				    </div>
+					<div class="form-actions">
+						<input type="submit" id="save-category" class="btn btn-success" name="btnsubmit" value="Save"> <i class="fa fa-check"></i> 
+					</div>
+				</form>
+           	</div>
+        </div>
+    </div>
+</div>

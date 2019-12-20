@@ -81,10 +81,10 @@ jQuery(document).ready(function() {
         	"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No Leads found<br/><br/></center>', "sZeroRecords": "<center><br/>No Leads found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ leads", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
         	"fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
 			
-			aoData.push( { "name": "startdate", "value": $('#startdate').val() } );
+					aoData.push( { "name": "startdate", "value": $('#startdate').val() } );
 					aoData.push( { "name": "enddate", "value": $('#enddate').val() } );
-					aoData.push( { "name": "clientname", "value": $('#clientname').val() } );
 					aoData.push( { "name": "status", "value": $('#status').val() } );
+					aoData.push( { "name": "clientname", "value": $('#clientname').val() } );
 					
 			
         		oSettings.jqXHR = $.ajax( {
@@ -865,7 +865,7 @@ function insertAttendance(employeeid,counter){
 					//alert("fg");
 					//$('#suceessmsg').html('');
 					$('#suceessmsg'+counter).append('<b>Attendance Saved Successfully</b>');
-					$('#suceessmsg'+counter).fadeOut(5000);  
+					$('#suceessmsg'+counter).fadeOut(6000);  
 			}
 
 		
@@ -880,7 +880,7 @@ function insertAttendance(employeeid,counter){
 $("#apply-filter").click(function() {
 	var month = $('#month').val();
 	var year = $('#year').val();
-	var department = $('#department').val();
+	var department = $('#dept').val();
 	var employee = $('#employee').val();
 	//alert(employee);
 	$.ajax({
@@ -897,29 +897,6 @@ $("#apply-filter").click(function() {
 
 	});
 
-//apply by member
-
-$("#applybyMemberdd").click(function() {
-	var startdate = $('#startdate').val();
-	//alert(startdate);
-	var enddate = $('#enddate').val();
-	var member = $('#member').val();
-	//alert(employee);
-	$.ajax({
-		url : base_url+"Attendance/index",
-        type : 'POST',
-        data : {startdate:startdate,enddate:enddate,member:member},
-        error: function() {
-              alert('Something is wrong');
-           },
-        success: function(data){
-			window.location.reload();
-        }
-	});
-
-	});
-
-
 //datepicker validation 
 
 $(document).ready(function(){
@@ -934,14 +911,17 @@ $(document).ready(function(){
 //reset filter attendance
 
 $('#reset-filtersAttendance').click(function(){ 
-	jQuery('#employee').val('All');
-	jQuery('#department').val('All');
-	jQuery('#month').val('');
-	jQuery('#year').val('');
-	jQuery('#ticket-filters').after('<p style="color:#00B200"><b>Succesfully Reset Filters</b></p>');
-	var oTable = $('#clients').DataTable();
-	oTable.draw();
-});
-	
+	 
 
+	$.ajax({
+		url : base_url+"Attendance/destroydata",
+        type : 'POST',
+        error: function() {
+              alert('Something is wrong');
+           },
+        success: function(){
+			window.location.reload();
+        }
+	});
+});
 

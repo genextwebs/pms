@@ -1,18 +1,17 @@
-
-            <nav aria-label="breadcrumb" class="breadcrumb-nav">
-                <div class="row">
-                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title"><i class="icon-people"></i> Clients</h4>
-                    </div>
-                    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-                        <ol class="breadcrumb">
-                            <li><a href="<?php echo base_url().'dashboard'?>">Home</a></li>
-                            <li><a href="<?php echo base_url().'Clients'?>">Clients</a></li>
-                            <li class="active">Project</li>
-                        </ol>
-                    </div>
-                </div>
-            </nav>
+<nav aria-label="breadcrumb" class="breadcrumb-nav">
+    <div class="row">
+        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+            <h4 class="page-title"><i class="icon-people"></i> Clients</h4>
+        </div>
+        <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+            <ol class="breadcrumb">
+                <li><a href="<?php echo base_url().'dashboard'?>">Home</a></li>
+                <li><a href="<?php echo base_url().'Clients'?>">Clients</a></li>
+                <li class="active">Project</li>
+            </ol>
+        </div>
+    </div>
+</nav>
 
             <!-- contetn-wrap -->
             <div class="content-in">  

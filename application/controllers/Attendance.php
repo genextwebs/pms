@@ -27,8 +27,7 @@ class Attendance extends CI_Controller{
             $this->department = $this->session->userdata('department_data');
             $this->employee = $this->session->userdata('employee_data');
 		}
-      
-		func_check_login();
+      func_check_login();
 	}
 	
 	public function index(){
@@ -38,8 +37,7 @@ class Attendance extends CI_Controller{
 		$data['selEmployee'] =  $this->employee;
 		$data['employee'] =$this->common_model->getData('tbl_employee');
 		$data['department'] =$this->common_model->getData('tbl_department');
-		if(!empty($data['selEmployee']) && !empty($data['selDepartment']))
-		 {	
+		if(!empty($data['selEmployee']) && !empty($data['selDepartment'])){	
 			$checkempid=$data['selEmployee'];
 			$checkdept=$data['selDepartment'];
 			$whereArr=array('id'=>$checkempid,'department'=>$checkdept);
@@ -79,25 +77,19 @@ class Attendance extends CI_Controller{
 		$data['employee'] =$this->common_model->getData('tbl_employee');
 		$selMember=$data['employee'][0]->id;
 		
-		$query="select * from tbl_attendance where employee=".$selMember." AND attendancedate>'".$selSdate."' AND attendancedate<'".$selEdate."'  ORDER BY attendancedate";
+		$query="select * from tbl_attendance where employee=".$selMember." AND attendancedate>='".$selSdate."' AND attendancedate<='".$selEdate."'  ORDER BY attendancedate";
 		$data['membersArr'] = $this->common_model->coreQueryObject($query);
 
-		if(!empty($_POST))
-		{
-			//echo "fggf";
-		$selSdate= $this->input->post('startdate');
-		$selEdate= $this->input->post('enddate');
-		$selMember= $this->input->post('member');
-		$this->session->set_userdata('selSdate',$selSdate);
-		$this->session->set_userdata('selEdate',$selEdate);
-		$this->session->set_userdata('selMember',$selMember);
-
-
-		$query="select * from tbl_attendance where employee=".$selMember." AND attendancedate>='".$selSdate."' AND attendancedate<='".$selEdate."'  ORDER BY attendancedate"; 
-		$data['membersArr'] = $this->common_model->coreQueryObject($query);
-
-
-	}
+		if(!empty($_POST)){
+			$selSdate= $this->input->post('startdate');
+			$selEdate= $this->input->post('enddate');
+			$selMember= $this->input->post('member');
+			$this->session->set_userdata('selSdate',$selSdate);
+			$this->session->set_userdata('selEdate',$selEdate);
+			$this->session->set_userdata('selMember',$selMember);
+			$query="select * from tbl_attendance where employee=".$selMember." AND attendancedate>='".$selSdate."' AND attendancedate<='".$selEdate."'  ORDER BY attendancedate"; 
+			$data['membersArr'] = $this->common_model->coreQueryObject($query);
+		}
 
 		$pquery="select * from tbl_attendance where employee=".$selMember." AND attendancedate>='".$selSdate."' AND attendancedate<='".$selEdate."'and attendance=1" ; 
 		$data['present'] = $this->common_model->coreQueryObject($pquery);
@@ -117,43 +109,27 @@ class Attendance extends CI_Controller{
 		$data['tday'] = $this->common_model->coreQueryObject($tquery);
 		$data['totalday']=count($data['tday']);
 
-
-	
-	/*function dateDiff($selSdate, $selEdate) 
-	{
-	  $date1_ts = strtotime($selSdate);
-	  $date2_ts = strtotime($selEdate);
-	  $diff = $date2_ts - $date1_ts;
-	  return round($diff / 86400);
-	}
-	$dateDiff= dateDiff($selSdate, $selEdate);
-	//echo $dateDiff;*/
-	function getDatesFromRange($start, $end){
-    $dates = array($start);
-    while(end($dates) < $end){
-        $dates[] = date('Y-m-d', strtotime(end($dates).' +1 day'));
-   		 }
-    return $dates;
+		function getDatesFromRange($start, $end){
+    		$dates = array($start);
+    		while(end($dates) < $end){
+        		$dates[] = date('Y-m-d', strtotime(end($dates).' +1 day'));
+   		 	}
+    		return $dates;
 		}
-	$data['total']=getDatesFromRange($selSdate,$selEdate);
-	$totalday=count($data['total']);
-	//echo "<pre>";print_r($data['total']);
+		$data['total']=getDatesFromRange($selSdate,$selEdate);
+		$totalday=count($data['total']);
 		$daysun=0;$daysat=0;
-	for($i=0;$i<=$totalday-1;$i++) {
-		$date=$data['total'][$i];
-		$dateDay = date('l', strtotime($date));
-		if($dateDay == 'Sunday')
-		{
+
+		for($i=0;$i<=$totalday-1;$i++) {
+			$date=$data['total'][$i];
+			$dateDay = date('l', strtotime($date));
+			if($dateDay == 'Sunday'){
 			$daysun=$daysun+1;
-		}
-			
-		elseif($dateDay == 'Saturday')
-		{
+			}
+			elseif($dateDay == 'Saturday'){
 			$daysat=$daysat+1;
+			}
 		}
-			
-		
-	}
 	
 		$oquery="select * from tbl_holiday where date>='".$selSdate."' AND date<='".$selEdate."'";
 		$data['oday'] = $this->common_model->coreQueryObject($oquery);
@@ -162,18 +138,15 @@ class Attendance extends CI_Controller{
 
 		$hquery="select * from tbl_holiday_settings";
 		$data['hday'] = $this->common_model->coreQueryObject($hquery);
-		if($data['hday'][0]->saturday == 1 &&  $data['hday'][0]->sunday == 1)
-		{
+		if($data['hday'][0]->saturday == 1 &&  $data['hday'][0]->sunday == 1){
 			$data['holiday']=$data['ocday']+$daysat+$daysun;
 			$data['wday']=$totalday-$data['holiday'];
 		}
-		elseif($data['hday'][0]->saturday == 1)
-		{
+		elseif($data['hday'][0]->saturday == 1){
 			$data['holiday']=$data['ocday']+$daysat;
 			$data['wday']=$totalday-$data['holiday'];
 		}
-		elseif($data['hday'][0]->sunday == 1)
-		{
+		elseif($data['hday'][0]->sunday == 1){
 			$data['holiday']=$data['ocday']+$daysun;
 			$data['wday']=$totalday-$data['holiday'];
 		}
@@ -189,18 +162,13 @@ class Attendance extends CI_Controller{
 	public function addattendance(){
 		$data['employee'] =$this->common_model->getData('tbl_employee');
 		$data['countemp']=count($data['employee']);
-		//$whereArr = array('attendancedate' => $attendancedate,'employee'=>$employee);
 		$date = date('Y-m-d');
-		//$whereArr=array('attendancedate'=>$date);
-		//$data['todayAttenData'] = $this->common_model->getData('tbl_attendance',$whereArr);
-		//print_r($data['todayAttenData']);die;
 		$this->load->view('common/header');
 		$this->load->view('Attendance/addattendance',$data);
 		$this->load->view('common/footer');
 	}
 
 	public function insertattendance(){
-
 		if(!empty($_POST)){
 			$attendancedate = $_POST['attendancedate'];
 			$employee = $_POST['employee'];
@@ -208,21 +176,17 @@ class Attendance extends CI_Controller{
 			$whereArr = array('attendancedate' => $attendancedate,'employee'=>$employee);
 			$data = $this->common_model->getData('tbl_attendance',$whereArr);
 			if(count($data)==1){
-				$updateArr=array('attendancedate'=>$attendancedate,'employee'=> $employee,'attendance'=>$attendance);
-			$this->common_model->updateData('tbl_attendance',$updateArr,$whereArr);
+				$updateArr=array('attendance'=>$attendance);
+				$this->common_model->updateData('tbl_attendance',$updateArr,$whereArr);
 			}
 			else{
-			$insertArr=array('attendancedate'=>$attendancedate,'employee'=> $employee,'attendance'=>$attendance);
-			$this->common_model->insertData('tbl_attendance',$insertArr);
-			
-			//echo $this->db->last_query();die;
-			
-		}
+				$insertArr=array('attendancedate'=>$attendancedate,'employee'=> $employee,'attendance'=>$attendance);
+				$this->common_model->insertData('tbl_attendance',$insertArr);
+			}
 		}
 	}
 
 	public function getfilterdata(){
-		//echo "ggf";die;
 		if(!empty($_POST)){
 			$month = $_POST['month'];
 			$year = $_POST['year'];
@@ -240,66 +204,46 @@ class Attendance extends CI_Controller{
 			else{
 				$this->session->set_userdata('employee_data', '');
 			}
-
-			//echo $month;die;
 			$this->session->set_userdata('month_data',$month);
 			$this->session->set_userdata('year_data',$year);
-			
 		}
 	}
 	
-
 	public function insertallattendance(){
-	
 		$attendance_array=array();
 		$employee_array=array();
-		$i=1;
-		if(!empty($_POST))
-		{
+		if(!empty($_POST)){
 			$attendancedate=$this->input->post('attendancedate');
-			while(isset($_POST['attendance'.$i]))
-			{
-				array_push($attendance_array,$_POST['attendance'.$i]);
-				array_push($employee_array,$_POST['employee'.$i]);
-				$i++;
+			$totalatt=$this->input->post('totalatten');
+			for($i=1;$i<=$totalatt;$i++){
+				if(isset($_POST['attendance'.$i])){
+					array_push($attendance_array,$_POST['attendance'.$i]);
+					array_push($employee_array,$_POST['employee'.$i]);
+				}
 			}
-	
-			//print_r($employee_array);
-
-			$whereArr = array('attendancedate' => $attendancedate,'employee'=>$emplo);
-			$data = $this->common_model->getData('tbl_attendance',$whereArr);
-
 			$totalemployee=count($employee_array);
-			
-			for($j=0;$j<=$totalemployee-1;$j++)
-			{
-
+			for($j=0;$j<=$totalemployee-1;$j++){
 				$whereArr = array('attendancedate' => $attendancedate,'employee'=>$employee_array[$j]);
 				$data = $this->common_model->getData('tbl_attendance',$whereArr);
-				//echo "<pre";print_r($data);die;
-				if(count($data)	== 1)
-				{
-					$updateArr=array('attendancedate'=>$attendancedate,'employee'=>$employee_array[$j],'attendance'=>$attendance_array[$j]);
-					$this->common_model->insertData('tbl_attendance',$updateArr,$whereArr);
-
+				if(count($data)	== 1){
+					$updateArr=array('attendance'=>$attendance_array[$j]);
+					$this->common_model->updateData('tbl_attendance',$updateArr,$whereArr);
 				}
-				else
-				{
-				$insertArr=array('attendancedate'=>$attendancedate,'employee'=>$employee_array[$j],'attendance'=>$attendance_array[$j]);
-				$this->common_model->insertData('tbl_attendance',$insertArr);
+				else{
+					$insertArr=array('attendancedate'=>$attendancedate,'employee'=>$employee_array[$j],'attendance'=>$attendance_array[$j]);
+					$this->common_model->insertData('tbl_attendance',$insertArr);
 				}
 
 			}
 			$this->session->set_flashdata('message_name', "All Attendance Saved Succeessfully");
-				redirect('Attendance/addattendance');
-			//print_r($answer_array);
-			
-			
-    			
-      		
-
-      	
+			redirect('Attendance/addattendance');
 		}
 	}
-	
+
+	public function destroydata(){
+		$this->session->unset_userdata('department_data');
+	 	$this->session->unset_userdata('employee_data');
+	 	$this->session->unset_userdata('month_data');
+	 	$this->session->unset_userdata('year_data');
+	 }
 }
