@@ -955,7 +955,11 @@ $('#hide-new-task-panel').click(function(){
 	$('#task_show').hide();
 });
                                                                                      
-                                            
+// for show update task view
+
+$('#updateTask').click(function(){
+	$('#update_task_show').show();
+});                                    
                                     
 
                                               
