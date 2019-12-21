@@ -1003,7 +1003,7 @@ class Project extends CI_Controller {
 				$str = '<label class="label label-danger">'.$status.'</label>';
 			}
 			
-				$actionStr = '<a href="javascript:;" class="btn btn-info btn-circle edit-task" data-toggle="tooltip" data-task-id="69" data-original-title="Edit"><i class="fa fa-pencil" 		aria-hidden="true"></i></a> &nbsp;
+				$actionStr = '<a href='.base_url().'project/updateTask/'.base64_encode($row->id).' class="btn btn-info btn-circle edit-task" data-toggle="tooltip" data-task-id="69" data-original-title="Edit" id="updateTask"><i class="fa fa-pencil" aria-hidden="true"></i></a> &nbsp;
 							<a href="javascript:;" class="btn btn-danger btn-circle sa-params" data-toggle="tooltip" data-task-id="69" data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>';
 			$datarow[] = array(
 				$id = $i,
@@ -1040,5 +1040,11 @@ class Project extends CI_Controller {
 		}
 		echo $status;exit();
 	}	
+
+	public function updateTask(){
+		$this->load->view('common/header');
+		$this->load->view('project/searchtemplate');
+		$this->load->view('common/footer');
+	}
 }	
 

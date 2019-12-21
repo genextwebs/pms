@@ -1,6 +1,4 @@
-
-
-            <nav aria-label="breadcrumb" class="breadcrumb-nav">
+<nav aria-label="breadcrumb" class="breadcrumb-nav">
                 <div class="row">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                         <h4 class="page-title"><i class="icon-speedometer"></i> Dashboard</h4>
@@ -1069,10 +1067,7 @@
             </div>
             <!-- ends of contentwrap -->
 
-            <!-- footer -->
-           <!--  <footer>
-                <p>2019 &copy; PMS</p>
-            </footer> -->
+            
             <!-- ends of footer -->
             <!-- add task category -->
             <div class="modal fade" id="add-task-categ" tabindex="-1" role="dialog" aria-labelledby="add-task-categtitle" aria-hidden="true">
