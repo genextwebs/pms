@@ -955,11 +955,20 @@ $('#hide-new-task-panel').click(function(){
 	$('#task_show').hide();
 });
                                                                                      
-// for show update task view
+// for show update task view and update
 
-$('#updateTask').click(function(){
-	$('#update_task_show').show();
-});                                    
+function updateTask(id){
+	$.ajax({
+		type: "POST",
+		url: base_url+"project/updateTask",
+		cache: false,
+	    data: "id="+id,
+	    success: function(data){
+	    	$('#update_task_show').html('');
+	    	$('#update_task_show').append(data);
+	    }
+	});
+}                                   
                                     
 
                                               
