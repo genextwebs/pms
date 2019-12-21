@@ -76,9 +76,8 @@
                         			<div class="row">
                                 		<div class="col-md-12">
                                             <div class="form-group">
-                                                <!-- <label class="control-label">Ticket Description <span class="text-danger">*</span></label> -->
-                                                <label class="control-label">Ticket Image <span class="text-danger">*</span></label>
-                                                <input type="file" id="ticket_Image" class="form-control" type="text" name="ticket_Image" value="">
+                                                 <input type='file'class="file-upload-input" name="ticket_Image" id="ticket_Image"/>
+                                             
                                             </div>
                                         </div>
                         			</div>
@@ -142,10 +141,24 @@
 	            					</div>
 	            					<div class="col-md-6">
 	            						<div class="form-group type">
-	            							<label>Type <a class="btn btn-sm btn-outline-info  ml-1" href="#"><i class="fa fa-plus"></i> Add Type</a></label>
+	            							<label>Type <!-- <a class="btn btn-sm btn-outline-info  ml-1" href="javascript:;" data-toggle="modal" data-target="#type1"><i class="fa fa-plus"></i> Add Type</a> --></label>
+	            						
 	            							<select class="custom-select br-0" name="question" id="question">
-	            								
-	            							</select>
+	            								<?php
+	            							foreach($tickettype as $ticket){
+												$str='';
+												//echo $ticket->id;die;
+												if($ticket->id==$ticketinfo[0]->type){
+												//echo $ticket->id.'<br/>';
+												//echo $ticketinfo[0]->type;die;	
+													$str='selected';
+												}
+												
+													$string = '<option value="'.$ticket->id.' "     '.$str.'>'.$ticket->name.'</option>';
+											}
+										?>
+
+											</select>
 	            						</div>
 	            					</div>
 	            					<div class="col-md-6">
@@ -161,20 +174,27 @@
 	            					</div>
 	            					<div class="col-md-12">
 	            						<div class="form-group channel">
-	            							<label class="control-label">Channel Name <a class="btn btn-sm btn-outline-info  ml-1" href="#"><i class="fa fa-plus"></i> Add channel</a></label>
+	            							
+	            							<!-- <label class="control-label">Channel Name <a class="btn btn-sm btn-outline-info  ml-1" href="javascript:;" data-toggle="modal" data-target="#channel1"><i class="fa fa-plus"></i> Add channel</a></label> -->
+	            							<label class="control-label">Channel Name</label>
 	            							<select class="custom-select br-0" name="channel" id="channel">
 	            								<?php
-													
-												?>
-	            							</select>
+	            							/*		foreach($ticketchannel as $tchannel){
+														$str='';
+															if($tchannel->id==$ticketinfo[0]->channelname){	
+																$str='selected';
+															}
+															$string = '<option value="'.$tchannel->id.'"'.$str.'">'.$tchannel->name.'</option>';
+											}
+*/										?>
 	            						</div>
 	            					</div>
-	            					<div class="col-md-12">
+	            				    <div class="col-md-12">
 	            						<div class="form-group">
 	            							<label class="control-label">Tags</label>
 	            							<input type="text" id="tags" class="form-control" name="tags" value="<?php echo !empty($ticketinfo[0]->tags) ? $ticketinfo[0]->tags : '' ?>">
 	            						</div>
-	            					</div>
+	            					</div>  
 	            				</div>
 	            			</div>
 	            		</div>
@@ -185,3 +205,67 @@
     </form>
 </div>	
 <!-- ends of contentwrap -->
+
+<!--For +addtype-->
+
+<!-- <div class="modal fade project-category" id="type1" tabindex="-1" role="dialog" aria-labelledby="project-category" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content br-0">
+			<div class="modal-header">
+				<h4 class="modal-title">Add New Ticket Type</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+					</button>
+			</div>
+			<div class="modal-body">
+				<form class="" id="ticket" name="ticket" method="post">
+					<div class="form-body">
+						<div class="row">
+							<div class="col-md-12 ">
+								<div class="form-group">
+									<label>Ticket Type</label>
+									<input type="text" name="ticket_type" id="ticket_type" class="form-control">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-actions">
+						<input type="button" id="save_ticket" class="btn btn-success" value="Save"> <i class="fa fa-check"></i>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+ -->
+<!-- For +addchannel-->
+
+<!-- <div class="modal fade project-category" id="channel1" tabindex="-1" role="dialog" aria-labelledby="project-category" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content br-0">
+			<div class="modal-header">
+				<h4 class="modal-title"> Add New Ticket Channel</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+					</button>
+			</div>
+			<div class="modal-body">
+				<form class="" id="ticketchannel" name="ticketchannel" method="post">
+					<div class="form-body">
+						<div class="row">
+							<div class="col-md-12 ">
+								<div class="form-group">
+									<label>Channel Name</label>
+									<input type="text" name="channel_name" id="channel_name" class="form-control">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-actions">
+						<input type="button" id="save_tchannel" class="btn btn-success" value="Save"> <i class="fa fa-check"></i>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div> -->

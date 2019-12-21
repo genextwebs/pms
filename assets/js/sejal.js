@@ -524,6 +524,7 @@ $("#save_ticket").click(function(event) {
 						    $('#question').html('');       
 							$('#question').append(data.ticketdata);
 							$('#type1').modal('toggle');
+							window.location.reload();
 							//	$('#type1').modal('toggle');
 							//$('#leave')[0].reset();
 

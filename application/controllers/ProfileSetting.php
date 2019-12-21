@@ -26,7 +26,8 @@ class ProfileSetting extends CI_Controller
 					$email=$this->input->post('email_id');
 					$pass=$this->input->post('password');
 					$mobile=$this->input->post('mobile_no');
-					$profilepicture = '';
+				    array('upload_data'=>$this->upload->data());
+					$updateArr=array($profilepicture = '';
 					
 					if(!empty($_FILES['image_file']['name'])){
 						$config = array(
@@ -41,8 +42,7 @@ class ProfileSetting extends CI_Controller
 
 						if($this->upload->do_upload('image_file')){
 
-							$profilepicture = array('upload_data'=>$this->upload->data());
-							$updateArr=array('name'=>$name,'emailid'=>$email,'password'=>$pass,'mobile'=>$mobile,'profileimg'=>$profilepicture['upload_data']['file_name']);
+							$profilepicture ='name'=>$name,'emailid'=>$email,'password'=>$pass,'mobile'=>$mobile,'profileimg'=>$profilepicture['upload_data']['file_name']);
 							$this->common_model->updateData('tbl_user',$updateArr,$whereArr);
 							$this->session->set_flashdata('message_name', 'Projects Updated sucessfully');
 						}

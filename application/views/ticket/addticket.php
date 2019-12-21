@@ -14,7 +14,7 @@
 </nav>
 <!-- contetn-wrap -->
 <div class="content-in">
-	<form id="addticket" class="aj-form" method="post" action="<?php echo base_url().'ticket/insertticket'; ?>">  
+	<form id="addticket" class="aj-form" method="post" action="<?php echo base_url().'ticket/insertticket'; ?>" enctype="multipart/form-data">  
 		<?php
 	        $mess = $this->session->flashdata('message_name');
 	        if(!empty($mess)){
@@ -76,13 +76,9 @@
                         			<div class="row">
                                 		<div class="col-md-12">
                                             <div class="form-group">
-                                                <!-- <label class="control-label">Ticket Description <span class="text-danger">*</span></label> -->
-                                                <!-- <input type='file'class="file-upload-input" name="ticket_Image" id="ticket_Image"/>
+                                            	<input type='file'class="file-upload-input" name="ticket_Image" id="ticket_Image"/>
+                                            	<input type="hidden" name="hidden_Image" value="<?php echo !empty($expense[0]->invoicefile) ? $expense[0]->invoicefile : '' ?>" >
                                                 
-                                                <input type="hidden" value="<?php echo
-                                                $ticketinfo[0]->ticketimage	?>" name="timage"> -->
-                                              <!--   <label class="control-label">Ticket Image <span class="text-danger">*</span></label>
-                                                <input type="file" id="ticket_Image" class="form-control" type="text" name="ticket_Image" value=""> -->
                                             </div>
                                         </div>
                         			</div>
@@ -181,6 +177,9 @@
 													<option value="<?php echo $tchannel->id?>"><?php echo $tchannel->name;?></option>
 												<?php
 													} 
+
+
+													
 												?> 		
 	            							</select>
 	            						</div>

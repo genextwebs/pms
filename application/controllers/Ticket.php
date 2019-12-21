@@ -32,17 +32,23 @@ class Ticket extends CI_Controller {
 
 			$t_subject = $this->input->post('ticket_subject'); 
 			$t_editor  = $this->input->post('editor1');
-			$t_image   = $this->input->post('ticket_Image');
+			//$t_image   = $this->input->post('ticket_Image');
+			//echo($t_image);die;
 			$t_requestname = $this->input->post('requestername');
 			$t_agentname = $this->input->post('agentname');
 			$t_question = $this->input->post('question');
 			$t_priority = $this->input->post('priority');
 			$t_channel = $this->input->post('channel');
 			$t_tags =  $this->input->post('tags');
-			
-			    
-			$whereArr  = array('ticketsubject'=>$t_subject,'ticketdescription'=>$t_editor, 'ticketimage'=>$t_image,'requestername'=>$t_requestname,'agent'=>$t_agentname,'type'=>$t_question,'priority'=>$t_priority,'channelname'=>$t_channel,'tags'=>$t_tags);
-			$query  =  $this->common_model->insertData('tbl_ticket',$whereArr);
+
+			$file = $_FILES['ticket_Image']['name'];
+			$file_loc = $_FILES['ticket_Image']['tmp_name'];
+			$file_size = $_FILES['ticket_Image']['size'];
+			$file_type = $_FILES['ticket_Image']['type'];
+			$folder="uploads/";
+			move_uploaded_file($file_loc,$folder.$file);
+			$insArr  = array('ticketsubject'=>$t_subject,'ticketdescription'=>$t_editor, 'ticketimage'=>$file,'requestername'=>$t_requestname,'agent'=>$t_agentname,'type'=>$t_question,'priority'=>$t_priority,'channelname'=>$t_channel,'tags'=>$t_tags);
+			$query  =  $this->common_model->insertData('tbl_ticket',$insArr);
 			$this->session->set_flashdata('message_name','Inserted Successfully........');
 			redirect('ticket/index');
 		}
@@ -156,7 +162,7 @@ class Ticket extends CI_Controller {
 						                    
 				               			 </div>
 							</div>';
-//echo($row->created_at);die;
+
 
 			$datarow[] = array(
 				$id = $i,
@@ -206,17 +212,41 @@ class Ticket extends CI_Controller {
 		{
 			$t_subject = $this->input->post('ticket_subject'); 
 			$t_editor  = $this->input->post('editor1');
-			$t_image   = $this->input->post('ticket_Image');
+			//$t_image   = $this->input->post('ticket_Image');
 			$t_requestname = $this->input->post('requestername');
 			$t_agentname = $this->input->post('agentname');
 			$t_question = $this->input->post('question');
 			$t_priority = $this->input->post('priority');
 			$t_channel = $this->input->post('channel');
 			$t_tags =  $this->input->post('tags');
+			
+			if(!empty($_FILES['ticket_Image']['name'])){
 
-			$updateArr  = array('ticketsubject'=>$t_subject,'ticketdescription'=>$t_editor, 'ticketimage'=>$t_image,'requestername'=>$t_requestname,'agent'=>$t_agentname,'type'=>$t_question,'priority'=>$t_priority,'channelname'=>$t_channel,'tags'=>$t_tags);
+				$file = $_FILES['ticket_Image']['name'];
+				$file_loc = $_FILES['ticket_Image']['tmp_name'];
+				$file_size = $_FILES['ticket_Image']['size'];
+				$file_type = $_FILES['ticket_Image']['type'];
+				$folder="uploads/";
+				move_uploaded_file($file_loc,$folder.$file);
+				$updateArr['ticketimage']=$file;	
+				}
+				else{
+					$updateArr['ticketimage']=$this->input->post('ticket_Image');
+				}
+				$updateArr['ticketsubject'] = $t_subject;
+				$updateArr['ticketdescription'] = $t_editor;
+				$updateArr['requestername'] = $t_requestname;
+				$updateArr['agent'] = $t_agentname;
+				$updateArr['type'] = $t_question;
+				$updateArr['priority'] = $t_priority;
+				$updateArr['channelname'] = $t_channel;
+				$updateArr['tags'] = $t_tags;
+
+
+			/*$updateArr  = array('ticketsubject'=>$t_subject,'ticketdescription'=>$t_editor,'requestername'=>$t_requestname,'agent'=>$t_agentname,'type'=>$t_question,'priority'=>$t_priority,'channelname'=>$t_channel,'tags'=>$t_tags);*/
 
 			$this->common_model->updateData('tbl_ticket',$updateArr,$whereArr);
+			//echo $this->db->last_query();die;
 			$this->session->set_flashdata('message_name', 'Ticket Updated sucessfully....');
 			redirect('ticket/index');
 		}
@@ -236,8 +266,7 @@ class Ticket extends CI_Controller {
 			$tname = $this->input->post('name');
 			$insArr = array('name'=>$tname);
 			$typeid=$this->common_model->insertData('tbl_ticket_type',$insArr);
-//echo $this->db->last_query();die;
-			//$catArray = $this->common_model->getData('tbl_ticket');
+			$catArray = $this->common_model->getData('tbl_ticket_type');
 			$str = '';
 			foreach($catArray as $row){
 				$str.='<option value="'.$row->id.'">'.$row->name.'</option>'; 
