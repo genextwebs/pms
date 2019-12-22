@@ -34,7 +34,7 @@
 								  	</li>
 								  	
 								  	<li class="nav-item">
-								    	<a class="nav-link <?php if($controller == 'Project' && ( $function == 'task' || $function == 'updateTask')) { echo "active";}?>" id="tasks-tab"  href="<?php echo base_url().'Project/task/'.base64_encode($id)?>" role="tab" aria-controls="tasks" aria-selected="false">Tasks</a>
+								    	<a class="nav-link <?php if($controller == 'Project' && $function == 'task') { echo "active";}?>" id="tasks-tab"  href="<?php echo base_url().'Project/task/'.base64_encode($id)?>" role="tab" aria-controls="tasks" aria-selected="false">Tasks</a>
 								  	</li>
 								  	<li class="nav-item">
 								    	<a class="nav-link" id="files-tab" data-toggle="tab" href="#files" role="tab" aria-controls="files" aria-selected="false">Files</a>
@@ -600,7 +600,7 @@
 									  				</div>
 									  			</div>
 									  		</div>
-									  		<div class="row mb-2" id="update_task_show"></div>
+									  		<div class="row mb-2"  id="update_task_show"></div>
 					            			<div class="stats-box">
 					            				<h2>Tasks</h2>
 					            				<div class="row mb-2">
@@ -645,9 +645,9 @@
 					            			</div>
 									  	</div>
 									  	<!-- upadte task -->
-									  <!-- 	<div class="tab-pane <?php if($controller == 'Project' && $function == 'updateTask') { echo "active show";}?>" id="tasks" role="tabpanel" aria-labelledby="tasks-tab">
-									  		<div class="row mb-2" id="update_task_show">
-									  			<div id="new-tadk-panel" class="col-md-12">
+									  	<!-- <div class="tab-pane <?php if($controller == 'Project' && $function == 'updateTask') { echo "active show";}?>" id="tasks" role="tabpanel" aria-labelledby="tasks-tab"> -->
+									  		
+									  			<!-- <div id="new-tadk-panel" class="col-md-12">
 									  				<div class="card">
 									  					<div class="card-header">
 									  						<i class="ti-plus"></i> New Task 
@@ -746,11 +746,21 @@
 													        </div>
 													    </div>
 									  				</div>
-									  			</div>
-									  		</div> -->
-									  
+									  			</div> -->
+									  		<!-- </div> -->
 									  		
-					            			
+					            			<!-- <div class="stats-box">
+					            				<h2>Tasks</h2>
+					            				<div class="row mb-2">
+												    <div class="col-md-6">
+												        <a href="javascript:void(0);" id="show-new-task-panel" class="btn btn-outline-success btn-sm"> <i class="fa fa-plus"></i> New Task</a>
+												        <a href="javascript:void(0);" class="btn btn-sm btn-outline-info ml-1" data-original-title="Edit" data-toggle="modal" data-target="#add-task-categ">
+											         		<i class="fa fa-plus"></i> Add Task Category</i>
+											         	</a>
+												    </div>
+												</div>
+					            			</div> -->
+									  	<!-- </div> -->
 									  	<!-- tab5 -->
 									  	<div class="tab-pane fade" id="files" role="tabpanel" aria-labelledby="files-tab">
 					            			<div class="stats-box">
