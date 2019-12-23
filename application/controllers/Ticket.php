@@ -12,10 +12,10 @@ class Ticket extends CI_Controller {
 	}
 
 	public function index(){
-		//$data['tickettype']=$this->common_model->getData('tbl_ticket_type');
-		//$data['ticketchannel']=$this->common_model->getData('tbl_ticket_channel');
+		$data['tickettype']=$this->common_model->getData('tbl_ticket_type');
+		$data['ticketchannel']=$this->common_model->getData('tbl_ticket_channel');
 		$this->load->view('common/header');
-		$this->load->view('ticket/ticket');
+		$this->load->view('ticket/ticket',$data);
 		$this->load->view('common/footer');
 	}
 
@@ -32,8 +32,7 @@ class Ticket extends CI_Controller {
 
 			$t_subject = $this->input->post('ticket_subject'); 
 			$t_editor  = $this->input->post('editor1');
-			//$t_image   = $this->input->post('ticket_Image');
-			//echo($t_image);die;
+			$status   = $this->input->post('status');
 			$t_requestname = $this->input->post('requestername');
 			$t_agentname = $this->input->post('agentname');
 			$t_question = $this->input->post('question');
@@ -47,7 +46,7 @@ class Ticket extends CI_Controller {
 			$file_type = $_FILES['ticket_Image']['type'];
 			$folder="uploads/";
 			move_uploaded_file($file_loc,$folder.$file);
-			$insArr  = array('ticketsubject'=>$t_subject,'ticketdescription'=>$t_editor, 'ticketimage'=>$file,'requestername'=>$t_requestname,'agent'=>$t_agentname,'type'=>$t_question,'priority'=>$t_priority,'channelname'=>$t_channel,'tags'=>$t_tags);
+			$insArr  = array('ticketsubject'=>$t_subject,'ticketdescription'=>$t_editor,'status'=>$status, 'ticketimage'=>$file,'requestername'=>$t_requestname,'agent'=>$t_agentname,'type'=>$t_question,'priority'=>$t_priority,'channelname'=>$t_channel,'tags'=>$t_tags);
 			$query  =  $this->common_model->insertData('tbl_ticket',$insArr);
 			$this->session->set_flashdata('message_name','Inserted Successfully........');
 			redirect('ticket/index');
@@ -61,7 +60,7 @@ class Ticket extends CI_Controller {
 			$defaultOrderClause = "";
 			$sWhere = "";
 			$sOrder = '';
-			$aColumns = array( 'id', 'ticketsubject', 'ticketdescription', 'ticketimage', 'requestername' ,'agent' , 'type' , 'priority' ,'channelname' , 'tags');
+			$aColumns = array( 'id', 'ticketsubject', 'ticketdescription', 'ticketimage', 'requestername' ,'agent' , 'type' , 'priority' ,'status','channelname' , 'tags');
 			$totalColumns = count($aColumns);
 
 			/** Paging Start **/
@@ -116,33 +115,45 @@ class Ticket extends CI_Controller {
 			/** Filtering Start */
 			if(!empty(trim($_GET['sSearch']))){
 				$searchTerm = trim($_GET['sSearch']);
-				$sWhere.= ' WHERE (ticketsubject like "%'.$searchTerm.'%" )';
+				$sWhere.= ' AND (ticketsubject like "%'.$searchTerm.'%")';
 			}
-			/*$startdate=!empty($_POST['startdate']) ? $_POST['startdate'] : '';
-			$enddate=!empty($_POST['enddate']) ? $_POST['enddate'] : '';
-			$empname=!empty($_POST['ename']) ? $_POST['ename'] : '';*/
+			//	$agent=!empty($_POST['agent']) ? $_POST['agent'] : '';
+	        $status=!empty($_POST['status1'])? $_POST['status1'] : '';
+			$priority=!empty($_POST['priority']) ? $_POST['priority'] : '';
+			$cname=!empty($_POST['channelname']) ? $_POST['channelname'] : '';
+			$type=!empty($_POST['tickettype']) ? $_POST['tickettype'] : '';
 
-			/*if(!empty($startdate)){						
-				$sWhere.=' AND date>="'.$startdate.'"';
+
+			if($status =='all'){
+				}
+			else if(!empty($status)){						
+				$sWhere.=' AND tbl_ticket.status='.$status;
 			}
-			if(!empty($enddate)){						
-				$sWhere.=' AND date<="'.$enddate.'"';
+			if($priority =='all'){
+				}
+			else if(!empty($priority)){						
+				$sWhere.=' AND tbl_ticket.priority='.$priority;
 			}
-			if(!empty($empname)){						
-				$sWhere.=' AND tbl_leaves.empid='.$empname;
+			if($cname =='all'){
+				}
+			else if(!empty($cname)){						
+				$sWhere.=' AND tbl_ticket.channelname='.$cname;
 			}
-			if(!empty($sWhere)){
-				$sWhere = " WHERE 1 ".$sWhere;
-			}*/
+			if($type =='all'){
+				}
+			else if(!empty($type)){						
+				$sWhere.=' AND tbl_ticket.type='.$type;
+			}
+			$sWhere = " WHERE 1 ".$sWhere;
 		}
 		
-		$query = "SELECT id,ticketsubject,requestername,created_at,agent,priority,tags FROM tbl_ticket".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
-		//echo $query;die;
+		$query = "SELECT tbl_ticket.* FROM tbl_ticket".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 		$TicketArr = $this->common_model->coreQueryObject($query);
 
-		$query = "SELECT * from tbl_ticket".$sWhere;
-		//echo $this->db->last_query();
+		$query = "SELECT tbl_ticket.*,tbl_ticket_channel.name as channel,tbl_ticket_type.name as type FROM tbl_ticket inner join tbl_ticket_channel on tbl_ticket.channelname=tbl_ticket_channel.id inner join tbl_ticket_type on tbl_ticket.type=tbl_ticket_type.id".$sWhere;
+		
 		$TicketFilterArr = $this->common_model->coreQueryObject($query);
+		echo $this->db->last_query();die;
 		$iFilteredTotal = count($TicketFilterArr);
 		$TicketAllArr = $this->common_model->getData('tbl_ticket');
 		$iTotal = count($TicketAllArr);
@@ -162,7 +173,43 @@ class Ticket extends CI_Controller {
 						                    
 				               			 </div>
 							</div>';
+		//For Priority
+		if($row->priority=='0'){
+			$priority=$row->priority='Low';
+			$showStatus = '<label class="label label-success">'.$priority.'</label>';
+		}
+		else if($row->priority=='1'){
+			$priority=$row->priority='High';
+			$showStatus = '<label class="label label-warning">'.$priority.'</label>';
+		}
+		else if($row->priority=='2'){
+			$prioritypriority=$row->priority='Medium';
+			$showStatus = '<label class="label label-warning">'.$priority.'</label>';
+		}
+		else if($row->priority=='3'){
+			$priority=$row->priority='Urgent';
+			$showStatus = '<label class="label label-warning">'.$priority.'</label>';
+		}
 
+		//For Status
+		if($row->status=='0'){
+			$status=$row->status='Open';
+			$showStatus = '<label class="label label-success">'.$status.'</label>';
+		}
+		else if($row->status=='1'){
+			$status=$row->status='Pending';
+			$showStatus = '<label class="label label-success">'.$status.'</label>';
+		}
+		else if($row->status=='2'){
+			$status=$row->status='Resolved';
+			$showStatus = '<label class="label label-success">'.$status.'</label>';
+		}
+
+		else if($row->status=='3'){
+			$status=$row->status='Close';
+			$showStatus = '<label class="label label-success">'.$status.'</label>';
+		}
+		
 
 			$datarow[] = array(
 				$id = $i,
@@ -172,7 +219,7 @@ class Ticket extends CI_Controller {
 			   
 			    '
 			    	<b>Agent:</b>'.$row->agent.
-			    	'<br/> <b>Staus:</b> <label class="label label-success">'/* $row->status*/.'</label><br/>
+			    	'<br/> <b>Staus:</b> <label class="label label-success">'.$row->status.'</label><br/>
 			        <label><b>Priority:</b></label>'.$row->priority,
 				/*$row->ticketimage,
 				$row->requestername,
@@ -212,6 +259,7 @@ class Ticket extends CI_Controller {
 		{
 			$t_subject = $this->input->post('ticket_subject'); 
 			$t_editor  = $this->input->post('editor1');
+			$status   = $this->input->post('status');
 			//$t_image   = $this->input->post('ticket_Image');
 			$t_requestname = $this->input->post('requestername');
 			$t_agentname = $this->input->post('agentname');
@@ -228,19 +276,24 @@ class Ticket extends CI_Controller {
 				$file_type = $_FILES['ticket_Image']['type'];
 				$folder="uploads/";
 				move_uploaded_file($file_loc,$folder.$file);
-				$updateArr['ticketimage']=$file;	
+				$updateArr['ticketimage']=$file;
+			//	print_r($updateArr['ticketimage']);die;
 				}
 				else{
-					$updateArr['ticketimage']=$this->input->post('ticket_Image');
+					$updateArr['ticketimage']=$this->input->post('hidden_img');
+					echo($updateArr['ticketimage']);
+
 				}
 				$updateArr['ticketsubject'] = $t_subject;
 				$updateArr['ticketdescription'] = $t_editor;
+				$updateArr['status'] = $status;
 				$updateArr['requestername'] = $t_requestname;
 				$updateArr['agent'] = $t_agentname;
 				$updateArr['type'] = $t_question;
 				$updateArr['priority'] = $t_priority;
 				$updateArr['channelname'] = $t_channel;
 				$updateArr['tags'] = $t_tags;
+
 
 
 			/*$updateArr  = array('ticketsubject'=>$t_subject,'ticketdescription'=>$t_editor,'requestername'=>$t_requestname,'agent'=>$t_agentname,'type'=>$t_question,'priority'=>$t_priority,'channelname'=>$t_channel,'tags'=>$t_tags);*/

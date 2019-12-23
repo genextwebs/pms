@@ -74,9 +74,30 @@
                                         </div>
                         			</div>
                         			<div class="row">
+		                    			<div class="col-md-6">
+		            						<div class="form-group type">
+		            							<label>Status <span class="text-danger">*</span></label>
+		            							<select class="custom-select br-0" name="status" id="status">
+		            							<!-- 	<option selected value="0">Open</option>
+		            								<option value="1">Pending</option>
+		            								<option value="2">Resolved</option>
+		            								<option value="3">Close</option> -->
+		            							<option value="0" <?php if($ticketinfo[0]->status=='0'){echo 'selected';}?>>Open</option>
+		            							<option value="1" <?php if($ticketinfo[0]->status=='1'){echo 'selected';}?>>Pending</option>
+		            							<option value="2" <?php if($ticketinfo[0]->status=='2'){echo 'selected';}?>>Resolved</option>
+		            							<option value="3" <?php if($ticketinfo[0]->status=='3'){echo 'selected';}?>>Close</option>
+
+		            							</select>
+		            						</div>
+		            					</div>
+	            					</div>
+                        			<div class="row">
                                 		<div class="col-md-12">
                                             <div class="form-group">
-                                                 <input type='file'class="file-upload-input" name="ticket_Image" id="ticket_Image"/>
+                                            	<label class="control-label">Ticket Image 
+                                            	</label><br/>
+                                                 	<input type='file'class="file-upload-input" name="ticket_Image" id="ticket_Image"/>
+                                                 	<input type="hidden" name="hidden_img" value="<?php echo !empty($ticketinfo[0]->ticketimage) ? $ticketinfo[0]->ticketimage : '' ?>" >
                                              
                                             </div>
                                         </div>
@@ -139,62 +160,70 @@
 	            							</select>
 	            						</div>
 	            					</div>
+
 	            					<div class="col-md-6">
 	            						<div class="form-group type">
-	            							<label>Type <!-- <a class="btn btn-sm btn-outline-info  ml-1" href="javascript:;" data-toggle="modal" data-target="#type1"><i class="fa fa-plus"></i> Add Type</a> --></label>
-	            						
+	            						<label class="control-label">Add Type</label>
 	            							<select class="custom-select br-0" name="question" id="question">
 	            								<?php
 	            							foreach($tickettype as $ticket){
 												$str='';
-												//echo $ticket->id;die;
 												if($ticket->id==$ticketinfo[0]->type){
 												//echo $ticket->id.'<br/>';
 												//echo $ticketinfo[0]->type;die;	
 													$str='selected';
 												}
 												
-													$string = '<option value="'.$ticket->id.' "     '.$str.'>'.$ticket->name.'</option>';
+													echo '<option value="'.$ticket->id.'"'.$str.'>'.$ticket->name.'</option>';
 											}
 										?>
 
 											</select>
 	            						</div>
 	            					</div>
+
 	            					<div class="col-md-6">
 	            						<div class="form-group type">
 	            							<label>Priority <span class="text-danger">*</span></label>
 	            							<select class="custom-select br-0" name="priority" id="priority">
-	            								<option selected>Low</option>
-	            								<option>Medium</option>
-	            								<option>High</option>
-	            								<option>Urgent</option>
+	            								<option value="0">Low</option>
+	            								<option value="1">High</option>
+	            								<option value="2">Medium</option>
+	            								<option value="3">Urgent</option>
 	            							</select>
 	            						</div>
 	            					</div>
+	            					
 	            					<div class="col-md-12">
 	            						<div class="form-group channel">
-	            							
-	            							<!-- <label class="control-label">Channel Name <a class="btn btn-sm btn-outline-info  ml-1" href="javascript:;" data-toggle="modal" data-target="#channel1"><i class="fa fa-plus"></i> Add channel</a></label> -->
-	            							<label class="control-label">Channel Name</label>
+	            							<label class="control-label">Channel Name </label>
 	            							<select class="custom-select br-0" name="channel" id="channel">
 	            								<?php
-	            							/*		foreach($ticketchannel as $tchannel){
+	            								foreach($ticketchannel as $tchannel){
 														$str='';
-															if($tchannel->id==$ticketinfo[0]->channelname){	
+															if($tchannel->id == $ticketinfo[0]->channelname){	 
+																//echo($tchannel->id);
+																//echo($ticketinfo[0]->channelname);
+																//die;
 																$str='selected';
 															}
-															$string = '<option value="'.$tchannel->id.'"'.$str.'">'.$tchannel->name.'</option>';
+															echo '<option value="'.$tchannel->id.'"'.$str.'>'.$tchannel->name.'</option>';
 											}
-*/										?>
-	            						</div>
+												/*foreach($ticketchannel as $channel){
+							            		echo '<option value="'.$channel->id.'">
+							            		'.$channel->name.'</option>';
+							            	}*/
+										?>
+										</select>
 	            					</div>
-	            				    <div class="col-md-12">
+	            					</div>
+	            					 <div class="col-md-12">
 	            						<div class="form-group">
 	            							<label class="control-label">Tags</label>
 	            							<input type="text" id="tags" class="form-control" name="tags" value="<?php echo !empty($ticketinfo[0]->tags) ? $ticketinfo[0]->tags : '' ?>">
 	            						</div>
-	            					</div>  
+	            					</div> 
+	            				    
 	            				</div>
 	            			</div>
 	            		</div>
@@ -208,7 +237,7 @@
 
 <!--For +addtype-->
 
-<!-- <div class="modal fade project-category" id="type1" tabindex="-1" role="dialog" aria-labelledby="project-category" aria-hidden="true">
+ <!-- <div class="modal fade project-category" id="type1" tabindex="-1" role="dialog" aria-labelledby="project-category" aria-hidden="true">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content br-0">
 			<div class="modal-header">
@@ -224,8 +253,8 @@
 							<div class="col-md-12 ">
 								<div class="form-group">
 									<label>Ticket Type</label>
-									<input type="text" name="ticket_type" id="ticket_type" class="form-control">
-								</div>
+									<!-- <input type="text" name="ticket_type" id="ticket_type" class="form-control"> -->
+								<!-- </div>
 							</div>
 						</div>
 					</div>
@@ -234,13 +263,13 @@
 					</div>
 				</form>
 			</div>
-		</div>
-	</div>
-</div>
- -->
+		</div> -->
+<!-- 	</div>
+</div> --> -->
+
 <!-- For +addchannel-->
 
-<!-- <div class="modal fade project-category" id="channel1" tabindex="-1" role="dialog" aria-labelledby="project-category" aria-hidden="true">
+<!--  <div class="modal fade project-category" id="channel1" tabindex="-1" role="dialog" aria-labelledby="project-category" aria-hidden="true">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content br-0">
 			<div class="modal-header">
@@ -268,4 +297,4 @@
 			</div>
 		</div>
 	</div>
-</div> -->
+</div>  -->

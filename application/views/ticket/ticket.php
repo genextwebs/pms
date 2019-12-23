@@ -47,7 +47,7 @@
 						</div>
         			</div>
 				</div>
-				<!-- <div class="row filter-from" id="ticket-filters" style="display: none;">
+				<div class="row filter-from" id="ticket-filters" style="display: none;">
 	             	<div class="col-md-12">
 	                    <h4>Filter by <a href="javascript:;" class="pull-right toggle-filter"><i class="fa fa-times-circle-o"></i></a></h4>
 	               	</div>
@@ -56,11 +56,14 @@
 		                	<div class="col-md-4">
 		                		<label class="control-label">Agent</label>
             					<div class="form-group">
-            						<select id='status' class="select2 form-control" data-placeholder="Select Agent">
-							            <option value='all'>All</option>       
-							            <option value='0'>Waiting</option>  
-							            <option value='1'>Accepted</option> 
-							            <option value='2'>Declined</option>   
+            						<select id='agent' class="select2 form-control" data-placeholder="Select Agent">
+							            <option selected>Agent not assigned</option>
+	            								<option>Kethi Oman[kethi@example.com]</option>
+	            								<option>Obama Donald[donald77@example.com]</option>
+	            								<option>Jequcy Trump[jequcy@example.com]</option>
+	            								<option>herry Oman[Oman@example.com]</option>
+	            								<option>Obama champ[Obama@example.com]</option>
+	            								<option>maxo Trump[Trump@example.com]</option>  
 									</select> 
             					</div>
 		                	</div>
@@ -69,57 +72,66 @@
 		                		<label class="control-label">Status</label>
             					<div class="form-group">
             						<select id='status' class="select2 form-control" data-placeholder="Select Status">
-							            <option value='all'>All</option>       
-							            <option value='0'>Waiting</option>  
-							            <option value='1'>Accepted</option> 
-							            <option value='2'>Declined</option>   
-										</select> 
+							            <option value="all">No filter</option>       
+							            <option value="0">Open</option>
+        								<option value="1">Pending</option>
+        								<option value="2">Resolved</option>
+        								<option value="3">Close</option>
+									</select> 
             					</div>
 		                	</div>
 
 	                		<div class="col-md-4">
 	                			<label class="control-label">Priority</label>
         						<div class="form-group">
-        							<select id='status' class="select2 form-control" data-placeholder="Select Priority">
-							            <option value='all'>All</option>       
-							            <option value='0'>Waiting</option>  
-							            <option value='1'>Accepted</option> 
-							            <option value='2'>Declined</option>   
+        							<select id='priority' class="select2 form-control" data-placeholder="Select Priority">
+        								<option value="all">--Select--</option>
+							           	<option value="0">Low</option>
+        								<option value="1">High</option>
+        								<option value="2">Medium</option>
+        								<option value="3">Urgent</option>
 									</select> 
         						</div>
 	                		</div>
 	                		<div class="col-md-4">
 	                			<label class="control-label">Channel Name</label>
         						<div class="form-group">
-        							<select id='status' class="select2 form-control" data-placeholder="Select ChannelName">
-							            <option value='all'>All</option>       
-							            <option value='0'>Waiting</option>  
-							            <option value='1'>Accepted</option> 
-							            <option value='2'>Declined</option>   
+        							<select id='channelname' class="select2 form-control" data-placeholder="Select ChannelName">
+							            <option value="all">--Select--</option>
+									
+										 <?php
+							            	foreach($ticketchannel as $channel){
+							            		echo '<option value="'.$channel->id.'">
+							            		'.$channel->name.'</option>';
+							            	} 
+							            ?> 
 									</select> 
         						</div>
 	                		</div>
 	                		<div class="col-md-4">
 	                			<label class="control-label">Type</label>
         						<div class="form-group">
-        							<select id='status' class="select2 form-control" data-placeholder="Select Type">
-							            <option value='all'>All</option>       
-							            <option value='0'>Waiting</option>  
-							            <option value='1'>Accepted</option> 
-							            <option value='2'>Declined</option>   
+        							<select id='tickettype' class="select2 form-control" data-placeholder="Select Type">
+        								<option value="all">--Select--</option>
+							           	<?php
+											foreach($tickettype as $type)
+											{
+												echo '<option value="'.$type->id.'" >'.$type->name.'</option>';
+											}
+										?>
 									</select> 
         						</div>
 	                		</div>
 		                	<div class="col-md-4">
 		                        <div class="form-group m-t-10">
 		                            <label class="control-label col-12 mb-3">&nbsp;</label>
-		                            	<button type="button" id="btnApplyEstimates" class="btn btn-success col-lg-4 co-md-5"><i class="fa fa-check"></i> Apply</button>
-		                            	<button type="button" id="reset-filters" class="btn btn-inverse col-lg-4 co-md-5 offset-md-1"><i class="fa fa-refresh"></i> Reset</button>
+		                            	<button type="button" id="btnApplyTicket" class="btn btn-success col-lg-4 co-md-5"><i class="fa fa-check"></i> Apply</button>
+		                            	<button type="button" id="btnreset" class="btn btn-inverse col-lg-4 co-md-5 offset-md-1"><i class="fa fa-refresh"></i> Reset</button>
 		                        </div>
 		                    </div>
 						</div>
 					</form>
-				</div> -->
+				</div> 
 			 
 			
 				<?php
@@ -153,34 +165,4 @@
 			
 <!-- ends of contentwrap -->
 
-<!--For +add type-->
 
-<div class="modal fade project-category" id="type1" tabindex="-1" role="dialog" aria-labelledby="project-category" aria-hidden="true">
-	<div class="modal-dialog modal-lg" role="document">
-		<div class="modal-content br-0">
-			<div class="modal-header">
-				<h4 class="modal-title"> Project Category</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">×</span>
-					</button>
-			</div>
-			<div class="modal-body">
-				<form class="" id="ticket" name="ticket" method="post" onsubmit="return checkName();">
-					<div class="form-body">
-						<div class="row">
-							<div class="col-md-12 ">
-								<div class="form-group">
-									<label>Ticket Type</label>
-									<input type="text" name="category_name" id="ticket_type" class="form-control">
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="form-actions">
-						<input type="submit" id="save_ticket" class="btn btn-success" value="Save"> <i class="fa fa-check"></i>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-</div>

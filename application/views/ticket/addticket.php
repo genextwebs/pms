@@ -55,6 +55,7 @@
 									<div class="alert alert-warning" role="alert">
 									  This is a warning alert
 									</div>
+
                 				</div>
                 				<div class="form-body">
                 					<div class="row">
@@ -74,8 +75,23 @@
                                         </div>
                         			</div>
                         			<div class="row">
+		                    			<div class="col-md-6">
+		            						<div class="form-group type">
+		            							<label>Status <span class="text-danger">*</span></label>
+		            							<select class="custom-select br-0" name="status" id="status">
+		            								<option selected value="0">Open</option>
+		            								<option value="1">Pending</option>
+		            								<option value="2">Resolved</option>
+		            								<option value="3">Close</option>
+		            							</select>
+		            						</div>
+		            					</div>
+	            					</div>
+                        			<div class="row">
                                 		<div class="col-md-12">
                                             <div class="form-group">
+                                            	<label class="control-label">Ticket Image 
+                                            	</label><br/>
                                             	<input type='file'class="file-upload-input" name="ticket_Image" id="ticket_Image"/>
                                             	<input type="hidden" name="hidden_Image" value="<?php echo !empty($expense[0]->invoicefile) ? $expense[0]->invoicefile : '' ?>" >
                                                 
@@ -113,6 +129,8 @@
 	            			<div class="card-body">
 	            				<div class="row">
 	            					<div class="col-md-12">
+
+		            						<p id="succmsg" class="text-success"></p>
 	            						<div class="form-group">
 	            							<label class="control-label">Requester Name</label>
 	            							<select class="custom-select br-0" name="requestername" id="requestername">
@@ -159,10 +177,10 @@
 	            						<div class="form-group type">
 	            							<label>Priority <span class="text-danger">*</span></label>
 	            							<select class="custom-select br-0" name="priority" id="priority">
-	            								<option selected>Low</option>
-	            								<option>Medium</option>
-	            								<option>High</option>
-	            								<option>Urgent</option>
+	            								<option selected value="0">Low</option>
+	            								<option value="1">High</option>
+	            								<option value="2">Medium</option>
+	            								<option value="3">Urgent</option>
 	            							</select>
 	            						</div>
 	            					</div>
@@ -177,9 +195,6 @@
 													<option value="<?php echo $tchannel->id?>"><?php echo $tchannel->name;?></option>
 												<?php
 													} 
-
-
-													
 												?> 		
 	            							</select>
 	            						</div>
@@ -220,6 +235,7 @@
 								<div class="form-group">
 									<label>Ticket Type</label>
 									<input type="text" name="ticket_type" id="ticket_type" class="form-control">
+									<p id="errormsg" class="text-danger"></p>
 								</div>
 							</div>
 						</div>
@@ -252,6 +268,7 @@
 								<div class="form-group">
 									<label>Channel Name</label>
 									<input type="text" name="channel_name" id="channel_name" class="form-control">
+									<p id="errormsgc" class="text-danger"></p>
 								</div>
 							</div>
 						</div>

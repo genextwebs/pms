@@ -271,10 +271,12 @@ jQuery(document).ready(function() {
 			"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No Projects found<br/><br/></center>', "sZeroRecords": "<center><br/>No Projects found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ leads", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
 			"fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
 			
-		    	/*	aoData.push( { "name": "startdate", "value": $('#startdate').val() } );
-				aoData.push( { "name": "enddate", "value": $('#enddate').val() } );
-				aoData.push( { "name": "ename", "value": $('#empname').val() } );
-				*/
+		    	//aoData.push( { "name": "agent", "value": $('#agent').val() } );
+				aoData.push( { "name": "status1", "value": $('#status').val() } );
+				aoData.push( { "name": "priority", "value": $('#priority').val() } );
+				aoData.push( { "name": "channelname", "value": $('#channelname').val() } );
+				aoData.push( { "name": "tickettype", "value": $('#tickettype').val() } );
+				
 				oSettings.jqXHR = $.ajax( {
 					"dataType": 'json',
 					"type": "POST",
@@ -337,6 +339,13 @@ $('#btnApplyLeaves').click(function(){
 	var oTable = $('#leaves').DataTable();
 	oTable.draw();
 });
+
+
+$('#btnApplyTicket').click(function(){
+	var oTable = $('#tickets').DataTable();
+	oTable.draw();
+});
+
 
 //addproject=> datepicker
 $(document).ready(function(){
@@ -523,31 +532,23 @@ $("#save_ticket").click(function(event) {
 							console.log(data.ticketdata);
 						    $('#question').html('');       
 							$('#question').append(data.ticketdata);
+							
+							$('#ticket')[0].reset();
 							$('#type1').modal('toggle');
-							window.location.reload();
-							//	$('#type1').modal('toggle');
-							//$('#leave')[0].reset();
-
-							//$("tbody").append("<tr id='cate_"+data.typeid+"'><td>"+data.count+"</td><td>"+dataString+"</td> <td><input type='submit' class='btn btn-sm btn-danger btn-rounded delete-category' onclick='deletecat(\'"+data.typeid+"\');' id='deletecat' value='Remove'></tr>");
-						   /* $('#project-category1').removeClass('show');
-							$('.modal-backdrop').removeClass('show');
-							$('.modal-backdrop').find('div').remove();
-							$('body').removeAttr("style");
-							$('body').removeClass("modal-open");
-							$('#category')[0].reset();*/
 							$('#succmsg').html('');
-							$('#succmsg').html('<b>Successfully category added</b>');
+							$('#succmsg').html('<b>Successfully ticket added</b>');
+							$('#succmsg').fadeOut(3000);
 					   }
 					});
 				}else{
 					jQuery('#errormsg').html('')
-					jQuery('#errormsg').html('<b>This category already exists</b>');
+					jQuery('#errormsg').html('<b>This ticket already exists</b>');
 				}
 			}
 		});
 	}else{
 		jQuery('#errormsg').html('')
-		jQuery('#errormsg').html('<b>Please enter category name</b>');
+		jQuery('#errormsg').html('<b>Please enter ticket name</b>');
 	}
 });
 
@@ -555,22 +556,17 @@ $("#save_ticket").click(function(event) {
 //add channel 
 $("#save_tchannel").click(function(event) {
 	var c_name = $("input[name='channel_name']").val();
-	//alert(c_name);
 	if(c_name!=""){
-		//alert(c_name);
 		$.ajax({
 			url: base_url+"ticket/check_t_channel",
 			type: 'POST',
 			dataType: 'html',
 			data:{channel:c_name},
 			success: function(data) {
-				//alert(t_name);
 				if(data==0){
 					var dataString = 'name='+ c_name;
-					//alert(c_name);
 					jQuery('#errormsg').html('');
 					$.ajax({
-				       // alert(dataString);
 					    url: base_url+"ticket/insert_t_channel",
 					    type: 'POST',
 					    dataType: 'json',
@@ -579,29 +575,24 @@ $("#save_tchannel").click(function(event) {
 							console.log(data.ticketcdata);
 						    $('#channel').html('');       
 							$('#channel').append(data.ticketcdata);
-							$('#channel1').modal('toggle');
-							 //$("#channel").modal("hide");
-
-							//$("tbody").append("<tr id='cate_"+data.typeid+"'><td>"+data.count+"</td><td>"+dataString+"</td> <td><input type='submit' class='btn btn-sm btn-danger btn-rounded delete-category' onclick='deletecat(\'"+data.typeid+"\');' id='deletecat' value='Remove'></tr>");
-						   /* $('#project-category1').removeClass('show');
-							$('.modal-backdrop').removeClass('show');
-							$('.modal-backdrop').find('div').remove();
-							$('body').removeAttr("style");
-							$('body').removeClass("modal-open");
-							$('#category')[0].reset();*/
+						
+							$('#ticketchannel')[0].reset();
+								$('#channel1').modal('toggle');
 							$('#succmsg').html('');
 							$('#succmsg').html('<b>Successfully Channel added</b>');
+							$('#succmsg').fadeOut(3000);
+
 					   }
 					});
 				}else{
-					jQuery('#errormsg').html('')
-					jQuery('#errormsg').html('<b>This Channel already exists</b>');
+					jQuery('#errormsgc').html('')
+					jQuery('#errormsgc').html('<b>This Channel already exists</b>');
 				}
 			}
 		});
 	}else{
-		jQuery('#errormsg').html('')
-		jQuery('#errormsg').html('<b>Please enter category name</b>');
+		jQuery('#errormsgc').html('')
+		jQuery('#errormsgc').html('<b>Please enter Channel Name</b>');
 	}
 });
 
