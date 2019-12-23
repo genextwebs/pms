@@ -974,10 +974,13 @@ function updateTask(id){
 	    	$('#deadline1').datepicker({format: 'dd-mm-yyyy'});
 	    	$('#deadline1').datepicker('setdate',data.duedate);
 	    	$('#assignemp option[value="'+data.SelEmp+'"]').attr('selected','selected');
-
-	    }
+	    	$('#task_category option[value="'+data.SelTaskCat+'"]').attr('selected','selected');
+	    	$('#status option[value="'+data.status+'"]').attr('selected','selected');
+	    	$('input:radio[name=radio-stacked]:selected').val();
+		 }
 	});
-}                                   
+}   
+
 
 //for close update view
 

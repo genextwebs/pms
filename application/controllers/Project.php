@@ -1053,7 +1053,9 @@ class Project extends CI_Controller {
 		$taskUpdateArr['startdate'] = $taskData[0]->startdate;
 		$taskUpdateArr['duedate'] = $taskData[0]->duedate;
 		$taskUpdateArr['SelEmp'] = $taskData[0]->assignedto;
-		//print_r($taskUpdateArr['SelEmp']);die;
+		$taskUpdateArr['SelTaskCat'] = $taskData[0]->taskcategory;
+		$taskUpdateArr['status'] = $taskData[0]->status;
+		$taskUpdateArr['priority'] = $taskData[0]->priority;
 		echo json_encode($taskUpdateArr);exit;
 	}
 }	

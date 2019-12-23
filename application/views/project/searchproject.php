@@ -661,7 +661,7 @@
 																			         		<i class="fa fa-plus"></i> Add Task Category</i>
 																			         	</a>
 										                							</label>
-										                							<select class="custom-select br-0" id="task-category" name="task-category">
+										                							<select class="custom-select br-0" id="task_category" name="task-category">
 										                							<?php
 										                								foreach($taskCat as $catData){
 										                							?>
@@ -669,6 +669,20 @@
 										                							<?php
 										                								}
 										                							?>	
+										                							</select>
+										                						</div>
+										                					</div>
+										                					<div class="col-md-12">
+										                						<div class="form-group">
+										                							<label class="control-label">
+										                								Status
+										                							</label>
+										                							<select class="custom-select br-0" id="status" name="task-status">
+										                							<option value="1">To Do</option>
+										                							<option value="2">Doing</option>
+										                							<option value="3">Done</option>
+										                							<option value="4">Completed</option>
+										                							<option value="0">Incomplete</option>
 										                							</select>
 										                						</div>
 										                					</div>
@@ -693,7 +707,7 @@
 													           			</div>
 													           		</div>
 													           		<div class="form-actions">
-													           			<button type="submit" id="save-task" class="btn btn-success"><i class="fa fa-check"></i> Save</button>
+													           			<button type="button" id="update-task" class="btn btn-success"><i class="fa fa-check"></i> Update</button>
 													           		</div>
 													           	</form>
 													        </div>
