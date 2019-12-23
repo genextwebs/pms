@@ -508,7 +508,7 @@
 	                                                        </div>
 									  					</div>
 									  					<div class="card-wrapper collapse show">
-													        <div class="card-body">
+													         <div class="card-body">
 													           	<form method="post" action="<?php echo base_url().'project/insertTask'?>" name="task_category">
 													           		<div class="form-body">
 													           			<div class="row">
@@ -600,96 +600,49 @@
 									  				</div>
 									  			</div>
 									  		</div>
-									  		<div class="row mb-2"  id="update_task_show"></div>
-					            			<div class="stats-box">
-					            				<h2>Tasks</h2>
-					            				<div class="row mb-2">
-												    <div class="col-md-6">
-												        <a href="javascript:void(0);" id="show-new-task-panel" class="btn btn-outline-success btn-sm"> <i class="fa fa-plus"></i> New Task</a>
-												        <a href="javascript:void(0);" class="btn btn-sm btn-outline-info ml-1" data-original-title="Edit" data-toggle="modal" data-target="#add-task-categ">
-											         		<i class="fa fa-plus"></i> Add Task Category</i>
-											         	</a>
-												    </div>
-												</div>
-												<div class="table-responsive mt-5">
-												    <table class="table table-bordered" id="tasks-table">
-												        <thead>
-												            <tr role="row">
-												                <th>Id</th>
-												                <th>Task</th>
-												               <!-- <th>Client</th>-->
-												                <th>Assigned To</th>
-												               <!-- <th>Assigned By</th>-->
-												                <th>Due Date</th>
-												                <th>Status</th>
-												                <th>Action</th>
-												            </tr>
-												        </thead>
-												        <tbody>
-												            <!--<tr>
-												                <td>69</td>
-												                <td><a href="javascript:;">Gryphon said to.</a></td>
-												                <td>Alice Gerlach</td>
-												                <td><img src="https://demo.worksuite.biz/default-profile-2.png" alt="user" class="img-circle" width="30">  Lyric Blanda</td>
-												                <td>-</td>
-												                <td><span class="text-danger">01-08-2019</span></td>
-												                <td><label class="badge badge-info" style="background-color: #d21010">Incomplete</label></td>
-												                <td>
-												                    <a href="javascript:;" class="btn btn-info btn-circle edit-task" data-toggle="tooltip" data-task-id="69" data-original-title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a> &nbsp;
-												                    <a href="javascript:;" class="btn btn-danger btn-circle sa-params" data-toggle="tooltip" data-task-id="69" data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>
-												                </td>
-												            </tr>-->
-												        </tbody>
-												    </table>
-												</div>
-					            			</div>
-									  	</div>
-									  	<!-- upadte task -->
-									  	<!-- <div class="tab-pane <?php if($controller == 'Project' && $function == 'updateTask') { echo "active show";}?>" id="tasks" role="tabpanel" aria-labelledby="tasks-tab"> -->
-									  		
-									  			<!-- <div id="new-tadk-panel" class="col-md-12">
+									  		<div class="row mb-2"  id="update_task_show" style="display: none;">
+									  			<div id="new-tadk-panel" class="col-md-12">
 									  				<div class="card">
 									  					<div class="card-header">
-									  						<i class="ti-plus"></i> New Task 
+									  						<i class="ti-pencil"></i> Update Task 
 									  						<div class="card-action">
-	                                                            <a href="javascript:;" id="hide-new-task-panel"><i class="ti-close"></i></a>
+	                                                            <a href="javascript:;" id="hide-update-task-panel"><i class="ti-close"></i></a>
 	                                                        </div>
 									  					</div>
 									  					<div class="card-wrapper collapse show">
 													        <div class="card-body">
-													           	<form method="post" action="<?php echo base_url().'project/insertTask'?>" name="task_category">
+													           	<form method="post" name="task_category">
 													           		<div class="form-body">
 													           			<div class="row">
 													           				<div class="col-md-12">
 									                							<div class="form-group">
 										                							<label class="control-label">Title</label>
-										                							<input type="text" class="form-control" id="title-task" name="title_task">
+										                							<input type="text" class="form-control" id="title_task" name="title_task" value="">
 										                						</div>
 									                						</div>
 									                						<div class="col-md-12">
 									                							<div class="form-group">
 									                							 	<label class="control-label">Description</label>
-									                							 	<textarea name="editor1"></textarea>
+									                							 	<textarea name="editor1" id="description"></textarea>
 									                							</div>
 									                						</div>
 									                						<div class="col-md-12">
 									                							<div class="form-group">
 									                								<label class="control-label">start Date</label>
-									                								<input id="start_date" type="text" class="form-control" name="startdate">
+									                								<input id="start_date1" type="text" class="form-control" name="startdate" value="" readonly="">
 									                							</div>
 									                						</div>
 									                						<div class="col-md-12">
 									                							<div class="form-group">
 									                								<label class="control-label">Due Date</label>
-									                								<input id="deadline" type="text" class="form-control" name="due_date">
+									                								<input id="deadline1" type="text" class="form-control" name="due_date" value="" readonly="">
 									                							</div>
 									                						</div>
 
 									                						<div class="col-md-12">
 									                							<div class="form-group sm-box">
 									                								<label class="control-label">Assigned To</label>
-									                							 	<select class="custom-select br-0" name="assignemp">
-									                							 		>
+									                							 	<select class="custom-select br-0" name="assignemp" id="assignemp">
 										                								<?php foreach($employee as $row){
 												            							?>
 																	            		<option value="<?php echo $row->id?>"><?php echo $row->employeename;?></option>
@@ -746,10 +699,9 @@
 													        </div>
 													    </div>
 									  				</div>
-									  			</div> -->
-									  		<!-- </div> -->
-									  		
-					            			<!-- <div class="stats-box">
+									  			</div>	
+									  		</div>
+					            			<div class="stats-box">
 					            				<h2>Tasks</h2>
 					            				<div class="row mb-2">
 												    <div class="col-md-6">
@@ -759,8 +711,40 @@
 											         	</a>
 												    </div>
 												</div>
-					            			</div> -->
-									  	<!-- </div> -->
+												<div class="table-responsive mt-5">
+												    <table class="table table-bordered" id="tasks-table">
+												        <thead>
+												            <tr role="row">
+												                <th>Id</th>
+												                <th>Task</th>
+												               <!-- <th>Client</th>-->
+												                <th>Assigned To</th>
+												               <!-- <th>Assigned By</th>-->
+												                <th>Due Date</th>
+												                <th>Status</th>
+												                <th>Action</th>
+												            </tr>
+												        </thead>
+												        <tbody>
+												            <!--<tr>
+												                <td>69</td>
+												                <td><a href="javascript:;">Gryphon said to.</a></td>
+												                <td>Alice Gerlach</td>
+												                <td><img src="https://demo.worksuite.biz/default-profile-2.png" alt="user" class="img-circle" width="30">  Lyric Blanda</td>
+												                <td>-</td>
+												                <td><span class="text-danger">01-08-2019</span></td>
+												                <td><label class="badge badge-info" style="background-color: #d21010">Incomplete</label></td>
+												                <td>
+												                    <a href="javascript:;" class="btn btn-info btn-circle edit-task" data-toggle="tooltip" data-task-id="69" data-original-title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a> &nbsp;
+												                    <a href="javascript:;" class="btn btn-danger btn-circle sa-params" data-toggle="tooltip" data-task-id="69" data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>
+												                </td>
+												            </tr>-->
+												        </tbody>
+												    </table>
+												</div>
+					            			</div>
+									  	</div>
+									  	
 									  	<!-- tab5 -->
 									  	<div class="tab-pane fade" id="files" role="tabpanel" aria-labelledby="files-tab">
 					            			<div class="stats-box">

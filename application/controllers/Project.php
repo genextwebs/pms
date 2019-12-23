@@ -1045,111 +1045,16 @@ class Project extends CI_Controller {
 		$id = base64_decode($_POST['id']);
 		$whereArr = array('id' => $id);
 		$taskData = $this->common_model->getData('tbl_task' , $whereArr);
+		$data['EmpData'] = $this->common_model->getData('tbl_employee');
 		$taskCat = $this->common_model->getData('tbl_task_category');
-		$str = '';
-		/*$str.= '<div id="new-tadk-panel" class="col-md-12">';
-		$str.= '<div class="card">';
-		$str.= '<div class="card-header">';
-		$str.= '<i class="ti-plus"></i> New Task ';
-		$str.= '<div class="card-action">';
-		$str.= '<a href="javascript:;" id="hide-new-task-panel"><i class="ti-close"></i></a>';
-		$str.= ' </div>';
-		$str.= ' </div>';
-		$str.= ' <div class="card-wrapper collapse show">';
-		$str.= ' <div class="card-body"></div></div></div>';*/
-		$str.= '<div id="new-tadk-panel" class="col-md-12">
-  				<div class="card">
-  					<div class="card-header">
-  						<i class="ti-plus"></i> New Task 
-  						<div class="card-action">
-                            <a href="javascript:;" id="hide-new-task-panel"><i class="ti-close"></i></a>
-                        </div>
-  					</div>
-					<div class="card-wrapper collapse show">
-			        <div class="card-body">
-			           	
-			           		<div class="form-body">
-			           			<div class="row">
-			           				<div class="col-md-12">
-            							<div class="form-group">
-                							<label class="control-label">Title</label>
-                							<input type="text" class="form-control" id="title-task" name="title_task" value='.$taskData[0]->title.'>
-                						</div>
-            						</div>
-            						<div class="col-md-12">
-            							<div class="form-group">
-            							 	<label class="control-label">Description</label>
-            							 	<textarea name="editor1">'.$taskData[0]->description.'</textarea>
-            							</div>
-            						</div>
-            						<div class="col-md-12">
-            							<div class="form-group">
-            								<label class="control-label">start Date</label>
-            								<input id="start_date" type="text" class="form-control" name="startdate" value='.$taskData[0]->startdate.'>
-            							</div>
-            						</div>
-            						<div class="col-md-12">
-            							<div class="form-group">
-            								<label class="control-label">Due Date</label>
-            								<input id="deadline" type="text" class="form-control" name="due_date" value='.$taskData[0]->duedate.'>
-            							</div>
-            						</div>
-
-            						<div class="col-md-12">
-            							<div class="form-group sm-box">
-            								<label class="control-label">Assigned To</label>
-            							 	
-            							</div>
-            						</div>
-					                						
-        						<div class="col-md-12">
-            						<div class="form-group">
-            							<label class="control-label">
-            								Task Category
-            								<a href="javascript:void(0);" class="btn btn-sm btn-outline-success ml-1" data-original-title="Edit" data-toggle="modal" data-target="#add-task-categ">
-								         		<i class="fa fa-plus"></i> Add Task Category</i>
-								         	</a>
-            							</label>
-            							<select class="custom-select br-0" id="task-category" name="task-category">';
-            							
-            								foreach($taskCat as $catData){
-            						
-            								$str.= '<option value="'.  $catData->id.'">' . $catData->task_category_name.'</option>';
-            						
-            								}
-            							
-            							$str.= '</select>
-            						</div>
-            					</div>
-            					<div class="col-md-12">
-            						<div class="form-group">
-            							<label class="control-label">Priority</label>
-            							<div class="custom-control custom-radio radio-danger">
-										    <input type="radio" class="custom-control-input" id="high-rad" name="radio-stacked" value="0"required="">
-										    <label class="custom-control-label text-danger" for="high-rad">High</label>
-										</div>
-					<div class="custom-control custom-radio radio-warning">
-					    <input type="radio" class="custom-control-input" id="medium-rad" name="radio-stacked" value="1"required="">
-					    <label class="custom-control-label text-warning" for="medium-rad">Medium</label>
-					</div>
-					<div class="custom-control custom-radio radio-success">
-					    <input type="radio" class="custom-control-input" id="low-rad" name="radio-stacked" value="2"required="">
-					    <label class="custom-control-label text-success" for="low-rad">Low</label>
-					</div>
-					<input type="hidden" value="<?php echo $id; ?>" name="projectid">
-				</div>
-			</div>
-			</div>
-		</div>
-		<div class="form-actions">
-			<button type="submit" id="save-task" class="btn btn-success"><i class="fa fa-check"></i> Save</button>
-		</div>
-	         
-	        </div>
-	    </div>
-		</div>
-	</div>';
-	echo json_encode($str);exit;
+		$taskUpdateArr = array();
+		$taskUpdateArr['title_task'] = $taskData[0]->title;
+		$taskUpdateArr['description'] = $taskData[0]->description;
+		$taskUpdateArr['startdate'] = $taskData[0]->startdate;
+		$taskUpdateArr['duedate'] = $taskData[0]->duedate;
+		$taskUpdateArr['SelEmp'] = $taskData[0]->assignedto;
+		//print_r($taskUpdateArr['SelEmp']);die;
+		echo json_encode($taskUpdateArr);exit;
 	}
 }	
 

@@ -962,14 +962,28 @@ function updateTask(id){
 		type: "POST",
 		url: base_url+"project/updateTask",
 		cache: false,
+		dataType: 'JSON',
 	    data: "id="+id,
 	    success: function(data){
-	    	$('#update_task_show').html('');
-	    	$('#update_task_show').append(data);
+	    	$('#update_task_show').show();
+	    	$('#title_task').val(data.title_task);
+	    	$('#description').val(data.description);
+	    	$('#start_date1').val(data.startdate);
+	    	$('#start_date1').datepicker({format: 'dd-mm-yyyy'});
+	    	$('#start_date1').datepicker('setdate',data.startdate);
+	    	$('#deadline1').datepicker({format: 'dd-mm-yyyy'});
+	    	$('#deadline1').datepicker('setdate',data.duedate);
+	    	$('#assignemp option[value="'+data.SelEmp+'"]').attr('selected','selected');
+
 	    }
 	});
 }                                   
-                                    
+
+//for close update view
+
+$('#hide-update-task-panel').click(function(){
+	$('#update_task_show').hide();
+});                                  
 
                                               
 	
