@@ -1003,7 +1003,7 @@ class Project extends CI_Controller {
 				$str = '<label class="label label-danger">'.$status.'</label>';
 			}
 			
-				$actionStr = '<a href="javascript:;"" onclick="updateTask(\''.base64_encode($row->id).'\')" class="btn btn-info btn-circle edit-task" data-toggle="tooltip" data-task-id="69" data-original-title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a> &nbsp;
+				$actionStr = '<a href="javascript:;" onclick="updateTask(\''.base64_encode($row->id).'\')" class="btn btn-info btn-circle edit-task" data-toggle="tooltip" data-task-id="69" data-original-title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a> &nbsp;
 							<a href="javascript:;" class="btn btn-danger btn-circle sa-params" data-toggle="tooltip" data-task-id="69" data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>';
 			$datarow[] = array(
 				$id = $i,
@@ -1045,6 +1045,7 @@ class Project extends CI_Controller {
 		$id = base64_decode($_POST['id']);
 		$whereArr = array('id' => $id);
 		$taskData = $this->common_model->getData('tbl_task' , $whereArr);
+		$taskCat = $this->common_model->getData('tbl_task_category');
 		$str = '';
 		/*$str.= '<div id="new-tadk-panel" class="col-md-12">';
 		$str.= '<div class="card">';
@@ -1055,107 +1056,99 @@ class Project extends CI_Controller {
 		$str.= ' </div>';
 		$str.= ' </div>';
 		$str.= ' <div class="card-wrapper collapse show">';
-		$str.= ' <div class="card-body">';*/
+		$str.= ' <div class="card-body"></div></div></div>';*/
 		$str.= '<div id="new-tadk-panel" class="col-md-12">
-									  				<div class="card">
-									  					<div class="card-header">
-									  						<i class="ti-plus"></i> New Task 
-									  						<div class="card-action">
-	                                                            <a href="javascript:;" id="hide-new-task-panel"><i class="ti-close"></i></a>
-	                                                        </div>
-									  					</div>
-									  					<div class="card-wrapper collapse show">
-													        <div class="card-body">
-													           	
-													           		<div class="form-body">
-													           			<div class="row">
-													           				<div class="col-md-12">
-									                							<div class="form-group">
-										                							<label class="control-label">Title</label>
-										                							<input type="text" class="form-control" id="title-task" name="title_task">
-										                						</div>
-									                						</div>
-									                						<div class="col-md-12">
-									                							<div class="form-group">
-									                							 	<label class="control-label">Description</label>
-									                							 	<textarea name="editor1"></textarea>
-									                							</div>
-									                						</div>
-									                						<div class="col-md-12">
-									                							<div class="form-group">
-									                								<label class="control-label">start Date</label>
-									                								<input id="start_date" type="text" class="form-control" name="startdate">
-									                							</div>
-									                						</div>
-									                						<div class="col-md-12">
-									                							<div class="form-group">
-									                								<label class="control-label">Due Date</label>
-									                								<input id="deadline" type="text" class="form-control" name="due_date">
-									                							</div>
-									                						</div>
+  				<div class="card">
+  					<div class="card-header">
+  						<i class="ti-plus"></i> New Task 
+  						<div class="card-action">
+                            <a href="javascript:;" id="hide-new-task-panel"><i class="ti-close"></i></a>
+                        </div>
+  					</div>
+					<div class="card-wrapper collapse show">
+			        <div class="card-body">
+			           	
+			           		<div class="form-body">
+			           			<div class="row">
+			           				<div class="col-md-12">
+            							<div class="form-group">
+                							<label class="control-label">Title</label>
+                							<input type="text" class="form-control" id="title-task" name="title_task" value='.$taskData[0]->title.'>
+                						</div>
+            						</div>
+            						<div class="col-md-12">
+            							<div class="form-group">
+            							 	<label class="control-label">Description</label>
+            							 	<textarea name="editor1">'.$taskData[0]->description.'</textarea>
+            							</div>
+            						</div>
+            						<div class="col-md-12">
+            							<div class="form-group">
+            								<label class="control-label">start Date</label>
+            								<input id="start_date" type="text" class="form-control" name="startdate" value='.$taskData[0]->startdate.'>
+            							</div>
+            						</div>
+            						<div class="col-md-12">
+            							<div class="form-group">
+            								<label class="control-label">Due Date</label>
+            								<input id="deadline" type="text" class="form-control" name="due_date" value='.$taskData[0]->duedate.'>
+            							</div>
+            						</div>
 
-									                						<div class="col-md-12">
-									                							<div class="form-group sm-box">
-									                								<label class="control-label">Assigned To</label>
-									                							 	<select class="custom-select br-0" name="assignemp">
-									                							 		>
-										                								<?php foreach($employee as $row){
-												            							?>
-																	            		<option value="<?php echo $row->id?>"><?php echo $row->employeename;?></option>
-																	            		<?php
-																	            		}
-																	            		?> 
-										                							</select>
-									                							</div>
-									                						</div>
-									                						
-									                						<div class="col-md-12">
-										                						<div class="form-group">
-										                							<label class="control-label">
-										                								Task Category
-										                								<a href="javascript:void(0);" class="btn btn-sm btn-outline-success ml-1" data-original-title="Edit" data-toggle="modal" data-target="#add-task-categ">
-																			         		<i class="fa fa-plus"></i> Add Task Category</i>
-																			         	</a>
-										                							</label>
-										                							<select class="custom-select br-0" id="task-category" name="task-category">
-										                							<?php
-										                								foreach($taskCat as $catData){
-										                							?>
-										                								<option value="<?php echo $catData->id; ?>"><?php echo $catData->task_category_name; ?></option>
-										                							<?php
-										                								}
-										                							?>	
-										                							</select>
-										                						</div>
-										                					</div>
-										                					<div class="col-md-12">
-										                						<div class="form-group">
-										                							<label class="control-label">Priority</label>
-										                							<div class="custom-control custom-radio radio-danger">
-																					    <input type="radio" class="custom-control-input" id="high-rad" name="radio-stacked" value="0"required="">
-																					    <label class="custom-control-label text-danger" for="high-rad">High</label>
-																					</div>
-																					<div class="custom-control custom-radio radio-warning">
-																					    <input type="radio" class="custom-control-input" id="medium-rad" name="radio-stacked" value="1"required="">
-																					    <label class="custom-control-label text-warning" for="medium-rad">Medium</label>
-																					</div>
-																					<div class="custom-control custom-radio radio-success">
-																					    <input type="radio" class="custom-control-input" id="low-rad" name="radio-stacked" value="2"required="">
-																					    <label class="custom-control-label text-success" for="low-rad">Low</label>
-																					</div>
-																					<input type="hidden" value="<?php echo $id; ?>" name="projectid">
-										                						</div>
-										                					</div>
-													           			</div>
-													           		</div>
-													           		<div class="form-actions">
-													           			<button type="submit" id="save-task" class="btn btn-success"><i class="fa fa-check"></i> Save</button>
-													           		</div>
-													         
-													        </div>
-													    </div>
-									  				</div>
-									  			</div>';
+            						<div class="col-md-12">
+            							<div class="form-group sm-box">
+            								<label class="control-label">Assigned To</label>
+            							 	
+            							</div>
+            						</div>
+					                						
+        						<div class="col-md-12">
+            						<div class="form-group">
+            							<label class="control-label">
+            								Task Category
+            								<a href="javascript:void(0);" class="btn btn-sm btn-outline-success ml-1" data-original-title="Edit" data-toggle="modal" data-target="#add-task-categ">
+								         		<i class="fa fa-plus"></i> Add Task Category</i>
+								         	</a>
+            							</label>
+            							<select class="custom-select br-0" id="task-category" name="task-category">';
+            							
+            								foreach($taskCat as $catData){
+            						
+            								$str.= '<option value="'.  $catData->id.'">' . $catData->task_category_name.'</option>';
+            						
+            								}
+            							
+            							$str.= '</select>
+            						</div>
+            					</div>
+            					<div class="col-md-12">
+            						<div class="form-group">
+            							<label class="control-label">Priority</label>
+            							<div class="custom-control custom-radio radio-danger">
+										    <input type="radio" class="custom-control-input" id="high-rad" name="radio-stacked" value="0"required="">
+										    <label class="custom-control-label text-danger" for="high-rad">High</label>
+										</div>
+					<div class="custom-control custom-radio radio-warning">
+					    <input type="radio" class="custom-control-input" id="medium-rad" name="radio-stacked" value="1"required="">
+					    <label class="custom-control-label text-warning" for="medium-rad">Medium</label>
+					</div>
+					<div class="custom-control custom-radio radio-success">
+					    <input type="radio" class="custom-control-input" id="low-rad" name="radio-stacked" value="2"required="">
+					    <label class="custom-control-label text-success" for="low-rad">Low</label>
+					</div>
+					<input type="hidden" value="<?php echo $id; ?>" name="projectid">
+				</div>
+			</div>
+			</div>
+		</div>
+		<div class="form-actions">
+			<button type="submit" id="save-task" class="btn btn-success"><i class="fa fa-check"></i> Save</button>
+		</div>
+	         
+	        </div>
+	    </div>
+		</div>
+	</div>';
 	echo json_encode($str);exit;
 	}
 }	
