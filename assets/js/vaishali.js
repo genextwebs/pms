@@ -971,12 +971,14 @@ function updateTask(id){
 	    	$('#start_date1').val(data.startdate);
 	    	$('#start_date1').datepicker({format: 'dd-mm-yyyy'});
 	    	$('#start_date1').datepicker('setdate',data.startdate);
+	    	$('#deadline1').val(data.duedate);
 	    	$('#deadline1').datepicker({format: 'dd-mm-yyyy'});
 	    	$('#deadline1').datepicker('setdate',data.duedate);
 	    	$('#assignemp option[value="'+data.SelEmp+'"]').attr('selected','selected');
 	    	$('#task_category option[value="'+data.SelTaskCat+'"]').attr('selected','selected');
 	    	$('#status option[value="'+data.status+'"]').attr('selected','selected');
-	    	$('input:radio[name=radio-stacked]:selected').val();
+	    	$('input:radio[name=radio-stacked]:checked').attr(data.priority);
+
 		 }
 	});
 }   
