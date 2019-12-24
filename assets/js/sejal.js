@@ -997,4 +997,90 @@ $("#save_tchannel").click(function(event) {
 		   });
 	}
 
-	
+
+
+
+/*
+$("#submitticket").click(function(event) {
+	var editorname = $("input[name='editor']").val();
+	if(editorname!=""){
+		$.ajax({
+			url: base_url+"ticket/insert_comment",
+			type: 'POST',
+			dataType: 'html',
+			data:{name:editorname},
+			success: function (data){
+
+			}
+			else{
+		jQuery('#errormsg').html('')
+		jQuery('#errormsg').html('<b>Please enter category name</b>');
+	}
+		
+	})
+	}
+});*/
+
+
+$("#submitticket").click(function(event) {
+	var editorname = $("#editor").val();
+
+		$.ajax({
+		    type: "POST",
+		    url: base_url+"ticket/insert_comment",
+		    dataType: 'json',
+		    data:{name:editorname},
+		   
+		   success: function(data){
+		   	alert(data);
+		   $('#appendticket').html('');
+		  	$('#appendticket').append(data);
+		 //  window.location.reload();
+
+
+			}
+		});
+
+	});
+
+$("#save_tchannel").click(function(event) {
+	var c_name = $("input[name='channel_name']").val();
+	if(c_name!=""){
+		$.ajax({
+			url: base_url+"ticket/check_t_channel",
+			type: 'POST',
+			dataType: 'html',
+			data:{channel:c_name},
+			success: function(data) {
+				if(data==0){
+					var dataString = 'name='+ c_name;
+					jQuery('#errormsg').html('');
+					$.ajax({
+					    url: base_url+"ticket/insert_t_channel",
+					    type: 'POST',
+					    dataType: 'json',
+					    data: dataString,
+						success: function(data) {
+							console.log(data.ticketcdata);
+						    $('#channel').html('');       
+							$('#channel').append(data.ticketcdata);
+						
+							$('#ticketchannel')[0].reset();
+								$('#channel1').modal('toggle');
+							$('#succmsg').html('');
+							$('#succmsg').html('<b>Successfully Channel added</b>');
+							$('#succmsg').fadeOut(3000);
+
+					   }
+					});
+				}else{
+					jQuery('#errormsgc').html('')
+					jQuery('#errormsgc').html('<b>This Channel already exists</b>');
+				}
+			}
+		});
+	}else{
+		jQuery('#errormsgc').html('')
+		jQuery('#errormsgc').html('<b>Please enter Channel Name</b>');
+	}
+});

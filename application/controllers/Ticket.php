@@ -22,6 +22,7 @@ class Ticket extends CI_Controller {
 	public function addticket(){
 		$data['tickettype']=$this->common_model->getData('tbl_ticket_type');
 		$data['ticketchannel']=$this->common_model->getData('tbl_ticket_channel');
+		 $data['getemployee']=$this->common_model->getData('tbl_employee');
 		$this->load->view('common/header');
 		$this->load->view('ticket/addticket',$data);
 		$this->load->view('common/footer');
@@ -153,7 +154,7 @@ class Ticket extends CI_Controller {
 		$query = "SELECT tbl_ticket.*,tbl_ticket_channel.name as channel,tbl_ticket_type.name as type FROM tbl_ticket inner join tbl_ticket_channel on tbl_ticket.channelname=tbl_ticket_channel.id inner join tbl_ticket_type on tbl_ticket.type=tbl_ticket_type.id".$sWhere;
 		
 		$TicketFilterArr = $this->common_model->coreQueryObject($query);
-		echo $this->db->last_query();die;
+		//echo $this->db->last_query();die;
 		$iFilteredTotal = count($TicketFilterArr);
 		$TicketAllArr = $this->common_model->getData('tbl_ticket');
 		$iTotal = count($TicketAllArr);
@@ -250,44 +251,47 @@ class Ticket extends CI_Controller {
 		$data['editticketId']=$id;
 	    $data['ticketinfo']=$this->common_model->getData('tbl_ticket',$whereArr);
 	    $data['tickettype']=$this->common_model->getData('tbl_ticket_type');
+	    $data['getemployee']=$this->common_model->getData('tbl_employee');
 		$data['ticketchannel']=$this->common_model->getData('tbl_ticket_channel');
+		$data['ticketcomment']=$this->common_model->getData('tbl_ticket_comment');
 		$this->load->view('common/header');
 		$this->load->view('ticket/editticket',$data);
 		$this->load->view('common/footer');
 
-	    if(!empty($_POST))
+	    /*if(!empty($_POST))
 		{
 			$t_subject = $this->input->post('ticket_subject'); 
 			$t_editor  = $this->input->post('editor1');
 			$status   = $this->input->post('status');
-			//$t_image   = $this->input->post('ticket_Image');
-			$t_requestname = $this->input->post('requestername');
+			$t_image   = $this->input->post('ticket_Image');
+			//$t_requestname = $this->input->post('requestername');
 			$t_agentname = $this->input->post('agentname');
 			$t_question = $this->input->post('question');
 			$t_priority = $this->input->post('priority');
 			$t_channel = $this->input->post('channel');
 			$t_tags =  $this->input->post('tags');
 			
-			if(!empty($_FILES['ticket_Image']['name'])){
-
-				$file = $_FILES['ticket_Image']['name'];
-				$file_loc = $_FILES['ticket_Image']['tmp_name'];
-				$file_size = $_FILES['ticket_Image']['size'];
-				$file_type = $_FILES['ticket_Image']['type'];
+			if(!empty($_FILES['t_image']['name'])){
+				echo(['t_image']['name']);die;
+				$fileimage = $_FILES['t_image']['name'];
+				$file_loc = $_FILES['t_image']['tmp_name'];
+				$file_size = $_FILES['t_image']['size'];
+				$file_type = $_FILES['t_image']['type'];
 				$folder="uploads/";
-				move_uploaded_file($file_loc,$folder.$file);
+				move_uploaded_file($file_loc,$folder.$fileimage);
 				$updateArr['ticketimage']=$file;
 			//	print_r($updateArr['ticketimage']);die;
-				}
+				}	
 				else{
 					$updateArr['ticketimage']=$this->input->post('hidden_img');
-					echo($updateArr['ticketimage']);
+					//echo($updateArr['ticketimage']);
 
 				}
+				//$updateArr['ticketimage']=$file;
 				$updateArr['ticketsubject'] = $t_subject;
 				$updateArr['ticketdescription'] = $t_editor;
 				$updateArr['status'] = $status;
-				$updateArr['requestername'] = $t_requestname;
+				//$updateArr['requestername'] = $t_requestname;
 				$updateArr['agent'] = $t_agentname;
 				$updateArr['type'] = $t_question;
 				$updateArr['priority'] = $t_priority;
@@ -296,13 +300,13 @@ class Ticket extends CI_Controller {
 
 
 
-			/*$updateArr  = array('ticketsubject'=>$t_subject,'ticketdescription'=>$t_editor,'requestername'=>$t_requestname,'agent'=>$t_agentname,'type'=>$t_question,'priority'=>$t_priority,'channelname'=>$t_channel,'tags'=>$t_tags);*/
 
 			$this->common_model->updateData('tbl_ticket',$updateArr,$whereArr);
+
 			//echo $this->db->last_query();die;
-			$this->session->set_flashdata('message_name', 'Ticket Updated sucessfully....');
-			redirect('ticket/index');
-		}
+			//$this->session->set_flashdata('message_name', 'Ticket Updated sucessfully....');
+			//redirect('ticket/index');
+		}*/
 	}
 
 	public function deleteticket(){
@@ -380,6 +384,25 @@ class Ticket extends CI_Controller {
 			}
 		}
 		echo $status;exit();
+	}
+
+	public function insert_comment(){
+		//echo('gdfg');die;
+		if(!empty($_POST)){
+			$comment=$this->input->post('name');
+
+			$insArr= array('comment' => $comment);
+			$ticketArr=$this->common_model->insertData('tbl_ticket_comment',$insArr);
+			//echo $this->db->last_query();die;
+			$tArray = $this->common_model->getData('tbl_ticket_comment');
+			$str = '';
+			$str.= '<div>Comment</div>';
+			$str.= $tArray[0]->comment;
+
+
+			echo json_encode($str);exit; 
+		
+		}
 	}
 
 

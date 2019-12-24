@@ -134,13 +134,14 @@
 	            						<div class="form-group">
 	            							<label class="control-label">Requester Name</label>
 	            							<select class="custom-select br-0" name="requestername" id="requestername">
-	            								<option selected>Select Requester Name</option>
-	            								<option>Kethi Oman[kethi@example.com]</option>
-	            								<option>Obama Donald[donald77@example.com]</option>
-	            								<option>Jequcy Trump[jequcy@example.com]</option>
-	            								<option>herry Oman[Oman@example.com]</option>
-	            								<option>Obama champ[Obama@example.com]</option>
-	            								<option>maxo Trump[Trump@example.com]</option>
+	            								<?php
+												foreach($getemployee as $emp){
+												?>
+													
+													<option value="<?php echo $emp->id?>"><?php echo $emp->employeename;?></option>
+													<?php
+													} 
+												?> 	
 	            							</select>
 	            						</div>
 	            					</div>

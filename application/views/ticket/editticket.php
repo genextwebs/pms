@@ -59,17 +59,34 @@
                 				<div class="form-body">
                 					<div class="row">
                 						<div class="col-md-12">
-                							<div class="form-group">
-                								<label class="control-label">Ticket Subject <span class="text-danger">*</span></label>
-                								<input id="ticket_subject" class="form-control" type="text" name="ticket_subject" value="<?php echo !empty($ticketinfo[0]->ticketsubject) ? $ticketinfo[0]->ticketsubject : '' ?>">
+                							<div class="form-group" id="comment_for_ticket">
+                								<label class="control-label">
+                							<?php
+                								 echo 'Ticket Subject='.$ticketinfo[0]->ticketsubject;
+                								 echo '<br/><br/>';
+                								 echo $ticketinfo[0]->created_at;
+                								
+                							 ?>
+                							  </label>
                 							</div>
+                							
+
+
                 						</div>
                 					</div>
+                					<div class="row">
+                						<div class="col-md-12">
+                							<div id="appendticket">
+                							</div>
+                						</div>
+                					</div>div>
 									<div class="row">
                                 		<div class="col-md-12">
                                             <div class="form-group">
                                                 <label class="control-label">Ticket Description <span class="text-danger">*</span></label>
-                                                <textarea name="editor1" id="editor1" ><?php echo !empty($ticketinfo[0]->ticketdescription) ? $ticketinfo[0]->ticketdescription : '' ?>></textarea>
+                                               <textarea name="editor" id="editor" ></textarea> 
+                                                
+                                               <!--  <textarea name="editor1" id="editor1" ><?php echo !empty($ticketinfo[0]->ticketdescription) ? $ticketinfo[0]->ticketdescription : '' ?>></textarea> -->
                                             </div>
                                         </div>
                         			</div>
@@ -111,7 +128,7 @@
 									  	<!-- <button type="submit" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" name="submitticket">
 									    	Submit
 									  	</button> -->
-									  	<button type="submit" class="btn btn-success" aria-haspopup="true" aria-expanded="false" name="submitticket">
+									  	<button type="button" class="btn btn-success" aria-haspopup="true" aria-expanded="false" name="submitticket" id="submitticket">
 									    	Submit
 									  	</button> 
 									  <!-- 	<div class="dropdown-menu">
@@ -133,7 +150,7 @@
 	            			<div class="card-body">
 	            				<div class="row">
 	            					<div class="col-md-12">
-	            						<div class="form-group">
+	            						<!-- <div class="form-group">
 	            							<label class="control-label">Requester Name</label>
 	            							<select class="custom-select br-0" name="requestername" id="requestername">
 	            								<option selected>Select Requester Name</option>
@@ -144,7 +161,7 @@
 	            								<option>Obama champ[Obama@example.com]</option>
 	            								<option>maxo Trump[Trump@example.com]</option>
 	            							</select>
-	            						</div>
+	            						</div> -->
 	            					</div>
 	            					<div class="col-md-12">
 	            						<div class="form-group">
@@ -235,66 +252,3 @@
 </div>	
 <!-- ends of contentwrap -->
 
-<!--For +addtype-->
-
- <!-- <div class="modal fade project-category" id="type1" tabindex="-1" role="dialog" aria-labelledby="project-category" aria-hidden="true">
-	<div class="modal-dialog modal-lg" role="document">
-		<div class="modal-content br-0">
-			<div class="modal-header">
-				<h4 class="modal-title">Add New Ticket Type</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">×</span>
-					</button>
-			</div>
-			<div class="modal-body">
-				<form class="" id="ticket" name="ticket" method="post">
-					<div class="form-body">
-						<div class="row">
-							<div class="col-md-12 ">
-								<div class="form-group">
-									<label>Ticket Type</label>
-									<!-- <input type="text" name="ticket_type" id="ticket_type" class="form-control"> -->
-								<!-- </div>
-							</div>
-						</div>
-					</div>
-					<div class="form-actions">
-						<input type="button" id="save_ticket" class="btn btn-success" value="Save"> <i class="fa fa-check"></i>
-					</div>
-				</form>
-			</div>
-		</div> -->
-<!-- 	</div>
-</div> --> -->
-
-<!-- For +addchannel-->
-
-<!--  <div class="modal fade project-category" id="channel1" tabindex="-1" role="dialog" aria-labelledby="project-category" aria-hidden="true">
-	<div class="modal-dialog modal-lg" role="document">
-		<div class="modal-content br-0">
-			<div class="modal-header">
-				<h4 class="modal-title"> Add New Ticket Channel</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">×</span>
-					</button>
-			</div>
-			<div class="modal-body">
-				<form class="" id="ticketchannel" name="ticketchannel" method="post">
-					<div class="form-body">
-						<div class="row">
-							<div class="col-md-12 ">
-								<div class="form-group">
-									<label>Channel Name</label>
-									<input type="text" name="channel_name" id="channel_name" class="form-control">
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="form-actions">
-						<input type="button" id="save_tchannel" class="btn btn-success" value="Save"> <i class="fa fa-check"></i>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-</div>  -->
