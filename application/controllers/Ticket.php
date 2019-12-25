@@ -251,7 +251,7 @@ class Ticket extends CI_Controller {
 		$data['editticketId']=$id;
 	    $data['ticketinfo']=$this->common_model->getData('tbl_ticket',$whereArr);
 	    $data['tickettype']=$this->common_model->getData('tbl_ticket_type');
-	    $data['getemployee']=$this->common_model->getData('tbl_employee');
+	  //  $data['getemployee']=$this->common_model->getData('tbl_employee');
 		$data['ticketchannel']=$this->common_model->getData('tbl_ticket_channel');
 		$data['ticketcomment']=$this->common_model->getData('tbl_ticket_comment');
 		$this->load->view('common/header');
@@ -319,6 +319,7 @@ class Ticket extends CI_Controller {
 	}
 
 	public function insert_t_type(){
+
 		if(!empty($_POST)){
 			$tname = $this->input->post('name');
 			$insArr = array('name'=>$tname);
@@ -387,21 +388,26 @@ class Ticket extends CI_Controller {
 	}
 
 	public function insert_comment(){
-		//echo('gdfg');die;
+		
 		if(!empty($_POST)){
 			$comment=$this->input->post('name');
+			$status=$this->input->post('status');
 
-			$insArr= array('comment' => $comment);
+			$insArr= array('comment' => $comment,'cpmmentstatusid'=> $status);
 			$ticketArr=$this->common_model->insertData('tbl_ticket_comment',$insArr);
-			//echo $this->db->last_query();die;
-			$tArray = $this->common_model->getData('tbl_ticket_comment');
-			$str = '';
-			$str.= '<div>Comment</div>';
-			$str.= $tArray[0]->comment;
-
-
-			echo json_encode($str);exit; 
 		
+			$tArray = $this->common_model->getData('tbl_ticket_comment');
+				
+			
+			$str ='';
+			$str.= $tArray[0]->created_at;
+			$str.= '<p><b>Requester</b>'. $comment.'</p>';
+
+			
+			$str.=  '<p id="deletecomment"><a href="javascript:void();" onclick="deleteleaves(\''.base64_encode($tArray[0]->id).'\');"  class="btn btn-danger btn-circle sa-params" data-toggle="tooltip"  data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a></p>';
+
+				
+			echo json_encode($str);exit; 
 		}
 	}
 

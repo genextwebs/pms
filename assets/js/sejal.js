@@ -1024,20 +1024,18 @@ $("#submitticket").click(function(event) {
 
 $("#submitticket").click(function(event) {
 	var editorname = $("#editor").val();
+	var t_status = $("#status").val();
 
+	//alert(editorname);
 		$.ajax({
 		    type: "POST",
 		    url: base_url+"ticket/insert_comment",
 		    dataType: 'json',
-		    data:{name:editorname},
+		    data:{name:editorname,status:t_status},
 		   
 		   success: function(data){
 		   	alert(data);
-		   $('#appendticket').html('');
-		  	$('#appendticket').append(data);
-		 //  window.location.reload();
-
-
+		  		$('#append').append(data);
 			}
 		});
 

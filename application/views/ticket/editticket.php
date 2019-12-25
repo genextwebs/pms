@@ -76,17 +76,39 @@
                 					</div>
                 					<div class="row">
                 						<div class="col-md-12">
-                							<div id="appendticket">
+                							<div id="append">
+                								<?php
+                								foreach($ticketcomment as $tcomm){
+                									echo $tcomm->created_at;
+                								?>
+                									<p><b>Requester</b>
+                								<?php 
+
+                										echo $tcomm->comment;
+                								?>
+                										<p id="deletecomment"><a href="javascript:void();" onclick="deleteleaves();"  class="btn btn-danger btn-circle sa-params" data-toggle="tooltip"  data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a></p>
+                								<br/>
+                								<?php
+                								
+               										}
+               									?>
+
                 							</div>
+                						<!-- 	<div id="appendticket">
+                								<p><b>Requester</b>
+                								<p id="deletecomment"><a href="javascript:void();" onclick="deleteleaves();"  class="btn btn-danger btn-circle sa-params" data-toggle="tooltip"  data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a></p>
+
+
+                							</div> -->
                 						</div>
-                					</div>div>
+                					</div>
 									<div class="row">
                                 		<div class="col-md-12">
                                             <div class="form-group">
                                                 <label class="control-label">Ticket Description <span class="text-danger">*</span></label>
                                                <textarea name="editor" id="editor" ></textarea> 
                                                 
-                                               <!--  <textarea name="editor1" id="editor1" ><?php echo !empty($ticketinfo[0]->ticketdescription) ? $ticketinfo[0]->ticketdescription : '' ?>></textarea> -->
+                                              
                                             </div>
                                         </div>
                         			</div>
