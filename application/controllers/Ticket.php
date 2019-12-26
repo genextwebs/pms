@@ -222,13 +222,6 @@ class Ticket extends CI_Controller {
 			    	<b>Agent:</b>'.$row->agent.
 			    	'<br/> <b>Staus:</b> <label class="label label-success">'.$row->status.'</label><br/>
 			        <label><b>Priority:</b></label>'.$row->priority,
-				/*$row->ticketimage,
-				$row->requestername,
-				$row->agent,
-				$row->type,
-				$row->priority,
-				$row->channelname,
-				$row->tags,*/
 				$actionstring
 				);
 				$i++;
@@ -251,9 +244,11 @@ class Ticket extends CI_Controller {
 		$data['editticketId']=$id;
 	    $data['ticketinfo']=$this->common_model->getData('tbl_ticket',$whereArr);
 	    $data['tickettype']=$this->common_model->getData('tbl_ticket_type');
-	  //  $data['getemployee']=$this->common_model->getData('tbl_employee');
+	  // $data['getemployee']=$this->common_model->getData('tbl_employee');
 		$data['ticketchannel']=$this->common_model->getData('tbl_ticket_channel');
-		$data['ticketcomment']=$this->common_model->getData('tbl_ticket_comment');
+		$query= 'SELECT tbl_user.profileimg FROM `tbl_ticket` inner join tbl_user on tbl_ticket.requestername =tbl_user.emailid';
+		//$data['ticketcomment']=$this->common_model->getData('tbl_ticket_comment');
+		$data['ticketcomment']=$this->common_model->coreQueryObject($query);
 		$this->load->view('common/header');
 		$this->load->view('ticket/editticket',$data);
 		$this->load->view('common/footer');
@@ -298,14 +293,11 @@ class Ticket extends CI_Controller {
 				$updateArr['channelname'] = $t_channel;
 				$updateArr['tags'] = $t_tags;
 
+				$this->common_model->updateData('tbl_ticket',$updateArr,$whereArr);
 
-
-
-			$this->common_model->updateData('tbl_ticket',$updateArr,$whereArr);
-
-			//echo $this->db->last_query();die;
-			//$this->session->set_flashdata('message_name', 'Ticket Updated sucessfully....');
-			//redirect('ticket/index');
+				//echo $this->db->last_query();die;
+				//$this->session->set_flashdata('message_name', 'Ticket Updated sucessfully....');
+				//redirect('ticket/index');
 		}*/
 	}
 
@@ -334,7 +326,6 @@ class Ticket extends CI_Controller {
 			$catArr['count'] = $totaldata;
 			$catArr['ticketdata'] = $str;
 			$catArr['typeid']= $typeid;
-			//print_r($catArr);die;
 			echo json_encode($catArr);exit; 
 		}
 	}
@@ -357,7 +348,6 @@ class Ticket extends CI_Controller {
 			$cname = $this->input->post('name');
 			$insArr = array('name'=>$cname);
 			$typeid=$this->common_model->insertData('tbl_ticket_channel',$insArr);
-			//echo $this->db->last_query();die;
 			$catArray = $this->common_model->getData('tbl_ticket_channel');
 			$str = '';
 			foreach($catArray as $row){
@@ -368,7 +358,6 @@ class Ticket extends CI_Controller {
 			$channelArr['count'] = $totaldata;
 			$channelArr['ticketcdata'] = $str;
 			$channelArr['typeid']= $typeid;
-			//print_r($catArr);die;
 			echo json_encode($channelArr);exit; 
 		}
 	}
@@ -378,8 +367,6 @@ class Ticket extends CI_Controller {
 		if(!empty($_POST['channel'])){
 			$where = array('name'=>$_POST['channel']);
 			$checkData = $this->common_model->getData('tbl_ticket_channel',$where);
-			
-			//echo $this->db->last_query();
 			if(!empty($checkData)){
 				$status = 1;
 			}
@@ -395,23 +382,32 @@ class Ticket extends CI_Controller {
 
 			$insArr= array('comment' => $comment,'cpmmentstatusid'=> $status);
 			$ticketArr=$this->common_model->insertData('tbl_ticket_comment',$insArr);
-		
 			$tArray = $this->common_model->getData('tbl_ticket_comment');
+			$imgArray= $this->common_model->getData('tbl_user');
+			//echo $imgArray;die;
+			//echo $this->db->last_query();die;
+			$userprofile = $imgArray[0]->profileimg;
+			$created  = $tArray[0]->created_at;
+			$replay =  $comment;
+			$totaldata = count($tArray);
+			$commentArr = array();
+			$commentArr['count'] = $totaldata;
+			$commentArr['create'] = $created;
+			$commentArr['replay'] = $replay;
+			$commentArr['profile'] = $userprofile;
+			$commentArr['insCommentData'] = $ticketArr;
 				
-			
-			$str ='';
-			$str.= $tArray[0]->created_at;
-			$str.= '<p><b>Requester</b>'. $comment.'</p>';
-
-			
-			$str.=  '<p id="deletecomment"><a href="javascript:void();" onclick="deleteleaves(\''.base64_encode($tArray[0]->id).'\');"  class="btn btn-danger btn-circle sa-params" data-toggle="tooltip"  data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a></p>';
-
-				
-			echo json_encode($str);exit; 
+			echo json_encode($commentArr);exit; 
 		}
 	}
 
+	public function deletecomment(){
 
-
+		$id=$_POST['id'];
+		$whereArr=array('id'=>$id);
+		$this->common_model->deleteData('tbl_ticket_comment',$whereArr);
+		$this->session->set_flashdata('message','Delete Succesfully....');
+		redirect('ticket/index');
+	}
 	
 }

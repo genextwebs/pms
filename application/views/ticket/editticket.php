@@ -69,39 +69,43 @@
                 							 ?>
                 							  </label>
                 							</div>
-                							
-
-
                 						</div>
                 					</div>
                 					<div class="row">
                 						<div class="col-md-12">
-                							<div id="append">
-                								<?php
-                								foreach($ticketcomment as $tcomm){
-                									echo $tcomm->created_at;
-                								?>
-                									<p><b>Requester</b>
-                								<?php 
-
-                										echo $tcomm->comment;
-                								?>
-                										<p id="deletecomment"><a href="javascript:void();" onclick="deleteleaves();"  class="btn btn-danger btn-circle sa-params" data-toggle="tooltip"  data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a></p>
-                								<br/>
-                								<?php
-                								
-               										}
-               									?>
-
-                							</div>
-                						<!-- 	<div id="appendticket">
-                								<p><b>Requester</b>
-                								<p id="deletecomment"><a href="javascript:void();" onclick="deleteleaves();"  class="btn btn-danger btn-circle sa-params" data-toggle="tooltip"  data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a></p>
-
-
-                							</div> -->
+                							<div class="table-responsive">
+												<table class="table">
+													<thead id="thead">
+													<tr>
+														<th>#</th>
+														<th>Image</th>
+														<th>Created at</th>
+														<th>Requester</th>
+														<th></th>
+													</tr>
+													</thead>
+													 <tbody id="replaytable">
+															<?php 	
+															 $i=1;
+																foreach($ticketcomment as $tcomm) { ?>      
+																    <tr>
+																		<td><?php echo $i; ?></td>
+																		<td></td>
+																		<td><?php echo $tcomm->comment; ?></td>
+																		<td><?php echo $tcomm->created_at; ?></td>
+																		<td>
+																			<!-- <a href="javascript:void(0);" data-cat-id="1" class="btn btn-sm btn-danger btn-rounded delete-category" onclick="deletecomment('<?php echo $tcomm->id; ?>')" id='deletecat'>Remove</a> -->
+																			<input type='button' class='btn btn-sm btn-danger btn-rounded delete-category' onclick ="delete_t_comment('<?php echo $tcomm->id; ?>');" id='deletereply' value='Remove'>
+																		</td>
+																	<!-- 	<td id="delete"><a href="javascript:;" data-cat-id="1" class="btn btn-sm btn-danger btn-rounded delete-category" id="deletebtn">Remove</a></td> -->
+																    </tr>
+														   <?php $i++; } ?>
+													</tbody>
+												</table>
+											</div>
                 						</div>
                 					</div>
+                					<div id="append"></div>
 									<div class="row">
                                 		<div class="col-md-12">
                                             <div class="form-group">
@@ -130,7 +134,7 @@
 		            						</div>
 		            					</div>
 	            					</div>
-                        			<div class="row">
+                        		<!-- 	<div class="row">
                                 		<div class="col-md-12">
                                             <div class="form-group">
                                             	<label class="control-label">Ticket Image 
@@ -140,7 +144,7 @@
                                              
                                             </div>
                                         </div>
-                        			</div>
+                        			</div> -->
                 				</div>
 	                		</div>
 	                		<div class="card-footer text-right">
@@ -166,13 +170,13 @@
 	                	</div>
 	                </div>
 	            </div>
-	            <div class="col-md-4">
+	            <!-- <div class="col-md-4">
 	            	<div class="card br-0">
 	            		<div class="card-wrapper collapse show">
 	            			<div class="card-body">
 	            				<div class="row">
 	            					<div class="col-md-12">
-	            						<!-- <div class="form-group">
+	            						<div class="form-group">
 	            							<label class="control-label">Requester Name</label>
 	            							<select class="custom-select br-0" name="requestername" id="requestername">
 	            								<option selected>Select Requester Name</option>
@@ -183,7 +187,7 @@
 	            								<option>Obama champ[Obama@example.com]</option>
 	            								<option>maxo Trump[Trump@example.com]</option>
 	            							</select>
-	            						</div> -->
+	            						</div> 
 	            					</div>
 	            					<div class="col-md-12">
 	            						<div class="form-group">
@@ -267,7 +271,7 @@
 	            			</div>
 	            		</div>
 	            	</div>
-	            </div> 
+	            </div>  -->
             </div>
         </div>
     </form>
