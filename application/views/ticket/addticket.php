@@ -70,7 +70,7 @@
                                 		<div class="col-md-12">
                                             <div class="form-group">
                                                 <label class="control-label">Ticket Description <span class="text-danger">*</span></label>
-                                                <textarea name="editor1" id="editor1"></textarea>
+                                                <textarea name="editor2" id="editor2"></textarea>
                                             </div>
                                         </div>
                         			</div>
@@ -79,7 +79,8 @@
 		            						<div class="form-group type">
 		            							<label>Status <span class="text-danger">*</span></label>
 		            							<select class="custom-select br-0" name="status" id="status">
-		            								<option selected value="0">Open</option>
+		            								<option value="">--Select--</option>
+		            								<option  value="0">Open</option>
 		            								<option value="1">Pending</option>
 		            								<option value="2">Resolved</option>
 		            								<option value="3">Close</option>
@@ -134,6 +135,7 @@
 	            						<div class="form-group">
 	            							<label class="control-label">Requester Name</label>
 	            							<select class="custom-select br-0" name="requestername" id="requestername">
+	            								<option value="">--SELECT--</option>
 	            								<?php
 												foreach($getemployee as $emp){
 												?>
@@ -178,6 +180,7 @@
 	            						<div class="form-group type">
 	            							<label>Priority <span class="text-danger">*</span></label>
 	            							<select class="custom-select br-0" name="priority" id="priority">
+
 	            								<option selected value="0">Low</option>
 	            								<option value="1">High</option>
 	            								<option value="2">Medium</option>

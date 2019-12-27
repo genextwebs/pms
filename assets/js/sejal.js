@@ -422,6 +422,30 @@ $("form[name='creatclient']").validate({
 	form.submit();}
 });
 
+
+//for addticket vlaidation
+
+$("form[id='addticket']").validate({
+	rules:{
+		ticket_subject: "required",
+		editor2: "required",
+		requestername: "required",
+		status :"required",
+
+	},
+	messages:{
+		ticket_subject: "The subject field is required",
+		editor2: "The description field is required",
+		requestername: "Requester Name Required",
+		status: "Status is Required",
+
+	},
+	submitHandler:function(form){
+	form.submit();
+	}
+
+
+});
 // for add category in addproject
 $("#save-category").click(function(event) {
 	var catname = $("input[name='category_name']").val();
@@ -996,19 +1020,22 @@ $("#save_tchannel").click(function(event) {
 $("#submitticket").click(function(event) {
 	var editorname = $("#editor").val();
 	var t_status = $("#status").val();
-
+	var empid= $("#requestername").val();
+	imgurl = base_url+"uploads/";
 	alert(editorname);
 		$.ajax({
 			
 		    type: "POST",
 		    url: base_url+"ticket/insert_comment",
+
 		    dataType: 'json',
-		    data:{name:editorname,status:t_status},
+		    data:{name:editorname,status:t_status,t_empid:empid},
 		   
 		   success: function(data){
-		   	alert(data.profile);
-			$('tbody').append("<tr><td>"+data.count+"</td><td><input type='hidden' value='<?php echo  $tcomm->requestername;?>''></td><td>"+data.replay+"</td><td>"+data.create+"</td><td><input type='button' class='btn btn-sm btn-danger btn-rounded delete-category' onclick ='delete_t_comment(\""+data.insCommentData+"\");' id='deletereply' value='Remove'></td></tr>");
+		  	alert(data.profileimg);
+			$('tbody').append("<tr><td>"+data.count+"</td><td><img height='50px' width='50px' src="+imgurl+data.profileimg+"></td><td>"+data.replay+"</td><td>"+data.create+"</td><td><input type='button' class='btn btn-sm btn-danger btn-rounded delete-category' onclick ='delete_t_comment(\""+data.insCommentData+"\");' id='deletereply' value='Remove'></td></tr>");
 			$('textarea').val('');
+			//$('replaytable').append();
 			}
 		});
 
@@ -1089,3 +1116,4 @@ $("#save_tchannel").click(function(event) {
 		jQuery('#errormsgc').html('<b>Please enter Channel Name</b>');
 	}
 });
+

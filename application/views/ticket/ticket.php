@@ -13,30 +13,106 @@
 </nav>
 
 <!-- contetn-wrap -->
-<div class="content-in">  
+<div class="content-in">
 	<div class="row">
 		<div class="col-md-4">
-			<div class="white-box p-b-0"> 
-				<div class="form-group">
-				    <label class="control-label">Start Date</label>
-					    <input type="text" name="start_date" id="start_date" autocomplete="off" class="form-control" value="">
-			    </div>
-		    </div>
-		</div> 
-    
-		<div class="col-md-2">
-			<div class="white-box p-t-10 p-b-10 bg-warning"> 
-				<h3 class="box-title text-white">Pending Leaves</h3>
-					<ul class="list-inline two-wrap">
-						<li><i class="icon-logout text-white"></i></li>
-							<?php 
-								$Total = $this->common_model->getData('tbl_leaves');
-								$total_leaves = count($Total);
-							?>
-						<li class="text-right"><span id="" class="counter text-white"><?php echo $total_leaves;?></span></li>
-					</ul>
+			<div class="form-group">
+				<label class="control-label">SELECT DATE RANGE</label>
+			    <div class="input-group input-daterange">
+						    <input type="text" class="start-date form-control br-0" id="start_date" name="start_date" value="" data-date-format='yyyy-mm-dd'>
+						    <div class="input-group-prepend">
+						      <span class="input-group-text bg-info text-white">To</span>
+						    </div>
+						    <input type="text" class="end-date form-control br-0" id="end_date" name="end_date" value="" data-date-format='yyyy-mm-dd'>
+
+				</div>
 			</div>
 		</div>
+		<div class="col-md-4">
+            <div class="form-group m-t-10">
+                <label class="control-label col-12 mb-3">&nbsp;</label>
+                <button type="button" id="btnApplyTicket" class="btn btn-success col-lg-4 co-md-5"><i class="fa fa-check"></i> Apply</button>
+            </div>
+        </div>
+
+	</div>
+	<div class="row">
+		<!--TOTAL TICKET-->
+		<div class="col-sm-4">
+			<div class="white-box p-t-10 p-b-10 bg-warning"> 
+				<h3 class="box-title text-white">TOTAL TICKETS</h3>
+				<ul class="list-inline two-wrap">
+					<li><i class="icon-logout text-white"></i></li>
+						<?php 
+							$Total = $this->common_model->getData('tbl_ticket');
+							$total_leaves = count($Total);
+						?>
+					<li class="text-right"><span id="" class="counter text-white"><?php echo $total_leaves;?></span></li>
+				</ul>
+			</div>
+		</div>
+		<!--CLOSED TICKETS-->
+		<div class="col-sm-4">
+			<div class="white-box p-t-10 p-b-10 bg-warning"> 
+				<h3 class="box-title text-white">CLOSED TICKETS</h3>
+				<ul class="list-inline two-wrap">
+					<li><i class="icon-logout text-white"></i></li>
+						<?php
+							$whereArr = array('status'=>3); 
+							$Total = $this->common_model->getData('tbl_leaves',$whereArr);
+
+							$total_leaves = count($Total);
+						?>
+					<li class="text-right"><span id="" class="counter text-white"><?php echo $total_leaves;?></span></li>
+				</ul>
+			</div>
+		</div>
+	</div>  
+	<div class="row">
+		<div class="col-sm-4">
+			 <div class="white-box p-t-10 p-b-10 bg-warning"> 
+				<h3 class="box-title text-white">OPEN TICKETS</h3>
+				<ul class="list-inline two-wrap">
+					<li><i class="icon-logout text-white"></i></li>
+						<?php 
+							$whereArr =	array('status'=>0);
+							$Total = $this->common_model->getData('tbl_leaves',$whereArr);
+							$total_leaves = count($Total);
+						?>
+					<li class="text-right"><span id="" class="counter text-white"><?php echo $total_leaves;?></span></li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-sm-4">
+			 <div class="white-box p-t-10 p-b-10 bg-warning"> 
+				<h3 class="box-title text-white">PENDING TICKETS</h3>
+				<ul class="list-inline two-wrap">
+					<li><i class="icon-logout text-white"></i></li>
+						<?php 
+							$whereArr =	array('status'=>1);
+							$Total = $this->common_model->getData('tbl_leaves',$whereArr);
+							$total_leaves = count($Total);
+						?>
+					<li class="text-right"><span id="" class="counter text-white"><?php echo $total_leaves;?></span></li> 
+				</ul>
+			</div>
+		</div>
+		<div class="col-sm-4">
+			 <div class="white-box p-t-10 p-b-10 bg-warning"> 
+				<h3 class="box-title text-white">RESOLVED TICKETS</h3>
+				<ul class="list-inline two-wrap">
+					<li><i class="icon-logout text-white"></i></li>
+						<?php 
+							$whereArr =	array('status'=>2);
+							$Total = $this->common_model->getData('tbl_leaves',$whereArr);
+							$total_leaves = count($Total);
+						?>
+					<li class="text-right"><span id="" class="counter text-white"><?php echo $total_leaves;?></span></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="row">
 		<div class="col-md-12">
 			<div class="stats-box">
 			 	<div class="row">
