@@ -19,19 +19,21 @@
 			<div class="form-group">
 				<label class="control-label">SELECT DATE RANGE</label>
 			    <div class="input-group input-daterange">
+
 						    <input type="text" class="start-date form-control br-0" id="start_date" name="start_date" value="" data-date-format='yyyy-mm-dd'>
 						    <div class="input-group-prepend">
 						      <span class="input-group-text bg-info text-white">To</span>
 						    </div>
-						    <input type="text" class="end-date form-control br-0" id="end_date" name="end_date" value="" data-date-format='yyyy-mm-dd'>
+						    <input type="text" class="end-date form-control br-0" id="deadline" name="deadline" value="" data-date-format='yyyy-mm-dd'>
 
 				</div>
+
 			</div>
 		</div>
 		<div class="col-md-4">
             <div class="form-group m-t-10">
                 <label class="control-label col-12 mb-3">&nbsp;</label>
-                <button type="button" id="btnApplyTicket" class="btn btn-success col-lg-4 co-md-5"><i class="fa fa-check"></i> Apply</button>
+                <button type="button" id="btnApply" class="btn btn-success col-lg-4 co-md-5"><i class="fa fa-check"></i> Apply</button>
             </div>
         </div>
 
@@ -58,8 +60,8 @@
 				<ul class="list-inline two-wrap">
 					<li><i class="icon-logout text-white"></i></li>
 						<?php
-							$whereArr = array('status'=>3); 
-							$Total = $this->common_model->getData('tbl_leaves',$whereArr);
+							$whereArr = array('status'=>4); 
+							$Total = $this->common_model->getData('tbl_ticket',$whereArr);
 
 							$total_leaves = count($Total);
 						?>
@@ -75,8 +77,8 @@
 				<ul class="list-inline two-wrap">
 					<li><i class="icon-logout text-white"></i></li>
 						<?php 
-							$whereArr =	array('status'=>0);
-							$Total = $this->common_model->getData('tbl_leaves',$whereArr);
+							$whereArr =	array('status'=>1);
+							$Total = $this->common_model->getData('tbl_ticket',$whereArr);
 							$total_leaves = count($Total);
 						?>
 					<li class="text-right"><span id="" class="counter text-white"><?php echo $total_leaves;?></span></li>
@@ -89,8 +91,8 @@
 				<ul class="list-inline two-wrap">
 					<li><i class="icon-logout text-white"></i></li>
 						<?php 
-							$whereArr =	array('status'=>1);
-							$Total = $this->common_model->getData('tbl_leaves',$whereArr);
+							$whereArr =	array('status'=>2);
+							$Total = $this->common_model->getData('tbl_ticket',$whereArr);
 							$total_leaves = count($Total);
 						?>
 					<li class="text-right"><span id="" class="counter text-white"><?php echo $total_leaves;?></span></li> 
@@ -103,8 +105,8 @@
 				<ul class="list-inline two-wrap">
 					<li><i class="icon-logout text-white"></i></li>
 						<?php 
-							$whereArr =	array('status'=>2);
-							$Total = $this->common_model->getData('tbl_leaves',$whereArr);
+							$whereArr =	array('status'=>3);
+							$Total = $this->common_model->getData('tbl_ticket',$whereArr);
 							$total_leaves = count($Total);
 						?>
 					<li class="text-right"><span id="" class="counter text-white"><?php echo $total_leaves;?></span></li>
@@ -148,11 +150,11 @@
 		                		<label class="control-label">Status</label>
             					<div class="form-group">
             						<select id='status' class="select2 form-control" data-placeholder="Select Status">
-							            <option value="all">No filter</option>       
-							            <option value="0">Open</option>
-        								<option value="1">Pending</option>
-        								<option value="2">Resolved</option>
-        								<option value="3">Close</option>
+					            		<option value="">--Select--</option>
+        								<option  value="1">Open</option>
+        								<option value="2">Pending</option>
+        								<option value="3">Resolved</option>
+        								<option value="4">Close</option>
 									</select> 
             					</div>
 		                	</div>
@@ -162,10 +164,10 @@
         						<div class="form-group">
         							<select id='priority' class="select2 form-control" data-placeholder="Select Priority">
         								<option value="all">--Select--</option>
-							           	<option value="0">Low</option>
-        								<option value="1">High</option>
-        								<option value="2">Medium</option>
-        								<option value="3">Urgent</option>
+							           	<option value="1">Low</option>
+        								<option value="2">High</option>
+        								<option value="3">Medium</option>
+        								<option value="4">Urgent</option>
 									</select> 
         						</div>
 	                		</div>
@@ -202,7 +204,7 @@
 		                        <div class="form-group m-t-10">
 		                            <label class="control-label col-12 mb-3">&nbsp;</label>
 		                            	<button type="button" id="btnApplyTicket" class="btn btn-success col-lg-4 co-md-5"><i class="fa fa-check"></i> Apply</button>
-		                            	<button type="button" id="btnreset" class="btn btn-inverse col-lg-4 co-md-5 offset-md-1"><i class="fa fa-refresh"></i> Reset</button>
+		                            	<button type="reset" id="btnreset" class="btn btn-inverse col-lg-4 co-md-5 offset-md-1"><i class="fa fa-refresh"></i> Reset</button>
 		                        </div>
 		                    </div>
 						</div>

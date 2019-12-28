@@ -271,6 +271,8 @@ jQuery(document).ready(function() {
 			"fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
 			
 		    	//aoData.push( { "name": "agent", "value": $('#agent').val() } );
+		    	aoData.push({"name": "s_date", "value":$('#start_date').val()});
+		    	aoData.push({"name" :"e_date" ,"value":$('#deadline').val()});
 				aoData.push( { "name": "status1", "value": $('#status').val() } );
 				aoData.push( { "name": "priority", "value": $('#priority').val() } );
 				aoData.push( { "name": "channelname", "value": $('#channelname').val() } );
@@ -347,17 +349,21 @@ $('#btnApplyTicket').click(function(){
 	oTable.draw();
 });
 
+$('#btnApply').click(function(){
+	var oTable = $('#tickets').DataTable();
+	oTable.draw();
+});
 
 //addproject=> datepicker
 $(document).ready(function(){
 	//for start date
 	$("#start_date").datepicker({
-        format: 'dd-mm-yyyy',
+        format: 'yyyy-mm-dd',
         todayHighlight: true,
         autoclose: true,
     }).on('changeDate', function (selected) {
         $('#deadline').datepicker({
-            format: 'dd-mm-yyyy',
+            format: 'yyyy-mm-dd',
             autoclose: true,
             todayHighlight: true
         });
@@ -367,7 +373,7 @@ $(document).ready(function(){
     });
 	//for end date
 	$("#deadline").datepicker({
-        format: 'dd-mm-yyyy',
+        format: 'yyyy-mm-dd',
         autoclose: true
     }).on('changeDate', function (selected) {
         var maxDate = new Date(selected.date.valueOf());
@@ -394,6 +400,23 @@ $("form[name='creatclient']").validate({
 			project_budget : "Enter valid input",
 			hours_allocated : "Enter Valid input",
 		},
+	submitHandler: function(form) {
+	form.submit();}
+});
+
+//edit(insert)ticket
+$("form[name='editticket']").validate({
+	rules:{
+		editor:"required",
+		requestername:"required",
+		status:"required",
+	},
+	messages:{
+		editor: "The subject field is required.",
+		requestername:"The description field is required.",
+		status:"The status field is requird",
+
+	},
 	submitHandler: function(form) {
 	form.submit();}
 });

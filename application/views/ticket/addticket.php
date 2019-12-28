@@ -80,10 +80,10 @@
 		            							<label>Status <span class="text-danger">*</span></label>
 		            							<select class="custom-select br-0" name="status" id="status">
 		            								<option value="">--Select--</option>
-		            								<option  value="0">Open</option>
-		            								<option value="1">Pending</option>
-		            								<option value="2">Resolved</option>
-		            								<option value="3">Close</option>
+		            								<option  value="1">Open</option>
+		            								<option value="2">Pending</option>
+		            								<option value="3">Resolved</option>
+		            								<option value="4">Close</option>
 		            							</select>
 		            						</div>
 		            					</div>
@@ -180,11 +180,11 @@
 	            						<div class="form-group type">
 	            							<label>Priority <span class="text-danger">*</span></label>
 	            							<select class="custom-select br-0" name="priority" id="priority">
-
-	            								<option selected value="0">Low</option>
-	            								<option value="1">High</option>
-	            								<option value="2">Medium</option>
-	            								<option value="3">Urgent</option>
+	            								<option value="">--SELECT--</option>
+	            								<option  value="1">Low</option>
+	            								<option value="2">High</option>
+	            								<option value="3">Medium</option>
+	            								<option value="4">Urgent</option>
 	            							</select>
 	            						</div>
 	            					</div>

@@ -14,7 +14,7 @@
 </nav>
 <!-- contetn-wrap -->
 <div class="content-in">
-	<form id="editticket" class="aj-form" method="post" action="<?php echo base_url().'ticket/editticket/'.base64_encode($editticketId); ?>">  
+	<form id="editticket" name="editticket" class="aj-form" method="post" action="<?php echo base_url().'ticket/editticket/'.base64_encode($editticketId); ?>">  
 		<?php
 	        $mess = $this->session->flashdata('message_name');
 	        if(!empty($mess)){
@@ -123,6 +123,7 @@
 	            								<div class="form-group">
 	            									<label class="control-label">Requester Name</label>
 	            										<select class="custom-select br-0" name="requestername" id="requestername">
+	            										<option value="">--SELECT--</option>
 			            								<?php
 														foreach($getemployee as $emp){
 														?>
@@ -140,10 +141,11 @@
 		            						<div class="form-group type">
 		            							<label>Status <span class="text-danger">*</span></label>
 		            							<select class="custom-select br-0" name="status" id="status">
-		            							<option value="0" <?php if($ticketinfo[0]->status=='0'){echo 'selected';}?>>Open</option>
-		            							<option value="1" <?php if($ticketinfo[0]->status=='1'){echo 'selected';}?>>Pending</option>
-		            							<option value="2" <?php if($ticketinfo[0]->status=='2'){echo 'selected';}?>>Resolved</option>
-		            							<option value="3" <?php if($ticketinfo[0]->status=='3'){echo 'selected';}?>>Close</option>
+		            							<option value="">--Select--</option>
+			    								<option  value="1">Open</option>
+			    								<option value="2">Pending</option>
+			    								<option value="3">Resolved</option>
+			    								<option value="4">Close</option>
 
 		            							</select>
 		            						</div>

@@ -32,7 +32,7 @@ class Ticket extends CI_Controller {
 		if(!empty($_POST)){
 
 			$t_subject = $this->input->post('ticket_subject'); 
-			$t_editor  = $this->input->post('editor1');
+			$t_editor  = $this->input->post('editor2');
 			$status   = $this->input->post('status');
 			$t_requestname = $this->input->post('requestername');
 			$t_agentname = $this->input->post('agentname');
@@ -119,11 +119,20 @@ class Ticket extends CI_Controller {
 				$sWhere.= ' AND (ticketsubject like "%'.$searchTerm.'%")';
 			}
 			//	$agent=!empty($_POST['agent']) ? $_POST['agent'] : '';
+			$sdate=!empty($_POST['s_date'])?$_POST['s_date']:'';
+			$enddate=!empty($_POST['e_date'])?$_POST['e_date']:'';
+			//echo($sdate);
+			//echo($enddate);die;
 	        $status=!empty($_POST['status1'])? $_POST['status1'] : '';
 			$priority=!empty($_POST['priority']) ? $_POST['priority'] : '';
 			$cname=!empty($_POST['channelname']) ? $_POST['channelname'] : '';
 			$type=!empty($_POST['tickettype']) ? $_POST['tickettype'] : '';
-
+			if(!empty($sdate)){
+				$sWhere.= 'AND created_at >="'.$sdate.'"';
+			}
+			if(!empty($enddate)){
+				$sWhere.= 'AND created_at<="'.$enddate.'"';
+			}
 
 			if($status =='all'){
 				}
@@ -142,9 +151,9 @@ class Ticket extends CI_Controller {
 			}
 			if($type =='all'){
 				}
-			else if(!empty($type)){						
+			else if(!empty($type)){					
 				$sWhere.=' AND tbl_ticket.type='.$type;
-			}
+			    }
 			$sWhere = " WHERE 1 ".$sWhere;
 		}
 		
@@ -152,6 +161,7 @@ class Ticket extends CI_Controller {
 		$TicketArr = $this->common_model->coreQueryObject($query);
 
 		$query = "SELECT tbl_ticket.*,tbl_ticket_channel.name as channel,tbl_ticket_type.name as type FROM tbl_ticket inner join tbl_ticket_channel on tbl_ticket.channelname=tbl_ticket_channel.id inner join tbl_ticket_type on tbl_ticket.type=tbl_ticket_type.id".$sWhere;
+		//echo $this->db->last_query();die;
 		
 		$TicketFilterArr = $this->common_model->coreQueryObject($query);
 		//echo $this->db->last_query();die;
@@ -175,38 +185,38 @@ class Ticket extends CI_Controller {
 				               			 </div>
 							</div>';
 		//For Priority
-		if($row->priority=='0'){
+		if($row->priority=='1'){
 			$priority=$row->priority='Low';
 			$showStatus = '<label class="label label-success">'.$priority.'</label>';
 		}
-		else if($row->priority=='1'){
+		else if($row->priority=='2'){
 			$priority=$row->priority='High';
 			$showStatus = '<label class="label label-warning">'.$priority.'</label>';
 		}
-		else if($row->priority=='2'){
+		else if($row->priority=='3'){
 			$prioritypriority=$row->priority='Medium';
 			$showStatus = '<label class="label label-warning">'.$priority.'</label>';
 		}
-		else if($row->priority=='3'){
+		else if($row->priority=='4'){
 			$priority=$row->priority='Urgent';
 			$showStatus = '<label class="label label-warning">'.$priority.'</label>';
 		}
 
 		//For Status
-		if($row->status=='0'){
+		if($row->status=='1'){
 			$status=$row->status='Open';
 			$showStatus = '<label class="label label-success">'.$status.'</label>';
 		}
-		else if($row->status=='1'){
+		else if($row->status=='2'){
 			$status=$row->status='Pending';
 			$showStatus = '<label class="label label-success">'.$status.'</label>';
 		}
-		else if($row->status=='2'){
+		else if($row->status=='3'){
 			$status=$row->status='Resolved';
 			$showStatus = '<label class="label label-success">'.$status.'</label>';
 		}
 
-		else if($row->status=='3'){
+		else if($row->status=='4'){
 			$status=$row->status='Close';
 			$showStatus = '<label class="label label-success">'.$status.'</label>';
 		}
@@ -218,8 +228,7 @@ class Ticket extends CI_Controller {
 				$row->requestername,
 				$row->created_at,
 			   
-			    '
-			    	<b>Agent:</b>'.$row->agent.
+			    '<b>Agent:</b>'.$row->agent.
 			    	'<br/> <b>Staus:</b> <label class="label label-success">'.$row->status.'</label><br/>
 			        <label><b>Priority:</b></label>'.$row->priority,
 				$actionstring
