@@ -57,12 +57,19 @@
         </div>
     </div>
 </div>
+<div class="row">
+	<div class="col-sm-12">
+		<div class="form-group custom-action">
+			<a href="<?php echo base_url().'timelog/addtimelog'?>" class="btn btn-outline-success btn-sm">Add New Project <i class="fa fa-plus" aria-hidden="true"></i></a>
+		</div>
+	</div>
+</div>
 
 <div class="row">
 	<div class="col-md-12">
 		<div class="stats-box"> 
 			<div class="table-responsive">
-				<table class="table table-bordered table-hover" id="tickets">
+				<table class="table table-bordered table-hover" id="timelog">
 					<thead>
 						<tr role="row">
 							 <th>Id</th>
@@ -83,4 +90,15 @@
 			
 <!-- ends of contentwrap -->
 
+<div class="modal fade project-category" id="timelog-popup" tabindex="-1" role="dialog" aria-labelledby="project-category" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content br-0">
+			
+			<div class="modal-body">
+				<div class="table-responsive" id="timelogpreview">
 
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -308,6 +308,77 @@ jQuery(document).ready(function() {
 			},
 		});
 	}
+
+	else if(controllerName == 'timelog' && (functionName == 'index' || functionName == '')){
+		var oTable = jQuery('#timelog').DataTable({
+			'bRetrieve': true,
+			"bPaginate": true,
+			"bLengthChange": true,
+			"iDisplayLength": 10,
+			"bFilter": true,
+			"bSort": true,
+			"aaSorting": [],
+			"aLengthMenu": [[10, 25, 50, 100, 200, 500, 1000, 5000], [10, 25, 50, 100, 200, 500, 1000, 5000]],
+			"bInfo": true,
+			"bAutoWidth": false,
+			"bProcessing": true,
+			"aoColumns": [{ "sWidth": "40px", sClass: "text-left", "asSorting": [  ] }, 
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] },
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] },
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ ] }, 
+
+
+		     ],
+			"bServerSide": true,
+			"fixedHeader": true,
+			"sAjaxSource": base_url+"Timelog/timeloglist",
+			"sServerMethod": "POST",
+			"sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
+			"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No Projects found<br/><br/></center>', "sZeroRecords": "<center><br/>No Projects found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ leads", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
+			"fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
+			
+		    	//aoData.push( { "name": "agent", "value": $('#agent').val() } );
+		    	/*aoData.push({"name": "s_date", "value":$('#start_date').val()});
+		    	aoData.push({"name" :"e_date" ,"value":$('#deadline').val()});
+				aoData.push( { "name": "status1", "value": $('#status').val() } );
+				aoData.push( { "name": "priority", "value": $('#priority').val() } );
+				aoData.push( { "name": "channelname", "value": $('#channelname').val() } );
+				aoData.push( { "name": "tickettype", "value": $('#tickettype').val() } );*/
+				
+				oSettings.jqXHR = $.ajax( {
+					"dataType": 'json',
+					"type": "POST",
+					"url": sSource,
+					"data": aoData,
+	                "timeout": 60000, //1000 - 1 sec - wait one minute before erroring out = 30000
+	                "success": function(json) {
+	                	var oTable = $('#timelog').dataTable();
+	                	var oLanguage = oTable.fnSettings().oLanguage;
+
+	                	if((json.estimateCount == true) && (json.iTotalDisplayRecords == json.limitCountQuery)){
+	                		oLanguage.sInfo = '<b>_START_ to _END_</b> of more than _TOTAL_ (<small>' + json.iTotalRecordsFormatted + ' Leaves</small>)';
+	                	}
+	                	else{
+	                		oLanguage.sInfo = '<b>_START_ to _END_</b> of <b>_TOTAL_</b> (<small>' + json.iTotalRecordsFormatted + ' Leaves </small>)';
+	                	}
+
+	                	fnCallback(json);
+	                }
+	            });
+			},
+
+			"fnRowCallback": function( nRow, aData, iDisplayIndex ){
+				return nRow;
+			},
+			"fnDrawCallback": function(oSettings, json) {
+
+			},
+		});
+	}
 });
 
 //PROJECT FILTER
@@ -353,6 +424,13 @@ $('#btnApply').click(function(){
 	var oTable = $('#tickets').DataTable();
 	oTable.draw();
 });
+
+/*$(function(){
+	$('#starttime').datetimepicker({
+		format:'LT'
+	});
+
+});*/
 
 //addproject=> datepicker
 $(document).ready(function(){
@@ -721,6 +799,27 @@ $("#save_tchannel").click(function(event) {
 
 	}
 
+	function edittimelog(id){
+		//alert('heloo mmm');
+		$.ajax({
+			type: "POST",
+		    url: base_url+"timelog/edittimelog",
+		    cache: false,
+		    dataType: 'json',
+		    data: "id="+id,
+		   success: function(data){
+		   	$('#timelogpreview').html('');
+		   	$('#timelogpreview').append(data);
+
+			}
+
+
+		});
+	}
+
+	
+	
+
 	function checkUncheck(){ 
 		var checkBox = document.getElementById("without_deadline");
         if (checkBox.checked) {
@@ -776,6 +875,41 @@ $("#save_tchannel").click(function(event) {
 		});
 	}
 	
+	//delete timelog
+	function deletetimelog(id){
+		var url = base_url+"timelog/deletetimelog";
+		swal({
+		 title: "Are you sure?",
+		 text: "Do you want to delete this timelog?",
+		 type: "warning",
+		 showCancelButton: true,
+		 confirmButtonColor: "#DD6B55",
+		 confirmButtonText: "Yes, delete it!",
+		 closeOnConfirm: false
+		},
+
+		function(isConfirm){
+			if (isConfirm) {
+				$.ajax({
+						url: url,
+					    type: "POST",
+					    dataType: "JSON",
+					    data: {id:id},
+					    dataType: "html",
+					  
+				   success: function (data) {
+					   swal("Done!", "It was succesfully deleted!", "success");
+					   $('#timelog').DataTable().ajax.reload();
+					 
+				   },
+				   error: function (xhr, ajaxOptions, thrownError) {
+					   swal("Error deleting!", "Please try again", "error");
+				   }
+				});
+			}
+		});
+	}
+
 	// deleteticket
    function deleteticket(id){
 		var url = base_url+"ticket/deleteticket";
@@ -1062,7 +1196,7 @@ $("#submitticket").click(function(event) {
 			}
 		});
 
-	});
+});
 
 	//delete tickets testttt
 	function delete_t_comment(id){
@@ -1138,5 +1272,35 @@ $("#save_tchannel").click(function(event) {
 		jQuery('#errormsgc').html('')
 		jQuery('#errormsgc').html('<b>Please enter Channel Name</b>');
 	}
+});
+
+//for timelog --> project dropdown=>employee disply accordingly
+$("#projectname").change(function(event) {
+	$('#empdiv').show();
+	var pname = $("#projectname").val();
+	//alert();
+	if(pname !=''){
+		$ajax({
+			 url: base_url+"timelog/getEmployeedata",
+			type:'post',
+			 dataType:'json',
+			 data:{projectname:pname},
+			 success:function(data){
+			 	alert(data.employee);
+
+			 	// $.each(data,function(id,data)
+                 //       {
+                               
+                                $('#empname').append('<option>'+data.employee+'</option>');
+                  //          });
+			 	//alert(data.empArr);
+			 //	$(#empname).append('<option>'+data.empArr+'<');
+
+			 }
+
+		});
+	}
+	
+
 });
 
