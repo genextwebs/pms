@@ -52,13 +52,13 @@
 											<div class="col-md-4">
 												<div class="form-group">
 													<label class="control-label">Select Project</label>
-														<select class="form-control" name="projectname" id="projectname">
+														<select class="form-control" class="projectclass" name="projectname" id="projectname" onchange=getEmployee();>
 															<option value="">--SELECT--</option>
 															
 															<?php 
 																foreach($projectinfo as $project){
 															?>
-															<option value="<?php $project->id?>"><?php echo $project->projectname;?></option>
+															<option value="<?php echo $project->id?>"><?php echo $project->projectname;?></option>
 																<?php 
 																}
 															?>
@@ -99,9 +99,9 @@
 												<div class="form-group" id="timeonly">
 													<label class="control-label">Start Time</label>
 														<input type="text" class="form-control" name="starttime" id="starttime">
+														
 												</div>
 											</div>
-										
 											<div class="col-md-4">
 												<div class="form-group">
 													<label class="control-label"> End Time</label>

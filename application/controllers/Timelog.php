@@ -265,14 +265,20 @@ class Timelog extends CI_Controller {
 		echo json_encode($str);exit;
 	}
 
-	public function getEmployeedata(){
+	public function getEmployee(){
 		$pname=$this->input->post('projectname');
-
-		/*$query="SELECT emp_id FROM tbl_project_info inner join tbl_project_member on tbl_project_info.id=tbl_project_member.project_id";*/
-		$query = "SELECT emp_id FROM `tbl_project_info` inner join tbl_project_member on tbl_project_info.id=tbl_project_member.project_id inner join tbl_employee on tbl_employee.id=tbl_project_member.emp_id";
-		$employee=$this->common_model->coreQueryObject($query);
-		
-		echo json_encode($employee);exit; 
+		//$whereArr = array('project_id'=>$pname);
+		$query ="select tbl_project_member.*,tbl_employee.employeename from tbl_project_member inner join tbl_employee on tbl_project_member.emp_id = tbl_employee.id where project_id=".$pname;
+		//echo($query);die;
+	  $getEmp=$this->common_model->coreQueryObject($query);
+	    //print_r($getTimelog);die;
+		$str = '';
+			foreach($getEmp as $row){
+				$str.='<option value="'.$row->id.'">'.$row->employeename.'</option>'; 
+			}
+			$timelogArr['empname'] = $str;
+			//print_r($timelogArr['empname']);die;
+			echo json_encode($timelogArr);exit;
 	}
 
 	 

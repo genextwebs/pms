@@ -432,6 +432,8 @@ $('#btnApply').click(function(){
 
 });*/
 
+
+
 //addproject=> datepicker
 $(document).ready(function(){
 	//for start date
@@ -1276,31 +1278,63 @@ $("#save_tchannel").click(function(event) {
 
 //for timelog --> project dropdown=>employee disply accordingly
 $("#projectname").change(function(event) {
+	  	pname = $('#projectname').val();
+	  	alert(pname);
 	$('#empdiv').show();
-	var pname = $("#projectname").val();
-	//alert();
 	if(pname !=''){
-		$ajax({
-			 url: base_url+"timelog/getEmployeedata",
+		$.ajax({
+			 url: base_url+"timelog/getEmployee",
 			type:'post',
 			 dataType:'json',
 			 data:{projectname:pname},
 			 success:function(data){
-			 	alert(data.employee);
-
-			 	// $.each(data,function(id,data)
-                 //       {
-                               
-                                $('#empname').append('<option>'+data.employee+'</option>');
-                  //          });
-			 	//alert(data.empArr);
-			 //	$(#empname).append('<option>'+data.empArr+'<');
-
-			 }
+               	$('#empname').append(data.empname);
+            }
 
 		});
 	}
-	
-
 });
+
+ 
+
+
+  $('#starttime').timepicker();
+  $('#endtime').timepicker();
+/*
+$("#hours").focus(function() {
+var valuestart = $("select[id='starttime']").val();
+alert(valuestart);
+var valuestop = $("select[id='endtime']").val();
+var timeStart = new Date(valuestart).getHours();
+var timeEnd = new Date(valuestop).getHours();
+
+var hourDiff = timeEnd - timeStart;      
+
+});*/
+
+
+  $("#hours").blur(function(){
+     valuestart = $("input[name='starttime']").val();
+     valueend = $("input[name='endtime']").val();
+    // var timeStart = new Date(valuestart).getHours();
+   date_future = new Date(new Date(valueend).getFullYear() +1, 0, 1);
+      date_now = new Date(valuestart);
+
+        seconds = Math.floor((date_future - (date_now))/1000);
+        minutes = Math.floor(seconds/60);
+        hours = Math.floor(minutes/60);
+        days = Math.floor(hours/24);
+        
+        hours = hours-(days*24);
+        minutes = minutes-(days*24*60)-(hours*60);
+
+     alert(seconds);
+   // alert(valuestart.getHours());
+//alert(valuestart);
+/* valuestop = $("input[name='endtime']").val();
+var timeStart = new Date(valuestart).getHours();
+var timeEnd = new Date(valuestop).getHours();
+
+var hourDiff = timeEnd - timeStart;  */  
+  });
 
