@@ -145,9 +145,7 @@ jQuery(document).ready(function() {
 					}).get();
 					//console.log(selected);
 					aoData.push( { "name": "status", "value": $('#status').val() } );
-
 					aoData.push( { "name": "employeename", "value": $('#employeename').val() } );
-					
 					aoData.push( { "name": "skill", "value": $('#skill').val() } );
 					aoData.push( { "name": "designation", "value": $('#designation').val() } );
 					aoData.push( { "name": "department", "value": $('#department').val() } );
@@ -181,62 +179,6 @@ jQuery(document).ready(function() {
 		});
 	}
 
-	else if(controllerName == 'project' && functionName == 'task'){
-		var oTable = jQuery('#tasks-table').DataTable({
-			'bRetrieve': true,
-	        "bPaginate": true,
-	        "bLengthChange": true,
-	        "iDisplayLength": 10,
-	        "bFilter": true,
-	        "bSort": true,
-	        "aaSorting": [],
-	        "aLengthMenu": [[10, 25, 50, 100, 200, 500, 1000, 5000], [10, 25, 50, 100, 200, 500, 1000, 5000]],
-	        "bInfo": true,
-	        "bAutoWidth": false,
-	        "bProcessing": true,
-	        "aoColumns": [{ "sWidth": "40px", sClass: "text-left", "asSorting": [  ] }, 
-                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
-                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
-                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
-                      { "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
-                      { "sWidth": "250px", sClass: "text-center", "asSorting": [  ]},  
-                     ],
-	        "bServerSide": true,
-	        "fixedHeader": true,
-	        "sAjaxSource": base_url+"project/task_list",
-	        "sServerMethod": "POST",
-	        "sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
-        	"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No Leads found<br/><br/></center>', "sZeroRecords": "<center><br/>No Leads found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ leads", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
-        	"fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
-        		oSettings.jqXHR = $.ajax( {
-	                "dataType": 'json',
-	                "type": "POST",
-	                "url": sSource,
-	                "data": aoData,
-	                "timeout": 60000, //1000 - 1 sec - wait one minute before erroring out = 30000
-	                "success": function(json) {
-	                    var oTable = $('#tasks-table').dataTable();
-	                    var oLanguage = oTable.fnSettings().oLanguage;
-
-	                    if((json.estimateCount == true) && (json.iTotalDisplayRecords == json.limitCountQuery)){
-	                        oLanguage.sInfo = '<b>_START_ to _END_</b> of more than _TOTAL_ (<small>' + json.iTotalRecordsFormatted + ' Tasks</small>)';
-	                    }
-	                    else{
-	                        oLanguage.sInfo = '<b>_START_ to _END_</b> of <b>_TOTAL_</b> (<small>' + json.iTotalRecordsFormatted + ' Tasks</small>)';
-	                    }
-	                    
-	                    fnCallback(json);
-	                }
-	            });
-        	},
-        	"fnRowCallback": function( nRow, aData, iDisplayIndex ){
-                return nRow;
-	        },
-	        "fnDrawCallback": function(oSettings, json) {
-
-	        },
-		});
-	}
 
 });
 $('#btnapply').click(function(){ 
@@ -356,15 +298,14 @@ $(function(){
 
 $(function(){
 
-		$("form[name='task_category']").validate({
+		$("form[name='modelholiday']").validate({
 		rules:{
-				title_task : "required",
-				startdate : "required" ,
-				due_date : "required" ,
-				assignemp : "required"
-		},	
-		messages:{
-				assignemp : "Choose an assignee",
+				'holiday_name[]': {
+                required: true
+            	},
+            	'occasion[]': {
+                required: true
+            	}
 		},			
 		submitHandler: function(form) {
 		form.submit();}
@@ -638,32 +579,14 @@ $('#repeate-data').click(function(){
 $("#save-holiday").click(function(event) {
 	var holiday_arr = [];
 	var ocasion_arr = [];
-	var holiday_err = 0;
-	var occasion_err = 0;
+
 	$("input[name^='holiday_name']").each(function() {
-		var holiday_date = $(this).val();
-		if(holiday_date.trim() == ''){
-			holiday_err = 1;
-		}
     holiday_arr.push($(this).val());
 });
 	$("input[name^='occasion']").each(function() {
-		var occasion = $(this).val();
-		if(occasion.trim() == ''){
-			 occasion_err = 1;
-		}
     ocasion_arr.push($(this).val());
 });
-	
-	if(holiday_err == 1){
-		alert('enter holiday');
-		return false;
-	}
-	if(occasion_err == 1){
-		alert('enter occasion');
-		return false;
-	}
-	
+	//console.log(holiday_arr);
 	event.preventDefault();
         $.ajax({
            url: base_url+"holiday/insert_data",
@@ -714,22 +637,22 @@ $("#save-defaultholiday").click(function(event) {
               alert('Something is wrong');
            },
            success: function(data) {
-	               $('#data-defaultholiday').modal('toggle');
-	               $('#modeldefaultholiday')[0].reset();
-           		
+           	
+               $('#data-defaultholiday').modal('toggle');
+               $('#modeldefaultholiday')[0].reset();
                displayData();
            }
         });
 });
 
-$(".close").click(function() {
+$("close").click(function() {
 	$('#data-holiday').modal('toggle');
     $('#modelholiday')[0].reset();
     $('#dynamic').html('');
  });   
                                  
-$(".closedata").click(function() {                                                  
-	$('#data-defaultholiday').modal('toggle');
+$("closedata").click(function() {                                                   
+$('#data-defaultholiday').modal('toggle');
     $('#modeldefaultholiday')[0].reset();  
 });                                               
  
@@ -804,191 +727,27 @@ if (isConfirm) {
    });
 }
 
-$('#selectyear').change(function(){
+/*$('#selectyear').change(function(){
+	alert('hii');
 	year = $(this).val();
 	$.ajax({
 		url : base_url+"holiday/check_year",
         type : 'POST',
-        data : {year: year},
+        data : {year: year}	
         error: function() {
               alert('Something is wrong');
            },
         success: function(){
-        	displayData();
+
         }
 	});
 
-});
-
-function deleteTemplateM(id){
-	var url = base_url+"project/deletetemplateM";
-	swal({
-	 title: "Are you sure?",
-	 text: "You will not be able to recover this imaginary file!",
-	 type: "warning",
-	 showCancelButton: true,
-	 confirmButtonColor: "#DD6B55",
-	 confirmButtonText: "Yes, delete it!",
-	 closeOnConfirm: false
-	},
-function(isConfirm){
-if (isConfirm) {
-       $.ajax({
-           url: url,
-           type: "POST",
-           dataType: "JSON",
-           data: {id:id},
-          dataType: "html",
-		  
-           success: function (data) {
-               swal("Done!", "It was succesfully deleted!", "success");
-               $('#'+atob(id)+'-tr').hide();
-			   
-           },
-           error: function (xhr, ajaxOptions, thrownError) {
-               swal("Error deleting!", "Please try again", "error");
-           }
-       });
-   }
-   });
-}                                            
- 
-
-
- function deleteProjectM(pmid){
-	var url = base_url+"project/deleteprojectM";
-	swal({
-	 title: "Are you sure?",
-	 text: "You will not be able to recover this imaginary file!",
-	 type: "warning",
-	 showCancelButton: true,
-	 confirmButtonColor: "#DD6B55",
-	 confirmButtonText: "Yes, delete it!",
-	 closeOnConfirm: false
-	},
-function(isConfirm){
-if (isConfirm) {
-       $.ajax({
-           url: url,
-           type: "POST",
-           dataType: "JSON",
-           data: {id:pmid},
-          dataType: "html",
-		  
-           success: function (data) {
-               swal("Done!", "It was succesfully deleted!", "success");
-               $('#'+atob(pmid)+'-tr').hide();
-			   
-           },
-           error: function (xhr, ajaxOptions, thrownError) {
-               swal("Error deleting!", "Please try again", "error");
-           }
-       });
-   }
-   });
-}                          
-
-// add category in task
-
-$('#save-task-category').click(function(){
-	var task_cat_name = $("input[name='category_name']").val();
-	if(task_cat_name != ''){
-		$.ajax({
-			url: base_url+"project/checkTaskCategory",
-			type: 'POST',
-			dataType: 'html',
-			data:{task_cat_name:task_cat_name},
-			success: function(data) {
-				if(data == 0){
-					var dataString = 'task_cat_name='+ task_cat_name;
-					$.ajax({
-						url: base_url+"project/insert_task_category",
-						type: 'POST',
-						dataType: 'JSON',
-						data: dataString,
-						success: function(data){
-							$('select[name="task-category"]').html('');
-							$('select[name="task-category"]').append(data.task_cat);
-							$('#taxCategory').append("<tr id='taskCat_"+data.lastTaskCatinsertid+"'><td>"+data.count+"</td><td>"+task_cat_name+"</td><td><input type='submit' class='btn btn-sm btn-danger btn-rounded delete-category' onclick='deletetaskCat(\""+data.lastTaskCatinsertid+"\");' value='Remove' id='deletetaskCat'></td></tr>");
-							$('#add-task-categ').modal('toggle');
-							$('#createTaskCategoryForm')[0].reset();
-						}
-					});		
-				}else{
-					jQuery('#errormsg').html('');
-					jQuery('#errormsg').html('<b>This task category already exists</b>');
-				}
-			}
-		});
-	}
-		else{
-			jQuery('#errormsg').html('');
-			jQuery('#errormsg').html('<b>Please enter taxk category name</b>');
-		}
-});
-
-function deletetaskCat(id){
-	$.ajax({
-	    type: "POST",
-	    url: base_url+"project/deletetaskCat",
-	    cache: false,
-	    data: "id="+id,
-	    success: function(data){
-		   	if(data == 1){
-		   		jQuery('#taskCat_'+id).remove();
-		   	}
-		   	else{
-		   		$('#succmsg').html('');
-				$('#succmsg').html('<b>Something went to wrong</b>');
-		   	}
-		}
-	});
-}
-
-//for show add new task
-$('#show-new-task-panel').click(function(){
-	$('#task_show').show();
-});
-
-//for close add task div
-$('#hide-new-task-panel').click(function(){
-	$('#task_show').hide();
-});
-                                                                                     
-// for show update task view and update
-
-function updateTask(id){
-	$.ajax({
-		type: "POST",
-		url: base_url+"project/updateTask",
-		cache: false,
-		dataType: 'JSON',
-	    data: "id="+id,
-	    success: function(data){
-	    	$('#update_task_show').show();
-	    	$('#title_task').val(data.title_task);
-	    	$('#description').val(data.description);
-	    	$('#start_date1').val(data.startdate);
-	    	$('#start_date1').datepicker({format: 'dd-mm-yyyy'});
-	    	$('#start_date1').datepicker('setdate',data.startdate);
-	    	$('#deadline1').val(data.duedate);
-	    	$('#deadline1').datepicker({format: 'dd-mm-yyyy'});
-	    	$('#deadline1').datepicker('setdate',data.duedate);
-	    	$('#assignemp option[value="'+data.SelEmp+'"]').attr('selected','selected');
-	    	$('#task_category option[value="'+data.SelTaskCat+'"]').attr('selected','selected');
-	    	$('#status option[value="'+data.status+'"]').attr('selected','selected');
-	    	$('input:radio[name=radio-stacked]:checked').attr(data.priority);
-
-		 }
-	});
-}   
-
-
-//for close update view
-
-$('#hide-update-task-panel').click(function(){
-	$('#update_task_show').hide();
-});                                  
+});*/
+                                            
+                                                
+                                                                                             
+                                            
+                                    
 
                                               
 	

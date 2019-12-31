@@ -1316,25 +1316,43 @@ var hourDiff = timeEnd - timeStart;
   $("#hours").blur(function(){
      valuestart = $("input[name='starttime']").val();
      valueend = $("input[name='endtime']").val();
+     //alert(valueend);
     // var timeStart = new Date(valuestart).getHours();
-   date_future = new Date(new Date(valueend).getFullYear() +1, 0, 1);
-      date_now = new Date(valuestart);
+   //date_future = new Date(new Date().getFullYear() +1, 0, 1);
+     // date_future = new Date(new Date('01/12/2020'+valueend));
+     //  date_now = new Date('01/01/2020'+valuestart);
 
-        seconds = Math.floor((date_future - (date_now))/1000);
-        minutes = Math.floor(seconds/60);
-        hours = Math.floor(minutes/60);
-        days = Math.floor(hours/24);
+     //    seconds = Math.floor((date_future - (date_now))/1000);
+     //    minutes = Math.floor(seconds/60);
+     //    hours = Math.floor(minutes/60);
+     //    days = Math.floor(hours/24);
         
-        hours = hours-(days*24);
-        minutes = minutes-(days*24*60)-(hours*60);
+     //    hours = hours-(days*24);
+     //    minutes = minutes-(days*24*60)-(hours*60);
+     var timeSplit_t1 = valuestart.split(':');
+     var timeSplit_t2 = valuestart.split(':');
+   //  var x1=parseint(timeSplit_t1[0])*60*60+parseint(timeSplit_t2[1]*60);
+   //  var x2=parseint(timeSplit_t1[0])*60*60+parseint(timeSplit_t2[1]*60);
+    var x1=parseint(timeSplit_t1[0]);
+    //+parseint(timeSplit_t2[1]);
+    alert(x1);
+    var x2=parseint(timeSplit_t1[0])+parseint(timeSplit_t2[1]);
+     
+     var s=x1+x2;
+     alert(s);
+     var m=Math.floor(s/60); 
+	 var h=Math.floor(m/60); 
 
-     alert(seconds);
-   // alert(valuestart.getHours());
-//alert(valuestart);
-/* valuestop = $("input[name='endtime']").val();
-var timeStart = new Date(valuestart).getHours();
-var timeEnd = new Date(valuestop).getHours();
+     /*alert(timeSplit);
+     $floorvalue= Math.floor(valuestart);
+     alert($floorvalue);
+	$endfloorvalue =Math.floor(valueend);
+	
+	$addfloor = $floorvlue+$endfloorvalue;
+*/
 
-var hourDiff = timeEnd - timeStart;  */  
+    
   });
+
+
 

@@ -189,41 +189,29 @@ class Project extends CI_Controller {
 		
 		/** Output */
 		$datarow = array();
-
 		$i = 1;
 		foreach($projectArr as $row) {
 			$rowid = $row->id;
-			$whereArr = array('project_id' => $rowid);
-			$p_member = $this->common_model->getData('tbl_project_member',$whereArr);
-			$emp_str = '';
-			foreach($p_member as $pm){
-				$emp_id = $pm->emp_id;
-				$whereArrEmp = array('id' => $emp_id);
-				$emp_arr = $this->common_model->getData('tbl_employee',$whereArrEmp);
-				$emp_name = substr($emp_arr[0]->employeename,0,1);
-				$emp_str.= ucfirst($emp_name);
-				
-			}
 		if($row->status=='1'){
-			$status=$row->status='Complete';
-			$showStatus = '<label class="label label-success">'.$status.'</label>';
-		}
-		else if($row->status=='0'){
-			$status=$row->status='InComplete';
-			$showStatus = '<label class="label label-warning">'.$status.'</label>';
-		}
-		else if($row->status=='2'){
-			$status=$row->status='InProgress';
-			$showStatus = '<label class="label label-inprogress">'.$status.'</label>';
-		}
-		else if($row->status=='3'){
-			$status=$row->status='OnHold';
-			$showStatus = '<label class="label label-onhold">'.$status.'</label>';
-		}
-		else{
-			$status=$row->status='Canceled';
-			$showStatus = '<label class="label label-danger">'.$status.'</label>';
-		}
+						$status=$row->status='Complete';
+						$showStatus = '<label class="label label-success">'.$status.'</label>';
+						}
+					else if($row->status=='0'){
+						$status=$row->status='InComplete';
+						$showStatus = '<label class="label label-warning">'.$status.'</label>';
+						}
+					else if($row->status=='2'){
+						$status=$row->status='InProgress';
+						$showStatus = '<label class="label label-inprogress">'.$status.'</label>';
+						}
+					else if($row->status=='3'){
+						$status=$row->status='OnHold';
+						$showStatus = '<label class="label label-onhold">'.$status.'</label>';
+						}
+					else{
+						$status=$row->status='Canceled';
+						$showStatus = '<label class="label label-danger">'.$status.'</label>';
+						}
 			$archive=$row->archive;
 			$st = '';
 			$string = '';
@@ -248,8 +236,7 @@ class Project extends CI_Controller {
 		$datarow[] = array(
 			$id = $i,
 			$row->projectname.'<br/>'.$string.'<br/>'.$showStatus,
-			"<a href='".base_url()."Project/member/".base64_encode($rowid)."'> Add Project  Members</a>"
-			.'<br/>'.$emp_str,
+			"<a href='".base_url()."P/template_data/".$id."'> Add Template Members</a>",
 			$row->deadline,
 			$row->clientname,
 			//$status,
@@ -280,7 +267,13 @@ class Project extends CI_Controller {
 		redirect('project/index');
 	}
 	
-	
+	public function searchproject(){
+		$id=base64_decode($this->uri->segment(3));
+		$searchArr=array('id'=>$id);
+		$this->load->view('common/header');
+		$this->load->view('project/searchproject',$searchArr);
+		$this->load->view('common/footer');
+	}
 			
 	public function deletetemplate(){
 		$id=base64_decode($_POST['id']);
@@ -299,7 +292,13 @@ class Project extends CI_Controller {
 		redirect('project/index');
 	}
 			
-  
+    public function archivetoproject(){
+		$id=base64_decode($_POST['id']);
+		$updateArr = array('archive'=>0);
+		$whereArr=array('id'=>$id);
+		$data['query']=$this->common_model->updateData('tbl_project_info',$updateArr,$whereArr);
+		redirect('project/index');
+	}
 			
 	/*public function viewarchiev(){
 		$data['client']=$this->common_model->getData('tbl_clients');
@@ -318,7 +317,7 @@ class Project extends CI_Controller {
 		redirect('project/index');
     }
 			
-	/*public function archivelist(){
+	public function archivelist(){
 		//echo('ytgvbhjn');die;
 		if(!empty($_POST)){
 			$_GET = $_POST;
@@ -329,7 +328,7 @@ class Project extends CI_Controller {
 			//'ahrefs_dr', 
 			$totalColumns = count($aColumns);
 
-			/** Paging Start 
+			/** Paging Start **/
 			$sLimit = "";
 			$sOffset = "";
 			if ($_GET['iDisplayStart'] < 0) {
@@ -346,7 +345,7 @@ class Project extends CI_Controller {
 				$sOffset = (int) $_GET['iDisplayStart'];
 			}
 			/** Paging End **/
-			/** Ordering Start 
+			/** Ordering Start **/
 			$noOrderColumns = array('other_do_ext');
 			if (isset($_GET['iSortCol_0']) && !in_array($aColumns[intval($_GET['iSortCol_0'])], $noOrderColumns)) {
 				$sOrder = " ";
@@ -377,7 +376,7 @@ class Project extends CI_Controller {
 			}
 			/** Ordering End **/
 				
-			/** Filtering Start 
+			/** Filtering Start */
 			
 			if(!empty(trim($_GET['sSearch']))){
 				$searchTerm = trim($_GET['sSearch']);
@@ -392,7 +391,7 @@ class Project extends CI_Controller {
 			}
 		/*	if(!empty($category)){						
 				$sWhere.=' AND projectcategoryid='.$category;
-			}
+			}*/
 			if($status=='all'){
 				}else{
 						$sWhere.=' AND tbl_project_info.status='.$status;
@@ -401,7 +400,7 @@ class Project extends CI_Controller {
 			if(!empty($sWhere)){
 				$sWhere = " WHERE 1 ".$sWhere;
 			}
-			/** Filtering End 
+			/** Filtering End */
 		}
 		$query = "SELECT tbl_project_info.*,tbl_clients.clientname as clientname from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 		//echo($query);die;
@@ -414,6 +413,7 @@ class Project extends CI_Controller {
 		$ProjectAllArr = $this->common_model->getData('tbl_project_info',$whereArr);
 		$iTotal = count($ProjectAllArr);
 		
+		/** Output */
 		$datarow = array();
 		$i = 1;
 		foreach($projectArr as $row) {
@@ -436,7 +436,7 @@ class Project extends CI_Controller {
 		$datarow[] = array(
 			$id = $i,
 			$row->projectname,
-			"<a href='".base_url()."P/tesmplate_data/".$id."'> Add Template Members</a>",
+			"<a href='".base_url()."P/template_data/".$id."'> Add Template Members</a>",
 			$row->deadline,
 			$row->clientname,
 			$status,
@@ -457,7 +457,7 @@ class Project extends CI_Controller {
 		);
 		echo json_encode($output);
 		exit();
-	}*/
+	}
 			
 	public function editproject(){	
 		$id=base64_decode($this->uri->segment(3));
@@ -701,21 +701,9 @@ class Project extends CI_Controller {
 				$i = 1;
 				foreach($templateArr as $row) {
 					$rowid = $row->id;	
-					$whereArr = array('template_id' => $rowid);
-					$temp_member = $this->common_model->getData('tbl_template_member',$whereArr);
-					$emp_str = '';
-					foreach($temp_member as $temp){
-						$emp_id = $temp->emp_id;
-						$whereArrEmp = array('id' => $emp_id);
-						$emp_arr = $this->common_model->getData('tbl_employee',$whereArrEmp);
-						$emp_name = substr($emp_arr[0]->employeename,0,1);
-						$emp_str.= ucfirst($emp_name);
-					}
 					$datarow[] = array(
 						$id = $i,
 						$row->projectname,
-						"<a href='".base_url()."Project/searchtemplate/".base64_encode($rowid)."'> Add Template  Members</a>".'<br/>'.$emp_str,
-						
 						$row->name,
 						'<a href='.base_url().'Project/edittemplate/'.base64_encode($row->id). ' class="btn btn-info btn-circle" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
 						 <a href='.base_url().'Project/searchproject/'.base64_encode($row->id). ' class="btn btn-success btn-circle" data-toggle="tooltip" data-original-title="View Project Details"><i class="fa fa-search" aria-hidden="true"></i></a>
@@ -732,17 +720,6 @@ class Project extends CI_Controller {
 							);
 		echo json_encode($output);
 		exit();
-	}
-
-	public function searchtemplate(){
-		$data['id'] = base64_decode($this->uri->segment(3));
-		$sql = "SELECT tbl_template_member.id as memberid,tbl_template_member.emp_id, tbl_employee.id ,tbl_employee.employeename from tbl_template_member inner join tbl_employee on tbl_template_member.emp_id = tbl_employee.id where template_id =".$data['id'];
-		$data['temp_member'] = $this->common_model->coreQueryObject($sql);
-		$data['emp_count'] = count($data['temp_member']);
-		$data['employee'] = $this->common_model->getData('tbl_employee');
-		$this->load->view('common/header');
-		$this->load->view('project/searchtemplate',$data);
-		$this->load->view('common/footer');
 	}
 
 	public function insertcat(){
@@ -787,276 +764,4 @@ class Project extends CI_Controller {
 		}
 		echo $status;exit();
 	}
-
-	public function insertProjectMember(){
-		if(!empty($_POST)){
-			$data['employee'] = $this->input->post('choose_member');
-			
-			$emp_count = count($data['employee']);
-			$project_id = $this->input->post('projectid');
-			for($i=0 ; $i<$emp_count; $i++){
-				$emp_id = $data['employee'][$i];
-				$whereArr = array('emp_id' => $emp_id);
-				$projectM = $this->common_model->getData('tbl_project_member', $whereArr);
-				if(count($projectM) == 1){
-					$this->session->set_flashdata('message_name', 'Alredy add this member');
-					redirect('Project/member/'.$this->uri->segment(3));
-				}
-				else{
-					$insArr = array('project_id' => $project_id , 'emp_id' => $emp_id);
-					$this->common_model->insertData('tbl_project_member',$insArr);
-				}
-			}
-		}
-		redirect('Project/member/'.$this->uri->segment(3));
-	}
-
-	public function insertTemplateMember(){
-		if(!empty($_POST)){
-			$data['employee'] = $this->input->post('choose_member');
-			$emp_count = count($data['employee']);
-			$template_id = $this->input->post('templateid');
-			for($i=0 ; $i<$emp_count; $i++){
-				$emp_id = $data['employee'][$i];
-				$whereArr = array('emp_id' => $emp_id);
-				$projectM = $this->common_model->getData('tbl_template_member', $whereArr);
-				if(count($projectM) == 1){
-					$this->session->set_flashdata('message_name', 'Alredy add this member');
-					redirect('Project/searchtemplate/'.$this->uri->segment(3));
-				}
-				else{
-					$insArr = array('template_id' => $template_id , 'emp_id' => $emp_id);
-					$this->common_model->insertData('tbl_template_member',$insArr);
-				}
-			}
-		}
-		redirect('Project/searchtemplate/'.$this->uri->segment(3));
-
-	}
-
-	public function deletetemplateM(){
-		$id = base64_decode($_POST['id']);
-		$whereArr = array('id' => $id);
-		$this->common_model->deleteData('tbl_template_member',$whereArr);
-	}
-	
-	public function deleteprojectM(){
-		$id = base64_decode($_POST['id']);
-		$whereArr = array('id' => $id);
-		$this->common_model->deleteData('tbl_project_member',$whereArr);
-	}
-
-	public function member(){
-		$data['id'] = base64_decode($this->uri->segment(3));
-		$sql = "SELECT tbl_project_member.id as memberid , tbl_project_member.emp_id , tbl_employee.id ,tbl_employee.employeename from tbl_project_member inner join tbl_employee on tbl_project_member.emp_id = tbl_employee.id where project_id =".$data['id'];
-		$data['member'] = $this->common_model->coreQueryObject($sql);
-		$data['emp_count'] = count($data['member']);
-		$data['employee'] = $this->common_model->getData('tbl_employee');
-		$this->load->view('common/header');
-		$this->load->view('project/searchproject',$data);
-		$this->load->view('common/footer');
-	}
-
-	public function task(){
-		$data['id'] = base64_decode($this->uri->segment(3));
-		$data['taskCat'] = $this->common_model->getData('tbl_task_category');
-		$data['employee'] = $this->common_model->getData('tbl_employee');
-		$this->load->view('common/header');
-		$this->load->view('project/searchproject',$data);
-		$this->load->view('common/footer');
-	}
-
-	public function insert_task_category(){
-		if(!empty($_POST)){
-			$task_cat = $this->input->post('task_cat_name');
-			$insArr = array('task_category_name' => $task_cat);
-			$lastTaskCatinsertid = $this->common_model->insertData('tbl_task_category',$insArr);
-			//echo $lastTaskCatinsertid;die;
-			$task_catArray = $this->common_model->getData('tbl_task_category');
-			$str = '';
-			foreach($task_catArray as $taskCat){
-				$str.= '<option value="'.$taskCat->id.'">'.$taskCat->task_category_name.'</option>';
-			}
-			$totalCatdata = count($task_catArray);
-			$task_CatArr = array();
-			$task_CatArr['count'] = $totalCatdata;
-			$task_CatArr['task_cat'] = $str;
-			$task_CatArr['lastTaskCatinsertid'] =  $lastTaskCatinsertid;
-			echo json_encode($task_CatArr);exit();
-		}
-	}
-
-	public function deletetaskCat(){
-		$status = 0;
-		if(!empty($_POST['id'])){
-			$id = $this->input->post('id');
-			$deleteArr = array('id' => $id);
-			$this->common_model->deleteData('tbl_task_category',$deleteArr);
-			$status = 1;
-		}
-		echo $status;exit();
-	}
-
-	public function insertTask(){
-		if(!empty($_POST)){
-			$title = $this->input->post('title_task');
-			$projectid = $this->input->post('projectid');
-			$description = $this->input->post('editor1');
-			//echo $description;die;
-			$startdate = $this->input->post('startdate');
-			$duedate = $this->input->post('due_date');
-			$assignemp = $this->input->post('assignemp');
-			$taskcategory = $this->input->post('task-category');
-			$priority = $this->input->post('radio-stacked');
-			$insArr = array('projectid' => $projectid, 'title' => $title , 'description' => $description , 'startdate' => $startdate , 'duedate' => $duedate , 'assignedto' => $assignemp , 'taskcategory' => $taskcategory , 'status' => 0, 'priority' => $priority);
-			$this->common_model->insertData('tbl_task',$insArr);
-			redirect('project/task/'.base64_encode($projectid));
-		}
-	}
-
-	public function task_list(){
-		if(!empty($_POST)){
-			$_GET = $_POST;
-			$defaultOrderClause = "";
-			$sWhere = "";
-			$sOrder = '';
-			$aColumns = array( 'id', 'title', 'assignedto', 'duedate', 'status');
-			//'ahrefs_dr', 
-            $totalColumns = count($aColumns);
-
-			/** Paging Start **/
-            $sLimit = "";
-            $sOffset = "";
-            if ($_GET['iDisplayStart'] < 0) {
-                $_GET['iDisplayStart'] = 0;
-            }
-            if ($_GET['iDisplayLength'] < 0) {
-                $_GET['iDisplayLength'] = 10;
-            }
-            if (isset($_GET['iDisplayStart']) && $_GET['iDisplayLength'] != '-1') {
-                $sLimit = (int) substr($_GET['iDisplayLength'], 0, 6);
-                $sOffset = (int) $_GET['iDisplayStart'];
-            } else {
-                $sLimit = 10;
-                $sOffset = (int) $_GET['iDisplayStart'];
-            }
-            /** Paging End **/
-            /** Ordering Start **/
-            $noOrderColumns = array('other_do_ext');
-            if (isset($_GET['iSortCol_0']) && !in_array($aColumns[intval($_GET['iSortCol_0'])], $noOrderColumns)) {
-                $sOrder = " ";
-                for ($i = 0; $i < intval($_GET['iSortingCols']); $i++) {
-                    if ($_GET['bSortable_' . intval($_GET['iSortCol_' . $i])] == "true") {
-
-                        if ($aColumns[intval($_GET['iSortCol_' . $i])] != '') {
-                            $sOrder .= $aColumns[intval($_GET['iSortCol_' . $i])] . " " . $_GET['sSortDir_' . $i] . ", ";
-                        } 
-                        else {
-                            $sOrder = $defaultOrderClause . " ";
-                        }
-
-                        $sortColumnName = intval($_GET['iSortCol_' . $i]).'|'.$_GET['sSortDir_' . $i];
-                    }
-                }
-
-                $sOrder = substr_replace($sOrder, "", -2);
-                if ($sOrder == "ORDER BY") {
-                    $sOrder = "";
-                }
-            } else {
-                $sOrder = $defaultOrderClause;
-            }
-
-            if(!empty($sOrder)){
-            	$sOrder = " ORDER BY ".$sOrder;
-            }
-            /** Ordering End **/
-
-            /** Filtering Start */
-            if(!empty(trim($_GET['sSearch']))){
-            	$searchTerm = trim($_GET['sSearch']);
-            	$sWhere .= ' AND (title like "%'.$searchTerm.'%" OR description like "%'.$searchTerm.'%" OR startdate like "%'.$searchTerm.'%" OR duedate like "%'.$searchTerm.'%" OR assignedto like "%'.$searchTerm.'%")';
-            }
-            if(!empty($sWhere)){
-            	$sWhere = " WHERE 1 ".$sWhere;
-            }
-            /** Filtering End */
-		}
-		
-	    $query = "SELECT tbl_task.* , tbl_employee.employeename from tbl_task inner JOIN tbl_employee on tbl_task.assignedto = tbl_employee.id ".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
-		$taskArr = $this->common_model->coreQueryObject($query);
-
-		$query = "SELECT * from tbl_task ".$sWhere;
-		//echo $this->db->last_query();die;
-		$taskFilterArr = $this->common_model->coreQueryObject($query);
-		$iFilteredTotal = count($taskFilterArr);
-
-		$taskAllArr = $this->common_model->getData('tbl_task');
-		$iTotal = count($taskAllArr);
-
-		/** Output */
-		$datarow = array();
-		$i = 1;
-		foreach($taskArr as $row) {
-			if($row->status == 0){
-				$status = $row->status = 'Incomplete';
-				$str = '<label class="label label-danger">'.$status.'</label>';
-			}
-			
-				$actionStr = '<a href="javascript:;" onclick="updateTask(\''.base64_encode($row->id).'\')" class="btn btn-info btn-circle edit-task" data-toggle="tooltip" data-task-id="69" data-original-title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a> &nbsp;
-							<a href="javascript:;" class="btn btn-danger btn-circle sa-params" data-toggle="tooltip" data-task-id="69" data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>';
-			$datarow[] = array(
-				$id = $i,
-                //$row->clientname.'<br/>'.$str,
-                $row->title,
-                $row->employeename,
-				$row->duedate,
-				$str,
-				$actionStr
-           	);
-           	$i++;
-      	}
-        
-		$output = array
-		(
-		   	"sEcho" => intval($_GET['sEcho']),
-	        "iTotalRecords" => $iTotal,
-	        "iTotalRecordsFormatted" => number_format($iTotal), //ShowLargeNumber($iTotal),
-	        "iTotalDisplayRecords" => $iFilteredTotal,
-	        "aaData" => $datarow
-		);
-	  echo json_encode($output);
-      exit();
-	}
-
-	public function checkTaskCategory(){
-		$status = 0;
-		if(!empty($_POST['task_cat_name'])){
-			$where = array('task_category_name' => $_POST['task_cat_name']);
-			$checkData = $this->common_model->getData('tbl_task_category',$where);
-			if(!empty($checkData)){
-				$status = 1;
-			}
-		}
-		echo $status;exit();
-	}	
-
-	public function updateTask(){
-		$id = base64_decode($_POST['id']);
-		$whereArr = array('id' => $id);
-		$taskData = $this->common_model->getData('tbl_task' , $whereArr);
-		$data['EmpData'] = $this->common_model->getData('tbl_employee');
-		$taskCat = $this->common_model->getData('tbl_task_category');
-		$taskUpdateArr = array();
-		$taskUpdateArr['title_task'] = $taskData[0]->title;
-		$taskUpdateArr['description'] = $taskData[0]->description;
-		$taskUpdateArr['startdate'] = $taskData[0]->startdate;
-		$taskUpdateArr['duedate'] = $taskData[0]->duedate;
-		$taskUpdateArr['SelEmp'] = $taskData[0]->assignedto;
-		$taskUpdateArr['SelTaskCat'] = $taskData[0]->taskcategory;
-		$taskUpdateArr['status'] = $taskData[0]->status;
-		$taskUpdateArr['priority'] = $taskData[0]->priority;
-		echo json_encode($taskUpdateArr);exit;
-	}
-}	
-
+}		
