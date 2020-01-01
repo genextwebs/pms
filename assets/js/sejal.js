@@ -1300,59 +1300,52 @@ $("#projectname").change(function(event) {
 
   $('#starttime').timepicker();
   $('#endtime').timepicker();
-/*
-$("#hours").focus(function() {
-var valuestart = $("select[id='starttime']").val();
-alert(valuestart);
-var valuestop = $("select[id='endtime']").val();
-var timeStart = new Date(valuestart).getHours();
-var timeEnd = new Date(valuestop).getHours();
-
-var hourDiff = timeEnd - timeStart;      
-
-});*/
 
 
-  $("#hours").blur(function(){
-     valuestart = $("input[name='starttime']").val();
-     valueend = $("input[name='endtime']").val();
-     //alert(valueend);
-    // var timeStart = new Date(valuestart).getHours();
-   //date_future = new Date(new Date().getFullYear() +1, 0, 1);
-     // date_future = new Date(new Date('01/12/2020'+valueend));
-     //  date_now = new Date('01/01/2020'+valuestart);
+  $("#endtime").blur(function(event){
+    valuestart = $("input[name='starttime']").val();
+    valueend = $("input[name='endtime']").val(); 
+    sdate = $("input[name='start_date']").val();
+    edate = $("input[name='deadline']").val();
+    if(valuestart.length == 7){
+    	start_am_pm = valuestart.substring(5);
+    }else{
+    	start_am_pm = valuestart.substring(4);
+    }
+    if(start_am_pm=="am"){
+    	 replace_s_time=valuestart.replace("am","");
+    }
+    else{
+    	 replace_s_time=valuestart.replace("pm","");
+    }
+    if(valuestart.length == 7){
+    	end_am_pm = valuestart.substring(5);
+    }else{
+    	end_am_pm = valuestart.substring(4);
+    }
+    if(end_am_pm=="am"){
+    	replace_e_time=valueend.replace("am", "");
+    }
+    else{
+    	replace_e_time=valueend.replace("pm", "");
+    }
+    alert(replace_e_time);
 
-     //    seconds = Math.floor((date_future - (date_now))/1000);
-     //    minutes = Math.floor(seconds/60);
-     //    hours = Math.floor(minutes/60);
-     //    days = Math.floor(hours/24);
-        
-     //    hours = hours-(days*24);
-     //    minutes = minutes-(days*24*60)-(hours*60);
-     var timeSplit_t1 = valuestart.split(':');
-     var timeSplit_t2 = valuestart.split(':');
-   //  var x1=parseint(timeSplit_t1[0])*60*60+parseint(timeSplit_t2[1]*60);
-   //  var x2=parseint(timeSplit_t1[0])*60*60+parseint(timeSplit_t2[1]*60);
-    var x1=parseint(timeSplit_t1[0]);
-    //+parseint(timeSplit_t2[1]);
-    alert(x1);
-    var x2=parseint(timeSplit_t1[0])+parseint(timeSplit_t2[1]);
-     
-     var s=x1+x2;
-     alert(s);
-     var m=Math.floor(s/60); 
-	 var h=Math.floor(m/60); 
+    var start_actual_time  =  sdate+" "+replace_s_time;
+    var end_actual_time    =  edate+" "+replace_e_time;
 
-     /*alert(timeSplit);
-     $floorvalue= Math.floor(valuestart);
-     alert($floorvalue);
-	$endfloorvalue =Math.floor(valueend);
-	
-	$addfloor = $floorvlue+$endfloorvalue;
-*/
+    start_actual_time = new Date(start_actual_time);
+    end_actual_time = new Date(end_actual_time);
 
-    
+    var diff = end_actual_time - start_actual_time;
+
+    var diffSeconds = diff/1000;
+    var HH = Math.floor(diffSeconds/3600);
+    var MM = Math.floor(diffSeconds%3600)/60;
+
+    var formatted = ((HH < 10)?("0" + HH):HH) + ":" + ((MM < 10)?("0" + MM):MM)
+    alert('Hours-->'+formatted);
+    $('#hours').val(formatted);
   });
-
 
 
