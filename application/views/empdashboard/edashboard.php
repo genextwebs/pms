@@ -25,7 +25,7 @@
                             </div>
                         </div>
                         <div class="col-sm-9 text-right">
-                            <span class="widget-title">  Total Projects</span><br>
+                            <span class="widget-title"> Total Projects</span><br>
                             <span class="counter">20</span>
                         </div>
                     </div>

@@ -101,6 +101,7 @@
 		</div>
 		<div class="col-md-12">
 			<div class="stats-box">
+				<?php if($this->user_type == 0) {  ?>
 				<div class="row">
 					<div class="col-sm-12">
 						<div class="form-group custom-action">
@@ -118,6 +119,7 @@
 					  </div>
 				 </div>
 			 </div>
+			<?php }  ?>
 			<div class="row">
 				<div class="col-md-4">
 					<div class="form-group">

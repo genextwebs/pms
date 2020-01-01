@@ -22,6 +22,9 @@ if($this->session->userdata('login')){
                 <!-- <li>
                     <a href="#"><i class="fas fa-sign-in-alt"></i> <span>Login As Employee</span></a>
                 </li> -->
+                 <li>
+                    <a href="<?php echo base_url().'EmpDashboard'; ?>"><i class="fa fa-sign-in"></i> <span>Login As Employee</span></a>
+                </li>
                 <li>
                     <a href="<?php echo base_url().'Login/logout'; ?>"><i class="fa fa-power-off"></i> <span>Logout</span></a>
                 </li>

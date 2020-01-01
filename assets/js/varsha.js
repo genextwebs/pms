@@ -925,3 +925,34 @@ $('#reset-filtersAttendance').click(function(){
 	});
 });
 
+//for search option in select  
+
+$(document).ready(function(){
+	$("#timezone").select2();
+   });
+
+$(document).ready(function(){
+	$("#date_format").select2();
+   });
+
+$(document).ready(function(){
+	$("#time_format").select2();
+   });
+
+$(document).ready(function(){
+	$("#locale").select2();
+   });
+
+//
+ $(document).ready(function() {
+          $('#recaptcha').click(function () { 
+           var selected = $(this).val(); alert(selected);  
+              if(selected == 'on') {
+               $('.key').show();
+               $('.secret').show();
+            } else {
+               $('.key').hide();
+               $('.secret').hide();
+             }
+     });       
+});

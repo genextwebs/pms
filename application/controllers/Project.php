@@ -8,6 +8,8 @@ class Project extends CI_Controller {
 		error_reporting(E_ALL);
 		ini_set('display_errors', 1);
 		$this->load->model('common_model');
+		$this->login = $this->session->userdata('login');
+		$this->user_type = $this->login->user_type;
 		func_check_login();
 	}
 			
@@ -221,7 +223,7 @@ class Project extends CI_Controller {
 				$string = '<label class="label label-archieve">'.ucfirst($st).'</label>';
 				$showStatus='';
 			}
-			
+		if($this->user_type == 0) { 
 			if($archive == '1'){
 				$actionstring = '<a href="javascript:void();" onclick="archivetoproject(\''.base64_encode($rowid).'\');" class="btn btn-info btn-circle revert" data-toggle="tooltip" data-user-id="14" data-original-title="Restore"><i class="fa fa-undo" aria-hidden="true"></i></a>
 								 <a href="javascript:void();" onclick="deleteproject(\''.base64_encode($rowid).'\');"  class="btn btn-danger btn-circle sa-params" data-toggle="tooltip"  data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>';
@@ -232,7 +234,11 @@ class Project extends CI_Controller {
 								 <a href='.base_url().'Project/searchproject/'.base64_encode($row->id). ' class="btn btn-success btn-circle" data-toggle="tooltip" data-original-title="View Project Details"><i class="fa fa-search" aria-hidden="true"></i></a>
 								 <a href="javascript:void();" onclick="archivedata(\''.base64_encode($rowid).'\');" class="btn btn-warning  btn-circle archive" data-toggle="tooltip" data-user-id="14" data-original-title="Archive"><i class="fa fa-archive" aria-hidden="true"></i></a>
 								 <a href="javascript:void();" onclick="deleteproject(\''.base64_encode($rowid).'\');"  class="btn btn-danger btn-circle sa-params" data-toggle="tooltip"  data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>';
-							}
+			}
+		}
+		if($this->user_type == 2) {  
+		 	$actionstring = ' <a href='.base_url().'Project/searchproject/'.base64_encode($row->id). ' class="btn btn-success btn-circle" data-toggle="tooltip" data-original-title="View Project Details"><i class="fa fa-search" aria-hidden="true"></i></a>';
+		 }
 		$datarow[] = array(
 			$id = $i,
 			$row->projectname.'<br/>'.$string.'<br/>'.$showStatus,

@@ -62,6 +62,12 @@ if($this->session->userdata('login')){
                 <span>Dashbord</span>
             </a>
         </li>
+         <li <?php if($controller == 'clients' && ($functionName == 'index' || $functionName == '')) { echo 'class="active"'; } ?>>
+            <a href="<?php echo base_url().'clients'?>" class="nav-link-s">
+                <i class="icon-people"></i>
+                <span>Clients</span>
+            </a>
+        </li>
          <li <?php if($controller == 'project' && ($functionName == 'project' || $functionName == '')) { echo 'class="active"'; } ?>>
             <a href="<?php echo base_url().'project'?>" class="nav-link-s">
                 <i class="icon-layers"></i>
@@ -85,20 +91,14 @@ if($this->session->userdata('login')){
                 </li>
             </ul>
         </li>
-         <li <?php if($controller == 'leads' && ($functionName == 'index' || $functionName == '')) { echo 'class="active"'; } ?>>
-            <a href="<?php echo base_url().'leads'?>" class="nav-link-s">
-                <i class="ti-receipt"></i>
-                <span>Leads</span>
-            </a>
-        </li>
-        <li>
-            <a href="#" class="nav-link-s">
-                <i class="icon-clock"></i>
+        <li <?php if($controller == 'timelog' && ($functionName == 'timelog' || $functionName == '')) { echo 'class="active"'; } ?>>
+            <a href="<?php echo base_url().'timelog'?>" class="nav-link-s">
+                <i class="icon-layers"></i>
                 <span>Time Logs</span>
             </a>
         </li>
-        <li>
-            <a href="#" class="nav-link-s">
+         <li <?php if($controller == 'Attendance' && ($functionName == 'Attendance' || $functionName == '')) { echo 'class="active"'; } ?>>
+            <a href="<?php echo base_url().'Attendance'?>" class="nav-link-s">
                 <i class="icon-clock"></i>
                 <span>Attendance</span>
             </a>

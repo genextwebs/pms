@@ -7,10 +7,13 @@ class Clients extends CI_Controller{
 		ini_set('display_errors',1);
 		error_reporting(E_ALL);
 		func_check_login();
+		$this->login = $this->session->userdata('login');
+		$this->user_type = $this->login->user_type;
 	}
 	
 	public function index(){
 		$data['clients']=$this->common_model->getData('tbl_clients');
+		$data['userData']=$this->common_model->getData('tbl_user');		
 		$this->load->view('common/header');
 		$this->load->view('clients/client',$data);
 		$this->load->view('common/footer');
@@ -193,9 +196,14 @@ class Clients extends CI_Controller{
 				$clientid = $row->clientId;
 				$create_date = date('d-m-Y', strtotime($row->created_at));
 				
+				if($this->user_type == 0) {
 				$actionStr = "<abbr title=\"Edit\"><a class=\"btn btn-info btn-circle\" data-toggle=\"tooltip\" data-original-title=\"Edit\" href='".base_url()."Clients/editclients/".base64_encode($id)."'><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i></a></abbr>
 				<abbr title=\"View Client Details\"><a class=\"btn btn-success btn-circle\" data-toggle=\"tooltip\" data-original-title=\"View Client Details\" href='".base_url()."Clients/viewclientdetail/".base64_encode($id)."/".base64_encode($clientid)."'><i class=\"fa fa-search\" aria-hidden=\"true\" ></i></a></abbr>
 				<abbr title=\"Delete\"><a  class=\"btn btn-danger btn-circle sa-params\" data-toggle=\"tooltip\"  data-original-title=\"Delete\" href=\"javascript:void();\" onclick=\"deleteclients('".base64_encode($id)."');\"><i class=\"fa fa-times\" aria-hidden=\"true\"></i></a></abbr>";	
+				}
+				if($this->user_type == 2) {
+					$actionStr ="<abbr title=\"View Client Details\"><a class=\"btn btn-success btn-circle\" data-toggle=\"tooltip\" data-original-title=\"View Client Details\" href='".base_url()."Clients/viewclientdetail/".base64_encode($id)."/".base64_encode($clientid)."'><i class=\"fa fa-search\" aria-hidden=\"true\" ></i></a></abbr>";
+				}
 	          
 				$datarow[] = array(
 					$id = $i,

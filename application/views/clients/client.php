@@ -28,17 +28,21 @@
                 </ul>
             </div>
         </div>
-
+       
 		<div class="col-md-12">
             <div class="stats-box">
+            	
 				<div class="row">
     				<div class="col-md-6">
     					<div class="form-group">
-                            <a class="btn btn-outline-success btn-sm"  href="<?php echo base_url().'Clients/addclients' ?>">Add New Client <i class="fa fa-plus" aria-hidden="true"></i></a>
+    						<?php if($this->user_type == 0) {  ?>
+                            	<a class="btn btn-outline-success btn-sm"  href="<?php echo base_url().'Clients/addclients' ?>">Add New Client <i class="fa fa-plus" aria-hidden="true"></i></a>
+                            <?php } ?>
 							<a href="javascript:;" id="toggle-filter" class="btn btn-outline-danger btn-sm toggle-filter"><i class="fa fa-sliders"></i> Filter Results</a>
 						</div>
     				</div>
 				</div>
+				
 				<div class="row filter-from" id="ticket-filters" style="display: none;">
 	                <div class="col-md-12">
 	                    <h4>Filter by <a href="javascript:;" class="pull-right toggle-filter"><i class="fa fa-times-circle-o"></i></a></h4>
