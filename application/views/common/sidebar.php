@@ -77,9 +77,9 @@ if($this->session->userdata('login')){
                 </li>
             </ul>
         </li>
-        <li>
+        <li <?php if($controller == 'products' && ($functionName == 'products' || $functionName == '')) { echo 'class="active"'; } ?>>
             <a href="<?php echo base_url().'products'?>" class="nav-link-s">
-                <i class="icon-basket"></i>
+                <i class="icon-layers"></i>
                 <span>Products</span>
             </a>
         </li>
@@ -109,12 +109,13 @@ if($this->session->userdata('login')){
                 <span>Time Logs</span>
             </a>
         </li>
-        <li>
-            <a href="<?php echo base_url().'ticket/'?>" class="nav-link-s">
-                <i class="ti-ticket"></i>
+        <li <?php if($controller == 'ticket' && ($functionName == 'ticket' || $functionName == '')) { echo 'class="active"'; } ?>>
+            <a href="<?php echo base_url().'ticket'?>" class="nav-link-s">
+                <i class="icon-layers"></i>
                 <span>Tickets</span>
             </a>
         </li>
+   
         <li>
             <a href="#employees" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle collapsed">
                <i class="ti-user"></i>
@@ -135,9 +136,9 @@ if($this->session->userdata('login')){
                 <span>Attendance</span>
             </a>
         </li>
-        <li>
+        <li <?php if($controller == 'holiday' && ($functionName == 'holiday' || $functionName == '')) { echo 'class="active"'; } ?>>
             <a href="<?php echo base_url().'holiday'?>" class="nav-link-s">
-                <i class="ti-calendar"></i>
+                <i class="icon-layers"></i>
                 <span>Holiday</span>
             </a>
         </li>
@@ -153,9 +154,9 @@ if($this->session->userdata('login')){
                 <span>Events</span>
             </a>
         </li>
-        <li>
-            <a href="<?php echo base_url().'Leaves'?>" class="nav-link-s">
-                <i class="icon-logout"></i>
+        <li <?php if($controller == 'leaves' && ($functionName == 'leaves' || $functionName == '')) { echo 'class="active"'; } ?>>
+            <a href="<?php echo base_url().'leaves'?>" class="nav-link-s">
+                <i class="icon-layers"></i>
                 <span>Leaves</span>
             </a>
         </li>

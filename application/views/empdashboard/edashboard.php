@@ -11,7 +11,7 @@
         </div>
     </div>
 </nav>
-
+<?php  ?>
 <!-- contetn-wrap -->
 <div class="content-in">  
     <div class="row db-stats">
@@ -26,7 +26,7 @@
                         </div>
                         <div class="col-sm-9 text-right">
                             <span class="widget-title"> Total Projects</span><br>
-                            <span class="counter">20</span>
+                            <span class="counter"><?php echo $totalProject; ?></span>
                         </div>
                     </div>
                 </div>

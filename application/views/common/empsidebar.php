@@ -62,12 +62,12 @@ if($this->session->userdata('login')){
                 <span>Dashbord</span>
             </a>
         </li>
-         <li <?php if($controller == 'clients' && ($functionName == 'index' || $functionName == '')) { echo 'class="active"'; } ?>>
+         <!-- <li <?php if($controller == 'clients' && ($functionName == 'index' || $functionName == '')) { echo 'class="active"'; } ?>>
             <a href="<?php echo base_url().'clients'?>" class="nav-link-s">
                 <i class="icon-people"></i>
                 <span>Clients</span>
             </a>
-        </li>
+        </li> -->
          <li <?php if($controller == 'project' && ($functionName == 'project' || $functionName == '')) { echo 'class="active"'; } ?>>
             <a href="<?php echo base_url().'project'?>" class="nav-link-s">
                 <i class="icon-layers"></i>
@@ -103,20 +103,20 @@ if($this->session->userdata('login')){
                 <span>Attendance</span>
             </a>
         </li>
-          <li>
-            <a href="#" class="nav-link-s">
-                <i class="ti-calendar"></i>
+        <li <?php if($controller == 'holiday' && ($functionName == 'holiday' || $functionName == '')) { echo 'class="active"'; } ?>>
+            <a href="<?php echo base_url().'holiday'?>" class="nav-link-s">
+                <i class="icon-layers"></i>
                 <span>Holiday</span>
             </a>
         </li>
-          <li>
-            <a href="#" class="nav-link-s">
-                <i class="ti-ticket"></i>
+        <li <?php if($controller == 'ticket' && ($functionName == 'ticket' || $functionName == '')) { echo 'class="active"'; } ?>>
+            <a href="<?php echo base_url().'ticket'?>" class="nav-link-s">
+                <i class="icon-layers"></i>
                 <span>Tickets</span>
             </a>
         </li>
    
-        <li>
+       <!--  <li>
             <a href="#finance" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle collapsed">
                 <i class="fa fa-money"></i>
                 <span>Finance</span>
@@ -135,7 +135,7 @@ if($this->session->userdata('login')){
                     <a href="#">Expenses</a>
                 </li>
             </ul>
-        </li>
+        </li> -->
          <li>
             <a href="#" class="nav-link-s">
                 <i class="ti-envelope"></i>
@@ -148,9 +148,9 @@ if($this->session->userdata('login')){
                 <span>Events</span>
             </a>
         </li>
-        <li>
-            <a href="#" class="nav-link-s">
-                <i class="icon-logout"></i>
+        <li <?php if($controller == 'leaves' && ($functionName == 'leaves' || $functionName == '')) { echo 'class="active"'; } ?>>
+            <a href="<?php echo base_url().'leaves'?>" class="nav-link-s">
+                <i class="icon-layers"></i>
                 <span>Leaves</span>
             </a>
         </li>

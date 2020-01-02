@@ -246,4 +246,11 @@ class Attendance extends CI_Controller{
 	 	$this->session->unset_userdata('month_data');
 	 	$this->session->unset_userdata('year_data');
 	 }
+
+	 public function timelog()
+	 {
+	 	$this->load->view('common/header');
+	 	$this->load->view('Attendance/timediff');
+	 	$this->load->view('common/footer');
+	 }
 }

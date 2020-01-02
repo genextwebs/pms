@@ -134,6 +134,7 @@
 					   </select>
 				   </div>
 				</div>
+				<?php if($this->user_type == 0) { ?>
 				<div class="col-lg-3 col-md-4">
 					<div class="form-group">
 						<label class="control-label">Client Name</label>
@@ -148,6 +149,7 @@
 						</select>
 					</div>
 				</div>
+			<?php } ?>
 				<div class="col-lg-3 col-md-4">
 					<div class="form-group">
 						<label class="control-label">Project Category</label>

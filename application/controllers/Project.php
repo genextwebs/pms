@@ -10,6 +10,7 @@ class Project extends CI_Controller {
 		$this->load->model('common_model');
 		$this->login = $this->session->userdata('login');
 		$this->user_type = $this->login->user_type;
+		$this->user_id = $this->login->id;	
 		func_check_login();
 	}
 			
@@ -178,11 +179,29 @@ class Project extends CI_Controller {
 			}*/
 			/** Filtering End */
 		}
-		$query = "SELECT tbl_project_info.*,tbl_clients.clientname as clientname from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
-		//echo($query);echo '<br/>';
-		$projectArr = $this->common_model->coreQueryObject($query);
-		$query = "SELECT tbl_project_info.*,tbl_clients.clientname as clientname from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id".$sWhere;
-		//echo($query);die;
+			
+			if($this->user_type == 2)
+			{
+				$whereArr= array('user_id'=>$this->user_id);
+				$data['empData']=$this->common_model->getData('tbl_employee',$whereArr);	
+				$empid=$data['empData']['0']->id;
+				$WhereArr1=array('emp_id'=>$empid);
+				$data['projectData']=$this->common_model->getData('tbl_project_member',$WhereArr1);	
+				$pid=$data['projectData']['0']->project_id;
+				$query = "SELECT tbl_project_info.*,tbl_clients.clientname as clientname from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id where tbl_project_info.id=".$pid.$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+				//echo($query);echo '<br/>';die;
+				$projectArr = $this->common_model->coreQueryObject($query);
+				$query = "SELECT tbl_project_info.*,tbl_clients.clientname as clientname from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id where tbl_project_info.id=".$pid.$sWhere;
+				//echo($query);die;
+			}
+			elseif($this->user_type == 0)
+			{
+				$query = "SELECT tbl_project_info.*,tbl_clients.clientname as clientname from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+				//echo($query);echo '<br/>';
+				$projectArr = $this->common_model->coreQueryObject($query);
+				$query = "SELECT tbl_project_info.*,tbl_clients.clientname as clientname from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id".$sWhere;
+				//echo($query);die;
+			}
 		$ProjectFilterArr = $this->common_model->coreQueryObject($query);
 		$iFilteredTotal = count($ProjectFilterArr);
 		//$whereArr=array('archive'=>0);
@@ -242,7 +261,7 @@ class Project extends CI_Controller {
 		$datarow[] = array(
 			$id = $i,
 			$row->projectname.'<br/>'.$string.'<br/>'.$showStatus,
-			"<a href='".base_url()."P/template_data/".$id."'> Add Template Members</a>",
+			"<a href='".base_url()."P/template_data/".$id."'> Add Project Members</a>",
 			$row->deadline,
 			$row->clientname,
 			//$status,

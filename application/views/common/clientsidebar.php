@@ -45,35 +45,31 @@ if($this->session->userdata('login')){
                 <span>Projects</span>
             </a>
         </li>
-        <li>
+        <li <?php if($controller == 'products' && ($functionName == 'products' || $functionName == '')) { echo 'class="active"'; } ?>>
             <a href="<?php echo base_url().'products'?>" class="nav-link-s">
-                <i class="icon-basket"></i>
+                <i class="icon-layers"></i>
                 <span>Products</span>
             </a>
         </li>
-           <li>
-            <a href="#" class="nav-link-s">
-                <i class="ti-ticket"></i>
+        <li <?php if($controller == 'ticket' && ($functionName == 'ticket' || $functionName == '')) { echo 'class="active"'; } ?>>
+            <a href="<?php echo base_url().'ticket'?>" class="nav-link-s">
+                <i class="icon-layers"></i>
                 <span>Tickets</span>
             </a>
         </li>
-      
-        <li>
-            <a href="#finance" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle collapsed">
-                <i class="fa fa-money"></i>
-                <span>Finance</span>
+        <li <?php if($controller == 'finance' && ($functionName == 'finance' || $functionName == '')) { echo 'class="active"'; } ?>>
+            <a href="<?php echo base_url().'finance'?>" class="nav-link-s">
+                <i class="icon-doc"></i>
+                <span>Estimates</span>
             </a>
-            <ul class="collapse list-unstyled" id="finance">
-                <li>
-                    <a href="<?php echo base_url().'finance' ?>">Estimates</a>
-                </li>
-                <li>
-                    <a href="#">Invoices</a>
-                </li>
-               
-            </ul>
         </li>
-      
+        <li <?php if($controller == 'finance' && ($functionName == 'invoice')) 
+        { echo 'class="active"'; } ?>>
+            <a href="<?php echo base_url().'finance/invoice'?>" class="nav-link-s">
+                <i class="ti-receipt"></i>
+                <span>Invoices</span>
+            </a>
+        </li>
      	<li>
             <a href="#" class="nav-link-s">
                 <i class="icon-calender"></i>
