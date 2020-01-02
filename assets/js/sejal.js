@@ -1300,52 +1300,45 @@ $("#projectname").change(function(event) {
 
   $('#starttime').timepicker();
   $('#endtime').timepicker();
+  
+function append(dl, dtTxt, ddTxt) {
+  var dt = document.createElement("dt");
+  var dd = document.createElement("dd");
+  dd.setAttribute=("name","hours");
+  dt.name="id";
+  dt.textContent = dtTxt;
+  dd.textContent = ddTxt;
+  dl.appendChild(dt);
+  dl.appendChild(dd);
+}
 
+$(document).ready(function() {
 
-  $("#endtime").blur(function(event){
-    valuestart = $("input[name='starttime']").val();
-    valueend = $("input[name='endtime']").val(); 
-    sdate = $("input[name='start_date']").val();
-    edate = $("input[name='deadline']").val();
-    if(valuestart.length == 7){
-    	start_am_pm = valuestart.substring(5);
-    }else{
-    	start_am_pm = valuestart.substring(4);
+  var today = new Date();
+  $('#d1').val(today.getFullYear() + "-" + ('0' + (today.getMonth() + 1)).slice(-2) + "-" + ('0' + (today.getDate() + 1)).slice(-2));
+  $('#d2').val($('#d1').val());
+  $('#t1').val('00:00');
+  $('#t2').val('00:00');
+  //
+  //$('#d1 #d2 #t1 #t2').
+  $('#d1, #d2, #t1, #t2').on('change', function(ev) {
+    var dl = document.getElementById("diff");
+    while (dl.hasChildNodes()) {
+      dl.removeChild(dl.lastChild);
     }
-    if(start_am_pm=="am"){
-    	 replace_s_time=valuestart.replace("am","");
-    }
-    else{
-    	 replace_s_time=valuestart.replace("pm","");
-    }
-    if(valuestart.length == 7){
-    	end_am_pm = valuestart.substring(5);
-    }else{
-    	end_am_pm = valuestart.substring(4);
-    }
-    if(end_am_pm=="am"){
-    	replace_e_time=valueend.replace("am", "");
-    }
-    else{
-    	replace_e_time=valueend.replace("pm", "");
-    }
-    alert(replace_e_time);
 
-    var start_actual_time  =  sdate+" "+replace_s_time;
-    var end_actual_time    =  edate+" "+replace_e_time;
-
-    start_actual_time = new Date(start_actual_time);
-    end_actual_time = new Date(end_actual_time);
-
-    var diff = end_actual_time - start_actual_time;
-
-    var diffSeconds = diff/1000;
-    var HH = Math.floor(diffSeconds/3600);
-    var MM = Math.floor(diffSeconds%3600)/60;
-
-    var formatted = ((HH < 10)?("0" + HH):HH) + ":" + ((MM < 10)?("0" + MM):MM)
-    alert('Hours-->'+formatted);
-    $('#hours').val(formatted);
+    var date1 = new Date($('#d1').val() + " " + $('#t1').val()).getTime();
+    var date2 = new Date($('#d2').val() + " " + $('#t2').val()).getTime();
+   // append(dl, "Interval ", " from: " + $('#d1').val() + " " + $('#t1').val() + " to: " + $('#d2').val() + " " + $('#t2').val());
+    var msec = date2 - date1;
+    var mins = Math.floor(msec / 60000);
+    var hrs = Math.floor(mins / 60);
+    var days = Math.floor(hrs / 24);
+    var yrs = Math.floor(days / 365);
+    //append(dl, "Minutes: ", mins + " minutes");
+    mins = mins % 60;
+    append(dl, "", hrs +" Hrs " + mins + " Mins");
   });
+  $('#d1').change();
 
-
+});

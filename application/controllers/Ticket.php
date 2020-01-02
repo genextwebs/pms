@@ -184,42 +184,42 @@ class Ticket extends CI_Controller {
 						                    
 				               			 </div>
 							</div>';
-		//For Priority
-		if($row->priority=='1'){
-			$priority=$row->priority='Low';
-			$showStatus = '<label class="label label-success">'.$priority.'</label>';
-		}
-		else if($row->priority=='2'){
-			$priority=$row->priority='High';
-			$showStatus = '<label class="label label-warning">'.$priority.'</label>';
-		}
-		else if($row->priority=='3'){
-			$prioritypriority=$row->priority='Medium';
-			$showStatus = '<label class="label label-warning">'.$priority.'</label>';
-		}
-		else if($row->priority=='4'){
-			$priority=$row->priority='Urgent';
-			$showStatus = '<label class="label label-warning">'.$priority.'</label>';
-		}
+			//For Priority
+			if($row->priority=='1'){
+				$priority=$row->priority='Low';
+				$showStatus = '<label class="label label-success">'.$priority.'</label>';
+			}
+			else if($row->priority=='2'){
+				$priority=$row->priority='High';
+				$showStatus = '<label class="label label-warning">'.$priority.'</label>';
+			}
+			else if($row->priority=='3'){
+				$prioritypriority=$row->priority='Medium';
+				$showStatus = '<label class="label label-warning">'.$priority.'</label>';
+			}
+			else if($row->priority=='4'){
+				$priority=$row->priority='Urgent';
+				$showStatus = '<label class="label label-warning">'.$priority.'</label>';
+			}
 
-		//For Status
-		if($row->status=='1'){
-			$status=$row->status='Open';
-			$showStatus = '<label class="label label-success">'.$status.'</label>';
-		}
-		else if($row->status=='2'){
-			$status=$row->status='Pending';
-			$showStatus = '<label class="label label-success">'.$status.'</label>';
-		}
-		else if($row->status=='3'){
-			$status=$row->status='Resolved';
-			$showStatus = '<label class="label label-success">'.$status.'</label>';
-		}
+			//For Status
+			if($row->status=='1'){
+				$status=$row->status='Open';
+				$showStatus = '<label class="label label-success">'.$status.'</label>';
+			}
+			else if($row->status=='2'){
+				$status=$row->status='Pending';
+				$showStatus = '<label class="label label-success">'.$status.'</label>';
+			}
+			else if($row->status=='3'){
+				$status=$row->status='Resolved';
+				$showStatus = '<label class="label label-success">'.$status.'</label>';
+			}
 
-		else if($row->status=='4'){
-			$status=$row->status='Close';
-			$showStatus = '<label class="label label-success">'.$status.'</label>';
-		}
+			else if($row->status=='4'){
+				$status=$row->status='Close';
+				$showStatus = '<label class="label label-success">'.$status.'</label>';
+			}
 		
 
 			$datarow[] = array(

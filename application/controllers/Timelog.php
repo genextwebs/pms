@@ -31,14 +31,15 @@ class Timelog extends CI_Controller {
 			if(!empty($_POST)){
 			$project = $this->input->post('projectname');
 			$emp = $this->input->post('empname');
-			$sdate = $this->input->post('start_date');
-			$edate = $this->input->post('deadline');
-			$stime = $this->input->post('starttime');
-			$etime = $this->input->post('endtime');
+			$sdate = $this->input->post('d1');
+			$edate = $this->input->post('d2');
+			$stime = $this->input->post('t1');
+			$etime = $this->input->post('t2');
 			$hours = $this->input->post('hours');
 			$memo = $this->input->post('memo');
 			
 			$insArr = array('timelogprojectid'=>$project ,'timelogemployeeid'=>$emp ,'timelogstartdate'=>$sdate , 'timelogenddate'=>$edate ,'timelogstarttime'=>$stime ,'timelogendtime'=>$etime,'totalhours'=>$hours,'timelogmemo'=>$memo);
+			print_R($insArr);die;
 			$this->common_model->insertData('tbl_timelog',$insArr);
 			redirect('timelog/index');
 		}

@@ -101,6 +101,8 @@
                         			</div>
                 				</div>
 	                		</div>
+	                		<dl id="diff">
+							</dl>
 	                		<div class="card-footer text-right">
 	                			<!-- action btn -->
                                 <div class="form-actions">

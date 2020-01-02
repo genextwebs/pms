@@ -727,7 +727,7 @@ if (isConfirm) {
    });
 }
 
-/*$('#selectyear').change(function(){
+$('#selectyear').change(function(){
 	alert('hii');
 	year = $(this).val();
 	$.ajax({
@@ -742,7 +742,76 @@ if (isConfirm) {
         }
 	});
 
-});*/
+});
+
+
+function deleteTemplateM(id){
+	var url = base_url+"project/deletetemplateM";
+	swal({
+	 title: "Are you sure?",
+	 text: "You will not be able to recover this imaginary file!",
+	 type: "warning",
+	 showCancelButton: true,
+	 confirmButtonColor: "#DD6B55",
+	 confirmButtonText: "Yes, delete it!",
+	 closeOnConfirm: false
+	},
+function(isConfirm){
+if (isConfirm) {
+       $.ajax({
+           url: url,
+           type: "POST",
+           dataType: "JSON",
+           data: {id:id},
+          dataType: "html",
+		  
+           success: function (data) {
+               swal("Done!", "It was succesfully deleted!", "success");
+               $('#'+atob(id)+'-tr').hide();
+			   
+           },
+           error: function (xhr, ajaxOptions, thrownError) {
+               swal("Error deleting!", "Please try again", "error");
+           }
+       });
+   }
+   });
+}                                            
+ 
+
+
+ function deleteProjectM(pmid){
+	var url = base_url+"project/deleteprojectM";
+	swal({
+	 title: "Are you sure?",
+	 text: "You will not be able to recover this imaginary file!",
+	 type: "warning",
+	 showCancelButton: true,
+	 confirmButtonColor: "#DD6B55",
+	 confirmButtonText: "Yes, delete it!",
+	 closeOnConfirm: false
+	},
+function(isConfirm){
+if (isConfirm) {
+       $.ajax({
+           url: url,
+           type: "POST",
+           dataType: "JSON",
+           data: {id:pmid},
+          dataType: "html",
+		  
+           success: function (data) {
+               swal("Done!", "It was succesfully deleted!", "success");
+               $('#'+atob(pmid)+'-tr').hide();
+			   
+           },
+           error: function (xhr, ajaxOptions, thrownError) {
+               swal("Error deleting!", "Please try again", "error");
+           }
+       });
+   }
+   });
+}               
                                             
                                                 
                                                                                              
