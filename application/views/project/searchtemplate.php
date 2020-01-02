@@ -30,7 +30,7 @@
 								    	<a class="nav-link" id="overview-tab" data-toggle="tab" href="#overview" role="tab" aria-controls="overview" aria-selected="true">Overview</a>
 								  	</li>
 								  	<li class="nav-item" >
-								    	<a class="nav-link <?php if($controller == 'Project' && $function == 'searchtemplate') { echo "active";}?>" id="members-tab"  role="tab" aria-controls="members" aria-selected="false">Members</a>
+								    	<a class="nav-link <?php if($controller == 'Project' && $function == 'searchtemplate') { echo "active";}?>" id="members-tab" data-toggle="tab" href="#members" role="tab" aria-controls="members" aria-selected="false">Members</a>
 								  	</li>
 								  	
 								  	<li class="nav-item">
