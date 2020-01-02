@@ -958,7 +958,7 @@ $(document).ready(function(){
 });
 
 
- function append(dl, dtTxt, ddTxt) {
+ /*function append(dl, dtTxt, ddTxt) {
   var dt = document.createElement("dt");
   var dd = document.createElement("dd");
   dt.textContent = dtTxt;
@@ -1003,4 +1003,4 @@ $(document).ready(function() {
   // trigger change
   $('#d1').change();
 
-});
+});*/

@@ -1302,14 +1302,11 @@ $("#projectname").change(function(event) {
   $('#endtime').timepicker();
   
 function append(dl, dtTxt, ddTxt) {
-  var dt = document.createElement("dt");
+
   var dd = document.createElement("dd");
-  dd.setAttribute=("name","hours");
-  dt.name="id";
-  dt.textContent = dtTxt;
   dd.textContent = ddTxt;
-  dl.appendChild(dt);
   dl.appendChild(dd);
+  $("#hours1").val(dd.textContent);
 }
 
 $(document).ready(function() {

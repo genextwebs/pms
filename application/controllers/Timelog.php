@@ -35,11 +35,11 @@ class Timelog extends CI_Controller {
 			$edate = $this->input->post('d2');
 			$stime = $this->input->post('t1');
 			$etime = $this->input->post('t2');
-			$hours = $this->input->post('hours');
+			$hours = $this->input->post('hours1');
 			$memo = $this->input->post('memo');
 			
 			$insArr = array('timelogprojectid'=>$project ,'timelogemployeeid'=>$emp ,'timelogstartdate'=>$sdate , 'timelogenddate'=>$edate ,'timelogstarttime'=>$stime ,'timelogendtime'=>$etime,'totalhours'=>$hours,'timelogmemo'=>$memo);
-			print_R($insArr);die;
+			//print_R($insArr);die;
 			$this->common_model->insertData('tbl_timelog',$insArr);
 			redirect('timelog/index');
 		}
@@ -129,15 +129,14 @@ class Timelog extends CI_Controller {
 			}*/
 			/** Filtering End */
 		}
-		$query = "SELECT projectbudget,tbl_timelog.* FROM `tbl_timelog` inner join tbl_project_info on tbl_timelog.timelogprojectid = tbl_project_info.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
-		//echo($query);echo '<br/>';
+		$query = "SELECT projectbudget,tbl_project_info.projectname,tbl_timelog.* FROM `tbl_timelog` inner join tbl_project_info on tbl_timelog.timelogprojectid = tbl_project_info.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 		$timeArr = $this->common_model->coreQueryObject($query);
-		$query = "SELECT projectbudget,tbl_timelog.* FROM `tbl_timelog` inner join tbl_project_info on tbl_timelog.timelogprojectid = tbl_project_info.id".$sWhere;
-		//echo($query);die;
-		//echo $query[0]->projectbudget;die;
+		$whereArr=array('id'=>$timeArr[0]->timelogemployeeid);
+		$empData=$this->common_model->getData('tbl_employee',$whereArr);
+
+		$query = "SELECT projectbudget,tbl_project_info.projectname,tbl_timelog.* FROM `tbl_timelog` inner join tbl_project_info on tbl_timelog.timelogprojectid = tbl_project_info.id".$sWhere;
 		$TimeFilterArr = $this->common_model->coreQueryObject($query);
 		$iFilteredTotal = count($TimeFilterArr);
-		//$whereArr=array('archive'=>0);
 		$TimeAllArr = $this->common_model->getData('tbl_timelog');
 		$iTotal = count($TimeAllArr);
 		
@@ -145,6 +144,7 @@ class Timelog extends CI_Controller {
 		$datarow = array();
 
 		$i = 1;
+
 		foreach($timeArr as $row) {
 			$rowid = $row->id;
 			
@@ -155,9 +155,9 @@ class Timelog extends CI_Controller {
 		
 		$datarow[] = array(
 			$id = $i,
-			$row->timelogprojectid,
-			$row->timelogemployeeid,
-			$row->timelogstarttime,
+			$row->projectname,
+			$empData[0]->employeename,
+			$row->timelogstartdate,
 			$row->timelogendtime,
 			$row->totalhours,
 			$row->projectbudget,

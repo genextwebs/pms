@@ -98,8 +98,12 @@
 											</div>
 											<div class="col-md-4">
 												<label  class="control-label">Total Hours</label>
-													<dl id="diff">
+												<div id="diff">
+													<dl id="hours_mins">
 													</dl>
+												</div>
+												<input type="hidden"  name="hours1" id="hours1" value=""> 
+												
 												
 											</div>
 										</div>
