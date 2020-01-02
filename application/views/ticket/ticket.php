@@ -5,7 +5,7 @@
 		</div>
 		<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 			<ol class="breadcrumb">
-				<li><a href="<?php echo base_url().'ticket' ?>">Home</a></li>
+				<li><a href="<?php echo base_url().'EmpDashboard' ?>">Home</a></li>
 				 <li class="active">Tickets</li>
 			</ol>
 		</div>
@@ -118,12 +118,16 @@
 		<div class="col-md-12">
 			<div class="stats-box">
 			 	<div class="row">
+			 	
         			<div class="col-md-6">
         				<div class="form-group">
+        				<?php if($this->user_type == 0) { ?>
 	                        <a class="btn btn-outline-success btn-sm"  href="<?php echo base_url().'Ticket/addticket'?>">Create Ticket <i class="fa fa-plus" aria-hidden="true"></i></a>
+	                     <?php } ?>
 							<a href="javascript:;" id="toggle-filter" class="btn btn-outline-danger btn-sm toggle-filter"><i class="fa fa-sliders"></i> Filter Results</a>
 						</div>
         			</div>
+        		
 				</div>
 				<div class="row filter-from" id="ticket-filters" style="display: none;">
 	             	<div class="col-md-12">

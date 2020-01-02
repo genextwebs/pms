@@ -8,6 +8,8 @@ class Ticket extends CI_Controller {
 		error_reporting(E_ALL);
 		ini_set('display_errors', 1);
 		$this->load->model('common_model');
+		$this->login = $this->session->userdata('login');
+		$this->user_type = $this->login->user_type;
 		func_check_login();
 	}
 

@@ -111,7 +111,7 @@ if($this->session->userdata('login')){
         </li>
         <li <?php if($controller == 'ticket' && ($functionName == 'ticket' || $functionName == '')) { echo 'class="active"'; } ?>>
             <a href="<?php echo base_url().'ticket'?>" class="nav-link-s">
-                <i class="icon-layers"></i>
+                <i class="ti-ticket"></i>
                 <span>Tickets</span>
             </a>
         </li>
@@ -138,7 +138,7 @@ if($this->session->userdata('login')){
         </li>
         <li <?php if($controller == 'holiday' && ($functionName == 'holiday' || $functionName == '')) { echo 'class="active"'; } ?>>
             <a href="<?php echo base_url().'holiday'?>" class="nav-link-s">
-                <i class="icon-layers"></i>
+                <i class="icon-calender"></i>
                 <span>Holiday</span>
             </a>
         </li>
@@ -156,7 +156,7 @@ if($this->session->userdata('login')){
         </li>
         <li <?php if($controller == 'leaves' && ($functionName == 'leaves' || $functionName == '')) { echo 'class="active"'; } ?>>
             <a href="<?php echo base_url().'leaves'?>" class="nav-link-s">
-                <i class="icon-layers"></i>
+                <i class="icon-logout"></i>
                 <span>Leaves</span>
             </a>
         </li>

@@ -9,6 +9,7 @@ class Holiday extends CI_Controller
 		$this->load->model('common_model');
 		$this->login = $this->session->userdata('login');
 		$this->user_id = $this->login->id;
+        $this->user_type = $this->login->user_type;
 		if(!$this->session->userdata('holiday_year')){
 			$this->year = date('Y');
 		}

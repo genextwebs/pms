@@ -41,13 +41,15 @@
                     <table class="table table-bordered" id="Attendance">
                         <thead>
                             <th>Employee</th>
-                            <th>Attendance</th> 
+                            <th>Attendance</th>
+                            <?php  if($this->user_type == 0) { ?> 
                             <th><input type="submit" id="allattendance" class="btn btn-success" name="btnsubmit" value="SaveAll" > <i class="fa fa-check"></i></th>
+                        <?php } ?>
                         </thead>
                         <?php $counter=1; ?>
               
                         <tbody>
-                            <?php foreach($employee as $row) { 
+                            <?php  foreach($employee as $row) { 
                              $id=$row->id;
                             ?>
                             <tr>

@@ -7,6 +7,9 @@ class Attendance extends CI_Controller{
 		$this->load->model('common_model');
 		ini_set('display_errors',1);
 		error_reporting(E_ALL);
+		$this->login = $this->session->userdata('login');
+		$this->user_type = $this->login->user_type;
+		$this->user_id = $this->login->id;
 		if(!$this->session->userdata('year_data')){          
 			$this->year =date('Y');
 			$this->department = $this->session->userdata('department_data');
@@ -56,8 +59,15 @@ class Attendance extends CI_Controller{
 			$whereArr=array('id'=>$checkempid);
 			$data['selEmployeeArr'] =$this->common_model->getData('tbl_employee',$whereArr);
 		}
-		else{
+		elseif($this->user_type == 0){
+			
 			$data['selEmployeeArr'] =$this->common_model->getData('tbl_employee');
+		}
+		elseif($this->user_type == 2){
+			
+				$whereArr= array('user_id'=>$this->user_id);
+				$data['selEmployeeArr'] =$this->common_model->getData('tbl_employee',$whereArr);
+			
 		}
 		$this->load->view('common/header');
 		$this->load->view('Attendance/attendance',$data);
@@ -160,7 +170,15 @@ class Attendance extends CI_Controller{
 		$this->load->view('common/footer');
 	}
 	public function addattendance(){
+		if($this->user_type == 0)
+		{
 		$data['employee'] =$this->common_model->getData('tbl_employee');
+		}
+		elseif($this->user_type == 2)
+		{
+		$whereArr=array('user_id'=>$this->user_id);
+		$data['employee'] =$this->common_model->getData('tbl_employee',$whereArr);
+		}
 		$data['countemp']=count($data['employee']);
 		$date = date('Y-m-d');
 		$this->load->view('common/header');

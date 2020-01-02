@@ -1,26 +1,27 @@
 <nav aria-label="breadcrumb" class="breadcrumb-nav">
                 <div class="row">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">Holiday List Of 2019</h4>
+                        <h4 class="page-title">Holiday List Of <?php echo date('Y'); ?></h4>
                     </div>
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                         <ol class="breadcrumb">
-                            <li><a href="<?php echo base_url().'dashboard'?>
+                            <li><a href="<?php echo base_url().'EmpDashboard'?>
                             ">Home</a></li>
-                            <li class="active">Holiday List Of 2019</li>
+                            <li class="active">Holiday List Of <?php echo date('Y'); ?></li>
                         </ol>
                     </div>
                 </div>
             </nav>
             <div class="col-sm-12">
-                <div class="form-group pull-left">
-                    <a href="javascript:;" id="holiday" data-toggle="modal" data-target="#data-holiday">Add Holiday <i class="fa fa-plus" aria-hidden="true"></i></a>
-                </div>
-                
-                <div class="pull-right" style="margin-right: 10px">
-                    <a class="btn btn-outline btn-sm btn-primary markHoliday" href="javascript:;" id="default-holiday" data-toggle="modal" data-target="#data-defaultholiday">
-                         Mark Default Holidays<i class="fa fa-check"></i> </a>
-                </div>
+                <?php if($this->user_type == 0) { ?>
+                    <div class="form-group pull-left">
+                        <a href="javascript:;" id="holiday" data-toggle="modal" data-target="#data-holiday">Add Holiday <i class="fa fa-plus" aria-hidden="true"></i></a>
+                    </div>
+                    <div class="pull-right" style="margin-right: 10px">
+                        <a class="btn btn-outline btn-sm btn-primary markHoliday" href="javascript:;" id="default-holiday" data-toggle="modal" data-target="#data-defaultholiday">
+                             Mark Default Holidays<i class="fa fa-check"></i> </a>
+                    </div>
+                <?php } ?>
             </div>
             <div class="col-md-12">
                 <select id="selectyear" class="pull-right">

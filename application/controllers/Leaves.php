@@ -8,6 +8,9 @@ class Leaves extends CI_Controller {
 		error_reporting(E_ALL);
 		ini_set('display_errors', 1);
 		$this->load->model('common_model');
+		$this->login = $this->session->userdata('login');
+		$this->user_id = $this->login->id;
+        $this->user_type = $this->login->user_type;
 		func_check_login();
 	}
 
@@ -169,14 +172,19 @@ class Leaves extends CI_Controller {
 					$actionstring= '<a href="javascript:;" onclick="searchleaves(\''.base64_encode($rowid).'\');"  class="btn btn-success btn-circle" data-toggle="modal" data-target="#leaves-popup" data-original-title="View Project Details"><i class="fa fa-search" aria-hidden="true"></i></a>';				 
 			}
 			else{
-
-					$actionstring= 
+					if($this->user_type == 2){
+						$actionstring= ' <a href="javascript:;" onclick="searchleaves(\''.base64_encode($rowid).'\');"  class="btn btn-success btn-circle" data-toggle="modal" data-target="#leaves-popup" data-original-title="View Project Details"><i class="fa fa-search" aria-hidden="true"></i></a>';
+					}
+					if($this->user_type == 0 ){
+						$actionstring= 
 
 					'<a href='.base_url().'Leaves/approveleaves/'.base64_encode($row->id). ' class="btn btn-success btn-circle" data-toggle="tooltip" data-original-title="View Project Details"><i class="fa fa-check" aria-hidden="true"></i></a>
 
 					<a href="javascript:void();" onclick="deleteleaves(\''.base64_encode($rowid).'\');"  class="btn btn-danger btn-circle sa-params" data-toggle="tooltip"  data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>
 
-				    <a href="javascript:;" onclick="searchleaves(\''.base64_encode($rowid).'\');"  class="btn btn-success btn-circle" data-toggle="modal" data-target="#leaves-popup" data-original-title="View Project Details"><i class="fa fa-search" aria-hidden="true"></i></a>';			
+				    <a href="javascript:;" onclick="searchleaves(\''.base64_encode($rowid).'\');"  class="btn btn-success btn-circle" data-toggle="modal" data-target="#leaves-popup" data-original-title="View Project Details"><i class="fa fa-search" aria-hidden="true"></i></a>';
+					}
+								
 			}
 			$datarow[] = array(
 				$id = $i,

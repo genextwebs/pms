@@ -48,6 +48,7 @@
 							<!-- 	<h3 class="box-title">ASSIGN LEAVE</h3> -->
 								<hr>
 								<p id="succmsg" class="text-success"></p>
+							<?php if($this->user_type == 0) { ?>
 								<div class="row">
 									<div class="col-md-12">
 										<div class="form-group">
@@ -76,14 +77,17 @@
 										</div>
 									</div>
 								</div>
+							<?php } ?>
 								<div class="row">
 									<div class="col-md-12">
 										<div class="form-group project-category">
 											<label class="control-label" for="leave_type">
 											Leave Type
-											<a class="btn btn-sm btn-outline-success ml-1" href="javascript:;" data-toggle="modal" data-target="#leave_type1" name="leave-category"><i class="fa fa-plus"></i> Add Leave Type</a></label>
-											
-											<select class="custom-select br-0" id="leave_type" name="leave_type">
+											<?php if($this->user_type == 0) { ?>
+												<a class="btn btn-sm btn-outline-success ml-1" href="javascript:;" data-toggle="modal" data-target="#leave_type1" name="leave-category"><i class="fa fa-plus"></i> Add Leave Type</a></label>
+											<?php } ?>
+											<br/>
+											<select id="leave_type" name="leave_type" class="form-control">
 											
 												<?php
 												foreach($leavecategory as $leave){
@@ -102,10 +106,11 @@
 										<div class="form-group">
 											<label class="control-label">Select Duration
 											</label>
-											Single<input id="radio_group1" class="form-control" type="radio" name="duration_radio" value="0" checked>
-											
-											 Multiple<input id="radio_group2" class="form-control" type="radio" name="duration_radio" value="1">
-											Half Day<input id="radio_group3" class="form-control" type="radio" name="duration_radio" value="2"> 
+											<div>
+											 <input type="radio" id="radio_group1" name="duration_radio" value="0">Single<br>
+											 <input type="radio" id="radio_group2" name="duration_radio" value="1">Multiple<br>
+											 <input type="radio" id="radio_group3" name="duration_radio" value="2">Half Day<br>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -113,7 +118,7 @@
 									<div class="col-md-2" id="deadlineBox">
 										<div class="form-group">
 											<label class="control-label">Date</label>
-											<input type="date" name="date" id="date" autocomplete="off" class="form-control" value="<?php if(!empty($sessData['date'])){echo $sessData['date'];}else{ }?>" >
+											<input type="text" name="date" id="startdate" autocomplete="off" class="form-control" value="<?php if(!empty($sessData['date'])){echo $sessData['date'];}else{ }?>" >
 										</div>
 									</div>
 								</div>
@@ -124,6 +129,7 @@
 											<textarea id="absence" class="form-control" name="absence" rows="5"><?php if(!empty($sessData['absence'])){echo $sessData['absence'];}else{ }?></textarea>
 										</div>
 									</div>
+								<?php if($this->user_type == 0) { ?>
 									<div class="col-md-6">
 										<div class="form-group">
 											<label class="control-label">Status</label>
@@ -143,6 +149,7 @@
 											</select>
 										</div>
 									</div>
+								<?php } ?>
 								</div>
 							
 							

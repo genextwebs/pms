@@ -1,7 +1,7 @@
 <nav aria-label="breadcrumb" class="breadcrumb-nav">
 	<div class="row">
 		<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-			<h4 class="page-title"><i class="icon-speedometer"></i>  Leaves</h4>
+			<h4 class="page-title"><i class="icon-logout"></i> Leaves</h4>
 		</div>
 		<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 			<ol class="breadcrumb">
@@ -34,13 +34,14 @@
 				<div class="row">
 					<div class="col-sm-12">
 						<div class="form-group custom-action">
-							<a href="<?php echo base_url().'Leaves/'?>" class="btn btn-outline-success btn-sm"> <i class="fa fa-list" aria-hidden="true"></i>All Leaves </a>
+
+							<!-- <a href="<?php echo base_url().'Leaves/'?>" class="btn btn-outline-success btn-sm"> <i class="fa fa-list" aria-hidden="true"></i>All Leaves </a> -->
 					<!-- 		
 							<a href=""  class="btn btn-outline-info btn-sm"><i class="fa fa-calendar" aria-hidden="true"></i> Calendar View </a>
 							 -->
 							<!--<a href="javascript:;" class="btn btn-outline-danger btn-sm hidden-xs hidden-sm"><i class="fa fa-bar-chart" aria-hidden="true"></i> Gantt Chart</a>-->
 							
-							<a href="<?php echo base_url().'Leaves/addleaves';?>"  class="btn btn-outline-primary btn-sm"><i class="ti-plus" aria-hidden="true"></i>Assign Leave </a>
+							<a href="<?php echo base_url().'Leaves/addleaves';?>"  class="btn btn-outline-primary btn-sm"><i class="ti-plus" aria-hidden="true"></i>Apply For Leave </a>
 							
 							
 							<!--<a href="<?php echo base_url().'Project/viewarchiev';?>"  class="btn btn-outline-info btn-sm">View Archive <i class="fa fa-trash" aria-hidden="true"></i></a>-->
@@ -62,7 +63,7 @@
 						</div>
 				   </div>
 				</div>
-
+			<?php if($this->user_type == 0) { ?>
 				<div class="col-lg-3 col-md-4">
 					<div class="form-group">
 						<label class="control-label">EMPLOYEE NAME
@@ -78,6 +79,7 @@
 					     </select>
 					</div>
 				</div>
+			<?php } ?>
 					 <div class="col-md-4">
 		                        <div class="form-group m-t-10">
 		                            <label class="control-label col-12 mb-3">&nbsp;</label>

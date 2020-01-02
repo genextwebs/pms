@@ -5,7 +5,7 @@
         </div>
         <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
             <ol class="breadcrumb">
-                <li><a href="<?php echo base_url().'dashboard'?>">Home</a></li>
+                <li><a href="<?php echo base_url().'EmpDashboard'?>">Home</a></li>
                 <li class="active">Attendance</li>
             </ol>
         </div>
@@ -31,9 +31,11 @@
                         <li class="nav-item">
                             <a class="nav-link <?php if($controller == 'Attendance' && ($function == 'index' || $function == '')) { echo 'active'; } ?>" id="overview-tab"  href="<?php echo base_url().'Attendance'?>" role="tab" aria-controls="overview" aria-selected="true">Summaary</a>
                         </li>
+                        <?php  if($this->user_type == 0) { ?>
                         <li class="nav-item">
                             <a class="nav-link <?php if($controller == 'Attendance' && $function == 'AttendanceByMember') { echo 'active'; } ?>" id="overview-tab"  href="<?php echo base_url().'Attendance/AttendanceByMember'?>" role="tab" aria-controls="overview" aria-selected="true">Attendance By Member</a>
                         </li>
+                    <?php } ?>
                     </ul>
                 </div>
                 <div class="contetn-tab">
@@ -46,6 +48,7 @@
                                     <div class="col-md-12">
                                         <div class="white-box p-b-0 bg-inverse " >
                                             <div class="row">
+                                        <?php  if($this->user_type == 0) { ?>
                                                 <div class="col-md-3">
                                                     <label >Employee</label>
                                                         <div class="form-group">
@@ -78,6 +81,7 @@
                                                             </select> 
                                                         </div>
                                                 </div>
+                                            <?php } ?>
                                                 <div class="col-md-2">
                                                     <label class="control-label">Select Month</label>
                                                         <div class="form-group">
@@ -101,6 +105,7 @@
                                                     <label class="control-label">Select Year(S)</label>
                                                         <div class="form-group">
                                                             <select id='year' name="year" class="select2 form-control">
+                                                            <option value="2020" <?php if($selYear == '2020'){ echo 'selected'; }?>>2020</option>
                                                             <option value="2019" <?php if($selYear == '2019'){ echo 'selected'; }?>>2019</option>
                                                             <option value="2018" <?php if($selYear == '2018'){ echo 'selected'; }?>>2018</option>
                                                             <option value="2017" <?php if($selYear == '2017'){ echo 'selected'; }?>>2017</option>
@@ -207,6 +212,7 @@
                                 </div>
                             </div>
                             <!-- tab2 -->
+                            <?php if($this->user_type == 0) { ?>
                             <div class="tab-pane section-1 <?php if($controller == 'Attendance' && $function == 'AttendanceByMember') { echo 'active show'; } ?>" id="overview" aria-labelledby="overview-tab" role="tabpanel">
                                 <form method="POST" action="<?php echo base_url().'Attendance/AttendanceByMember'?>">
                                     <div class="row">
@@ -337,6 +343,7 @@
                                     </div> 
                                 </div>
                             </div> 
+                        <?php } ?>
 
                         </div>
                     </div>
