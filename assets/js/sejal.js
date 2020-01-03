@@ -341,13 +341,11 @@ jQuery(document).ready(function() {
 			"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No Projects found<br/><br/></center>', "sZeroRecords": "<center><br/>No Projects found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ leads", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
 			"fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
 			
-		    	//aoData.push( { "name": "agent", "value": $('#agent').val() } );
-		    	/*aoData.push({"name": "s_date", "value":$('#start_date').val()});
-		    	aoData.push({"name" :"e_date" ,"value":$('#deadline').val()});
-				aoData.push( { "name": "status1", "value": $('#status').val() } );
-				aoData.push( { "name": "priority", "value": $('#priority').val() } );
-				aoData.push( { "name": "channelname", "value": $('#channelname').val() } );
-				aoData.push( { "name": "tickettype", "value": $('#tickettype').val() } );*/
+		    	aoData.push( { "name": "pname", "value": $('#projectData').val() } );
+		    	aoData.push( { "name": "ename", "value": $('#employeeData').val() } );
+		    	aoData.push({"name": "start_date", "value":$('#start_date').val()});
+		    	aoData.push({"name" :"deadline" ,"value":$('#deadline').val()});
+				
 				
 				oSettings.jqXHR = $.ajax( {
 					"dataType": 'json',
@@ -425,14 +423,11 @@ $('#btnApply').click(function(){
 	oTable.draw();
 });
 
-/*$(function(){
-	$('#starttime').datetimepicker({
-		format:'LT'
-	});
-
-});*/
-
-
+$('#btnApplyLogs').click(function(){
+	//alert('hello');
+	var oTable = $('#timelog').DataTable();
+	oTable.draw();
+})
 
 //addproject=> datepicker
 $(document).ready(function(){
@@ -810,6 +805,7 @@ $("#save_tchannel").click(function(event) {
 		    dataType: 'json',
 		    data: "id="+id,
 		   success: function(data){
+		   	alert(data);
 		   	$('#timelogpreview').html('');
 		   	$('#timelogpreview').append(data);
 

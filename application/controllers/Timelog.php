@@ -12,8 +12,10 @@ class Timelog extends CI_Controller {
 	}
 
 	public function index(){
+		$data['projectinfo']=$this->common_model->getData('tbl_project_info');
+		$data['empinfo'] = $this->common_model->getData('tbl_employee');
 		$this->load->view('common/header');
-		$this->load->view('timelog/timelog');
+		$this->load->view('timelog/timelog',$data);
 		$this->load->view('common/footer');
 	}
 
@@ -106,36 +108,45 @@ class Timelog extends CI_Controller {
 			/** Filtering Start */
 			
 			if(!empty(trim($_GET['sSearch']))){
-				$searchTerm = trim($_GET['sSearch']);
-				$sWhere.= ' AND (tbl_project_info.projectname like "%'.$searchTerm.'%" OR tbl_timelog.starttime like "%'.$searchTerm.'%" OR tbl_timelog.endtime "%'.$searchTerm.'%" OR tbl_project_info.earning like "%'.$searchTerm.'%" OR tbl_employee.employeename like "%'.$searchTerm.'%")';
+				$searchTerm = trim($_GET['sSearch']);/*
+				OR tbl_timelog.timelogstartdate like "%'.$searchTerm.'%" OR tbl_timelog.ear like "%'.$searchTerm.'%" OR tbl_timelog.timelogenddate "%'.$searchTerm.'%" OR tbl_project_info.projectbudget  like "%'.$searchTerm.'%" OR  tbl_timelog.hours like "%'.$sSearchTerm.'%"*/
+				
+				$sWhere.= ' AND (tbl_project_info.projectname like "%'.$searchTerm.'%" OR tbl_timelog.timelogstartdate like "%'.$searchTerm.'%" OR tbl_timelog.timelogendtime like "%'.$searchTerm.'%" OR tbl_timelog.totalhours like "%'.$searchTerm.'%" OR tbl_project_info.projectbudget like "%'.$searchTerm.'%")';
 			}
-		/*	$status=$_POST['status1'];	
-			$client=!empty($_POST['clientname1']) ? $_POST['clientname1'] : '';		
-			$category=!empty($_POST['categoryname1']) ? $_POST['categoryname1'] : '';
-			
-			if(!empty($client)){
-					$sWhere.=' AND tbl_project_info.clientid='.$client;
+		
+			$pname=!empty($_POST['pname']) ? $_POST['pname'] : '';	
+			//echo($pname);die;	
+			$ename=!empty($_POST['ename']) ? $_POST['ename'] : '';
+			$startdate=!empty($_POST['start_date']) ? $_POST['start_date'] : '';
+			//echo($startdate);die;		
+			$enddate=!empty($_POST['deadline']) ? $_POST['deadline'] : '';
+		
+
+			if(!empty($pname)){
+					$sWhere.=' AND tbl_timelog.timelogprojectid='.$pname;
 			}
-			if(!empty($category)){						
-				$sWhere.=' AND projectcategoryid='.$category;
+			if(!empty($ename)){						
+				$sWhere.=' AND tbl_timelog.timelogemployeeid='.$ename;
 			}
-			if($status=='all'){
-				}else{
-						$sWhere.=' AND tbl_project_info.status='.$status;
-				}*/
-			/*$sWhere.=' AND tbl_project_info.archive=0';	
+			if(!empty($startdate)){						
+				$sWhere.=' AND tbl_timelog.timelogstartdate>="'.$startdate.'"';
+			}
+			if(!empty($enddate)){						
+				$sWhere.=' AND tbl_timelog.timelogenddate<="'.$enddate.'"';
+			}
 			if(!empty($sWhere)){
 				$sWhere = " WHERE 1 ".$sWhere;
-			}*/
-			/** Filtering End */
+			}
+			
 		}
-		$query = "SELECT projectbudget,tbl_project_info.projectname,tbl_timelog.* FROM `tbl_timelog` inner join tbl_project_info on tbl_timelog.timelogprojectid = tbl_project_info.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+		$query = "SELECT projectbudget,tbl_project_info.*,tbl_timelog.* FROM `tbl_timelog` inner join tbl_project_info on tbl_timelog.timelogprojectid = tbl_project_info.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 		$timeArr = $this->common_model->coreQueryObject($query);
-		$whereArr=array('id'=>$timeArr[0]->timelogemployeeid);
-		$empData=$this->common_model->getData('tbl_employee',$whereArr);
+		
+		//print_R($empData);
 
-		$query = "SELECT projectbudget,tbl_project_info.projectname,tbl_timelog.* FROM `tbl_timelog` inner join tbl_project_info on tbl_timelog.timelogprojectid = tbl_project_info.id".$sWhere;
+		$query = "select projectbudget,tbl_project_info.*,tbl_timelog.* FROM `tbl_timelog` inner join tbl_project_info on tbl_timelog.timelogprojectid = tbl_project_info.id".$sWhere;
 		$TimeFilterArr = $this->common_model->coreQueryObject($query);
+		//echo $this->db->last_query();die;
 		$iFilteredTotal = count($TimeFilterArr);
 		$TimeAllArr = $this->common_model->getData('tbl_timelog');
 		$iTotal = count($TimeAllArr);
@@ -149,14 +160,24 @@ class Timelog extends CI_Controller {
 			$rowid = $row->id;
 			
 				$actionstring = 
-								'<a href="javascript:void()" onclick="edittimelog(\''.base64_encode($rowid).'\')" class="btn btn-info btn-circle" data-original-title="Edit" data-target="#timelog-popup" data-toggle="modal"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+								'<a href="javascript:;" onclick="edittimelog(\''.base64_encode($rowid).'\')" class="btn btn-info btn-circle" data-original-title="Edit" data-toggle="modal" data-target="#timelog-popup" ><i class="fa fa-pencil" aria-hidden="true"></i></a>
 
 								 <a href="javascript:void();" onclick="deletetimelog(\''.base64_encode($rowid).'\');"  class="btn btn-danger btn-circle sa-params" data-toggle="tooltip"  data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>';
 		
+		$whereArr=array('id'=>$row->timelogemployeeid);
+		$empData=$this->common_model->getData('tbl_employee',$whereArr);
+		foreach($empData as $emp){
+			$empData=$empData[0]->employeename;
+
+		}
+
+		
+
+
 		$datarow[] = array(
 			$id = $i,
 			$row->projectname,
-			$empData[0]->employeename,
+			$empData,
 			$row->timelogstartdate,
 			$row->timelogendtime,
 			$row->totalhours,
@@ -189,81 +210,27 @@ class Timelog extends CI_Controller {
 	}
 
 	public function edittimelog(){
+
+		//$timelog['projectAlldata']=$this->common_model->getData('tbl_project_info');
 		$id=base64_decode($_POST['id']);
 		$whereArr=array('id'=>$id);
-		$data =$this->common_model->getData('tbl_timelog',$whereArr);
-		$id= $data[0]->id;
-		$str ='';
-		$str.= '<div class="form-body">
-								<h3 class="box-title">Timelog Info</h3><hr>
-									<p id="succmsg" class="text-success"></p>
-										<div class="row">
-											<div class="col-md-4">
-												<div class="form-group">
-													<label class="control-label">Select Project</label>
-														<input id="projectname" class="form-control" type="text" name="projectname" value="">
-												</div>
-											</div>
-										
-											<div class="col-md-4">
-												<div class="form-group">
-													<label class="control-label"> Start Date</label>
-														<input type="text" class="start-date form-control br-0" id="start_date" name="start_date" value="" data-date-format=" yyyy-mm-dd">
-												</div>
-											</div>
-										
-											<div class="col-md-4">
-												<div class="form-group">
-													<label class="control-label">End Date</label>
-														   <input type="text" class="end-date form-control br-0" id="deadline" name="deadline" value="" data-date-format="yyyy-mm-dd ">
-												</div>
-											</div>
-										</div>
-
-										<div class="row">
-											<div class="col-md-4">
-												<div class="form-group" id="timeonly">
-													<label class="control-label">Start Time</label>
-														<input type="text" class="form-control" name="starttime" id="starttime">
-												</div>
-											</div>
-										
-											<div class="col-md-4">
-												<div class="form-group">
-													<label class="control-label"> End Time</label>
-														<input type="text" class="form-control" name="endtime" id="endtime">
-												</div>
-											</div>
-										
-											<div class="col-md-4">
-												<div class="form-group">
-													<label class="control-label">Total Hours</label>
-													<input type="text" name="hours" id="hours">
-														<!--logic-->
-												</div>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col-md-4">
-												<div class="form-group">
-													<label class="control-label"> Employee Name</label>
-														<input type="text" class="form-control" name="empname" id="empname">
-												</div>
-											</div>
-											<div class="col-md-4">
-												<div class="form-group">
-													<label class="control-label"> Memo</label>
-														<input type="text" class="form-control" name="memo" id="memo">
-												</div>
-											</div>
-										</div>
-										<div class="form-actions">
-											<button type="submit" name="btnsavetime" id="save-form" class="btn btn-success"> <i class="fa fa-check"></i> Save</button>
-										</div>
+		if(!empty($_POST)){
+			$project = $this->input->post('projectname');
+			$emp = $this->input->post('emp_name');
+			$sdate = $this->input->post('start_date');
+			$edate = $this->input->post('deadline');
+			$stime = $this->input->post('start_time');
+			$etime = $this->input->post('end_time');
+			$hours = $this->input->post('hours1');
+			$memo = $this->input->post('detail_memo');
+			$updateArr = array('timelogprojectid'=>$project,'timelogemployeeid'=>$emp,'timelogstartdate'=>$sdate,'timelogenddate'=>$edate,'timelogstarttime'=>$stime,'timelogendtime'=>$etime,'totalhours'=>$hours,'timelogmemo'=>$memo);
+			$this->common_model->updateData('tbl_timelog',$updateArr,$whereArr);
+			echo $this->input->last_query();die;
+			redirect('timelog/index');
 
 
-							</div>';
-		echo json_encode($str);exit;
+		}
+		
 	}
 
 	public function getEmployee(){
@@ -281,6 +248,8 @@ class Timelog extends CI_Controller {
 			//print_r($timelogArr['empname']);die;
 			echo json_encode($timelogArr);exit;
 	}
+
+
 
 	 
 }
