@@ -53,7 +53,7 @@
 											<div class="col-md-4">
 												<div class="form-group">
 													<label class="control-label">Select Project</label>
-														<select class="form-control" class="projectclass" name="projectname" id="projectname" onchange=getEmployee();>
+														<select class="form-control" class="projectclass" name="project_name" id="project_name" onchange="showEmployee();">
 															<option value="">--SELECT--</option>
 															
 															<?php 
@@ -66,11 +66,11 @@
 														</select>
 												</div>
 											</div>
-											<div class="col-md-4" >
+											<div class="col-md-4">
 												<div class="row" id="empdiv" style="display:none">
 													<div class="form-group">
 													<label class="control-label"> Employee Name</label>
-														<select  class="form-control" name="empname" id="empname">
+														 <select  class="form-control" name="empname" id="empname">
 															<option>--SELECT--</option>
 															
 														</select>

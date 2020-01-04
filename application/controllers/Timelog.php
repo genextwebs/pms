@@ -12,8 +12,10 @@ class Timelog extends CI_Controller {
 	}
 
 	public function index(){
+
 		$data['projectinfo']=$this->common_model->getData('tbl_project_info');
 		$data['empinfo'] = $this->common_model->getData('tbl_employee');
+		
 		$this->load->view('common/header');
 		$this->load->view('timelog/timelog',$data);
 		$this->load->view('common/footer');
@@ -210,23 +212,155 @@ class Timelog extends CI_Controller {
 	}
 
 	public function edittimelog(){
-
-		//$timelog['projectAlldata']=$this->common_model->getData('tbl_project_info');
+		$data['projectinfo']=$this->common_model->getData('tbl_project_info');
+		$data['empinfo'] = $this->common_model->getData('tbl_employee');
 		$id=base64_decode($_POST['id']);
 		$whereArr=array('id'=>$id);
+		$timelog= $this->common_model->getData('tbl_timelog',$whereArr);
+		$str= '';
+		$str.='<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="control-label">Select Project</label>
+								<select class="custom-select br-0" id="project_name" name="project_name" onchange="showEmployee();">';	
+								foreach($data['projectinfo'] as $project){
+									$string='';
+										if($project->id == $timelog[0]->timelogprojectid){
+												$string='selected';
+										    }  
+											$str.= '<option value="'.$project->id.'"'.$string.'>'.$project->projectname.'</option>';
+								        }
+
+		$str.=	                '</select>
+						</div>
+					</div>';
+
+
+					$startdate='';
+						if(	!empty($timelog[0]->timelogstartdate)){
+							$startdate = $timelog[0]->timelogstartdate;
+						}
+		$str.=      '<div class="col-md-4">
+						<div class="form-group">
+							 <label for="date" class="control-label"> Start Date</label>
+						   <input type="date" name="d1" id="d1" value="'.$startdate.'"  class="form-control"/></div>
+					</div>';
+
+
+					$enddate='';
+						if(	!empty($timelog[0]->timelogenddate)){
+							$enddate = $timelog[0]->timelogenddate;
+						}
+
+		$str.=	    '<div class="col-md-4">
+						<div class="form-group">
+							<label class="control-label">End Date</label>
+							<input type="date" name="d2" id="d2" 
+							value="'.$enddate.'" class="form-control"/>
+						</div>
+					</div>
+				</div>';
+
+		$starttime='';
+						if(	!empty($timelog[0]->timelogstarttime)){
+							$starttime = $timelog[0]->timelogstarttime;
+						}
+
+		$str.=      '<div class="row">
+						<div class="col-md-4">
+							<div class="form-group" id="timeonly">
+								<label class="control-label">Start Time</label>
+							    <input type="time" name="t1" id="t1" value="'.$starttime.'"  class="form-control"/>
+							</div>
+						</div>';
+
+		$endtime='';
+		if(	!empty($timelog[0]->timelogendtime)){
+			$endtime = $timelog[0]->timelogendtime;
+		}
+
+	    $str.=      '<div class="col-md-4">
+						<div class="form-group">
+							<label class="control-label"> End Time</label>
+							<input type="time" name="t2" id="t2" value="'.$endtime.'" class="form-control" onchange="calculateHours();"/>
+						</div>
+					</div>';
+
+		$hour='';
+		if(	!empty($timelog[0]->totalhours)){
+			$hour = $timelog[0]->totalhours;
+		}
+			
+		$str.=     '<div class="col-md-4">
+						<label  class="control-label">Total Hours</label>
+							<div id="diff">
+								<dl id="hours_mins">'.$hour.'</dl>
+							</div>
+							<input type="hidden"  name="hours1" id="hours1" value="'.$hour.'">
+					</div>';
+
+		$str.=' </div>
+				<div class="row">
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="control-label"> Employee Name</label>';
+
+			
+
+		$str.=		       '<select name="empname" id="empname" class="custom-select br-0">';
+									/*foreach($data['empinfo'] as $emp){
+									$string='';
+										if($emp->id == $timelog[0]->timelogemployeeid){
+												$string='selected';
+										    }  
+											$str.= '<option value="'.$emp->id.'"'.$string.'>'.$emp->employeename.'</option>';
+								        }
+										*/
+
+		$str.=	             '</select>
+							
+								
+						</div>
+					</div>';
+		//For Memo
+		$timelogmemo='';
+		if(	!empty($timelog[0]->timelogmemo)){
+			$timelogmemo = $timelog[0]->timelogmemo;
+		}
+
+		$str.=	   '<div class="col-md-4">
+						<div class="form-group">
+							<label class="control-label"> Memo</label>
+								<input type="text" class="form-control" name="detail_memo" id="detail_memo" value="'.$timelogmemo.'">
+						</div>
+					</div>
+				</div>';
+
+		$str.=     '<div class="form-actions">
+					     <button type="button" onclick="updatetimelog(\''.base64_encode($id).'\')" name="btnupdate" id="save-form" class="btn btn-success"> <i class="fa fa-check"></i> Update</button>
+				    </div>';
+
+		echo json_encode($str);exit;
+}
+		//echo $timelog[0]->timelogprojectid;
+public function update_timelog(){
+
+		$id=base64_decode($_POST['id']);
+		$whereArr=array('id'=>$id);
+
 		if(!empty($_POST)){
-			$project = $this->input->post('projectname');
-			$emp = $this->input->post('emp_name');
-			$sdate = $this->input->post('start_date');
-			$edate = $this->input->post('deadline');
-			$stime = $this->input->post('start_time');
-			$etime = $this->input->post('end_time');
-			$hours = $this->input->post('hours1');
-			$memo = $this->input->post('detail_memo');
+			$project = $this->input->post('pname');
+			$emp = $this->input->post('employee');
+			$sdate = $this->input->post('d1');
+			$edate = $this->input->post('d2');
+			$stime = $this->input->post('t1');
+			$etime = $this->input->post('t2');
+			$hours = $this->input->post('hour');
+			$memo = $this->input->post('demo');
 			$updateArr = array('timelogprojectid'=>$project,'timelogemployeeid'=>$emp,'timelogstartdate'=>$sdate,'timelogenddate'=>$edate,'timelogstarttime'=>$stime,'timelogendtime'=>$etime,'totalhours'=>$hours,'timelogmemo'=>$memo);
 			$this->common_model->updateData('tbl_timelog',$updateArr,$whereArr);
-			echo $this->input->last_query();die;
-			redirect('timelog/index');
+			//echo $this->input->last_query();die;
+			//redirect('timelog/index');
 
 
 		}

@@ -797,7 +797,10 @@ $("#save_tchannel").click(function(event) {
 	}
 
 	function edittimelog(id){
-		//alert('heloo mmm');
+		
+		//$('#leaves-popup').modal('toggle');
+		$('#timelog-popup').modal('show');
+
 		$.ajax({
 			type: "POST",
 		    url: base_url+"timelog/edittimelog",
@@ -805,12 +808,14 @@ $("#save_tchannel").click(function(event) {
 		    dataType: 'json',
 		    data: "id="+id,
 		   success: function(data){
-		   	alert(data);
-		   	$('#timelogpreview').html('');
-		   	$('#timelogpreview').append(data);
+		   //	alert(data);
+		 // alert($(data).html());
+		    $('#timelog_edit').html('');
+		   	$('#timelog_edit').append(data);
 
-			}
-
+			},
+			error: function (xhr, ajaxOptions, thrownError) {
+			    }
 
 		});
 	}
@@ -1097,11 +1102,39 @@ $("#save_tchannel").click(function(event) {
 				data: {id : id  , mem : mem ,ltype : ltype , date : date , abs : abs, sta : sta},
 				dataType: "html",
 			    success: function (data) {
-					$('#editleaves').modal('toggle');
+					$('#timelog-popup').modal('toggle');
 						window.location.reload();
 				},
 		    });
 		}
+	}
+
+	function updatetimelog(id){
+		var projectname =$('#project_name').val();
+
+		var date1 = $('#d1').val();
+		alert(d1);
+		var date2 = $('#d2').val();
+		var time1 = $('#t1').val();
+		var time2 = $('#t2').val();
+		var hours = $('#hours1').val();
+		var emp = $('#empname').val();
+		var demo = $('#detail_memo').val();
+		$.ajax({
+			url:base_url+"timelog/update_timelog",
+			type:"POST",
+			dataType:"json",
+			data:{id:id,pname:projectname,d1:date1,d2:date2,t1:time1,t2:time2,hour:hours,employee:emp,demo:demo},
+			dataType:"html",
+			success:function(data){
+				$('#timelog-popup').modal('toggle');
+				window.location.reload();
+
+			},
+
+
+		});
+
 	}
 	
 
@@ -1291,6 +1324,24 @@ $("#projectname").change(function(event) {
 	}
 });
 
+function showEmployee(){
+	pname = $('#project_name').val();
+	$('#empdiv').show();
+	if(pname !=''){
+
+		$.ajax({
+			 url: base_url+"timelog/getEmployee",
+			type:'post',
+			 dataType:'json',
+			 data:{projectname:pname},
+			 success:function(data){
+               	$('#empname').append(data.empname);
+            }
+
+		});
+
+	}
+}
  
 
 
@@ -1305,7 +1356,7 @@ function append(dl, dtTxt, ddTxt) {
   $("#hours1").val(dd.textContent);
 }
 
-$(document).ready(function() {
+/*$(document).ready(function() {
 
   var today = new Date();
   $('#d1').val(today.getFullYear() + "-" + ('0' + (today.getMonth() + 1)).slice(-2) + "-" + ('0' + (today.getDate() + 1)).slice(-2));
@@ -1334,4 +1385,36 @@ $(document).ready(function() {
   });
   $('#d1').change();
 
-});
+});*/
+
+function calculateHours(){
+
+	 var today = new Date();
+  $('#d1').val(today.getFullYear() + "-" + ('0' + (today.getMonth() + 1)).slice(-2) + "-" + ('0' + (today.getDate() + 1)).slice(-2));
+  $('#d2').val($('#d1').val());
+  $('#t1').val('00:00');
+  $('#t2').val('00:00');
+  
+  //
+  //$('#d1 #d2 #t1 #t2').
+  $('#d1, #d2, #t1, #t2').on('change', function(ev) {
+    var dl = document.getElementById("diff");
+    while (dl.hasChildNodes()) {
+      dl.removeChild(dl.lastChild);
+    }
+
+    var date1 = new Date($('#d1').val() + " " + $('#t1').val()).getTime();
+    var date2 = new Date($('#d2').val() + " " + $('#t2').val()).getTime();
+   // append(dl, "Interval ", " from: " + $('#d1').val() + " " + $('#t1').val() + " to: " + $('#d2').val() + " " + $('#t2').val());
+    var msec = date2 - date1;
+    var mins = Math.floor(msec / 60000);
+    var hrs = Math.floor(mins / 60);
+    var days = Math.floor(hrs / 24);
+    var yrs = Math.floor(days / 365);
+    //append(dl, "Minutes: ", mins + " minutes");
+    mins = mins % 60;
+    append(dl, "", hrs +" Hrs " + mins + " Mins");
+  });
+  $('#d1').change();
+
+}
