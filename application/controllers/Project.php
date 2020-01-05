@@ -830,12 +830,11 @@ class Project extends CI_Controller {
 	public function insertProjectMember(){
 		if(!empty($_POST)){
 			$data['employee'] = $this->input->post('choose_member');
-			
 			$emp_count = count($data['employee']);
 			$project_id = $this->input->post('projectid');
 			for($i=0 ; $i<$emp_count; $i++){
 				$emp_id = $data['employee'][$i];
-				$whereArr = array('emp_id' => $emp_id);
+				$whereArr = array('emp_id' => $emp_id,'project_id' => $project_id);
 				$projectM = $this->common_model->getData('tbl_project_member', $whereArr);
 				if(count($projectM) == 1){
 					$this->session->set_flashdata('message_name', 'Alredy add this member');
@@ -857,7 +856,7 @@ class Project extends CI_Controller {
 			$template_id = $this->input->post('templateid');
 			for($i=0 ; $i<$emp_count; $i++){
 				$emp_id = $data['employee'][$i];
-				$whereArr = array('emp_id' => $emp_id);
+				$whereArr = array('emp_id' => $emp_id,'template_id' =>$template_id);
 				$projectM = $this->common_model->getData('tbl_template_member', $whereArr);
 				if(count($projectM) == 1){
 					$this->session->set_flashdata('message_name', 'Alredy add this member');
@@ -1076,6 +1075,7 @@ class Project extends CI_Controller {
 		$data['EmpData'] = $this->common_model->getData('tbl_employee');
 		$taskCat = $this->common_model->getData('tbl_task_category');
 		$taskUpdateArr = array();
+		$taskUpdateArr['id'] = $taskData[0]->id;
 		$taskUpdateArr['title_task'] = $taskData[0]->title;
 		$taskUpdateArr['description'] = $taskData[0]->description;
 		$taskUpdateArr['startdate'] = $taskData[0]->startdate;
@@ -1086,5 +1086,25 @@ class Project extends CI_Controller {
 		$taskUpdateArr['priority'] = $taskData[0]->priority;
 		//print_r($taskUpdateArr['SelEmp']);die;
 		echo json_encode($taskUpdateArr);exit;
+	}
+
+	public function updateTaskData(){
+		$id = $_POST['id'];
+		$whereArr = array('id' => $id);
+		if(!empty($_POST)){
+			$title = $this->input->post('title_task');
+			$projectid = $this->input->post('projectid');
+			$description = $this->input->post('editor1');
+			$startdate = $this->input->post('startdate');
+			$duedate = $this->input->post('due_date');
+			$assignemp = $this->input->post('assignemp');
+			$taskcategory = $this->input->post('task-category');
+			$status = $this->input->post('status');
+			$priority = $this->input->post('radio-stacked');
+			$updateArr = array('projectid' => $projectid, 'title' => $title , 'description' => $description , 'startdate' => $startdate , 'duedate' => $duedate , 'assignedto' => $assignemp , 'taskcategory' => $taskcategory , 'status' => $status, 'priority' => $priority);
+			print_r($updateArr);die;
+			$this->common_model->updateData('tbl_task',$updateArr,$whereArr);
+			redirect('project/task/'.base64_encode($projectid));
+		}
 	}
 }		

@@ -979,11 +979,27 @@ function updateTask(id){
 	    	$('#task_category option[value="'+data.SelTaskCat+'"]').attr('selected','selected');
 	    	$('#status option[value="'+data.status+'"]').attr('selected','selected');
 	    	$('input:radio[name=radio-stacked]:checked').attr(data.priority);
+	    	$("#update_task").on("click", function(){ myFunction(data.id); });
 	    	
 		 }
 	});
 }   
 
+
+function myFunction(id){
+	$.ajax({
+           	url: base_url+"project/updateTaskData",
+           	type: 'POST',
+           	//dataType:'JSON',
+           	data: "id="+id,
+           	error: function() {
+              alert('Something is wrong');
+           	},
+      	 	success: function(data) {
+
+      	 	}
+    	});	
+}
 
 //for close update view
 

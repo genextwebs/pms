@@ -674,6 +674,20 @@
 										                					</div>
 										                					<div class="col-md-12">
 										                						<div class="form-group">
+										                							<label class="control-label">
+										                							Status
+										                							</label>
+										                							<select name="status" id="status" class="form-control">
+                                                                    <option value="1">To Do</option>
+                                                                    <option value="2">Doing</option>
+                                                                    <option value="3">Done</option>
+                                                                    <option value="4">Completed</option>
+                                                                    <option value="0">Incomplete</option>
+                                                            </select>
+										                						</div>
+										                					</div>
+										                					<div class="col-md-12">
+										                						<div class="form-group">
 										                							<label class="control-label">Priority</label>
 										                							<div class="custom-control custom-radio radio-danger">
 																					    <input type="radio" class="custom-control-input" id="high-rad" name="radio-stacked" value="0"required="">
@@ -693,7 +707,7 @@
 													           			</div>
 													           		</div>
 													           		<div class="form-actions">
-													           			<button type="submit" id="save-task" class="btn btn-success"><i class="fa fa-check"></i> Save</button>
+													           			<input type="button"  class="btn btn-success" id="update_task" value="Update"><i class="fa fa-check"></i> 
 													           		</div>
 													           	</form>
 													        </div>
