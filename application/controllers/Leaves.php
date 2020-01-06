@@ -58,23 +58,23 @@ class Leaves extends CI_Controller {
 			$aColumns = array( 'id', 'empid', 'leaveid', 'duration', 'date','reasonforabsence','status');
 			$totalColumns = count($aColumns);
 
-			/** Paging Start **/
-			$sLimit = "";
-			$sOffset = "";
-			if ($_GET['iDisplayStart'] < 0) {
-				$_GET['iDisplayStart'] = 0;
-			}
-			if ($_GET['iDisplayLength'] < 0) {
-				$_GET['iDisplayLength'] = 10;
-			}
-			if (isset($_GET['iDisplayStart']) && $_GET['iDisplayLength'] != '-1') {
-				$sLimit = (int) substr($_GET['iDisplayLength'], 0, 6);
-				$sOffset = (int) $_GET['iDisplayStart'];
-			} else {
-				$sLimit = 10;
-				$sOffset = (int) $_GET['iDisplayStart'];
-			}
-			/** Paging End **/
+				/** Paging Start **/
+            $sLimit = "";
+            $sOffset = "";
+            if ($_GET['iDisplayStart'] < 0) {
+                $_GET['iDisplayStart'] = 0;
+            }
+            if ($_GET['iDisplayLength'] < 0) {
+                $_GET['iDisplayLength'] = 10;
+            }
+            if (isset($_GET['iDisplayStart']) && $_GET['iDisplayLength'] != '-1') {
+                $sLimit = (int) substr($_GET['iDisplayLength'], 0, 6);
+                $sOffset = (int) $_GET['iDisplayStart'];
+            } else {
+                $sLimit = 10;
+                $sOffset = (int) $_GET['iDisplayStart'];
+            }
+            /** Paging End **/
 
 			/** Ordering Start **/
 			$noOrderColumns = array('other_do_ext');
@@ -173,7 +173,7 @@ class Leaves extends CI_Controller {
 			}
 			else{
 					if($this->user_type == 2){
-						$actionstring= ' <a href="javascript:;" onclick="searchleaves(\''.base64_encode($rowid).'\');"  class="btn btn-success btn-circle" data-toggle="modal" data-target="#leaves-popup" data-original-title="View Project Details"><i class="fa fa-search" aria-hidden="true"></i></a>';
+						$actionstring= '<abbr title="view Leaves"><a href="javascript:;" onclick="searchleaves(\''.base64_encode($rowid).'\');"  class="btn btn-success btn-circle" data-toggle="modal" data-target="#leaves-popup" data-original-title="View Project Details"><i class="fa fa-search" aria-hidden="true"></i></a></abbr>';
 					}
 					if($this->user_type == 0 ){
 						$actionstring= 
@@ -197,15 +197,17 @@ class Leaves extends CI_Controller {
 				$i++;
 			}
 			
+			 
 			$output = array
 			(
-				"sEcho" => intval($_POST['sEcho']),
-					   "iTotalRecords" => $iTotal,
-					   "iTotalRecordsFormatted" => number_format($iTotal),
-					   "aaData" => $datarow
+			   	"sEcho" => intval($_GET['sEcho']),
+		        "iTotalRecords" => $iTotal,
+		        "iTotalRecordsFormatted" => number_format($iTotal), //ShowLargeNumber($iTotal),
+		        "iTotalDisplayRecords" => $iFilteredTotal,
+		        "aaData" => $datarow
 			);
-			echo json_encode($output);
-			exit();
+		  	echo json_encode($output);
+	      	exit();
 	}
 
 	public function searchleaves(){
@@ -219,10 +221,21 @@ class Leaves extends CI_Controller {
 		$str.= '<p><b>Reason for absence</b></p>';
 		$str.= '<p>'.$data[0]->reasonforabsence.'</p>';
 		$str.= '<p><b>Status</b></p>'; 
-		$str.= '<p>'.$data[0]->status.'</p>';
-		$str.= '<p><button onclick="closeleaves()" class="btn btn-white waves-effect" >Close</button>  </p>';  
+		if($data[0]->status == 0)
+		{
+			$status='Pending';
+		}
+		elseif($data[0]->status == 1)
+		{
+			$status='Approved';
+		}
+		$str.= '<p>'.$status.'</p>';
+		$str.= '<p><button onclick="closeleaves()" class="btn btn-white waves-effect" >Close</button>  </p>'; 
+		if($this->user_type == 0)
+		{ 
 		$str.= '<p><button onclick="editleaves(\''.base64_encode($id).'\')" class="btn btn-success"><i class="fa fa-edit">Edit</i> </button></p>';
 		$str.= '<p><button onclick="deleteSearchLeaves(\''.base64_encode($id).'\')" class="btn btn-danger"><i class="fa fa-times">Delete</i> </button></p>';
+		}
 		echo json_encode($str);exit;
 	}
 

@@ -237,16 +237,17 @@ class Ticket extends CI_Controller {
 				);
 				$i++;
 			}
-			
+
 			$output = array
 			(
-				"sEcho" => intval($_POST['sEcho']),
-					   "iTotalRecords" => $iTotal,
-					   "iTotalRecordsFormatted" => number_format($iTotal),
-					   "aaData" => $datarow
+			   	"sEcho" => intval($_GET['sEcho']),
+		        "iTotalRecords" => $iTotal,
+		        "iTotalRecordsFormatted" => number_format($iTotal), //ShowLargeNumber($iTotal),
+		        "iTotalDisplayRecords" => $iFilteredTotal,
+		        "aaData" => $datarow
 			);
-			echo json_encode($output);
-			exit();
+		  	echo json_encode($output);
+	      	exit();
 	}
 
 	public function editticket(){

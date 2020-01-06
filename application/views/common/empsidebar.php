@@ -97,8 +97,8 @@ if($this->session->userdata('login')){
                 <span>Time Logs</span>
             </a>
         </li>
-         <li <?php if($controller == 'Attendance' && ($functionName == 'Attendance' || $functionName == '')) { echo 'class="active"'; } ?>>
-            <a href="<?php echo base_url().'Attendance'?>" class="nav-link-s">
+        <li <?php if($controller == 'attendance' && ($functionName == 'attendance' || $functionName == '')) { echo 'class="active"'; } ?>>
+            <a href="<?php echo base_url().'attendance'?>" class="nav-link-s">
                 <i class="icon-clock"></i>
                 <span>Attendance</span>
             </a>
