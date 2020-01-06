@@ -74,7 +74,7 @@
 <div class="row">
 	<div class="col-sm-12">
 		<div class="form-group custom-action">
-			<a href="<?php echo base_url().'timelog/addtimelog'?>" class="btn btn-outline-success btn-sm">Add New Project <i class="fa fa-plus" aria-hidden="true"></i></a>
+			<a href="<?php echo base_url().'timelog/addtimelog'?>" class="btn btn-outline-success btn-sm">Add TimeLog <i class="fa fa-plus" aria-hidden="true"></i></a>
 		</div>
 	</div>
 </div>

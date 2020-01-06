@@ -33,17 +33,16 @@ class Timelog extends CI_Controller {
 	public function inserttimelog(){
 
 			if(!empty($_POST)){
-			$project = $this->input->post('projectname');
+			$project = $this->input->post('project_name');
 			$emp = $this->input->post('empname');
-			$sdate = $this->input->post('d1');
-			$edate = $this->input->post('d2');
-			$stime = $this->input->post('t1');
-			$etime = $this->input->post('t2');
+			$sdate = $this->input->post('timelog_d1');
+			$edate = $this->input->post('timelog_d2');
+			$stime = $this->input->post('timelog_t1');
+			$etime = $this->input->post('timelog_t2');
 			$hours = $this->input->post('hours1');
 			$memo = $this->input->post('memo');
 			
 			$insArr = array('timelogprojectid'=>$project ,'timelogemployeeid'=>$emp ,'timelogstartdate'=>$sdate , 'timelogenddate'=>$edate ,'timelogstarttime'=>$stime ,'timelogendtime'=>$etime,'totalhours'=>$hours,'timelogmemo'=>$memo);
-			//print_R($insArr);die;
 			$this->common_model->insertData('tbl_timelog',$insArr);
 			redirect('timelog/index');
 		}
@@ -106,21 +105,17 @@ class Timelog extends CI_Controller {
 				$sOrder = " ORDER BY ".$sOrder;
 			}
 			/** Ordering End **/
-				
+
 			/** Filtering Start */
 			
 			if(!empty(trim($_GET['sSearch']))){
-				$searchTerm = trim($_GET['sSearch']);/*
-				OR tbl_timelog.timelogstartdate like "%'.$searchTerm.'%" OR tbl_timelog.ear like "%'.$searchTerm.'%" OR tbl_timelog.timelogenddate "%'.$searchTerm.'%" OR tbl_project_info.projectbudget  like "%'.$searchTerm.'%" OR  tbl_timelog.hours like "%'.$sSearchTerm.'%"*/
-				
+				$searchTerm = trim($_GET['sSearch']);
 				$sWhere.= ' AND (tbl_project_info.projectname like "%'.$searchTerm.'%" OR tbl_timelog.timelogstartdate like "%'.$searchTerm.'%" OR tbl_timelog.timelogendtime like "%'.$searchTerm.'%" OR tbl_timelog.totalhours like "%'.$searchTerm.'%" OR tbl_project_info.projectbudget like "%'.$searchTerm.'%")';
 			}
 		
 			$pname=!empty($_POST['pname']) ? $_POST['pname'] : '';	
-			//echo($pname);die;	
 			$ename=!empty($_POST['ename']) ? $_POST['ename'] : '';
 			$startdate=!empty($_POST['start_date']) ? $_POST['start_date'] : '';
-			//echo($startdate);die;		
 			$enddate=!empty($_POST['deadline']) ? $_POST['deadline'] : '';
 		
 
@@ -141,10 +136,8 @@ class Timelog extends CI_Controller {
 			}
 			
 		}
-		$query = "SELECT projectbudget,tbl_project_info.*,tbl_timelog.* FROM `tbl_timelog` inner join tbl_project_info on tbl_timelog.timelogprojectid = tbl_project_info.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+		$query = "SELECT tbl_project_info.projectbudget,tbl_project_info.*,tbl_timelog.* FROM `tbl_timelog` inner join tbl_project_info on tbl_timelog.timelogprojectid = tbl_project_info.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 		$timeArr = $this->common_model->coreQueryObject($query);
-		
-		//print_R($empData);
 
 		$query = "select projectbudget,tbl_project_info.*,tbl_timelog.* FROM `tbl_timelog` inner join tbl_project_info on tbl_timelog.timelogprojectid = tbl_project_info.id".$sWhere;
 		$TimeFilterArr = $this->common_model->coreQueryObject($query);
@@ -160,28 +153,36 @@ class Timelog extends CI_Controller {
 
 		foreach($timeArr as $row) {
 			$rowid = $row->id;
-			
-				$actionstring = 
-								'<a href="javascript:;" onclick="edittimelog(\''.base64_encode($rowid).'\')" class="btn btn-info btn-circle" data-original-title="Edit" data-toggle="modal" data-target="#timelog-popup" ><i class="fa fa-pencil" aria-hidden="true"></i></a>
+			$projectid =$row->timelogprojectid;
+			//echo($projectid);die;
+	        $actionstring = 
 
-								 <a href="javascript:void();" onclick="deletetimelog(\''.base64_encode($rowid).'\');"  class="btn btn-danger btn-circle sa-params" data-toggle="tooltip"  data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>';
-		
-		$whereArr=array('id'=>$row->timelogemployeeid);
+						'<a href="javascript:;" onclick="edittimelog(\''.base64_encode($rowid).'\')" class="btn btn-info btn-circle" data-original-title="Edit" data-toggle="modal" data-target="#timelog-popup" ><i class="fa fa-pencil" aria-hidden="true"></i></a>
+
+						 <a href="javascript:void();" onclick="deletetimelog(\''.base64_encode($rowid).'\');"  class="btn btn-danger btn-circle sa-params" data-toggle="tooltip"  data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>';
+
+		/*$empid=$row->timelogemployeeid;
+		$whereArr=array('id'=>$empid);
 		$empData=$this->common_model->getData('tbl_employee',$whereArr);
 		foreach($empData as $emp){
 			$empData=$empData[0]->employeename;
+			
+		}*/
 
+		$query ="select tbl_project_member.*,tbl_employee.employeename from tbl_project_member inner join tbl_employee on tbl_project_member.emp_id = tbl_employee.id where project_id=".$projectid;
+	  	$empData=$this->common_model->coreQueryObject($query);
+	  	foreach($empData as $emp){
+			$empData=$empData[0]->employeename;
+			
 		}
-
-		
 
 
 		$datarow[] = array(
 			$id = $i,
 			$row->projectname,
 			$empData,
-			$row->timelogstartdate,
-			$row->timelogendtime,
+			$row->timelogstartdate.'<br/>'.$row->timelogstarttime,
+			$row->timelogenddate.'<br/>'.$row->timelogendtime,
 			$row->totalhours,
 			$row->projectbudget,
 			$actionstring
@@ -193,14 +194,13 @@ class Timelog extends CI_Controller {
 		(
 			"sEcho" => intval($_POST['sEcho']),
 				   "iTotalRecords" => $iTotal,
-				   "iTotalRecordsFormatted" => number_format($iTotal), //ShowLargeNumber($iTotal),
+				   "iTotalRecordsFormatted" => number_format($iTotal), 
+				   //ShowLargeNumber($iTotal),
 				   "iTotalDisplayRecords" => $iFilteredTotal,
 				   "aaData" => $datarow
 		);
 		echo json_encode($output);
 		exit();
-	
-
 	}
 
 	public function deletetimelog(){
@@ -212,11 +212,13 @@ class Timelog extends CI_Controller {
 	}
 
 	public function edittimelog(){
-		$data['projectinfo']=$this->common_model->getData('tbl_project_info');
-		$data['empinfo'] = $this->common_model->getData('tbl_employee');
+
 		$id=base64_decode($_POST['id']);
 		$whereArr=array('id'=>$id);
 		$timelog= $this->common_model->getData('tbl_timelog',$whereArr);
+		$query ="select tbl_project_member.*,tbl_employee.employeename from tbl_project_member inner join tbl_employee on tbl_project_member.emp_id = tbl_employee.id where project_id=".$timelog[0]->timelogprojectid;
+	  	$getEmp=$this->common_model->coreQueryObject($query);
+		$data['projectinfo']=$this->common_model->getData('tbl_project_info');
 		$str= '';
 		$str.='<div class="row">
 					<div class="col-md-4">
@@ -243,7 +245,7 @@ class Timelog extends CI_Controller {
 		$str.=      '<div class="col-md-4">
 						<div class="form-group">
 							 <label for="date" class="control-label"> Start Date</label>
-						   <input type="date" name="d1" id="d1" value="'.$startdate.'"  class="form-control"/></div>
+						   <input type="date" name="d1" id="d1" value="'.$startdate.'"  class="form-control" onchange="changeDate();"/></div>
 					</div>';
 
 
@@ -304,24 +306,16 @@ class Timelog extends CI_Controller {
 					<div class="col-md-4">
 						<div class="form-group">
 							<label class="control-label"> Employee Name</label>';
-
-			
-
-		$str.=		       '<select name="empname" id="empname" class="custom-select br-0">';
-									/*foreach($data['empinfo'] as $emp){
+		$str.=		            '<select name="empname" id="empname" class="custom-select br-0">';
+									foreach($getEmp as $emp){
 									$string='';
-										if($emp->id == $timelog[0]->timelogemployeeid){
-												$string='selected';
-										    }  
 											$str.= '<option value="'.$emp->id.'"'.$string.'>'.$emp->employeename.'</option>';
-								        }
-										*/
+								    }
 
-		$str.=	             '</select>
-							
-								
+		$str.=	             '</select>	
 						</div>
 					</div>';
+
 		//For Memo
 		$timelogmemo='';
 		if(	!empty($timelog[0]->timelogmemo)){
@@ -342,7 +336,7 @@ class Timelog extends CI_Controller {
 
 		echo json_encode($str);exit;
 }
-		//echo $timelog[0]->timelogprojectid;
+
 public function update_timelog(){
 
 		$id=base64_decode($_POST['id']);
@@ -359,31 +353,20 @@ public function update_timelog(){
 			$memo = $this->input->post('demo');
 			$updateArr = array('timelogprojectid'=>$project,'timelogemployeeid'=>$emp,'timelogstartdate'=>$sdate,'timelogenddate'=>$edate,'timelogstarttime'=>$stime,'timelogendtime'=>$etime,'totalhours'=>$hours,'timelogmemo'=>$memo);
 			$this->common_model->updateData('tbl_timelog',$updateArr,$whereArr);
-			//echo $this->input->last_query();die;
-			//redirect('timelog/index');
-
-
 		}
 		
 	}
 
 	public function getEmployee(){
 		$pname=$this->input->post('projectname');
-		//$whereArr = array('project_id'=>$pname);
-		$query ="select tbl_project_member.*,tbl_employee.employeename from tbl_project_member inner join tbl_employee on tbl_project_member.emp_id = tbl_employee.id where project_id=".$pname;
-		//echo($query);die;
-	  $getEmp=$this->common_model->coreQueryObject($query);
-	    //print_r($getTimelog);die;
+		$query ="select tbl_project_member.*,tbl_employee.employeename,tbl_employee.id as eid from tbl_project_member inner join tbl_employee on tbl_project_member.emp_id = tbl_employee.id where project_id=".$pname;
+	  	$getEmp=$this->common_model->coreQueryObject($query);
 		$str = '';
 			foreach($getEmp as $row){
-				$str.='<option value="'.$row->id.'">'.$row->employeename.'</option>'; 
+				$str.='<option value="'.$row->eid.'">'.$row->employeename.'</option>'; 
 			}
-			$timelogArr['empname'] = $str;
-			//print_r($timelogArr['empname']);die;
-			echo json_encode($timelogArr);exit;
-	}
 
-
-
-	 
+		$timelogArr['empname'] = $str;
+		echo json_encode($timelogArr);exit;
+	}	 
 }

@@ -24,7 +24,7 @@
 				</div>
 				<div class="card-wrapper collapse show">
 					<div class="card-body">
-						<form id="creatclient" class="aj-form" name="creatclient" method="post" action="<?php echo base_url().'timelog/inserttimelog'?>">
+						<form id="addtimelog" class="aj-form" name="addtimelog" method="post" action="<?php echo base_url().'timelog/inserttimelog'?>">
 							<?php
                                     $mess = $this->session->flashdata('message_name');
                                     if(!empty($mess)){
@@ -71,8 +71,6 @@
 													<div class="form-group">
 													<label class="control-label"> Employee Name</label>
 														 <select  class="form-control" name="empname" id="empname">
-															<option>--SELECT--</option>
-															
 														</select>
 													</div>
 												</div>
@@ -83,17 +81,17 @@
 											<div class="col-md-4">
 												<div class="block">
 												  <label for="date" class="control-label"> Start Date</label>
-												  <input type="date" name="d1" id="d1" value=""  class="form-control"/>
+												  <input type="date" name="timelog_d1" id="timelog_d1" value=""  class="form-control"/>
 												  <label for="time" class="control-label">Start Time</label>
-												  <input type="time" name="t1" id="t1" value=""  class="form-control"/>
+												  <input type="time" name="timelog_t1" id="timelog_t1" value=""  class="form-control"/>
 												</div>
 											</div>
 											<div class="col-md-4">
 												<div class="block">
-												  <label for="date" class="control-label">End Date</label>
-												  <input type="date" name="d2" id="d2" value="" class="form-control" />
-												  <label for="time" class="control-label">End Time</label>
-												  <input type="time" name="t2" id="t2" value="" class="form-control"/>
+												    <label for="date" class="control-label">End Date</label>
+												    <input type="date" name="timelog_d2" id="timelog_d2" value="" class="form-control" />
+												    <label for="time" class="control-label">End Time</label>
+												    <input type="time" name="timelog_t2" id="timelog_t2" value="" class="form-control"/>
 												</div>
 											</div>
 											<div class="col-md-4">
@@ -102,24 +100,20 @@
 													<dl id="hours_mins">
 													</dl>
 												</div>
-												<input type="hidden"  name="hours1" id="hours1" value=""> 
-												
-												
+												<input type="hidden"  name="hours1" id="hours1" value=""> 		
 											</div>
 										</div>
 										<div class="row">
 											<div class="col-md-12">
 												<div class="form-group">
 													<label class="control-label"> Memo</label>
-														 <input type="text" class="form-control" name="memo" id="memo"/> 
+												    <input type="text" class="form-control" name="memo" id="memo"/> 
 												</div>
 											</div>
 										</div>
 										<div class="form-actions">
 											<button type="submit" name="btnsavetime" id="save-form" class="btn btn-success"> <i class="fa fa-check"></i> Save</button>
 										</div>
-
-
 							</div>
 					    </form>
 					</div>

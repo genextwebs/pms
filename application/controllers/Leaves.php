@@ -429,7 +429,6 @@ class Leaves extends CI_Controller {
 				$status = 1;
 			}
 		}
-		//echo($status);die;
 		echo $status;exit();
 
 
