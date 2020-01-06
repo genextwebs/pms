@@ -1387,34 +1387,3 @@ function append(dl, dtTxt, ddTxt) {
 
 });*/
 
-function calculateHours(){
-
-	 var today = new Date();
-  $('#d1').val(today.getFullYear() + "-" + ('0' + (today.getMonth() + 1)).slice(-2) + "-" + ('0' + (today.getDate() + 1)).slice(-2));
-  $('#d2').val($('#d1').val());
-  $('#t1').val('00:00');
-  $('#t2').val('00:00');
-  
-  //
-  //$('#d1 #d2 #t1 #t2').
-  $('#d1, #d2, #t1, #t2').on('change', function(ev) {
-    var dl = document.getElementById("diff");
-    while (dl.hasChildNodes()) {
-      dl.removeChild(dl.lastChild);
-    }
-
-    var date1 = new Date($('#d1').val() + " " + $('#t1').val()).getTime();
-    var date2 = new Date($('#d2').val() + " " + $('#t2').val()).getTime();
-   // append(dl, "Interval ", " from: " + $('#d1').val() + " " + $('#t1').val() + " to: " + $('#d2').val() + " " + $('#t2').val());
-    var msec = date2 - date1;
-    var mins = Math.floor(msec / 60000);
-    var hrs = Math.floor(mins / 60);
-    var days = Math.floor(hrs / 24);
-    var yrs = Math.floor(days / 365);
-    //append(dl, "Minutes: ", mins + " minutes");
-    mins = mins % 60;
-    append(dl, "", hrs +" Hrs " + mins + " Mins");
-  });
-  $('#d1').change();
-
-}
