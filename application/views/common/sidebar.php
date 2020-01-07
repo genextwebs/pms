@@ -173,7 +173,7 @@ if($this->session->userdata('login')){
             </a>
             <ul class="collapse list-unstyled" id="reports">
                 <li>
-                    <a href="#">Task Report</a>
+                    <a href="<?php echo base_url().'taskreport/index'?>">Task Report</a>
                 </li>
                 <li>
                     <a href="#">Time Log Report</a>
@@ -187,6 +187,7 @@ if($this->session->userdata('login')){
                 <li>
                 	<a href="#">Leave Report</a>
                 </li>
+             
             </ul>
         </li>
         <li>
