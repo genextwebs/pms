@@ -11,7 +11,32 @@
 		</div>
 	</div> 
 </nav>
-
+<?php 
+$dataStrCmp =$dataStr1="";
+$count=0;
+foreach ($Chart as $pie) {
+	if($pie->status==4){
+		$dataStrCmp = $pie->status;
+		$c1=$count++;
+	}else if($pie->status==1){
+		$dataStrpend = $pie->status;
+		$c2=$count++;
+	}
+/*	else if($pie->status==1){
+		$dataStrpend = $pie->status;
+		$c2=$count++;
+	}
+	 else if($pie->status==1){
+		$dataStrpend = $pie->status;
+		$c2=$count++;
+	}
+	else if($pie->status==1){
+		$dataStrpend = $pie->status;
+		$c2=$count++;
+	}*/
+}
+		
+?> 
 <!-- contetn-wrap -->
 <div class="content-in">  
 	<div class="row">
@@ -115,6 +140,13 @@
 </div>
 
 
+ 
+<h1>PIE CHART</h1>
+
+<div id="piechart"></div>
+<div></div>
+
+
 
 <div class="row">
 	<div class="col-md-12">
@@ -136,3 +168,67 @@
 		</div>
 	</div>
 </div>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<script type="text/javascript">
+	Highcharts.chart('piechart', {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    title: {
+        text: 'Status'
+    },
+    tooltip: {
+     //   pointFormat: '{series.xyz}: <b>{point.percentage:.1f}%</b>'
+    },
+    accessibility: {
+        point: {
+            valueSuffix: '%'
+        }
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                //format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+            }
+        }
+    },
+    series: [{
+       name: 'Status ',
+        colorByPoint: true,
+        data:[
+
+        	 ['Completed Status',<?php echo $c1;?>],
+        	 ['Pending Status',<?php echo $c2?>]
+        ]
+
+       // pointInterval: 3600 * 1000,
+    }]
+
+
+
+});
+</script>
+ <!--   data: [
+                  ['Firefox',   45.0],
+                  ['IE',       26.8],
+                  {
+                     name: 'Chrome',
+                     y: 12.8,
+                     sliced: true,
+                     selected: true
+                  },
+                  
+                  ['Safari',    8.5],
+                  ['Opera',     6.2],
+                  ['Others',   0.7]
+               ]
+            }]; -->

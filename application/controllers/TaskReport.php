@@ -17,11 +17,31 @@ class TaskReport extends CI_Controller {
 	public function index(){
 		$data['allEmpData'] = $this->common_model->getData('tbl_employee');
 		$data['allProjectData'] = $this->common_model->getData('tbl_project_info');
+		$data['Chart']=$this->common_model->getData('tbl_task');
+			$str= '';
+		foreach ($data['Chart'] as $pie) {
+		$str.= '<b>'.$pie->status;
+			
+		}
+		
 		$this->load->view('common/header');
 		$this->load->view('report/taskreport',$data);
 		$this->load->view('common/footer');
+	
 
 	}
+
+/*
+	public function chart(){
+		$data['Chart']=$this->common_model->getData('tbl_task');
+		$this->load->view('report/taskreport',$data);
+		/*$str=$data[0]->status;
+		$str=$data[0]->title;
+		 echo json_encode($data);exit;
+
+	}*/
+
+     
 	
 	public function taskreportlist(){
 		if(!empty($_POST)){
@@ -120,7 +140,7 @@ class TaskReport extends CI_Controller {
 		$TimeFilterArr = $this->common_model->coreQueryObject($query);
 		//echo $this->db->last_query();die;
 		$iFilteredTotal = count($TimeFilterArr);
-		$taskReportAllArr = $this->common_model->getData('tbl_timelog');
+		$taskReportAllArr = $this->common_model->getData('tbl_task');
 		$iTotal = count($taskReportAllArr);
 		
 		/** Output */
@@ -166,18 +186,24 @@ class TaskReport extends CI_Controller {
 			);
 			$i++;
 		}
-		
+
 		$output = array
 		(
 			"sEcho" => intval($_POST['sEcho']),
+					//"corequery"=>$corequery,
 				   "iTotalRecords" => $iTotal,
 				   "iTotalRecordsFormatted" => number_format($iTotal), 
 				   //ShowLargeNumber($iTotal),
 				   "iTotalDisplayRecords" => $iFilteredTotal,
 				   "aaData" => $datarow
 		);
+
+
+
 		echo json_encode($output);
 		exit();
 	}
 	
 }
+
+  
