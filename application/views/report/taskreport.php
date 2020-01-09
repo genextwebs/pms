@@ -11,32 +11,7 @@
 		</div>
 	</div> 
 </nav>
-<?php 
-$dataStrCmp =$dataStr1="";
-$count=0;
-foreach ($Chart as $pie) {
-	if($pie->status==4){
-		$dataStrCmp = $pie->status;
-		$c1=$count++;
-	}else if($pie->status==1){
-		$dataStrpend = $pie->status;
-		$c2=$count++;
-	}
-/*	else if($pie->status==1){
-		$dataStrpend = $pie->status;
-		$c2=$count++;
-	}
-	 else if($pie->status==1){
-		$dataStrpend = $pie->status;
-		$c2=$count++;
-	}
-	else if($pie->status==1){
-		$dataStrpend = $pie->status;
-		$c2=$count++;
-	}*/
-}
-		
-?> 
+
 <!-- contetn-wrap -->
 <div class="content-in">  
 	<div class="row">
@@ -143,8 +118,37 @@ foreach ($Chart as $pie) {
  
 <h1>PIE CHART</h1>
 
-<div id="piechart"></div>
-<div></div>
+<div id="piechart">
+	<?php 
+
+$count=0;
+
+foreach ($Chart as $pie) {
+	if($pie->status==4){
+		//$dataStrCmp = $pie->status;
+		$c1=$count++;
+	}else if($pie->status==1){
+		//$dataStrpend = $pie->status;
+		$c2=$count++;
+	}
+/*	else if($pie->status==1){
+		$dataStrpend = $pie->status;
+		$c2=$count++;
+	}
+	 else if($pie->status==1){
+		$dataStrpend = $pie->status;
+		$c2=$count++;
+	}
+	else if($pie->status==1){
+		$dataStrpend = $pie->status;
+		$c2=$count++;
+	}*/
+}
+		
+?> 
+
+</div>
+
 
 
 
@@ -173,7 +177,8 @@ foreach ($Chart as $pie) {
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
 <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 <script type="text/javascript">
-	Highcharts.chart('piechart', {
+
+Highcharts.chart('piechart', {
     chart: {
         plotBackgroundColor: null,
         plotBorderWidth: null,
@@ -212,9 +217,6 @@ foreach ($Chart as $pie) {
 
        // pointInterval: 3600 * 1000,
     }]
-
-
-
 });
 </script>
  <!--   data: [

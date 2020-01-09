@@ -1559,56 +1559,30 @@ function calculateHours(){
 	}
 
 
-  
-  function initConter() {
-        $(".counter").counterUp({
-            delay: 100,
-            time: 1200
-        });
-    }
 
+$("#btnApplyTimeReport").click(function(event) {
 
- /*   function pieChart(status){
-    	//var data = new google.visualization.DataTable(json.corequery);
-		//data.addColumn('number', 'Person');
-		data.addRows(status);
-		new google.visualization.LineChart(document.getElementById('visualization')).draw(data, {
-		    title: 'Status',
-		    width : 700,
-		    height : 300,
-		    vAxis : {
-		        maxValue : 4000
-		    }
+	//alert('dfd');
+	var sdate = $("input[name='start_date']").val();
+	var deadline = $("input[name='deadline']").val();
+	var pdata = $("select[name='projectData']").val();
+	//alert(sdate+''+deadline+''+pdata);
+	if(sdate!="" && deadline!="" && pdata!=""){
+		$.ajax({
+			url: base_url+"timelogreport/getBarchart",
+			type: 'POST',
+			dataType: 'html',
+			data:{startdate:sdate,enddate:deadline,hours:pdata},
+			success: function(data) {
+				alert(data);
+				columnChart(data);
+			}
+		});
+	}else{
+		jQuery('#errormsg').html('')
+		jQuery('#errormsg').html('<b>Please enter category name</b>');
+	}
 });
-}*/
-
- 
-
-//google.charts.load('current', {'packages':['corechart']});
-//google.charts.setOnLoadCallback(drawChart);
-
-// Draw the chart and set the chart values
-/*function drawChart() {
-
-  var data = google.visualization.arrayToDataTable([
-  ['Task', 'Hours per Day'],
-  ['Mushrooms', 10],
-      ['Onions', 1],
-      ['Olives', 2],
-      ['Zucchini', 2],
-      ['Pepperoni', 1]
-   
-  //[json.status]
-]);
-
-  // Optional; add a title and set the width and height of the chart
-  var options = {'title':'My Average Day', 'width':550, 'height':400};
-
-  // Display the chart inside the <div> element with id="piechart"
-  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-  chart.draw(data, options);
-}*/
-   
 
 
 

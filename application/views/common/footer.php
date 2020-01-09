@@ -5,7 +5,9 @@
             <!-- ends of footer -->
         </div>
     </div>
-
+    <!--for bar chart-->
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="<?php echo base_url();?>assets/js/popper.min.js"></script>

@@ -176,7 +176,7 @@ if($this->session->userdata('login')){
                     <a href="<?php echo base_url().'taskreport/index'?>">Task Report</a>
                 </li>
                 <li>
-                    <a href="#">Time Log Report</a>
+                    <a href="<?php echo base_url().'timelogreport/index'?>">Time Log Report</a>
                 </li>
                 <li>
                 	<a href="#">Finance Report</a>
