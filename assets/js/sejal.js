@@ -1571,10 +1571,9 @@ $("#btnApplyTimeReport").click(function(event) {
 		$.ajax({
 			url: base_url+"timelogreport/getBarchart",
 			type: 'POST',
-			dataType: 'html',
-			data:{startdate:sdate,enddate:deadline,hours:pdata},
+			dataType: 'json',
+			data:{startdate:sdate,enddate:deadline,projectdata:pdata},
 			success: function(data) {
-				alert(data);
 				columnChart(data);
 			}
 		});

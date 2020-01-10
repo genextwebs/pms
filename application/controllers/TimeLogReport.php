@@ -24,28 +24,80 @@ class TimeLogReport extends CI_Controller {
 
 	public function getBarchart(){
 		if(!empty($_POST)){
-			$sdate = $this->input->post('startdate');
-			$edate = $this->input->post('enddate');
-			$hour = $this->input->post('hours');
-		/*		
-			$this->session->set_userdata('start_date',$sdate);
-			 $this->session->set_userdata('end_date',$edate);
-			 $this->session->set_userdata('total_hour',$hour);*/
-			/*
-			$whereArr= array('timelogstartdate'=>$sdate,'timelogenddate'=>$edate,'totalhours'=>$hour);
-		    $logArray['Timelogdata'] = $this->common_model->getData('tbl_timelog',$whereArr);*/
+			$startdate=!empty($_POST['startdate']) ? $_POST['startdate'] : '';
+			$enddate=!empty($_POST['enddate']) ? $_POST['enddate'] : '';
+		
+		
+			$sWhere = "";
+			if(!empty($startdate)){						
+				$sWhere.=' AND timelogstartdate>="'.$startdate.'"';
+			}
+			if(!empty($enddate)){						
+				$sWhere.=' OR timelogenddate<="'.$enddate.'"';
+			}
+			if(!empty($sWhere)){
+				$sWhere = " WHERE 1 ".$sWhere;
+			}
+			$query = "SELECT * from tbl_timelog".$sWhere;
+			$dateRange= $this->createDateRangeArray($startdate,$enddate);
+			//print_r($dateRange);die;
+			$str='';
+			$str1=$dateRange[0][''].''.''.'';
+			echo $str1;die;
+			//print_r ($dateRange);die;
 
-		    $logArray= array();
 			
-			$logArray['s_date'] = $sdate;
-			$logArray['e_date'] = $edate;
-			$logArray['total_hours'] = $hour;
-
-			echo json_encode($logArray);exit;		
+			
+		/*    $dateStr = $dateCount="";
+		    $dateRange = $this->createDateRangeArray($startdate,$enddate);
+		    foreach ($dateRange as $key => $value) {
+		    	$sWhere = " WHERE ";
+				$sWhere.="  timelogstartdate ='".$value."'";					
+				$sWhere.=" OR timelogenddate ='".$value."'";
+				$sql = "SELECT * FROM tbl_timelog ".$sWhere;
+			
+				$logArray = $this->common_model->coreQuery($sql);
+		  	$dateStr.=$value." ,";
+		    	if(!empty($logArray)){
+		    		$dateCount.=$value;
+		    	}else{
+		    		$dateCount.="0,";
+		    	}
+		 }*/
+		  //  $finalCountStr =trim($dateCount,","); 
+		   // $finalDateStr = trim($dateStr,",");
+		  //  $concateStr = $finalCountStr."$#$".$finalDateStr;
+		//      $concateStr = $finalDateStr;
+			echo json_encode($str);exit;		
 
 		}
     }
 
+
+    function createDateRangeArray($strDateFrom,$strDateTo)
+	{
+	    // takes two dates formatted as YYYY-MM-DD and creates an
+	    // inclusive array of the dates between the from and to dates.
+
+	    // could test validity of dates here but I'm already doing
+	    // that in the main script
+
+	    $aryRange=array();
+
+	    $iDateFrom=mktime(1,0,0,substr($strDateFrom,5,2),     substr($strDateFrom,8,2),substr($strDateFrom,0,4));
+	    $iDateTo=mktime(1,0,0,substr($strDateTo,5,2),     substr($strDateTo,8,2),substr($strDateTo,0,4));
+
+	    if ($iDateTo>=$iDateFrom)
+	    {
+	        array_push($aryRange,date('Y-m-d',$iDateFrom)); // first entry
+	        while ($iDateFrom<$iDateTo)
+	        {
+	            $iDateFrom+=86400; // add 24 hours
+	            array_push($aryRange,date('Y-m-d',$iDateFrom));
+	        }
+	    }
+	    return $aryRange;
+	}
 
 
 }

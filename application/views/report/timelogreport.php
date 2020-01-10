@@ -53,18 +53,21 @@
 	        </div>
 	    </div>
 	</div>
-	 <div id="container">
-	 	
-	 </div>
+	<div id="container">
+	</div>
 </div>
-<script type="text/javascript">
-	function columnChart(data){
-	$var=data;
-	alert('var---'+$var);
-	var data_click = <?php echo $click; ?>;
-    var data_viewer = <?php echo $viewer; ?>;
-  
+
+
+
+ <script type="text/javascript">
+	function columnChart(dateRange){
+		//var getdate=dateRange;
+	// dat=jQuery.trim(dateRange,'"');
+
+	 //var date=getdate.split("");
+
 		$(function() {
+			
    			 var chart = new Highcharts.Chart({
 
         	chart: {
@@ -72,14 +75,15 @@
           		    type: 'column'
         	},
         	xAxis: {
-            	categories: ['2013','2014','2015', '2016']
+
+            	categories: [dateRange]
         	},
     		yAxis: {
         		title: {
             		text: 'Rate'
         		}
     		},
-        	/*yAxis: {
+           	yAxis: {
             		title: {
                 		text: 'axis title',
                 		useHTML: true,
@@ -87,15 +91,15 @@
                     	rotation: 90
                 	}
             	}
-        	},*/
+        	},
 
         series: [{
-            data: [20023,4005,12,89,123,12,5]}]
-
-    	 });
+        data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+    }]
 
 		});
-    }
+    });
+	}
 
 </script>
 
