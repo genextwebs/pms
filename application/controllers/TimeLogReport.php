@@ -15,77 +15,80 @@ class TimeLogReport extends CI_Controller {
 	}
 
 	public function index(){
+		 $allproject=$this->session->userdata('project');
+		 //echo $allproject;die;
+
+		if (!empty($this->session->userdata('sdate')) AND !empty($this->session->userdata('edate'))){
+			$sdate=$this->session->userdata('sdate');
+		    $edate=$this->session->userdata('edate');
+		   
+
+		}
+		else{ 
+			$sdate = '2019-01-02';
+			$edate = '2019-01-30';
+		}
+		
+		$data['dateRange']= $this->createDateRangeArray($sdate,$edate);
+		
+		foreach($data['dateRange'] as $date){
+			$str = '"'.$date.'"'.',';
+		}
+
+
+	 /*  $query = "SELECT totalhours,timelogstartdate,timelogprojectid from tbl_timelog where timelogprojectid=127 AND (timelogstartdate between '2020-01-07' AND '2020-01-20')";*/
+	 	$query = 'SELECT totalhours,timelogstartdate,timelogprojectid from tbl_timelog where timelogprojectid=127 AND (timelogstartdate between "'.$sdate.'" AND "'.$edate.'")';
+	   
+		$data['getHours'] = $this->common_model->coreQueryObject($query);
 	
+
+		$temp = array();
+		$stri='';
+		foreach($data['getHours'] as $hour){
+				$find = [" Hrs ", " Mins"];
+    			$replace = ['.', ''];
+    			$string = str_replace($find,$replace,$hour->totalhours);
+
+			if(array_key_exists($hour->timelogstartdate,$temp)){
+			//	echo "Exist";
+				$temp[$hour->timelogstartdate]=$string+$temp[$hour->timelogstartdate];
+			}
+			else{
+					//echo "NOt Exist";
+					$temp[$hour->timelogstartdate]=$string;
+			}
+		}
+	
+		$data['finalTempArr']=	$temp;
 		$data['allProjectData'] = $this->common_model->getData('tbl_project_info');
 		$this->load->view('common/header');
 		$this->load->view('report/timelogreport',$data);
 		$this->load->view('common/footer');
-	}
+    }
+	
 
-	public function getBarchart(){
-		if(!empty($_POST)){
-			$startdate=!empty($_POST['startdate']) ? $_POST['startdate'] : '';
-			$enddate=!empty($_POST['enddate']) ? $_POST['enddate'] : '';
-		
-		
-			$sWhere = "";
-			if(!empty($startdate)){						
-				$sWhere.=' AND timelogstartdate>="'.$startdate.'"';
-			}
-			if(!empty($enddate)){						
-				$sWhere.=' OR timelogenddate<="'.$enddate.'"';
-			}
-			if(!empty($sWhere)){
-				$sWhere = " WHERE 1 ".$sWhere;
-			}
-			$query = "SELECT * from tbl_timelog".$sWhere;
-			$dateRange= $this->createDateRangeArray($startdate,$enddate);
-			//print_r($dateRange);die;
-			$str='';
-			$str1=$dateRange[0][''].''.''.'';
-			echo $str1;die;
-			//print_r ($dateRange);die;
-
-			
-			
-		/*    $dateStr = $dateCount="";
-		    $dateRange = $this->createDateRangeArray($startdate,$enddate);
-		    foreach ($dateRange as $key => $value) {
-		    	$sWhere = " WHERE ";
-				$sWhere.="  timelogstartdate ='".$value."'";					
-				$sWhere.=" OR timelogenddate ='".$value."'";
-				$sql = "SELECT * FROM tbl_timelog ".$sWhere;
-			
-				$logArray = $this->common_model->coreQuery($sql);
-		  	$dateStr.=$value." ,";
-		    	if(!empty($logArray)){
-		    		$dateCount.=$value;
-		    	}else{
-		    		$dateCount.="0,";
-		    	}
-		 }*/
-		  //  $finalCountStr =trim($dateCount,","); 
-		   // $finalDateStr = trim($dateStr,",");
-		  //  $concateStr = $finalCountStr."$#$".$finalDateStr;
-		//      $concateStr = $finalDateStr;
-			echo json_encode($str);exit;		
+	public function getPostData(){
+		if(!empty($_POST))
+		{
+			$sdate=$this->input->post('start_date');
+	    	$edate=$this->input->post('deadline');
+	    	$project=$this->input->post('projectData');
+	    
+	    	$this->session->set_userdata('sdate',$sdate);
+	    	$this->session->set_userdata('edate',$edate);
+	    	$this->session->set_userdata('project',$project);
+	    
+	    	redirect('TimeLogReport/index');
 
 		}
-    }
+	}
 
 
     function createDateRangeArray($strDateFrom,$strDateTo)
 	{
-	    // takes two dates formatted as YYYY-MM-DD and creates an
-	    // inclusive array of the dates between the from and to dates.
-
-	    // could test validity of dates here but I'm already doing
-	    // that in the main script
-
 	    $aryRange=array();
-
-	    $iDateFrom=mktime(1,0,0,substr($strDateFrom,5,2),     substr($strDateFrom,8,2),substr($strDateFrom,0,4));
-	    $iDateTo=mktime(1,0,0,substr($strDateTo,5,2),     substr($strDateTo,8,2),substr($strDateTo,0,4));
+	    $iDateFrom=mktime(1,0,0,substr($strDateFrom,5,2),  substr($strDateFrom,8,2),substr($strDateFrom,0,4));
+	    $iDateTo=mktime(1,0,0,substr($strDateTo,5,2),  substr($strDateTo,8,2),substr($strDateTo,0,4));
 
 	    if ($iDateTo>=$iDateFrom)
 	    {
@@ -98,6 +101,4 @@ class TimeLogReport extends CI_Controller {
 	    }
 	    return $aryRange;
 	}
-
-
 }

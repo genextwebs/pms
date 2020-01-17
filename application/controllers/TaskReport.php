@@ -18,7 +18,7 @@ class TaskReport extends CI_Controller {
 		$data['allEmpData'] = $this->common_model->getData('tbl_employee');
 		$data['allProjectData'] = $this->common_model->getData('tbl_project_info');
 		$data['Chart']=$this->common_model->getData('tbl_task');
-			$str= '';
+		$str= '';
 		foreach ($data['Chart'] as $pie) {
 		$str.= '<b>'.$pie->status;
 			

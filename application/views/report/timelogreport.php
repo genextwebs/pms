@@ -13,7 +13,8 @@
 </nav>
 
 
-	<div class="content-in">
+<div class="content-in">
+	<form id="creatleave=-" class="aj-form--" name="TimeLogRepor--t" method="post" action="<?php echo base_url().'TimeLogReport/getPostData';?>">
 		<div class="row">
 			<div class="col-md-4">
 				<div class="form-group">
@@ -48,59 +49,60 @@
 			<div class="col-md-4">
 	            <div class="form-group m-t-10">
 	                <label class="control-label col-12 mb-3">&nbsp;</label>
-	                <button type="button" id="btnApplyTimeReport" class="btn btn-success col-lg-4 co-md-5"><i class="fa fa-check"></i> Apply</button>
+	                <button type="submit" id="btnApplyTimeReport" class="btn btn-success col-lg-4 co-md-5"><i class="fa fa-check"></i> Apply</button>
 	            </div>
 	        </div>
 	    </div>
-	</div>
-	<div id="container">
-	</div>
+	</form>
+</div>
+<div id="container" style="height: 400px"></div>
 </div>
 
-
-
- <script type="text/javascript">
-	function columnChart(dateRange){
-		//var getdate=dateRange;
-	// dat=jQuery.trim(dateRange,'"');
-
-	 //var date=getdate.split("");
-
-		$(function() {
-			
-   			 var chart = new Highcharts.Chart({
-
-        	chart: {
-           		    renderTo: 'container',
-          		    type: 'column'
-        	},
-        	xAxis: {
-
-            	categories: [dateRange]
-        	},
-    		yAxis: {
-        		title: {
-            		text: 'Rate'
-        		}
-    		},
-           	yAxis: {
-            		title: {
-                		text: 'axis title',
-                		useHTML: true,
-                	style: {
-                    	rotation: 90
-                	}
-            	}
-        	},
-
-        series: [{
-        data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
-    }]
-
-		});
-    });
+<?php
+    $str='';$str1='';
+	foreach($finalTempArr as $key=>$value){
+		$str.= '"'.$key.'"'.',';
+		$str1.= $value.',';
 	}
 
+
+?>
+<script src="https://code.highcharts.com/stock/highstock.js"></script>
+<script src="https://code.highcharts.com/stock/modules/data.js"></script>
+<script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/stock/modules/export-data.js"></script>
+<script type="text/javascript">
+
+
+
+//var textT = "Hello world,,,,, hello people.....";
+//var textT = $stri.replaceArray(find, replace);
+
+
+Highcharts.chart('container', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'TimeLog Report'
+    },
+  
+    xAxis: {
+        categories: [<?php echo rtrim($str,',');?>],
+        crosshair: true
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: 'Rainfall (mm)'
+        }
+    },
+    series: [{
+        name: 'HourseLogged',
+        data: [<?php echo rtrim($str1,',');?>]
+        //data:[50.0,47.0,0.0]
+    },]
+});
 </script>
 
 

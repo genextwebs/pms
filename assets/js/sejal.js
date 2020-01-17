@@ -1560,10 +1560,11 @@ function calculateHours(){
 
 
 
-$("#btnApplyTimeReport").click(function(event) {
+/*$("#btnApplyTimeReport").click(function(event) {
 
 	//alert('dfd');
 	var sdate = $("input[name='start_date']").val();
+
 	var deadline = $("input[name='deadline']").val();
 	var pdata = $("select[name='projectData']").val();
 	//alert(sdate+''+deadline+''+pdata);
@@ -1571,9 +1572,12 @@ $("#btnApplyTimeReport").click(function(event) {
 		$.ajax({
 			url: base_url+"timelogreport/getBarchart",
 			type: 'POST',
+			//value : "[{\"key\":\"val\"}]",
 			dataType: 'json',
 			data:{startdate:sdate,enddate:deadline,projectdata:pdata},
 			success: function(data) {
+				//alert('teee'+data);
+				//alert('data---'+data);
 				columnChart(data);
 			}
 		});
@@ -1582,7 +1586,7 @@ $("#btnApplyTimeReport").click(function(event) {
 		jQuery('#errormsg').html('<b>Please enter category name</b>');
 	}
 });
-
+*/
 
 
 
