@@ -1,12 +1,12 @@
 <nav aria-label="breadcrumb" class="breadcrumb-nav">
 	<div class="row">
 		<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-			<h4 class="page-title"><i class="icon-speedometer"></i>Time Log Report</h4>
+			<h4 class="page-title"><i class="icon-speedometer"></i> Finance Report</h4>
 		</div>
 		 <div class="col-lg-9 col-sm -8 col-md-8 col-xs-12">
 			<ol class="breadcrumb">
 				<li><a href="<?php echo base_url().'dashboard' ?>">Home</a></li>
-				 <li class="active">Time Log Report</li>
+				 <li class="active"> Finance Report</li>
 			</ol>
 		</div>
 	</div> 
@@ -14,7 +14,7 @@
 
 
 <div class="content-in">
-	<form id="timelogreport" class="aj-form--" name="timelogreport" method="post" action="<?php echo base_url().'TimeLogReport/getPostData';?>">
+	<form id="creatleave=-" class="aj-form--" name="TimeLogRepor--t" method="post" action="<?php echo base_url().'TimeLogReport/getPostData';?>">
 		<div class="row">
 			<div class="col-md-4">
 				<div class="form-group">
@@ -30,17 +30,33 @@
 			</div>
 			<div class="col-md-4">
 				<div class="form-group">
-					<label class="control-label">Select Project</label>
+					<label class="control-label">Project</label>
 					<select id="projectData" class="custom-select" name="projectData">
 						<option value="">--Select--</option>
-							<?php 
+						<?php 
 								foreach($allProjectData as $project){
 							?>
 							<option value="<?php echo $project->id; ?>"><?php echo $project->projectname; ?></option>
 							<?php	
 					
 							}
+						?> 
+					</select> 
+				</div>
+			</div>
+				<div class="col-md-4">
+				<div class="form-group">
+					<label class="control-label">Client</label>
+					<select id="projectData" class="custom-select" name="projectData">
+						<option value="">--Select--</option>
+							<?php 
+								foreach($allClients as $client){
 							?>
+							<option value="<?php echo $client->id; ?>"><?php echo $client->clientname; ?></option>
+							<?php	
+					
+							}
+							?> 
 					</select> 
 				</div>
 			</div>
@@ -55,53 +71,32 @@
 	    </div>
 	</form>
 </div>
-<div id="container" style="height: 400px"></div>
-</div>
-
-<?php
-    $str='';$str1='';
-	foreach($finalTempArr as $key=>$value){
-		$str.= '"'.$key.'"'.',';
-		$str1.= $value.',';
-	}
-
-
-?>
-<script src="https://code.highcharts.com/stock/highstock.js"></script>
-<script src="https://code.highcharts.com/stock/modules/data.js"></script>
-<script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
-<script src="https://code.highcharts.com/stock/modules/export-data.js"></script>
-<script type="text/javascript">
-
-
-
-
-Highcharts.chart('container', {
-    chart: {
-        type: 'column'
-    },
-    title: {
-        text: 'TimeLog Report'
-    },
-  
-    xAxis: {
-        categories: [<?php echo rtrim($str,',');?>],
-        crosshair: true
-    },
-    yAxis: {
-        min: 0,
-        title: {
-            text: 'Rainfall (mm)'
-        }
-    },
-    series: [{
-        name: 'HourseLogged',
-        data: [<?php echo rtrim($str1,',');?>]
-        //data:[50.0,47.0,0.0]
-    },]
-});
-</script>
-
-
-
-
+	            <?php
+					$mess = $this->session->flashdata('message_name');
+					if(!empty($mess)){
+						//warning 
+				?>
+					<div class="col-md-12">
+						<div class="submit-alerts">
+							<div class="alert alert-success" role="alert" style="display:block;">
+								<?php echo $mess; ?>
+							</div>
+						</div>
+					</div>
+				<?php } ?>
+ 
+				<div class="table-responsive">
+					<table class="table table-bordered table-hover" id="finanacereport">
+						<thead>
+							<tr role="row">
+								 <th>Id</th>
+								 <th>Project</th>
+								 <th>Invoice</th> 
+								 <th>Amount</th>
+								 <th>Paid On</th>
+								<th>Status</th>
+								<!--  <th>Remark</th> -->
+							</tr>
+						</thead>
+					</table>
+				</div>

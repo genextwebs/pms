@@ -179,13 +179,13 @@ if($this->session->userdata('login')){
                     <a href="<?php echo base_url().'timelogreport/index'?>">Time Log Report</a>
                 </li>
                 <li>
-                	<a href="#">Finance Report</a>
+                	<a href="<?php echo base_url().'financereport/index'?>">Finance Report</a>
                 </li>
                 <li>
-                	<a href="#">Income vs Expense Report</a>
+                	<a href="<?php echo base_url().'incomeexpensereport/index'?>">Income vs Expense Report</a>
                 </li>
                 <li>
-                	<a href="#">Leave Report</a>
+                	<a href="<?php echo base_url().'leavereport/index'?>">Leave Report</a>
                 </li>
              
             </ul>

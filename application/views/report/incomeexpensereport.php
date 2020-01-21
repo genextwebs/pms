@@ -1,12 +1,12 @@
 <nav aria-label="breadcrumb" class="breadcrumb-nav">
 	<div class="row">
 		<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-			<h4 class="page-title"><i class="icon-speedometer"></i>Time Log Report</h4>
+			<h4 class="page-title"><i class="icon-speedometer"></i> Finance Report</h4>
 		</div>
 		 <div class="col-lg-9 col-sm -8 col-md-8 col-xs-12">
 			<ol class="breadcrumb">
 				<li><a href="<?php echo base_url().'dashboard' ?>">Home</a></li>
-				 <li class="active">Time Log Report</li>
+				 <li class="active"> Finance Report</li>
 			</ol>
 		</div>
 	</div> 
@@ -14,7 +14,7 @@
 
 
 <div class="content-in">
-	<form id="timelogreport" class="aj-form--" name="timelogreport" method="post" action="<?php echo base_url().'TimeLogReport/getPostData';?>">
+	<form id="creatleave=-" class="aj-form--" name="TimeLogRepor--t" method="post" action="<?php echo base_url().'IncomeExpenseReport/getPostData';?>">
 		<div class="row">
 			<div class="col-md-4">
 				<div class="form-group">
@@ -28,45 +28,53 @@
 						</div>
 				</div>
 			</div>
-			<div class="col-md-4">
+			<!-- <div class="col-md-4">
 				<div class="form-group">
-					<label class="control-label">Select Project</label>
+					<label class="control-label">Select Duration</label>
 					<select id="projectData" class="custom-select" name="projectData">
 						<option value="">--Select--</option>
-							<?php 
+						<?php 
 								foreach($allProjectData as $project){
 							?>
 							<option value="<?php echo $project->id; ?>"><?php echo $project->projectname; ?></option>
 							<?php	
 					
 							}
-							?>
+						?> 
 					</select> 
 				</div>
-			</div>
+			</div> -->
 		</div>
 		<div class="row">
 			<div class="col-md-4">
 	            <div class="form-group m-t-10">
 	                <label class="control-label col-12 mb-3">&nbsp;</label>
-	                <button type="submit" id="btnApplyTimeReport" class="btn btn-success col-lg-4 co-md-5"><i class="fa fa-check"></i> Apply</button>
+	                <button type="submit" id="btnIncome_Expense" class="btn btn-success col-lg-4 co-md-5"><i class="fa fa-check"></i> Apply</button>
 	            </div>
 	        </div>
 	    </div>
 	</form>
 </div>
+<?php
+
+	$str='';
+	/*foreach($dateRange as $date){
+			$str.= '"'.$date.'"'.',';
+		}*/
+	$str1='';
+	$str2='';
+	foreach($finalTempArr as $key=>$value){
+		$str.= '"'.$key.'"'.',';
+		$str1.= $value['expense'].',';
+		$str2.= $value['income'].',';
+	}
+
+?>
+
 <div id="container" style="height: 400px"></div>
 </div>
 
-<?php
-    $str='';$str1='';
-	foreach($finalTempArr as $key=>$value){
-		$str.= '"'.$key.'"'.',';
-		$str1.= $value.',';
-	}
 
-
-?>
 <script src="https://code.highcharts.com/stock/highstock.js"></script>
 <script src="https://code.highcharts.com/stock/modules/data.js"></script>
 <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
@@ -81,27 +89,36 @@ Highcharts.chart('container', {
         type: 'column'
     },
     title: {
-        text: 'TimeLog Report'
+        text: 'Income-Expense Report'
     },
   
     xAxis: {
         categories: [<?php echo rtrim($str,',');?>],
+        // data:[50.0,47.0,0.0],
         crosshair: true
     },
     yAxis: {
         min: 0,
         title: {
-            text: 'Rainfall (mm)'
+            text: 'income-expense'
         }
     },
-    series: [{
-        name: 'HourseLogged',
-        data: [<?php echo rtrim($str1,',');?>]
-        //data:[50.0,47.0,0.0]
+    /*series: [{
+        name: 'TotalExpense:',
+        data: [<?php  echo rtrim($str2,',');?>]
+       // data:[50.0,47.0,0.0]
+    },]*/
+       series: [{
+        name: 'Total Expense',
+        data: [<?php  echo rtrim($str1,',');?>]
+
+    }, {
+        name: 'Total Income',
+         data: [<?php  echo rtrim($str2,',');?>]
+
     },]
 });
+
 </script>
-
-
 
 

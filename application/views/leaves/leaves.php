@@ -80,12 +80,12 @@
 					</div>
 				</div>
 			<?php } ?>
-					 <div class="col-md-4">
+			<div class="col-md-4">
 		                        <div class="form-group m-t-10">
 		                            <label class="control-label col-12 mb-3">&nbsp;</label>
 		                            <button type="button" id="btnApplyLeaves" class="btn btn-success col-lg-4 co-md-5"><i class="fa fa-check"></i> Apply</button>
 		                        </div>
-		                    </div>
+		        </div>
 			</div>
 				<?php
 					$mess = $this->session->flashdata('message_name');
