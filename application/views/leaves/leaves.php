@@ -63,7 +63,7 @@
 						</div>
 				   </div>
 				</div>
-			<?php if($this->user_type == 0) { ?>
+				<?php if($this->user_type == 0) { ?>
 				<div class="col-lg-3 col-md-4">
 					<div class="form-group">
 						<label class="control-label">EMPLOYEE NAME
@@ -79,8 +79,8 @@
 					     </select>
 					</div>
 				</div>
-			<?php } ?>
-			<div class="col-md-4">
+			    <?php } ?>
+			    <div class="col-md-4">
 		                        <div class="form-group m-t-10">
 		                            <label class="control-label col-12 mb-3">&nbsp;</label>
 		                            <button type="button" id="btnApplyLeaves" class="btn btn-success col-lg-4 co-md-5"><i class="fa fa-check"></i> Apply</button>

@@ -466,7 +466,7 @@ jQuery(document).ready(function() {
 			"aoColumns": [{ "sWidth": "40px", sClass: "text-left", "asSorting": [  ] }, 
 			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
 			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
-			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+			/*{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, */
 			],
 			"bServerSide": true,
 			"fixedHeader": true,
@@ -1621,35 +1621,30 @@ function calculateHours(){
 	}
 
 
+function showLeaveReport(id){
+	
+	alert(id);
 
-/*$("#btnApplyTimeReport").click(function(event) {
-
-	//alert('dfd');
-	var sdate = $("input[name='start_date']").val();
-
-	var deadline = $("input[name='deadline']").val();
-	var pdata = $("select[name='projectData']").val();
-	//alert(sdate+''+deadline+''+pdata);
-	if(sdate!="" && deadline!="" && pdata!=""){
-		$.ajax({
-			url: base_url+"timelogreport/getBarchart",
-			type: 'POST',
-			//value : "[{\"key\":\"val\"}]",
-			dataType: 'json',
-			data:{startdate:sdate,enddate:deadline,projectdata:pdata},
-			success: function(data) {
-				//alert('teee'+data);
-				//alert('data---'+data);
-				columnChart(data);
-			}
-		});
-	}else{
-		jQuery('#errormsg').html('')
-		jQuery('#errormsg').html('<b>Please enter category name</b>');
-	}
-});
-*/
-
+	$.ajax({
+		type: "POST",
+		url: base_url+"LeaveReport/showReport",
+		dataType: 'JSON',
+	    data: "id="+id,
+	    success: function(data){
+	    	alert('see'+data.leaveid);
+	    	//$('#commonleave').toggle();
+	    	/*$('#td1').val(data.leaveid);
+	    	$('#td1').val(data.date);
+	    	$('#td1').val(data.reason);*/
+	    	//$('#commonleave').html('');
+			$("tbody").append("<tr id='cate_"+data.id+"'><td>#</td><td>"+data.leaveid+"</td><td>"+data.date+"</td><td>"+data.reason+"</td></tr>");
+	    	$('#commonleave').modal('toggle');
+	    	//window.location.reload();
+	    	//$('#commonleave').toggle('');
+	    	
+		 }
+	});
+}
 
 
 
