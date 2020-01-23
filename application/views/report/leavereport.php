@@ -59,8 +59,8 @@
 					<tr role="row">
 						 <th>Id</th>
 						 <th>Employee</th>
-						 <th>Approved/Pending Leave</th>
-						<!--  <th>Pending Leave</th> -->
+						 <th>Approved Leave</th>
+						 <th>Pending Leave</th> 
 					</tr>
 				</thead>
 			</table>
@@ -84,25 +84,13 @@
 				<div class="table-responsive">
 					<div class="row">
 						<div class="col-md-4">
-						
-							<!-- 
-							<?php
-							$count=0;
-								foreach($allleavetypedata as $type){
-									//echo $type->name;
-									if($type->name=='Casual'){
-										$count++;
-									}
-
-								}
-							?> -->
-							<div class="btn btn-info btn-circle"><span>0</span></div>Casual
+							<div  class="btn btn-info btn-circle"><span id="casualleave"></span></div>Casual
 						</div>
 						<div class="col-md-4">
-							<div class="btn btn-info btn-circle"><span>0</span></div>Sick
+							<div class="btn btn-info btn-circle"><span id="sickleave"></span></div>Sick
 						</div>
 						<div class="col-md-4">
-							<div class="btn btn-info btn-circle"><span>0</span></div>Earned
+							<div class="btn btn-info btn-circle"><span id="earnedleave"></span></div>Earned
 						</div>
 					  </div>
 

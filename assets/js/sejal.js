@@ -466,7 +466,7 @@ jQuery(document).ready(function() {
 			"aoColumns": [{ "sWidth": "40px", sClass: "text-left", "asSorting": [  ] }, 
 			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
 			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
-			/*{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, */
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }
 			],
 			"bServerSide": true,
 			"fixedHeader": true,
@@ -1621,24 +1621,28 @@ function calculateHours(){
 	}
 
 
-function showLeaveReport(id){
+function showLeaveReport(id,status){
 	
 	alert(id);
-
+	alert(status);
 	$.ajax({
 		type: "POST",
 		url: base_url+"LeaveReport/showReport",
 		dataType: 'JSON',
 	    data: "id="+id,
 	    success: function(data){
-	    	alert('see'+data.leaveid);
+	    	alert('employeeid-->'+data.empid+'leave id -->'+data.leaveid+'reason-->'+data.reason);
+	    	
 	    	//$('#commonleave').toggle();
 	    	/*$('#td1').val(data.leaveid);
 	    	$('#td1').val(data.date);
 	    	$('#td1').val(data.reason);*/
-	    	//$('#commonleave').html('');
-			$("tbody").append("<tr id='cate_"+data.id+"'><td>#</td><td>"+data.leaveid+"</td><td>"+data.date+"</td><td>"+data.reason+"</td></tr>");
-	    	$('#commonleave').modal('toggle');
+	    	$("#casualleave").append(data.casual);
+	    	$("#sickleave").append(data.sick);
+	    	$("#earnedleave").append(data.earned);
+
+			$("tbody").append("<tr id='cate_"+data.empid+"'><td>#</td><td>"+data.leaveid+"</td><td>"+data.date+"</td><td>"+data.reason+"</td></tr>");
+	    	//$('#commonleave').modal('toggle');
 	    	//window.location.reload();
 	    	//$('#commonleave').toggle('');
 	    	
