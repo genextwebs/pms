@@ -83,9 +83,9 @@ class LeaveReport extends CI_Controller {
 			/** Ordering End **/
 
 			/** Filtering Start */
-	/*		if(!empty(trim($_GET['sSearch']))){
+			if(!empty(trim($_GET['sSearch']))){
 				$searchTerm = trim($_GET['sSearch']);
-				$sWhere.= ' AND (tbl_employee.employeename like "%'.$searchTerm.'%" OR  tbl_leavetype.name like "%'.$searchTerm.'%")';
+				$sWhere.= ' AND (tbl_employee.employeename like "%'.$searchTerm.'%")';
 			}
 			$startdate=!empty($_POST['startdate']) ? $_POST['startdate'] : '';
 			$enddate=!empty($_POST['enddate']) ? $_POST['enddate'] : '';
@@ -102,7 +102,7 @@ class LeaveReport extends CI_Controller {
 			}	
 			if(!empty($sWhere)){
 				$sWhere = " WHERE 1 ".$sWhere;
-			}*/
+			}
 		}
 
 	/*	$query="SELECT tbl_leaves.*,tbl_employee.employeename,sum(status) from tbl_leaves inner join tbl_employee on tbl_leaves.empid =tbl_employee.id where status in (1,0) group by empid".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;*/
@@ -113,7 +113,8 @@ class LeaveReport extends CI_Controller {
 	
 		$query = "SELECT tbl_leaves.*,tbl_employee.employeename from tbl_leaves inner join tbl_employee on tbl_leaves.empid =tbl_employee.id".$sWhere.' group By tbl_employee.employeename '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 		$LeavesArr = $this->common_model->coreQueryObject($query);
-		
+
+		$query = "SELECT tbl_leaves.*,tbl_employee.employeename from tbl_leaves inner join tbl_employee on tbl_leaves.empid =tbl_employee.id".$sWhere.' group By tbl_employee.employeename '.$sOrder.' limit '.$sOffset.', '.$sLimit;
          
         /* select count(status),empid from tbl_leaves where status=1 group by empid*/
 	
@@ -135,25 +136,25 @@ class LeaveReport extends CI_Controller {
 
 			$rowid = $row->id;
 			$mystatus=$row->status;
-		    $count=0;
+		 //   $count=0;
 		    $showStatus=$showStatus1=$status="";
 			if($row->status=='1'){
-				$status=$row->status='Approved';
-				$showStatus = '<label class="label label-success">'.$status.'</label>';
-				$count++;
+			//	$status=$row->status='Approved';
+				$showStatus = '<label>'.$status.'</label>';
+				//$count++;
 			}
 			else if($row->status=='0'){
-				$status=$row->status='Pending';
-				$showStatus1 = '<label class="label label-danger">'.$status.'</label>';
-				$count++;	
+				//$status=$row->status='Pending';
+				$showStatus1 = '<label>'.$status.'</label>';
+				//$count++;	
 			}
 				
 				$datarow[] = array(
 					$id = $i,
 					$row->employeename,
-					$showStatus.'<p>'.count($getCountActive).'</p><a href="javascript:;" onclick="showLeaveReport(\''.base64_encode($row->empid).'\');" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#commonleave" >View <i class="fa fa-plus" aria-hidden="true" ></i></a>',
+					$showStatus.'<p class="btn btn-info btn-circle">'.count($getCountActive).'</p><br/><a href="javascript:;" onclick="showLeaveReportActive(\''.base64_encode($row->empid).'\');" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#commonleave" >View <i class="fa fa-plus" aria-hidden="true" ></i></a>',
 
-					$showStatus1.'<p>'.count($getCountPending).'</p><a href="javascript:;" onclick="showLeaveReport(\''.base64_encode($row->empid).'\');" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#commonleave" >View <i class="fa fa-plus" aria-hidden="true" ></i></a>');
+					$showStatus1.'<p class="btn btn-info btn-circle">'.count($getCountPending).'</p><br/><a href="javascript:;" onclick="showLeaveReportPending(\''.base64_encode($row->empid).'\');" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#commonleave" >View <i class="fa fa-plus" aria-hidden="true" ></i></a>');
 					$i++;
 			}
 			 
@@ -171,24 +172,19 @@ class LeaveReport extends CI_Controller {
 
 
 
-	public function showReport(){
+	public function LeaveReportActive(){
 		$id = base64_decode($_POST['id']);
+		
+		$query='SELECT tbl_leaves.*,tbl_leavetype.name FROM `tbl_leaves` inner join tbl_leavetype on tbl_leaves.leavetypeid=tbl_leavetype.id where empid='.$id.'  AND status=1';
 
-		//$id = $_POST['id'];
-		//$whereArr = array('empid'=>$id);
-		//$leaveData=$this->common_model->getData('tbl_leaves',$whereArr);
-	/*	echo "<pre>";
-		print_r($leaveData);die;*/
-
-		$query="SELECT tbl_leaves.*,tbl_leavetype.name FROM `tbl_leaves` inner join tbl_leavetype on tbl_leaves.leavetypeid=tbl_leavetype.id where empid=".$id;
-
-		 $leaveData= $this->common_model->coreQueryObject($query);
-		/* echo "<PRE>";
-	  print_r($leaveData);*/
+		$leaveData= $this->common_model->coreQueryObject($query);
 		//echo($query);die;
+
 		$casual=0;
 		$sick=0;
 		$earned=0;
+	
+		$str='';$i=0;$str1='';
 	    foreach ($leaveData as $data) {
 
 			if($data->name=="Casual"){
@@ -198,21 +194,75 @@ class LeaveReport extends CI_Controller {
 			}else{
 				$earned++;
 			}
-		}
-	/*	echo "<pre>";
-		print_r($leaveData);
-		echo 'casual='.$casual.'sick='.$sick.'ear='.$earned;die;*/
-
-		$leaveDataArr = array();
-	   	$leaveDataArr['empid'] = $leaveData[0]->empid;
-		$leaveDataArr['leaveid'] = $leaveData[0]->leavetypeid;
-		$leaveDataArr['date'] = $leaveData[0]->date;
-		$leaveDataArr['reason'] = $leaveData[0]->reasonforabsence;
-		$leaveDataArr['casual']	= $casual;
-		$leaveDataArr['sick']	= $sick;
-		$leaveDataArr['earned']	= $earned;
 		
+			$i++;
+			$str.='<tr id='.$data->empid.'><td>'.$i.'</td><td><b>'.$data->name.'</b></td><td>'.$data->date.'</td><td>'.$data->reasonforabsence.'</td></tr>';
+		}
+	
+		$str1.='<div class="row"> 
+					<div class="col-md-4">
+						<div  class="btn btn-info btn-circle"><span id="casualleave">'.$casual.'</span>
+						</div>Casual
+					</div>
+					<div class="col-md-4">
+						<div class="btn btn-info btn-circle"><span id="sickleave">'.$sick.'</span>
+					    </div>Sick
+					</div>
+					<div class="col-md-4">
+						<div class="btn btn-info btn-circle"><span id="earnedleave">'.$earned.'</span>
+						</div>Earned
+					</div>
+				</div>';
 
-		echo json_encode($leaveDataArr);exit;
+		$finalStr=$str.'#$#'.$str1;
+		echo $finalStr;exit;
+	}
+
+
+	public function LeaveReportPending(){
+			$id = base64_decode($_POST['id']);
+		
+		$query='SELECT tbl_leaves.*,tbl_leavetype.name FROM `tbl_leaves` inner join tbl_leavetype on tbl_leaves.leavetypeid=tbl_leavetype.id where empid='.$id.'  AND status=0';
+
+		$leaveData= $this->common_model->coreQueryObject($query);
+		$casual=0;
+		$sick=0;
+		$earned=0;
+	
+		$str='';$i=0;$str1='';
+	    foreach ($leaveData as $data) {
+
+			if($data->name=="Casual"){
+				$casual++;
+			}else if($data->name=="Sick"){
+				$sick++;
+			}else{
+				$earned++;
+			}
+		
+			$i++;
+			$str.='<tr id='.$data->empid.'><td>'.$i.'</td><td><b>'.$data->name.'</b></td><td>'.$data->date.'</td><td>'.$data->reasonforabsence.'</td></tr>';
+		}
+	
+		$str1.='<div class="row"> 
+					<div class="col-md-4">
+						<div  class="btn btn-info btn-circle"><span id="casualleave">'.$casual.'</span>
+						</div>Casual
+					</div>
+					<div class="col-md-4">
+						<div class="btn btn-info btn-circle"><span id="sickleave">'.$sick.'</span>
+					    </div>Sick
+					</div>
+					<div class="col-md-4">
+						<div class="btn btn-info btn-circle"><span id="earnedleave">'.$earned.'</span>
+						</div>Earned
+					</div>
+				</div>';
+
+		$finalStr=$str.'#$#'.$str1;
+		echo $finalStr;exit;
+	
 	}
 }
+
+

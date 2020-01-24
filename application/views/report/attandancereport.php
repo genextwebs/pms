@@ -54,71 +54,16 @@
 	</div>
 	<div class="row">
 		<div class="table-responsive">
-			<table class="table table-bordered table-hover" id="leavesreport">
+			<table class="table table-bordered table-hover" id="attandancereport">
 				<thead>
 					<tr role="row">
 						 <th>Id</th>
 						 <th>Employee</th>
-						 <th>Approved Leave</th>
-						 <th>Pending Leave</th> 
+						 <th>Present</th>
+						 <th>Absent</th> 
 					</tr>
 				</thead>
 			</table>
-		</div>
-	</div>
-</div>
-
-
-<!-- //common model leave -->
-
-<div class="modal fade project-category" id="commonleave" tabindex="-1" role="dialog"  aria-hidden="true">
-	<div class="modal-dialog modal-lg" role="document">
-		<div class="modal-content br-0">
-			<div class="modal-header">
-				<h4 class="modal-title"> Approved Leaves Details</h4>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">×</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<div class="table-responsive">
-					<div class="row">
-						<div id="counter">
-						
-					    </div>
-
-					<table class="table">
-						
-						
-						<thead>
-						<tr>
-							<th>#</th>
-							<th>Leave Type</th>
-							<th>Date</th>
-							<th>Reason For Absence</th>
-						</tr>
-						</thead>
-						 <tbody>
-						 	<!-- <tr>
-						 		<td></td>
-						 		<td></td>
-						 		<td></td>
-						 	</tr> -->
-								<!--  <?php foreach ($allleavedata as $row) { ?>      
-									  <tr id="cate_<?php echo $row->id;?>">
-									  	<td></td>
-										  <td><?php echo $row->leavetypeid; ?></td>
-										  <td><?php echo $row->date; ?></td>
-										 <td><?php echo $row->reasonforabsence; ?></td>
-									   </tr>
-							   <?php } ?> -->
-
-						</tbody>
-					</table>
-				</div>
-				<hr>
-				
-			</div>
 		</div>
 	</div>
 </div>

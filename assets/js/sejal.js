@@ -511,7 +511,67 @@ jQuery(document).ready(function() {
 		});
 	}
 
+	else if(controllerName == 'attandancereport' && (functionName == 'index' || functionName == '')){
 		
+		var oTable = jQuery('#attandancereport').DataTable({
+			'bRetrieve': true,
+			"bPaginate": true,
+			"bLengthChange": true,
+			"iDisplayLength": 10,
+			"bFilter": true,
+			"bSort": true,
+			"aaSorting": [],
+			"aLengthMenu": [[10, 25, 50, 100, 200, 500, 1000, 5000], [10, 25, 50, 100, 200, 500, 1000, 5000]],
+			"bInfo": true,
+			"bAutoWidth": false,
+			"bProcessing": true,
+			"aoColumns": [{ "sWidth": "40px", sClass: "text-left", "asSorting": [  ] }, 
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }
+			],
+			"bServerSide": true,
+			"fixedHeader": true,
+			"sAjaxSource": base_url+"AttandanceReport/attandancelistreport",
+			"sServerMethod": "POST",
+			"sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
+			"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No Projects found<br/><br/></center>', "sZeroRecords": "<center><br/>No Projects found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ leads", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
+			"fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
+			
+				aoData.push( { "name": "startdate", "value": $('#startdate').val() } );
+				aoData.push( { "name": "enddate", "value": $('#enddate').val() } );
+				aoData.push( { "name": "ename", "value": $('#empname').val() } );
+
+				oSettings.jqXHR = $.ajax( {
+					"dataType": 'json',
+					"type": "POST",
+					"url": sSource,
+					"data": aoData,
+	                "timeout": 60000, //1000 - 1 sec - wait one minute before erroring out = 30000
+	                "success": function(json) {
+	                	var oTable = $('#attandancereport').dataTable();
+	                	var oLanguage = oTable.fnSettings().oLanguage;
+
+	                	if((json.estimateCount == true) && (json.iTotalDisplayRecords == json.limitCountQuery)){
+	                		oLanguage.sInfo = '<b>_START_ to _END_</b> of more than _TOTAL_ (<small>' + json.iTotalRecordsFormatted + ' Leaves</small>)';
+	                	}
+	                	else{
+	                		oLanguage.sInfo = '<b>_START_ to _END_</b> of <b>_TOTAL_</b> (<small>' + json.iTotalRecordsFormatted + ' Leaves </small>)';
+	                	}
+
+	                	fnCallback(json);
+	                }
+	            });
+			},
+
+			"fnRowCallback": function( nRow, aData, iDisplayIndex ){
+				return nRow;
+			},
+			"fnDrawCallback": function(oSettings, json) {
+
+			},
+		});
+	}		
 });
 
 //PROJECT FILTER
@@ -544,6 +604,11 @@ $('#project_status').change(function(){
 
 $('#btnApplyLeaves').click(function(){ 
 	var oTable = $('#leaves').DataTable();
+	oTable.draw();
+});
+
+$('#btnApplyLeavesReport').click(function(){ 
+	var oTable = $('#leavesreport').DataTable();
 	oTable.draw();
 });
 
@@ -1621,36 +1686,52 @@ function calculateHours(){
 	}
 
 
-function showLeaveReport(id,status){
-	
+function showLeaveReportActive(id,status){
+
 	alert(id);
 	alert(status);
 	$.ajax({
 		type: "POST",
-		url: base_url+"LeaveReport/showReport",
-		dataType: 'JSON',
+		url: base_url+"LeaveReport/LeaveReportActive",
+		dataType: 'html',
 	    data: "id="+id,
 	    success: function(data){
-	    	alert('employeeid-->'+data.empid+'leave id -->'+data.leaveid+'reason-->'+data.reason);
-	    	
-	    	//$('#commonleave').toggle();
-	    	/*$('#td1').val(data.leaveid);
-	    	$('#td1').val(data.date);
-	    	$('#td1').val(data.reason);*/
-	    	$("#casualleave").append(data.casual);
-	    	$("#sickleave").append(data.sick);
-	    	$("#earnedleave").append(data.earned);
-
-			$("tbody").append("<tr id='cate_"+data.empid+"'><td>#</td><td>"+data.leaveid+"</td><td>"+data.date+"</td><td>"+data.reason+"</td></tr>");
-	    	//$('#commonleave').modal('toggle');
-	    	//window.location.reload();
-	    	//$('#commonleave').toggle('');
-	    	
+	    
+	    	var finalArr = data.split('#$#');
+	    	$("#counter").append(finalArr[1]);
+	    	$("tbody").append(finalArr[0]);
+	    	//console.log(finalArr[1]);
+			//$("tbody").append("<tr id='cate_"+data.empid+"'><td>#</td><td>"+data.leaveid+"</td><td>"+data.date+"</td><td>"+data.reason+"</td></tr>");
 		 }
 	});
 }
 
 
+function showLeaveReportPending(id,status){
+	
+	$.ajax({
+		type: "POST",
+		url: base_url+"LeaveReport/LeaveReportPending",
+		dataType: 'html',
+	    data: "id="+id,
+	    success: function(data){
+	    	
+	    	var finalArr = data.split('#$#');
+	    	$("tbody").html('');
+	    	$("#counter").html('');
+	    	$("#counter").append(finalArr[1]);
+	    	$("tbody").append(finalArr[0]);
+
+	    	//$("#commonleave").modal('toggle');
+						   /*window.location.reload();*/
+	    	//window.location.reload();
+	    	//setInterval('location.reload(true), 5000); 
+	    	//console.log(finalArr[1]);
+			
+		 }
+	});
+
+}
 
 
 

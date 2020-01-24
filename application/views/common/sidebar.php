@@ -187,6 +187,9 @@ if($this->session->userdata('login')){
                 <li>
                 	<a href="<?php echo base_url().'leavereport/index'?>">Leave Report</a>
                 </li>
+                 <li>
+                    <a href="<?php echo base_url().'attandancereport/index'?>">Attandance Report</a>
+                </li>
              
             </ul>
         </li>
