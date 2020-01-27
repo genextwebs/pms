@@ -16,6 +16,7 @@ class AttandanceReport extends CI_Controller {
 
 
 	public function index(){
+		
 		$data['employee'] = $this->common_model->getData('tbl_employee');
 		$this->load->view('common/header');
 		$this->load->view('report/attandancereport',$data);
@@ -82,31 +83,42 @@ class AttandanceReport extends CI_Controller {
 			/** Ordering End **/
 
 			/** Filtering Start */
-			/*if(!empty(trim($_GET['sSearch']))){
+			//print_r($_POST);
+			if(!empty(trim($_GET['sSearch']))){
 				$searchTerm = trim($_GET['sSearch']);
-				$sWhere.= ' AND (tbl_employee.employeename like "%'.$searchTerm.'%" OR  tbl_leavetype.name like "%'.$searchTerm.'%")';
+				$sWhere.= ' AND (tbl_employee.employeename like "%'.$searchTerm.'%")';
 			}
-			$startdate=!empty($_POST['startdate']) ? $_POST['startdate'] : '';
-			$enddate=!empty($_POST['enddate']) ? $_POST['enddate'] : '';
+			if(!empty(trim($_POST['startdate']))){
+				$startdate=!empty($_POST['startdate']) ? $_POST['startdate'] : '';
+			}else{
+				$startdate ='2019-12-01';
+			}
+			if(!empty(trim($_POST['enddate']))){ 
+				$enddate=!empty($_POST['enddate']) ? $_POST['enddate'] : '';
+			}else{
+				$enddate='2019-12-30';
+			}
 			$empname=!empty($_POST['ename']) ? $_POST['ename'] : '';
-
+			$this->session->set_userdata('s_date',$startdate);
+			$this->session->set_userdata('e_date',$enddate);
+			//echo $enddate;die;
 			if(!empty($startdate)){						
-				$sWhere.=' AND date>="'.$startdate.'"';
+				$sWhere.=' AND attendancedate>="'.$startdate.'"';
 			}
 			if(!empty($enddate)){						
-				$sWhere.=' AND date<="'.$enddate.'"';
+				$sWhere.=' AND attendancedate<="'.$enddate.'"';
 			}
 			if(!empty($empname)){						
-				$sWhere.=' AND tbl_leaves.empid='.$empname;
+				$sWhere.=' AND tbl_attendance.employee='.$empname;
 			}
 			if(!empty($sWhere)){
 				$sWhere = " WHERE 1 ".$sWhere;
-			}*/
+			}
 		}
-		$query = "SELECT tbl_employee.employeename,tbl_attendance.* FROM `tbl_attendance` inner join tbl_employee on tbl_attendance.employee=tbl_employee.id Group by employeename".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
-		//	echo $this->db->last_query();
+		$query = "SELECT tbl_employee.employeename,tbl_attendance.* FROM `tbl_attendance` inner join tbl_employee on tbl_attendance.employee=tbl_employee.id".$sWhere.' Group by employeename'.$sOrder.' limit '.$sOffset.', '.$sLimit;
+
 		$AttendanceArr = $this->common_model->coreQueryObject($query);
-		/*$query = "SELECT tbl_employee.employeename,tbl_attendance.* FROM `tbl_attendance` inner join tbl_employee on tbl_attendance.employee=tbl_employee.id Group by employeename".$sWhere;*/
+		$query = "SELECT tbl_employee.employeename,tbl_attendance.* FROM `tbl_attendance` inner join tbl_employee on tbl_attendance.employee=tbl_employee.id".$sWhere;
 		
 
 		$AttendanceFilterArr = $this->common_model->coreQueryObject($query);
@@ -121,13 +133,14 @@ class AttandanceReport extends CI_Controller {
 			$rowid = $row->id;
 			$myattandance=$row->attendance;
 
-			$sql="SELECT tbl_employee.employeename,tbl_attendance.* FROM `tbl_attendance` inner join tbl_employee on tbl_attendance.employee=tbl_employee.id Group by employeename where tbl_attendance.employee = ".$row->id." AND tbl_attendance.attendance = 1";
+			$sql="SELECT tbl_employee.employeename,tbl_attendance.* FROM `tbl_attendance`inner join tbl_employee on tbl_attendance.employee=tbl_employee.id where tbl_attendance.employee = ".$row->employee." AND tbl_attendance.attendance = 1";
 
-			$sql1="SELECT tbl_employee.employeename,tbl_attendance.* FROM `tbl_attendance` inner join tbl_employee on tbl_attendance.employee=tbl_employee.id Group by employeename where tbl_attendance.employee = ".$row->id." AND tbl_attendance.attendance = 2";
+
+			$sql1="SELECT tbl_employee.employeename,tbl_attendance.* FROM `tbl_attendance` inner join tbl_employee on tbl_attendance.employee=tbl_employee.id where tbl_attendance.employee = ".$row->employee." AND tbl_attendance.attendance = 3";
 
 			$getCountPresent = $this->common_model->coreQueryObject($sql);
 			$getCountAbsent = $this->common_model->coreQueryObject($sql1);
-
+//echo $sql;echo $sql1;die;
 			$presentStatus=$absStatus="";
 			if($row->attendance=='1'){
 					$attendance=$row->attendance='Present';

@@ -535,7 +535,7 @@ jQuery(document).ready(function() {
 			"sAjaxSource": base_url+"AttandanceReport/attandancelistreport",
 			"sServerMethod": "POST",
 			"sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
-			"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No Projects found<br/><br/></center>', "sZeroRecords": "<center><br/>No Projects found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ leads", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
+			"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No AttandanceReport found<br/><br/></center>', "sZeroRecords": "<center><br/>No AttandanceReport found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ leads", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
 			"fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
 			
 				aoData.push( { "name": "startdate", "value": $('#startdate').val() } );
@@ -553,10 +553,10 @@ jQuery(document).ready(function() {
 	                	var oLanguage = oTable.fnSettings().oLanguage;
 
 	                	if((json.estimateCount == true) && (json.iTotalDisplayRecords == json.limitCountQuery)){
-	                		oLanguage.sInfo = '<b>_START_ to _END_</b> of more than _TOTAL_ (<small>' + json.iTotalRecordsFormatted + ' Leaves</small>)';
+	                		oLanguage.sInfo = '<b>_START_ to _END_</b> of more than _TOTAL_ (<small>' + json.iTotalRecordsFormatted + ' AttandanceReport</small>)';
 	                	}
 	                	else{
-	                		oLanguage.sInfo = '<b>_START_ to _END_</b> of <b>_TOTAL_</b> (<small>' + json.iTotalRecordsFormatted + ' Leaves </small>)';
+	                		oLanguage.sInfo = '<b>_START_ to _END_</b> of <b>_TOTAL_</b> (<small>' + json.iTotalRecordsFormatted + ' AttandanceReport </small>)';
 	                	}
 
 	                	fnCallback(json);
@@ -631,6 +631,11 @@ $('#btnApplyLogs').click(function(){
 
 $('#btnApplyReport').click(function(){
 	var oTable = $('#taskreport').DataTable();
+	oTable.draw();
+});
+
+$('#btnApplyAttandanceReport').click(function(){
+	var oTable = $('#attandancereport').DataTable();
 	oTable.draw();
 });
 
