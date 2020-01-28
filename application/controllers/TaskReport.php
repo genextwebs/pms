@@ -15,33 +15,20 @@ class TaskReport extends CI_Controller {
 	}
 	
 	public function index(){
+		$data['startdate']=date('Y-m-d',strtotime('-1 month'));
+		$data['enddate']=date('Y-m-d');
 		$data['allEmpData'] = $this->common_model->getData('tbl_employee');
 		$data['allProjectData'] = $this->common_model->getData('tbl_project_info');
 		$data['Chart']=$this->common_model->getData('tbl_task');
 		$str= '';
 		foreach ($data['Chart'] as $pie) {
-		$str.= '<b>'.$pie->status;
-			
+			$str.= '<b>'.$pie->status;
 		}
 		
 		$this->load->view('common/header');
 		$this->load->view('report/taskreport',$data);
 		$this->load->view('common/footer');
-	
-
 	}
-
-/*
-	public function chart(){
-		$data['Chart']=$this->common_model->getData('tbl_task');
-		$this->load->view('report/taskreport',$data);
-		/*$str=$data[0]->status;
-		$str=$data[0]->title;
-		 echo json_encode($data);exit;
-
-	}*/
-
-     
 	
 	public function taskreportlist(){
 		if(!empty($_POST)){
@@ -107,10 +94,20 @@ class TaskReport extends CI_Controller {
 				$searchTerm = trim($_GET['sSearch']);
 				$sWhere.= ' AND (tbl_project_info.projectname like "%'.$searchTerm.'%" OR tbl_task.duedate like "%'.$searchTerm.'%" OR tbl_task.assignedto like "%'.$searchTerm.'%" OR tbl_task.title like "%'.$searchTerm.'%" OR tbl_task.status like "%'.$searchTerm.'%")';
 			}
-		
 			
+			if(!empty(trim($_POST['startdate']))){
+				$startdate=!empty($_POST['startdate']) ? $_POST['startdate'] : '';
+			}else{
+				$startdate=date('Y-m-d',strtotime('-1 month'));
+			}
+			if(!empty(trim($_POST['enddate']))){ 
+				$enddate=!empty($_POST['enddate']) ? $_POST['enddate'] : '';
+			}else{
+				$enddate=date('Y-m-d');
+			}
+			/*
 			$startdate=!empty($_POST['startdate']) ? $_POST['startdate'] : '';
-			$enddate=!empty($_POST['enddate']) ? $_POST['enddate'] : '';
+			$enddate=!empty($_POST['enddate']) ? $_POST['enddate'] : '';*/
 			$pname=!empty($_POST['project']) ? $_POST['project'] : '';	
 			$ename=!empty($_POST['empdata']) ? $_POST['empdata'] : '';
 		
@@ -162,19 +159,17 @@ class TaskReport extends CI_Controller {
 			else if($row->status=='2'){
 					$status=$row->status='Doing';
 					$showStatus = '<label class="label label-danger">'.$status.'</label>';
-				}
+			}
 			
 			else if($row->status=='3'){
 					$status=$row->status='Done';
 					$showStatus = '<label class="label label-danger">'.$status.'</label>';
-				}
+			}
 			
 			else if($row->status=='4'){
 					$status=$row->status='Completed';
 					$showStatus = '<label class="label label-danger">'.$status.'</label>';
-				}
-			
-
+			}
 
 		$datarow[] = array(
 			$id = $i,
@@ -197,9 +192,6 @@ class TaskReport extends CI_Controller {
 				   "iTotalDisplayRecords" => $iFilteredTotal,
 				   "aaData" => $datarow
 		);
-
-
-
 		echo json_encode($output);
 		exit();
 	}

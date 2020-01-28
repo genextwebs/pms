@@ -34,19 +34,7 @@
 				<div class="row">
 					<div class="col-sm-12">
 						<div class="form-group custom-action">
-
-							<!-- <a href="<?php echo base_url().'Leaves/'?>" class="btn btn-outline-success btn-sm"> <i class="fa fa-list" aria-hidden="true"></i>All Leaves </a> -->
-					<!-- 		
-							<a href=""  class="btn btn-outline-info btn-sm"><i class="fa fa-calendar" aria-hidden="true"></i> Calendar View </a>
-							 -->
-							<!--<a href="javascript:;" class="btn btn-outline-danger btn-sm hidden-xs hidden-sm"><i class="fa fa-bar-chart" aria-hidden="true"></i> Gantt Chart</a>-->
-							
 							<a href="<?php echo base_url().'Leaves/addleaves';?>"  class="btn btn-outline-primary btn-sm"><i class="ti-plus" aria-hidden="true"></i>Apply For Leave </a>
-							
-							
-							<!--<a href="<?php echo base_url().'Project/viewarchiev';?>"  class="btn btn-outline-info btn-sm">View Archive <i class="fa fa-trash" aria-hidden="true"></i></a>-->
-							
-							<!--<a href="javascript:;" onclick="exportData()" class="btn btn-info btn-sm"><i class="ti-export" aria-hidden="true"></i> Export To Excel</a>-->
 					  </div>
 				 </div>
 			 </div>
@@ -55,11 +43,11 @@
 					<div class="form-group">
 						<label class="control-label">SELECT DATE RANGE</label>
 					    <div class="input-group input-daterange">
-								    <input type="text" class="start-date form-control br-0" id="startdate" name="startdate" value="" data-date-format='yyyy-mm-dd'>
+								    <input type="text" class="start-date form-control br-0" id="startdate" name="startdate" value="<?php echo $startdate;?>" data-date-format='yyyy-mm-dd'>
 								    <div class="input-group-prepend">
 								      <span class="input-group-text bg-info text-white">To</span>
 								    </div>
-								    <input type="text" class="end-date form-control br-0" id="enddate" name="enddate" data-date-format='yyyy-mm-dd' value="">
+								    <input type="text" class="end-date form-control br-0" id="enddate" name="enddate" data-date-format='yyyy-mm-dd' value="<?php echo $enddate;?>">
 						</div>
 				   </div>
 				</div>

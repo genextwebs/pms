@@ -63,11 +63,11 @@
 				<div class="form-group">
 					<label class="control-label">SELECT DATE RANGE</label>
 			    		<div class="input-group input-daterange">
-					  	    <input type="text" class="start-date form-control br-0" id="start_date" name="start_date" value="" data-date-format='yyyy-mm-dd'>
+					  	    <input type="text" class="start-date form-control br-0" id="start_date" name="start_date" value="<?php echo $startdate;?>" data-date-format='yyyy-mm-dd'>
 					   		<div class="input-group-prepend">
 					        	<span class="input-group-text bg-info text-white">To</span>
 				    		</div>
-				  		    <input type="text" class="end-date form-control br-0" id="deadline" name="deadline" value="" data-date-format='yyyy-mm-dd'>
+				  		    <input type="text" class="end-date form-control br-0" id="deadline" name="deadline" value="<?php echo $enddate;?>" data-date-format='yyyy-mm-dd'>
 						</div>
 				</div>
 			</div>
@@ -119,17 +119,17 @@
 <h1>PIE CHART</h1>
 
 <div id="piechart">
-	<?php 
+<?php 
 
-$count=0;
+$count1=0;$count2=0;
 
 foreach ($Chart as $pie) {
 	if($pie->status==4){
 		//$dataStrCmp = $pie->status;
-		$c1=$count++;
+		$c1=$count1++;
 	}else if($pie->status==1){
 		//$dataStrpend = $pie->status;
-		$c2=$count++;
+		$c2=$count2++;
 	}
 /*	else if($pie->status==1){
 		$dataStrpend = $pie->status;
@@ -219,18 +219,3 @@ Highcharts.chart('piechart', {
     }]
 });
 </script>
- <!--   data: [
-                  ['Firefox',   45.0],
-                  ['IE',       26.8],
-                  {
-                     name: 'Chrome',
-                     y: 12.8,
-                     sliced: true,
-                     selected: true
-                  },
-                  
-                  ['Safari',    8.5],
-                  ['Opera',     6.2],
-                  ['Others',   0.7]
-               ]
-            }]; -->

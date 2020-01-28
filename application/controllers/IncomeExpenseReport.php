@@ -21,8 +21,10 @@ class IncomeExpenseReport extends CI_Controller {
 		    $edate=$this->session->userdata('edate');
 		}
 		else{ 
-			$sdate = '2019-01-02';
-			$edate = '2019-01-30';
+			/*$sdate = '2019-01-02';
+			$edate = '2019-01-30';*/
+			$sdate=date('Y-m-d',strtotime('-1 month'));
+			$edate=date('Y-m-d');
 		}
 		$data['dateRange']= $this->createDateRangeArray($sdate,$edate);
 	/*
@@ -56,7 +58,8 @@ class IncomeExpenseReport extends CI_Controller {
 		print_r($temp);
 		exit;*/
 		$data['finalTempArr']=	$temp;
-
+		$data['sdate']=$sdate;
+		$data['edate']=$edate;
 		$this->load->view('common/header');
 		$this->load->view('report/incomeexpensereport',$data);
 		$this->load->view('common/footer');

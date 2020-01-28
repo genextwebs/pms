@@ -15,18 +15,17 @@ class TimeLogReport extends CI_Controller {
 	}
 
 	public function index(){
-		 $allproject=$this->session->userdata('project');
-		 //echo $allproject;die;
-
+		$allproject=$this->session->userdata('project');
+	
 		if (!empty($this->session->userdata('sdate')) AND !empty($this->session->userdata('edate'))){
 			$sdate=$this->session->userdata('sdate');
 		    $edate=$this->session->userdata('edate');
-		   
-
 		}
 		else{ 
-			$sdate = '2019-01-02';
-			$edate = '2019-01-30';
+			/*$sdate = '2019-01-02';
+			$edate = '2019-01-30';*/
+				$sdate=date('Y-m-d',strtotime('-1 month'));
+				$edate=date('Y-m-d');
 		}
 		
 		$data['dateRange']= $this->createDateRangeArray($sdate,$edate);
@@ -35,13 +34,14 @@ class TimeLogReport extends CI_Controller {
 			$str = '"'.$date.'"'.',';
 		}
 
+	 	/*  $query = "SELECT totalhours,timelogstartdate,timelogprojectid from tbl_timelog where timelogprojectid=127 AND (timelogstartdate between '2020-01-07' AND '2020-01-20')";*/
+	 	if(!empty($allproject)){
+	 		$query = 'SELECT totalhours,timelogstartdate,timelogprojectid from tbl_timelog where timelogprojectid='.$allproject.' AND (timelogstartdate between "'.$sdate.'" AND "'.$edate.'")';
+	 	}else{
+	 		$query = 'SELECT totalhours,timelogstartdate,timelogprojectid from tbl_timelog where (timelogstartdate between "'.$sdate.'" AND "'.$edate.'")';
+	 	}
 
-	 /*  $query = "SELECT totalhours,timelogstartdate,timelogprojectid from tbl_timelog where timelogprojectid=127 AND (timelogstartdate between '2020-01-07' AND '2020-01-20')";*/
-	 	$query = 'SELECT totalhours,timelogstartdate,timelogprojectid from tbl_timelog where timelogprojectid=127 AND (timelogstartdate between "'.$sdate.'" AND "'.$edate.'")';
-	   
 		$data['getHours'] = $this->common_model->coreQueryObject($query);
-	
-
 		$temp = array();
 		$stri='';
 		foreach($data['getHours'] as $hour){
@@ -58,7 +58,8 @@ class TimeLogReport extends CI_Controller {
 					$temp[$hour->timelogstartdate]=$string;
 			}
 		}
-	
+		$data['sdate']=$sdate;
+		$data['edate']=$edate;
 		$data['finalTempArr']=	$temp;
 		$data['allProjectData'] = $this->common_model->getData('tbl_project_info');
 		$this->load->view('common/header');

@@ -14,6 +14,8 @@ class Ticket extends CI_Controller {
 	}
 
 	public function index(){
+		$data['s_date']=date('Y-m-d',strtotime('-1 month'));
+		$data['e_date']=date('Y-m-d');
 		$data['tickettype']=$this->common_model->getData('tbl_ticket_type');
 		$data['ticketchannel']=$this->common_model->getData('tbl_ticket_channel');
 		$this->load->view('common/header');
@@ -51,7 +53,7 @@ class Ticket extends CI_Controller {
 			move_uploaded_file($file_loc,$folder.$file);
 			$insArr  = array('ticketsubject'=>$t_subject,'ticketdescription'=>$t_editor,'status'=>$status, 'ticketimage'=>$file,'requestername'=>$t_requestname,'agent'=>$t_agentname,'type'=>$t_question,'priority'=>$t_priority,'channelname'=>$t_channel,'tags'=>$t_tags);
 			$query  =  $this->common_model->insertData('tbl_ticket',$insArr);
-			$this->session->set_flashdata('message_name','Inserted Successfully........');
+			$this->session->set_flashdata('message_name','Ticket Inserted Successfully...');
 			redirect('ticket/index');
 		}
 	}
@@ -120,11 +122,19 @@ class Ticket extends CI_Controller {
 				$searchTerm = trim($_GET['sSearch']);
 				$sWhere.= ' AND (ticketsubject like "%'.$searchTerm.'%")';
 			}
-			//	$agent=!empty($_POST['agent']) ? $_POST['agent'] : '';
-			$sdate=!empty($_POST['s_date'])?$_POST['s_date']:'';
+			if(!empty(trim($_POST['s_date']))){
+				$startdate=!empty($_POST['s_date']) ? $_POST['s_date'] : '';
+			}else{
+				$startdate=date('Y-m-d',strtotime('-1 month'));
+			}
+			if(!empty(trim($_POST['e_date']))){ 
+				$enddate=!empty($_POST['e_date']) ? $_POST['e_date'] : '';
+			}else{
+				$enddate=date('Y-m-d');
+			}
+			/*$sdate=!empty($_POST['s_date'])?$_POST['s_date']:'';
 			$enddate=!empty($_POST['e_date'])?$_POST['e_date']:'';
-			//echo($sdate);
-			//echo($enddate);die;
+			*/
 	        $status=!empty($_POST['status1'])? $_POST['status1'] : '';
 			$priority=!empty($_POST['priority']) ? $_POST['priority'] : '';
 			$cname=!empty($_POST['channelname']) ? $_POST['channelname'] : '';

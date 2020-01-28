@@ -18,6 +18,8 @@ class AttandanceReport extends CI_Controller {
 	public function index(){
 		
 		$data['employee'] = $this->common_model->getData('tbl_employee');
+		$data['startdate']=date('Y-m-d',strtotime('-1 month'));
+		$data['enddate']=date('Y-m-d');
 		$this->load->view('common/header');
 		$this->load->view('report/attandancereport',$data);
 		$this->load->view('common/footer');
@@ -88,20 +90,22 @@ class AttandanceReport extends CI_Controller {
 				$searchTerm = trim($_GET['sSearch']);
 				$sWhere.= ' AND (tbl_employee.employeename like "%'.$searchTerm.'%")';
 			}
+
 			if(!empty(trim($_POST['startdate']))){
 				$startdate=!empty($_POST['startdate']) ? $_POST['startdate'] : '';
 			}else{
-				$startdate ='2019-12-01';
+				$startdate=date('Y-m-d',strtotime('-1 month'));
 			}
 			if(!empty(trim($_POST['enddate']))){ 
 				$enddate=!empty($_POST['enddate']) ? $_POST['enddate'] : '';
 			}else{
-				$enddate='2019-12-30';
+				$enddate=date('Y-m-d');
 			}
 			$empname=!empty($_POST['ename']) ? $_POST['ename'] : '';
-			$this->session->set_userdata('s_date',$startdate);
-			$this->session->set_userdata('e_date',$enddate);
-			//echo $enddate;die;
+			//$this->session->set_userdata('s_date',$startdate);
+			//$this->session->set_userdata('e_date',$enddate);
+			//$this->session->userdata('s_date');die;
+			///echo $enddate.''.$startdate;die;
 			if(!empty($startdate)){						
 				$sWhere.=' AND attendancedate>="'.$startdate.'"';
 			}
@@ -109,7 +113,7 @@ class AttandanceReport extends CI_Controller {
 				$sWhere.=' AND attendancedate<="'.$enddate.'"';
 			}
 			if(!empty($empname)){						
-				$sWhere.=' AND tbl_attendance.employee='.$empname;
+				$sWhere.=' AND tbl_employee.id='.$empname;
 			}
 			if(!empty($sWhere)){
 				$sWhere = " WHERE 1 ".$sWhere;
@@ -122,6 +126,7 @@ class AttandanceReport extends CI_Controller {
 		
 
 		$AttendanceFilterArr = $this->common_model->coreQueryObject($query);
+		//echo $this->db->last_query();die;
 		$iFilteredTotal = count($AttendanceFilterArr);
 		$AttendanceAllArr = $this->common_model->getData('tbl_attendance');
 		$iTotal = count($AttendanceAllArr);

@@ -15,6 +15,8 @@ class Leaves extends CI_Controller {
 	}
 
 	public function index(){
+		$data['startdate']=date('Y-m-d',strtotime('-1 month'));
+		$data['enddate']=date('Y-m-d');
 		$data['leavecategory']=$this->common_model->getData('tbl_leavetype');
 		$data['employee']=$this->common_model->getData('tbl_employee'); 
 		$this->load->view('common/header');
@@ -44,7 +46,7 @@ class Leaves extends CI_Controller {
 			$whereArr = array('empid'=>$mem,'leavetypeid'=>$type,'duration'=>$radio,'date'=>$date,'reasonforabsence'=>$abs,'status'=>$status);
 
 			$this->common_model->insertData('tbl_leaves',$whereArr);
-			$this->session->set_flashdata('message_name', 'Project Insert sucessfully');
+			$this->session->set_flashdata('message_name', 'Leaves Insert sucessfully');
 			redirect('Leaves/index');
 		}
 	}
@@ -112,8 +114,18 @@ class Leaves extends CI_Controller {
 				$searchTerm = trim($_GET['sSearch']);
 				$sWhere.= ' AND (tbl_employee.employeename like "%'.$searchTerm.'%" OR  tbl_leavetype.name like "%'.$searchTerm.'%")';
 			}
-			$startdate=!empty($_POST['startdate']) ? $_POST['startdate'] : '';
-			$enddate=!empty($_POST['enddate']) ? $_POST['enddate'] : '';
+			if(!empty(trim($_POST['startdate']))){
+				$startdate=!empty($_POST['startdate']) ? $_POST['startdate'] : '';
+			}else{
+				$startdate=date('Y-m-d',strtotime('-1 month'));
+			}
+			if(!empty(trim($_POST['enddate']))){ 
+				$enddate=!empty($_POST['enddate']) ? $_POST['enddate'] : '';
+			}else{
+				$enddate=date('Y-m-d');
+			}
+			/*$startdate=!empty($_POST['startdate']) ? $_POST['startdate'] : '';
+			$enddate=!empty($_POST['enddate']) ? $_POST['enddate'] : '';*/
 			$empname=!empty($_POST['ename']) ? $_POST['ename'] : '';
 
 			if(!empty($startdate)){						
@@ -129,15 +141,13 @@ class Leaves extends CI_Controller {
 				$sWhere = " WHERE 1 ".$sWhere;
 			}
 		}
-		//$query = "SELECT tbl_leaves.*,tbl_employee.employeename as empname from tbl_leaves INNER JOIN tbl_employee on tbl_leaves.empid = tbl_employee.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+	
 		$query = "SELECT tbl_leaves.*,tbl_employee.employeename as empname,tbl_leavetype.name as leavetype from tbl_leaves INNER JOIN tbl_employee on tbl_leaves.empid = tbl_employee.id INNER JOIN tbl_leavetype ON tbl_leavetype.id = tbl_leaves.leavetypeid".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
-		//	echo $this->db->last_query();
+	
 		$LeavesArr = $this->common_model->coreQueryObject($query);
+	
 		$query = "SELECT tbl_leaves.*,tbl_employee.employeename as empname,tbl_leavetype.name as leavetype from tbl_leaves INNER JOIN tbl_employee on tbl_leaves.empid = tbl_employee.id INNER JOIN tbl_leavetype ON tbl_leavetype.id = tbl_leaves.leavetypeid".$sWhere;
-		//print_r($LeavesArr);die;
-		//echo $this->db->last_query();
-		/*$query = "SELECT date,tbl_employee.employeename as empname from tbl_leaves inner join tbl_employee on tbl_leaves.empid = tbl_employee.id".$sWhere;*/
-
+	
 		$LeavesFilterArr = $this->common_model->coreQueryObject($query);
 		$iFilteredTotal = count($LeavesFilterArr);
 		$ProjectAllArr = $this->common_model->getData('tbl_leaves');
@@ -149,15 +159,7 @@ class Leaves extends CI_Controller {
 		foreach($LeavesArr as $row) {
 			$rowid = $row->id;
 			$mystatus=$row->status;
-			//$leavetype=$row->leavetypeid;
-			/*if($row->leavetypeid=='1'){
-					$status=$row->status='Approved';
-					$showStatus = '<label class="label label-success">'.$status.'</label>';
-			}
-			else{
-					$status=$row->status='Pending';
-					$showStatus = '<label class="label label-danger">'.$status.'</label>';
-				}*/
+			
 			if($row->status=='1'){
 					$status=$row->status='Approved';
 					$showStatus = '<label class="label label-success">'.$status.'</label>';
@@ -165,15 +167,16 @@ class Leaves extends CI_Controller {
 			else{
 					$status=$row->status='Pending';
 					$showStatus = '<label class="label label-danger">'.$status.'</label>';
-				}
+			}
 					
 			if($mystatus=='1'){
 		
 					$actionstring= '<a href="javascript:;" onclick="searchleaves(\''.base64_encode($rowid).'\');"  class="btn btn-success btn-circle" data-toggle="modal" data-target="#leaves-popup" data-original-title="View Project Details"><i class="fa fa-search" aria-hidden="true"></i></a>';				 
 			}
 			else{
-					if($this->user_type == 2){
-						$actionstring= '<abbr title="view Leaves"><a href="javascript:;" onclick="searchleaves(\''.base64_encode($rowid).'\');"  class="btn btn-success btn-circle" data-toggle="modal" data-target="#leaves-popup" data-original-title="View Project Details"><i class="fa fa-search" aria-hidden="true"></i></a></abbr>';
+				if($this->user_type == 2){
+
+					$actionstring= '<abbr title="view Leaves"><a href="javascript:;" onclick="searchleaves(\''.base64_encode($rowid).'\');"  class="btn btn-success btn-circle" data-toggle="modal" data-target="#leaves-popup" data-original-title="View Project Details"><i class="fa fa-search" aria-hidden="true"></i></a></abbr>';
 					}
 					if($this->user_type == 0 ){
 						$actionstring= 
@@ -196,8 +199,6 @@ class Leaves extends CI_Controller {
 				);
 				$i++;
 			}
-			
-			 
 			$output = array
 			(
 			   	"sEcho" => intval($_GET['sEcho']),
@@ -375,6 +376,7 @@ class Leaves extends CI_Controller {
 			$abs,'status'=>$status);
 		$whereArr=array('id'=>$id);
 		$this->common_model->updateData('tbl_leaves',$updateArr,$whereArr);
+		$this->session->set_flashdata('message_name', 'Leaves Update sucessfully');
 	}
 
 	//Leave list search button click->After deleteSearchLeaves

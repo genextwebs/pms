@@ -15,6 +15,8 @@ class LeaveReport extends CI_Controller {
 	}
 
 	public function index(){
+		$data['startdate']=date('Y-m-d',strtotime('-1 month'));
+		$data['enddate']=date('Y-m-d');
 		$data['allleavetypedata'] = $this->common_model->getData('tbl_leavetype');
 		$data['allleavedata'] = $this->common_model->getData('tbl_leaves');
 		$data['employee'] = $this->common_model->getData('tbl_employee');
@@ -87,10 +89,19 @@ class LeaveReport extends CI_Controller {
 				$searchTerm = trim($_GET['sSearch']);
 				$sWhere.= ' AND (tbl_employee.employeename like "%'.$searchTerm.'%")';
 			}
-			$startdate=!empty($_POST['startdate']) ? $_POST['startdate'] : '';
-			$enddate=!empty($_POST['enddate']) ? $_POST['enddate'] : '';
-			$empname=!empty($_POST['ename']) ? $_POST['ename'] : '';
+			if(!empty(trim($_POST['startdate']))){
+				$startdate=!empty($_POST['startdate']) ? $_POST['startdate'] : '';
+			}else{
+				$startdate=date('Y-m-d',strtotime('-1 month'));
+			}
+			if(!empty(trim($_POST['enddate']))){ 
+				$enddate=!empty($_POST['enddate']) ? $_POST['enddate'] : '';
+			}else{
+				$enddate=date('Y-m-d');
+			}
 
+			$empname=!empty($_POST['ename']) ? $_POST['ename'] : '';
+			
 			if(!empty($startdate)){						
 				$sWhere.=' AND date>="'.$startdate.'"';
 			}
@@ -104,21 +115,12 @@ class LeaveReport extends CI_Controller {
 				$sWhere = " WHERE 1 ".$sWhere;
 			}
 		}
-
-	/*	$query="SELECT tbl_leaves.*,tbl_employee.employeename,sum(status) from tbl_leaves inner join tbl_employee on tbl_leaves.empid =tbl_employee.id where status in (1,0) group by empid".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;*/
-	/*	$query="SELECT tbl_leaves.*,tbl_employee.employeename,sum(status) from tbl_leaves inner join tbl_employee on tbl_leaves.empid =tbl_employee.id where status=1 ".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;*/
-		
-	
-		//echo $query;die;
 	
 		$query = "SELECT tbl_leaves.*,tbl_employee.employeename from tbl_leaves inner join tbl_employee on tbl_leaves.empid =tbl_employee.id".$sWhere.' group By tbl_employee.employeename '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 		$LeavesArr = $this->common_model->coreQueryObject($query);
 
 		$query = "SELECT tbl_leaves.*,tbl_employee.employeename from tbl_leaves inner join tbl_employee on tbl_leaves.empid =tbl_employee.id".$sWhere.' group By tbl_employee.employeename '.$sOrder.' limit '.$sOffset.', '.$sLimit;
-         
-        /* select count(status),empid from tbl_leaves where status=1 group by empid*/
-	
-
+     
 		$LeavesFilterArr = $this->common_model->coreQueryObject($query);
 		$iFilteredTotal = count($LeavesFilterArr);
 		$leaveAllArr = $this->common_model->getData('tbl_leaves');

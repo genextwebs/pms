@@ -15,7 +15,8 @@ class Timelog extends CI_Controller {
 
 		$data['projectinfo']=$this->common_model->getData('tbl_project_info');
 		$data['empinfo'] = $this->common_model->getData('tbl_employee');
-		
+		$data['start_date']=date('Y-m-d',strtotime('-1 month'));
+		$data['deadline']=date('Y-m-d');
 		$this->load->view('common/header');
 		$this->load->view('timelog/timelog',$data);
 		$this->load->view('common/footer');
@@ -44,6 +45,7 @@ class Timelog extends CI_Controller {
 			
 			$insArr = array('timelogprojectid'=>$project ,'timelogemployeeid'=>$emp ,'timelogstartdate'=>$sdate , 'timelogenddate'=>$edate ,'timelogstarttime'=>$stime ,'timelogendtime'=>$etime,'totalhours'=>$hours,'timelogmemo'=>$memo);
 			$this->common_model->insertData('tbl_timelog',$insArr);
+			$this->session->set_flashdata('message_name','Timelog Inserted Succesfully....');
 			redirect('timelog/index');
 		}
 	}
@@ -115,8 +117,18 @@ class Timelog extends CI_Controller {
 		
 			$pname=!empty($_POST['pname']) ? $_POST['pname'] : '';	
 			$ename=!empty($_POST['ename']) ? $_POST['ename'] : '';
-			$startdate=!empty($_POST['start_date']) ? $_POST['start_date'] : '';
-			$enddate=!empty($_POST['deadline']) ? $_POST['deadline'] : '';
+			if(!empty(trim($_POST['start_date']))){
+				$startdate=!empty($_POST['start_date']) ? $_POST['start_date'] : '';
+			}else{
+				$startdate=date('Y-m-d',strtotime('-1 month'));
+			}
+			if(!empty(trim($_POST['deadline']))){ 
+				$enddate=!empty($_POST['deadline']) ? $_POST['deadline'] : '';
+			}else{
+				$enddate=date('Y-m-d');
+			}
+			/*$startdate=!empty($_POST['start_date']) ? $_POST['start_date'] : '';
+			$enddate=!empty($_POST['deadline']) ? $_POST['deadline'] : '';*/
 		
 
 			if(!empty($pname)){
@@ -353,6 +365,7 @@ public function update_timelog(){
 			$memo = $this->input->post('demo');
 			$updateArr = array('timelogprojectid'=>$project,'timelogemployeeid'=>$emp,'timelogstartdate'=>$sdate,'timelogenddate'=>$edate,'timelogstarttime'=>$stime,'timelogendtime'=>$etime,'totalhours'=>$hours,'timelogmemo'=>$memo);
 			$this->common_model->updateData('tbl_timelog',$updateArr,$whereArr);
+			$this->session->set_flashdata('message_name','Timelog Update Succesfully....');
 		}
 		
 	}
