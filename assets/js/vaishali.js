@@ -979,24 +979,33 @@ function updateTask(id){
 	    	$('#task_category option[value="'+data.SelTaskCat+'"]').attr('selected','selected');
 	    	$('#status option[value="'+data.status+'"]').attr('selected','selected');
 	    	$('input:radio[name=radio-stacked]:checked').attr(data.priority);
-	    	$("#update_task").on("click", function(){ myFunction(data.id); });
+	    	$("#update_task").on("click", function(){ upadateTaskData(data.id) });
 	    	
 		 }
 	});
 }   
 
 
-function myFunction(id){
+function upadateTaskData(id){
+	title_task = $('#title_task').val();
+	description = $('#description').val();
+	start_date = $('#start_date1').val();
+	deadline = $('#deadline1').val();
+	assignemp = $('#assignemp').val();
+	task_category = $('#task-category').val();
+	status = $('#status').val();
+	priority = $('input:radio[name=radio-stacked]').val();
+	projectid = $('#projectid').val();
+	dataString = {id:id,title_task:title_task,description:description,start_date:start_date,deadline:deadline,assignemp:assignemp,task_category:task_category,status:status,priority:priority,projectid:projectid};
 	$.ajax({
            	url: base_url+"project/updateTaskData",
            	type: 'POST',
-           	//dataType:'JSON',
-           	data: "id="+id,
+           	data: dataString,
            	error: function() {
               alert('Something is wrong');
            	},
       	 	success: function(data) {
-
+      	 		window.location.reload();
       	 	}
     	});	
 }
@@ -1007,6 +1016,40 @@ $('#hide-update-task-panel').click(function(){
 	$('#update_task_show').hide();
 });                                  
 
+//delete task
+
+function deleteTask(id){
+	var url = base_url+"project/delete_Task";
+	swal({
+	 title: "Are you sure?",
+	 text: "You will not be able to recover this imaginary file!",
+	 type: "warning",
+	 showCancelButton: true,
+	 confirmButtonColor: "#DD6B55",
+	 confirmButtonText: "Yes, delete it!",
+	 closeOnConfirm: false
+	},
+function(isConfirm){
+if (isConfirm) {
+       $.ajax({
+           url: url,
+           type: "POST",
+           dataType: "JSON",
+           data: {id:id},
+          dataType: "html",
+		  
+           success: function (data) {
+               swal("Done!", "It was succesfully deleted!", "success");
+               $('#tasks-table').DataTable().ajax.reload();
+			   
+           },
+           error: function (xhr, ajaxOptions, thrownError) {
+               swal("Error deleting!", "Please try again", "error");
+           }
+       });
+   }
+   });
+}                                            
                                               
 	
 

@@ -830,11 +830,12 @@ class Project extends CI_Controller {
 	public function insertProjectMember(){
 		if(!empty($_POST)){
 			$data['employee'] = $this->input->post('choose_member');
+			 
 			$emp_count = count($data['employee']);
 			$project_id = $this->input->post('projectid');
 			for($i=0 ; $i<$emp_count; $i++){
 				$emp_id = $data['employee'][$i];
-				$whereArr = array('emp_id' => $emp_id,'project_id' => $project_id);
+				$whereArr = array('emp_id' => $emp_id , 'project_id' => $project_id);
 				$projectM = $this->common_model->getData('tbl_project_member', $whereArr);
 				if(count($projectM) == 1){
 					$this->session->set_flashdata('message_name', 'Alredy add this member');
@@ -856,7 +857,7 @@ class Project extends CI_Controller {
 			$template_id = $this->input->post('templateid');
 			for($i=0 ; $i<$emp_count; $i++){
 				$emp_id = $data['employee'][$i];
-				$whereArr = array('emp_id' => $emp_id,'template_id' =>$template_id);
+				$whereArr = array('emp_id' => $emp_id , 'template_id' => $template_id);
 				$projectM = $this->common_model->getData('tbl_template_member', $whereArr);
 				if(count($projectM) == 1){
 					$this->session->set_flashdata('message_name', 'Alredy add this member');
@@ -1024,6 +1025,7 @@ class Project extends CI_Controller {
 		/** Output */
 		$datarow = array();
 		$i = 1;
+		$str = '';
 		foreach($taskArr as $row) {
 			if($row->status == 0){
 				$status = $row->status = 'Incomplete';
@@ -1031,12 +1033,20 @@ class Project extends CI_Controller {
 			}
 			
 				$actionStr = '<a href="javascript:;" onclick="updateTask(\''.base64_encode($row->id).'\')" class="btn btn-info btn-circle edit-task" data-toggle="tooltip" data-task-id="69" data-original-title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a> &nbsp;
-							<a href="javascript:;" class="btn btn-danger btn-circle sa-params" data-toggle="tooltip" data-task-id="69" data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>';
+					<a href="javascript:;" class="btn btn-danger btn-circle sa-params" data-toggle="tooltip" data-task-id="69" data-original-title="Delete" onclick="deleteTask(\''.$row->id.'\')"><i class="fa fa-times" aria-hidden="true"></i></a>';
+			foreach($taskAllArr as $task){
+				$wherePid = array('id'=>$taskAllArr[0]->projectid);
+				$projectData = $this->common_model->getData('tbl_project_info',$wherePid);
+				$whereCid = array('id'=>$projectData[0]->clientid);
+				$clientData = $this->common_model->getData('tbl_clients',$whereCid);
+				$clientname = $clientData[0]->clientname;
+			}
 			$datarow[] = array(
 				$id = $i,
                 //$row->clientname.'<br/>'.$str,
                 $row->title,
                 $row->employeename,
+                $clientname,
 				$row->duedate,
 				$str,
 				$actionStr
@@ -1090,21 +1100,27 @@ class Project extends CI_Controller {
 
 	public function updateTaskData(){
 		$id = $_POST['id'];
+		$title = $_POST['title_task'];		
+		$projectid = $_POST['projectid'];
+		$description = $_POST['description'];
+		$startdate = $_POST['start_date'];
+		$duedate = $_POST['deadline'];
+		$assignemp = $_POST['assignemp'];
+		$taskcategory = $_POST['task_category'];
+		$status = $_POST['status'];
+		$priority = $_POST['priority'];
 		$whereArr = array('id' => $id);
-		if(!empty($_POST)){
-			$title = $this->input->post('title_task');
-			$projectid = $this->input->post('projectid');
-			$description = $this->input->post('editor1');
-			$startdate = $this->input->post('startdate');
-			$duedate = $this->input->post('due_date');
-			$assignemp = $this->input->post('assignemp');
-			$taskcategory = $this->input->post('task-category');
-			$status = $this->input->post('status');
-			$priority = $this->input->post('radio-stacked');
-			$updateArr = array('projectid' => $projectid, 'title' => $title , 'description' => $description , 'startdate' => $startdate , 'duedate' => $duedate , 'assignedto' => $assignemp , 'taskcategory' => $taskcategory , 'status' => $status, 'priority' => $priority);
-			print_r($updateArr);die;
-			$this->common_model->updateData('tbl_task',$updateArr,$whereArr);
-			redirect('project/task/'.base64_encode($projectid));
+		$updateArr = array('projectid' => $projectid, 'title' => $title , 'description' => $description , 'startdate' => $startdate , 'duedate' => $duedate , 'assignedto' => $assignemp , 'taskcategory' => $taskcategory , 'status' => $status, 'priority' => $priority);
+		//print_r($updateArr);die;
+		$this->common_model->updateData('tbl_task',$updateArr,$whereArr);
+		redirect('project/task/'.base64_encode($projectid));
+	}
+
+	public function delete_Task(){
+		if(!empty($_POST['id'])){	
+			$id = $_POST['id'];
+			$deleteArr = array('id'=>$id);
+			$this->common_model->deleteData('tbl_task',$deleteArr);
 		}
 	}
 }		

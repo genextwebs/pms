@@ -611,7 +611,7 @@
 									  					</div>
 									  					<div class="card-wrapper collapse show">
 													        <div class="card-body">
-													           	<form method="post" name="task_category">
+													           	<form method="post" name="task_category" id="task_update">
 													           		<div class="form-body">
 													           			<div class="row">
 													           				<div class="col-md-12">
@@ -678,12 +678,12 @@
 										                							Status
 										                							</label>
 										                							<select name="status" id="status" class="form-control">
-                                                                    <option value="1">To Do</option>
-                                                                    <option value="2">Doing</option>
-                                                                    <option value="3">Done</option>
-                                                                    <option value="4">Completed</option>
-                                                                    <option value="0">Incomplete</option>
-                                                            </select>
+			                                                                    <option value="1">To Do</option>
+			                                                                    <option value="2">Doing</option>
+			                                                                    <option value="3">Done</option>
+			                                                                    <option value="4">Completed</option>
+			                                                                    <option value="0">Incomplete</option>
+                                                            				</select>
 										                						</div>
 										                					</div>
 										                					<div class="col-md-12">
@@ -701,7 +701,7 @@
 																					    <input type="radio" class="custom-control-input" id="low-rad" name="radio-stacked" value="2"required="">
 																					    <label class="custom-control-label text-success" for="low-rad">Low</label>
 																					</div>
-																					<input type="hidden" value="<?php echo $id; ?>" name="projectid">
+																					<input type="hidden" value="<?php echo $id; ?>" name="projectid" id="projectid">
 										                						</div>
 										                					</div>
 													           			</div>
@@ -731,8 +731,9 @@
 												            <tr role="row">
 												                <th>Id</th>
 												                <th>Task</th>
-												               <!-- <th>Client</th>-->
+												               	
 												                <th>Assigned To</th>
+												                <th>Client</th>
 												               <!-- <th>Assigned By</th>-->
 												                <th>Due Date</th>
 												                <th>Status</th>
