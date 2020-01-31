@@ -34,7 +34,6 @@ class TimeLogReport extends CI_Controller {
 			$str = '"'.$date.'"'.',';
 		}
 
-	 	/*  $query = "SELECT totalhours,timelogstartdate,timelogprojectid from tbl_timelog where timelogprojectid=127 AND (timelogstartdate between '2020-01-07' AND '2020-01-20')";*/
 	 	if(!empty($allproject)){
 	 		$query = 'SELECT totalhours,timelogstartdate,timelogprojectid from tbl_timelog where timelogprojectid='.$allproject.' AND (timelogstartdate between "'.$sdate.'" AND "'.$edate.'")';
 	 	}else{
@@ -58,6 +57,7 @@ class TimeLogReport extends CI_Controller {
 					$temp[$hour->timelogstartdate]=$string;
 			}
 		}
+		//echo '<pre>';print_r($data['getHours']);die;
 		$data['sdate']=$sdate;
 		$data['edate']=$edate;
 		$data['finalTempArr']=	$temp;

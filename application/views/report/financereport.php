@@ -14,20 +14,19 @@
 
 
 <div class="content-in">
-	<form id="creatleave=-" class="aj-form--" name="TimeLogRepor--t" method="post" action="<?php echo base_url().'TimeLogReport/getPostData';?>">
 		<div class="row">
 			<div class="col-md-4">
 				<div class="form-group">
 					<label class="control-label">SELECT DATE RANGE</label>
 			    		<div class="input-group input-daterange">
-					  	    <input type="text" class="start-date form-control br-0" id="start_date" name="start_date" value="" data-date-format='yyyy-mm-dd'>
+					  	    <input type="text" class="start-date form-control br-0" id="start_date" name="start_date" value="<?php echo $sdate;?>" data-date-format='yyyy-mm-dd'>
 					   		<div class="input-group-prepend">
 					        	<span class="input-group-text bg-info text-white">To</span>
 				    		</div>
-				  		    <input type="text" class="end-date form-control br-0" id="deadline" name="deadline" value="" data-date-format='yyyy-mm-dd'>
+				  		    <input type="text" class="end-date form-control br-0" id="deadline" name="deadline" value="<?php echo $edate;?>" data-date-format='yyyy-mm-dd'>
 						</div>
 				</div>
-			</div>
+			</div>	
 			<div class="col-md-4">
 				<div class="form-group">
 					<label class="control-label">Project</label>
@@ -44,10 +43,10 @@
 					</select> 
 				</div>
 			</div>
-				<div class="col-md-4">
+			<div class="col-md-4">
 				<div class="form-group">
 					<label class="control-label">Client</label>
-					<select id="projectData" class="custom-select" name="projectData">
+					<select id="clientData" class="custom-select" name="clientData">
 						<option value="">--Select--</option>
 							<?php 
 								foreach($allClients as $client){
@@ -65,11 +64,10 @@
 			<div class="col-md-4">
 	            <div class="form-group m-t-10">
 	                <label class="control-label col-12 mb-3">&nbsp;</label>
-	                <button type="submit" id="btnApplyTimeReport" class="btn btn-success col-lg-4 co-md-5"><i class="fa fa-check"></i> Apply</button>
+	                <button type="submit" id="btnFinanceReport" class="btn btn-success col-lg-4 co-md-5"><i class="fa fa-check"></i> Apply</button>
 	            </div>
 	        </div>
 	    </div>
-	</form>
 </div>
 	            <?php
 					$mess = $this->session->flashdata('message_name');
@@ -85,6 +83,7 @@
 					</div>
 				<?php } ?>
  
+
 				<div class="table-responsive">
 					<table class="table table-bordered table-hover" id="finanacereport">
 						<thead>
@@ -100,3 +99,52 @@
 						</thead>
 					</table>
 				</div>
+
+<div id="container" style="height: 400px"></div>
+</div>
+
+<?php
+   $str='';
+   $str1='';
+	//foreach($data['getAmount'] as $key=>$value){
+   	foreach($finalTempArr as $key=>$value){
+		$str.= '"'.$key.'"'.',';
+		$str1.= $value.',';
+	}
+?>
+
+<!-- <p><?php echo $str.''.$str1; ?></p> -->
+<script src="https://code.highcharts.com/stock/highstock.js"></script>
+<script src="https://code.highcharts.com/stock/modules/data.js"></script>
+<script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/stock/modules/export-data.js"></script>
+<script type="text/javascript">
+
+
+
+
+Highcharts.chart('container', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'TimeLog Report'
+    },
+  
+    xAxis: {
+        categories: [<?php echo $str;?>],
+        crosshair: true
+    },
+    yAxis: {
+        min: 0,
+        title: {
+        //    text: 'Rainfall (mm)'
+        }
+    },
+    series: [{
+        name: 'HourseLogged',
+        data: [<?php echo $str1;?>]
+        //data:[50.0,47.0,0.0]
+    },]
+});
+</script>

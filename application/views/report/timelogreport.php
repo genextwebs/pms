@@ -64,11 +64,11 @@
 		$str.= '"'.$key.'"'.',';
 		$str1.= $value.',';
 	}
-
+	//print_r($key);
 
 ?>
 
-<p><?php echo $str.''.$str1; ?></p>
+
 <script src="https://code.highcharts.com/stock/highstock.js"></script>
 <script src="https://code.highcharts.com/stock/modules/data.js"></script>
 <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>

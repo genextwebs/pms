@@ -15,6 +15,8 @@ class FinanceReport extends CI_Controller {
 	}
 
 	public function index(){
+
+		
 		$project=$this->session->userdata('project');
 		$client=$this->session->userdata('client');
 
@@ -30,9 +32,10 @@ class FinanceReport extends CI_Controller {
 
 		
 		$data['dateRange']= $this->createDateRangeArray($startdate,$enddate);
+/*		
+		if(!empty($project) AND !empty($client) AND  !empty($startdate) AND  !empty($enddate)){*/
 
-
-		if(!empty($project) AND !empty($client)){
+		if(!empty($project)){
 	 		$query = 'SELECT * from tbl_invoice where project='.$project.' AND (invoicedate between "'.$startdate.'" AND "'.$enddate.'") AND (clientname ='.$client.')';
 	 	}else{
 	 		$query = 'SELECT * from tbl_invoice where 1 AND (invoicedate between "'.$startdate.'" AND "'.$enddate.'")';
@@ -106,7 +109,7 @@ class FinanceReport extends CI_Controller {
 	    return $aryRange;
 	}
 
-	public function fianancereportlist123(){
+	public function fianancereportlist(){
 		if(!empty($_POST)){
 			$_GET = $_POST;
 			$defaultOrderClause = "";

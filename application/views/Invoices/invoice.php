@@ -32,13 +32,14 @@
 	                		<form action="" id="filter-form">
 							<div class="row">
 		                		<div class="col-md-4">
-		                			
-            							<label class="control-label">Select Date Range</label>
-											<input type="text"class="start-date form-control br-0" id="startdate" name="startdate" data-date-format='yyyy-mm-dd' />
+		                			<label class="control-label">Select Date Range</label>
+										<input type="text"class="start-date form-control br-0" id="startdate" name="startdate" data-date-format='yyyy-mm-dd' />
+											
 											<div class="input-group-prepend">
 											      <span class="input-group-text bg-info text-white">To</span>
-											    </div>
-											<input type="text" class="end-date form-control br-0" id="enddate" name="enddate" data-date-format='yyyy-mm-dd'  />
+											</div>
+											
+										<input type="text" class="end-date form-control br-0" id="enddate" name="enddate" data-date-format='yyyy-mm-dd'  />
 									
 		                		</div>
 		                		<div class="col-md-2">
