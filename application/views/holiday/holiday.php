@@ -41,7 +41,7 @@
     <li><a data-toggle="tab" href="#May">May</a></li>
     <li><a data-toggle="tab" href="#June">June</a></li>
     <li><a data-toggle="tab" href="#July">July</a></li>
-    <li><a data-toggle="tab" href="#Augest">Augest</a></li>
+    <li><a data-toggle="tab" href="#Augest">August</a></li>
     <li><a data-toggle="tab" href="#September">September</a></li>
     <li><a data-toggle="tab" href="#October">October</a></li>
     <li><a data-toggle="tab" href="#November">November</a></li>
@@ -78,7 +78,9 @@
                 <th> Date </th>
                 <th> Occasion </th>
                 <th> Day </th>
-                <th> Action </th>
+                <?php if($this->user_type == 0) { ?>
+                    <th> Action </th>
+                <?php } ?>
             </tr>
             </thead>
             <tbody id="janTbody">
@@ -101,9 +103,11 @@
                                     } 
                                 ?></td>
                                 <td><?php echo $dateDay; ?></td>
+                                <?php if($this->user_type == 0) { ?>
                                 <td>
                                     <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
                                 </td>
+                            <?php } ?>
                             </tr>
                             <?php
                             $j++; 
@@ -116,7 +120,9 @@
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Saturday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
+                                <?php if($this->user_type == 0) { ?>
                                 <td><button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>
+                            <?php } ?>
                             </tr>
                             <?php
                             $j++;
@@ -128,7 +134,9 @@
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Sunday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
+                                <?php if($this->user_type == 0) { ?>
                                 <td><button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>
+                            <?php } ?>
                             </tr>
                             <?php
                             $j++;
@@ -149,7 +157,9 @@
                 <th> Date </th>
                 <th> Occasion </th>
                 <th> Day </th>
+                <?php if($this->user_type == 0) { ?>
                 <th> Action </th>
+                <?php } ?>
             </tr>
             </thead>
             <tbody id="febTbody">
@@ -174,9 +184,9 @@
                                 ?>
                                  </td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td>
-                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
-                                </td>
+                                <?php if($this->user_type == 0) { ?>
+                                <td><button type="button" onclick="deleteHoliday('<?php echo $date; ?>','')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>
+                            <?php } ?>
                             </tr>
                             <?php
                             $j++; 
@@ -188,9 +198,9 @@
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Saturday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td>
-                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
-                                </td>
+                                <?php if($this->user_type == 0) { ?>
+                                <td><button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></td>
+                            <?php } ?>
                             </tr>
                             <?php
                             $j++;
@@ -202,9 +212,9 @@
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Sunday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td>
-                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
-                                </td>
+                                <?php if($this->user_type == 0) { ?>
+                                <td><button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></td>
+                                <?php } ?>
                             </tr>
                             <?php
                             $j++;
@@ -223,7 +233,9 @@
                 <th> Date </th>
                 <th> Occasion </th>
                 <th> Day </th>
+                <?php if($this->user_type == 0) { ?>
                 <th> Action </th>
+                <?php } ?>
             </tr>
             </thead>
             <tbody id="marTbody">
@@ -248,9 +260,9 @@
                                 ?>
                                 </td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td>
-                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
-                                </td>
+                                <?php if($this->user_type == 0) { ?>
+                                <td><button type="button" onclick="deleteHoliday('<?php echo $date; ?>','')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>
+                                <?php } ?>
                             </tr>
                             <?php
                             $j++; 
@@ -262,9 +274,9 @@
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Saturday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td>
-                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
-                                </td>
+                                <?php if($this->user_type == 0) { ?>
+                                <td><button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>
+                                <?php } ?>
                             </tr>
                             <?php
                             $j++;
@@ -276,9 +288,9 @@
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Sunday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td>
-                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
-                                </td>
+                                <?php if($this->user_type == 0) { ?>
+                                <td><button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>
+                            <?php } ?>
                             </tr>
                             <?php
                             $j++;
@@ -297,7 +309,9 @@
                 <th> Date </th>
                 <th> Occasion </th>
                 <th> Day </th>
+                <?php if($this->user_type == 0) { ?>
                 <th> Action </th>
+            <?php } ?>
             </tr>
             </thead>
             <tbody id="aprilTbody">
@@ -322,9 +336,9 @@
                                 ?>
                                 </td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td>
-                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
-                                </td>
+                                <?php if($this->user_type == 0) { ?>
+                                <td><button type="button" onclick="deleteHoliday('<?php echo $date; ?>','')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>
+                            <?php } ?> 
                             </tr>
                             <?php
                             $j++; 
@@ -336,9 +350,9 @@
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Saturday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td>
-                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
-                                </td>
+                                <?php if($this->user_type == 0) { ?>
+                                <td> <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>
+                            <?php } ?>
                             </tr>
                             <?php
                             $j++;
@@ -350,9 +364,9 @@
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Sunday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td>
-                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
-                                </td>
+                                <?php if($this->user_type == 0) { ?>
+                                <td> <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button> </td>
+                            <?php } ?> 
                             </tr>
                             <?php
                             $j++;
@@ -371,7 +385,9 @@
                 <th> Date </th>
                 <th> Occasion </th>
                 <th> Day </th>
+                <?php if($this->user_type == 0) { ?>
                 <th> Action </th>
+            <?php } ?>
             </tr>
             </thead>
             <tbody id="mayTbody">
@@ -396,9 +412,9 @@
                                 ?>
                                 </td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td>
-                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
-                                </td>
+                                <?php if($this->user_type == 0) { ?>
+                                <td><button type="button" onclick="deleteHoliday('<?php echo $date; ?>','')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>
+                                <?php } ?>
                             </tr>
                             <?php
                             $j++; 
@@ -410,9 +426,9 @@
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Saturday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td>
-                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
-                                </td>
+                                <?php if($this->user_type == 0) { ?>
+                                <td> <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>
+                            <?php } ?>
                             </tr>
                             <?php
                             $j++;
@@ -424,9 +440,9 @@
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Sunday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td>
-                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
-                                </td>
+                                <?php if($this->user_type == 0) { ?>
+                                <td> <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td> 
+                            <?php } ?>
                             </tr>
                             <?php
                             $j++;
@@ -445,7 +461,9 @@
                 <th> Date </th>
                 <th> Occasion </th>
                 <th> Day </th>
+                <?php if($this->user_type == 0) { ?>
                 <th> Action </th>
+                <?php } ?>
             </tr>
             </thead>
             <tbody id="juneTbody"> 
@@ -470,9 +488,9 @@
                                 ?>
                                 </td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td>
-                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
-                                </td>
+                                <?php if($this->user_type == 0) { ?>
+                                <td><button type="button" onclick="deleteHoliday('<?php echo $date; ?>','')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>
+                            <?php } ?>
                             </tr>
                             <?php
                             $j++; 
@@ -484,9 +502,9 @@
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Saturday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td>
-                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
-                                </td>
+                                <?php if($this->user_type == 0) { ?>
+                                <td> <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>
+                            <?php } ?>
                             </tr>
                             <?php
                             $j++;
@@ -498,9 +516,9 @@
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Sunday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td>
-                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
-                                </td>
+                                <?php if($this->user_type == 0) { ?>
+                                <td><button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>
+                            <?php } ?>
                             </tr>
                             <?php
                             $j++;
@@ -519,7 +537,9 @@
                 <th> Date </th>
                 <th> Occasion </th>
                 <th> Day </th>
+                <?php if($this->user_type == 0) { ?>
                 <th> Action </th>
+                <?php } ?>
             </tr>
             </thead>
             <tbody id="julyTbody">
@@ -544,9 +564,9 @@
                                 ?>
                                 </td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td>
-                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
-                                </td>
+                                <?php if($this->user_type == 0) { ?>
+                                <td><button type="button" onclick="deleteHoliday('<?php echo $date; ?>','')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>
+                            <?php } ?>
                             </tr>
                             <?php
                             $j++; 
@@ -558,9 +578,9 @@
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Saturday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td>
-                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
-                                </td>
+                                <?php if($this->user_type == 0) { ?>
+                                <td><button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>
+                                <?php } ?>
                             </tr>
                             <?php
                             $j++;
@@ -572,9 +592,9 @@
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Sunday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td>
-                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
-                                </td>
+                                <?php if($this->user_type == 0) { ?>
+                                <td><button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>
+                                <?php } ?>
                             </tr>
                             <?php
                             $j++;
@@ -585,7 +605,7 @@
         </table>
     </div>
     <div id="Augest" class="tab-pane fade">
-      <h3>Augest</h3>
+      <h3>August</h3>
       <table class="table table-hover">
             <thead>
             <tr>
@@ -593,7 +613,9 @@
                 <th> Date </th>
                 <th> Occasion </th>
                 <th> Day </th>
+                <?php if($this->user_type == 0) { ?>
                 <th> Action </th>
+                <?php } ?>
             </tr>
             </thead>
             <tbody id="augTbody">
@@ -618,9 +640,9 @@
                                 ?>
                                 </td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td>
-                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
-                                </td>
+                                <?php if($this->user_type == 0) { ?>
+                                <td><button type="button" onclick="deleteHoliday('<?php echo $date; ?>','')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>
+                                <?php } ?>
                             </tr>
                             <?php
                             $j++; 
@@ -632,9 +654,9 @@
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Saturday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td>
-                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
-                                </td>
+                                <?php if($this->user_type == 0) { ?>
+                                <td><button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>
+                                <?php } ?>
                             </tr>
                             <?php
                             $j++;
@@ -646,9 +668,9 @@
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Sunday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td>
-                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
-                                </td>
+                                <?php if($this->user_type == 0) { ?>
+                                <td><button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>
+                            <?php } ?>
                             </tr>
                             <?php
                             $j++;
@@ -667,7 +689,9 @@
                 <th> Date </th>
                 <th> Occasion </th>
                 <th> Day </th>
+                <?php if($this->user_type == 0) { ?>
                 <th> Action </th>
+                <?php } ?>
             </tr>
             </thead>
             <tbody id="sepTbody">
@@ -692,9 +716,9 @@
                                 ?>
                                 </td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td>
-                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
-                                </td>
+                                <?php if($this->user_type == 0) { ?>
+                                <td><button type="button" onclick="deleteHoliday('<?php echo $date; ?>','')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>
+                            <?php } ?>
                             </tr>
                             <?php
                             $j++; 
@@ -706,9 +730,9 @@
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Saturday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td>
-                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
-                                </td>
+                                <?php if($this->user_type == 0) { ?>
+                                <td><button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>
+                                <?Php } ?>
                             </tr>
                             <?php
                             $j++;
@@ -720,9 +744,9 @@
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Sunday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td>
-                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
-                                </td>
+                                <?php if($this->user_type == 0) { ?>
+                                <td> <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button> </td>
+                                <?php } ?>
                             </tr>
                             <?php
                             $j++;
@@ -741,7 +765,9 @@
                 <th> Date </th>
                 <th> Occasion </th>
                 <th> Day </th>
+                <?php if($this->user_type == 0) { ?>
                 <th> Action </th>
+                <?php } ?>
             </tr>
             </thead>
             <tbody id="octTbody">
@@ -766,9 +792,9 @@
                                 ?>
                                 </td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td>
-                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
-                                </td>
+                                <?php if($this->user_type == 0) { ?>
+                                <td><button type="button" onclick="deleteHoliday('<?php echo $date; ?>','')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>
+                                <?php } ?>
                             </tr>
                             <?php
                             $j++; 
@@ -780,9 +806,9 @@
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Saturday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td>
-                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
-                                </td>
+                                <?php if($this->user_type == 0) { ?>
+                                <td> <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>
+                            <?php } ?>
                             </tr>
                             <?php
                             $j++;
@@ -794,9 +820,9 @@
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Sunday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td>
-                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
-                                </td>
+                                <?php if($this->user_type == 0) { ?>
+                                <td><button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>
+                                <?php } ?>
                             </tr>
                             <?php
                             $j++;
@@ -815,7 +841,9 @@
                 <th> Date </th>
                 <th> Occasion </th>
                 <th> Day </th>
+                <?php if($this->user_type == 0) { ?>
                 <th> Action </th>
+                <?php } ?>
             </tr>
             </thead>
             <tbody id="novTbody">
@@ -840,9 +868,9 @@
                                 ?>
                                 </td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td>
-                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
-                                </td>
+                                <?php if($this->user_type == 0) { ?>
+                                <td> <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>
+                                <?php } ?>
                             </tr>
                             <?php
                             $j++; 
@@ -854,9 +882,9 @@
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Saturday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td>
-                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
-                                </td>
+                                <?php if($this->user_type == 0) { ?>
+                                <td><button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>
+                            <?php } ?>
                             </tr>
                             <?php
                             $j++;
@@ -868,9 +896,9 @@
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Sunday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td>
-                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
-                                </td>
+                                <?php if($this->user_type == 0) { ?>
+                                <td><button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>
+                            <?php } ?>
                             </tr>
                             <?php
                             $j++;
@@ -889,7 +917,9 @@
                 <th> Date </th>
                 <th> Occasion </th>
                 <th> Day </th>
+                 <?php if($this->user_type == 0) { ?>
                 <th> Action </th>
+            <?php } ?>
             </tr>
             </thead>
             <tbody id="decTbody">
@@ -914,9 +944,9 @@
                                 ?>
                                 </td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td>
-                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
-                                </td>
+                                 <?php if($this->user_type == 0) { ?>
+                                <td><button type="button" onclick="deleteHoliday('<?php echo $date; ?>','')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>
+                                <?php } ?>
                             </tr>
                             <?php
                             $j++; 
@@ -928,9 +958,9 @@
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Saturday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td>
-                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
-                                </td>
+                                 <?php if($this->user_type == 0) { ?>
+                                <td><button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>
+                            <?php } ?>
                             </tr>
                             <?php
                             $j++;
@@ -942,9 +972,9 @@
                                 <td><?php echo $date; ?></td>
                                 <td><?php echo 'Sunday'; ?></td>
                                 <td><?php echo $dateDay; ?></td>
-                                <td>
-                                <button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
-                                </td>
+                                 <?php if($this->user_type == 0) { ?>
+                                <td><button type="button" onclick="deleteHoliday('<?php echo $date; ?>','1')" href="javascript:void(0);" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button></td>
+                                <?php } ?>
                             </tr>
                             <?php
                             $j++;

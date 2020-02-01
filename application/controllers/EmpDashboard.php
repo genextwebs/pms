@@ -20,6 +20,7 @@ class EmpDashboard extends CI_Controller
 			$WhereArr1=array('emp_id'=>$empid);
 			$data['projectData']=$this->common_model->getData('tbl_project_member',$WhereArr1);	
 			$data['totalProject']=count($data['projectData']);
+			//print_r($data['totalProject']);
 		}
 		elseif($this->user_type == 0) {
 			$data='';

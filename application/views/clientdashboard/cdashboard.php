@@ -27,7 +27,12 @@
                         </div>
                         <div class="col-sm-9 text-right">
                             <span class="widget-title">  Total Projects</span><br>
-                            <span class="counter">20</span>
+                            <span class="counter"><?php $cid = $this->login->id;
+                            $query = "select * from tbl_project_info where clientid=".$cid;
+                             $clientsData = $this->common_model->coreQuery($query);
+                             $totalPro =  count($clientsData);
+                              echo $totalPro; ?></span>
+                          
                         </div>
                     </div>
                 </div>
@@ -88,39 +93,39 @@
     </div>
     
     <div class="row">
-    	<div class="col-md-6">
-    		<div class="card c-wrapp">
-			    <div class="card-header">PROJECT ACTIVITY TIMELINE</div>
-			    <div class="card-wrapper collapse show">
-			        <div class="card-body">
-			            <ul class="list-task list-group border-none" data-role="tasklist">
-			                <li class="list-group-item" data-role="task">
-			                    1. <a class="text-danger" href="#"> Gryphon. '--you advance twice--' 'Each with a deep voice, 'are done.</a> <i>2 Months Ago</i>
-			                </li>
-			                <li class="list-group-item" data-role="task">
-			                    2. <a class="text-danger" href="#"> However, when they hit her; and the executioner went off like an.</a> <i>4 Days From Now</i>
-			                </li>
-			                <li class="list-group-item" data-role="task">
-			                    3. <a class="text-danger" href="#"> WHAT?' said the Gryphon, half to itself, 'Oh dear! Oh dear! I'd.</a> <i>6 Months Ago</i>
-			                </li>
-			                <li class="list-group-item" data-role="task">
-			                    4. <a class="text-danger" href="#"> Alice was not quite know what a dear quiet thing,' Alice went on.</a> <i>11 Months Ago</i>
-			                </li>
-			                <li class="list-group-item" data-role="task">
-			                    5. <a class="text-danger" href="#"> Mouse, frowning, but very politely: 'Did you say things are worse.</a> <i>1 Day From Now</i>
-			                </li>
-			                <li class="list-group-item" data-role="task">
-			                    6. <a class="text-danger" href="#"> And the muscular strength, which it gave to my right size: the next.</a> <i>2 Days From Now</i>
-			                </li>
-			                <li class="list-group-item" data-role="task">
-			                    7. <a class="text-danger" href="#"> At last the Mouse, who was peeping anxiously into its eyes were.</a> <i>4 Days From Now</i>
-			                </li>
-			            </ul>
-			        </div>
-			    </div>
-			</div>
-    	</div>
-    	
+        <div class="col-md-6">
+            <div class="card c-wrapp">
+                <div class="card-header">PROJECT ACTIVITY TIMELINE</div>
+                <div class="card-wrapper collapse show">
+                    <div class="card-body">
+                        <ul class="list-task list-group border-none" data-role="tasklist">
+                            <li class="list-group-item" data-role="task">
+                                1. <a class="text-danger" href="#"> Gryphon. '--you advance twice--' 'Each with a deep voice, 'are done.</a> <i>2 Months Ago</i>
+                            </li>
+                            <li class="list-group-item" data-role="task">
+                                2. <a class="text-danger" href="#"> However, when they hit her; and the executioner went off like an.</a> <i>4 Days From Now</i>
+                            </li>
+                            <li class="list-group-item" data-role="task">
+                                3. <a class="text-danger" href="#"> WHAT?' said the Gryphon, half to itself, 'Oh dear! Oh dear! I'd.</a> <i>6 Months Ago</i>
+                            </li>
+                            <li class="list-group-item" data-role="task">
+                                4. <a class="text-danger" href="#"> Alice was not quite know what a dear quiet thing,' Alice went on.</a> <i>11 Months Ago</i>
+                            </li>
+                            <li class="list-group-item" data-role="task">
+                                5. <a class="text-danger" href="#"> Mouse, frowning, but very politely: 'Did you say things are worse.</a> <i>1 Day From Now</i>
+                            </li>
+                            <li class="list-group-item" data-role="task">
+                                6. <a class="text-danger" href="#"> And the muscular strength, which it gave to my right size: the next.</a> <i>2 Days From Now</i>
+                            </li>
+                            <li class="list-group-item" data-role="task">
+                                7. <a class="text-danger" href="#"> At last the Mouse, who was peeping anxiously into its eyes were.</a> <i>4 Days From Now</i>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
     </div>
 </div>
 <!-- ends of contentwrap -->

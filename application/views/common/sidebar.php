@@ -130,12 +130,18 @@ if($this->session->userdata('login')){
                 </li>
             </ul>
         </li>
-        <li>
+          <li <?php if($controller == 'Attendance' && ($functionName == '' || $functionName == '')) { echo 'class="active"'; } ?>>
             <a href="<?php echo base_url().'Attendance'?>" class="nav-link-s">
                 <i class="icon-clock"></i>
                 <span>Attendance</span>
             </a>
         </li>
+      <!--   <li>
+            <a href="<?php echo base_url().'Attendance'?>" class="nav-link-s">
+                <i class="icon-clock"></i>
+                <span>Attendance</span>
+            </a>
+        </li> -->
         <li <?php if($controller == 'holiday' && ($functionName == 'holiday' || $functionName == '')) { echo 'class="active"'; } ?>>
             <a href="<?php echo base_url().'holiday'?>" class="nav-link-s">
                 <i class="icon-calender"></i>
