@@ -935,6 +935,7 @@ class Project extends CI_Controller {
 	}
 
 	public function insertTask(){
+		$test = base64_decode($this->uri->segment(3));
 		if(!empty($_POST)){
 			$title = $this->input->post('title_task');
 			$projectid = $this->input->post('projectid');
@@ -947,7 +948,13 @@ class Project extends CI_Controller {
 			$priority = $this->input->post('radio-stacked');
 			$insArr = array('projectid' => $projectid, 'title' => $title , 'description' => $description , 'startdate' => $startdate , 'duedate' => $duedate , 'assignedto' => $assignemp , 'taskcategory' => $taskcategory , 'status' => 0, 'priority' => $priority);
 			$this->common_model->insertData('tbl_task',$insArr);
-			redirect('project/task/'.base64_encode($projectid));
+			print_r($insArr);
+			if($test == 'project'){
+				redirect('project/task/'.base64_encode($projectid));
+			}
+			else{
+				redirect('task');
+			}
 		}
 	}
 
@@ -957,7 +964,7 @@ class Project extends CI_Controller {
 			$defaultOrderClause = "";
 			$sWhere = "";
 			$sOrder = '';
-			$aColumns = array( 'id', 'title', 'assignedto', 'duedate', 'status');
+			$aColumns = array( 'id', 'title','projectid','assignedto', 'duedate', 'status');
 			//'ahrefs_dr', 
             $totalColumns = count($aColumns);
 			/** Paging Start **/
@@ -1031,27 +1038,53 @@ class Project extends CI_Controller {
 				$status = $row->status = 'Incomplete';
 				$str = '<label class="label label-danger">'.$status.'</label>';
 			}
-			
-				$actionStr = '<a href="javascript:;" onclick="updateTask(\''.base64_encode($row->id).'\')" class="btn btn-info btn-circle edit-task" data-toggle="tooltip" data-task-id="69" data-original-title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a> &nbsp;
-					<a href="javascript:;" class="btn btn-danger btn-circle sa-params" data-toggle="tooltip" data-task-id="69" data-original-title="Delete" onclick="deleteTask(\''.$row->id.'\')"><i class="fa fa-times" aria-hidden="true"></i></a>';
-			foreach($taskAllArr as $task){
-				$wherePid = array('id'=>$taskAllArr[0]->projectid);
-				$projectData = $this->common_model->getData('tbl_project_info',$wherePid);
-				$whereCid = array('id'=>$projectData[0]->clientid);
-				$clientData = $this->common_model->getData('tbl_clients',$whereCid);
-				$clientname = $clientData[0]->clientname;
+			elseif($row->status == 1){
+				$status = $row->status = 'To Do';
+				$str = '<label class="label label-success">'.$status.'</label>';
 			}
-			$datarow[] = array(
-				$id = $i,
-                //$row->clientname.'<br/>'.$str,
-                $row->title,
-                $row->employeename,
-                $clientname,
-				$row->duedate,
-				$str,
-				$actionStr
-           	);
-           	$i++;
+			elseif($row->status == 2){
+				$status = $row->status = 'Doing';
+				$str = '<label class="label label-danger">'.$status.'</label>';
+			}
+			elseif($row->status == 3){
+				$status = $row->status = 'Done';
+				$str = '<label class="label label-success">'.$status.'</label>';
+			}
+			elseif($row->status == 4){
+				$status = $row->status = 'Completed';
+				$str = '<label class="label label-success">'.$status.'</label>';
+			}
+			$actionStr="";
+				if(strtolower($this->uri->segment(3))=='project'){
+					$actionStr.= '<a href="javascript:;" onclick="updateTask(\''.base64_encode($row->id).'\')" class="btn btn-info btn-circle edit-task" data-toggle="tooltip" data-task-id="69" data-original-title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a> &nbsp;';
+				}else{
+					$actionStr.= '<a href='.base_url().'task/edittask/'.base64_encode($row->id).' class="btn btn-info btn-circle edit-task" data-toggle="tooltip" data-task-id="69" data-original-title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a> &nbsp;';
+				}
+				$actionStr.='<a href="javascript:;" class="btn btn-danger btn-circle sa-params" data-toggle="tooltip" data-task-id="69" data-original-title="Delete" onclick="deleteTask(\''.$row->id.'\')"><i class="fa fa-times" aria-hidden="true"></i></a>';
+
+
+			$sql = "select tbl_project_info.*,tbl_task.projectid from tbl_task inner join tbl_project_info on tbl_task.projectid = tbl_project_info.id where tbl_project_info.id=".$row->projectid;
+			$clientData=$this->common_model->coreQueryObject($sql);
+
+			foreach($clientData as $cname){
+				$projectname = $cname->projectname;
+				$clientquery = 'select tbl_clients.*,tbl_project_info.clientid from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id where tbl_clients.id='.$cname->clientid;
+				$clientName = $this->common_model->coreQueryObject($clientquery);
+				foreach($clientName as $CN){
+					$client = $CN->clientname;
+				}
+			}
+	        $datarow[] = array(
+					$id = $i,
+	                $row->title,
+	                $projectname,
+	                $row->employeename,
+	                $client,
+					$row->duedate,
+					$str,
+					$actionStr
+	        );
+	        $i++;
       	}
         
 		$output = array

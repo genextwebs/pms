@@ -182,7 +182,7 @@ jQuery(document).ready(function() {
 		});
 	}
 
-	else if(controllerName == 'project' && functionName == 'task'){
+	else if((controllerName == 'project' || controllerName == 'task') && (functionName == 'task' || functionName == '')){
 		var oTable = jQuery('#tasks-table').DataTable({
 			'bRetrieve': true,
 	        "bPaginate": true,
@@ -196,6 +196,8 @@ jQuery(document).ready(function() {
 	        "bAutoWidth": false,
 	        "bProcessing": true,
 	        "aoColumns": [{ "sWidth": "40px", sClass: "text-left", "asSorting": [  ] }, 
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] },
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
                       { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
                       { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
                       { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
@@ -204,7 +206,7 @@ jQuery(document).ready(function() {
                      ],
 	        "bServerSide": true,
 	        "fixedHeader": true,
-	        "sAjaxSource": base_url+"project/task_list",
+	        "sAjaxSource": base_url+"project/task_list/"+controllerName,
 	        "sServerMethod": "POST",
 	        "sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
         	"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No Leads found<br/><br/></center>', "sZeroRecords": "<center><br/>No Leads found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ leads", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
@@ -913,6 +915,7 @@ $('#save-task-category').click(function(){
 							$('#taxCategory').append("<tr id='taskCat_"+data.lastTaskCatinsertid+"'><td>"+data.count+"</td><td>"+task_cat_name+"</td><td><input type='submit' class='btn btn-sm btn-danger btn-rounded delete-category' onclick='deletetaskCat(\""+data.lastTaskCatinsertid+"\");' value='Remove' id='deletetaskCat'></td></tr>");
 							$('#add-task-categ').modal('toggle');
 							$('#createTaskCategoryForm')[0].reset();
+							jQuery('#errormsg').css('display','none');
 						}
 					});		
 				}else{
@@ -928,6 +931,10 @@ $('#save-task-category').click(function(){
 		}
 });
 
+jQuery('#close').click(function(){
+	jQuery('#errormsg').css('display','none');;
+	jQuery('#category_name').val('');
+});
 function deletetaskCat(id){
 	$.ajax({
 	    type: "POST",

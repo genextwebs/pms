@@ -506,10 +506,10 @@
 									  						<div class="card-action">
 	                                                            <a href="javascript:;" id="hide-new-task-panel"><i class="ti-close"></i></a>
 	                                                        </div>
-									  					</div>
+									  					</div><?php $c = 'project'; ?>
 									  					<div class="card-wrapper collapse show">
 													         <div class="card-body">
-													           	<form method="post" action="<?php echo base_url().'project/insertTask'?>" name="task_category">
+													           	<form method="post" action="<?php echo base_url().'project/insertTask/'.base64_encode($c); ?>" name="task_category">
 													           		<div class="form-body">
 													           			<div class="row">
 													           				<div class="col-md-12">
@@ -731,7 +731,7 @@
 												            <tr role="row">
 												                <th>Id</th>
 												                <th>Task</th>
-												               	
+												               	<th>Project</th>
 												                <th>Assigned To</th>
 												                <th>Client</th>
 												               <!-- <th>Assigned By</th>-->

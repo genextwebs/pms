@@ -129,13 +129,13 @@
 															foreach($client as $row)
 															{
 																$str='';
-																if($row->id==$projectinfo->select-client)
+																if($row->id==$projectinfo->clientid)
 																{
 																	$str='selected';
 																	?>	
 																	<?php
 																}
-																echo '<option value="'.$row->id.'" >'.$row->clientname.'</option>';
+																echo '<option value="'.$row->id.'"'.$str.'>'.$row->clientname.'</option>';
 															}
 														?>
                     						</select>
