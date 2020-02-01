@@ -606,7 +606,6 @@ jQuery(document).ready(function() {
 				aoData.push( { "name": "deadline", "value": $('#deadline').val() } );
 				aoData.push( { "name": "project", "value": $('#projectData').val() } );
 				aoData.push( { "name": "clientData", "value": $('#clientData').val() } );
-
 				oSettings.jqXHR = $.ajax( {
 					"dataType": 'json',
 					"type": "POST",
@@ -614,14 +613,16 @@ jQuery(document).ready(function() {
 					"data": aoData,
 	                "timeout": 60000, //1000 - 1 sec - wait one minute before erroring out = 30000
 	                "success": function(json) {
+	                	var getGraph = json.graphData;
+	                	var splitArr = getGraph.split('#$#');
+	                	graphDataAppend(splitArr[0],splitArr[1]);
 	                	var oTable = $('#finanacereport').dataTable();
 	                	var oLanguage = oTable.fnSettings().oLanguage;
-
 	                	if((json.estimateCount == true) && (json.iTotalDisplayRecords == json.limitCountQuery)){
-	                		oLanguage.sInfo = '<b>_START_ to _END_</b> of more than _TOTAL_ (<small>' + json.iTotalRecordsFormatted + ' FinanceReport</small>)';
+	                		oLanguage.sInfo = '<b>_START_ to _END_</b> of more than _TOTAL_ (<small>' + json.iTotalRecordsFormatted + ' AttandanceReport</small>)';
 	                	}
 	                	else{
-	                		oLanguage.sInfo = '<b>_START_ to _END_</b> of <b>_TOTAL_</b> (<small>' + json.iTotalRecordsFormatted + ' FinanceReport </small>)';
+	                		oLanguage.sInfo = '<b>_START_ to _END_</b> of <b>_TOTAL_</b> (<small>' + json.iTotalRecordsFormatted + ' AttandanceReport </small>)';
 	                	}
 
 	                	fnCallback(json);
@@ -638,6 +639,7 @@ jQuery(document).ready(function() {
 		});
 	}		
 });
+
 
 //PROJECT FILTER
 $('#clientname').change(function(){ //button filter event click

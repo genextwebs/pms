@@ -54,13 +54,14 @@ class TimeLogReport extends CI_Controller {
 			}
 			else{
 					//echo "NOt Exist";
-					$temp[$hour->timelogstartdate]=$string;
+				$temp[$hour->timelogstartdate]=$string;
 			}
 		}
 		//echo '<pre>';print_r($data['getHours']);die;
 		$data['sdate']=$sdate;
 		$data['edate']=$edate;
 		$data['finalTempArr']=	$temp;
+		//print_r($data['finalTempArr']);die;
 		$data['allProjectData'] = $this->common_model->getData('tbl_project_info');
 		$this->load->view('common/header');
 		$this->load->view('report/timelogreport',$data);

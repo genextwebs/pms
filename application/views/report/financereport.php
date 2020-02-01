@@ -103,17 +103,9 @@
 <div id="container" style="height: 400px"></div>
 </div>
 
-<?php
-   $str='';
-   $str1='';
-	//foreach($data['getAmount'] as $key=>$value){
-   	foreach($finalTempArr as $key=>$value){
-		$str.= '"'.$key.'"'.',';
-		$str1.= $value.',';
-	}
-?>
 
-<!-- <p><?php echo $str.''.$str1; ?></p> -->
+
+    <script src="http://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/stock/highstock.js"></script>
 <script src="https://code.highcharts.com/stock/modules/data.js"></script>
 <script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
@@ -121,30 +113,36 @@
 <script type="text/javascript">
 
 
-
-
-Highcharts.chart('container', {
-    chart: {
-        type: 'column'
-    },
-    title: {
-        text: 'TimeLog Report'
-    },
-  
-    xAxis: {
-        categories: [<?php echo $str;?>],
-        crosshair: true
-    },
-    yAxis: {
-        min: 0,
-        title: {
-        //    text: 'Rainfall (mm)'
-        }
-    },
-    series: [{
-        name: 'HourseLogged',
-        data: [<?php echo $str1;?>]
-        //data:[50.0,47.0,0.0]
-    },]
-});
+function graphDataAppend(str,str1)
+{
+	alert('str'+str);
+	alert('str1'+str1);
+	//var amount=str1;
+	/*
+	var str123=str.rtrim(',')
+	alert('str123'+str123);*/
+	Highcharts.chart('container', {
+	    chart: {
+	        type: 'column'
+	    },
+	    title: {
+	        text: 'TimeLog Report'
+	    },
+	  
+	    xAxis: {
+	       	categories: [str],
+	        crosshair: true
+	    },
+	    yAxis: {
+	        min: 0,
+	        title: {
+	        //    text: 'Rainfall (mm)'
+	        }
+	    },
+	    series: [{
+	        name: 'HourseLogged',
+	      	data:[eval(str1)]
+	    },]
+	});
+}
 </script>

@@ -15,14 +15,16 @@ class FinanceReport extends CI_Controller {
 	}
 
 	public function index(){
-		$project=$this->session->userdata('project');
-		$client=$this->session->userdata('client');
+		//$e_date	= $this->session->userdata('edate');
+		//$s_date = $this->session->userdata('sdate');
+		$project = $this->session->userdata('project');
+		$client = $this->session->userdata('client');
 
-		if (!empty($this->session->userdata('sdate')) AND !empty($this->session->userdata('edate'))){
+		if (!empty($s_date) AND !empty($e_date)){
 			$startdate=$this->session->userdata('sdate');
 		    $enddate=$this->session->userdata('edate');
 		}
-		else{ 
+		else{
 		
 			$startdate=date('Y-m-d',strtotime('-1 month'));
 			$enddate=date('Y-m-d');
@@ -30,65 +32,101 @@ class FinanceReport extends CI_Controller {
 
 		
 		$data['dateRange']= $this->createDateRangeArray($startdate,$enddate);
-
-
-		if(!empty($project) AND !empty($client)){
+		if(!empty($project)){
 	 		$query = 'SELECT * from tbl_invoice where project='.$project.' AND (invoicedate between "'.$startdate.'" AND "'.$enddate.'") AND (clientname ='.$client.')';
 	 	}else{
 	 		$query = 'SELECT * from tbl_invoice where 1 AND (invoicedate between "'.$startdate.'" AND "'.$enddate.'")';
 	 	}
-	 	//echo($query);die;
 	 	$data['getAmount'] = $this->common_model->coreQueryObject($query);
-	 	//echo '<pre>';print_r($data['getAmount']);die;
 	 	$temp = array();
 		$stri='';
 		foreach($data['getAmount'] as $amount){
-				/*$find = [" Hrs ", " Mins"];
-    			$replace = ['.', ''];
-    			$string = str_replace($find,$replace,$amount->totalhours);*/
     			$string = $amount->total;
 
 			if(array_key_exists($amount->invoicedate,$temp)){
-				//echo "Exist";
 				$temp[$amount->invoicedate]=$string+$temp[$amount->invoicedate];
 			}
 			else{
-					//echo "NOt Exist";
 					$temp[$amount->invoicedate]=$string;
 			}
-			//echo '<pre>';print_r($string+$temp[$amount->invoicedate]);die;
+		
 		}
 		
 		$data['allProjectData'] = $this->common_model->getData('tbl_project_info');
 	    $data['allClients'] = $this->common_model->getData('tbl_clients');
 	   	$data['sdate']=$startdate;
 		$data['edate']=$enddate;
-		$data['finalTempArr']=	$temp;
+		//$data['finalTempArr']=	$temp;
 		$this->load->view('common/header');
 		$this->load->view('report/financereport',$data);
 		$this->load->view('common/footer');
 	}
 
 
-	public function getPostData(){
-		if(!empty($_POST))
+	public function getPostData($post){
+		if(!empty($post))
 		{
-			$sdate=$this->input->post('start_date');
-	    	$edate=$this->input->post('deadline');
-	    	$project=$this->input->post('projectData');
-	    	$client=$this->input->post('clientData');
-	    
+
+			$sdate=$post['start_date'];
+	    	$edate=$post['deadline'];
+	    	$project=$post['project'];
+	    	$client=$post['clientData'];
+	    	
 	    	$this->session->set_userdata('sdate',$sdate);
 	    	$this->session->set_userdata('edate',$edate);
 	    	$this->session->set_userdata('project',$project);
 	    	$this->session->set_userdata('client',$client);
-	    
-	    	redirect('FinanceReport/index');
+	    	
+	    	//redirect('FinanceReport/index');
+	    	$project = $this->session->userdata('project');
+		  $client = $this->session->userdata('client');
 
+		if (!empty($sdate) AND !empty($edate)){
+			$startdate=$this->session->userdata('sdate');
+		    $enddate=$this->session->userdata('edate');
 		}
+		else{
+		
+			$startdate=date('Y-m-d',strtotime('-1 month'));
+			$enddate=date('Y-m-d');
+		}
+
+		
+		$data['dateRange']= $this->createDateRangeArray($startdate,$enddate);
+		if(!empty($project)){
+	 		$query = 'SELECT * from tbl_invoice where project='.$project.' AND (invoicedate between "'.$startdate.'" AND "'.$enddate.'") AND (clientname ='.$client.')';
+	 	}else{
+	 		$query = 'SELECT * from tbl_invoice where 1 AND (invoicedate between "'.$startdate.'" AND "'.$enddate.'")';
+	 	}
+	 	/*$query= 'SELECT * from tbl_invoice where 1 AND (invoicedate between "2019-12-06" AND "2019-12-06")';*/
+	 	$data['getAmount'] = $this->common_model->coreQueryObject($query);
+	 	//echo $query;die;
+	 	$temp = array();
+		$stri='';
+		foreach($data['getAmount'] as $amount){
+    			$string = $amount->total;
+
+			if(array_key_exists($amount->invoicedate,$temp)){
+				$temp[$amount->invoicedate]=$string+$temp[$amount->invoicedate];
+			}
+			else{
+					$temp[$amount->invoicedate]=$string;
+			}
+		
+		}
+			$str='';
+		    $str1='';
+		   	foreach($temp as $key=>$value){
+				$str.= '"'.$key.'"'.',';
+				$str1.= $value.',';
+			}
+	     	return rtrim($str,",")."#$#".rtrim($str1,",");
+			//print_r($temp);die;
+		}
+
 	}
 
-	 function createDateRangeArray($strDateFrom,$strDateTo)
+	   function createDateRangeArray($strDateFrom,$strDateTo)
 	{
 	    $aryRange=array();
 	    $iDateFrom=mktime(1,0,0,substr($strDateFrom,5,2),  substr($strDateFrom,8,2),substr($strDateFrom,0,4));
@@ -106,7 +144,7 @@ class FinanceReport extends CI_Controller {
 	    return $aryRange;
 	}
 
-	public function fianancereportlist123(){
+	public function fianancereportlist(){
 		if(!empty($_POST)){
 			$_GET = $_POST;
 			$defaultOrderClause = "";
@@ -236,13 +274,14 @@ class FinanceReport extends CI_Controller {
 			);
 				$i++;
 			}
-			
-			 
+			$dataGraph = $this->getPostData($_POST);
+			  
 			$output = array
 			(
 			   	"sEcho" => intval($_GET['sEcho']),
 		        "iTotalRecords" => $iTotal,
 		        "iTotalRecordsFormatted" => number_format($iTotal), //ShowLargeNumber($iTotal),
+		        "graphData"=>$dataGraph,
 		        "iTotalDisplayRecords" => $iFilteredTotal,
 		        "aaData" => $datarow
 			);
