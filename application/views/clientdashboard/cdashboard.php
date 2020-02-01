@@ -1,3 +1,6 @@
+
+
+
 <nav aria-label="breadcrumb" class="breadcrumb-nav">
     <div class="row">
         <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
@@ -7,12 +10,15 @@
             <ol class="breadcrumb">
                 <li><a href="#">Home</a></li>
                 <li class="active">Dashboard</li>
+                <li><a class="btn btn-outline btn-inverse timer-modal" href="javascript:;">Start Timer <i class="fa fa-check-circle text-success"></i></a></li>
+
             </ol>
         </div>
     </div>
 </nav>
 
 <!-- contetn-wrap -->
+
 <div class="content-in">  
     <div class="row db-stats">
        

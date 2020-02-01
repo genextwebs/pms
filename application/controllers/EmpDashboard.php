@@ -18,9 +18,16 @@ class EmpDashboard extends CI_Controller
 			$data['empData']=$this->common_model->getData('tbl_employee',$whereArr);	
 			$empid=$data['empData']['0']->id;
 			$WhereArr1=array('emp_id'=>$empid);
-			$data['projectData']=$this->common_model->getData('tbl_project_member',$WhereArr1);	
+			$data['projectData']=$this->common_model->getData('tbl_project_member',$WhereArr1);
+			//print_r($data['projectData']);	
 			$data['totalProject']=count($data['projectData']);
-			//print_r($data['totalProject']);
+			$project = array();
+			for($i=0;$i<=count($data['projectData'])-1;$i++){
+				$whereArr3 = array('id'=>$data['projectData'][$i]->project_id);
+				$project1 =$this->common_model->getData('tbl_project_info',$whereArr3);
+				array_push($project,$project1[0]);
+			}
+			$data['projectDetail'] = $project;
 		}
 		elseif($this->user_type == 0) {
 			$data='';

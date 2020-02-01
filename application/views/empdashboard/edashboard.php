@@ -7,12 +7,21 @@
             <ol class="breadcrumb">
                 <li><a href="#">Home</a></li>
                 <li class="active">Dashboard</li>
+                <li><!-- <a href="javascript:;">Start Timer <i class="fa fa-check-circle text-success"></i> --></a>
+
+                 <a href="javascript:;" id="holiday" data-toggle="modal" data-target="#data-holiday1"><b>Start Timer</b><i class="fa fa-plus" aria-hidden="true"></i></a></li> 
             </ol>
         </div>
     </div>
 </nav>
-<?php  ?>
+
 <!-- contetn-wrap -->
+<div  class="row">
+<div id=n1 style="z-index: 2; position: relative; right: 0px; top: 10px; background-color: #00cc33;
+ width: 100px; padding: 10px; color: white; font-size:20px; border: #0000cc 2px dashed; "> </div>
+ <div><input type="button" name="btn" id='btn' value="Start" onclick="to_start()"; class="btn btn-success"></div>
+</div>
+
 <div class="content-in">  
     <div class="row db-stats">
         <div class="col-md-3 col-sm-6">
@@ -175,3 +184,54 @@
     </div>
 </div>
 <!-- ends of contentwrap -->
+
+
+<div id="data-holiday1" class="modal fade defaultholiday" id="data-defaultholiday" tabindex="-1" role="dialog" aria-labelledby="holiday" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content br-0">
+                        <div class="modal-header">
+                            <h4 class="modal-title"><i class=" ti-plus"></i>Start Timer</h4>
+                            <button type="button" class="closedata" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="modeldefaultholiday" class="" name="modeldefaultholiday" method="post">
+                                <div class="form-body">
+                                <div id="dynamic">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                               <h4>select Project</h4>
+                                               <select class="select2 form-control" id="clientname">
+                                        <option value="">Select</option>
+                                        <?php
+                                            foreach($projectDetail as $row)
+                                            {
+                                                if(!empty($row->projectname)){
+                                                    echo '<option value="'.$row->id.'" >'.$row->projectname.'</option>';
+                                                }
+                                            }
+                                        ?>
+                                    </select>   
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">  
+                                            <div class="form-group">
+                                                <label>Memo</label>
+                                                <input type="text" name="memo">
+                                            </div>
+                                        </div>
+                                        <div><input type="button" name="btn" id='btn' value="Start" onclick="to_start()"; class="btn btn-success"></div>
+                                    </div>
+
+                                </div>
+                               
+                                </div>
+                                
+                                <!-- a -->
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
