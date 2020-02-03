@@ -601,7 +601,7 @@ class Project extends CI_Controller {
 			$whereArr=array('id'=>$id);
 			//echo "<pre>";print_r($_POST);die;
 			$this->common_model->updateData('tbl_project_template',$updateArr,$whereArr);
-			//echo $this->db->last_query();die;
+			$this->session->set_flashdata('message_name', 'Template Update sucessfully');
 			redirect('project/projecttemplate');
 		}
 	}
@@ -657,7 +657,7 @@ class Project extends CI_Controller {
 			'viewtask'=>$view,'projectsummary'=>$editor,'note'=>$note,'tasknotification'=>$tasks);
 			$this->common_model->insertData('tbl_project_template',$insertArr);
 			$whereArr=array('id'=>$id);
-			$this->session->set_flashdata('message','Template Inserted Succesfully....');
+			$this->session->set_flashdata('message_name','Template Inserted Succesfully....');
 			redirect('Project/projecttemplate');				
 		}
 	}
@@ -841,13 +841,14 @@ class Project extends CI_Controller {
 				$projectM = $this->common_model->getData('tbl_project_member', $whereArr);
 				if(count($projectM) == 1){
 					$this->session->set_flashdata('message_name', 'Alredy add this member');
-					redirect('Project/member/'.$this->uri->segment(3));
 				}
 				else{
 					$insArr = array('project_id' => $project_id , 'emp_id' => $emp_id);
 					$this->common_model->insertData('tbl_project_member',$insArr);
 				}
+
 			}
+			redirect('Project/member/'.$this->uri->segment(3));
 		}
 		redirect('Project/member/'.$this->uri->segment(3));
 	}
@@ -863,13 +864,14 @@ class Project extends CI_Controller {
 				$projectM = $this->common_model->getData('tbl_template_member', $whereArr);
 				if(count($projectM) == 1){
 					$this->session->set_flashdata('message_name', 'Alredy add this member');
-					redirect('Project/searchtemplate/'.$this->uri->segment(3));
+					
 				}
 				else{
 					$insArr = array('template_id' => $template_id , 'emp_id' => $emp_id);
 					$this->common_model->insertData('tbl_template_member',$insArr);
 				}
 			}
+			redirect('Project/searchtemplate/'.$this->uri->segment(3));
 		}
 		redirect('Project/searchtemplate/'.$this->uri->segment(3));
 
@@ -950,6 +952,7 @@ class Project extends CI_Controller {
 			$priority = $this->input->post('radio-stacked');
 			$insArr = array('projectid' => $projectid, 'title' => $title , 'description' => $description , 'startdate' => $startdate , 'duedate' => $duedate , 'assignedto' => $assignemp , 'taskcategory' => $taskcategory , 'status' => 0, 'priority' => $priority);
 			$this->common_model->insertData('tbl_task',$insArr);
+			$this->session->set_flashdata('message_name', 'Task Insert sucessfully');
 			if($test == 'project'){
 				redirect('project/task/'.base64_encode($projectid));
 			}
@@ -1020,6 +1023,7 @@ class Project extends CI_Controller {
             $employee = !empty($_POST['employee']) ? $_POST['employee'] : '';
             $status = $_POST['status'];
             $taskcategory = !empty($_POST['employee']) ? $_POST['taskcategory'] : '';
+            $clientName = !empty($_POST['client']) ? $_POST['client'] : ''; 
             $startdate = !empty($_POST['startdate']) ? $_POST['startdate'] : '';
             $enddate = !empty($_POST['enddate']) ? $_POST['enddate'] : '';
             if(strtolower($this->uri->segment(3))=='task'){
@@ -1032,6 +1036,11 @@ class Project extends CI_Controller {
 	            }
 	            else{
 	            	$sWhere.=' AND  assignedto='.$employee;
+	            }
+	            if($clientName == 'all'){
+	            }
+	            else{
+	            	$sWhere.=' AND  clientid='.$clientName;
 	            }
 	            if($status == 'all'){
 	            }
@@ -1056,10 +1065,9 @@ class Project extends CI_Controller {
             /** Filtering End */
 		}
 		
-	    $query = "SELECT tbl_task.* , tbl_employee.employeename from tbl_task inner JOIN tbl_employee on tbl_task.assignedto = tbl_employee.id ".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+	    $query = "SELECT tbl_task.* , tbl_employee.employeename,tbl_clients.clientname,tbl_project_info.clientid,tbl_project_info.projectname from tbl_task inner JOIN tbl_employee on tbl_task.assignedto = tbl_employee.id inner join tbl_project_info on tbl_task.projectid = tbl_project_info.id inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id ".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 		$taskArr = $this->common_model->coreQueryObject($query);
-		$query = "SELECT * from tbl_task ".$sWhere;
-		//echo $this->db->last_query();die;
+		$query = "SELECT tbl_task.* , tbl_employee.employeename,tbl_clients.clientname,tbl_project_info.clientid,tbl_project_info.projectname from tbl_task inner JOIN tbl_employee on tbl_task.assignedto = tbl_employee.id inner join tbl_project_info on tbl_task.projectid = tbl_project_info.id inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id ".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 		$taskFilterArr = $this->common_model->coreQueryObject($query);
 		$iFilteredTotal = count($taskFilterArr);
 		$taskAllArr = $this->common_model->getData('tbl_task');
@@ -1097,24 +1105,12 @@ class Project extends CI_Controller {
 				}
 				$actionStr.='<a href="javascript:;" class="btn btn-danger btn-circle sa-params" data-toggle="tooltip" data-task-id="69" data-original-title="Delete" onclick="deleteTask(\''.$row->id.'\')"><i class="fa fa-times" aria-hidden="true"></i></a>';
 
-
-			$sql = "select tbl_project_info.*,tbl_task.projectid from tbl_task inner join tbl_project_info on tbl_task.projectid = tbl_project_info.id where tbl_project_info.id=".$row->projectid;
-			$clientData=$this->common_model->coreQueryObject($sql);
-
-			foreach($clientData as $cname){
-				$projectname = $cname->projectname;
-				$clientquery = 'select tbl_clients.*,tbl_project_info.clientid from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id where tbl_clients.id='.$cname->clientid;
-				$clientName = $this->common_model->coreQueryObject($clientquery);
-				foreach($clientName as $CN){
-					$client = $CN->clientname;
-				}
-			}
 	        $datarow[] = array(
 					$id = $i,
 	                $row->title,
-	                $projectname,
+	                $row->projectname,
 	                $row->employeename,
-	                $client,
+	                $row->clientname,
 					$row->duedate,
 					$str,
 					$actionStr

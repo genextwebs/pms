@@ -148,6 +148,19 @@
 			                        
 			                    </div>
 			                </div>
+			                <?php
+		                    $mess = $this->session->flashdata('message_name');
+		                    if(!empty($mess)){
+		                        //warning 
+		                    ?>
+		                    <div class="col-md-12">
+		                        <div class="submit-alerts">
+		                            <div class="alert alert-success" role="alert" style="display:block;">
+		                                <?php echo $mess; ?>
+		                            </div>
+		                        </div>
+		                    </div>
+		                <?php } ?>
 			                <div class="row">
 			                	<div class="col-md-12">
 			                		<div class="table-responsive">

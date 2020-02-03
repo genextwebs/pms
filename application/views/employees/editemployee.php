@@ -19,7 +19,7 @@
                     <div class="col-md-12">
 		                <div class="card br-0">
 		                	<div class="card-header br-0 card-header-inverse">
-		                		Add Employee Info
+		                		Edit Employee Info
 		                	</div>
 		                	<div class="card-wrapper collapse show">
 		                		<div class="card-body">
@@ -224,7 +224,7 @@
 			                                
 											<!-- action btn -->
 			                                <div class="form-actions">
-				                                <input type="submit" id="save-form" class="btn btn-success"> <i class="fa fa-check" value="Update"></i> 
+				                                <button type="submit" id="save-form" class="btn btn-success"> <i class="fa fa-check" ></i> Update
 				                                <button type="reset" class="btn btn-default">Reset</button>
 				                            </div>
 		                				</div>

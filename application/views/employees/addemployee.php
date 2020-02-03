@@ -25,10 +25,15 @@
 		                		<div class="card-body">
 		                			<form id="createemployee" name="createemployee" class="aj-form" enctype="multipart/form-data" action="<?php echo base_url().'employee/insertemployee'?>" method="post">
 		                				<div class="submit-alerts">
-		                					<div class="alert alert-success" role="alert">
-											  This is a success alert
+		                					<?php
+		                					$mess = $this->session->flashdata('message_name');
+						                    if(!empty($mess)){
+						                        //warning 
+						                    ?>
+		                					<div class="alert alert-success" role="alert" style="display:block;">
+											  <?php echo $mess; ?>
 											</div>
-											<?php 
+											<?php }
 											if(!empty($error_msg['error'])) { ?>
 											<div class="alert alert-danger" role="alert" style="display: block;">
 											  <?php
@@ -218,7 +223,7 @@
 			                                
 											<!-- action btn -->
 			                                <div class="form-actions">
-				                                <input type="submit" id="save-form" class="btn btn-success"> <i class="fa fa-check" value="Save"></i> 
+				                                <button type="submit" id="save-form" class="btn btn-success" name="save"> <i class="fa fa-check">Save</i> 
 				                                <button type="reset" class="btn btn-default">Reset</button>
 				                            </div>
 		                				</div>
@@ -240,7 +245,7 @@
             			<div class="modal-header">
             				<h4 class="modal-title">Designation</h4>
             				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            					<span aria-hidden="true">×</span>
+            					<span aria-hidden="true" id="close">×</span>
             				</button>
             			</div>
             			<div class="modal-body">
@@ -252,6 +257,7 @@
 						                        <label>Name</label>
 						                        <input type="text" name="designation_name" id="designation_name" class="form-control">
 						                    </div>
+						                    <p id="errormsg" style="color: red;"></p>
 						                </div>
 						            </div>
 						        </div>
@@ -274,7 +280,7 @@
             			<div class="modal-header">
             				<h4 class="modal-title">Department</h4>
             				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            					<span aria-hidden="true">×</span>
+            					<span aria-hidden="true" id="close">×</span>
             				</button>
             			</div>
             			<div class="modal-body">
@@ -286,6 +292,7 @@
 						                        <label>Name</label>
 						                        <input type="text" name="department_name" id="department_name" class="form-control">
 						                    </div>
+						                    <p id="errormsg" style="color: red;"></p>
 						                </div>
 						            </div>
 						        </div>

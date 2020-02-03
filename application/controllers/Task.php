@@ -56,6 +56,7 @@ class Task extends CI_Controller {
 			$status = $this->input->post('status');
 			$updateArr = array('projectid' => $projectid, 'title' => $title , 'description' => $description , 'startdate' => $startdate , 'duedate' => $duedate , 'assignedto' => $assignemp , 'taskcategory' => $taskcategory , 'status' => $status, 'priority' => $priority);
 			$this->common_model->updateData('tbl_task',$updateArr,$where);
+			$this->session->set_flashdata('message_name', 'Task Updated sucessfully');
 			redirect('task');
 		}
 	}

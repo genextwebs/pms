@@ -92,6 +92,7 @@ class Employee extends CI_Controller
 				$profilepicture = array('upload_data'=>$this->upload->data());*/
 			$insArr = array('user_id' =>$last_inserted,'employeename'=>$employee_name,'slackusername'=>$username,'joingdate'=>$joiningdate,'lastdate'=>$lastdate,'gender'=>$gender,'address'=>$address,'skills'=>$skills,'designation'=>$designation,'department'=>$department,'hourlyrate'=>$hourlyrate);
 				$this->common_model->insertData('tbl_employee',$insArr);
+				$this->session->set_flashdata('message_name', 'Employee Insert sucessfully');
 			/*}
 			else{
 				$error = array('error' => $this->upload->display_errors());
@@ -102,6 +103,18 @@ class Employee extends CI_Controller
 			}*/
 			redirect('employee');
 		}			
+	}
+
+	public function checkDesignation(){
+		$status = 0;
+		if(!empty($_POST['name'])){
+			$where = array('name'=>$_POST['name']);
+			$checkData = $this->common_model->getData('tbl_designation',$where);
+			if(!empty($checkData)){
+				$status = 1;
+			}
+		}
+		echo $status;exit();
 	}
 
 	public function insert_designation(){
@@ -120,6 +133,17 @@ class Employee extends CI_Controller
 		}
 	}
 
+	public function checkDepartment(){
+		$status = 0;
+		if(!empty($_POST['name'])){
+			$where = array('name'=>$_POST['name']);
+			$checkData = $this->common_model->getData('tbl_department',$where);
+			if(!empty($checkData)){
+				$status = 1;
+			}
+		}
+		echo $status;exit();
+	}
 	public function insert_department(){
 		if(!empty($_POST)){
 			$desName = $this->input->post('name');
@@ -368,6 +392,7 @@ class Employee extends CI_Controller
 			$updateArr1['hourlyrate'] = $hourlyrate;
 			
 			$this->common_model->updateData('tbl_employee',$updateArr1,$whereArr1);
+			$this->session->set_flashdata('message_name', 'Employee Update sucessfully');
 			$this->common_model->updateData('tbl_user',$updateArr,$whereArr);
 			redirect('employee');
 		}			

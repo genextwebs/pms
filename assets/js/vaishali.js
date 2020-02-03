@@ -1,4 +1,3 @@
-
 jQuery(document).ready(function() {
 	if(controllerName == 'leads' && (functionName == 'index' || functionName == '')){
 		var oTable = jQuery('#leads').DataTable({
@@ -216,6 +215,7 @@ jQuery(document).ready(function() {
         			aoData.push( { "name": "employee", "value": $('#selassto').val() } );
         			aoData.push( { "name": "status", "value": $('#selstatus').val() } );
         			aoData.push( { "name": "taskcategory", "value": $('#taskcategory').val() } );
+        			aoData.push( { "name": "client", "value": $('#selclient').val() } );
         			aoData.push( { "name": "startdate", "value": $('#start_date').val() } );
         			aoData.push( { "name": "enddate", "value": $('#deadline').val() } );
         		}
@@ -441,14 +441,10 @@ $("#save-product").click(function(event) {
               alert('Something is wrong');
            },
            success: function(data) {
-           	console.log(data);
-     			/*$.each(data.taxdata, function(key, value) {
-                           $('select[name="tax"]').append('<option value="'+ value.id +'">'+ value.rate +'</option>');
-                       })*/
                 $('select[name="tax"]').html('');       
                 $('select[name="tax"]').append(data.taxdata);
-               $("tbody").append("<tr><td>"+data.count+"</td><td>"+taxname+"</td><td>"+rate+"</td></tr>");
-               $('#project-tax').modal('toggle');
+                $("tbody").append("<tr><td>"+data.count+"</td><td>"+taxname+"</td><td>"+rate+"</td></tr>");
+                $('#project-tax').modal('toggle');
                 $('#tax')[0].reset();
            }
         });
@@ -492,58 +488,82 @@ $(function() {
     });
 
 // display designation in employee
-$("#save-designation").click(function(event) {
-			event.preventDefault();
-			var name = $("input[name='designation_name']").val();
-       		var dataString = 'name='+ name;
-        $.ajax({
-           url: base_url+"employee/insert_designation",
-           type: 'POST',
-           dataType: 'json',
-           data: dataString,
-           error: function() {
-              alert('Something is wrong');
-           },
-           success: function(data) {
-           	//console.log(data);
-     			/*$.each(data.taxdata, function(key, value) {
-                           $('select[name="tax"]').append('<option value="'+ value.id +'">'+ value.rate +'</option>');
-                       })*/
-                $('select[name="designation"]').html('');
-                $('select[name="designation"]').append(data.taxdata);
-              // $("tbody").append("<tr><td>"+data.count+"</td><td>"+taxname+"</td><td>"+rate+"</td></tr>");
-               $('#data-designation').modal('toggle');
-                $('#modeldesignation')[0].reset();
-           }
-        });
+$('#save-designation').click(function(){
+	var name = $("input[name='designation_name']").val();
+	if(name != ''){
+		$.ajax({
+			url: base_url+"employee/checkDesignation",
+			type: 'POST',
+			dataType: 'html',
+			data:{name:name},
+			success: function(data) {
+				if(data == 0){
+					var dataString = 'name='+ name;
+					$.ajax({
+						url: base_url+"employee/insert_designation",
+						type: 'POST',
+						dataType: 'JSON',
+						data: dataString,
+						success: function(data){
+							$('select[name="designation"]').html('');
+			                $('select[name="designation"]').append(data.desData);
+			                $('#data-designation').modal('toggle');
+			                $('#modeldesignation')[0].reset();
+							jQuery('#errormsg').css('display','none');
+						}
+					});		
+				}else{
+					jQuery('#errormsg').html('');
+					jQuery('#errormsg').html('<b>This Department already exists</b>');
+				}
+			}
+		});
+	}
+		else{
+			jQuery('#errormsg').html('');
+			jQuery('#errormsg').html('<b>Please enter department name</b>');
+		}
 });
 
+
 // display department in employee
-$("#save-department").click(function(event) {
-			event.preventDefault();
-			var name = $("input[name='department_name']").val();
-       		var dataString = 'name='+ name;
-        $.ajax({
-           url: base_url+"employee/insert_department",
-           type: 'POST',
-           dataType: 'json',
-           data: dataString,
-           error: function() {
-              alert('Something is wrong');
-           },
-           success: function(data) {
-           	//console.log(data);
-     			/*$.each(data.taxdata, function(key, value) {
-                           $('select[name="tax"]').append('<option value="'+ value.id +'">'+ value.rate +'</option>');
-                       })*/
-                $('select[name="department"]').html('');
-                $('select[name="department"]').append(data.taxdata);
-              // $("tbody").append("<tr><td>"+data.count+"</td><td>"+taxname+"</td><td>"+rate+"</td></tr>");
-               $('#data-department').modal('toggle');
-                $('#modaldepartment')[0].reset();
-           }
-        });
+$('#save-department').click(function(){
+	var name = $("input[name='department_name']").val();
+	if(name != ''){
+		$.ajax({
+			url: base_url+"employee/checkDepartment",
+			type: 'POST',
+			dataType: 'html',
+			data:{name:name},
+			success: function(data) {
+				if(data == 0){
+					var dataString = 'name='+ name;
+					$.ajax({
+						url: base_url+"employee/insert_department",
+						type: 'POST',
+						dataType: 'JSON',
+						data: dataString,
+						success: function(data){
+							$('select[name="department"]').html('');
+			                $('select[name="department"]').append(data.depData);
+			 				$('#data-department').modal('toggle');
+			                $('#modaldepartment')[0].reset();
+							jQuery('#errormsg').css('display','none');
+						}
+					});		
+				}else{
+					jQuery('#errormsg').html('');
+					jQuery('#errormsg').html('<b>This Department already exists</b>');
+				}
+			}
+		});
+	}
+		else{
+			jQuery('#errormsg').html('');
+			jQuery('#errormsg').html('<b>Please enter department name</b>');
+		}
 });
+
 
 // image upload and preview
 /*$(document).ready(function(){
@@ -714,8 +734,6 @@ $("#save-defaultholiday").click(function(event) {
 			 else{
 			 	sunday = '0';
 			 }
-       		//var dataString = 'saturday='+ saturday +'sunday=' + sunday ;
-       		//alert(dataString);
         $.ajax({
            url: base_url+"holiday/insert_defaultholiday",
            type: 'POST',
@@ -940,8 +958,10 @@ $('#save-task-category').click(function(){
 });
 
 jQuery('#close').click(function(){
-	jQuery('#errormsg').css('display','none');;
+	jQuery('#errormsg').css('display','none');
 	jQuery('#category_name').val('');
+	jQuery('#designation_name').val('');
+	jQuery('#department_name').val('');
 });
 function deletetaskCat(id){
 	$.ajax({
