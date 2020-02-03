@@ -48,7 +48,7 @@ class Finance extends CI_Controller{
 				$insertArr1=array('estimateid'=>$estimateid,'item' => $item_name[$i],'qtyhrs' => $quantity[$i], 'unitprice' => $cost_per_item[$i], 'tax' => $taxes[$i],'amount'=>$amount[$i],'description' => $item_Description[$i]);
 				$this->common_model->insertData('tbl_products',$insertArr1);
 			}
-			$this->session->set_flashdata('messagename', "Data Inserted Succeess");
+			$this->session->set_flashdata('message_name', "Estimate Inserte Successfully..");
 			redirect('Finance');	
 		}
 	}
@@ -114,7 +114,7 @@ class Finance extends CI_Controller{
             /** Filtering Start */
             if(!empty(trim($_GET['sSearch']))){
             	$searchTerm = trim($_GET['sSearch']);
-            	$sWhere .= ' AND (tbl_clients.clientname like "%'.$searchTerm.'%" OR note like "%'.$searchTerm.'%" OR item like "%'.$searchTerm.'%" OR description like "%'.$searchTerm.'%")';
+            	$sWhere .= ' AND (tbl_clients.clientname like "%'.$searchTerm.'%")';
             }
 				$startdate=!empty($_POST['startdate']) ? $_POST['startdate'] : '';
 				$enddate=!empty($_POST['enddate']) ? $_POST['enddate'] : '';
@@ -138,9 +138,10 @@ class Finance extends CI_Controller{
 				
 		
 	    	$query = "select tbl_estimates.* , tbl_clients.clientname from tbl_estimates INNER JOIN tbl_clients ON tbl_clients.id=tbl_estimates.client".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+	    	//echo $query;
 			$estimatesArr = $this->common_model->coreQueryObject($query);
 
-			$query = "SELECT * from tbl_estimates ".$sWhere;
+			$query = "select tbl_estimates.* , tbl_clients.clientname from tbl_estimates INNER JOIN tbl_clients ON tbl_clients.id=tbl_estimates.client".$sWhere;
 			$estimatesFilterArr = $this->common_model->coreQueryObject($query);
 			$iFilteredTotal = count($estimatesFilterArr);
 
@@ -247,7 +248,7 @@ class Finance extends CI_Controller{
 					$insertArr1=array('estimateid'=>$id1,'item' => $item_name[$i],'qtyhrs' => $quantity[$i], 'unitprice' => $cost_per_item[$i], 'tax' => $taxes[$i],'amount'=>$amount[$i],'description' => $item_Description[$i]);
 					$this->common_model->insertData('tbl_products',$insertArr1);
 				}
-				$this->session->set_flashdata('messagename', "Data Update Succeessfully");
+				$this->session->set_flashdata('message_name', "Estimate Update Succeessfully");
 				redirect('Finance');
 		}
 	}
@@ -315,7 +316,7 @@ class Finance extends CI_Controller{
 				$insertArr1=array('invoiceid'=>$invoiceid,'item' => $item[$i],'qtyhrs' => $qtyhrs[$i], 'unitprice' => $unitprice[$i], 'tax' => $tax[$i],'amount'=>$amount[$i],'description' => $description[$i]);
 				$this->common_model->insertData('tbl_invoiceproduct',$insertArr1);
 			}
-				$this->session->set_flashdata('messagename', "Data Inserted Succeess");
+				$this->session->set_flashdata('message_name', "Create Invoice Successfully");
 				redirect('Finance/invoice');
 		}
 	}
@@ -365,7 +366,7 @@ class Finance extends CI_Controller{
 				$insertArr1=array('invoiceid'=>$invoiceid,'item' => $item[$i],'qtyhrs' => $qtyhrs[$i], 'unitprice' => $unitprice[$i], 'tax' => $tax[$i],'amount'=>$amount[$i],'description' => $description[$i]);
 				$this->common_model->insertData('tbl_invoiceproduct',$insertArr1);
 			}
-			$this->session->set_flashdata('messagename', "Data Inserted Succeess");
+			$this->session->set_flashdata('message_name', "Invoice Insert Successfully");
 			redirect('Finance/invoice');
 		}
 	}

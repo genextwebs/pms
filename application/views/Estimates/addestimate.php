@@ -74,7 +74,7 @@
 												<div class="col-md-4">
 		                							<div class="form-group">
 		                								<label class="control-label">Valid Till</label>
-														<input type="date" class="form-control" name="valid_till" id="valid_till">
+														<input type="text" class="form-control" name="valid_till" id="start_date">
 		                							</div>
 		                						</div>
 		                					</div>

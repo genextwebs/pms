@@ -85,7 +85,7 @@
 									<div class="col-md-6">
             							<div class="form-group">
             								<label class="control-label">Valid Till</label>
-											<input type="date" class="form-control" name="valid_till" id="valid_till" value="<?php echo !empty($estimate[0]->validtill) ? $estimate[0]->validtill : '' ?>">
+											<input type="text" class="form-control" name="valid_till" id="start_date" value="<?php echo !empty($estimate[0]->validtill) ? $estimate[0]->validtill : '' ?>">
             							</div>
             						</div>
 									<div class="col-md-6">

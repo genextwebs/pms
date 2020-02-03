@@ -78,7 +78,7 @@ jQuery(document).ready(function() {
 	        "sAjaxSource": base_url+"Clients/client_list",
 	        "sServerMethod": "POST",
 	        "sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
-        	"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No Leads found<br/><br/></center>', "sZeroRecords": "<center><br/>No Leads found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ leads", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
+        	"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No Clients found<br/><br/></center>', "sZeroRecords": "<center><br/>No Clients found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ leads", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
         	"fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
 			
 					aoData.push( { "name": "startdate", "value": $('#startdate').val() } );
@@ -274,7 +274,7 @@ jQuery(document).ready(function() {
 	        "sAjaxSource": base_url+"Finance/estimate_list",
 	        "sServerMethod": "POST",
 	        "sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
-        	"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No Leads found<br/><br/></center>', "sZeroRecords": "<center><br/>No Leads found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ leads", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
+        	"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No Estimates found<br/><br/></center>', "sZeroRecords": "<center><br/>No Estimates found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ leads", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
         	"fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
 			
 					aoData.push( { "name": "startdate", "value": $('#startdate').val() } );
@@ -400,7 +400,7 @@ jQuery(document).ready(function() {
 	        "sAjaxSource": base_url+"Finance/invoice_list",
 	        "sServerMethod": "POST",
 	        "sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
-        	"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No Leads found<br/><br/></center>', "sZeroRecords": "<center><br/>No Leads found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ leads", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
+        	"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No Invoices found<br/><br/></center>', "sZeroRecords": "<center><br/>No Invoices found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ leads", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
         	"fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
 			
 					aoData.push( { "name": "startdate", "value": $('#startdate').val() } );
@@ -517,7 +517,7 @@ jQuery(document).ready(function() {
 	        "sAjaxSource": base_url+"Finance/expense_list",
 	        "sServerMethod": "POST",
 	        "sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
-        	"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No Leads found<br/><br/></center>', "sZeroRecords": "<center><br/>No Leads found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ leads", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
+        	"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No Expenses found<br/><br/></center>', "sZeroRecords": "<center><br/>No Expenses found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ leads", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
         	"fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
 			
 					aoData.push( { "name": "startdate", "value": $('#startdate').val() } );
@@ -963,17 +963,19 @@ var m=0;
 var s=0;
 function to_start(){
 
-switch(document.getElementById('btn').value)
-{
-case  'Stop':
-window.clearInterval(tm); // stop the timer 
-document.getElementById('btn').value='Start';
-break;
-case  'Start':
-tm=window.setInterval('disp()',1000);
-document.getElementById('btn').value='Stop';
-break;
-}
+	switch(document.getElementById('btn').value)
+	{
+	case  'Stop':
+	window.clearInterval(tm); // stop the timer 
+	document.getElementById('btn').value='Stop';
+	break;
+	case  'Start':
+	tm=window.setInterval('disp()',1000);
+	$('#btn1').css("display","block");
+	$("#data-tasktimer").modal("toggle");
+	document.getElementById('btn').value='Stop';
+	break;
+	}
 }
 
 

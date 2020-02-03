@@ -26,7 +26,7 @@
                         </div>
                         <div class="col-sm-9 text-right">
                             <span class="widget-title"> Total Clients</span><br>
-                            <span class="counter">31</span>
+                            <span class="counter"><?php echo $totalClient; ?></span>
                         </div>
                     </div>
                 </div>
@@ -43,7 +43,7 @@
                         </div>
                         <div class="col-sm-9 text-right">
                             <span class="widget-title"> Total Employees</span><br>
-                            <span class="counter">32</span>
+                            <span class="counter"><?php echo $totalEmployee; ?></span>
                         </div>
                     </div>
                 </div>
@@ -112,7 +112,7 @@
                         </div>
                         <div class="col-sm-9 text-right">
                             <span class="widget-title"> Pending Tasks</span><br>
-                            <span class="counter">15</span>
+                            <span class="counter"><?php echo $totalTaskCompete; ?></span>
                         </div>
                     </div>
                 </div>
@@ -129,7 +129,7 @@
                         </div>
                         <div class="col-sm-9 text-right">
                             <span class="widget-title"> Completed Tasks</span><br>
-                            <span class="counter">13</span>
+                            <span class="counter"><?php echo $totalTaskCompete; ?></span>
                         </div>
                     </div>
                 </div>
@@ -168,7 +168,7 @@
                                 </div>
                                 <div class="col-sm-9 text-right">
                                     <span class="widget-title"> Resolved Tickets</span><br>
-                                    <span class="counter">13</span>
+                                    <span class="counter"><?php echo $totalticketResolved; ?></span>
                                 </div>
                             </div>
                         </div>
@@ -185,7 +185,7 @@
                                 </div>
                                 <div class="col-sm-9 text-right">
                                     <span class="widget-title"> Unresolved Tickets</span><br>
-                                    <span class="counter">17</span>
+                                    <span class="counter"><?php echo $totalticketPending; ?></span>
                                 </div>
                             </div>
                         </div>

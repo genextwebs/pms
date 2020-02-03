@@ -9,7 +9,7 @@
                 <li class="active">Dashboard</li>
                 <li><!-- <a href="javascript:;">Start Timer <i class="fa fa-check-circle text-success"></i> --></a>
 
-                 <a href="javascript:;" id="holiday" data-toggle="modal" data-target="#data-holiday1"><b>Start Timer</b><i class="fa fa-plus" aria-hidden="true"></i></a></li> 
+                 <a href="javascript:;" id="holiday" data-toggle="modal" data-target="#data-tasktimer"><b>Start Timer</b><i class="fa fa-plus" aria-hidden="true"></i></a></li> 
             </ol>
         </div>
     </div>
@@ -19,7 +19,7 @@
 <div  class="row">
 <div id=n1 style="z-index: 2; position: relative; right: 0px; top: 10px; background-color: #00cc33;
  width: 100px; padding: 10px; color: white; font-size:20px; border: #0000cc 2px dashed; "> </div>
- <div><input type="button" name="btn" id='btn' value="Start" onclick="to_start()"; class="btn btn-success"></div>
+ <div><input type="button" name="btn" id='btn1' value="stop" onclick="to_start()"; class="btn btn-success" style="display:none;"></div>
 </div>
 
 <div class="content-in">  
@@ -185,8 +185,8 @@
 </div>
 <!-- ends of contentwrap -->
 
-
-<div id="data-holiday1" class="modal fade defaultholiday" id="data-defaultholiday" tabindex="-1" role="dialog" aria-labelledby="holiday" aria-hidden="true">
+    
+<div  class="modal fade defaultholiday" id="data-tasktimer" tabindex="-1" role="dialog" aria-labelledby="holiday" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content br-0">
                         <div class="modal-header">
