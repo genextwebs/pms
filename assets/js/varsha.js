@@ -131,7 +131,9 @@ $('#reset-filters').click(function(){
 	jQuery('#enddate').val('');
 	jQuery('#status').val('all');
 	jQuery('#clientname').val('');
-	jQuery('#ticket-filters').after('<p style="color:#00B200"><b>Succesfully Reset Filters</b></p>');
+	$('#resetrmsg').html('');
+	jQuery('#ticket-filters').after('<p id="resetrmsg" style="color:#00B200"><b>Succesfully Reset Filters</b></p>');
+	$('#resetrmsg').fadeOut(6000); 
 	var oTable = $('#clients').DataTable();
 	oTable.draw();
 });
@@ -141,7 +143,7 @@ function deleteclients(clientid){
 		var url = base_url+"Clients/deleteclient";
 		swal({
 		 title: "Are you sure?",
-		 text: "You will not be able to recover this imaginary file!",
+		 text: "Do you want to delete this Client?",
 		 type: "warning",
 		 showCancelButton: true,
 		 confirmButtonColor: "#DD6B55",
@@ -325,7 +327,7 @@ function deleteestimates(estimateid){
 		var url = base_url+"Finance/deleteestimate";
 		swal({
 		 title: "Are you sure?",
-		 text: "You will not be able to recover this imaginary file!",
+		 text: "Do you want to delete this Estimate?",
 		 type: "warning",
 		 showCancelButton: true,
 		 confirmButtonColor: "#DD6B55",
@@ -455,7 +457,7 @@ function deleteinvoices(invoiceid){
 		var url = base_url+"Finance/deleteinvoice";
 		swal({
 		 title: "Are you sure?",
-		 text: "You will not be able to recover this imaginary file!",
+		 text: "Do you want to delete this Invoice",
 		 type: "warning",
 		 showCancelButton: true,
 		 confirmButtonColor: "#DD6B55",
@@ -562,17 +564,12 @@ jQuery(document).ready(function() {
 	}
 });
 
-
-
-
-
-
 //delete expenses
 function deleteexpenses(expenseid){
 		var url = base_url+"Finance/deleteexpense";
 		swal({
 		 title: "Are you sure?",
-		 text: "You will not be able to recover this imaginary file!",
+		 text: "Do you want to delete this Expense?",
 		 type: "warning",
 		 showCancelButton: true,
 		 confirmButtonColor: "#DD6B55",
@@ -775,66 +772,66 @@ $("select[name^='status']").each(function() {
 });
 
 	  if(client_name_err == 1){
-		alert('enter Client name');
+		alert('Please enter Client name');
 		return false;
 	}
 
 	
 
 	  if(currency_name_err == 1){
-		alert('enter Currency');
+		alert('Please Select Currency');
 		return false;
 	}
 
 	  if(validtill_err == 1){
-		alert('enter ValidTill Date');
+		alert('Please enter ValidTill Date');
 		return false;
 	}
 
 	if(project_name_err == 1){
-		alert('enter project name');
+		alert('Please enter project name');
 		return false;
 	}
 
 	if(invoice_err == 1){
-		alert('enter Invoice Number');
+		alert('Please enter Invoice Number');
 		return false;
 	}
 
 	if(invoicedate_err == 1){
-		alert('enter invoice date');
+		alert('Please enter invoice date');
 		return false;
 	}
 
 	if(duedate_err == 1){
-		alert('enter Due Date');
+		alert('Please enter Due Date');
 		return false;
 	}
 
 	if(status_err == 1){
-		alert('enter Status');
+		alert('Please select Status');
 		return false;
 	}
 
 	  if(item_name_err == 1){
-		alert('enter item name');
+		alert('Please enter item name');
 		return false;
 	}
 	
 	 if(quantity_err == 1){
-		alert('enter quantity');
+		alert('Please enter quantity');
 		return false;
 	}
 
 	if(cost_per_item_err == 1){
-		alert('enter cost per item');
+		alert('Please enter cost per item');
 		return false;
 	}
 
 	
 
 	 if(amount_err == 1){
-		alert('enter amount');
+		alert('Please enter amount');
 		return false;
 	}
 });	

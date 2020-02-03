@@ -269,7 +269,7 @@ class Finance extends CI_Controller{
 		$data['CId']=$clientid;
 		$data['tax'] =$this->common_model->getData('tbl_tax');
 		$sql1='select id,projectname from tbl_project_info where clientid='.$clientid;
-		$data['project'] =$this->common_model->coreQueryObject($sql1);
+		$data['project'] =$this->common_model->coreQueryObject($sql1);	
 		$data['estimate']=$this->common_model->getData('tbl_estimates',$whereArr);
 		$data['product']=$this->common_model->getData('tbl_products',$whereArr1);
 		$sql='SELECT * FROM tbl_invoice ORDER BY tbl_invoice.id DESC LIMIT 1';
@@ -300,7 +300,7 @@ class Finance extends CI_Controller{
 			$data['invoicedata']=$this->common_model->coreQueryObject($sql);
 
 			
-			$insertArr=array('invoice' => $invoice,'project' => $project,'companyname'=>$data['invoicedata'][0]->companyname,'clientname'=>$data['invoicedata'][0]->clientid,
+			$insertArr=array('invoice' => $invoice,'project' => $project,'client'=>$data['invoicedata'][0]->companyname,'clientid'=>$data['invoicedata'][0]->clientid,
 				'currency' => $currency,'invoicedate' => $invoicedate,'duedate'=>$duedate,'status'=>$status,'recuringpayment'=>$recuringpayment,'billingfrequency'=>$billingfrequency,'billinginterval'=>$billinginterval,'billingcycle'=>$billingcycle,'total'=>$total,'note'=>$note);
 			$this->common_model->insertData('tbl_invoice',$insertArr);
 			$invoiceid=$this->db->insert_id();
@@ -348,10 +348,12 @@ class Finance extends CI_Controller{
 			$billingcycle=$this->input->post('billing_cycle');
 			$total=$this->input->post('finaltotal');
 			$note=$this->input->post('note');
-
+			echo $project;die;
+			if($project != ''){
 			$sql="SELECT tbl_project_info.clientid,tbl_clients.clientname,tbl_clients.companyname FROM tbl_project_info INNER JOIN tbl_clients ON tbl_project_info.clientid = tbl_clients.id where tbl_project_info.id=".$project;	
-			$data['invoicedata']=$this->common_model->coreQueryObject($sql);
-			$insertArr=array('invoice' => $invoice,'project' => $project,'companyname'=>$data['invoicedata'][0]->companyname,'clientname'=>$client,'currency' => $currency,'invoicedate' => $invoicedate,'duedate'=>$duedate,'status'=>$status,'recuringpayment'=>$recuringpayment,'billingfrequency'=>$billingfrequency,'billinginterval'=>$billinginterval,'billingcycle'=>$billingcycle,'total'=>$total,'note'=>$note);
+			$data['invoicedata']=$this->common_model->
+			coreQueryObject($sql);
+			$insertArr=array('invoice' => $invoice,'project' => $project,'companyname'=>$data['invoicedata'][0]->companyname,'client'=>$client,'currency' => $currency,'invoicedate' => $invoicedate,'duedate'=>$duedate,'status'=>$status,'recuringpayment'=>$recuringpayment,'billingfrequency'=>$billingfrequency,'billinginterval'=>$billinginterval,'billingcycle'=>$billingcycle,'total'=>$total,'note'=>$note);
 			$this->common_model->insertData('tbl_invoice',$insertArr);
 			$invoiceid=$this->db->insert_id();
 			
@@ -366,6 +368,7 @@ class Finance extends CI_Controller{
 				$insertArr1=array('invoiceid'=>$invoiceid,'item' => $item[$i],'qtyhrs' => $qtyhrs[$i], 'unitprice' => $unitprice[$i], 'tax' => $tax[$i],'amount'=>$amount[$i],'description' => $description[$i]);
 				$this->common_model->insertData('tbl_invoiceproduct',$insertArr1);
 			}
+		}
 			$this->session->set_flashdata('message_name', "Invoice Insert Successfully");
 			redirect('Finance/invoice');
 		}
