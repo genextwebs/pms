@@ -81,7 +81,7 @@ jQuery(document).ready(function() {
 	        "sAjaxSource": base_url+"products/product_list",
 	        "sServerMethod": "POST",
 	        "sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
-        	"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No Leads found<br/><br/></center>', "sZeroRecords": "<center><br/>No Leads found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ leads", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
+        	"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No Products found<br/><br/></center>', "sZeroRecords": "<center><br/>No Products found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ leads", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
         	"fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
         		oSettings.jqXHR = $.ajax( {
 	                "dataType": 'json',
@@ -138,7 +138,7 @@ jQuery(document).ready(function() {
 	        "sAjaxSource": base_url+"employee/employee_list",
 	        "sServerMethod": "POST",
 	        "sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
-        	"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No Leads found<br/><br/></center>', "sZeroRecords": "<center><br/>No Leads found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ leads", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
+        	"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No Employee found<br/><br/></center>', "sZeroRecords": "<center><br/>No Employee found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ leads", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
         	"fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
         		var selected = [];
 					$("#skill :selected").map(function(i, el) {
@@ -209,8 +209,16 @@ jQuery(document).ready(function() {
 	        "sAjaxSource": base_url+"project/task_list/"+controllerName,
 	        "sServerMethod": "POST",
 	        "sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
-        	"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No Leads found<br/><br/></center>', "sZeroRecords": "<center><br/>No Leads found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ leads", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
+        	"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No Task found<br/><br/></center>', "sZeroRecords": "<center><br/>No Task found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ leads", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
         	"fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
+        		if(controllerName = 'task'){
+        			aoData.push( { "name": "project", "value": $('#selproject').val() } );
+        			aoData.push( { "name": "employee", "value": $('#selassto').val() } );
+        			aoData.push( { "name": "status", "value": $('#selstatus').val() } );
+        			aoData.push( { "name": "taskcategory", "value": $('#taskcategory').val() } );
+        			aoData.push( { "name": "startdate", "value": $('#start_date').val() } );
+        			aoData.push( { "name": "enddate", "value": $('#deadline').val() } );
+        		}
         		oSettings.jqXHR = $.ajax( {
 	                "dataType": 'json',
 	                "type": "POST",
@@ -242,9 +250,9 @@ jQuery(document).ready(function() {
 	}
 
 });
-$('#btnapply').click(function(){ 
+$('#filter-results').click(function(){ 
 			//button filter event click
-	var oTable = $('#employee').DataTable();
+	var oTable = $('#tasks-table').DataTable();
 	oTable.draw();
 });
 
@@ -391,7 +399,7 @@ function deleteLeadClient(leadId, clientId, type){
 	var url = base_url+"leads/deleteleads";
 	swal({
 	  title: "Are you sure?",
-	  text: "You will not be able to recover this imaginary file!",
+	  text: "Do yoy want to delete this Lead",
 	  type: "warning",
 	  showCancelButton: true,
 	  confirmButtonColor: "#DD6B55",
@@ -450,7 +458,7 @@ function deleteproducts(id){
 	var url = base_url+"products/deleteproducts";
 	swal({
 	 title: "Are you sure?",
-	 text: "You will not be able to recover this imaginary file!",
+	 text: "Do yoy want to delete this product",
 	 type: "warning",
 	 showCancelButton: true,
 	 confirmButtonColor: "#DD6B55",
@@ -589,7 +597,7 @@ function deleteemployee(id){
 	var url = base_url+"employee/deleteemployee";
 	swal({
 	 title: "Are you sure?",
-	 text: "You will not be able to recover this imaginary file!",
+	 text: "Do yoy want to delete this Employee",
 	 type: "warning",
 	 showCancelButton: true,
 	 confirmButtonColor: "#DD6B55",
@@ -779,7 +787,7 @@ function deleteHoliday(id,type){
 	var url = base_url+"holiday/deleteholiday";
 	swal({
 	 title: "Are you sure?",
-	 text: "You will not be able to recover this imaginary file!",
+	 text: "Do yoy want to delete this Holiday",
 	 type: "warning",
 	 showCancelButton: true,
 	 confirmButtonColor: "#DD6B55",
@@ -827,7 +835,7 @@ function deleteTemplateM(id){
 	var url = base_url+"project/deletetemplateM";
 	swal({
 	 title: "Are you sure?",
-	 text: "You will not be able to recover this imaginary file!",
+	 text: "Do yoy want to delete this Template Member",
 	 type: "warning",
 	 showCancelButton: true,
 	 confirmButtonColor: "#DD6B55",
@@ -862,7 +870,7 @@ if (isConfirm) {
 	var url = base_url+"project/deleteprojectM";
 	swal({
 	 title: "Are you sure?",
-	 text: "You will not be able to recover this imaginary file!",
+	 text: "Do yoy want to delete this Project Member",
 	 type: "warning",
 	 showCancelButton: true,
 	 confirmButtonColor: "#DD6B55",
@@ -1029,7 +1037,7 @@ function deleteTask(id){
 	var url = base_url+"project/delete_Task";
 	swal({
 	 title: "Are you sure?",
-	 text: "You will not be able to recover this imaginary file!",
+	 text: "Do yoy want to delete this Task",
 	 type: "warning",
 	 showCancelButton: true,
 	 confirmButtonColor: "#DD6B55",

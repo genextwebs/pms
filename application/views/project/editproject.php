@@ -19,7 +19,7 @@
 		<div class="col-md-12">
 			<div class="card br-0">
 				<div class="card-header br-0 card-header-inverse">
-					Add Project 
+					Edit Project 
 				</div>
 				<div class="card-wrapper collapse show">
 					<div class="card-body">
@@ -95,7 +95,7 @@
 									<div class="col-md-4">
 										<div class="form-group">
 											<div class="custom-control custom-checkbox my-1 mr-sm-2">
-												<input type="checkbox" class="custom-control-input" name="manual_timelog" id="manual_timelog" value="1" <?php if(($projectinfo[0]->manualtimelog)=='1'){ echo 'checked';}?>>
+												<input type="checkbox" class="custom-control-input" name="manual_timelog" id="manual_timelog" <?php if(($projectinfo[0]->manualtimelog)=='1'){ echo 'checked';}?>>
 												<label class="custom-control-label" for="manual_timelog" style="padding-top: 2px;">Allow manual time logs?</label>
 											</div>
 										</div>

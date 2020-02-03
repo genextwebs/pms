@@ -255,14 +255,14 @@ class Project extends CI_Controller {
 		if($this->user_type == 0) { 
 			if($archive == '1'){
 				$actionstring = '<a href="javascript:void();" onclick="archivetoproject(\''.base64_encode($rowid).'\');" class="btn btn-info btn-circle revert" data-toggle="tooltip" data-user-id="14" data-original-title="Restore"><i class="fa fa-undo" aria-hidden="true"></i></a>
-								 <a href="javascript:void();" onclick="deleteproject(\''.base64_encode($rowid).'\');"  class="btn btn-danger btn-circle sa-params" data-toggle="tooltip"  data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>';
+					<a href="javascript:void();" onclick="deleteproject(\''.base64_encode($rowid).'\');"  class="btn btn-danger btn-circle sa-params" data-toggle="tooltip"  data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>';
 			
 			}
 			else{
 				$actionstring = '<a href='.base_url().'Project/editproject/'.base64_encode($row->id). ' class="btn btn-info btn-circle" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-								 <a href='.base_url().'Project/searchproject/'.base64_encode($row->id). ' class="btn btn-success btn-circle" data-toggle="tooltip" data-original-title="View Project Details"><i class="fa fa-search" aria-hidden="true"></i></a>
-								 <a href="javascript:void();" onclick="archivedata(\''.base64_encode($rowid).'\');" class="btn btn-warning  btn-circle archive" data-toggle="tooltip" data-user-id="14" data-original-title="Archive"><i class="fa fa-archive" aria-hidden="true"></i></a>
-								 <a href="javascript:void();" onclick="deleteproject(\''.base64_encode($rowid).'\');"  class="btn btn-danger btn-circle sa-params" data-toggle="tooltip"  data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>';
+					<a href='.base_url().'Project/searchproject/'.base64_encode($row->id). ' class="btn btn-success btn-circle" data-toggle="tooltip" data-original-title="View Project Details"><i class="fa fa-search" aria-hidden="true"></i></a>
+					<a href="javascript:void();" onclick="archivedata(\''.base64_encode($rowid).'\');" class="btn btn-warning  btn-circle archive" data-toggle="tooltip" data-user-id="14" data-original-title="Archive"><i class="fa fa-archive" aria-hidden="true"></i></a>
+					<a href="javascript:void();" onclick="deleteproject(\''.base64_encode($rowid).'\');"  class="btn btn-danger btn-circle sa-params" data-toggle="tooltip"  data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>';
 			}
 		}
 		if($this->user_type == 2) {  
@@ -508,8 +508,9 @@ class Project extends CI_Controller {
 		$this->load->view('common/header');
 		$this->load->view('project/editproject',$data);
 		$this->load->view('common/footer');
+		//echo $this->input->post('manual_timelog');die;
 		if($this->input->post('manual_timelog')=='on'){
-					$chk_value='1';
+				$chk_value='1';
 			}
 			else{ $chk_value='0';
 			}
@@ -554,6 +555,7 @@ class Project extends CI_Controller {
 			'tasknotification'=>$tasks,'status'=>$status,'projectsummary'=>$editor1,'note'=>$notes,
 			'projectbudget'=>$budget,'currency'=>$currency,'hoursallocated'=>$hours,'archive'=>0);
 			$whereArr=array('id'=>$id);
+			//echo "<PRE>";print_r($updateArr);die;
 			$this->common_model->updateData('tbl_project_info',$updateArr,$whereArr);
 			$this->session->set_flashdata('message_name', 'Projects Updated sucessfully');
 			redirect('project/index');
@@ -948,7 +950,6 @@ class Project extends CI_Controller {
 			$priority = $this->input->post('radio-stacked');
 			$insArr = array('projectid' => $projectid, 'title' => $title , 'description' => $description , 'startdate' => $startdate , 'duedate' => $duedate , 'assignedto' => $assignemp , 'taskcategory' => $taskcategory , 'status' => 0, 'priority' => $priority);
 			$this->common_model->insertData('tbl_task',$insArr);
-			print_r($insArr);
 			if($test == 'project'){
 				redirect('project/task/'.base64_encode($projectid));
 			}
@@ -1015,6 +1016,40 @@ class Project extends CI_Controller {
             	$searchTerm = trim($_GET['sSearch']);
             	$sWhere .= ' AND (title like "%'.$searchTerm.'%" OR description like "%'.$searchTerm.'%" OR startdate like "%'.$searchTerm.'%" OR duedate like "%'.$searchTerm.'%" OR assignedto like "%'.$searchTerm.'%")';
             }
+            $project = !empty($_POST['project']) ? $_POST['project'] : '';
+            $employee = !empty($_POST['employee']) ? $_POST['employee'] : '';
+            $status = $_POST['status'];
+            $taskcategory = !empty($_POST['employee']) ? $_POST['taskcategory'] : '';
+            $startdate = !empty($_POST['startdate']) ? $_POST['startdate'] : '';
+            $enddate = !empty($_POST['enddate']) ? $_POST['enddate'] : '';
+            if(strtolower($this->uri->segment(3))=='task'){
+	            if($project == 'all'){
+	            }
+	            else{
+	            	$sWhere.=' AND  projectid='.$project;
+	            }
+	            if($employee == 'all'){
+	            }
+	            else{
+	            	$sWhere.=' AND  assignedto='.$employee;
+	            }
+	            if($status == 'all'){
+	            }
+	            else{
+	            	$sWhere.=' AND  status='.$status;
+	            }
+	            if($taskcategory == 'all'){
+	            }
+	            else{
+	            	$sWhere.=' AND  taskcategory='.$taskcategory;
+	            }
+	            if(!empty($startdate)){						
+						$sWhere.=' AND startdate>="'.$startdate.'"';
+				}
+				if(!empty($enddate)){						
+					$sWhere.=' AND duedate<="'.$enddate.'"';
+				}
+	        }
             if(!empty($sWhere)){
             	$sWhere = " WHERE 1 ".$sWhere;
             }
@@ -1044,7 +1079,7 @@ class Project extends CI_Controller {
 			}
 			elseif($row->status == 2){
 				$status = $row->status = 'Doing';
-				$str = '<label class="label label-danger">'.$status.'</label>';
+				$str = '<label class="label-dangerel label-danger">'.$status.'</label>';
 			}
 			elseif($row->status == 3){
 				$status = $row->status = 'Done';

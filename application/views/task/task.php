@@ -22,18 +22,18 @@
 				                <div class="form-group">
 				                    <label class="box-title mt-3">Select Date Range</label>
 				                    <div class="input-group input-daterange">
-									    <input type="text" class="start-date form-control br-0" value="2012-04-05">
+									    <input type="text" class="start-date form-control br-0" id="start_date">
 									    <div class="input-group-prepend">
 									      <span class="input-group-text bg-info text-white">To</span>
 									    </div>
-									    <input type="text" class="end-date form-control br-0" value="2012-04-19">
+									    <input type="text" class="end-date form-control br-0" id="deadline">
 									</div>
 				                </div>
 				            </div>
 				            <div class="col-md-3">
 				            	<div class="form-group">
 									<label class="box-title mt-3">Select Project</label>
-									<select id='selproject' class="custom-select search-select">
+									<select id='selproject' class="custom-select search-select" name="selproject">
 										<option value="all">All</option>
 							            <?php
         								foreach($project as $pj){
