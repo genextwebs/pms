@@ -994,7 +994,6 @@ $("#save_tchannel").click(function(event) {
 					    dataType: 'json',
 					    data: dataString,
 						success: function(data) {
-							alert('gg');
 							console.log(data.ticketcdata);
 						    $('#channel').html('');       
 							$('#channel').append(data.ticketcdata);
