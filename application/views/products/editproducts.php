@@ -19,7 +19,7 @@
                     <div class="col-md-12">
 		                <div class="card br-0">
 		                	<div class="card-header br-0 card-header-inverse">
-		                		Add Project 
+		                		Add Products 
 		                	</div>
 		                	<div class="card-wrapper collapse show">
 		                		<div class="card-body">
