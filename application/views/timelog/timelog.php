@@ -19,11 +19,11 @@
 			<div class="form-group">
 				<label class="control-label">SELECT DATE RANGE</label>
 			    <div class="input-group input-daterange">
-				    <input type="text" class="start-date form-control br-0" id="start_date" name="start_date"  data-date-format='yyyy-mm-dd' value="<?php echo $start_date;?>">
+				    <input type="text" class="start-date form-control br-0" id="start_date" name="start_date"  data-date-format='yyyy-mm-dd' value="">
 				    <div class="input-group-prepend">
 				      <span class="input-group-text bg-info text-white">To</span>
 				    </div>
-				    <input type="text" class="end-date form-control br-0" id="deadline" name="deadline" value="<?php echo $deadline;?>" data-date-format='yyyy-mm-dd'>
+				    <input type="text" class="end-date form-control br-0" id="deadline" name="deadline" value="" data-date-format='yyyy-mm-dd'>
 				</div>
 			</div>
 		</div>

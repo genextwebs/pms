@@ -122,7 +122,7 @@ class Ticket extends CI_Controller {
 				$searchTerm = trim($_GET['sSearch']);
 				$sWhere.= ' AND (ticketsubject like "%'.$searchTerm.'%")';
 			}
-			if(!empty(trim($_POST['s_date']))){
+		/*	if(!empty(trim($_POST['s_date']))){
 				$startdate=!empty($_POST['s_date']) ? $_POST['s_date'] : '';
 			}else{
 				$startdate=date('Y-m-d',strtotime('-1 month'));
@@ -131,10 +131,10 @@ class Ticket extends CI_Controller {
 				$enddate=!empty($_POST['e_date']) ? $_POST['e_date'] : '';
 			}else{
 				$enddate=date('Y-m-d');
-			}
-			/*$sdate=!empty($_POST['s_date'])?$_POST['s_date']:'';
+			}*/
+			$sdate=!empty($_POST['s_date'])?$_POST['s_date']:'';
 			$enddate=!empty($_POST['e_date'])?$_POST['e_date']:'';
-			*/
+		
 	        $status=!empty($_POST['status1'])? $_POST['status1'] : '';
 			$priority=!empty($_POST['priority']) ? $_POST['priority'] : '';
 			$cname=!empty($_POST['channelname']) ? $_POST['channelname'] : '';

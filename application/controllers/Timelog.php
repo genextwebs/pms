@@ -117,7 +117,7 @@ class Timelog extends CI_Controller {
 		
 			$pname=!empty($_POST['pname']) ? $_POST['pname'] : '';	
 			$ename=!empty($_POST['ename']) ? $_POST['ename'] : '';
-			if(!empty(trim($_POST['start_date']))){
+			/*if(!empty(trim($_POST['start_date']))){
 				$startdate=!empty($_POST['start_date']) ? $_POST['start_date'] : '';
 			}else{
 				$startdate=date('Y-m-d',strtotime('-1 month'));
@@ -126,9 +126,9 @@ class Timelog extends CI_Controller {
 				$enddate=!empty($_POST['deadline']) ? $_POST['deadline'] : '';
 			}else{
 				$enddate=date('Y-m-d');
-			}
-			/*$startdate=!empty($_POST['start_date']) ? $_POST['start_date'] : '';
-			$enddate=!empty($_POST['deadline']) ? $_POST['deadline'] : '';*/
+			}*/
+			$startdate=!empty($_POST['start_date']) ? $_POST['start_date'] : '';
+			$enddate=!empty($_POST['deadline']) ? $_POST['deadline'] : '';
 		
 
 			if(!empty($pname)){
@@ -151,7 +151,7 @@ class Timelog extends CI_Controller {
 		$query = "SELECT tbl_project_info.projectbudget,tbl_project_info.*,tbl_timelog.* FROM `tbl_timelog` inner join tbl_project_info on tbl_timelog.timelogprojectid = tbl_project_info.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 		$timeArr = $this->common_model->coreQueryObject($query);
 
-		$query = "select projectbudget,tbl_project_info.*,tbl_timelog.* FROM `tbl_timelog` inner join tbl_project_info on tbl_timelog.timelogprojectid = tbl_project_info.id".$sWhere;
+		$query = "SELECT projectbudget,tbl_project_info.*,tbl_timelog.* FROM `tbl_timelog` inner join tbl_project_info on tbl_timelog.timelogprojectid = tbl_project_info.id".$sWhere;
 		$TimeFilterArr = $this->common_model->coreQueryObject($query);
 		//echo $this->db->last_query();die;
 		$iFilteredTotal = count($TimeFilterArr);
@@ -372,7 +372,9 @@ public function update_timelog(){
 
 	public function getEmployee(){
 		$pname=$this->input->post('projectname');
-		$query ="select tbl_project_member.*,tbl_employee.employeename,tbl_employee.id as eid from tbl_project_member inner join tbl_employee on tbl_project_member.emp_id = tbl_employee.id where project_id=".$pname;
+		$query ="SELECT tbl_project_member.*,tbl_employee.employeename,tbl_employee.id as eid from tbl_project_member inner join tbl_employee on tbl_project_member.emp_id = tbl_employee.id where project_id=".$pname;
+	//
+		ECHO $this->DB->last_query();DIE;
 	  	$getEmp=$this->common_model->coreQueryObject($query);
 		$str = '';
 			foreach($getEmp as $row){

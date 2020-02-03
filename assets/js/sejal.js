@@ -203,7 +203,7 @@ jQuery(document).ready(function() {
 			"sAjaxSource": base_url+"Leaves/leavelist",
 			"sServerMethod": "POST",
 			"sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
-			"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No Projects found<br/><br/></center>', "sZeroRecords": "<center><br/>No Projects found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ leads", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
+			"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No leaves found<br/><br/></center>', "sZeroRecords": "<center><br/>No leaves found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ leads", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
 			"fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
 			
 				aoData.push( { "name": "startdate", "value": $('#startdate').val() } );
@@ -267,7 +267,7 @@ jQuery(document).ready(function() {
 			"sAjaxSource": base_url+"Ticket/ticketlist",
 			"sServerMethod": "POST",
 			"sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
-			"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No Projects found<br/><br/></center>', "sZeroRecords": "<center><br/>No Projects found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ leads", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
+			"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No tickets found<br/><br/></center>', "sZeroRecords": "<center><br/>No tickets found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ tickets", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
 			"fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
 			
 		    	//aoData.push( { "name": "agent", "value": $('#agent').val() } );
@@ -738,6 +738,11 @@ $(document).ready(function(){
     });
 });
 
+//
+
+	
+
+
 //addproject validation for all input
 $("form[name='creatclient']").validate({
 	rules:{
@@ -869,6 +874,7 @@ $("#save-category").click(function(event) {
 							$('.modal-backdrop').find('div').remove();
 							$('body').removeAttr("style");
 							$('body').removeClass("modal-open");
+							//$('#project-category1').modal('toggle');
 							$('#category')[0].reset();
 							$('#succmsg').html('');
 							$('#succmsg').html('<b>Successfully category added</b>');
@@ -988,12 +994,13 @@ $("#save_tchannel").click(function(event) {
 					    dataType: 'json',
 					    data: dataString,
 						success: function(data) {
+							alert('gg');
 							console.log(data.ticketcdata);
 						    $('#channel').html('');       
 							$('#channel').append(data.ticketcdata);
 						
 							$('#ticketchannel')[0].reset();
-								$('#channel1').modal('toggle');
+							$('#channel1').modal('toggle');
 							$('#succmsg').html('');
 							$('#succmsg').html('<b>Successfully Channel added</b>');
 							$('#succmsg').fadeOut(3000);
@@ -1035,6 +1042,7 @@ $("#save_tchannel").click(function(event) {
 					$('#leave')[0].reset();
 					$('#succmsg').html('');
 					$('#succmsg').html('<b>Successfully category removed</b>');
+					$('#succmsg').fadeOut(3000);
 				}else{
 					$('#succmsg').html('');
 					$('#succmsg').html('<b>Something went to wrong</b>');
@@ -1384,7 +1392,7 @@ $("#save_tchannel").click(function(event) {
 			else{
 				
 				$.ajax({
-							url: base_url+"Leaves/updateleaves",
+						url: base_url+"Leaves/updateleaves",
 						type: "POST",
 						dataType: "JSON",
 						data: {id : id  , mem : mem ,ltype : ltype , date : date , abs : abs, sta : sta},
@@ -1811,6 +1819,9 @@ function showLeaveReportPending(id,status){
 }
 
 
-
+jQuery('#close').click(function(){
+    jQuery('#errormsg').css('display','none');
+    jQuery('#category_name').val('');
+});
 
   

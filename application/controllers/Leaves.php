@@ -114,7 +114,7 @@ class Leaves extends CI_Controller {
 				$searchTerm = trim($_GET['sSearch']);
 				$sWhere.= ' AND (tbl_employee.employeename like "%'.$searchTerm.'%" OR  tbl_leavetype.name like "%'.$searchTerm.'%")';
 			}
-			if(!empty(trim($_POST['startdate']))){
+			/*if(!empty(trim($_POST['startdate']))){
 				$startdate=!empty($_POST['startdate']) ? $_POST['startdate'] : '';
 			}else{
 				$startdate=date('Y-m-d',strtotime('-1 month'));
@@ -123,9 +123,9 @@ class Leaves extends CI_Controller {
 				$enddate=!empty($_POST['enddate']) ? $_POST['enddate'] : '';
 			}else{
 				$enddate=date('Y-m-d');
-			}
-			/*$startdate=!empty($_POST['startdate']) ? $_POST['startdate'] : '';
-			$enddate=!empty($_POST['enddate']) ? $_POST['enddate'] : '';*/
+			}*/
+			$startdate=!empty($_POST['startdate']) ? $_POST['startdate'] : '';
+			$enddate=!empty($_POST['enddate']) ? $_POST['enddate'] : '';
 			$empname=!empty($_POST['ename']) ? $_POST['ename'] : '';
 
 			if(!empty($startdate)){						
@@ -289,14 +289,17 @@ class Leaves extends CI_Controller {
 		//For Date
 		$date='';
 		if(	!empty($leaves[0]->date)){
-			$date = $leaves[0]->date;
+			 $leaves[0]->date;
 		}
 
+		//$leaves[0]->date;die;
 		$string.=   '<div class="row">
 						<div class="col-md-4" id="deadlineBox">
 							<div class="form-group">
 								<label class="control-label">Date</label>
-									<input type="date" name="date" id="date" autocomplete="off" class="form-control" value="'.$date.'">
+									<input type="text" name="date" id="date" class="form-control" value="'.$leaves[0]->date.'">
+
+
 								</div>
 							</div>
 				     </div>';
