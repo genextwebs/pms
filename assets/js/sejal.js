@@ -860,8 +860,8 @@ $("#save-category").click(function(event) {
 					    dataType: 'json',
 					    data: dataString,
 						success: function(data) {
-							console.log(data.ticketdata);
-							/*$('select[name="project-category"]').html('');       
+							//console.log(data.ticketdata);
+							$('select[name="project-category"]').html('');       
 							$('select[name="project-category"]').append(data.catdata);
 							$("tbody").append("<tr id='cate_"+data.lastinsertid+"'><td>"+data.count+"</td><td>"+catname+"</td> <td><input type='submit' class='btn btn-sm btn-danger btn-rounded delete-category' onclick='deletecat(\'"+data.lastinsertid+"\');' id='deletecat' value='Remove'></tr>");
 						    $('#project-category1').removeClass('show');
@@ -869,7 +869,7 @@ $("#save-category").click(function(event) {
 							$('.modal-backdrop').find('div').remove();
 							$('body').removeAttr("style");
 							$('body').removeClass("modal-open");
-							$('#category')[0].reset();*/
+							$('#category')[0].reset();
 							$('#succmsg').html('');
 							$('#succmsg').html('<b>Successfully category added</b>');
 					   }
