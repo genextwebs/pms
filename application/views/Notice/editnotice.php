@@ -7,7 +7,7 @@
             <ol class="breadcrumb">
                 <li><a href="<?php echo base_url().'dashboard'?>">Home</a></li>
                 <li><a href="<?php echo base_url().'Clients'?>">NoticeBoard</a></li>
-                <li class="active">Add New</li>
+                <li class="active">Edit</li>
             </ol>
         </div>
     </div>
@@ -19,12 +19,12 @@
         <div class="col-md-12">
             <div class="card br-0">
             	<div class="card-header br-0 card-header-inverse">
-            		 Notice  Board
+            		 Update Notice Info
             	</div>
             	<div class="card-wrapper collapse show">
             		<div class="card-body">
             			
-            				<form id="creatclient" class="aj-form" method="post" action="<?php echo base_url().'NoticeBoard/insertNotice'?>" name="notice" >
+            				<form id="notice" class="aj-form" method="post" name="notice" >
             				<?php
 									$mess = $this->session->flashdata('message_name');
 									if(!empty($mess)){
@@ -50,34 +50,38 @@
 								</div>
             				</div>
             				<div class="form-body">
-            					<h3 class="box-title">Add New Notice</h3>
+            					<h3 class="box-title">Update Notice</h3>
             					<hr>
             					<div class="row">
             						<div class="col-md-12">
             							<div class="form-group">
             								<label class="control-label">Notice Heading</label>
-            								<input id="heading" class="form-control" type="text" name="heading">
+            								<input id="heading" class="form-control" type="text" name="heading" value="<?php echo !empty($notices[0]->heading) ? $notices[0]->heading : '' ?>">
             							</div>
             						</div>
             					</div>
                                 <hr>
             					<div class="row">
             						<div class="col-md-12">
-            							<input type="radio" name="noticeto" value="1">To Employees
-                                        <input type="radio" name="noticeto" value="2">To Clients
+            							<input type="radio" name="noticeto" value="1" <?php echo ($notices[0]->noticeto== '1') ?  "checked" : "" ;  ?>>To Employees
+                                        <input type="radio" name="noticeto" value="2" <?php echo ($notices[0]->noticeto== '2') ?  "checked" : "" ;  ?>>To Clients
             						</div>
             					</div>
                                 <hr>
                                   <div class="col-md-12">
                                 <h5>Department</h5>
                                 <div class="form-group">
-                                    <select class="select2 form-control" id="department" name="All">
-                                        <option value="">All</option>
+                                    <select class="select2 form-control" id="department" name="department">
+                                        <option value="">Select</option>
                                         <?php
+
                                             foreach($department as $row)
                                             {
+                                                 $str='';
                                                 if(!empty($row->name)){
-                                                    echo '<option value="'.$row->id.'" >'.$row->name.'</option>';
+                                                 $str="selected";
+
+                                                    echo '<option value="'.$row->id.'"'.$str.'>'.$row->name.'</option>';
                                                 }
                                             }
                                         ?>
@@ -89,14 +93,14 @@
                                     <div class="col-md-12">
                                         <label>Notice Description</label>
                                         <div class="form-group">
-                                            <textarea name="desc" id="desc" class="form-control" rows="5"></textarea>
+                                            <textarea name="desc" id="desc" class="form-control" rows="5"><?php echo !empty($notices[0]->description) ? $notices[0]->description : '' ?></textarea>
                                         </div>
                                     </div>
                                 </div>
                                 <hr>
                                 <div class="form-actions">
 	                                <!-- <input type="submit" id="save-form" class="btn btn-success" name="btnsubmit" value="Save" > <i class="fa fa-check"></i> -->
-	                                <button type="submit" name="btnsubmit" id="save-form" class="btn btn-success"> <i class="fa fa-check"></i> Save</button>
+	                                <button type="submit" name="btnsubmit" id="save-form" class="btn btn-success"> <i class="fa fa-check"></i> Update</button>
 									<a href="<?php echo base_url().'Clients/index' ?>" class="btn btn-default">Back</a>
 	                            </div>
             				</div>

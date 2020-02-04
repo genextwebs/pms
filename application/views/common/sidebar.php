@@ -166,8 +166,8 @@ if($this->session->userdata('login')){
                 <span>Leaves</span>
             </a>
         </li>
-        <li>
-            <a href="#" class="nav-link-s">
+        <li <?php if($controller == 'noticeboard' && ($functionName == 'index' || $functionName == '')) { echo 'class="active"'; } ?>>
+            <a href="<?php echo base_url().'noticeboard'?>" class="nav-link-s">
                 <i class="ti-layout-media-overlay"></i>
                 <span>Notice Board</span>
             </a>
