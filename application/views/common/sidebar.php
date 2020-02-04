@@ -65,9 +65,9 @@ if($this->session->userdata('login')){
                 <i class="ti-layout-list-thumb"></i>
                 <span>Tasks</span>
             </a>
-            <ul class="collapse list-unstyled" id="taskmenu">
-                <li>
-                    <a href="#">Tasks</a>
+            <ul class="collapse list-unstyled <?php if($controller == 'task') {echo 'show'; }?>" id="taskmenu">
+                <li <?php if($controller == 'task' && ($functionName == 'task' || $functionName == '')) { echo 'class="active"'; } ?>>
+                    <a href="<?php echo base_url().'task'?>">Tasks</a>
                 </li>
                 <li>
                     <a href="#">Task Board</a>
@@ -88,17 +88,17 @@ if($this->session->userdata('login')){
                 <i class="fa fa-money"></i>
                 <span>Finance</span>
             </a>
-            <ul class="collapse list-unstyled" id="finance">
-                <li>
+            <ul class="collapse list-unstyled <?php if($controller == 'finance'){ echo 'show'; } ?>" id="finance">
+                <li <?php if($controller == 'finance' && ($functionName == 'finance' || $functionName == '')) { echo 'class="active"'; } ?>>
                     <a href="<?php echo base_url().'finance' ?>">Estimates</a>
                 </li>
-                <li>
+                <li <?php if($controller == 'finance' && $functionName == 'invoice'){ echo 'class="active"'; } ?>>
                     <a href="<?php echo base_url().'finance/invoice' ?>">Invoices</a>
                 </li>
                 <li>
                     <a href="#">Payments</a>
                 </li>
-                <li>
+                <li <?php if($controller == 'finance' && $functionName == 'expense'){ echo 'class="active"'; } ?>>
                     <a href="<?php echo base_url().'finance/expense' ?>">Expenses</a>
                 </li>
             </ul>
@@ -121,8 +121,8 @@ if($this->session->userdata('login')){
                <i class="ti-user"></i>
                <span> Employees </span>
             </a>
-            <ul class="collapse list-unstyled" id="employees">
-                <li>
+            <ul class="collapse list-unstyled <?php if($controller == 'employee') {echo 'show'; }?>"" id="employees">
+                <li <?php if($controller == 'employee' && ($functionName == 'employee' || $functionName == '')) { echo 'class="active"'; }  ?>>
                     <a href="<?php echo base_url().'employee'?>">Employees List</a>
                 </li>
                 <li>
