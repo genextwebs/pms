@@ -278,8 +278,6 @@ class Ticket extends CI_Controller {
 		$query= "Select tbl_ticket_comment.*,tbl_employee.user_id,profileimg from tbl_ticket_comment inner join tbl_employee on tbl_ticket_comment.ticketemployeeid= tbl_employee.id inner join tbl_user on tbl_employee.user_id=tbl_user.id";
 
 		$data['ticketcommenttest'] = $this->common_model->coreQueryObject($query);
-		//echo '<pre>';
-		//print_r($data['ticketcomment']);die;
 		$this->load->view('common/header');
 		$this->load->view('ticket/editticket',$data);
 		$this->load->view('common/footer');

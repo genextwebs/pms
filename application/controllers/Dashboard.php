@@ -38,7 +38,7 @@ class Dashboard extends CI_Controller
 			$empData = $this->common_model->getData('tbl_employee',$whereArrE);
 			array_push($totalEmptData,$empData[0]);
 		}
-		
+			
 		$data['totalEmployee'] = count($totalEmptData);
 
 		$whereArrT = array('status'=>4 );

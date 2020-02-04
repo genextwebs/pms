@@ -16,7 +16,9 @@ class EmpDashboard extends CI_Controller
 		if($this->user_type == 2) {
 			$whereArr= array('user_id'=>$this->user_id);
 			$data['empData']=$this->common_model->getData('tbl_employee',$whereArr);	
+		
 			$empid=$data['empData']['0']->id;
+
 			$WhereArr1=array('emp_id'=>$empid);
 			$data['projectData']=$this->common_model->getData('tbl_project_member',$WhereArr1);
 			//print_r($data['projectData']);	
