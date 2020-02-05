@@ -13,6 +13,7 @@
             </nav>
 
             <!-- contetn-wrap -->
+            <h6 id="sucesmsg" class="text-success"></h6>
             <div class="content-in">  
             	<h2>Filter Results</h2>
                 <div class="stats-box">
@@ -119,7 +120,8 @@
 				            <div class="col-md-12 mb-2">
 				            	<div class="form-group">
 						            <div class="custom-control custom-checkbox my-1 mr-sm-2">
-									    <input type="checkbox" class="custom-control-input" name="hide-complete" id="hide-complete">
+									    <input type="checkbox" class="custom-control-input" name="hide-complete" id="hide-complete" value="0">
+									    <input type="hidden" id="chk-complete" name="chk-complete" value="">
 									    <label class="custom-control-label" for="hide-complete" style="padding-top: 2px;">Hide Completed Tasks</label>
 									</div>
 						        </div>

@@ -876,8 +876,10 @@ $("#save-category").click(function(event) {
 							$('body').removeClass("modal-open");
 							//$('#project-category1').modal('toggle');
 							$('#category')[0].reset();
+
 							$('#succmsg').html('');
 							$('#succmsg').html('<b>Successfully category added</b>');
+							$('#succmsg').fadeOut(5000);
 					   }
 					});
 				}else{

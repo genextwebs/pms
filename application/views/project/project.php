@@ -150,7 +150,7 @@
 					</div>
 				</div>
 			<?php } ?>
-				<div class="col-lg-3 col-md-4">
+				<!-- <div class="col-lg-3 col-md-4">
 					<div class="form-group">
 						<label class="control-label">Project Category</label>
 						<select id="categoryname" class="custom-select" name="categoryname">
@@ -163,7 +163,7 @@
 							?>
 						</select> 
 					</div>
-				</div>
+				</div> -->
 			</div>
 				<?php
 					$mess = $this->session->flashdata('message_name');

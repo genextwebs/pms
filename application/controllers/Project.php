@@ -271,7 +271,7 @@ class Project extends CI_Controller {
 		$datarow[] = array(
 			$id = $i,
 			$row->projectname.'<br/>'.$string.'<br/>'.$showStatus,
-			"<a href='".base_url()."Project/member/".base64_encode($rowid)."'> Add Project  Members</a>"
+			"<a href='".base_url()."Project/member/".base64_encode($rowid)."'> <i class='fa fa-plus'></i> Add Project  Members</a>"
 			.'<br/>'.$emp_str,
 			$row->deadline,
 			$row->clientname,
@@ -755,7 +755,7 @@ class Project extends CI_Controller {
 					$datarow[] = array(
 						$id = $i,
 						$row->projectname,
-						"<a href='".base_url()."Project/searchtemplate/".base64_encode($rowid)."'> Add Template  Members</a>".'<br/>'.$emp_str,
+						"<a href='".base_url()."Project/searchtemplate/".base64_encode($rowid)."'> <i class='fa fa-plus'></i> Add Template  Members</a>".'<br/>'.$emp_str,
 						$row->name,
 						'<a href='.base_url().'Project/edittemplate/'.base64_encode($row->id). ' class="btn btn-info btn-circle" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
 						 <a href='.base_url().'Project/searchproject/'.base64_encode($row->id). ' class="btn btn-success btn-circle" data-toggle="tooltip" data-original-title="View Project Details"><i class="fa fa-search" aria-hidden="true"></i></a>
@@ -796,10 +796,12 @@ class Project extends CI_Controller {
 			foreach($catArray as $row){
 				$str.='<option value="'.$row->id.'">'.$row->name.'</option>'; 
 			}
+			$sucessmsg = 'Category Added Succesfully';
 			$totaldata = count($catArray);
 			$catArr = array();
 			$catArr['count'] = $totaldata;
 			$catArr['catdata'] = $str;
+			$catArr['sucessmsg'] = $sucessmsg;
 			$catArr['lastinsertid']= $lastinsertid;
 			//print_r($catArr);die;
 			echo json_encode($catArr);exit; 
@@ -837,10 +839,12 @@ class Project extends CI_Controller {
 			$project_id = $this->input->post('projectid');
 			for($i=0 ; $i<$emp_count; $i++){
 				$emp_id = $data['employee'][$i];
+				$whereEmp = array('id' => $emp_id);
+				$empname = $this->common_model->getData('tbl_employee', $whereEmp);
 				$whereArr = array('emp_id' => $emp_id , 'project_id' => $project_id);
 				$projectM = $this->common_model->getData('tbl_project_member', $whereArr);
 				if(count($projectM) == 1){
-					$this->session->set_flashdata('message_name', 'Alredy add this member');
+					$this->session->set_flashdata('message_name', 'Alredy add '.$empname[0]->employeename);
 				}
 				else{
 					$insArr = array('project_id' => $project_id , 'emp_id' => $emp_id);
@@ -860,10 +864,12 @@ class Project extends CI_Controller {
 			$template_id = $this->input->post('templateid');
 			for($i=0 ; $i<$emp_count; $i++){
 				$emp_id = $data['employee'][$i];
+				$whereEmp = array('id' => $emp_id);
+				$empname = $this->common_model->getData('tbl_employee', $whereEmp);
 				$whereArr = array('emp_id' => $emp_id , 'template_id' => $template_id);
 				$projectM = $this->common_model->getData('tbl_template_member', $whereArr);
 				if(count($projectM) == 1){
-					$this->session->set_flashdata('message_name', 'Alredy add this member');
+					$this->session->set_flashdata('message_name', 'Already add '.$empname[0]->employeename);
 					
 				}
 				else{
@@ -918,10 +924,12 @@ class Project extends CI_Controller {
 			foreach($task_catArray as $taskCat){
 				$str.= '<option value="'.$taskCat->id.'">'.$taskCat->task_category_name.'</option>';
 			}
+			$sucessmsg = "Category Added Sucessfully";
 			$totalCatdata = count($task_catArray);
 			$task_CatArr = array();
 			$task_CatArr['count'] = $totalCatdata;
 			$task_CatArr['task_cat'] = $str;
+			$task_CatArr['sucessmsg'] = $sucessmsg;
 			$task_CatArr['lastTaskCatinsertid'] =  $lastTaskCatinsertid;
 			echo json_encode($task_CatArr);exit();
 		}
@@ -932,7 +940,8 @@ class Project extends CI_Controller {
 		if(!empty($_POST['id'])){
 			$id=$this->input->post('id');
 			$deleteArr=array('id'=>$id);
-			$this->common_model->deleteData('tbl_project_category',$deleteArr);
+			$this->common_model->deleteData('tbl_task_category',$deleteArr);
+			//echo $this->db->last_query();die;
 			$status = 1;
 		}
 		echo $status;exit();
@@ -1017,7 +1026,7 @@ class Project extends CI_Controller {
             /** Filtering Start */
             if(!empty(trim($_GET['sSearch']))){
             	$searchTerm = trim($_GET['sSearch']);
-            	$sWhere .= ' AND (title like "%'.$searchTerm.'%" OR description like "%'.$searchTerm.'%" OR startdate like "%'.$searchTerm.'%" OR duedate like "%'.$searchTerm.'%" OR assignedto like "%'.$searchTerm.'%")';
+            	$sWhere .= ' AND (title like "%'.$searchTerm.'%" OR description like "%'.$searchTerm.'%" OR tbl_task.startdate like "%'.$searchTerm.'%" OR tbl_task.duedate like "%'.$searchTerm.'%" OR tbl_employee.employeename like "%'.$searchTerm.'%" OR tbl_clients.clientname like "%'.$searchTerm.'%")';
             }
             $project = !empty($_POST['project']) ? $_POST['project'] : '';
             $employee = !empty($_POST['employee']) ? $_POST['employee'] : '';
@@ -1026,6 +1035,7 @@ class Project extends CI_Controller {
             $clientName = !empty($_POST['client']) ? $_POST['client'] : ''; 
             $startdate = !empty($_POST['startdate']) ? $_POST['startdate'] : '';
             $enddate = !empty($_POST['enddate']) ? $_POST['enddate'] : '';
+            $hideComplete = $_POST['hideComplete'];
             if(strtolower($this->uri->segment(3))=='task'){
 	            if($project == 'all'){
 	            }
@@ -1045,7 +1055,7 @@ class Project extends CI_Controller {
 	            if($status == 'all'){
 	            }
 	            else{
-	            	$sWhere.=' AND  status='.$status;
+	            	$sWhere.=' AND  tbl_task.status='.$status;
 	            }
 	            if($taskcategory == 'all'){
 	            }
@@ -1053,11 +1063,15 @@ class Project extends CI_Controller {
 	            	$sWhere.=' AND  taskcategory='.$taskcategory;
 	            }
 	            if(!empty($startdate)){						
-						$sWhere.=' AND startdate>="'.$startdate.'"';
+						$sWhere.=' AND tbl_task.startdate>="'.$startdate.'"';
 				}
 				if(!empty($enddate)){						
-					$sWhere.=' AND duedate<="'.$enddate.'"';
+					$sWhere.=' AND tbl_task.duedate<="'.$enddate.'"';
 				}
+				if($hideComplete == 1){
+					$sWhere.=' AND tbl_task.status != 4';
+				}
+				
 	        }
             if(!empty($sWhere)){
             	$sWhere = " WHERE 1 ".$sWhere;
@@ -1066,8 +1080,10 @@ class Project extends CI_Controller {
 		}
 		
 	    $query = "SELECT tbl_task.* , tbl_employee.employeename,tbl_clients.clientname,tbl_project_info.clientid,tbl_project_info.projectname from tbl_task inner JOIN tbl_employee on tbl_task.assignedto = tbl_employee.id inner join tbl_project_info on tbl_task.projectid = tbl_project_info.id inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id ".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+	    //echo $query;die;
 		$taskArr = $this->common_model->coreQueryObject($query);
 		$query = "SELECT tbl_task.* , tbl_employee.employeename,tbl_clients.clientname,tbl_project_info.clientid,tbl_project_info.projectname from tbl_task inner JOIN tbl_employee on tbl_task.assignedto = tbl_employee.id inner join tbl_project_info on tbl_task.projectid = tbl_project_info.id inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id ".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+		//echo $query;die;
 		$taskFilterArr = $this->common_model->coreQueryObject($query);
 		$iFilteredTotal = count($taskFilterArr);
 		$taskAllArr = $this->common_model->getData('tbl_task');
@@ -1079,15 +1095,15 @@ class Project extends CI_Controller {
 		foreach($taskArr as $row) {
 			if($row->status == 0){
 				$status = $row->status = 'Incomplete';
-				$str = '<label class="label label-danger">'.$status.'</label>';
+				$str = '<label class="label label-warning">'.$status.'</label>';
 			}
 			elseif($row->status == 1){
 				$status = $row->status = 'To Do';
-				$str = '<label class="label label-success">'.$status.'</label>';
+				$str = '<label class="label label-onhold">'.$status.'</label>';
 			}
 			elseif($row->status == 2){
 				$status = $row->status = 'Doing';
-				$str = '<label class="label-dangerel label-danger">'.$status.'</label>';
+				$str = '<label class="label label-inprogress">'.$status.'</label>';
 			}
 			elseif($row->status == 3){
 				$status = $row->status = 'Done';

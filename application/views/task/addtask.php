@@ -14,6 +14,7 @@
             </nav>
 
             <!-- contetn-wrap -->
+            <h6 id="sucesmsg"></h6>
             <div class="content-in">  
                 <div class="row">
                     <div class="col-md-8">
@@ -35,6 +36,7 @@
 											  This is a warning alert
 											</div>
 		                				</div>
+		                				<p id="sucesmsg" class="text-success"></p>
 		                				<div class="form-body">
 		                					<div class="row">
 		                						<div class="col-md-12">

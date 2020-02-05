@@ -182,6 +182,7 @@ jQuery(document).ready(function() {
 	}
 
 	else if((controllerName == 'project' || controllerName == 'task') && (functionName == 'task' || functionName == '')){
+		
 		var oTable = jQuery('#tasks-table').DataTable({
 			'bRetrieve': true,
 	        "bPaginate": true,
@@ -218,6 +219,7 @@ jQuery(document).ready(function() {
         			aoData.push( { "name": "client", "value": $('#selclient').val() } );
         			aoData.push( { "name": "startdate", "value": $('#start_date').val() } );
         			aoData.push( { "name": "enddate", "value": $('#deadline').val() } );
+        			aoData.push( { "name": "hideComplete", "value": $('#chk-complete').val() } );
         		}
         		oSettings.jqXHR = $.ajax( {
 	                "dataType": 'json',
@@ -255,7 +257,13 @@ $('#filter-results').click(function(){
 	var oTable = $('#tasks-table').DataTable();
 	oTable.draw();
 });
-
+jQuery('#hide-complete').change(function(){
+	if($(this).prop("checked") == true){
+		jQuery('#chk-complete').val(1);
+	}else{
+		jQuery('#chk-complete').val(0);
+	}
+})
 $(document).ready(function(){
   $("#toggle-filter").click(function(){
     $("#filterdiv").toggle();
@@ -941,6 +949,8 @@ $('#save-task-category').click(function(){
 							$('#taxCategory').append("<tr id='taskCat_"+data.lastTaskCatinsertid+"'><td>"+data.count+"</td><td>"+task_cat_name+"</td><td><input type='submit' class='btn btn-sm btn-danger btn-rounded delete-category' onclick='deletetaskCat(\""+data.lastTaskCatinsertid+"\");' value='Remove' id='deletetaskCat'></td></tr>");
 							$('#add-task-categ').modal('toggle');
 							$('#createTaskCategoryForm')[0].reset();
+							$('#sucesmsg').append(data.sucessmsg);
+							$('#sucesmsg').fadeOut(5000);
 							jQuery('#errormsg').css('display','none');
 						}
 					});		
