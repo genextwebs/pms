@@ -7,7 +7,9 @@ if($this->session->userdata('login')){
     }else if($login->user_type == 1){
         $where = array('user_id'=>$login->id);
         $getClient = $this->common_model->getData('tbl_clients',$where);
-        $loginName = trim($getClient[0]->companyname);
+        if(!empty($getClient)){
+            $loginName = trim($getClient[0]->companyname);
+        }
     }
 }
 ?>

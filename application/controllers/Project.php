@@ -189,7 +189,7 @@ class Project extends CI_Controller {
 				$data['projectData']=$this->common_model->getData('tbl_project_member',$WhereArr1);	
 				$pid=$data['projectData']['0']->project_id;
 				$query = "SELECT tbl_project_info.*,tbl_clients.clientname as clientname from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id where tbl_project_info.id=".$pid.$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
-				//echo($query);echo '<br/>';die;
+				
 				$projectArr = $this->common_model->coreQueryObject($query);
 				$query = "SELECT tbl_project_info.*,tbl_clients.clientname as clientname from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id where tbl_project_info.id=".$pid.$sWhere;
 				//echo($query);die;
@@ -202,6 +202,23 @@ class Project extends CI_Controller {
 				$query = "SELECT tbl_project_info.*,tbl_clients.clientname as clientname from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id".$sWhere;
 				//echo($query);die;
 			}
+
+			//type=1   "SELECT tbl_project_info.*,tbl_clients.clientname FROM `tbl_project_info` inner join tbl_clients on tbl_project_info.clientid=tbl_clients.id where tbl_project_info.id=110
+
+			else if($this->user_type == 1){
+				//$whereArr= array('clientid'=>$this->user_id);
+			//	print_r($whereArr);die;
+
+				//$date= $this->common_model->getData('tbl_project_info',$whereArr);
+				//$project_id=$date[0]->id
+				//PRINT_R($date);DIE;
+				$query="SELECT tbl_project_info.*,tbl_clients.clientname FROM `tbl_project_info` inner join tbl_clients on tbl_project_info.clientid=tbl_clients.id where tbl_clients.user_id=".$this->user_id.''.$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+				//echo($query);die;
+				$projectArr = $this->common_model->coreQueryObject($query);
+				$query="SELECT tbl_project_info.*,tbl_clients.clientname FROM `tbl_project_info` inner join tbl_clients on tbl_project_info.clientid=tbl_clients.id where tbl_clients.user_id=".$this->user_id.''.$sWhere;
+				
+			}
+
 		$ProjectFilterArr = $this->common_model->coreQueryObject($query);
 		$iFilteredTotal = count($ProjectFilterArr);
 		//$whereArr=array('archive'=>0);

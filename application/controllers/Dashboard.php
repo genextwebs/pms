@@ -23,7 +23,9 @@ class Dashboard extends CI_Controller
 		{
 			$whereArrC = array('user_id'=>$userclientData[$i]->id);
 			$clientData = $this->common_model->getData('tbl_clients',$whereArrC);
-			array_push($totalClientData,$clientData[0]);
+			if(!empty($clientData)){
+				array_push($totalClientData,$clientData[0]);
+			}
 		}
 		
 		$data['totalClient'] = count($totalClientData);
@@ -36,9 +38,11 @@ class Dashboard extends CI_Controller
 		{
 			$whereArrE = array('user_id'=>$userempData[$i]->id);
 			$empData = $this->common_model->getData('tbl_employee',$whereArrE);
+			if(!empty($empData)){
 			array_push($totalEmptData,$empData[0]);
+			}
 		}
-			
+		//print_r($empData);die;
 		$data['totalEmployee'] = count($totalEmptData);
 
 		$whereArrT = array('status'=>4 );
