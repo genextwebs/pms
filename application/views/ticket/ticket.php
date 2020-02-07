@@ -11,7 +11,8 @@
 		</div>
 	</div>
 </nav>
-
+<?php if($this->user_type == 0){
+?>
 <!-- contetn-wrap -->
 <div class="content-in">
 	<div class="row">
@@ -114,6 +115,10 @@
 			</div>
 		</div>
 	</div>
+<?php
+}
+?>
+
 	<div class="row">
 		<div class="col-md-12">
 			<div class="stats-box">
@@ -122,13 +127,26 @@
         			<div class="col-md-6">
         				<div class="form-group">
         				<?php if($this->user_type == 0) { ?>
+	                        
 	                        <a class="btn btn-outline-success btn-sm"  href="<?php echo base_url().'Ticket/addticket'?>">Create Ticket <i class="fa fa-plus" aria-hidden="true"></i></a>
-	                     <?php } ?>
-							<a href="javascript:;" id="toggle-filter" class="btn btn-outline-danger btn-sm toggle-filter"><i class="fa fa-sliders"></i> Filter Results</a>
+
+	                        <a href="javascript:;" id="toggle-filter" class="btn btn-outline-danger btn-sm toggle-filter"><i class="fa fa-sliders"></i> Filter Results</a>
+
+	                    <?php }else if($this->user_type == 1){
+	                    ?>
+	                     	<a class="btn btn-outline-success btn-sm"  href="<?php echo base_url().'Ticket/addticket'?>">Create Ticket <i class="fa fa-plus" aria-hidden="true"></i></a>
+
+	                     <?php }else if($this->user_type == 2){
+	                     ?>
+	                     	<a class="btn btn-outline-success btn-sm"  href="<?php echo base_url().'Ticket/addticket'?>">Create Ticket <i class="fa fa-plus" aria-hidden="true"></i></a>
+
+						<?php } ?>
 						</div>
         			</div>
         		
 				</div>
+				<?php if($this->user_type == 0){?>
+
 				<div class="row filter-from" id="ticket-filters" style="display: none;">
 	             	<div class="col-md-12">
 	                    <h4>Filter by <a href="javascript:;" class="pull-right toggle-filter"><i class="fa fa-times-circle-o"></i></a></h4>
@@ -214,7 +232,7 @@
 						</div>
 					</form>
 				</div> 
-			 
+			 <?php } ?>
 			
 				<?php
 					$mess = $this->session->flashdata('message_name');

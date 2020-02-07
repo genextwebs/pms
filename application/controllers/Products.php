@@ -8,7 +8,12 @@ class Products extends CI_Controller
 		error_reporting(E_ALL);
 		ini_set('display_errors', 1);
 		$this->load->model('common_model');
+		$this->login = $this->session->userdata('login');
+		$this->user_type = $this->login->user_type;
+		$this->user_id = $this->login->id;
 		func_check_login();
+//		$this->user_type = $this->login->user_type;
+//		$this->user_id = $this->login->id;	
 		//echo "<PRE>";print_r($_POST);exit;
 	}
 	
@@ -128,11 +133,21 @@ class Products extends CI_Controller
             }
             /** Filtering End */
 		}
-		
-	    $query = "SELECT * from tbl_product ".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
-		$productsArr = $this->common_model->coreQueryObject($query);
 
-		$query = "SELECT * from tbl_product ".$sWhere;
+		/*if($this->user_type == 0){*/
+			$query = "SELECT * from tbl_product ".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+			$productsArr = $this->common_model->coreQueryObject($query);
+
+			$query = "SELECT * from tbl_product ".$sWhere;
+		/*}
+		else if($this->user_type == 1){
+
+		}
+		else if($this->user_type == 2){
+			
+		}*/
+		
+	    
 		$productsFilterArr = $this->common_model->coreQueryObject($query);
 		$iFilteredTotal = count($productsFilterArr);
 

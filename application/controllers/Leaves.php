@@ -138,16 +138,28 @@ class Leaves extends CI_Controller {
 				$sWhere.=' AND tbl_leaves.empid='.$empname;
 			}
 			if(!empty($sWhere)){
-				$sWhere = " WHERE 1 ".$sWhere;
+				$sWhere = " ".$sWhere;
 			}
 		}
+
+		if($this->user_type == 0){
 	
 		$query = "SELECT tbl_leaves.*,tbl_employee.employeename as empname,tbl_leavetype.name as leavetype from tbl_leaves INNER JOIN tbl_employee on tbl_leaves.empid = tbl_employee.id INNER JOIN tbl_leavetype ON tbl_leavetype.id = tbl_leaves.leavetypeid".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 	
 		$LeavesArr = $this->common_model->coreQueryObject($query);
 	
 		$query = "SELECT tbl_leaves.*,tbl_employee.employeename as empname,tbl_leavetype.name as leavetype from tbl_leaves INNER JOIN tbl_employee on tbl_leaves.empid = tbl_employee.id INNER JOIN tbl_leavetype ON tbl_leavetype.id = tbl_leaves.leavetypeid".$sWhere;
+
+		}else if($this->user_type == 2){
 	
+			$query = "SELECT tbl_leaves.*,tbl_employee.employeename as empname,tbl_leavetype.name as leavetype from tbl_leaves INNER JOIN tbl_employee on tbl_leaves.empid = tbl_employee.id INNER JOIN tbl_leavetype ON tbl_leavetype.id = tbl_leaves.leavetypeid where tbl_employee.user_id=".$this->user_id.''.$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+	
+			$LeavesArr = $this->common_model->coreQueryObject($query);
+	
+			$query = "SELECT tbl_leaves.*,tbl_employee.employeename as empname,tbl_leavetype.name as leavetype from tbl_leaves INNER JOIN tbl_employee on tbl_leaves.empid = tbl_employee.id INNER JOIN tbl_leavetype ON tbl_leavetype.id = tbl_leaves.leavetypeid where tbl_employee.user_id=".$this->user_id.''.$sWhere;
+			echo $query;die;
+		}
+
 		$LeavesFilterArr = $this->common_model->coreQueryObject($query);
 		$iFilteredTotal = count($LeavesFilterArr);
 		$ProjectAllArr = $this->common_model->getData('tbl_leaves');
@@ -176,17 +188,19 @@ class Leaves extends CI_Controller {
 			else{
 				if($this->user_type == 2){
 
-					$actionstring= '<abbr title="view Leaves"><a href="javascript:;" onclick="searchleaves(\''.base64_encode($rowid).'\');"  class="btn btn-success btn-circle" data-toggle="modal" data-target="#leaves-popup" data-original-title="View Project Details"><i class="fa fa-search" aria-hidden="true"></i></a></abbr>';
-					}
-					if($this->user_type == 0 ){
-						$actionstring= 
+					$actionstring= 
+
+					'<abbr title="view Leaves"><a href="javascript:;" onclick="searchleaves(\''.base64_encode($rowid).'\');"  class="btn btn-success btn-circle" data-toggle="modal" data-target="#leaves-popup" data-original-title="View Project Details"><i class="fa fa-search" aria-hidden="true"></i></a></abbr>';
+				}else if($this->user_type == 0 ){
+						
+					$actionstring= 
 
 					'<a href='.base_url().'Leaves/approveleaves/'.base64_encode($row->id). ' class="btn btn-success btn-circle" data-toggle="tooltip" data-original-title="View Project Details"><i class="fa fa-check" aria-hidden="true"></i></a>
 
 					<a href="javascript:void();" onclick="deleteleaves(\''.base64_encode($rowid).'\');"  class="btn btn-danger btn-circle sa-params" data-toggle="tooltip"  data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>
 
 				    <a href="javascript:;" onclick="searchleaves(\''.base64_encode($rowid).'\');"  class="btn btn-success btn-circle" data-toggle="modal" data-target="#leaves-popup" data-original-title="View Project Details"><i class="fa fa-search" aria-hidden="true"></i></a>';
-					}
+				}
 								
 			}
 			$datarow[] = array(

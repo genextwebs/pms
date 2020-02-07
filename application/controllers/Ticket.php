@@ -122,6 +122,7 @@ class Ticket extends CI_Controller {
 				$searchTerm = trim($_GET['sSearch']);
 				$sWhere.= ' AND (ticketsubject like "%'.$searchTerm.'%")';
 			}
+
 		/*	if(!empty(trim($_POST['s_date']))){
 				$startdate=!empty($_POST['s_date']) ? $_POST['s_date'] : '';
 			}else{
@@ -168,11 +169,26 @@ class Ticket extends CI_Controller {
 			    }
 			$sWhere = " WHERE 1 ".$sWhere;
 		}
-		
-		$query = "SELECT tbl_ticket.* FROM tbl_ticket".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
-		$TicketArr = $this->common_model->coreQueryObject($query);
+		if($this->user_type == 0){
+			
+			$query = "SELECT tbl_ticket.* FROM tbl_ticket".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+			$TicketArr = $this->common_model->coreQueryObject($query);
 
-		$query = "SELECT tbl_ticket.*,tbl_ticket_channel.name as channel,tbl_ticket_type.name as type FROM tbl_ticket inner join tbl_ticket_channel on tbl_ticket.channelname=tbl_ticket_channel.id inner join tbl_ticket_type on tbl_ticket.type=tbl_ticket_type.id".$sWhere;
+			$query = "SELECT tbl_ticket.*,tbl_ticket_channel.name as channel,tbl_ticket_type.name as type FROM tbl_ticket inner join tbl_ticket_channel on tbl_ticket.channelname=tbl_ticket_channel.id inner join tbl_ticket_type on tbl_ticket.type=tbl_ticket_type.id".$sWhere;
+
+		}else if($this->user_type == 1){
+			$query = "SELECT tbl_ticket.* FROM tbl_ticket".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+			$TicketArr = $this->common_model->coreQueryObject($query);
+
+			$query = "SELECT tbl_ticket.*,tbl_ticket_channel.name as channel,tbl_ticket_type.name as type FROM tbl_ticket inner join tbl_ticket_channel on tbl_ticket.channelname=tbl_ticket_channel.id inner join tbl_ticket_type on tbl_ticket.type=tbl_ticket_type.id".$sWhere;
+
+		}else if($this->user_type == 2){
+			$query = "SELECT tbl_ticket.* FROM tbl_ticket".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+			$TicketArr = $this->common_model->coreQueryObject($query);
+
+			$query = "SELECT tbl_ticket.*,tbl_ticket_channel.name as channel,tbl_ticket_type.name as type FROM tbl_ticket inner join tbl_ticket_channel on tbl_ticket.channelname=tbl_ticket_channel.id inner join tbl_ticket_type on tbl_ticket.type=tbl_ticket_type.id".$sWhere;	
+		}
+		
 		//echo $this->db->last_query();die;
 		
 		$TicketFilterArr = $this->common_model->coreQueryObject($query);
@@ -187,6 +203,7 @@ class Ticket extends CI_Controller {
 		foreach($TicketArr as $row) {
 			$rowid = $row->id;
 			//echo($rowid);die;
+			if($this->user_type == 0){
 			$actionstring = '<div class="dropdown action m-r-10">
 				                <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
 				                		<div class="dropdown-menu">
@@ -196,6 +213,12 @@ class Ticket extends CI_Controller {
 						                    
 				               			 </div>
 							</div>';
+			}else if($this->user_type == 1){
+				$actionstring ='<p>view</p>';
+
+			}else if($this->user_type == 2){
+				$actionstring ='<p>view</p>';
+			}
 			//For Priority
 			if($row->priority=='1'){
 				$priority=$row->priority='Low';

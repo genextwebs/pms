@@ -206,17 +206,12 @@ class Project extends CI_Controller {
 			//type=1   "SELECT tbl_project_info.*,tbl_clients.clientname FROM `tbl_project_info` inner join tbl_clients on tbl_project_info.clientid=tbl_clients.id where tbl_project_info.id=110
 
 			else if($this->user_type == 1){
-				//$whereArr= array('clientid'=>$this->user_id);
-			//	print_r($whereArr);die;
-
-				//$date= $this->common_model->getData('tbl_project_info',$whereArr);
-				//$project_id=$date[0]->id
-				//PRINT_R($date);DIE;
+		//echo $this->user_id;die;
 				$query="SELECT tbl_project_info.*,tbl_clients.clientname FROM `tbl_project_info` inner join tbl_clients on tbl_project_info.clientid=tbl_clients.id where tbl_clients.user_id=".$this->user_id.''.$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
-				//echo($query);die;
+				
 				$projectArr = $this->common_model->coreQueryObject($query);
 				$query="SELECT tbl_project_info.*,tbl_clients.clientname FROM `tbl_project_info` inner join tbl_clients on tbl_project_info.clientid=tbl_clients.id where tbl_clients.user_id=".$this->user_id.''.$sWhere;
-				
+				//echo $query;die;
 			}
 
 		$ProjectFilterArr = $this->common_model->coreQueryObject($query);
@@ -282,8 +277,12 @@ class Project extends CI_Controller {
 					<a href="javascript:void();" onclick="deleteproject(\''.base64_encode($rowid).'\');"  class="btn btn-danger btn-circle sa-params" data-toggle="tooltip"  data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>';
 			}
 		}
-		if($this->user_type == 2) {  
+		else if($this->user_type == 2) {  
 		 	$actionstring = ' <a href='.base_url().'Project/searchproject/'.base64_encode($row->id). ' class="btn btn-success btn-circle" data-toggle="tooltip" data-original-title="View Project Details"><i class="fa fa-search" aria-hidden="true"></i></a>';
+		 }
+
+		else if($this->user_type == 1){
+		 	$actionstring ='<p><a href='.base_url().'Project/searchproject/'.base64_encode($row->id). ' class="btn btn-success btn-circle" data-toggle="tooltip" data-original-title="View Project Details"><i class="fa fa-search" aria-hidden="true"></i></a></p>';
 		 }
 		$datarow[] = array(
 			$id = $i,
