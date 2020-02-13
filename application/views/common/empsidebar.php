@@ -2,12 +2,22 @@
 $loginName="";
 if($this->session->userdata('login')){
     $login=$this->session->userdata('login');
+
     if($login->user_type==0){
         $loginName = substr($login->emailid,0,8);
-    }else if($login->user_type == 1){
+    }
+   /* else if($login->user_type == 1){
         $where = array('user_id'=>$login->id);
         $getClient = $this->common_model->getData('tbl_clients',$where);
         $loginName = trim($getClient[0]->companyname);
+    }*/
+    else if($login->user_type == 2){
+        $where = array('user_id'=>$login->id);
+        $getEmp = $this->common_model->getData('tbl_employee',$where);
+       // print_r($getEmp);die;
+        if(!empty($getEmp)){
+            $loginName = trim($getEmp[0]->employeename);
+        }
     }
 }
 ?>
@@ -24,7 +34,7 @@ if($this->session->userdata('login')){
          echo $this->db->last_query();die;
         $data = $this->common_model->coreQueryObject($query);*/
 
-
+ 
 ?> 
 <div id="sidebar-scroll" class="slim-nav">
     <ul class="list-unstyled components user">
@@ -81,7 +91,7 @@ if($this->session->userdata('login')){
             </a>
             <ul class="collapse list-unstyled" id="taskmenu">
                 <li>
-                    <a href="#">Tasks</a>
+                    <a href="<?php echo base_url().'task'?>">Tasks</a>
                 </li>
                 <li>
                     <a href="#">Task Board</a>
@@ -136,12 +146,12 @@ if($this->session->userdata('login')){
                 </li>
             </ul>
         </li> -->
-         <li>
+      <!--    <li>
             <a href="#" class="nav-link-s">
                 <i class="ti-envelope"></i>
                 <span>Messages</span>
             </a>
-        </li>
+        </li> -->
         <li>
             <a href="#" class="nav-link-s">
                 <i class="icon-calender"></i>

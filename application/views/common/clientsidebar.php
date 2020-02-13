@@ -7,6 +7,7 @@ if($this->session->userdata('login')){
     }else if($login->user_type == 1){
         $where = array('user_id'=>$login->id);
         $getClient = $this->common_model->getData('tbl_clients',$where);
+       // echo $this->db->last_query();die;
         if(!empty($getClient)){
             $loginName = trim($getClient[0]->companyname);
         }
@@ -47,12 +48,12 @@ if($this->session->userdata('login')){
                 <span>Projects</span>
             </a>
         </li>
-        <li <?php if($controller == 'products' && ($functionName == 'products' || $functionName == '')) { echo 'class="active"'; } ?>>
+      <!--   <li <?php if($controller == 'products' && ($functionName == 'products' || $functionName == '')) { echo 'class="active"'; } ?>>
             <a href="<?php echo base_url().'products'?>" class="nav-link-s">
                 <i class="icon-layers"></i>
                 <span>Products</span>
             </a>
-        </li>
+        </li> -->
         <li <?php if($controller == 'ticket' && ($functionName == 'ticket' || $functionName == '')) { echo 'class="active"'; } ?>>
             <a href="<?php echo base_url().'ticket'?>" class="nav-link-s">
                 <i class="icon-layers"></i>

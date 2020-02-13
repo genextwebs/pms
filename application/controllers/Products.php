@@ -134,18 +134,13 @@ class Products extends CI_Controller
             /** Filtering End */
 		}
 
-		/*if($this->user_type == 0){*/
+	
 			$query = "SELECT * from tbl_product ".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 			$productsArr = $this->common_model->coreQueryObject($query);
 
 			$query = "SELECT * from tbl_product ".$sWhere;
-		/*}
-		else if($this->user_type == 1){
-
-		}
-		else if($this->user_type == 2){
-			
-		}*/
+		
+		
 		
 	    
 		$productsFilterArr = $this->common_model->coreQueryObject($query);

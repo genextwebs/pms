@@ -43,21 +43,32 @@ class Task extends CI_Controller {
 		$this->load->view('common/header');
 		$this->load->view('task/edittask',$data);
 		$this->load->view('common/footer');
-		if(!empty($_POST)){
-			$title = $this->input->post('title_task');
-			$projectid = $this->input->post('projectid');
-			$description = $this->input->post('editor1');
-			//echo $description;die;
-			$startdate = $this->input->post('startdate');
-			$duedate = $this->input->post('due_date');
-			$assignemp = $this->input->post('assignemp');
-			$taskcategory = $this->input->post('task-category');
-			$priority = $this->input->post('radio-stacked');
-			$status = $this->input->post('status');
-			$updateArr = array('projectid' => $projectid, 'title' => $title , 'description' => $description , 'startdate' => $startdate , 'duedate' => $duedate , 'assignedto' => $assignemp , 'taskcategory' => $taskcategory , 'status' => $status, 'priority' => $priority);
-			$this->common_model->updateData('tbl_task',$updateArr,$where);
-			$this->session->set_flashdata('message_name', 'Task Updated sucessfully');
-			redirect('task');
+		if($this->user_type == 0){
+			if(!empty($_POST)){
+				$title = $this->input->post('title_task');
+				$projectid = $this->input->post('projectid');
+				$description = $this->input->post('editor1');
+				//echo $description;die;
+				$startdate = $this->input->post('startdate');
+				$duedate = $this->input->post('due_date');
+				$assignemp = $this->input->post('assignemp');
+				$taskcategory = $this->input->post('task-category');
+				$priority = $this->input->post('radio-stacked');
+				$status = $this->input->post('status');
+				$updateArr = array('projectid' => $projectid, 'title' => $title , 'description' => $description , 'startdate' => $startdate , 'duedate' => $duedate , 'assignedto' => $assignemp , 'taskcategory' => $taskcategory , 'status' => $status, 'priority' => $priority);
+				$this->common_model->updateData('tbl_task',$updateArr,$where);
+				$this->session->set_flashdata('message_name', 'Task Updated sucessfully');
+				redirect('task');
+			}
+		}else if($this->user_type == 2) {
+			if(!empty($_POST)){
+				
+				$status = $this->input->post('status');
+				$updateArr = array('status' => $status);
+				$this->common_model->updateData('tbl_task',$updateArr,$where);
+				$this->session->set_flashdata('message_name', 'Task Updated sucessfully');
+				redirect('task');
+			}
 		}
 	}
 }

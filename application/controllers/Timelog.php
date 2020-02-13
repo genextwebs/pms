@@ -8,6 +8,10 @@ class Timelog extends CI_Controller {
 		error_reporting(E_ALL);
 		ini_set('display_errors', 1);
 		$this->load->model('common_model');
+		$this->login = $this->session->userdata('login');
+		$this->user_id = $this->login->id;
+        $this->user_type = $this->login->user_type;
+        $this->name = $this->login->name;
 		func_check_login();
 	}
 
@@ -112,7 +116,7 @@ class Timelog extends CI_Controller {
 			
 			if(!empty(trim($_GET['sSearch']))){
 				$searchTerm = trim($_GET['sSearch']);
-				$sWhere.= ' AND (tbl_project_info.projectname like "%'.$searchTerm.'%" OR tbl_timelog.timelogstartdate like "%'.$searchTerm.'%" OR tbl_timelog.timelogendtime like "%'.$searchTerm.'%" OR tbl_timelog.totalhours like "%'.$searchTerm.'%" OR tbl_project_info.projectbudget like "%'.$searchTerm.'%")';
+				$sWhere.= ' AND (tbl_project_info.projectname like "%'.$searchTerm.'%" OR tbl_timelog.timelogstartdate like "%'.$searchTerm.'%" OR tbl_timelog.timelogendtime like "%'.$searchTerm.'%" OR tbl_timelog.totalhours like "%'.$searchTerm.'%" OR tbl_project_info.projectbudget like "%'.$searchTerm.'%" OR tbl_employee.employeename like "%'.$searchTerm.'%")';
 			}
 		
 			$pname=!empty($_POST['pname']) ? $_POST['pname'] : '';	
@@ -144,20 +148,25 @@ class Timelog extends CI_Controller {
 				$sWhere.=' AND tbl_timelog.timelogenddate<="'.$enddate.'"';
 			}
 			if(!empty($sWhere)){
-				$sWhere = " WHERE 1 ".$sWhere;
+				$sWhere = " ".$sWhere;
 			}
 			
 		}
-		$query = "SELECT tbl_project_info.projectbudget,tbl_project_info.*,tbl_timelog.* FROM `tbl_timelog` inner join tbl_project_info on tbl_timelog.timelogprojectid = tbl_project_info.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
-		$timeArr = $this->common_model->coreQueryObject($query);
+		
+		if($this->user_type == 0){
+		$query = "SELECT tbl_project_info.projectbudget,tbl_project_info.*,tbl_timelog.*,tbl_employee.* FROM `tbl_timelog` inner join tbl_project_info on tbl_timelog.timelogprojectid = tbl_project_info.id inner join tbl_employee on tbl_employee.id = tbl_timelog.timelogemployeeid".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 
-		$query = "SELECT projectbudget,tbl_project_info.*,tbl_timelog.* FROM `tbl_timelog` inner join tbl_project_info on tbl_timelog.timelogprojectid = tbl_project_info.id".$sWhere;
+			$timeArr = $this->common_model->coreQueryObject($query);
+
+			$query = "SELECT tbl_project_info.projectbudget,tbl_project_info.*,tbl_timelog.*,tbl_employee.* FROM `tbl_timelog` inner join tbl_project_info on tbl_timelog.timelogprojectid = tbl_project_info.id 
+			    inner join tbl_employee on tbl_employee.id = tbl_timelog.timelogemployeeid".$sWhere;
+
+
 		$TimeFilterArr = $this->common_model->coreQueryObject($query);
-		//echo $this->db->last_query();die;
 		$iFilteredTotal = count($TimeFilterArr);
 		$TimeAllArr = $this->common_model->getData('tbl_timelog');
 		$iTotal = count($TimeAllArr);
-		
+
 		/** Output */
 		$datarow = array();
 
@@ -167,50 +176,94 @@ class Timelog extends CI_Controller {
 			$rowid = $row->id;
 			$projectid =$row->timelogprojectid;
 			//echo($projectid);die;
+			
 	        $actionstring = 
 
 						'<a href="javascript:;" onclick="edittimelog(\''.base64_encode($rowid).'\')" class="btn btn-info btn-circle" data-original-title="Edit" data-toggle="modal" data-target="#timelog-popup" ><i class="fa fa-pencil" aria-hidden="true"></i></a>
 
 						 <a href="javascript:void();" onclick="deletetimelog(\''.base64_encode($rowid).'\');"  class="btn btn-danger btn-circle sa-params" data-toggle="tooltip"  data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>';
+						
+	
+			$datarow[] = array(
+				$id = $i,
+				$row->projectname,
+				$row->employeename,
+				$row->timelogstartdate.'<br/>'.$row->timelogstarttime,
+				$row->timelogenddate.'<br/>'.$row->timelogendtime,
+				$row->totalhours,
+				$row->projectbudget,
+				$actionstring
+				);
+		
 
-		/*$empid=$row->timelogemployeeid;
-		$whereArr=array('id'=>$empid);
-		$empData=$this->common_model->getData('tbl_employee',$whereArr);
-		foreach($empData as $emp){
-			$empData=$empData[0]->employeename;
-			
-		}*/
-
-		$query ="select tbl_project_member.*,tbl_employee.employeename from tbl_project_member inner join tbl_employee on tbl_project_member.emp_id = tbl_employee.id where project_id=".$projectid;
-	  	$empData=$this->common_model->coreQueryObject($query);
-	  	foreach($empData as $emp){
-			$empData=$empData[0]->employeename;
-			
+			$i++;
 		}
 
-
-		$datarow[] = array(
-			$id = $i,
-			$row->projectname,
-			$empData,
-			$row->timelogstartdate.'<br/>'.$row->timelogstarttime,
-			$row->timelogenddate.'<br/>'.$row->timelogendtime,
-			$row->totalhours,
-			$row->projectbudget,
-			$actionstring
+	
+			$output = array
+			(
+				"sEcho" => intval($_POST['sEcho']),
+					   "iTotalRecords" => $iTotal,
+					   "iTotalRecordsFormatted" => number_format($iTotal), 
+					   //ShowLargeNumber($iTotal),
+					   "iTotalDisplayRecords" => $iFilteredTotal,
+					   "aaData" => $datarow
 			);
+		
+	
+
+		}else if($this->user_type == 2){
+		
+			$query = "SELECT tbl_project_info.projectbudget,tbl_project_info.*,tbl_employee.*,tbl_timelog.* FROM `tbl_timelog` inner join tbl_project_info on tbl_timelog.timelogprojectid = tbl_project_info.id  inner join tbl_employee on tbl_employee.id = tbl_timelog.timelogemployeeid where tbl_employee.user_id=".$this->user_id.''.$sWhere.''.$sOrder.' limit '.$sOffset.', '.$sLimit;
+
+			$timeArr = $this->common_model->coreQueryObject($query);
+
+			$query = "SELECT projectbudget,tbl_project_info.*,tbl_employee.*,tbl_timelog.* FROM `tbl_timelog` inner join tbl_project_info on tbl_timelog.timelogprojectid = tbl_project_info.id inner join tbl_employee on tbl_employee.id = tbl_timelog.timelogemployeeid where tbl_employee.user_id=".$this->user_id.''.$sWhere;
+			//echo $this->db->last_query();die;
+
+
+		$TimeFilterArr = $this->common_model->coreQueryObject($query);
+//		echo '<pre>';print_r($TimeFilterArr);die;
+		$iTotal = count($TimeFilterArr);
+		//echo '<pre>';print_r($iTotal);die;
+		//$TimeAllArr = $this->common_model->getData('tbl_timelog');
+		//$iTotal = count($TimeAllArr);
+
+		$datarow = array();
+
+		$i = 1;
+
+		foreach($timeArr as $row) {
+			$rowid = $row->id;
+			$projectid =$row->timelogprojectid;
+				 $actionstring ='<p>--</p>';
+			
+
+			$datarow[] = array(
+					$id = $i,
+					$row->projectname,
+					$row->employeename,
+					$row->timelogstartdate.'<br/>'.$row->timelogstarttime,
+					$row->timelogenddate.'<br/>'.$row->timelogendtime,
+					$row->totalhours,
+					$row->projectbudget,
+					$actionstring
+					);
 			$i++;
 		}
 		
-		$output = array
-		(
-			"sEcho" => intval($_POST['sEcho']),
-				   "iTotalRecords" => $iTotal,
-				   "iTotalRecordsFormatted" => number_format($iTotal), 
-				   //ShowLargeNumber($iTotal),
-				   "iTotalDisplayRecords" => $iFilteredTotal,
-				   "aaData" => $datarow
-		);
+		
+			$output = array
+			(
+				"sEcho" => intval($_POST['sEcho']),
+					   "iTotalRecords" => $iTotal,
+					   "iTotalRecordsFormatted" => number_format($iTotal), 
+					   //ShowLargeNumber($iTotal),
+					   "iTotalDisplayRecords" => $iTotal,
+					   "aaData" => $datarow
+			);
+		
+	}
 		echo json_encode($output);
 		exit();
 	}

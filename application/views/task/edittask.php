@@ -1,4 +1,4 @@
- <nav aria-label="breadcrumb" class="breadcrumb-nav">
+		 <nav aria-label="breadcrumb" class="breadcrumb-nav">
                 <div class="row">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                         <h4 class="page-title"><i class="ti-layout-list-thumb"></i> Tasks</h4>
@@ -14,6 +14,8 @@
             </nav>
 
             <!-- contetn-wrap -->
+            <?php if($this->user_type == 0){ 
+            ?>
             <div class="content-in">  
                 <div class="row">
                     <div class="col-md-8">
@@ -161,6 +163,156 @@
 		            </div>
                 </div>
             </div>
+            <?php 
+            }else if($this->user_type == 2){
+            ?>
+            <div class="content-in">  
+                <div class="row">
+                    <div class="col-md-8">
+		                <div class="card br-0">
+		                	<div class="card-header br-0 card-header-inverse">
+		                		New Task
+		                	</div>
+		                	<div class="card-wrapper collapse show">
+		                		<div class="card-body"><?php $c = 'task'; ?>
+		                			<form name="task_category" class="aj-form" method="post">
+		                				<div class="submit-alerts">
+		                					<div class="alert alert-success" role="alert">
+											  This is a success alert
+											</div>
+											<div class="alert alert-danger" role="alert">
+											  This is a danger alert
+											</div>
+											<div class="alert alert-warning" role="alert">
+											  This is a warning alert
+											</div>
+		                				</div>
+		                				<div class="form-body">
+		                					<div class="row">
+		                						<div class="col-md-12">
+		                							<div class="form-group">
+		                								<label class="control-label">Project</label>
+		                								<select class="custom-select br-0" name="projectid" disabled>
+		                								<?php
+			                								foreach($project as $pj){
+			                									$str = '';
+			                									if($pj->id == $taskData[0]->projectid){
+			                										$str = 'selected';
+			                									}
+			                								echo '<option value="'.$pj->id.'" '.$str.'>'.$pj->projectname.'</option>';
+			                								}
+			                							?>	
+		                								</select>
+		                							</div>
+		                						</div>
+		                						<div class="col-md-12">
+			                						<div class="form-group">
+			                							<label class="control-label">
+			                								Task Category
+			                							</label>
+			                							<select class="custom-select br-0" id="task-category" name="task-category" disabled>
+			                							<?php
+			                								foreach($taskCat as $catData){
+			                										$str = '';
+						                							if($catData->id == $taskData[0]->taskcategory){
+						                								$str = 'selected';
+						                							}
+						                							echo '<option value="'.$catData->id.'" '.$str.'>'.$catData->task_category_name.'</option>';
+					                							}
+			                							?>	
+			                							</select>
+			                						</div>
+			                					</div>
+			                					<div class="col-md-6">
+			                					</div>
+		                						<div class="col-md-12">
+		                							<div class="form-group">
+			                							<label class="control-label">Title</label>
+			                							<input type="text" class="form-control" id="title_task" name="title_task" value="<?php echo !empty($taskData[0]->title) ?  $taskData[0]->title : ' '?>" disabled>
+			                						</div>
+		                						</div>
+		                						<div class="col-md-12">
+		                							<div class="form-group">
+		                							 	<label class="control-label">Description</label>
+		                							 	<textarea name="editor1" disabled><?php echo !empty($taskData[0]->description) ?  $taskData[0]->description : ' '?></textarea>
+		                							</div>
+		                						</div>
+		                						<div class="col-md-12">
+		                							<div class="form-group">
+		                								<label class="control-label">start Date</label>
+		                								<input id="start_date" type="text" class="form-control" name="startdate" value="<?php echo !empty($taskData[0]->startdate) ?  $taskData[0]->startdate : ' '?>" disabled>
+		                							</div>
+		                						</div>
+		                						<div class="col-md-12">
+		                							<div class="form-group">
+		                								<label class="control-label">Due Date</label>
+		                								<input id="deadline" type="text" class="form-control" name="due_date" value="<?php echo !empty($taskData[0]->duedate) ?  $taskData[0]->duedate : ' '?>" disabled>
+		                							</div>
+		                						</div>
+		                						<div class="col-md-12">
+			                						<div class="form-group">
+			                							<label class="control-label">Assigned To</label>
+			                							<select id='selUser' class="custom-select" name="assignemp" disabled>
+												            <?php foreach($employee as $row){
+					            							$str = '';
+				                							if($row->id == $taskData[0]->assignedto){
+				                								$str = 'selected';
+				                							}
+				                							echo '<option value="'.$row->id.'" '.$str.'>'.$row->employeename.'</option>';
+										            		}
+										            		?>  
+												        </select> 
+			                						</div>
+			                					</div>
+			                					<div class="col-md-12">
+			                						<div class="form-group">
+			                							<label class="control-label">
+			                							Status
+			                							</label>
+			                							<select name="status" id="status" class="form-control">
+		                                                    <option value="1" <?php if($taskData[0]->status == 1){ echo 'selected'; }?>>To Do</option>
+		                                                    <option value="2" <?php if($taskData[0]->status == 2){ echo 'selected'; }?>>Doing</option>
+		                                                    <option value="3" <?php if($taskData[0]->status == 3){ echo 'selected'; }?>>Done</option>
+		                                                    <option value="4" <?php if($taskData[0]->status == 4){ echo 'selected'; }?>>Completed</option>
+		                                                    <option value="0" <?php if($taskData[0]->status == 0){ echo 'selected'; }?>>Incomplete</option>
+                                					</select>
+			                						</div>
+			                					</div>
+			                					<div class="col-md-12">
+			                						<div class="form-group">
+			                							<label class="control-label">Priority</label>
+			                							<div class="custom-control custom-radio radio-danger">
+														    <input type="radio" class="custom-control-input" id="high-rad" name="radio-stacked" value="0" <?php if($taskData[0]->priority == '0'){ echo 'checked'; }?> required disabled>
+														    <label class="custom-control-label text-danger" for="high-rad">High</label>
+														</div>
+														<div class="custom-control custom-radio radio-warning">
+														    <input type="radio" class="custom-control-input" id="medium-rad" name="radio-stacked" value="1" <?php if($taskData[0]->priority == '1'){ echo 'checked'; }?> required disabled>
+														    <label class="custom-control-label text-warning" for="medium-rad">Medium</label>
+														</div>
+														<div class="custom-control custom-radio radio-success">
+														    <input type="radio" class="custom-control-input" id="low-rad" name="radio-stacked" value="2" <?php if($taskData[0]->priority == '2'){ echo 'checked'; }?> required disabled> 
+														    <label class="custom-control-label text-success" for="low-rad">Low</label>
+														</div>
+			                						</div>
+			                					</div>
+			                					
+		                					</div>
+		                					
+											<!-- action btn -->
+			                                <div class="form-actions">
+				                                <button type="submit" id="save-form" class="btn btn-success"> <i class="fa fa-check"></i> Update</button>
+				                            </div>
+		                				</div>
+		                			</form>
+		                		</div>
+		                	</div>
+		                </div>
+		            </div>
+                </div>
+            </div>
+            <?php
+            } 
+            ?>
             <!-- ends of contentwrap -->
 
 <!-- add task category -->

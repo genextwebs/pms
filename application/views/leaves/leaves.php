@@ -15,6 +15,7 @@
 <!-- contetn-wrap -->
 <div class="content-in">  
 	<div class="row">
+		<?php if($this->user_type == 0){?>
 		<div class="col-md-2">
 			<div class="white-box p-t-10 p-b-10 bg-warning"> 
 				<h3 class="box-title text-white">Pending Leaves</h3>
@@ -28,6 +29,9 @@
 				</ul>
 			</div>
 		</div>
+		<?php 
+		}
+		?>
 	
 		<div class="col-md-12">
 			<div class="stats-box">

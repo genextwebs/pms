@@ -179,8 +179,27 @@ class Project extends CI_Controller {
 			}*/
 			/** Filtering End */
 		}
+		if($this->user_type == 0){
+
+			$query = "SELECT tbl_project_info.*,tbl_clients.clientname as clientname from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+		
+
+			$projectArr = $this->common_model->coreQueryObject($query);
+
+			$query = "SELECT tbl_project_info.*,tbl_clients.clientname as clientname from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id".$sWhere;
+
+
+		}else if($this->user_type == 1){
+
+			$query="SELECT tbl_project_info.*,tbl_clients.clientname FROM `tbl_project_info` inner join tbl_clients on tbl_project_info.clientid=tbl_clients.id where tbl_clients.user_id=".$this->user_id.''.$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 			
-			if($this->user_type == 2)
+			$projectArr = $this->common_model->coreQueryObject($query);
+
+			$query="SELECT tbl_project_info.*,tbl_clients.clientname FROM `tbl_project_info` inner join tbl_clients on tbl_project_info.clientid=tbl_clients.id where tbl_clients.user_id=".$this->user_id.''.$sWhere;
+				//echo $query;die;
+
+		}
+		else if($this->user_type == 2)
 			{
 				$whereArr= array('user_id'=>$this->user_id);
 				$data['empData']=$this->common_model->getData('tbl_employee',$whereArr);	
@@ -194,25 +213,9 @@ class Project extends CI_Controller {
 				$query = "SELECT tbl_project_info.*,tbl_clients.clientname as clientname from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id where tbl_project_info.id=".$pid.$sWhere;
 				//echo($query);die;
 			}
-			elseif($this->user_type == 0)
-			{
-				$query = "SELECT tbl_project_info.*,tbl_clients.clientname as clientname from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
-				//echo($query);echo '<br/>';
-				$projectArr = $this->common_model->coreQueryObject($query);
-				$query = "SELECT tbl_project_info.*,tbl_clients.clientname as clientname from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id".$sWhere;
-				//echo($query);die;
-			}
+			
 
-			//type=1   "SELECT tbl_project_info.*,tbl_clients.clientname FROM `tbl_project_info` inner join tbl_clients on tbl_project_info.clientid=tbl_clients.id where tbl_project_info.id=110
-
-			else if($this->user_type == 1){
-		//echo $this->user_id;die;
-				$query="SELECT tbl_project_info.*,tbl_clients.clientname FROM `tbl_project_info` inner join tbl_clients on tbl_project_info.clientid=tbl_clients.id where tbl_clients.user_id=".$this->user_id.''.$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
-				
-				$projectArr = $this->common_model->coreQueryObject($query);
-				$query="SELECT tbl_project_info.*,tbl_clients.clientname FROM `tbl_project_info` inner join tbl_clients on tbl_project_info.clientid=tbl_clients.id where tbl_clients.user_id=".$this->user_id.''.$sWhere;
-				//echo $query;die;
-			}
+			
 
 		$ProjectFilterArr = $this->common_model->coreQueryObject($query);
 		$iFilteredTotal = count($ProjectFilterArr);
@@ -1094,12 +1097,12 @@ class Project extends CI_Controller {
             }
             /** Filtering End */
 		}
-		
-	    $query = "SELECT tbl_task.* , tbl_employee.employeename,tbl_clients.clientname,tbl_project_info.clientid,tbl_project_info.projectname from tbl_task inner JOIN tbl_employee on tbl_task.assignedto = tbl_employee.id inner join tbl_project_info on tbl_task.projectid = tbl_project_info.id inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id ".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
-	    //echo $query;die;
-		$taskArr = $this->common_model->coreQueryObject($query);
-		$query = "SELECT tbl_task.* , tbl_employee.employeename,tbl_clients.clientname,tbl_project_info.clientid,tbl_project_info.projectname from tbl_task inner JOIN tbl_employee on tbl_task.assignedto = tbl_employee.id inner join tbl_project_info on tbl_task.projectid = tbl_project_info.id inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id ".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
-		//echo $query;die;
+		if($this->user_type == 0){
+			$query = "SELECT tbl_task.* , tbl_employee.employeename,tbl_clients.clientname,tbl_project_info.clientid,tbl_project_info.projectname from tbl_task inner JOIN tbl_employee on tbl_task.assignedto = tbl_employee.id inner join tbl_project_info on tbl_task.projectid = tbl_project_info.id inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id ".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+	    
+			$taskArr = $this->common_model->coreQueryObject($query);
+			$query = "SELECT tbl_task.* , tbl_employee.employeename,tbl_clients.clientname,tbl_project_info.clientid,tbl_project_info.projectname from tbl_task inner JOIN tbl_employee on tbl_task.assignedto = tbl_employee.id inner join tbl_project_info on tbl_task.projectid = tbl_project_info.id inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id ".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+
 		$taskFilterArr = $this->common_model->coreQueryObject($query);
 		$iFilteredTotal = count($taskFilterArr);
 		$taskAllArr = $this->common_model->getData('tbl_task');
@@ -1158,6 +1161,70 @@ class Project extends CI_Controller {
 	        "iTotalDisplayRecords" => $iFilteredTotal,
 	        "aaData" => $datarow
 		);
+
+		}else if($this->user_type == 2){
+
+			$query = "SELECT tbl_task.* , tbl_employee.employeename,tbl_clients.clientname,tbl_project_info.clientid,tbl_project_info.projectname from tbl_task inner JOIN tbl_employee on tbl_task.assignedto = tbl_employee.id inner join tbl_project_info on tbl_task.projectid = tbl_project_info.id inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id where tbl_employee.user_id =".$this->user_id.''.$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+
+			$taskArr = $this->common_model->coreQueryObject($query);
+
+			$query = "SELECT tbl_task.* , tbl_employee.employeename,tbl_clients.clientname,tbl_project_info.clientid,tbl_project_info.projectname from tbl_task inner JOIN tbl_employee on tbl_task.assignedto = tbl_employee.id inner join tbl_project_info on tbl_task.projectid = tbl_project_info.id inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id where tbl_employee.user_id =".$this->user_id.''.$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+
+		$taskFilterArr = $this->common_model->coreQueryObject($query);
+		$iTotal = count($taskFilterArr);
+		//$taskAllArr = $this->common_model->getData('tbl_task');
+		//$iTotal = count($taskAllArr);
+		/** Output */
+		$datarow = array();
+		$i = 1;
+		$str = '';
+		foreach($taskArr as $row) {
+			if($row->status == 0){
+				$status = $row->status = 'Incomplete';
+				$str = '<label class="label label-warning">'.$status.'</label>';
+			}
+			elseif($row->status == 1){
+				$status = $row->status = 'To Do';
+				$str = '<label class="label label-onhold">'.$status.'</label>';
+			}
+			elseif($row->status == 2){
+				$status = $row->status = 'Doing';
+				$str = '<label class="label label-inprogress">'.$status.'</label>';
+			}
+			elseif($row->status == 3){
+				$status = $row->status = 'Done';
+				$str = '<label class="label label-success">'.$status.'</label>';
+			}
+			elseif($row->status == 4){
+				$status = $row->status = 'Completed';
+				$str = '<label class="label label-success">'.$status.'</label>';
+			}
+			$actionStr="";
+			$actionStr.= '<a href='.base_url().'task/edittask/'.base64_encode($row->id).' class="btn btn-info btn-circle edit-task" data-toggle="tooltip" data-task-id="69" data-original-title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a> &nbsp;';
+
+	        $datarow[] = array(
+					$id = $i,
+	                $row->title,
+	                $row->projectname,
+	                $row->employeename,
+	                $row->clientname,
+					$row->duedate,
+					$str,
+					$actionStr
+	        );
+	        $i++;
+      	}
+        
+		$output = array
+		(
+		   	"sEcho" => intval($_GET['sEcho']),
+	        "iTotalRecords" => $iTotal,
+	        "iTotalRecordsFormatted" => number_format($iTotal), //ShowLargeNumber($iTotal),
+	        "iTotalDisplayRecords" => $iTotal,
+	        "aaData" => $datarow
+		);
+		} 	
+	    
 	  echo json_encode($output);
       exit();
 	}

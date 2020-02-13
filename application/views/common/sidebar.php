@@ -77,12 +77,12 @@ if($this->session->userdata('login')){
                 </li>
             </ul>
         </li>
-        <li <?php if($controller == 'products' && ($functionName == 'products' || $functionName == '')) { echo 'class="active"'; } ?>>
+       <!--  <li <?php if($controller == 'products' && ($functionName == 'products' || $functionName == '')) { echo 'class="active"'; } ?>>
             <a href="<?php echo base_url().'products'?>" class="nav-link-s">
                 <i class="icon-layers"></i>
                 <span>Products</span>
             </a>
-        </li>
+        </li> -->
         <li>
             <a href="#finance" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle collapsed">
                 <i class="fa fa-money"></i>
@@ -121,13 +121,13 @@ if($this->session->userdata('login')){
                <i class="ti-user"></i>
                <span> Employees </span>
             </a>
-            <ul class="collapse list-unstyled <?php if($controller == 'employee') {echo 'show'; }?>"" id="employees">
+            <ul class="collapse list-unstyled <?php if($controller == 'employee') {echo 'show'; }?>" id="employees">
                 <li <?php if($controller == 'employee' && ($functionName == 'employee' || $functionName == '')) { echo 'class="active"'; }  ?>>
                     <a href="<?php echo base_url().'employee'?>">Employees List</a>
                 </li>
-                <li>
+                <!-- <li>
                     <a href="#">Teams</a>
-                </li>
+                </li> -->
             </ul>
         </li>
           <li <?php if($controller == 'Attendance' && ($functionName == '' || $functionName == '')) { echo 'class="active"'; } ?>>
@@ -148,12 +148,12 @@ if($this->session->userdata('login')){
                 <span>Holiday</span>
             </a>
         </li>
-        <li>
+      <!--   <li>
             <a href="#" class="nav-link-s">
                 <i class="ti-envelope"></i>
                 <span>Messages</span>
             </a>
-        </li>
+        </li> -->
         <li>
             <a href="#" class="nav-link-s">
                 <i class="icon-calender"></i>

@@ -157,7 +157,7 @@ class Leaves extends CI_Controller {
 			$LeavesArr = $this->common_model->coreQueryObject($query);
 	
 			$query = "SELECT tbl_leaves.*,tbl_employee.employeename as empname,tbl_leavetype.name as leavetype from tbl_leaves INNER JOIN tbl_employee on tbl_leaves.empid = tbl_employee.id INNER JOIN tbl_leavetype ON tbl_leavetype.id = tbl_leaves.leavetypeid where tbl_employee.user_id=".$this->user_id.''.$sWhere;
-			echo $query;die;
+			//echo $query;die;
 		}
 
 		$LeavesFilterArr = $this->common_model->coreQueryObject($query);
