@@ -235,8 +235,12 @@ class Clients extends CI_Controller{
 		$whereArr1=array('id'=>$clientid);
 		$clientArr=array('user_id'=>$clientid);
 		$data['clients']=$this->common_model->getData('tbl_clients',$clientArr);
-		$clientmaniId = $data['clients'][0]->id;
-		$whereArr=array('id'=>$clientmaniId);
+		if(!empty($data['clients'])){
+			$clientmaniId = $data['clients'][0]->id;
+			$whereArr=array('id'=>$clientmaniId);
+		}
+	
+	
 		$data['user']=$this->common_model->getData('tbl_user',$whereArr1);
 		if(!empty($_POST)){
 			$companyname=$this->input->post('company_name');

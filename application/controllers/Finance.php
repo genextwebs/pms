@@ -7,6 +7,9 @@ class Finance extends CI_Controller{
 		$this->load->model('common_model');
 		ini_set('display_errors',1);
 		error_reporting(E_ALL);
+		$this->login = $this->session->userdata('login');
+		$this->user_type = $this->login->user_type;
+		$this->user_id = $this->login->id;	
 		func_check_login();
 	}
 
@@ -116,7 +119,9 @@ class Finance extends CI_Controller{
             	$searchTerm = trim($_GET['sSearch']);
             	$sWhere .= ' AND (tbl_clients.clientname like "%'.$searchTerm.'%")';
             }
-				$startdate=!empty($_POST['startdate']) ? $_POST['startdate'] : '';
+
+            if($this->user_type == 0){
+            	$startdate=!empty($_POST['startdate']) ? $_POST['startdate'] : '';
 				$enddate=!empty($_POST['enddate']) ? $_POST['enddate'] : '';
 				$status=$_POST['status'];
 					if($status=='all'){
@@ -134,83 +139,147 @@ class Finance extends CI_Controller{
 						$sWhere = " WHERE 1 ".$sWhere;
 					}
 					/** Filtering End */
-		}
+		
 				
 		
-	    	$query = "select tbl_estimates.* , tbl_clients.clientname from tbl_estimates INNER JOIN tbl_clients ON tbl_clients.id=tbl_estimates.client".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
-	    	//echo $query;
-			$estimatesArr = $this->common_model->coreQueryObject($query);
+	    			$query = "select tbl_estimates.* , tbl_clients.clientname from tbl_estimates INNER JOIN tbl_clients ON tbl_clients.id=tbl_estimates.client".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+	    	
+					$estimatesArr = $this->common_model->coreQueryObject($query);
 
-			$query = "select tbl_estimates.* , tbl_clients.clientname from tbl_estimates INNER JOIN tbl_clients ON tbl_clients.id=tbl_estimates.client".$sWhere;
-			$estimatesFilterArr = $this->common_model->coreQueryObject($query);
-			$iFilteredTotal = count($estimatesFilterArr);
+					$query = "select tbl_estimates.* , tbl_clients.clientname from tbl_estimates INNER JOIN tbl_clients ON tbl_clients.id=tbl_estimates.client".$sWhere;
 
-			$estimatesAllArr = $this->common_model->getData('tbl_estimates');
-			$iTotal = count($estimatesAllArr);
+					$estimatesFilterArr = $this->common_model->coreQueryObject($query);
+					$iFilteredTotal = count($estimatesFilterArr);
+					$estimatesAllArr = $this->common_model->getData('tbl_estimates');
+					$iTotal = count($estimatesAllArr);
 
-			/** Output */
-			$datarow = array();
-			$i = 1;
-			foreach($estimatesArr as $row){
-				$id = $row->id;
-				$clientid = $row->client;
-				$checkstatus=$row->status;
-				if($row->status == '0'){
-					$status = $row->status = 'Waiting';
-				}
-				else if($row->status == '1'){
-					$status = $row->status = 'Accepted';
-					//$sta='<lable class="label label-success">'.$status.'</label>';
-				}
-				else if($row->status == '2'){
-					$status = $row->status = 'Declined';
-					//$sta='<lable class="label label-success">'.$status.'</label>';
-				}
-				$create_date = date('d-m-Y', strtotime($row->created_at));
-			
-				if($checkstatus =='1'){
-					$actionStr = '<div class="dropdown action m-r-10">
-				                <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
-				                		<div class="dropdown-menu">
-						                   <a  class="dropdown-item" href="javascript:void(0)" onclick="deleteestimates(\''.base64_encode($row->id).'\')"><i class="fa fa-trash "></i> Delete</a>
-										</div>
-								</div>';
-				}
-				else{
-					$actionStr = '<div class="dropdown action m-r-10">
-				                <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
-				                		<div class="dropdown-menu">
-						                    <a  class="dropdown-item" href='.base_url().'Finance/editestimate/'.base64_encode($id).'><i class="fa fa-pencil"></i> Edit</a>
-											<a  class="dropdown-item" href="javascript:void(0)" onclick="deleteestimates(\''.base64_encode($row->id).'\')"><i class="fa fa-trash "></i> Delete</a>
-											<a  class="dropdown-item" href="'.base_url().'Finance/createinvoice/'.base64_encode($id).'/'.base64_encode($clientid).'"><i class="ti-receipt"></i>Create Invoice</a>
-				               			 </div>
-									</div>';
-				}
-			
-				$datarow[] = array(
-					$id = $i,
-	                $row->clientname,
-	                $row->total,
-					$create_date,
-					$row->validtill,
-	                $status,	
-					$actionStr
-	           	);
-           		$i++;
-      		}
+					/** Output */
+					$datarow = array();
+					$i = 1;
+					foreach($estimatesArr as $row){
+						$id = $row->id;
+						$clientid = $row->client;
+						$checkstatus=$row->status;
+						if($row->status == '0'){
+							$status = $row->status = 'Waiting';
+						}
+						else if($row->status == '1'){
+							$status = $row->status = 'Accepted';
+							//$sta='<lable class="label label-success">'.$status.'</label>';
+						}
+						else if($row->status == '2'){
+							$status = $row->status = 'Declined';
+							//$sta='<lable class="label label-success">'.$status.'</label>';
+						}
+						$create_date = date('d-m-Y', strtotime($row->created_at));
+					
+						if($checkstatus =='1'){
+							$actionStr = '<div class="dropdown action m-r-10">
+						                <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
+						                		<div class="dropdown-menu">
+								                   <a  class="dropdown-item" href="javascript:void(0)" onclick="deleteestimates(\''.base64_encode($row->id).'\')"><i class="fa fa-trash "></i> Delete</a>
+												</div>
+										</div>';
+						}
+						else{
+							$actionStr = '<div class="dropdown action m-r-10">
+						                <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
+						                		<div class="dropdown-menu">
+								                    <a  class="dropdown-item" href='.base_url().'Finance/editestimate/'.base64_encode($id).'><i class="fa fa-pencil"></i> Edit</a>
+													<a  class="dropdown-item" href="javascript:void(0)" onclick="deleteestimates(\''.base64_encode($row->id).'\')"><i class="fa fa-trash "></i> Delete</a>
+													<a  class="dropdown-item" href="'.base_url().'Finance/createinvoice/'.base64_encode($id).'/'.base64_encode($clientid).'"><i class="ti-receipt"></i>Create Invoice</a>
+						               			 </div>
+											</div>';
+						}
+					
+						$datarow[] = array(
+							$id = $i,
+			                $row->clientname,
+			                $row->total,
+							$create_date,
+							$row->validtill,
+			                $status,	
+							$actionStr
+			           	);
+		           		$i++;
+		      		}
         
-				$output = array
-				(
-				   	"sEcho" => intval($_GET['sEcho']),
-			        "iTotalRecords" => $iTotal,
-			        "iTotalRecordsFormatted" => number_format($iTotal), //ShowLargeNumber($iTotal),
-			        "iTotalDisplayRecords" => $iFilteredTotal,
-			        "aaData" => $datarow
-				);
-	  			echo json_encode($output);
-      			exit();
-	}
+					$output = array
+					(
+					   	"sEcho" => intval($_GET['sEcho']),
+				        "iTotalRecords" => $iTotal,
+				        "iTotalRecordsFormatted" => number_format($iTotal), //ShowLargeNumber($iTotal),
+				        "iTotalDisplayRecords" => $iFilteredTotal,
+				        "aaData" => $datarow
+					);
+            }
+            else if($this->user_type == 1){
+            
+					if(!empty($sWhere)){
+						$sWhere = " WHERE 1 ".$sWhere;
+					}
+					/** Filtering End */
 
+	    			$query = "select tbl_estimates.* , tbl_clients.* from tbl_estimates INNER JOIN tbl_clients ON tbl_clients.id=tbl_estimates.client where tbl_clients.user_id=".$this->user_id.''.$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+
+					$estimatesArr = $this->common_model->coreQueryObject($query);
+					/*echo $this->db->last_query();
+					die;
+					*/$query = "select tbl_estimates.* , tbl_clients.clientname from tbl_estimates INNER JOIN tbl_clients ON tbl_clients.id=tbl_estimates.client".$sWhere;
+
+					$estimatesFilterArr = $this->common_model->coreQueryObject($query);
+					$iFilteredTotal = count($estimatesFilterArr);
+					$estimatesAllArr = $this->common_model->getData('tbl_estimates');
+					$iTotal = count($estimatesAllArr);
+
+					/** Output */
+					$datarow = array();
+					$i = 1;
+					foreach($estimatesArr as $row){
+						$id = $row->id;
+						$clientid = $row->client;
+						$checkstatus=$row->status;
+						if($row->status == '0'){
+							$status = $row->status = 'Waiting';
+						}
+						else if($row->status == '1'){
+							$status = $row->status = 'Accepted';
+						}
+						else if($row->status == '2'){
+							$status = $row->status = 'Declined';
+						}
+						$create_date = date('d-m-Y', strtotime($row->created_at));
+					
+						
+						$actionStr = '--';
+						
+					
+						$datarow[] = array(
+							$id = $i,
+			                $row->clientname,
+			                $row->total,
+							$create_date,
+							$row->validtill,
+			                $status,	
+							$actionStr
+			           	);
+			       		$i++;
+			  		}
+        
+					$output = array
+					(
+					   	"sEcho" => intval($_GET['sEcho']),
+				        "iTotalRecords" => $iTotal,
+				        "iTotalRecordsFormatted" => number_format($iTotal), //ShowLargeNumber($iTotal),
+				        "iTotalDisplayRecords" => $iFilteredTotal,
+				        "aaData" => $datarow
+					);
+            }
+				
+  			echo json_encode($output);
+  			exit();
+	}
+}
 	public function editestimate(){
 		$id=$this->uri->segment(3);
 		$id1=base64_decode($id);

@@ -15,7 +15,9 @@
 <!-- contetn-wrap -->
 <div class="content-in">  
     <div class="row">
-        <div class="col-md-3">
+    	<?php if($this->user_type == 0){
+    	?>
+    	<div class="col-md-3">
             <div class="stats-box bg-black">
                 <h3 class="box-title text-white">Total Notices</h3>
                 <ul class="list-inline two-wrap">
@@ -28,6 +30,13 @@
                 </ul>
             </div>
         </div>
+    	<?php 
+    	}elseif ($this->user_type == 2){
+
+    		# Blank
+    	}
+    	?>
+  
        
 		<div class="col-md-12">
             <div class="stats-box">

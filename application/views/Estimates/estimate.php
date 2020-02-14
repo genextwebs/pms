@@ -17,7 +17,10 @@
 	<div class="row">
 	    <div class="col-md-12">
 	        <div class="stats-box">
-				<div class="row">
+	        	<?php
+	        	if($this->user_type == 0){
+	        	?>
+	        		<div class="row">
 					<div class="col-md-6">
 						<div class="form-group">
 	                        <a class="btn btn-outline-success btn-sm"  href="<?php echo base_url().'Finance/addestimates' ?>">Create Estimate <i class="fa fa-plus" aria-hidden="true"></i></a>
@@ -61,7 +64,15 @@
 	            			</div>
 						</div>
 					</form>
-				</div>					
+				</div>		
+	        	<?php
+	        	}else if($this->user_type == 1){
+	        	?>
+	        		
+	        	<?php
+	        	} 
+	        	?>
+								
 		    		<?php
 						//warning 
 						$mess = $this->session->flashdata('message_name');

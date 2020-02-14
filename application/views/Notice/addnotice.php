@@ -71,7 +71,7 @@
                                   <div class="col-md-12">
                                 <h5>Department</h5>
                                 <div class="form-group">
-                                    <select class="select2 form-control" id="department" name="All">
+                                    <select class="select2 form-control" id="department" name="department">
                                         <option value="">All</option>
                                         <?php
                                             foreach($department as $row)

@@ -6,9 +6,12 @@ class NoticeBoard extends CI_Controller{
 		$this->load->model('common_model');
 		ini_set('display_errors',1);
 		error_reporting(E_ALL);
-		func_check_login();
+
 		$this->login = $this->session->userdata('login');
 		$this->user_type = $this->login->user_type;
+		$this->user_id = $this->login->id;	
+		func_check_login();
+
 	}
 
 	public function index(){
@@ -29,6 +32,7 @@ class NoticeBoard extends CI_Controller{
 			$heading=$this->input->post('heading');
 			$noticeto=$this->input->post('noticeto');
 			$department=$this->input->post('department');
+			//echo $heading.''.$department;die;
 			$desc=$this->input->post('desc');
 	
 				$insertArr=array('heading'=>$heading,'noticeto' => $noticeto,'department' => $department,'description' => $desc);
@@ -128,9 +132,9 @@ class NoticeBoard extends CI_Controller{
 					/** Filtering End */
 					//					echo $sWhere;die;
 		}
-				
 		
-	   	$query = "select * from tbl_notice".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+		if($this->user_type == 0){
+			$query = "select * from tbl_notice".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 	    $noticesArr = $this->common_model->coreQueryObject($query);
 		
 		$query =  "select * from tbl_notice".$sWhere;	
@@ -186,7 +190,57 @@ class NoticeBoard extends CI_Controller{
 		        "iTotalDisplayRecords" => $iFilteredTotal,
 		        "aaData" => $datarow
 			);
-		  	echo json_encode($output);
+			
+		}elseif ($this->user_type == 2) {
+
+			$query = "select * from tbl_notice".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+	    	$noticesArr = $this->common_model->coreQueryObject($query);
+			$query =  "select * from tbl_notice".$sWhere;	
+			$noticesFilterArr = $this->common_model->coreQueryObject($query);
+			$iFilteredTotal = count($noticesFilterArr);
+			$noticesAllarr = $this->common_model->getData('tbl_clients');
+			$iTotal = count($noticesAllarr);
+
+		/** Output */
+		$datarow = array();
+			$i = 1;
+			foreach($noticesArr as $row) {
+				if($row->noticeto == '1'){
+					$to = $row->status = 'Employee';
+				}
+				elseif($row->noticeto == '2'){
+					$to = $row->status = 'Client';
+				}
+				
+				$noticeid = $row->id;
+				$create_date = date('d-m-Y', strtotime($row->created_at));
+				
+				$actionStr = '<p>--</p>';
+				
+	          
+				$datarow[] = array(
+					$id = $i,
+	                $row->heading,
+	                $create_date,
+		            $to,	
+					$actionStr
+	           	);
+	           	$i++;
+	      	}
+	        
+			$output = array
+			(
+			   	"sEcho" => intval($_GET['sEcho']),
+		        "iTotalRecords" => $iTotal,
+		        "iTotalRecordsFormatted" => number_format($iTotal), //ShowLargeNumber($iTotal),
+		        "iTotalDisplayRecords" => $iFilteredTotal,
+		        "aaData" => $datarow
+			);
+		
+
+		} 
+		
+	   	  	echo json_encode($output);
 	      	exit();
 	}
 

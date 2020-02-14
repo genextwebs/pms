@@ -6,6 +6,9 @@ class Leads extends CI_Controller
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('common_model');
+		$this->login = $this->session->userdata('login');
+		$this->user_type = $this->login->user_type;
+		$this->user_id = $this->login->id;
 		func_check_login();
 	}
 	
@@ -136,10 +139,13 @@ class Leads extends CI_Controller
 							</div>';
 			}
 			else{
-				$whereget = array('id'=>$clientid);
-				$getClient = $this->common_model->getData('tbl_clients',$whereget);
-				$clientid = $getClient[0]->user_id;
-				$actionStr = '<div class="dropdown action m-r-10">
+					$whereget = array('id'=>$clientid);
+					$getClient = $this->common_model->getData('tbl_clients',$whereget);
+					if(!empty($getClient)){
+						$clientid = $getClient[0]->user_id;	
+					}
+					
+					$actionStr = '<div class="dropdown action m-r-10">
 				                <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
 				               		 <div class="dropdown-menu">
 						                    <a  class="dropdown-item" href='.base_url().'leads/viewleadsdetail/'.base64_encode($id).'><i class="fa fa-search"></i> View</a>
