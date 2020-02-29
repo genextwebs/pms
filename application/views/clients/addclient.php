@@ -115,7 +115,7 @@
             							<div class="form-group">
             								<div class="form-group">
 	                                            <label>Mobile</label>
-	                                            <input type="tel" name="mobile" id="mobile" class="form-control" value="<?php if(!empty($sessData['mobile'])) { echo $sessData['mobile']; } else {} ?>">
+	                                            <input type="tel" name="mobile" id="mobile" class="form-control allow-no" value="<?php if(!empty($sessData['mobile'])) { echo $sessData['mobile']; } else {} ?>">
 	                                        </div>
             							</div>
             						</div>

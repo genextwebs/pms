@@ -347,6 +347,8 @@ $(function(){
 		$('#createemployee').validate({
 		rules:{
 				employee_name : "required",
+				designation : "required",
+				department : "required",
 				employee_email :{
 							
 							required:true,
@@ -360,12 +362,11 @@ $(function(){
 						minlength:10,
 						maxlength:10
 					},
-				designation : "required",
-				department : "required",
+				
 		},	
 		messages:
 				{
-					mobile : "Enter 10 digit",
+					mobile : "Enter 10 digit Number Only",
 					
 				},	
 		submitHandler: function(form) {

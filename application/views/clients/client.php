@@ -21,10 +21,11 @@
                 <ul class="list-inline two-wrap">
                     <li><i class="icon-user text-white"></i></li>
 					<?php 
-							$clientsArr = $this->common_model->getData('tbl_clients');
-							$total_clients = count($clientsArr);
+							$whereArr = array('user_type'=>1,'is_deleted'=>0);
+							$userclientData = $this->common_model->getData('tbl_user',$whereArr);
+							$total_clients = count($userclientData);
 					?>
-                    <li class="text-right"><span id="" class="counter text-white"><?php echo  $total_clients; ?></span></li>
+                    <li class="text-right"><span id="" class="counter text-white"><?php if($total_clients != '') { echo  $total_clients; } else { echo 0; } ?></span></li>
                 </ul>
             </div>
         </div>

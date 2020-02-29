@@ -62,6 +62,7 @@ class Attendance extends CI_Controller{
 		elseif($this->user_type == 0){
 			
 			$data['selEmployeeArr'] =$this->common_model->getData('tbl_employee');
+			//echo "<PRE>";print_r($data['selEmployeeArr']);
 		}
 		elseif($this->user_type == 2){
 			

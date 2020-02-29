@@ -15,7 +15,7 @@ class Login extends CI_Controller
 	public function checklogin(){
 		if($this->input->post('btnlogin')){
 			$email = $this->input->post('email');	
-			$password = $this->input->post('password');	
+			$password = md5($this->input->post('password'));	
 			if(empty($email)){
                 $this->session->set_flashdata('message', '<div id="message"> Please Enter Email Address.</div>');
                 redirect('login');

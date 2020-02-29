@@ -20,7 +20,9 @@
 							<div class="row">
                 				<div class="col-md-6">
                 					<div class="form-group">
+                						<?php if($this->user_type == 0) { ?>
 			                            <a class="btn btn-outline-success btn-sm"  href="<?php echo base_url().'Finance/addinvoices' ?>">Create Invoice <i class="fa fa-plus" aria-hidden="true"></i></a>
+			                        	<?php } ?>
 										<a href="javascript:;" id="toggle-filter" class="btn btn-outline-danger btn-sm toggle-filter"><i class="fa fa-sliders"></i> Filter Results</a>
 									</div>
                 				</div>
@@ -56,6 +58,7 @@
 											</select> 
             							</div>
 		                		</div>
+		                		<?php if($this->user_type == 0) { ?>
 								<div class="col-md-2">
 		                			<label class="control-label">Client</label>
 		                			<div class="form-group">
@@ -70,6 +73,7 @@
 										</select> 
             						</div>
 		                		</div>
+		                	<?php } ?>
 		                		<div class="col-md-2">
 		                			
             							<h5 class="control-label">Status</label>

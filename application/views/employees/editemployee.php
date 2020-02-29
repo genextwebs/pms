@@ -74,7 +74,7 @@
 		                						<div class="col-md-4">
 		                							<div class="form-group">
 		                								<label class="control-label">Mobile</label>
-		                								<input type="text" class="form-control" id="mobile" name="mobile" value="<?php echo !empty($user[0]->mobile) ?  $user[0]->mobile : ' '?>">
+		                								<input type="text" class="form-control allow-no" id="mobile" name="mobile" value="<?php echo !empty($user[0]->mobile) ?  $user[0]->mobile : ' '?>">
 		                							</div>
 		                						</div>
 		                					</div>
@@ -127,7 +127,7 @@
                                         		<div class="col-md-12">
 		                                            <div class="form-group">
 		                                                <label class="control-label">Address</label>
-		                                                <textarea name="address" class="form-control" rows="4"><?php 	?></textarea>
+		                                                <textarea name="address" class="form-control" rows="4"><?php 	echo !empty($employee[0]->address) ?  $employee[0]->address : ' '?></textarea>
 		                                            </div>
 		                                        </div>
                                 			</div>
@@ -185,7 +185,7 @@
                                 				<div class="col-md-6">
 											        <div class="form-group">
 											            <label class="control-label">Hourly Rate</label>
-											            <input type="text" class="form-control" id="hourly-rate" name="hourly-rate" value="<?php echo !empty($employee[0]->hourlyrate) ?  $employee[0]->hourlyrate : ' '?>">
+											            <input type="text" class="form-control" id="hourly-rate" name="hourly_rate" value="<?php echo !empty($employee[0]->hourlyrate) ?  $employee[0]->hourlyrate : ' '?>">
 											        </div>
 											    </div>
 											    <div class="col-md-6">

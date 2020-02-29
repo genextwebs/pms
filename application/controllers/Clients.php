@@ -37,7 +37,8 @@ class Clients extends CI_Controller{
 			$address=$this->input->post('address');
 			$clientname=$this->input->post('name');
 			$clientemail=$this->input->post('email');
-			$password=$this->input->post('password');
+			$orgpassword=$this->input->post('password');
+			$password=md5($this->input->post('password'));
 			if($this->input->post('randompassword')=='on')
 			{$on='1';}
 			else{ $on='0';}
@@ -58,7 +59,7 @@ class Clients extends CI_Controller{
 				redirect('Clients/addclients');
 			}
 			else{
-				$userinsertArr=array('user_type'=>1,'emailid'=>$clientemail,'password'=>md5($password),'generaterandompassword'=>$grp,'mobile'=>$mobile,'status'=>1,'login'=>$login);
+				$userinsertArr=array('user_type'=>1,'emailid'=>$clientemail,'password'=>$password,'original_password'=>$orgpassword,'generaterandompassword'=>$grp,'mobile'=>$mobile,'status'=>1,'login'=>$login,'is_deleted'=>0);
 				$this->common_model->insertdata('tbl_user',$userinsertArr);
 				$userid=$this->db->insert_id();
 
@@ -249,6 +250,7 @@ class Clients extends CI_Controller{
 			$clientname=$this->input->post('name');
 			$clientemail=$this->input->post('email');
 			if($this->input->post('password')!=''){
+					$updateArr['original_password']=$this->input->post('password');
 					$updateArr['password']=md5($this->input->post('password'));
 			}	
 			$mobile=$this->input->post('mobile');

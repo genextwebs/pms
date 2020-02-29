@@ -80,7 +80,7 @@
 		                						<div class="col-md-4">
 		                							<div class="form-group">
 		                								<label class="control-label">Mobile</label>
-		                								<input type="text" class="form-control" id="mobile" name="mobile" value="<?php if(!empty($sessData['mobile'])){echo $sessData['mobile'];}?>">
+		                								<input type="text" class="form-control allow-no" id="mobile" name="mobile" value="<?php if(!empty($sessData['mobile'])){echo $sessData['mobile'];}?>">
 		                							</div>
 		                						</div>
 		                					</div>
@@ -199,7 +199,7 @@
                                 				<div class="col-md-6">
 											        <div class="form-group">
 											            <label class="control-label">Hourly Rate</label>
-											            <input type="text" class="form-control" id="hourly-rate" name="hourly-rate" value="<?php if(!empty($sessData['hourly-rate'])){echo $sessData['hourly-rate'];}?>">
+											            <input type="text" class="form-control" id="hourly-rate" name="hourly_rate" value="<?php if(!empty($sessData['hourly-rate'])){echo $sessData['hourly-rate'];}?>">
 											        </div>
 											    </div>
                                 			</div>

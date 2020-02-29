@@ -91,7 +91,7 @@
 									<div class="col-lg-4 col-md-6">
 										<div class="form-group">
 											<label class="control-label">Mobile</label>
-											<input type="text" id="mobile" name="mobile" class="form-control" value="<?php if(!empty($sessData['mobile'])){echo $sessData['mobile'];}else{ }?>">
+											<input type="text" id="mobile" name="mobile" class="form-control allow-no" value="<?php if(!empty($sessData['mobile'])){echo $sessData['mobile'];}else{ }?>">
 										</div>
 									</div>
 									<div class="col-lg-4 col-md-6">

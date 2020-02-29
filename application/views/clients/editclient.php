@@ -96,7 +96,7 @@
             							<div class="form-group">
             								<div class="form-group">
 	                                            <label>Mobile</label>
-	                                            <input type="tel" name="mobile" id="mobile" value="<?php echo !empty($user[0]->mobile) ?  $user[0]->mobile :''?>" class="form-control">
+	                                            <input type="tel" name="mobile" id="mobile" value="<?php echo !empty($user[0]->mobile) ?  $user[0]->mobile :''?>" class="form-control allow-no">
 	                                       </div>
             							</div>
             						</div>

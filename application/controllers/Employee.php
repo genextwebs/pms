@@ -44,7 +44,8 @@ class Employee extends CI_Controller
 		if(!empty($_POST)){
 			$employee_name = $this->input->post('employee_name');
 			$employee_email = $this->input->post('employee_email');
-			$password = $this->input->post('password');
+			$orgpassword=$this->input->post('password');
+			$password=md5($this->input->post('password'));
 			if($this->input->post('randompassword')=='on'){
 				$randompassword='1';
 			}
@@ -61,7 +62,7 @@ class Employee extends CI_Controller
 			$skills = $this->input->post('skills');
 			$designation = $this->input->post('designation');
 			$department = $this->input->post('department');
-			$hourlyrate = $this->input->post('hourly-rate');
+			$hourlyrate = $this->input->post('hourly_rate');
 			$login = $this->input->post('login');
 			$whereArr = array('emailid' => $employee_email);
 			$data = $this->common_model->getData("tbl_user",$whereArr);
@@ -73,7 +74,7 @@ class Employee extends CI_Controller
 				redirect('employee/addemployee');			
 			}
 			else{
-			$userinsArr =  array('user_type' => 2, 'emailid' => $employee_email,'password' => $password,'generaterandompassword' => $grp,'mobile' => $mobile,'status' => '0','login' => $login);
+			$userinsArr =  array('user_type' => 2, 'emailid' => $employee_email,'password'=>$password,'original_password'=>$orgpassword,'generaterandompassword' => $grp,'mobile' => $mobile,'status' => '0','login' => $login,'is_deleted'=>0);
 			$this->common_model->insertData('tbl_user',$userinsArr);
 			}
 			$last_inserted = $this->db->insert_id();
@@ -352,6 +353,7 @@ class Employee extends CI_Controller
 			$employee_email = $this->input->post('employee_email');
 			$updateArr=array();
 			if($this->input->post('password') != ''){
+				$updateArr['original_password'] = $this->input->post('password');
 				$updateArr['password'] = md5($this->input->post('password'));
 			}
 			if($this->input->post('randompassword')=='on'){
@@ -370,7 +372,7 @@ class Employee extends CI_Controller
 			$skills = $this->input->post('skills');
 			$designation = $this->input->post('designation');
 			$department = $this->input->post('department');
-			$hourlyrate = $this->input->post('hourly-rate');
+			$hourlyrate = $this->input->post('hourly_rate');
 			$status = $this->input->post('status');
 			$login = $this->input->post('login');
 				

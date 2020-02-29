@@ -87,7 +87,7 @@ class Project extends CI_Controller {
 				$store=array('projectname'=>$name,'projectcategoryid'=>$cat,'startdate'=>$date,'manualtimelog'=>$timelog,
 				'projectmember'=>$member,'deadline'=>$deadline,'clientid'=>$client,'viewtask'=>$view,
 				'tasknotification'=>$tasks,'status'=>0,'projectsummary'=>$editor1,'note'=>$notes,
-				'projectbudget'=>$budget,'currency'=>$currency,'hoursallocated'=>$hours,'archive'=>0);
+				'projectbudget'=>$budget,'currency'=>$currency,'hoursallocated'=>$hours,'archive'=>0,'is_deleted'=>0);
 				$this->common_model->insertData('tbl_project_info',$store);
 				$this->session->set_flashdata('message_name', 'Project Insert sucessfully');
 				redirect('Project/index');
@@ -173,6 +173,10 @@ class Project extends CI_Controller {
 				}else{
 						$sWhere.=' AND tbl_project_info.status='.$status;
 				}
+				$sWhere.=' AND tbl_project_info.is_deleted=0';
+					if(!empty($sWhere)){
+						$sWhere = " WHERE 1 ".$sWhere;
+					}
 			/*$sWhere.=' AND tbl_project_info.archive=0';	
 			if(!empty($sWhere)){
 				$sWhere = " WHERE 1 ".$sWhere;
@@ -210,12 +214,12 @@ class Project extends CI_Controller {
 				$query = "SELECT tbl_project_info.*,tbl_clients.clientname as clientname from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id where tbl_project_info.id=".$pid.$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 				
 				$projectArr = $this->common_model->coreQueryObject($query);
-				$query = "SELECT tbl_project_info.*,tbl_clients.clientname as clientname from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id where tbl_project_info.id=".$pid.$sWhere;
+				//$query = "SELECT tbl_project_info.*,tbl_clients.clientname as clientname from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id where tbl_project_info.id=".$pid.$sWhere;
 				//echo($query);die;
 			}
 			
 
-			
+			// print_r($projectArr);
 
 		$ProjectFilterArr = $this->common_model->coreQueryObject($query);
 		$iFilteredTotal = count($ProjectFilterArr);
@@ -235,8 +239,10 @@ class Project extends CI_Controller {
 			$emp_id = $pm->emp_id;
 			$whereArrEmp = array('id' => $emp_id);
 			$emp_arr = $this->common_model->getData('tbl_employee',$whereArrEmp);
+			if(!empty($emp_arr)){
 			$emp_name = substr($emp_arr[0]->employeename,0,1);
 			$emp_str.= ucfirst($emp_name);
+			}
 			}
 		if($row->status=='1'){
 						$status=$row->status='Complete';
@@ -314,11 +320,10 @@ class Project extends CI_Controller {
 				
 	public function deleteproject(){
 		$id=base64_decode($_POST['id']);
-		//echo($id);die;
 		$whereArr=array('id'=>$id);
-		$this->common_model->deleteData('tbl_project_info',$whereArr);
-		//echo $this->db->last_query();die;
-		$this->session->set_flashdata('message','Delete Succesfully....');
+		$updateArr=array('is_deleted'=>1);
+		$this->common_model->updateData('tbl_project_info',$updateArr,$whereArr);
+		$this->session->set_flashdata('message','Project Delete Succesfully....');
 		redirect('project/index');
 	}
 	

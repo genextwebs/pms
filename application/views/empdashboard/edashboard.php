@@ -35,7 +35,7 @@
                         </div>
                         <div class="col-sm-9 text-right">
                             <span class="widget-title"> Total Projects</span><br>
-                            <span class="counter"><?php if(!empty($totalProject)) { echo $totalProject; } ?></span>
+                            <span class="counter"><?php if(!empty($totalProject)) { echo $totalProject; } else echo 0; ?></span>
                         </div>
                     </div>
                 </div>

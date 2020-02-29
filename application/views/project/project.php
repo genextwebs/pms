@@ -20,10 +20,28 @@
 				<h3 class="box-title text-white">Total Projects</h3>
 				<ul class="list-inline two-wrap">
 					<li><i class="icon-layers text-white"></i></li>
-					 <?php 
-						$Totals = $this->common_model->getData('tbl_project_info');
-						$total_Project = count($Totals);
+					 <?php if($this->user_type == 0){
+					 	$whereArr = array('is_deleted'=>0);
+						$Totals = $this->common_model->getData('tbl_project_info',$whereArr);
+						$total_Project = count($Totals); 
+					}elseif($this->user_type == 2){
+						$whereArr = array('user_id'=>$this->user_id);
+						$Totals = $this->common_model->getData('tbl_employee',$whereArr);
+						$whereArr1 = array('emp_id'=>$Totals[0]->id);
+						$Totals = $this->common_model->getData('tbl_project_member',$whereArr1);
+						$whereArr2 = array('id'=>$Totals[0]->project_id,'is_deleted'=>0);
+						$tProject = $this->common_model->getData('tbl_project_info',$whereArr2);
+						$total_Project = count($tProject); 
+					}elseif($this->user_type == 1){
+						//echo $this->user_id;die;
+						$whereArr = array('user_id'=>$this->user_id);
+						$Totals = $this->common_model->getData('tbl_clients',$whereArr);
+						$whereArr1 = array('clientid'=>$Totals[0]->id,'is_deleted'=>0);
+						$Totals = $this->common_model->getData('tbl_project_info',$whereArr1);
+						$total_Project = count($Totals); 
+					}
 					 ?>
+					
 					<li class="text-right"><span id="" class="counter text-white"><?php echo $total_Project;?></span></li>
 				</ul>
 			</div>
@@ -33,12 +51,28 @@
 				<h3 class="box-title text-white">Incomplete Projects</h3>
 				<ul class="list-inline two-wrap">
 					<li><i class="icon-layers text-white"></i></li>
-					 <?php 
-						$whereArr=array('status'=>0);
+					 
+					  <?php if($this->user_type == 0){
+						$whereArr=array('status'=>0,'is_deleted'=>0);
 						$Total = $this->common_model->getData('tbl_project_info',$whereArr);
-						$total_Project = count($Total);
+						$total_ProjectIncom = count($Totals); 
+					}elseif($this->user_type == 2){
+						$whereArr = array('user_id'=>$this->user_id);
+						$Totals = $this->common_model->getData('tbl_employee',$whereArr);
+						$whereArr1 = array('emp_id'=>$Totals[0]->id);
+						$Totals = $this->common_model->getData('tbl_project_member',$whereArr1);
+						$whereArr2 = array('id'=>$Totals[0]->project_id,'status'=>0,'is_deleted'=>0);
+						$tProject = $this->common_model->getData('tbl_project_info',$whereArr2);
+						$total_ProjectIncom = count($tProject); 
+					}elseif($this->user_type == 1){
+						$whereArr = array('user_id'=>$this->user_id);
+						$Totals = $this->common_model->getData('tbl_clients',$whereArr);
+						$whereArr1 = array('clientid'=>$Totals[0]->id,'status'=>0,'is_deleted'=>0);
+						$Totals = $this->common_model->getData('tbl_project_info',$whereArr1);
+						$total_ProjectIncom = count($Totals); 
+					}
 					 ?>
-					<li class="text-right"><span id="" class="counter text-white"><?php echo $total_Project;?></span></li>
+					<li class="text-right"><span id="" class="counter text-white"><?php echo $total_ProjectIncom;?></span></li>
 				</ul>
 			</div>
 		</div>
@@ -48,12 +82,27 @@
 				<h3 class="box-title text-white">Completed Projects</h3>
 				<ul class="list-inline two-wrap">
 					<li><i class="icon-layers text-white"></i></li>
-					<?php 
-						$whereArr=array('status'=>1);
+					 <?php if($this->user_type == 0){
+						$whereArr=array('status'=>1,'is_deleted'=>0);
 						$Total = $this->common_model->getData('tbl_project_info',$whereArr);
-						$total_Project = count($Total);
+						$total_Projectcom = count($Totals); 
+					}elseif($this->user_type == 2){
+						$whereArr = array('user_id'=>$this->user_id);
+						$Totals = $this->common_model->getData('tbl_employee',$whereArr);
+						$whereArr1 = array('emp_id'=>$Totals[0]->id);
+						$Totals = $this->common_model->getData('tbl_project_member',$whereArr1);
+						$whereArr2 = array('id'=>$Totals[0]->project_id,'status'=>1,'is_deleted'=>0);
+						$tProject = $this->common_model->getData('tbl_project_info',$whereArr2);
+						$total_Projectcom = count($tProject); 
+					}elseif($this->user_type == 1){
+						$whereArr = array('user_id'=>$this->user_id);
+						$Totals = $this->common_model->getData('tbl_clients',$whereArr);
+						$whereArr1 = array('clientid'=>$Totals[0]->id,'status'=>1,'is_deleted'=>0);
+						$Totals = $this->common_model->getData('tbl_project_info',$whereArr1);
+						$total_Projectcom = count($Totals); 
+					}
 					 ?>
-				   <li class="text-right"><span id="" class="counter text-white"><?php echo $total_Project;?></span></li>
+				   <li class="text-right"><span id="" class="counter text-white"><?php echo $total_Projectcom;?></span></li>
 				</ul>
 			</div>
 		</div>
@@ -62,12 +111,27 @@
 				<h3 class="box-title text-white">In Process Projects</h3>
 				<ul class="list-inline two-wrap">
 					<li><i class="icon-layers text-white"></i></li>
-					<?php 
-						$whereArr=array('status'=>2);
+					<?php if($this->user_type == 0){
+						$whereArr=array('status'=>2,'is_deleted'=>0);
 						$Total = $this->common_model->getData('tbl_project_info',$whereArr);
-						$total_Project = count($Total);
+						$total_Projectpro = count($Totals); 
+					}elseif($this->user_type == 2){
+						$whereArr = array('user_id'=>$this->user_id);
+						$Totals = $this->common_model->getData('tbl_employee',$whereArr);
+						$whereArr1 = array('emp_id'=>$Totals[0]->id);
+						$Totals = $this->common_model->getData('tbl_project_member',$whereArr1);
+						$whereArr2 = array('id'=>$Totals[0]->project_id,'status'=>2,'is_deleted'=>0);
+						$tProject = $this->common_model->getData('tbl_project_info',$whereArr2);
+						$total_Projectpro = count($tProject); 
+					}elseif($this->user_type == 1){
+						$whereArr = array('user_id'=>$this->user_id);
+						$Totals = $this->common_model->getData('tbl_clients',$whereArr);
+						$whereArr1 = array('clientid'=>$Totals[0]->id,'status'=>2,'is_deleted'=>0);
+						$Totals = $this->common_model->getData('tbl_project_info',$whereArr1);
+						$total_Projectpro = count($Totals); 
+					}
 					 ?>
-					<li class="text-right"><span id="" class="counter text-white"><?php echo $total_Project;?></span></li>
+					<li class="text-right"><span id="" class="counter text-white"><?php echo $total_Projectpro;?></span></li>
 				</ul>
 			</div>
 		</div>
@@ -76,12 +140,27 @@
 				<h3 class="box-title text-white">OnHold Projects</h3>
 				<ul class="list-inline two-wrap">
 					<li><i class="icon-layers text-white"></i></li>
-					 <?php 
-						$whereArr=array('status'=>3);
+					 <?php if($this->user_type == 0){
+						$whereArr=array('status'=>3,'is_deleted'=>0);
 						$Total = $this->common_model->getData('tbl_project_info',$whereArr);
-						$total_Project = count($Total);
+						$total_Projecthold = count($Totals); 
+					}elseif($this->user_type == 2){
+						$whereArr = array('user_id'=>$this->user_id);
+						$Totals = $this->common_model->getData('tbl_employee',$whereArr);
+						$whereArr1 = array('emp_id'=>$Totals[0]->id);
+						$Totals = $this->common_model->getData('tbl_project_member',$whereArr1);
+						$whereArr2 = array('id'=>$Totals[0]->project_id,'status'=>3,'is_deleted'=>0);
+						$tProject = $this->common_model->getData('tbl_project_info',$whereArr2);
+						$total_Projecthold = count($tProject); 
+					}elseif($this->user_type == 1){
+						$whereArr = array('user_id'=>$this->user_id);
+						$Totals = $this->common_model->getData('tbl_clients',$whereArr);
+						$whereArr1 = array('clientid'=>$Totals[0]->id,'status'=>3,'is_deleted'=>0);
+						$Totals = $this->common_model->getData('tbl_project_info',$whereArr1);
+						$total_Projecthold = count($Totals); 
+					}
 					 ?>
-					<li class="text-right"><span id="" class="counter text-white"><?php echo $total_Project;?></span></li>
+					<li class="text-right"><span id="" class="counter text-white"><?php echo $total_Projecthold;?></span></li>
 				</ul>
 			</div>
 		</div>
@@ -90,12 +169,27 @@
 				<h3 class="box-title text-white">Cancelled Projects</h3>
 				<ul class="list-inline two-wrap">
 					<li><i class="icon-layers text-white"></i></li>
-						<?php 
-							$whereArr=array('status'=>4);
-							$Total = $this->common_model->getData('tbl_project_info',$whereArr);
-							$total_Project = count($Total);
-						 ?>
-					<li class="text-right"><span id="" class="counter text-white"><?php echo $total_Project;?></span></li>
+						 <?php if($this->user_type == 0){
+						$whereArr=array('status'=>4,'is_deleted'=>0);
+						$Total = $this->common_model->getData('tbl_project_info',$whereArr);
+						$total_Projectcancel = count($Totals); 
+					}elseif($this->user_type == 2){
+						$whereArr = array('user_id'=>$this->user_id);
+						$Totals = $this->common_model->getData('tbl_employee',$whereArr);
+						$whereArr1 = array('emp_id'=>$Totals[0]->id);
+						$Totals = $this->common_model->getData('tbl_project_member',$whereArr1);
+						$whereArr2 = array('id'=>$Totals[0]->project_id,'status'=>4,'is_deleted'=>0);
+						$tProject = $this->common_model->getData('tbl_project_info',$whereArr2);
+						$total_Projectcancel = count($tProject); 
+					}elseif($this->user_type == 1){
+						$whereArr = array('user_id'=>$this->user_id);
+						$Totals = $this->common_model->getData('tbl_clients',$whereArr);
+						$whereArr1 = array('clientid'=>$Totals[0]->id,'status'=>4,'is_deleted'=>0);
+						$Totals = $this->common_model->getData('tbl_project_info',$whereArr1);
+						$total_Projectcancel = count($Totals); 
+					}
+					 ?>
+					<li class="text-right"><span id="" class="counter text-white"><?php echo $total_Projectcancel;?></span></li>
 				</ul>
 			</div>
 		</div>
