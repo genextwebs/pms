@@ -202,7 +202,6 @@ function countamount(counter){
 
 function counttax(counter){
 	var f3 = $('#taxes'+counter).val();
-	
 	if(f3 != ''){
 		var f = $('#amount'+counter).val();
 		var amount=eval(f);
@@ -640,8 +639,8 @@ function getprojectbyclient(projectid){
                 success:function(html){
                 		//console.log(html);
                 		//alert("ht");
-                	$('select[name="project"]').html(" ");
-					 $('select[name="project"]').append(html.projectdata);                }
+                	$('select[name="project1"]').html("");
+					 $('select[name="project1"]').append(html.projectdata);                }
             }); 
         }
 }
@@ -651,10 +650,11 @@ function getprojectbyclient(projectid){
 $("#estimate-invoice").click(function(event) {
 	
 	var client_name_err  = 0;
+	var project_name_err1  = 0;
 	var currency_name_err  = 0;
 	var validtill_err  = 0;
 
-	var project_name_err  = 0;
+	
 	var invoice_err  = 0;
 	var invoicedate_err  = 0;
 	var duedate_err  = 0;
@@ -669,17 +669,26 @@ $("#estimate-invoice").click(function(event) {
 
 	$("select[name^='client']").each(function() {
 		var client = $(this).val();
+		//alert(client);
 		if(client == ''){
 			client_name_err = 1;
 		}
- 
-  
+
 });
 
+	$("select[name^='project1']").each(function() {
+		var project = $(this).val();
+		alert(project);
+		if(project == ''){
+			alert('fghgfhnbg');
+			project_name_err1 = 1;
+		}
+ 
+});
 
-	
 	$("select[name^='currency']").each(function() {
 		var currency = $(this).val();
+		//alert(currency);
 		if(currency.trim() == ''){
 			currency_name_err = 1;
 		}
@@ -694,13 +703,7 @@ $("#estimate-invoice").click(function(event) {
    
   
 });
-	$("select[name^='project']").each(function() {
-		var project = $(this).val();
-		if(project == ''){
-			project_name_err = 1;
-		}
- 
-});
+	
 
 	$("input[name^='invoice_number']").each(function() {
 		var invoice_number = $(this).val();
@@ -775,9 +778,10 @@ $("select[name^='status']").each(function() {
 		alert('Please enter Client name');
 		return false;
 	}
-
-	
-
+	if(project_name_err1 == 1){
+		alert('Please enter Project');
+		return false;
+	}
 	  if(currency_name_err == 1){
 		alert('Please Select Currency');
 		return false;

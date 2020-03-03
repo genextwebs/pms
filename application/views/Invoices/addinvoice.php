@@ -54,7 +54,9 @@
 													<div class="form-group">
 													<?php 
 														$invoice1=$invoice[0]->invoice;
+														
 														$test=explode('#',$invoice1);
+															
 														$a=$test[1]+1;
 														$inv='INV#'.$a;
 													?>
@@ -86,8 +88,8 @@
 												<div class="col-md-4">
 													<div class="form-group">
 														<label class="control-label">Project</label>
-			                                            <select name="project" id="project" class="form-control">
-															<option value="">--</option>
+			                                            <select name="project1" id="project" class="form-control">
+															<option value="">select</option>
 														</select>
 													</div>
 												</div>
@@ -110,7 +112,7 @@
 														<div class="row">
 														<div class="col-md-12">
 															<div class="input-icon">
-																<input type="text" class="form-control" name="invoice_date" id="startdate" value="<?php echo date('Y-m-d'); ?>">
+																<input type="text" class="form-control" name="invoice_date" id="startdate" data-date-format='yyyy-mm-dd' value="<?php echo date('Y-m-d'); ?>">
 															</div>
 														</div>
 														</div>

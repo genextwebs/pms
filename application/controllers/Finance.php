@@ -394,7 +394,8 @@ class Finance extends CI_Controller{
 	public function addinvoices(){
 		$sql='SELECT * FROM tbl_invoice ORDER BY tbl_invoice.id DESC LIMIT 1';
 		$data['invoice']=$this->common_model->coreQueryObject($sql);
-		$data['client']=$this->common_model->getData('tbl_clients');
+		$whereArr = array('is_deleted'=>0);
+		$data['client']=$this->common_model->getData('tbl_clients',$whereArr);
 		$data['employee'] =$this->common_model->getData('tbl_employee');
 		$data['project'] =$this->common_model->getData('tbl_project_info');
 		$data['tax'] =$this->common_model->getData('tbl_tax');
@@ -418,7 +419,7 @@ class Finance extends CI_Controller{
 			$billingcycle=$this->input->post('billing_cycle');
 			$total=$this->input->post('finaltotal');
 			$note=$this->input->post('note');
-			echo $project;die;
+			//echo $project;die;
 			if($project != ''){
 			$sql="SELECT tbl_project_info.clientid,tbl_clients.clientname,tbl_clients.companyname FROM tbl_project_info INNER JOIN tbl_clients ON tbl_project_info.clientid = tbl_clients.id where tbl_project_info.id=".$project;	
 			$data['invoicedata']=$this->common_model->
@@ -553,7 +554,7 @@ class Finance extends CI_Controller{
 		$invoicesFilterArr = $this->common_model->coreQueryObject($query);
 	
 		$iFilteredTotal = count($invoicesFilterArr);
-
+		//$whereArr = array('client!=' => '');
 		$invoicesAllArr = $this->common_model->getData('tbl_invoice');
 		$iTotal = count($invoicesAllArr);
 
@@ -853,12 +854,20 @@ class Finance extends CI_Controller{
 		$whereArr=array('clientid'=>$clientid);
 		$projectArr=$this->common_model->getData('tbl_project_info',$whereArr);
 		$str = '';
+		if(!empty($projectArr)){
 			foreach($projectArr as $row){
 				$str.='<option value="'.$row->id.'">'.$row->projectname.'</option>'; 
 			}
 			$projectArr = array();
 			$projectArr['projectdata'] = $str;
-			echo json_encode($projectArr);exit();
+		}
+		else{
+			$str = '';
+			$projectArr = array();
+			$projectArr['projectdata'] = $str;
+			
+		}
+		echo json_encode($projectArr);exit();
 	}
 
 	public function inserttax(){
