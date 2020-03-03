@@ -125,8 +125,8 @@
 			                							<select name="status" id="status" class="form-control">
 		                                                    <option value="1" <?php if($taskData[0]->status == 1){ echo 'selected'; }?>>To Do</option>
 		                                                    <option value="2" <?php if($taskData[0]->status == 2){ echo 'selected'; }?>>Doing</option>
-		                                                    <option value="3" <?php if($taskData[0]->status == 3){ echo 'selected'; }?>>Done</option>
-		                                                    <option value="4" <?php if($taskData[0]->status == 4){ echo 'selected'; }?>>Completed</option>
+		                                                   <!--  <option value="3" <?php if($taskData[0]->status == 3){ echo 'selected'; }?>>Done</option> -->
+		                                                    <option value="3" <?php if($taskData[0]->status == 3){ echo 'selected'; }?>>Completed</option>
 		                                                    <option value="0" <?php if($taskData[0]->status == 0){ echo 'selected'; }?>>Incomplete</option>
                                 					</select>
 			                						</div>

@@ -220,7 +220,7 @@
 				        </div>
 				    </div>
 					<div class="form-actions">
-						<input type="submit" id="save-category" class="btn btn-success" name="btnsubmit" value="Save"> <i class="fa fa-check"></i> 
+						<input type="submit" id="save-products" class="btn btn-success" name="btnsubmit" value="Save"> <i class="fa fa-check"></i> 
 					</div>
 				</form>
            	</div>

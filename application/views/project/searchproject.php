@@ -466,7 +466,7 @@
 					            						<form method="post" action="<?php echo base_url().'project/insertProjectMember/'.base64_encode($id) ?>">
 					            							<div class="form-group">
 					            								<select multiple class="form-control" name="choose_member[]" placeholder="choose Members">
-					            								<option value="">All</option>
+					            								
 							                                    <?php foreach($employee as $row){
 												            	?>
 												            	<option value="<?php echo $row->id?>"><?php echo $row->employeename;?></option>

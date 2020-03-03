@@ -21,7 +21,8 @@ class Finance extends CI_Controller{
 	
 	public function addestimates(){
 		$data['tax']=$this->common_model->getData('tbl_tax');
-		$data['client']=$this->common_model->getData('tbl_clients');
+		$whereArr = array('is_deleted'=>0);
+		$data['client']=$this->common_model->getData('tbl_clients',$whereArr);
 		$this->load->view('common/header');
 		$this->load->view('Estimates/addestimate',$data);
 		$this->load->view('common/footer');
@@ -858,6 +859,26 @@ class Finance extends CI_Controller{
 			$projectArr = array();
 			$projectArr['projectdata'] = $str;
 			echo json_encode($projectArr);exit();
+	}
+
+	public function inserttax(){
+		if(!empty($_POST)){
+			$taxname = $this->input->post('taxname');
+			$rate = $this->input->post('rate');
+			$insArr = array('taxname'=>$taxname,'rate'=>$rate);
+			$this->common_model->insertData('tbl_tax',$insArr);
+			$taxArray = $this->common_model->getData('tbl_tax');
+			$str = '';
+			foreach($taxArray as $row){
+				$str.='<option value="'.$row->rate.'">'.$row->taxname.'('.$row->rate.'%)</option>'; 
+			}
+			$totaldata = count($taxArray);
+			$txtArr = array();
+			$txtArr['count'] = $totaldata;
+			$txtArr['taxdata'] = $str;
+			echo  json_encode($txtArr);exit; 
+			echo  $totaldata; exit;
+		}
 	}
 }
 ?>

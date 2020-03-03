@@ -37,12 +37,16 @@ $(function() {
 				email: true
 			},
 			password:{	required: true,
-						minlength: 6
+						minlength: 8,
 					}
 	 	},
 	 	messages:
 		{
 			mobile : "Enter 10 digit Number",
+			password : {
+				minlength: "Enter Minimum 8 characters or digits"
+			}
+			
 			
 		},		
 		submitHandler: function(form) {

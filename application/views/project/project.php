@@ -54,7 +54,7 @@
 					 
 					  <?php if($this->user_type == 0){
 						$whereArr=array('status'=>0,'is_deleted'=>0);
-						$Total = $this->common_model->getData('tbl_project_info',$whereArr);
+						$Totals = $this->common_model->getData('tbl_project_info',$whereArr);
 						$total_ProjectIncom = count($Totals); 
 					}elseif($this->user_type == 2){
 						$whereArr = array('user_id'=>$this->user_id);
@@ -84,7 +84,7 @@
 					<li><i class="icon-layers text-white"></i></li>
 					 <?php if($this->user_type == 0){
 						$whereArr=array('status'=>1,'is_deleted'=>0);
-						$Total = $this->common_model->getData('tbl_project_info',$whereArr);
+						$Totals = $this->common_model->getData('tbl_project_info',$whereArr);
 						$total_Projectcom = count($Totals); 
 					}elseif($this->user_type == 2){
 						$whereArr = array('user_id'=>$this->user_id);
@@ -113,7 +113,7 @@
 					<li><i class="icon-layers text-white"></i></li>
 					<?php if($this->user_type == 0){
 						$whereArr=array('status'=>2,'is_deleted'=>0);
-						$Total = $this->common_model->getData('tbl_project_info',$whereArr);
+						$Totals = $this->common_model->getData('tbl_project_info',$whereArr);
 						$total_Projectpro = count($Totals); 
 					}elseif($this->user_type == 2){
 						$whereArr = array('user_id'=>$this->user_id);
@@ -142,7 +142,7 @@
 					<li><i class="icon-layers text-white"></i></li>
 					 <?php if($this->user_type == 0){
 						$whereArr=array('status'=>3,'is_deleted'=>0);
-						$Total = $this->common_model->getData('tbl_project_info',$whereArr);
+						$Totals = $this->common_model->getData('tbl_project_info',$whereArr);
 						$total_Projecthold = count($Totals); 
 					}elseif($this->user_type == 2){
 						$whereArr = array('user_id'=>$this->user_id);
@@ -171,7 +171,7 @@
 					<li><i class="icon-layers text-white"></i></li>
 						 <?php if($this->user_type == 0){
 						$whereArr=array('status'=>4,'is_deleted'=>0);
-						$Total = $this->common_model->getData('tbl_project_info',$whereArr);
+						$Totals = $this->common_model->getData('tbl_project_info',$whereArr);
 						$total_Projectcancel = count($Totals); 
 					}elseif($this->user_type == 2){
 						$whereArr = array('user_id'=>$this->user_id);

@@ -16,7 +16,8 @@ class Project extends CI_Controller {
 			
 	public function index(){
 		$data['category']=$this->common_model->getData('tbl_project_category');
-		$data['client']=$this->common_model->getData('tbl_clients');
+		$whereArr = array('is_deleted'=>0);
+		$data['client']=$this->common_model->getData('tbl_clients',$whereArr);
 		
 		$this->load->view('common/header');
 		$this->load->view('project/project',$data);
@@ -25,7 +26,8 @@ class Project extends CI_Controller {
 			
 	public function addproject(){
 		$data['sessData'] = $this->session->flashdata('data');
-		$data['client']=$this->common_model->getData('tbl_clients');
+		$whereArr = array('is_deleted'=>0);
+		$data['client']=$this->common_model->getData('tbl_clients',$whereArr);
 		$data['category']=$this->common_model->getData('tbl_project_category');
 		$this->load->view('common/header');
 		$this->load->view('project/addproject',$data);
@@ -186,9 +188,9 @@ class Project extends CI_Controller {
 		if($this->user_type == 0){
 
 			$query = "SELECT tbl_project_info.*,tbl_clients.clientname as clientname from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
-		
-
+			//echo $query;die;
 			$projectArr = $this->common_model->coreQueryObject($query);
+			//print_r($projectArr);die;
 
 			$query = "SELECT tbl_project_info.*,tbl_clients.clientname as clientname from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id".$sWhere;
 
@@ -198,7 +200,7 @@ class Project extends CI_Controller {
 			$query="SELECT tbl_project_info.*,tbl_clients.clientname FROM `tbl_project_info` inner join tbl_clients on tbl_project_info.clientid=tbl_clients.id where tbl_clients.user_id=".$this->user_id.''.$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 			
 			$projectArr = $this->common_model->coreQueryObject($query);
-
+			
 			$query="SELECT tbl_project_info.*,tbl_clients.clientname FROM `tbl_project_info` inner join tbl_clients on tbl_project_info.clientid=tbl_clients.id where tbl_clients.user_id=".$this->user_id.''.$sWhere;
 				//echo $query;die;
 
@@ -224,7 +226,8 @@ class Project extends CI_Controller {
 		$ProjectFilterArr = $this->common_model->coreQueryObject($query);
 		$iFilteredTotal = count($ProjectFilterArr);
 		//$whereArr=array('archive'=>0);
-		$ProjectAllArr = $this->common_model->getData('tbl_project_info');
+		$whereArr = array('is_deleted'=>0);
+		$ProjectAllArr = $this->common_model->getData('tbl_project_info',$whereArr);
 		$iTotal = count($ProjectAllArr);
 		
 		/** Output */
@@ -1093,7 +1096,7 @@ class Project extends CI_Controller {
 					$sWhere.=' AND tbl_task.duedate<="'.$enddate.'"';
 				}
 				if($hideComplete == 1){
-					$sWhere.=' AND tbl_task.status != 4';
+					$sWhere.=' AND tbl_task.status != 3';
 				}
 				
 	        }
@@ -1130,10 +1133,6 @@ class Project extends CI_Controller {
 				$str = '<label class="label label-inprogress">'.$status.'</label>';
 			}
 			elseif($row->status == 3){
-				$status = $row->status = 'Done';
-				$str = '<label class="label label-success">'.$status.'</label>';
-			}
-			elseif($row->status == 4){
 				$status = $row->status = 'Completed';
 				$str = '<label class="label label-success">'.$status.'</label>';
 			}
@@ -1197,10 +1196,6 @@ class Project extends CI_Controller {
 				$str = '<label class="label label-inprogress">'.$status.'</label>';
 			}
 			elseif($row->status == 3){
-				$status = $row->status = 'Done';
-				$str = '<label class="label label-success">'.$status.'</label>';
-			}
-			elseif($row->status == 4){
 				$status = $row->status = 'Completed';
 				$str = '<label class="label label-success">'.$status.'</label>';
 			}

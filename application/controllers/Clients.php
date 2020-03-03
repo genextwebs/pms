@@ -7,12 +7,15 @@ class Clients extends CI_Controller{
 		ini_set('display_errors',1);
 		error_reporting(E_ALL);
 		func_check_login();
+		$this->load->library('SendMail');
 		$this->login = $this->session->userdata('login');
 		$this->user_type = $this->login->user_type;
+		$this->load->helper('common_helper');
 	}
 	
 	public function index(){
-		$data['clients']=$this->common_model->getData('tbl_clients');
+		$whereArr = array('is_deleted'=>0);
+		$data['clients']=$this->common_model->getData('tbl_clients',$whereArr);
 		$data['userData']=$this->common_model->getData('tbl_user');		
 		$this->load->view('common/header');
 		$this->load->view('clients/client',$data);
@@ -59,11 +62,11 @@ class Clients extends CI_Controller{
 				redirect('Clients/addclients');
 			}
 			else{
-				$userinsertArr=array('user_type'=>1,'emailid'=>$clientemail,'password'=>$password,'original_password'=>$orgpassword,'generaterandompassword'=>$grp,'mobile'=>$mobile,'status'=>1,'login'=>$login,'is_deleted'=>0);
+				$userinsertArr=array('user_type'=>1,'name'=>$clientname,'emailid'=>$clientemail,'password'=>$password,'original_password'=>$orgpassword,'generaterandompassword'=>$grp,'mobile'=>$mobile,'status'=>1,'login'=>$login,'is_deleted'=>0);
 				$this->common_model->insertdata('tbl_user',$userinsertArr);
 				$userid=$this->db->insert_id();
 
-				$insertArr=array('user_id'=>$userid,'companyname' => $companyname,'website' => $website,'address' => $address,'clientname' => $clientname,'skype' => $skype,'linkedin' => $linkedin,'twitter' => $twitter,'facebook' => $facebook,'gstnumber' => $gstnumber,'note' => $note);
+				$insertArr=array('user_id'=>$userid,'companyname' => $companyname,'website' => $website,'address' => $address,'clientname' => $clientname,'skype' => $skype,'linkedin' => $linkedin,'twitter' => $twitter,'facebook' => $facebook,'gstnumber' => $gstnumber,'note' => $note,'is_deleted'=>0);
 				$this->common_model->insertdata('tbl_clients',$insertArr);
 				$last_inserted = $this->db->insert_id();
 				$updateArr = array('clientid'=>$last_inserted);
@@ -71,13 +74,25 @@ class Clients extends CI_Controller{
 				$data['editID'] = $id;
 				$whereArr = array('id'=>$id);
 				$this->common_model->updateData('tbl_leads',$updateArr,$whereArr);
-				//echo $this->db->last_query();die;
+				//email
+				 $subject = 'Congratulation,You are successfully register on PMS';
+                if(!empty($clientemail)){
+                    
+                    $msg="Dear ".$clientname."<br/>";
+                    $msg.="You are successfully registered please verify your email address ";
+                }
+                $msg.="<a href=".base_url().'Users/verify_email/'.base64_encode($clientemail)."> Click here </a>";
+                $result = $this->sendmail->sendTo($clientemail, 'Dear Customer',$subject,$msg);
+
 				$this->session->set_flashdata('message_name', "Data Inserted Succeessfully");
 				redirect('Clients/index');
 			}
 		}
 	}
 	
+	/*public function abc(){
+		verify_email($clientemail);
+	}*/
 	public function client_list(){
 		if(!empty($_POST)){
 			$_GET = $_POST;
@@ -175,8 +190,8 @@ class Clients extends CI_Controller{
 		$clientsFilterArr = $this->common_model->coreQueryObject($query);
 	
 		$iFilteredTotal = count($clientsFilterArr);
-
-		$clientsAllarr = $this->common_model->getData('tbl_clients');
+		$whereArr = array('is_deleted'=>0);
+		$clientsAllarr = $this->common_model->getData('tbl_clients',$whereArr);
 		$iTotal = count($clientsAllarr);
 
 		/** Output */
@@ -308,9 +323,10 @@ class Clients extends CI_Controller{
 	public function deleteclient(){
 		$clientid=base64_decode($_POST['clientid']);
 		$whereArr=array('id'=>$clientid);
+		$whereArrClient=array('user_id'=>$clientid);
 		$updateArr=array('is_deleted'=>1);
 		$this->common_model->updateData('tbl_user',$updateArr,$whereArr);
-		$this->common_model->deleteData('tbl_clients',$whereArr);
+		$this->common_model->updateData('tbl_clients',$updateArr,$whereArrClient);
 		redirect('Clients/index');
 	}
 	
@@ -326,5 +342,7 @@ class Clients extends CI_Controller{
 		$this->load->view('clients/viewclientdetail',$data);
 		$this->load->view('common/footer');
 	}
+
+	
 }
 ?>

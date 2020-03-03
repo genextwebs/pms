@@ -23,3 +23,10 @@ if (!function_exists('func_check_login')) {
         }
     }
 }
+
+ function verify_email($email){
+   // $email = base64_decode($this->uri->segment(3));
+    $whereArr = array('emailid'=>$email);
+    $updateArr = array('verify_email'=>1);
+    $this->common_model->updateData('tbl_user',$updateArr,$whereArr);
+}

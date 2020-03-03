@@ -45,16 +45,24 @@ class Dashboard extends CI_Controller
 		//print_r($empData);die;
 		$data['totalEmployee'] = count($totalEmptData);
 
-		$whereArrT = array('status'=>4 );
-		$data['taskData'] = $this->common_model->getData('tbl_task',$whereArrT);
+		//total projects
+		$whereArr = array('is_deleted'=>0);
+		$projectData = $this->common_model->getData('tbl_project_info',$whereArr);
+		$data['totalproject'] = count($projectData);
+		
+		//print_r($empData);die;
+		$data['totalEmployee'] = count($totalEmptData);
+
+		$whereArrPT = array('status' != 3);
+		$data['taskData'] = $this->common_model->getData('tbl_task',$whereArrPT);
 
 		$data['totalTaskPending'] = count($data['taskData']);
 
 
-		$whereArrT = array('status'=>4);
-		$data['taskData'] = $this->common_model->getData('tbl_task',$whereArrT);
+		$whereArrCT = array('status'=>3);
+		$data['taskData'] = $this->common_model->getData('tbl_task',$whereArrCT);
 
-		$data['totalTaskCompete'] = count($data['taskData']);
+		$data['totalTaskComplete'] = count($data['taskData']);
 
 		$whereArrTp = array('status'=>2);
 		$data['ticketPending'] = $this->common_model->getData('tbl_ticket',$whereArrTp);

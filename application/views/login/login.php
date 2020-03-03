@@ -29,14 +29,26 @@
 			<div class="stats-box">
 				<form id="loginform" method="post" class="form-material" action="<?php echo base_url().'login/checklogin'?>"> 
 					<?php
-						//warning 
-						$mess = $this->session->flashdata('message');
+						//Success msg 
+						$mess = $this->session->flashdata('successmsg');
 						if(!empty($mess)){
 					?>
 				   	<div class="col-md-12">
 						<div class="submit-alerts">
-							<div class="alert alert-danger" role="alert" style="display:block;">
+							<div class="alert alert-success" role="alert" style="display:block;">
 								<?php echo $mess; ?>
+							</div>
+						</div>
+					</div>
+                    <?php } 
+						//warning 
+						$fmsg = $this->session->flashdata('failmsg');
+						if(!empty($fmsg)){
+					?>
+				   	<div class="col-md-12">
+						<div class="submit-alerts">
+							<div class="alert alert-danger" role="alert" style="display:block;">
+								<?php echo $fmsg; ?>
 							</div>
 						</div>
 					</div>

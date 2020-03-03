@@ -60,7 +60,7 @@
                         </div>
                         <div class="col-sm-9 text-right">
                             <span class="widget-title">  Total Projects</span><br>
-                            <span class="counter">20</span>
+                            <span class="counter"><?php echo $totalproject; ?></span>
                         </div>
                     </div>
                 </div>
@@ -111,8 +111,8 @@
                             </div>
                         </div>
                         <div class="col-sm-9 text-right">
-                            <span class="widget-title"> Pending Tasks</span><br>
-                            <span class="counter"><?php echo $totalTaskCompete; ?></span>
+                            <span class="widget-title">Pending Tasks</span><br>
+                            <span class="counter"><?php echo $totalTaskPending; ?></span>
                         </div>
                     </div>
                 </div>
@@ -129,7 +129,7 @@
                         </div>
                         <div class="col-sm-9 text-right">
                             <span class="widget-title"> Completed Tasks</span><br>
-                            <span class="counter"><?php echo $totalTaskCompete; ?></span>
+                            <span class="counter"><?php echo $totalTaskComplete; ?></span>
                         </div>
                     </div>
                 </div>

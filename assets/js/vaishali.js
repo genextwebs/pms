@@ -437,12 +437,13 @@ function deleteLeadClient(leadId, clientId, type){
 
 // for add tax in product
 $("#save-product").click(function(event) {
+	aler
 			event.preventDefault();
 			var taxname = $("input[name='tax_name']").val();
        		var rate = $("input[name='rate']").val();
        		var dataString = 'taxname='+ taxname + '&rate='+ rate;
         $.ajax({
-           url: base_url+"products/inserttax",
+           url: base_url+"Finance/inserttax",
            type: 'POST',
            dataType: 'json',
            data: dataString,

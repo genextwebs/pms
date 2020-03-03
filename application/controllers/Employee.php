@@ -7,6 +7,7 @@ class Employee extends CI_Controller
 		parent::__construct();
 		$this->load->model('common_model');
 		func_check_login();
+		$this->load->library('SendMail');	
 	}
 	
 	public function index(){
@@ -74,7 +75,7 @@ class Employee extends CI_Controller
 				redirect('employee/addemployee');			
 			}
 			else{
-			$userinsArr =  array('user_type' => 2, 'emailid' => $employee_email,'password'=>$password,'original_password'=>$orgpassword,'generaterandompassword' => $grp,'mobile' => $mobile,'status' => '0','login' => $login,'is_deleted'=>0);
+			$userinsArr =  array('user_type' => 2,'name'=>$employee_name, 'emailid' => $employee_email,'password'=>$password,'original_password'=>$orgpassword,'generaterandompassword' => $grp,'mobile' => $mobile,'status' => '0','login' => $login,'is_deleted'=>0);
 			$this->common_model->insertData('tbl_user',$userinsArr);
 			}
 			$last_inserted = $this->db->insert_id();
@@ -91,8 +92,18 @@ class Employee extends CI_Controller
 			$profilepicture = '';
 			if($this->upload->do_upload('profilepicture')){
 				$profilepicture = array('upload_data'=>$this->upload->data());*/
-			$insArr = array('user_id' =>$last_inserted,'employeename'=>$employee_name,'slackusername'=>$username,'joingdate'=>$joiningdate,'lastdate'=>$lastdate,'gender'=>$gender,'address'=>$address,'skills'=>$skills,'designation'=>$designation,'department'=>$department,'hourlyrate'=>$hourlyrate);
+			$insArr = array('user_id' =>$last_inserted,'employeename'=>$employee_name,'slackusername'=>$username,'joingdate'=>$joiningdate,'lastdate'=>$lastdate,'gender'=>$gender,'address'=>$address,'skills'=>$skills,'designation'=>$designation,'department'=>$department,'hourlyrate'=>$hourlyrate,'is_deleted'=>0);
 				$this->common_model->insertData('tbl_employee',$insArr);
+
+				 $subject = 'Congratulation,You are successfully register on PMS.com';
+                if(!empty($employee_email)){
+                    
+                    $msg="Dear ".$employee_name."<br/>";
+                    $msg.="You are successfully registered please verify your email address ";
+                }
+                $msg.="<a href=".base_url().'Users/verify_email/'.base64_encode($employee_email)."> Click here </a>";
+                $result = $this->sendmail->sendTo($employee_email, 'Dear Customer',$subject,$msg);
+
 				$this->session->set_flashdata('message_name', 'Employee Insert sucessfully');
 			/*}
 			else{
@@ -403,8 +414,10 @@ class Employee extends CI_Controller
 	public function deleteemployee(){
 		$id = base64_decode($_POST['id']);
 		$whereArr = array('id'=>$id);
+		$whereArrEmployee=array('user_id'=>$clientid);
 		$updateArr = array('is_deleted' => '1');
 		$this->common_model->updateData('tbl_user',$updateArr,$whereArr);
+		$this->common_model->updateData('tbl_employee',$updateArr,$whereArrEmployee);
 		redirect('employee');
 	}
 
