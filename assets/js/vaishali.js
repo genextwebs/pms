@@ -437,7 +437,7 @@ function deleteLeadClient(leadId, clientId, type){
 
 // for add tax in product
 $("#save-product").click(function(event) {
-	alert('hghnbgn');
+	
 			event.preventDefault();
 			var taxname = $("input[name='tax_name']").val();
        		var rate = $("input[name='rate']").val();

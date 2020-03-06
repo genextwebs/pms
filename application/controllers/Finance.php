@@ -163,13 +163,16 @@ class Finance extends CI_Controller{
 						$checkstatus=$row->status;
 						if($row->status == '0'){
 							$status = $row->status = 'Waiting';
+							$sta='<lable class="label label-info">'.$status.'</label>';
 						}
 						else if($row->status == '1'){
 							$status = $row->status = 'Accepted';
+							$sta='<lable class="label label-success">'.$status.'</label>';
 							//$sta='<lable class="label label-success">'.$status.'</label>';
 						}
 						else if($row->status == '2'){
 							$status = $row->status = 'Declined';
+							$sta='<lable class="label label-danger">'.$status.'</label>';
 							//$sta='<lable class="label label-success">'.$status.'</label>';
 						}
 						$create_date = date('d-m-Y', strtotime($row->created_at));
@@ -199,7 +202,7 @@ class Finance extends CI_Controller{
 			                $row->total,
 							$create_date,
 							$row->validtill,
-			                $status,	
+			                $sta,	
 							$actionStr
 			           	);
 		           		$i++;
@@ -242,12 +245,15 @@ class Finance extends CI_Controller{
 						$checkstatus=$row->status;
 						if($row->status == '0'){
 							$status = $row->status = 'Waiting';
+							$sta='<lable class="label label-info">'.$status.'</label>';
 						}
 						else if($row->status == '1'){
 							$status = $row->status = 'Accepted';
+							$sta='<lable class="label label-success">'.$status.'</label>';
 						}
 						else if($row->status == '2'){
 							$status = $row->status = 'Declined';
+							$sta='<lable class="label label-danger">'.$status.'</label>';
 						}
 						$create_date = date('d-m-Y', strtotime($row->created_at));
 					
@@ -261,7 +267,7 @@ class Finance extends CI_Controller{
 			                $row->total,
 							$create_date,
 							$row->validtill,
-			                $status,	
+			                $sta,	
 							$actionStr
 			           	);
 			       		$i++;
@@ -396,8 +402,8 @@ class Finance extends CI_Controller{
 		$data['invoice']=$this->common_model->coreQueryObject($sql);
 		$whereArr = array('is_deleted'=>0);
 		$data['client']=$this->common_model->getData('tbl_clients',$whereArr);
-		$data['employee'] =$this->common_model->getData('tbl_employee');
-		$data['project'] =$this->common_model->getData('tbl_project_info');
+		$data['employee'] =$this->common_model->getData('tbl_employee',$whereArr);
+		$data['project'] =$this->common_model->getData('tbl_project_info',$whereArr);
 		$data['tax'] =$this->common_model->getData('tbl_tax');
 		$this->load->view('common/header');
 		$this->load->view('Invoices/addinvoice',$data);
@@ -617,8 +623,9 @@ class Finance extends CI_Controller{
 	}
 
 	public function addexpenses(){
-		$data['employee'] =$this->common_model->getData('tbl_employee');
-		$data['project'] =$this->common_model->getData('tbl_project_info');
+		$whereArr = array('is_deleted'=>0);
+		$data['employee'] =$this->common_model->getData('tbl_employee',$whereArr);
+		$data['project'] =$this->common_model->getData('tbl_project_info',$whereArr);
 		$this->load->view('common/header');
 		$this->load->view('Expenses/addexpense',$data);
 		$this->load->view('common/footer');
@@ -649,7 +656,8 @@ class Finance extends CI_Controller{
 	}
 
 	public function expense(){
-		$data['employee'] =$this->common_model->getData('tbl_employee');
+		$whereArr = array('is_deleted'=>0);
+		$data['employee'] =$this->common_model->getData('tbl_employee',$whereArr);
 		$this->load->view('common/header');
 		$this->load->view('Expenses/expense',$data);
 		$this->load->view('common/footer');
@@ -799,8 +807,9 @@ class Finance extends CI_Controller{
 	public function editexpenses(){
 		$id=base64_decode($this->uri->segment(3));
 		$whereArr=array('id'=>$id);
-		$data['employee'] =$this->common_model->getData('tbl_employee');
-		$data['project'] =$this->common_model->getData('tbl_project_info');
+		$whereArr1 = array('is_deleted'=>0);
+		$data['employee'] =$this->common_model->getData('tbl_employee',$whereArr1);
+		$data['project'] =$this->common_model->getData('tbl_project_info',$whereArr1);
 		$data['expense']=$this->common_model->getData('tbl_expense',$whereArr);
 		$this->load->view('common/header');
 		$this->load->view('Expenses/editexpense',$data);
@@ -864,6 +873,7 @@ class Finance extends CI_Controller{
 		else{
 			$str = '';
 			$projectArr = array();
+			$str.='<option value=" ">--</option>';
 			$projectArr['projectdata'] = $str;
 			
 		}

@@ -650,7 +650,7 @@ function getprojectbyclient(projectid){
 $("#estimate-invoice").click(function(event) {
 	
 	var client_name_err  = 0;
-	var project_name_err1  = 0;
+	var project_name_err  = 0;
 	var currency_name_err  = 0;
 	var validtill_err  = 0;
 
@@ -669,7 +669,6 @@ $("#estimate-invoice").click(function(event) {
 
 	$("select[name^='client']").each(function() {
 		var client = $(this).val();
-		//alert(client);
 		if(client == ''){
 			client_name_err = 1;
 		}
@@ -677,18 +676,15 @@ $("#estimate-invoice").click(function(event) {
 });
 
 	$("select[name^='project1']").each(function() {
-		var project = $(this).val();
-		alert(project);
-		if(project == ''){
-			alert('fghgfhnbg');
-			project_name_err1 = 1;
+		var project1 = $(this).val();
+		if(project1.trim() == ''){
+			project_name_err = 1;
 		}
  
 });
 
 	$("select[name^='currency']").each(function() {
 		var currency = $(this).val();
-		//alert(currency);
 		if(currency.trim() == ''){
 			currency_name_err = 1;
 		}
@@ -774,11 +770,11 @@ $("select[name^='status']").each(function() {
    
 });
 
-	  if(client_name_err == 1){
+	if(client_name_err == 1){
 		alert('Please enter Client name');
 		return false;
 	}
-	if(project_name_err1 == 1){
+	if(project_name_err == 1){
 		alert('Please enter Project');
 		return false;
 	}
@@ -789,11 +785,6 @@ $("select[name^='status']").each(function() {
 
 	  if(validtill_err == 1){
 		alert('Please enter ValidTill Date');
-		return false;
-	}
-
-	if(project_name_err == 1){
-		alert('Please enter project name');
 		return false;
 	}
 
