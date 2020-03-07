@@ -13,7 +13,8 @@ class Employee extends CI_Controller
 	public function index(){
 		$data['designation'] = $this->common_model->getData('tbl_designation');
 		$data['department'] = $this->common_model->getData('tbl_department');
-		$data['employee'] = $this->common_model->getData('tbl_employee');
+		$whereArr = array('is_deleted'=>0);
+		$data['employee'] = $this->common_model->getData('tbl_employee',$whereArr);
 		$tempArr=array();
 		foreach($data['employee'] as $row){
 			$skill = $row->skills;
@@ -348,8 +349,8 @@ class Employee extends CI_Controller
 
 	public function editemployee(){
 		$id = base64_decode($this->uri->segment(3));
-		$whereArr = array('id'=>$id);
-		$whereArr1 = array('user_id'=>$id);
+		$whereArr = array('id'=>$id,'is_deleted'=>0);
+		$whereArr1 = array('user_id'=>$id,'is_deleted'=>0);
 		$data['user'] = $this->common_model->getData('tbl_user',$whereArr);
 		$data['employee'] = $this->common_model->getData('tbl_employee',$whereArr1);
 		$data['sessData'] = $this->session->flashdata('data');

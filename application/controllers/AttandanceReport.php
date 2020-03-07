@@ -16,8 +16,8 @@ class AttandanceReport extends CI_Controller {
 
 
 	public function index(){
-		
-		$data['employee'] = $this->common_model->getData('tbl_employee');
+		$whereArr = array('is_deleted'=>0);
+		$data['employee'] = $this->common_model->getData('tbl_employee',$whereArr);
 		$data['startdate']=date('Y-m-d',strtotime('-1 month'));
 		$data['enddate']=date('Y-m-d');
 		$this->load->view('common/header');

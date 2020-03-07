@@ -61,9 +61,9 @@ class FinanceReport extends CI_Controller {
 			}
 			//echo '<pre>';print_r($string+$temp[$amount->invoicedate]);die;
 		}
-		
-		$data['allProjectData'] = $this->common_model->getData('tbl_project_info');
-	    $data['allClients'] = $this->common_model->getData('tbl_clients');
+		$whereArr = array('is_deleted'=>0);
+		$data['allProjectData'] = $this->common_model->getData('tbl_project_info',$whereArr);
+	    $data['allClients'] = $this->common_model->getData('tbl_clients'$whereArr);
 	   	$data['sdate']=$startdate;
 		$data['edate']=$enddate;
 		$data['finalTempArr']=	$temp;

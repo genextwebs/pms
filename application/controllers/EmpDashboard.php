@@ -14,11 +14,11 @@ class EmpDashboard extends CI_Controller
 	}
 	public function index(){
 		if($this->user_type == 2) {
-			$whereArr= array('user_id'=>$this->user_id);
+			$whereArr= array('user_id'=>$this->user_id,'is_deleted'=>0);
 			$data['empData']=$this->common_model->getData('tbl_employee',$whereArr);
 			if(!empty($data['empData'])){
 				$empid=$data['empData']['0']->id;
-				$WhereArr1=array('emp_id'=>$empid);
+				$WhereArr1=array('emp_id'=>$empid,'is_deleted'=>0);
 				$data['projectData']=$this->common_model->getData('tbl_project_member',$WhereArr1);
 				$data['totalProject']=count($data['projectData']);
 

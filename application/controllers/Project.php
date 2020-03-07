@@ -165,6 +165,7 @@ class Project extends CI_Controller {
 			$client=!empty($_POST['clientname1']) ? $_POST['clientname1'] : '';		
 			$category=!empty($_POST['categoryname1']) ? $_POST['categoryname1'] : '';
 			
+			$sWhere.='AND tbl_clients.user_id='.$this->user_id;
 			if(!empty($client)){
 					$sWhere.=' AND tbl_project_info.clientid='.$client;
 			}
@@ -197,11 +198,11 @@ class Project extends CI_Controller {
 
 		}else if($this->user_type == 1){
 
-			$query="SELECT tbl_project_info.*,tbl_clients.clientname FROM `tbl_project_info` inner join tbl_clients on tbl_project_info.clientid=tbl_clients.id where tbl_clients.user_id=".$this->user_id.''.$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
-			
+			$query = "SELECT tbl_project_info.*,tbl_clients.clientname as clientname from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+			//echo $query;die;
 			$projectArr = $this->common_model->coreQueryObject($query);
 			
-			$query="SELECT tbl_project_info.*,tbl_clients.clientname FROM `tbl_project_info` inner join tbl_clients on tbl_project_info.clientid=tbl_clients.id where tbl_clients.user_id=".$this->user_id.''.$sWhere;
+			/*$query="SELECT tbl_project_info.*,tbl_clients.clientname FROM `tbl_project_info` inner join tbl_clients on tbl_project_info.clientid=tbl_clients.id where tbl_clients.user_id=".$this->user_id.''.$sWhere;*/
 				//echo $query;die;
 
 		}

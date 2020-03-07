@@ -198,7 +198,8 @@ class NoticeBoard extends CI_Controller{
 			$query =  "select * from tbl_notice".$sWhere;	
 			$noticesFilterArr = $this->common_model->coreQueryObject($query);
 			$iFilteredTotal = count($noticesFilterArr);
-			$noticesAllarr = $this->common_model->getData('tbl_clients');
+			$whereArr = array('is_deleted'=>0);
+			$noticesAllarr = $this->common_model->getData('tbl_clients',$whereArr);
 			$iTotal = count($noticesAllarr);
 
 		/** Output */

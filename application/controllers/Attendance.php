@@ -38,35 +38,36 @@ class Attendance extends CI_Controller{
 		$data['selYear'] =  $this->year;
 		$data['selDepartment'] =  $this->department;
 		$data['selEmployee'] =  $this->employee;
-		$data['employee'] =$this->common_model->getData('tbl_employee');
+		$whereArr = array('is_deleted'=>0);
+		$data['employee'] =$this->common_model->getData('tbl_employee',$whereArr);
 		$data['department'] =$this->common_model->getData('tbl_department');
 		if(!empty($data['selEmployee']) && !empty($data['selDepartment'])){	
 			$checkempid=$data['selEmployee'];
 			$checkdept=$data['selDepartment'];
-			$whereArr=array('id'=>$checkempid,'department'=>$checkdept);
+			$whereArr=array('id'=>$checkempid,'department'=>$checkdept,'is_deleted'=>0);
 			$data['selEmployeeArr'] =$this->common_model->getData('tbl_employee',$whereArr);
 		}
 		elseif(!empty($data['selDepartment'])){
 			$checkdept=$data['selDepartment'];
 			//echo $checkdept;die;
-			$whereArr=array('department'=>$checkdept);
+			$whereArr=array('department'=>$checkdept,'is_deleted'=>0);
 			$data['selEmployeeArr'] =$this->common_model->getData('tbl_employee',$whereArr);
 			//print_r($data['selEmployeeArr'] );die;
 
 		}
 		elseif(!empty($data['selEmployee'])){
 			$checkempid=$data['selEmployee'];
-			$whereArr=array('id'=>$checkempid);
+			$whereArr=array('id'=>$checkempid,'is_deleted'=>0);
 			$data['selEmployeeArr'] =$this->common_model->getData('tbl_employee',$whereArr);
 		}
 		elseif($this->user_type == 0){
-			
-			$data['selEmployeeArr'] =$this->common_model->getData('tbl_employee');
+			$whereArr = array('is_deleted'=>0);
+			$data['selEmployeeArr'] =$this->common_model->getData('tbl_employee',$whereArr);
 			//echo "<PRE>";print_r($data['selEmployeeArr']);
 		}
 		elseif($this->user_type == 2){
 			
-				$whereArr= array('user_id'=>$this->user_id);
+				$whereArr= array('user_id'=>$this->user_id,'is_deleted'=>0);
 				$data['selEmployeeArr'] =$this->common_model->getData('tbl_employee',$whereArr);
 			
 		}
@@ -85,7 +86,8 @@ class Attendance extends CI_Controller{
 		//$month=date('d');
 		$selSdate=$year.'-'.$month.'-01';
 		$selEdate=date('Y-m-d');
-		$data['employee'] =$this->common_model->getData('tbl_employee');
+		$whereArr = array('is_deleted'=>0);
+		$data['employee'] =$this->common_model->getData('tbl_employee',$whereArr);
 		$selMember=$data['employee'][0]->id;
 		
 		$query="select * from tbl_attendance where employee=".$selMember." AND attendancedate>='".$selSdate."' AND attendancedate<='".$selEdate."'  ORDER BY attendancedate";
@@ -173,11 +175,12 @@ class Attendance extends CI_Controller{
 	public function addattendance(){
 		if($this->user_type == 0)
 		{
-		$data['employee'] =$this->common_model->getData('tbl_employee');
+		$whereArr = array('is_deleted'=>0);
+		$data['employee'] =$this->common_model->getData('tbl_employee',$whereArr);
 		}
 		elseif($this->user_type == 2)
 		{
-		$whereArr=array('user_id'=>$this->user_id);
+		$whereArr=array('user_id'=>$this->user_id,'is_deleted'=>0);
 		$data['employee'] =$this->common_model->getData('tbl_employee',$whereArr);
 		}
 		$data['countemp']=count($data['employee']);

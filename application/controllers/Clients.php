@@ -250,7 +250,7 @@ class Clients extends CI_Controller{
 		$clientid = base64_decode($this->uri->segment(3));
 		$ltoc = $this->uri->segment(4);
 		$whereArr1=array('id'=>$clientid);
-		$clientArr=array('user_id'=>$clientid);
+		$clientArr=array('user_id'=>$clientid,'is_deleted'=>0);
 		$data['clients']=$this->common_model->getData('tbl_clients',$clientArr);
 		if(!empty($data['clients'])){
 			$clientmaniId = $data['clients'][0]->id;

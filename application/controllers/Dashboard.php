@@ -21,7 +21,7 @@ class Dashboard extends CI_Controller
 		$totalClientData = array();
 		for($i=0;$i<=$totalUser-1;$i++)
 		{
-			$whereArrC = array('user_id'=>$userclientData[$i]->id);
+			$whereArrC = array('user_id'=>$userclientData[$i]->id,'is_deleted'=>0);
 			$clientData = $this->common_model->getData('tbl_clients',$whereArrC);
 			if(!empty($clientData)){
 				array_push($totalClientData,$clientData[0]);
@@ -36,7 +36,7 @@ class Dashboard extends CI_Controller
 		$totalEmptData = array();
 		for($i=0;$i<=$totaluserEmp-1;$i++)
 		{
-			$whereArrE = array('user_id'=>$userempData[$i]->id);
+			$whereArrE = array('user_id'=>$userempData[$i]->id,'is_deleted'=>0);
 			$empData = $this->common_model->getData('tbl_employee',$whereArrE);
 			if(!empty($empData)){
 			array_push($totalEmptData,$empData[0]);

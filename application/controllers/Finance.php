@@ -162,8 +162,9 @@ class Finance extends CI_Controller{
 						$clientid = $row->client;
 						$checkstatus=$row->status;
 						if($row->status == '0'){
+
 							$status = $row->status = 'Waiting';
-							$sta='<lable class="label label-info">'.$status.'</label>';
+							$sta='<lable class="label label-danger">'.$status.'</label>';
 						}
 						else if($row->status == '1'){
 							$status = $row->status = 'Accepted';
