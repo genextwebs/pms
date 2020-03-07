@@ -354,7 +354,7 @@ class Ticket extends CI_Controller {
 		if(!empty($_POST)){
 			$cname = $this->input->post('name');
 			$insArr = array('name'=>$cname);
-			$typeid=$this->common_model->insertData('tbl_ticket_channel',$insArr);
+			$this->common_model->insertData('tbl_ticket_channel',$insArr);
 			$catArray = $this->common_model->getData('tbl_ticket_channel');
 			
 			//echo $image;die;
@@ -362,14 +362,8 @@ class Ticket extends CI_Controller {
 			foreach($catArray as $row){
 				$str.='<option value="'.$row->id.'">'.$row->name.'</option>'; 
 			}
-			
-			$totaldata = count($catArray);
 			$channelArr = array();
-			$channelArr['count'] = $totaldata;
 			$channelArr['ticketcdata'] = $str;
-			$channelArr['typeid']= $typeid;
-			$channelArr['profileimg'] = $image;
-			//echo($channelArr['profileimg']);die;
 			echo json_encode($channelArr);exit; 
 		}
 	}

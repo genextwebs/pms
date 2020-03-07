@@ -1000,8 +1000,9 @@ $("#save_tchannel").click(function(event) {
 						    $('#channel').html('');       
 							$('#channel').append(data.ticketcdata);
 						
-							$('#ticketchannel')[0].reset();
+							
 							$('#channel1').modal('toggle');
+							$('#ticketchannel')[0].reset();	
 							$('#succmsg').html('');
 							$('#succmsg').html('<b>Successfully Channel added</b>');
 							$('#succmsg').fadeOut(3000);
@@ -1556,47 +1557,7 @@ $("#save_tchannel").click(function(event) {
 	}
 
 
-	$("#save_tchannel").click(function(event) {
-		var c_name = $("input[name='channel_name']").val();
-		if(c_name!=""){
-			$.ajax({
-				url: base_url+"ticket/check_t_channel",
-				type: 'POST',
-				dataType: 'html',
-				data:{channel:c_name},
-				success: function(data) {
-					if(data==0){
-						var dataString = 'name='+ c_name;
-						jQuery('#errormsg').html('');
-
-						$.ajax({
-						    url: base_url+"ticket/insert_t_channel",
-						    type: 'POST',
-						    dataType: 'json',
-						    data: dataString,
-							success: function(data) {
-								console.log(data.ticketcdata);
-							    $('#channel').html('');       
-								$('#channel').append(data.ticketcdata);
-								$('#ticketchannel')[0].reset();
-								$('#channel1').modal('toggle');
-								$('#succmsg').html('');
-								$('#succmsg').html('<b>Successfully Channel added</b>');
-								$('#succmsg').fadeOut(3000);
-						   }
-						});
-					}else{
-						jQuery('#errormsgc').html('')
-						jQuery('#errormsgc').html('<b>This Channel already exists</b>');
-					}
-				}
-			});
-		}else{
-			jQuery('#errormsgc').html('')
-			jQuery('#errormsgc').html('<b>Please enter Channel Name</b>');
-		}
-	});
-
+	
 
 	function showEmployee(){
 		pname = $('#project_name').val();

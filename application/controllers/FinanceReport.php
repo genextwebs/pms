@@ -240,10 +240,10 @@ class FinanceReport extends CI_Controller {
 		}
 		
 		$query = "SELECT tbl_invoice.*,projectname FROM `tbl_invoice` inner join tbl_project_info on tbl_invoice.project= tbl_project_info.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
-
+		//echo $query;die;
 		$FinanceArr = $this->common_model->coreQueryObject($query);
 		$query = "SELECT tbl_invoice.*,projectname FROM `tbl_invoice` inner join tbl_project_info on tbl_invoice.project= tbl_project_info.id".$sWhere;
-
+		//echo $query;die;
 		$FinanceFilterArr = $this->common_model->coreQueryObject($query);
 
 		//echo $this->db->last_query();die;

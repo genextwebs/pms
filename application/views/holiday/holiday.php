@@ -5,7 +5,7 @@
                     </div>
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                         <ol class="breadcrumb">
-                            <li><a href="<?php echo base_url().'EmpDashboard'?>
+                            <li><a href="<?php echo base_url().'Dashboard'?>
                             ">Home</a></li>
                             <li class="active">Holiday List Of <?php echo date('Y'); ?></li>
                         </ol>
@@ -69,7 +69,7 @@
         $SundayChk = $row->sunday;
        
     ?>
-    <div id="January" class="tab-pane fade in active">
+    <div id="January" class="tab-pane fade in active show">
       <h3>January</h3>
         <table class="table table-hover">
             <thead>

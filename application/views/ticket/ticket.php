@@ -5,7 +5,7 @@
 		</div>
 		<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 			<ol class="breadcrumb">
-				<li><a href="<?php echo base_url().'EmpDashboard' ?>">Home</a></li>
+				<li><a href="<?php echo base_url().'Dashboard' ?>">Home</a></li>
 				 <li class="active">Tickets</li>
 			</ol>
 		</div>

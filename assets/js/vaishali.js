@@ -755,7 +755,6 @@ $("#save-defaultholiday").click(function(event) {
            success: function(data) {
 	               $('#data-defaultholiday').modal('toggle');
 	               $('#modeldefaultholiday')[0].reset();
-           		
                displayData();
            }
         });
