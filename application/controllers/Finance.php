@@ -376,7 +376,7 @@ class Finance extends CI_Controller{
 			$data['invoicedata']=$this->common_model->coreQueryObject($sql);
 
 			
-			$insertArr=array('invoice' => $invoice,'project' => $project,'client'=>$data['invoicedata'][0]->companyname,'clientid'=>$data['invoicedata'][0]->clientid,
+			$insertArr=array('invoice' => $invoice,'project' => $project,'client'=>$data['invoicedata'][0]->companyname,'client'=>$data['invoicedata'][0]->clientid,
 				'currency' => $currency,'invoicedate' => $invoicedate,'duedate'=>$duedate,'status'=>$status,'recuringpayment'=>$recuringpayment,'billingfrequency'=>$billingfrequency,'billinginterval'=>$billinginterval,'billingcycle'=>$billingcycle,'total'=>$total,'note'=>$note);
 			$this->common_model->insertData('tbl_invoice',$insertArr);
 			$invoiceid=$this->db->insert_id();
