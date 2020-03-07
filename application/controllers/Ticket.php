@@ -26,7 +26,8 @@ class Ticket extends CI_Controller {
 	public function addticket(){
 		$data['tickettype']=$this->common_model->getData('tbl_ticket_type');
 		$data['ticketchannel']=$this->common_model->getData('tbl_ticket_channel');
-		 $data['getemployee']=$this->common_model->getData('tbl_employee');
+		$whereArr = array('is_deleted'=>0);
+		$data['getemployee']=$this->common_model->getData('tbl_employee',$whereArr);
 		$this->load->view('common/header');
 		$this->load->view('ticket/addticket',$data);
 		$this->load->view('common/footer');
@@ -289,7 +290,8 @@ class Ticket extends CI_Controller {
 		$data['editticketId']=$id;
 	    $data['ticketinfo']=$this->common_model->getData('tbl_ticket',$whereArr);
 	    $data['tickettype']=$this->common_model->getData('tbl_ticket_type');
-	   $data['getemployee']=$this->common_model->getData('tbl_employee');
+	    $whereEmp = array('is_deleted'=>0);
+	    $data['getemployee']=$this->common_model->getData('tbl_employee',$whereEmp);
 		$data['ticketchannel']=$this->common_model->getData('tbl_ticket_channel');
 		
 		//$data['ticketcomment']=$this->common_model->getData('tbl_ticket_comment');

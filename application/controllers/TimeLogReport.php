@@ -62,7 +62,8 @@ class TimeLogReport extends CI_Controller {
 		$data['edate']=$edate;
 		$data['finalTempArr']=	$temp;
 		//print_r($data['finalTempArr']);die;
-		$data['allProjectData'] = $this->common_model->getData('tbl_project_info');
+		$whereArr = array('is_deleted' => 0);
+		$data['allProjectData'] = $this->common_model->getData('tbl_project_info',$whereArr);
 		$this->load->view('common/header');
 		$this->load->view('report/timelogreport',$data);
 		$this->load->view('common/footer');

@@ -27,8 +27,9 @@ class Timelog extends CI_Controller {
 	}
 
 	public function addtimelog(){
-		$data['projectinfo']=$this->common_model->getData('tbl_project_info');
-		$data['empinfo'] = $this->common_model->getData('tbl_employee');
+		$whereArr = array('is_deleted'=>0);
+		$data['projectinfo']=$this->common_model->getData('tbl_project_info',$whereArr);
+		$data['empinfo'] = $this->common_model->getData('tbl_employee',$whereArr);
 		$this->load->view('common/header');
 		$this->load->view('timelog/addtimelog',$data);
 		$this->load->view('common/footer');
@@ -427,7 +428,7 @@ public function update_timelog(){
 		$pname=$this->input->post('projectname');
 		$query ="SELECT tbl_project_member.*,tbl_employee.employeename,tbl_employee.id as eid from tbl_project_member inner join tbl_employee on tbl_project_member.emp_id = tbl_employee.id where project_id=".$pname;
 	//
-		ECHO $this->DB->last_query();DIE;
+		//ECHO $this->DB->last_query();DIE;
 	  	$getEmp=$this->common_model->coreQueryObject($query);
 		$str = '';
 			foreach($getEmp as $row){

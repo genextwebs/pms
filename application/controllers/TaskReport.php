@@ -17,8 +17,9 @@ class TaskReport extends CI_Controller {
 	public function index(){
 		$data['startdate']=date('Y-m-d',strtotime('-1 month'));
 		$data['enddate']=date('Y-m-d');
-		$data['allEmpData'] = $this->common_model->getData('tbl_employee');
-		$data['allProjectData'] = $this->common_model->getData('tbl_project_info');
+		$whereArr = array('is_deleted'=>0);
+		$data['allEmpData'] = $this->common_model->getData('tbl_employee',$whereArr);
+		$data['allProjectData'] = $this->common_model->getData('tbl_project_info',$whereArr);
 		$data['Chart']=$this->common_model->getData('tbl_task');
 		$str= '';
 		foreach ($data['Chart'] as $pie) {

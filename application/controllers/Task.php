@@ -15,18 +15,20 @@ class Task extends CI_Controller {
 	}
 
 	public function index(){	
-		$data['employee'] = $this->common_model->getData('tbl_employee	'); 
-		$data['project'] = $this->common_model->getData('tbl_project_info');
+		$whereArr = array('is_deleted'=>0);
+		$data['employee'] = $this->common_model->getData('tbl_employee',$whereArr); 
+		$data['project'] = $this->common_model->getData('tbl_project_info',$whereArr);
 		$data['taskCat'] = $this->common_model->getData('tbl_task_category');
-		$data['clientData'] = $this->common_model->getData('tbl_clients');
+		$data['clientData'] = $this->common_model->getData('tbl_clients',$whereArr);
 		$this->load->view('common/header');
 		$this->load->view('task/task',$data);
 		$this->load->view('common/footer');
 	}
 
 	public function addTask(){
-		$data['employee'] = $this->common_model->getData('tbl_employee	'); 
-		$data['project'] = $this->common_model->getData('tbl_project_info');
+		$whereArr = array('is_deleted'=>0);
+		$data['employee'] = $this->common_model->getData('tbl_employee',$whereArr); 
+		$data['project'] = $this->common_model->getData('tbl_project_info',$whereArr);
 		$data['taskCat'] = $this->common_model->getData('tbl_task_category');
 		$this->load->view('common/header');
 		$this->load->view('task/addtask',$data);
@@ -36,8 +38,9 @@ class Task extends CI_Controller {
 	public function edittask(){
 		$id = base64_decode($this->uri->segment(3));
 		$where = array('id' => $id);
-		$data['employee'] = $this->common_model->getData('tbl_employee'); 
-		$data['project'] = $this->common_model->getData('tbl_project_info');
+		$whereArr = array('is_deleted'=>0);
+		$data['employee'] = $this->common_model->getData('tbl_employee',$whereArr); 
+		$data['project'] = $this->common_model->getData('tbl_project_info',$whereArr);
 		$data['taskCat'] = $this->common_model->getData('tbl_task_category');
 		$data['taskData'] = $this->common_model->getData('tbl_task',$where);
 		$this->load->view('common/header');

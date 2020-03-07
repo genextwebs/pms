@@ -18,15 +18,16 @@ class Leaves extends CI_Controller {
 		$data['startdate']=date('Y-m-d',strtotime('-1 month'));
 		$data['enddate']=date('Y-m-d');
 		$data['leavecategory']=$this->common_model->getData('tbl_leavetype');
-		$data['employee']=$this->common_model->getData('tbl_employee'); 
+		$whereArr = array('is_deleted'=>0);
+		$data['employee']=$this->common_model->getData('tbl_employee',$whereArr); 
 		$this->load->view('common/header');
 		$this->load->view('leaves/leaves',$data);
 		$this->load->view('common/footer');
 	} 
 
 	public function addleaves(){
-		
-		$data['employee']=$this->common_model->getData('tbl_employee');
+		$whereArr = array('is_deleted'=>0);
+		$data['employee']=$this->common_model->getData('tbl_employee',$whereArr);
 		$data['leavecategory']=$this->common_model->getData('tbl_leavetype');
 		$this->load->view('common/header');
 		$this->load->view('leaves/addleaves',$data);
@@ -297,8 +298,9 @@ class Leaves extends CI_Controller {
 	public function editleavesbtn(){
 		$id=base64_decode($_POST['id']);
 		$whereArr=array('id'=>$id);
+		$whereEmp = array('is_deleted'=>0);
 		$leaves =$this->common_model->getData('tbl_leaves',$whereArr);
-		$emp['employee'] =$this->common_model->getData('tbl_employee');
+		$emp['employee'] =$this->common_model->getData('tbl_employee',$whereEmp);
 		$leavetype['leave'] =$this->common_model->getData('tbl_leavetype');
 		$id= $leaves[0]->id;
 
