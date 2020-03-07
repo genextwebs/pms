@@ -42,17 +42,21 @@ class SendMail
 
     public function sendTo($toEmail, $recipientName, $subject, $msg){
         $email = new \SendGrid\Mail\Mail();
+       //print_r($email);die;
         $email->setFrom('project165.system@gmail.com', "PMS");
         $email->setSubject($subject);
         $email->addTo($toEmail,$recipientName);
         $email->addContent("text/html", $msg);
-        $sendgrid = new \SendGrid('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
+        $sendgrid = new \SendGrid('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
             ');
         try {
+            //echo "ghng";die;
+           //print_r($email);die;
             $response = $sendgrid->send($email);
-           /* print $response->statusCode() . "\n";
+           /* print_r($response);
+            print $response->statusCode() . "\n";
             print_r($response->headers());
-            print $response->body() . "\n";*/
+            print $response->body() . "\n";die;*/
         } catch (Exception $e) {
             echo 'Caught exception: '. $e->getMessage() ."\n";
         }

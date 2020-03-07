@@ -31,7 +31,9 @@
                         <div class="col-sm-9 text-right">
                             <span class="widget-title">  Total Projects</span><br>
                             <span class="counter"><?php $cid = $this->login->id;
-                            $query = "select * from tbl_project_info where clientid=".$cid;
+                            $whereArr = array('user_id'=>$cid);
+                            $clientData = $this->common_model->getData('tbl_clients',$whereArr);
+                            $query = "select * from tbl_project_info where clientid=".$clientData[0]->id;
                              $clientsData = $this->common_model->coreQuery($query);
                              $totalPro =  count($clientsData);
                               echo $totalPro; ?></span>

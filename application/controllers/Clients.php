@@ -82,6 +82,7 @@ class Clients extends CI_Controller{
                     $msg.="You are successfully registered please verify your email address ";
                 }
                 $msg.="<a href=".base_url().'Users/verify_email/'.base64_encode($clientemail)."> Click here </a>";
+               //echo $clientemail;die;
                 $result = $this->sendmail->sendTo($clientemail, 'Dear Customer',$subject,$msg);
 
 				$this->session->set_flashdata('message_name', "Data Inserted Succeessfully");
