@@ -414,7 +414,7 @@ class Finance extends CI_Controller{
 		if($this->input->post('btnsubmit')){
 			$invoice=$this->input->post('invoice_number');
 			$client=$this->input->post('client');
-			$project=$this->input->post('project');
+			$project=$this->input->post('project1');
 			$currency=$this->input->post('currency');
 			$invoicedate=$this->input->post('invoice_date');
 			$duedate=$this->input->post('due_date');
@@ -425,7 +425,7 @@ class Finance extends CI_Controller{
 			$billingcycle=$this->input->post('billing_cycle');
 			$total=$this->input->post('finaltotal');
 			$note=$this->input->post('note');
-			//echo $project;die;
+			echo $project;
 			if($project != ''){
 			$sql="SELECT tbl_project_info.clientid,tbl_clients.clientname,tbl_clients.companyname FROM tbl_project_info INNER JOIN tbl_clients ON tbl_project_info.clientid = tbl_clients.id where tbl_project_info.id=".$project;	
 			$data['invoicedata']=$this->common_model->
