@@ -22,7 +22,8 @@
 				<ul class="list-inline two-wrap">
 					<li><i class="icon-logout text-white"></i></li>
 					 <?php 
-						$Total = $this->common_model->getData('tbl_leaves');
+					 	$where = array('status' => 0);
+						$Total = $this->common_model->getData('tbl_leaves',$where);
 						$total_leaves = count($Total);
 					 ?>
 					<li class="text-right"><span id="" class="counter text-white"><?php echo $total_leaves;?></span></li>
