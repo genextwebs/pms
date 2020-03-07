@@ -164,8 +164,9 @@ class Project extends CI_Controller {
 			$status=$_POST['status1'];	
 			$client=!empty($_POST['clientname1']) ? $_POST['clientname1'] : '';		
 			$category=!empty($_POST['categoryname1']) ? $_POST['categoryname1'] : '';
-			
+			if($this->user_type == 1){
 			$sWhere.='AND tbl_clients.user_id='.$this->user_id;
+			}	
 			if(!empty($client)){
 					$sWhere.=' AND tbl_project_info.clientid='.$client;
 			}

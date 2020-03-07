@@ -69,7 +69,7 @@
                         </div>
                         <div class="col-sm-9 text-right">
                             <span class="widget-title"> Pending Tasks</span><br>
-                            <span class="counter">15</span>
+                            <span class="counter"><?php echo $totalTaskPending;  ?></span>
                         </div>
                     </div>
                 </div>
@@ -86,7 +86,7 @@
                         </div>
                         <div class="col-sm-9 text-right">
                             <span class="widget-title"> Completed Tasks</span><br>
-                            <span class="counter">13</span>
+                            <span class="counter"><?php echo $totalTaskComplete; ?></span>
                         </div>
                     </div>
                 </div>

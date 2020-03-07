@@ -18,7 +18,7 @@ class EmpDashboard extends CI_Controller
 			$data['empData']=$this->common_model->getData('tbl_employee',$whereArr);
 			if(!empty($data['empData'])){
 				$empid=$data['empData']['0']->id;
-				$WhereArr1=array('emp_id'=>$empid,'is_deleted'=>0);
+				$WhereArr1=array('emp_id'=>$empid);
 				$data['projectData']=$this->common_model->getData('tbl_project_member',$WhereArr1);
 				$data['totalProject']=count($data['projectData']);
 
@@ -29,7 +29,22 @@ class EmpDashboard extends CI_Controller
 					array_push($project,$project1[0]);
 				}
 				$data['projectDetail'] = $project;
-		}}
+		}
+		$whereArrUser = array('user_id'=>$this->user_id);
+		$userData = $this->common_model->getData('tbl_employee',$whereArrUser);
+		//print_r($userData);die;
+		$whereArrPT = array('status!='=>3,'assignedto'=>$userData[0]->id);
+		$data['taskData'] = $this->common_model->getData('tbl_task',$whereArrPT);
+		//echo $this->db->last_query();die;
+		//print_r($data['taskData']);die;
+		$data['totalTaskPending'] = count($data['taskData']);
+
+
+		$whereArrCT = array('status'=>3,'assignedto'=>$userData[0]->id);
+		$data['taskData'] = $this->common_model->getData('tbl_task',$whereArrCT);
+
+		$data['totalTaskComplete'] = count($data['taskData']);
+	}
 		elseif($this->user_type == 0) {
 			$data='';
 		}

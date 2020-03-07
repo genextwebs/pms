@@ -29,8 +29,12 @@
 						$Totals = $this->common_model->getData('tbl_employee',$whereArr);
 						$whereArr1 = array('emp_id'=>$Totals[0]->id);
 						$Totals = $this->common_model->getData('tbl_project_member',$whereArr1);
+						$total_Project = 0;
+						if(!empty($Totals)){
 						$whereArr2 = array('id'=>$Totals[0]->project_id,'is_deleted'=>0);
 						$tProject = $this->common_model->getData('tbl_project_info',$whereArr2);
+						
+						}
 						$total_Project = count($tProject); 
 					}elseif($this->user_type == 1){
 						//echo $this->user_id;die;
