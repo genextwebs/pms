@@ -14,6 +14,7 @@ class Login extends CI_Controller
 	
 	public function checklogin(){
 		if($this->input->post('btnlogin')){
+			//echo "frgvfbg";die;
 			$email = $this->input->post('email');	
 			$password = md5($this->input->post('password'));	
 			if(empty($email)){
@@ -28,7 +29,7 @@ class Login extends CI_Controller
 				$whereArr = array('emailid' => $email, 'password' => $password);
 				$data = $this->common_model->getData('tbl_user',$whereArr);
 				//echo $data[0]->id;
-				//echo "<PRE>";print_r($data);die;
+				
 				
 				$session = $data[0];
 				$this->session->set_userdata('login',$session);
