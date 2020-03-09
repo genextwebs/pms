@@ -1507,17 +1507,14 @@ $("#save_tchannel").click(function(event) {
 	imgurl = base_url+"uploads/";
 
 		$.ajax({
-			
 		    type: "POST",
 		    url: base_url+"ticket/insert_comment",
 		    dataType: 'json',
 		    data:{name:editorname,status:t_status,t_empid:empid},
-		   
 		    success: function(data){
 				$('tbody').append("<tr><td>"+data.count+"</td><td><img height='50px' width='50px' src="+imgurl+data.profileimg+"></td><td>"+data.replay+"</td><td>"+data.create+"</td><td><input type='button' class='btn btn-sm btn-danger btn-rounded delete-category' onclick ='delete_t_comment(\""+data.insCommentData+"\");' id='deletereply' value='Remove'></td></tr>");
 				$('textarea').val('');
-				 window.location.reload();
-
+				window.location.reload();
 			}
 		});
 

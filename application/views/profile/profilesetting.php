@@ -25,17 +25,13 @@
 					<div class="card-body">
 						<form id="creatclient" class="aj-form" name="upload_form" id="upload_form" method="post" enctype="multipart/form-data"  method="post"> 
 						<?php
-                                    $mess = $this->session->flashdata('message_name');
-                                    if(!empty($mess)){
-                                        //warning 
-                                    ?>
+                            $mess = $this->session->flashdata('message_name');
+                            if(!empty($mess)){
+                                //warning 
+                            ?>
             				<div class="submit-alerts">
             					<div class="alert alert-success" role="alert" style="display:block;">
-								</div>
-                            </div>
-                            <div class="submit-alerts">
-								<div class="alert alert-danger" role="alert" style="display:block;">
-								 <?php echo $mess; ?>
+								 <?php echo $mess;?>
 								</div>
                             </div>
                             <?php  } ?>
@@ -44,11 +40,7 @@
 								  This is a warning alert
 								</div>
             				</div>
-                            
 							<div class="form-body">
-								<!-- <h3 class="box-title">Project Info</h3> -->
-							<!-- 	<hr>
-								<p id="succmsg" class="text-success"></p> -->
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
@@ -57,7 +49,6 @@
 											$profile[0]->name) ? $profile[0]->name : '' ?>">
 										</div>
 									</div>
-
 									<div class="col-md-6">
 											<div class="form-group">
 											<label class="control-label">Your Email</label>
@@ -74,7 +65,6 @@
 											$profile[0]->name) ? $profile[0]->name : '' ?>">
 										</div>
 									</div>
-
 									<div class="col-md-6">
 											<div class="form-group">
 											<label class="control-label">Your Mobile Number</label>
@@ -83,34 +73,26 @@
 										</div>
 									</div>
 								</div>
-							
 								<div class="row">
 			                        <div class="col-md-6">
                                 		<div class="file-upload mb-5">
                                 			<label>Profile Picture</label>
                                 				<div class="image-upload-wrap">
                            							<input type='file'class="file-upload-input" name="image_file" id="image_file"/>
-			                                				<!-- <div class="drag-text">
-			                                					<h3>Drag and drop <br>a file or select add Image</h3>
-			                                				</div> -->
 			                                	</div>
 			                                	<input type="hidden" value="<?php echo  $profile[0]->profileimg; ?>" name="image_name">
-			                                	<img src="<?php echo base_url().'upload/'.$profile[0]->profileimg;?>" height="100px" width="100px">
-			                                	
-			                                	
-			                                	
+			                                	<img src="<?php echo base_url().'upload/'.$profile[0]->profileimg;?>" height="100px" width="100px">	
 			                            </div>
-			                           <!--   <button class="file-upload-btn" type="submit" name="upload" id="upload">Select Image</button> -->
 			                        </div>
 			                    </div>
 			                </div>
-								<div class="form-actions">
-									<div class="form-group">
-										<button type="submit" name="btnsave" id="save-form" class="btn btn-success"> <i class="fa fa-check"></i> Update</button>
-										<input type="reset" class="btn btn-default" value="Reset">
-									</div>
+							<div class="form-actions">
+								<div class="form-group">
+									<button type="submit" name="btnsave" id="save-form" class="btn btn-success"> <i class="fa fa-check"></i> Update</button>
+									<input type="reset" class="btn btn-default" value="Reset">
 								</div>
 							</div>
+						</div>
 						</form>
 					</div>
 				</div>

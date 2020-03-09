@@ -22,6 +22,7 @@
 	    ?>
 		<div class="submit-alerts">
 			<div class="alert alert-success" role="alert" style="display:block;">
+				 <?php echo $mess; ?>
 			</div>
 	    </div>
 	    <div class="submit-alerts">
@@ -79,10 +80,7 @@
 													<tr>
 														<th>#</th>
 														<th>ProfileImage</th>
-														<?php if($this->user_type == 0){ ?>
 														<th>Requester</th>
-														<?php } ?>
-														<th>Comments</th>
 														<th>Created at</th>
 														<th></th>
 													</tr>
@@ -96,11 +94,8 @@
 																    <tr>
 																		<td><?php echo $i; ?></td>
 																		<td><img src="<?php echo base_url().'upload/'.$tcomm->profileimg; ?>" height="50px" width="50px"></td>
-																			<?php if($this->user_type == 0){ ?>
-																	<td><?php echo $tcomm->ticketemployeeid; ?></td>
-																	<?php } ?>
+																		
 																		<td><?php echo $tcomm->comment; ?></td>
-																
 																		<td><?php echo $tcomm->created_at; ?></td>
 																		<td>
 																			<input type='button' class='btn btn-sm btn-danger btn-rounded delete-category' onclick ="delete_t_comment('<?php echo $tcomm->id; ?>');" id='deletereply' value='Remove'>
@@ -123,7 +118,6 @@
                                             </div>
                                         </div>
                         			</div>
-                        			<?php if($this->user_type == 0){ ?>
                         			<div class="row">
 	            						<div class="col-md-6">
 	            							<p id="succmsg" class="text-success"></p>
@@ -143,7 +137,6 @@
 	            						</div>
 	            					</div>
 	            					</div>
-	            				<?php } ?>
                         			<div class="row">
 		                    			<div class="col-md-6">
 		            						<div class="form-group type">

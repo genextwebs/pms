@@ -25,7 +25,7 @@
 			                <a href="<?php echo base_url().'project/addproject';?>"><span class=" m-0">Add Project</span></a>
 			            </li>
 			            <li class="dropdown-item">
-			                <a href="javascript:void(0);" ><span class=" m-0">Add Task</span></a>
+			                <a href="<?php echo base_url().'task/addTask';?>" ><span class=" m-0">Add Task</span></a>
 			            </li>
 			            <li class="dropdown-item">
 			                <a href="<?php echo base_url().'clients/addclients'; ?>" class="active"><span class=" m-0">Add Client</span></a>
@@ -37,7 +37,7 @@
 			                <a href="javascript:void(0);"><span class=" m-0">Add Payment</span></a>
 			            </li>
 			            <li class="dropdown-item">
-			                <a href="javascript:void(0);"><span class=" m-0">Add Ticket</span> </a>
+			                <a href="<?php echo base_url().'ticket/addticket';?>"><span class=" m-0">Add Ticket</span> </a>
 			            </li>
 			        </ul>
 			    </li>
