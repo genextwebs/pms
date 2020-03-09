@@ -286,7 +286,7 @@ class Project extends CI_Controller {
 			}
 			else{
 				$actionstring = '<a href='.base_url().'Project/editproject/'.base64_encode($row->id). ' class="btn btn-info btn-circle" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-					<a href='.base_url().'Project/searchproject/'.base64_encode($row->id). ' class="btn btn-success btn-circle" data-toggle="tooltip" data-original-title="View Project Details"><i class="fa fa-search" aria-hidden="true"></i></a>
+					<a href='.base_url().'Project/showproject/'.base64_encode($row->id). ' class="btn btn-success btn-circle" data-toggle="tooltip" data-original-title="View Project Details"><i class="fa fa-search" aria-hidden="true"></i></a>
 					<a href="javascript:void();" onclick="archivedata(\''.base64_encode($rowid).'\');" class="btn btn-warning  btn-circle archive" data-toggle="tooltip" data-user-id="14" data-original-title="Archive"><i class="fa fa-archive" aria-hidden="true"></i></a>
 					<a href="javascript:void();" onclick="deleteproject(\''.base64_encode($rowid).'\');"  class="btn btn-danger btn-circle sa-params" data-toggle="tooltip"  data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>';
 			}
@@ -589,6 +589,20 @@ class Project extends CI_Controller {
 			$this->session->set_flashdata('message_name', 'Projects Updated sucessfully');
 			redirect('project/index');
 		}			
+	}
+
+	public function showproject(){
+		$id=base64_decode($this->uri->segment(3));
+		//$id1=base64_decode($this->uri->segment(4));
+		$whereArr=array('id'=>$id);
+		//$whereArr1=array('id'=>$id1);
+		$data['projectlist']=$this->common_model->getData('tbl_project_info',$whereArr);
+		$data['pro_category']=$this->common_model->getData('tbl_project_category',$whereArr);
+		$query = "SELECT * FROM tbl_project_info inner join tbl_clients on tbl_project_info.clientid =tbl_clients.id where tbl_project_info.id=".$id;
+		$data['pro_client']=$this->common_model->coreQueryObject($query,$whereArr);
+		$this->load->view('common/header');
+		$this->load->view('project/viewproject',$data);
+		$this->load->view('common/footer');
 	}
 		
 	public function edittemplate(){
