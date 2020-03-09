@@ -520,7 +520,7 @@ class Finance extends CI_Controller{
          	/** Filtering Start */
            	if(!empty(trim($_GET['sSearch']))){
             	$searchTerm = trim($_GET['sSearch']);
-            	$sWhere .= ' AND (projectname like "%'.$searchTerm.'%" OR clientname like "%'.$searchTerm.'%" OR companyname like "%'.$searchTerm.'%" OR note like "%'.$searchTerm.'%")';
+            	$sWhere .= ' AND (c.clientname like "%'.$searchTerm.'%" OR i.companyname like "%'.$searchTerm.'%" OR i.note like "%'.$searchTerm.'%")';
             }
 				$startdate=!empty($_POST['startdate']) ? $_POST['startdate'] : '';
 				$enddate=!empty($_POST['enddate']) ? $_POST['enddate'] : '';
@@ -528,8 +528,10 @@ class Finance extends CI_Controller{
 				$clientname=!empty($_POST['clientname']) ? $_POST['clientname'] : '';
 				$status=$_POST['status'];
 			
+				$whereclient = array('user_id'=>$this->user_id);
+				$clientData = $this->common_model->getData('tbl_clients',$whereclient);
 				if($this->user_type == 1){
-					$sWhere.=' AND i.client='.$this->user_id;
+					$sWhere.=' AND i.client='.$clientData[0]->id;
 				}
 				if(!empty($projectname)){
 					$sWhere.=' AND  project="'.$projectname.'"';
@@ -554,18 +556,30 @@ class Finance extends CI_Controller{
 					/** Filtering End */
 
 			$query = "SELECT i.* , c.id as clientid,c.clientname,p.projectname FROM tbl_invoice i INNER JOIN tbl_clients c ON c.id = i.client INNER JOIN tbl_project_info p ON p.id = i.project".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
-	    echo $query;die;
+	    //echo $query;die;
 		$invoicesArr = $this->common_model->coreQueryObject($query);
 		//print_r($invoicesArr);die;
-		$query = "SELECT * from tbl_invoice i ".$sWhere;
-	
-		$invoicesFilterArr = $this->common_model->coreQueryObject($query);
-	
-		$iFilteredTotal = count($invoicesFilterArr);
-		//$whereArr = array('client!=' => '');
-		$invoicesAllArr = $this->common_model->getData('tbl_invoice');
-		$iTotal = count($invoicesAllArr);
+		if($this->user_type == 1){
+			$query = "SELECT i.*, c.id as clientid,c.clientname,p.projectname FROM tbl_invoice i INNER JOIN tbl_clients c ON c.id = i.client INNER JOIN tbl_project_info p ON p.id = i.project".$sWhere;
+		
+			$invoicesFilterArr = $this->common_model->coreQueryObject($query);
+		
+			$iFilteredTotal = count($invoicesFilterArr);
+			//$whereArr = array('client!=' => '');
+			//$invoicesAllArr = $this->common_model->getData('tbl_invoice');
+			$iTotal = count($invoicesFilterArr);
+		}
+		elseif($this->user_type == 0){
 
+			$query = "SELECT i.*, c.id as clientid,c.clientname,p.projectname FROM tbl_invoice i INNER JOIN tbl_clients c ON c.id = i.client INNER JOIN tbl_project_info p ON p.id = i.project".$sWhere;
+		
+			$invoicesFilterArr = $this->common_model->coreQueryObject($query);
+		
+			$iFilteredTotal = count($invoicesFilterArr);
+			//$whereArr = array('client!=' => '');
+			$invoicesAllArr = $this->common_model->getData('tbl_invoice');
+			$iTotal = count($invoicesAllArr);
+		}
 
 		}
 		

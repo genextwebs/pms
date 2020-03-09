@@ -81,6 +81,11 @@
         startTimer(fiveMinutes, display);
     });
     </script>
+   <!--  <script>
+        jQuery(document).ready(function(){
+          jQuery('[data-toggle="tooltip"]').tooltip();
+        });
+    </script> -->
 </body>
 </html>
 

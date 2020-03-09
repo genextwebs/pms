@@ -95,8 +95,10 @@ if($this->session->userdata('login')){
                 <li <?php if($controller == 'finance' && $functionName == 'invoice'){ echo 'class="active"'; } ?>>
                     <a href="<?php echo base_url().'finance/invoice' ?>">Invoices</a>
                 </li>
-                <li>
-                    <a href="#">Payments</a>
+                <li <?php if($controller == 'payment' && ($functionName == 'payment' || $functionName == '')) { echo 'class="active"'; } ?>>
+                    <a href="<?php echo base_url().'payment'?>" class="nav-link-s">
+                        <span>Payment</span>
+                    </a>
                 </li>
                 <li <?php if($controller == 'finance' && $functionName == 'expense'){ echo 'class="active"'; } ?>>
                     <a href="<?php echo base_url().'finance/expense' ?>">Expenses</a>
