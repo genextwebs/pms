@@ -10,6 +10,7 @@ class Ticket extends CI_Controller {
 		$this->load->model('common_model');
 		$this->login = $this->session->userdata('login');
 		$this->user_type = $this->login->user_type;
+		$this->user_id = $this->login->id;
 		func_check_login();
 	}
 
@@ -218,7 +219,15 @@ class Ticket extends CI_Controller {
 				$actionstring ='<p>view</p>';
 
 			}else if($this->user_type == 2){
-				$actionstring ='<p>view</p>';
+				$actionstring = '<div class="dropdown action m-r-10">
+				                <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
+				                		<div class="dropdown-menu">
+						                    <a  class="dropdown-item" href="'.base_url().'ticket/editticket/'.base64_encode($row->id).'";><i class="fa fa-edit"></i> Edit</a>
+
+						                    <a  href="javascript:void();" onclick="deleteticket(\''.base64_encode($row->id).'\');" class="dropdown-item" href="javascript:void()"><i class="fa fa-trash" ></i> Delete</a>
+						                    
+				               			 </div>
+							</div>';
 			}
 			//For Priority
 			if($row->priority=='1'){
@@ -300,9 +309,11 @@ class Ticket extends CI_Controller {
 	//echo($query);die;
 		/*$query= "Select comment from tbl_ticket_comment inner join tbl_employee on tbl_ticket_comment.ticketemployeeid= tbl_employee.id inner join tbl_user on tbl_employee.id=tbl_ticket_comment.ticketemployeeid";*/	
 		/*$query = "Select comment,tbl_employee.user_id from tbl_ticket_comment inner join tbl_employee on tbl_ticket_comment.ticketemployeeid= tbl_employee.id";*/
-		$query= "Select tbl_ticket_comment.*,tbl_employee.user_id,profileimg from tbl_ticket_comment inner join tbl_employee on tbl_ticket_comment.ticketemployeeid= tbl_employee.id inner join tbl_user on tbl_employee.user_id=tbl_user.id";
+		$query= "Select tbl_ticket_comment.*,tbl_employee.user_id from tbl_ticket_comment inner join tbl_employee on tbl_ticket_comment.ticketemployeeid= tbl_employee.id inner join tbl_user on tbl_employee.user_id=tbl_user.id";
 
 		$data['ticketcommenttest'] = $this->common_model->coreQueryObject($query);
+		/*echo '<pre>';
+		print_r($data['ticketcommenttest']);die;*/
 		$this->load->view('common/header');
 		$this->load->view('ticket/editticket',$data);
 		$this->load->view('common/footer');
@@ -388,14 +399,18 @@ class Ticket extends CI_Controller {
 			$comment = $this->input->post('name');
 			$status = $this->input->post('status');
 			$empid = $this->input->post('t_empid');
-			$insArr = array('comment' => $comment,'cpmmentstatusid'=> $status,'ticketemployeeid'=>$empid );
+			$whereArr = array('id'=>$this->user_id);
+			$data = $this->common_model->getData('tbl_user',$whereArr);
+			//print_r($data);die;
+			$insArr = array('profileimg'=>$data[0]->profileimg,'comment' => $comment,'cpmmentstatusid'=> $status,'ticketemployeeid'=>$empid );
 			$ticketArr =$this->common_model->insertData('tbl_ticket_comment',$insArr);
 			$tArray = $this->common_model->getData('tbl_ticket_comment');
 
-			$query= "Select tbl_ticket_comment.*,tbl_employee.user_id,tbl_user.profileimg from tbl_ticket_comment inner join tbl_employee on tbl_ticket_comment.ticketemployeeid= tbl_employee.id inner join tbl_user on tbl_employee.user_id=tbl_user.id";
+			/*$query= "Select tbl_ticket_comment.*,tbl_employee.user_id,tbl_user.profileimg from tbl_ticket_comment inner join tbl_employee on tbl_ticket_comment.ticketemployeeid= tbl_employee.id inner join tbl_user on tbl_employee.user_id=tbl_user.id";*/
 
-			$img_corequery= $this->common_model->coreQueryObject($query);
-			$image=$img_corequery[0]->profileimg;
+			//$img_corequery= $this->common_model->coreQueryObject($query);
+			//$image=$img_corequery[0]->profileimg;
+			$image=$tArray[0]->profileimg;
 			$created = $tArray[0]->created_at;
 			$replay =  $comment;
 			$totaldata = count($tArray);

@@ -527,7 +527,10 @@ class Finance extends CI_Controller{
 				$projectname=!empty($_POST['projectname']) ? $_POST['projectname'] : '';
 				$clientname=!empty($_POST['clientname']) ? $_POST['clientname'] : '';
 				$status=$_POST['status'];
-		
+			
+				if($this->user_type == 1){
+					$sWhere.=' AND i.client='.$this->user_id;
+				}
 				if(!empty($projectname)){
 					$sWhere.=' AND  project="'.$projectname.'"';
 				}
@@ -549,11 +552,9 @@ class Finance extends CI_Controller{
 					$sWhere = " WHERE 1 ".$sWhere;
 				}
 					/** Filtering End */
-		}
-				
-		
-	    $query = "SELECT i.* , c.id as clientid,c.clientname,p.projectname FROM tbl_invoice i INNER JOIN tbl_clients c ON c.id = i.client INNER JOIN tbl_project_info p ON p.id = i.project".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
-	    //echo $query;die;
+
+			$query = "SELECT i.* , c.id as clientid,c.clientname,p.projectname FROM tbl_invoice i INNER JOIN tbl_clients c ON c.id = i.client INNER JOIN tbl_project_info p ON p.id = i.project".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+	    echo $query;die;
 		$invoicesArr = $this->common_model->coreQueryObject($query);
 		//print_r($invoicesArr);die;
 		$query = "SELECT * from tbl_invoice i ".$sWhere;
@@ -565,6 +566,10 @@ class Finance extends CI_Controller{
 		$invoicesAllArr = $this->common_model->getData('tbl_invoice');
 		$iTotal = count($invoicesAllArr);
 
+
+		}
+		
+	    
 		/** Output */
 		$datarow = array();
 		$i = 1;

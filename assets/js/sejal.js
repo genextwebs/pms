@@ -1516,6 +1516,8 @@ $("#save_tchannel").click(function(event) {
 		    success: function(data){
 				$('tbody').append("<tr><td>"+data.count+"</td><td><img height='50px' width='50px' src="+imgurl+data.profileimg+"></td><td>"+data.replay+"</td><td>"+data.create+"</td><td><input type='button' class='btn btn-sm btn-danger btn-rounded delete-category' onclick ='delete_t_comment(\""+data.insCommentData+"\");' id='deletereply' value='Remove'></td></tr>");
 				$('textarea').val('');
+				 window.location.reload();
+
 			}
 		});
 
