@@ -5,8 +5,8 @@ class Payment extends CI_Controller{
 		parent::__construct();
 		$this->load->database();
 		$this->load->model('common_model');
-		ini_set('display_errors',1);
-		error_reporting(E_ALL);
+		ini_set('display_errors',0);
+		//error_reporting(E_ALL);
 		$this->login = $this->session->userdata('login');
 		$this->user_type = $this->login->user_type;
 		$this->user_id = $this->login->id;	
@@ -30,22 +30,32 @@ class Payment extends CI_Controller{
         $remark = $this->input->post('remark');
       // $mobileNo = $this->input->post('mobileNo');
         $userid = $this->input->post('userid');
-        //$cvStatus = $this->input->post('cvStatus');
+        $invoiceid = $this->input->post('invoiceid');
         $insArr = array('user_id' => $userid , 'project' => $project , 'paidon' => $paidon , 'currency' => $currency , 'amount' => $amount , 'remark' => $remark , 'successkey' => $razorpay_payment_id);
-        $this->Common_model->insertData('tbl_payment', $insArr);
+       // print_r($insArr);
+        $this->common_model->insertData('tbl_payment', $insArr);
         $arr = array('msg' => 'Payment Successfully Credited');
         $userarray = array();
         $userarray['userId'] = base64_encode($userid);
-        $userarray['cvStatus'] = base64_encode($cvStatus);
+        $userarray['invoiceid'] = base64_encode($invoiceid);
+
         echo json_encode($userarray);exit();
         echo  json_encode($arr);exit(); 
     }
 
     public function response($page = null)
     {
-       
-        
-        $this->render('payumoney/response');
+        $invoiceid = base64_decode($this->uri->segment(3));
+
+        $whereArrI = array('id'=>$invoiceid);
+        $updateArrI = array('payment_done'=>1);
+        $this->common_model->updateData('tbl_invoice',$updateArrI,$whereArrI);
+        $whereArr = array('id'=>$this->user_id);
+        $updateArr = array('payment_verify'=>1);
+        $this->common_model->updateData('tbl_user',$updateArr,$whereArr);
+        $this->load->view('common/header');
+        $this->load->view('Payment/response');
+        $this->load->view('common/footer');
     }  
 }
 ?>

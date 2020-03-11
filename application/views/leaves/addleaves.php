@@ -52,7 +52,7 @@
 								<div class="row">
 									<div class="col-md-12">
 										<div class="form-group">
-											<label class="control-label">Choose Member</label>
+											<label class="control-label">Choose Member<span class="astric">*</span></label>
 											
 											<select class="custom-select br-0" id="choose_mem" name="choose_mem">
 											
@@ -117,7 +117,7 @@
 								<div class="row">
 									<div class="col-md-2" id="deadlineBox">
 										<div class="form-group">
-											<label class="control-label">Date</label>
+											<label class="control-label">Date<span class="astric">*</span></label>
 											<input type="text" name="date" id="startdate" autocomplete="off" class="form-control" value="<?php if(!empty($sessData['date'])){echo $sessData['date'];}else{ }?>" >
 										</div>
 									</div>
@@ -125,7 +125,7 @@
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-											<label class="control-label">Reason for absence</label>
+											<label class="control-label">Reason for absence<span class="astric">*</span></label>
 											<textarea id="absence" class="form-control" name="absence" rows="5"><?php if(!empty($sessData['absence'])){echo $sessData['absence'];}else{ }?></textarea>
 										</div>
 									</div>

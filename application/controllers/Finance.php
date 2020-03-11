@@ -1,5 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+use Dompdf\Dompdf;	
 class Finance extends CI_Controller{
 	public function __construct(){
 		parent::__construct();
@@ -11,6 +12,7 @@ class Finance extends CI_Controller{
 		$this->user_type = $this->login->user_type;
 		$this->user_id = $this->login->id;	
 		func_check_login();
+
 	}
 
 	public function index(){
@@ -601,14 +603,38 @@ class Finance extends CI_Controller{
 				$status = $row->status = 'Partially Paid';
 				$sta='<lable class="label label-info">'.$status.'</label>';
 			}
-			
-				$actionStr = '<div class="dropdown action m-r-10">
-				                <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
-				                		<div class="dropdown-menu">
-						       				<a  class="dropdown-item" href="javascript:void(0);" onclick="deleteinvoices(\''.base64_encode($id).'\')"><i class="fa fa-trash "></i> Delete</a>
-										</div>
-							</div>';
-			
+
+			if($this->user_type == 0){
+					$actionStr = '<div class="dropdown action m-r-10">
+			                <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
+			                		<div class="dropdown-menu">
+					       				<a  class="dropdown-item" href="javascript:void(0);" onclick="deleteinvoices(\''.base64_encode($id).'\')"><i class="fa fa-trash "></i> Delete</a>
+									</div>
+						</div>';
+
+			}
+			elseif($this->user_type == 1){
+				if($row->payment_done == 0){
+					$actionStr = '<div class="dropdown action m-r-10">
+			                <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
+			                		<div class="dropdown-menu">
+			                		 <a  class="dropdown-item" href='.base_url().'Finance/doPayment/'.base64_encode($id).'><i class="fa fa-credit-card custom"></i> Payment</a>
+					       				<a  class="dropdown-item" href="javascript:void(0);" onclick="deleteinvoices(\''.base64_encode($id).'\')"><i class="fa fa-trash "></i> Delete</a>
+									</div>
+						</div>';
+				}
+				elseif($row->payment_done == 1){
+					$actionStr = '<div class="dropdown action m-r-10">
+			                <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
+			                		<div class="dropdown-menu">
+			                		 <a  class="dropdown-item" href='.base_url().'Finance/downloadFiles/'.base64_encode($id).'><i class="fa fa-download"></i> Download</a>
+					       				<a  class="dropdown-item" href="javascript:void(0);" onclick="deleteinvoices(\''.base64_encode($id).'\')"><i class="fa fa-trash "></i> Delete</a>
+									</div>
+						</div>';
+				}
+
+			}
+		
 			
 			$datarow[] = array(
 				$id = $i,
@@ -918,6 +944,42 @@ class Finance extends CI_Controller{
 			echo  json_encode($txtArr);exit; 
 			echo  $totaldata; exit;
 		}
+	}
+
+	public function doPayment(){
+		$data['invoiceid']=base64_decode($this->uri->segment(3));
+		$whereArr = array('is_deleted'=>0);
+		$data['project']=$this->common_model->getData('tbl_project_info',$whereArr);
+		$whereArr1 = array('id'=>$data['invoiceid']);
+		$data['invoiceData'] = $this->common_model->getData('tbl_invoice',$whereArr1);
+		$this->load->view('common/header');
+		$this->load->view('Payment/payment',$data);
+		$this->load->view('common/footer');
+	}
+	public function downloadFiles(){
+		 $fileName = 'invoice.pdf';
+            
+            $contentStr = base_url()."/attachments/invoice/1.html";
+            //$pdfroot = FCPATH.'user_report/'.$examId.'/'.$fileName;
+
+            $content = file_get_contents($contentStr);
+            $content = str_replace('[', '', $content);
+            $content = str_replace(']', '', $content);
+
+            $content = str_replace('3.a.iv', ucfirst($que3AnsArr[0]->city), $content);
+            $content = str_replace('3.a.ii', $que3AnsArr[0]->spouse_fname." ".$que3AnsArr[0]->spouse_mname." ".$que3AnsArr[0]->spouse_lname, $content);
+
+            $dompdf->loadHtml($content);
+
+            // Render and download
+            
+            
+            //$dompdf->stream($fileName);
+            $pdf_string =   $dompdf->output();
+            //$this->zip->add_data($name, $pdf_string);
+            file_put_contents($pdf_string ); 
+            $path1 =  "./user_report/".$examId."/".$fileName;
+            $this->zip->read_file($path1);
 	}
 }
 ?>

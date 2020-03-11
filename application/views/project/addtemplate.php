@@ -49,7 +49,7 @@
 		                					<div class="row">
 		                						<div class="col-md-12">
 		                							<div class="form-group">
-		                								<label class="control-label">Project Name</label>
+		                								<label class="control-label">Project Name<span class="astric">*</span></label>
 		                								<input id="project_name" class="form-control" type="text" name="project_name" value="">
 		                							</div>
 		                						</div>

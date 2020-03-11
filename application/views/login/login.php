@@ -56,11 +56,13 @@
 					<div class="row">
 						<div class="col-md-12">
 							<div class="form-group">
+								<label style="font-size: 18px;"><b>Email</b><span class="astric">*</span></label>
 								<input type="email" id="email" class="form-control" name="email" placeholder="Email">
 							</div>
 						</div>
 						<div class="col-md-12">
 							<div class="form-group">
+								<label style="font-size: 18px;"><b>Password</b><span class="astric">*</span></label>
 								<input type="password" name="password" id="password" class="form-control" placeholder="password">
 							</div>
 						</div>

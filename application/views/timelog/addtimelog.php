@@ -52,7 +52,7 @@
 										<div class="row">
 											<div class="col-md-4">
 												<div class="form-group">
-													<label class="control-label">Select Project</label>
+													<label class="control-label">Select Project<span class="astric">*</span></label>
 														<select class="form-control" class="projectclass" name="project_name" id="project_name" onchange="showEmployee();">
 															<option value="">--SELECT--</option>
 															
@@ -69,7 +69,7 @@
 											<div class="col-md-4">
 												<div class="row" id="empdiv" style="display:none">
 													<div class="form-group">
-													<label class="control-label"> Employee Name</label>
+													<label class="control-label"> Employee Name<span class="astric">*</span></label>
 														 <select  class="form-control" name="empname" id="empname">
 														</select>
 													</div>
@@ -80,17 +80,17 @@
 										<div class="row">
 											<div class="col-md-4">
 												<div class="block">
-												  <label for="date" class="control-label"> Start Date</label>
+												  <label for="date" class="control-label"> Start Date<span class="astric">*</span></label>
 												  <input type="date" name="timelog_d1" id="timelog_d1" value=""  class="form-control"/>
-												  <label for="time" class="control-label">Start Time</label>
+												  <label for="time" class="control-label">Start Time<span class="astric">*</span></label>
 												  <input type="time" name="timelog_t1" id="timelog_t1" value=""  class="form-control"/>
 												</div>
 											</div>
 											<div class="col-md-4">
 												<div class="block">
-												    <label for="date" class="control-label">End Date</label>
+												    <label for="date" class="control-label">End Date<span class="astric">*</span></label>
 												    <input type="date" name="timelog_d2" id="timelog_d2" value="" class="form-control" />
-												    <label for="time" class="control-label">End Time</label>
+												    <label for="time" class="control-label">End Time<span class="astric">*</span></label>
 												    <input type="time" name="timelog_t2" id="timelog_t2" value="" class="form-control"/>
 												</div>
 											</div>
@@ -106,7 +106,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												<div class="form-group">
-													<label class="control-label"> Memo</label>
+													<label class="control-label"> Memo<span class="astric">*</span></label>
 												    <input type="text" class="form-control" name="memo" id="memo"/> 
 												</div>
 											</div>

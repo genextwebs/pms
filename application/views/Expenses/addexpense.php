@@ -52,7 +52,7 @@
 									<div class="col-md-12 ">
 										<div class="col-md-12">
 	        								<div class="form-group">
-	        									<label class="control-label">Choose Member</label>
+	        									<label class="control-label">Choose Member<span class="astric">*</span></label>
 												<select name="employee" id="employee" class="form-control">
 												<option value="">--</option>
 													<?php
@@ -70,7 +70,7 @@
 									<div class="col-md-12 ">
 										<div class="col-md-12">
 	        								<div class="form-group">
-	        									<label class="control-label">Project</label>
+	        									<label class="control-label">Project<span class="astric">*</span></label>
 												<select name="project" id="project" class="form-control">
 												<option value="">--</option>
 													<?php
@@ -88,7 +88,7 @@
 									<div class="col-md-12 ">
 										<div class="col-md-12">
 	        								<div class="form-group">
-	        									<label class="control-label">Currency</label>
+	        									<label class="control-label">Currency<span class="astric">*</span></label>
 												<select name="currency" id="currency" class="form-control">
 												<option value="">--</option>
 												<option value="1">$(USD)</option>
@@ -102,7 +102,7 @@
 									<div class="col-md-12 ">
 										<div class="col-md-12">
 	        								<div class="form-group">
-	        									<label class="control-label">Item Name</label>
+	        									<label class="control-label">Item Name<span class="astric">*</span></label>
 												<input type="text" class="form-control" name="itemname" id="itemname">
 											</div>
 	        							</div>
@@ -112,7 +112,7 @@
 									<div class="col-md-12 ">
 										<div class="col-md-12">
 	        								<div class="form-group">
-	        									<label class="control-label">Price</label>
+	        									<label class="control-label">Price<span class="astric">*</span></label>
 												<input type="text" class="form-control" name="price" id="price">
 											</div>
 	        							</div>
@@ -122,7 +122,7 @@
 									<div class="col-md-12 ">
 										<div class="col-md-12">
 	        								<div class="form-group">
-	        									<label class="control-label">Purchased From</label>
+	        									<label class="control-label">Purchased From<span class="astric">*</span></label>
 												<input type="text" class="form-control" name="purchasedfrom" id="purchasedfrom">
 											</div>
 	        							</div>
@@ -132,7 +132,7 @@
 									<div class="col-md-12 ">
 										<div class="col-md-12">
 	        								<div class="form-group">
-	        									<label class="control-label">Purchase Date</label>
+	        									<label class="control-label">Purchase Date<span class="astric">*</span></label>
 												<div class="input-icon">
 													<input type="text" class="form-control" name="purchasedate" id="start_date" value="<?php echo date('Y-m-d'); ?>">
 												</div>

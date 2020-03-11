@@ -23,7 +23,7 @@
 		                	</div>
 		                	<div class="card-wrapper collapse show">
 		                		<div class="card-body">
-		                			<form class="aj-form" method="post" name="payment" >
+		                			<form class="aj-form" method="post" name="payment" id="payment">
 											 <?php
 												$mess = $this->session->flashdata('message_name');
 												if(!empty($mess)){
@@ -52,13 +52,19 @@
 		                					<div class="row">
 												<div class="col-md-6">
 													<div class="form-group">
-													<label class="control-label">Select Project</label>
+													<label class="control-label">Select Project<span class="astric">*</span></label>
 			                                            <select name="project" id="project" class="form-control">
 															<option value="">select</option>
 																<?php
 																	foreach($project as $row)
 																	{
-																		echo '<option value="'.$row->id.'">'.$row->projectname.'</option>';
+																		$str='';
+																		if($row->id==$invoiceData[0]->project)
+																		{
+																			$str="selected";
+																		
+																		}
+																		echo '<option value="'.$row->id.'"'.$str.'>'.$row->projectname.'</option>';
 																	}
 																?>
 														</select>
@@ -67,7 +73,7 @@
 												
 												<div class="col-md-6">
 													<div class="form-group">
-														<label class="control-label">Paid On</label>
+														<label class="control-label">Paid On<span class="astric">*</span></label>
 			                                            <input type="text" name="paidon" id="paidon" class="form-control" data-date-format='yyyy-mm-dd' value="<?php echo date('Y-m-d'); ?>">
 													</div>
 												</div>
@@ -75,22 +81,22 @@
 											<div class="row">
 												<div class="col-md-6">
 		                							<div class="form-group">
-		                								<label class="control-label">Currency</label>
+		                								<label class="control-label">Currency<span class="astric">*</span></label>
 														<select name="currency" id="currency" class="form-control">
 															<option value="">select</option>
-															<option value="1">$(USD)</option>
-															<option value="2">R(IND)</option>
+															<option value="1" <?php if($invoiceData[0]->currency=='1'){ echo 'selected'; } ?>>$(USD)</option>
+															<option value="2" <?php if($invoiceData[0]->currency=='2'){ echo 'selected'; } ?>>R(IND)</option>
 
 														</select>
 													</div>
 		                						</div>
 												<div class="col-md-6">
 													<div class="form-group">
-														<label class="control-label">Amount</label>
+														<label class="control-label">Amount<span class="astric">*</span></label>
 														<div class="row">
 														<div class="col-md-12">
 															<div class="input-icon">
-																<input type="text" class="form-control" name="amount" id="amount" >
+																<input type="text" class="form-control" name="amount" id="amount" value="<?php echo !empty($invoiceData[0]->total) ? $invoiceData[0]->total : '' ?>" >
 															</div>
 														</div>
 														</div>
@@ -101,11 +107,12 @@
 												<div class="col-sm-12">
 													<div class="form-group">
 														<label class="control-label">Remark</label>
-													<textarea name="remark" class="form-control" rows="5"></textarea>
+													<textarea name="remark" class="form-control" id="remark" rows="5"></textarea>
 													</div>
 												</div>
 											</div>
 											<input type="hidden" name="userid" id="userid" value="<?php echo $this->user_id; ?>">
+											<input type="hidden" name="invoiceid" id="invoiceid" value="<?php echo $invoiceid; ?>">
 											<div class="row">
 												<div class="col-md-12">
 													<input type="submit" id="pay" class="btn btn-success" name="btnsubmit" value="Pay" > <i class="fa fa-check"></i>
@@ -120,56 +127,9 @@
 		            </div>
                 </div>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-<script>
-  var SITEURL = "<?php echo base_url(); ?>";
-  $('#pay').on('click', function(e){
-  	var project = $('select[name="project"]').val();
-  	var paidon = $('input[name="paidon"]').val();
-  	var currency = $('select[name="Currency"]').val();
-  	var amount = $('input[name="amount"]').val();
-  	var remark = $('input[name="remark"]').val();
-  	var userid = $('#userid').val();
-  //	var cvStatus = $('#cvStatus').val();
-  //	var amount = $('#amount').val();*/
-    var options = {
-    "key": "rzp_test_Mz6ATj37skcz3Z",
-    "amount": (amount*100), // 2000 paise = INR 20
-    "name": "Indileader",
-    "description": "Payment",
-    
-    "handler": function (response){
-    	console.log(response);
-          $.ajax({
-            url: SITEURL + 'Payment/razorPaySuccess',
-            type: 'post',
-            dataType: 'json',
-            data: { 
-                razorpay_payment_id: response.razorpay_payment_id , 
-                project : project,
-                paidon : paidon,
-                currency : currency,
-                amount : amount,
-                remark :remark,
-                userid : userid
-              }, 
-            success: function (msg) {
-              window.location.href = SITEURL + 'Payment/response';
-            }
-        });
-      
-    },
- 
-    "theme": {
-        "color": "#528FF0"
-    }
-    
-  };
-  var rzp1 = new Razorpay(options);
-  rzp1.open();
-  e.preventDefault();
-  });
- 
-</script>
+
+
+
             <!-- ends of contentwrap -->
 
 		

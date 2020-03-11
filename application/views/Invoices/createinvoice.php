@@ -58,7 +58,7 @@
 														$a=$test[1]+1;
 														$inv='INV#'.$a;
 													?>
-														<label class="control-label">Invoice #</label>
+														<label class="control-label">Invoice #<span class="astric">*</span></label>
 														<div class="row">
 															<div class="col-md-12">
 																<div class="input-icon">
@@ -70,7 +70,7 @@
 												</div>
 												<div class="col-md-4">
 													<div class="form-group">
-														<label class="control-label">Project</label>
+														<label class="control-label">Project<span class="astric">*</span></label>
 			                                            <select name="project" id="project" class="form-control">
 															<option value="">--</option>
 																<?php
@@ -84,7 +84,7 @@
 												</div>
 												<div class="col-md-4">
 		                							<div class="form-group">
-		                								<label class="control-label">Currency</label>
+		                								<label class="control-label">Currency<span class="astric">*</span></label>
 														<select name="currency" id="currency" class="form-control">
 															<option value="">select</option>
 															<option value="1" <?php if($estimate[0]->currency=='1'){ echo 'selected'; } ?>>$(USD)</option>
@@ -97,7 +97,7 @@
 											<div class="row">
 												<div class="col-md-4">
 													<div class="form-group">
-														<label class="control-label">Invoice Date</label>
+														<label class="control-label">Invoice Date<span class="astric">*</span></label>
 														<div class="row">
 														<div class="col-md-12">
 															<div class="input-icon">
@@ -109,7 +109,7 @@
 												</div>
 												<div class="col-md-4">
 													<div class="form-group">
-														<label class="control-label">Due Date</label>
+														<label class="control-label">Due Date<span class="astric">*</span></label>
 														<div class="input-icon">
 															<input type="text" class="form-control" name="due_date" id="deadline" value="<?php echo !empty($estimate[0]->validtill) ? $estimate[0]->validtill : ''?>">
 														</div>
@@ -117,7 +117,7 @@
 												</div>
 												<div class="col-md-4">
 													<div class="form-group">
-														<label class="control-label">Status</label>
+														<label class="control-label">Status<span class="astric">*</span></label>
 														<select class="form-control" name="status" id="status">
 															<option value="">select</option>
 															<option value="1">Paid</option>
@@ -186,7 +186,7 @@
 											<div id="row<?php echo $j; ?>" class="row">
 												<div class="row">
 												<div class="form-group">
-                                                    <label class="control-label hidden-md hidden-lg">Item</label>
+                                                    <label class="control-label hidden-md hidden-lg">Item<span class="astric">*</span></label>
                                                     <div class="input-group">
                                                         <div class="input-group-addon"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span></div>
                                                         <input type="text" class="form-control item_name" name="item_name[]" value="<?php echo !empty($product[$i]->item) ? $product[$i]->item : '' ?>">
@@ -194,13 +194,13 @@
                                                 </div>
 												<div class="col-md-1">
 													<div class="form-group">
-														<label class="control-label hidden-md hidden-lg">Qty/Hrs</label>
+														<label class="control-label hidden-md hidden-lg">Qty/Hrs<span class="astric">*</span></label>
 														<input type="number" min="1" class="form-control quantity" name="quantity[]" id="quantity<?php echo $j; ?>" value="<?php echo !empty($product[$i]->qtyhrs) ? $product[$i]->qtyhrs : '' ?>">
 													</div>
 												</div>
 												<div class="col-md-2">
 													<div class="form-group">
-														<label class="control-label hidden-md hidden-lg">Unit Price</label>
+														<label class="control-label hidden-md hidden-lg">Unit Price<span class="astric">*</span></label>
 														<input type="text" class="form-control cost_per_item" name="cost_per_item[]" id="cost_per_item<?php echo $j; ?>" value="<?php echo !empty($product[$i]->unitprice) ? $product[$i]->unitprice : '' ?>"  onblur="countamount(1);">
 													</div>
 												</div>
@@ -232,7 +232,7 @@
 													</div>	
 												</div>
 												<div class="col-md-2 border-dark  text-center">
-													<label class="control-label hidden-md hidden-lg">Amount</label>
+													<label class="control-label hidden-md hidden-lg">Amount<span class="astric">*</span></label>
 												<input type="text" name="amount[]" id="amount<?php echo $j; ?>"  value="<?php echo !empty($product[$i]->amount) ? $product[$i]->amount : '' ?>">
 													<div class="col-md-1 text-right visible-md visible-lg"><button type="button" name="remove" id="<?php echo $j; ?>" class="btn remove-item btn-circle btn-danger remove"><i class="fa fa-remove"></i></button></div>
 												</div>

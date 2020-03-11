@@ -51,13 +51,13 @@
             					<div class="row">
             						<div class="col-md-6">
             							<div class="form-group">
-            								<label class="control-label">Company Name</label>
+            								<label class="control-label">Company Name<span class="astric">*</span></label>
             								<input id="company_name" class="form-control" type="text" name="company_name" value="<?php if(!empty($sessData['company_name'])){echo $sessData['company_name'];}?>">
             							</div>
             						</div>
             						<div class="col-md-6">
             							<div class="form-group">
-            								<label class="control-label">Website</label>
+            								<label class="control-label">Website<span class="astric">*</span></label>
             								<input id="website" class="form-control" type="text" name="website" value="<?php if(!empty($sessData['website'])){echo $sessData['website'];}else{ }?>">
             							</div>
             						</div>
@@ -75,13 +75,13 @@
             					<div class="row">
 								    <div class="col-md-6">
 								        <div class="form-group">
-								            <label class="control-label">Client Name</label>
+								            <label class="control-label">Client Name<span class="astric">*</span></label>
 								            <input type="text" name="name" id="name" class="form-control" value="<?php if(!empty($sessData['client_name'])){echo $sessData['client_name'];}else{ }?>">
 								        </div>
 								    </div>
 								    <div class="col-md-6">
 								        <div class="form-group">
-								            <label class="control-label">Client Email</label>
+								            <label class="control-label">Client Email<span class="astric">*</span></label>
 								            <input type="text" name="email" id="email" class="form-control" value="">
 								            <span class="help-desk">Lead will login using this email.</span>
 								        </div>
@@ -90,7 +90,7 @@
 								<div class="row">
 									<div class="col-lg-4 col-md-6">
 										<div class="form-group">
-											<label class="control-label">Mobile</label>
+											<label class="control-label">Mobile<span class="astric">*</span></label>
 											<input type="text" id="mobile" name="mobile" class="form-control allow-no" value="<?php if(!empty($sessData['mobile'])){echo $sessData['mobile'];}else{ }?>">
 										</div>
 									</div>

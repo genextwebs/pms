@@ -858,11 +858,9 @@ function insertAttendance(employeeid,counter){
 					//$('#suceessmsg').html('');
 					$('#suceessmsg'+counter).append('<b>Attendance Saved Successfully</b>');
 					$('#suceessmsg'+counter).fadeOut(6000);  
-			}
-
-		
-	});
-}
+			}	
+		});
+	}
 }
 
 
@@ -1146,3 +1144,107 @@ jQuery(".allow-no").keydown(function (event) {
         }
     }
 });
+
+//payment validation 
+
+$("#pay").click(function(event) {
+	var project_name_err  = 0;
+	var paidon_name_err = 0;
+	var currency_name_err = 0;
+	var amount_name_err = 0;	
+	$("select[name^='project']").each(function() {
+		var project = $(this).val();
+		if(project == ''){
+			project_name_err = 1;
+		}
+	});
+	$("input[name^='paidon']").each(function() {
+		var paidon = $(this).val();
+		if(paidon == ''){
+			paidon_name_err = 1;
+		}
+	});
+	$("select[name^='currency']").each(function() {
+		var currency = $(this).val();
+		if(currency == ''){
+			currency_name_err = 1;
+		}
+	});
+	$("input[name^='amount']").each(function() {
+		var amount = $(this).val();
+		if(amount == ''){
+			amount_name_err = 1;
+		}
+	});
+
+	if(project_name_err == 1){
+		alert('Please select Project');
+		return false;
+	}
+	if(paidon_name_err == 1){
+		alert('Please enter Date');
+		return false;
+	}
+	if(currency_name_err == 1){
+		alert('Please enter currency');
+		return false;
+	}
+	if(amount_name_err == 1){
+		alert('Please enter amount');
+		return false;
+	}
+});	
+
+
+
+
+//payment
+
+ // var SITEURL = "<?php echo base_url(); ?>";
+  $('#pay').on('click', function(e){
+  	var project = $('select[name="project"]').val();
+  	var paidon = $('input[name="paidon"]').val();
+  	var currency = $('select[name="currency"]').val();
+  	var amount = $('input[name="amount"]').val();
+  	var remark = $('#remark').val();
+  	var userid = $('#userid').val();
+  	var invoiceid = $('#invoiceid').val();
+    var options = {
+    "key": "rzp_test_Mz6ATj37skcz3Z",
+    "amount": (amount*100), // 2000 paise = INR 20
+    "name": "PMS",
+    "description": "Payment",
+    
+    "handler": function (response){
+    	console.log(response);
+          $.ajax({
+            url: base_url + 'Payment/razorPaySuccess',
+            type: 'post',
+            dataType: 'json',
+            data: { 
+                razorpay_payment_id: response.razorpay_payment_id , 
+                project : project,
+                paidon : paidon,
+                currency : currency,
+                amount : amount,
+                remark :remark,
+                userid : userid,
+                invoiceid:invoiceid
+              }, 
+            success: function (msg) {
+              window.location.href = base_url + 'Payment/response/'+msg.invoiceid;
+            }
+        });
+      
+    },
+ 
+    "theme": {
+        "color": "#528FF0"
+    }
+    
+  };
+  var rzp1 = new Razorpay(options);
+  rzp1.open();
+  e.preventDefault();
+  });
+

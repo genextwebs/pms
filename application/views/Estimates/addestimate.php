@@ -49,7 +49,7 @@
 		                					<div class="row">
 		                						<div class="col-md-4">
 		                							<div class="form-group">
-		                								<label class="control-label">Client</label>
+		                								<label class="control-label">Client<span class="astric">*</span></label>
 			                                            <select name="client" id="client" class="form-control">
 															<option value="">select</option>
 																<?php
@@ -63,7 +63,7 @@
 		                						</div>
 		                						<div class="col-md-4">
 		                							<div class="form-group">
-		                								<label class="control-label">Currency</label>
+		                								<label class="control-label">Currency<span class="astric">*</span></label>
 														<select name="currency" id="currency" class="form-control">
 															<option value="">select</option>
 															<option value="1">$(USD)</option>
@@ -73,7 +73,7 @@
 		                						</div>
 												<div class="col-md-4">
 		                							<div class="form-group">
-		                								<label class="control-label">Valid Till</label>
+		                								<label class="control-label">Valid Till<span class="astric">*</span></label>
 														<input type="text" class="form-control" name="valid_till" id="start_date">
 		                							</div>
 		                						</div>
@@ -84,7 +84,7 @@
 											<div class="row" >
 												<div class="row" >
 												<div class="form-group">
-                                                    <label class="control-label hidden-md hidden-lg">Item</label>
+                                                    <label class="control-label hidden-md hidden-lg">Item<span class="astric">*</span></label>
                                                     <div class="input-group">
                                                         <div class="input-group-addon"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span></div>
                                                         <input type="text" class="form-control item_name" name="item_name[]">
@@ -92,13 +92,13 @@
                                                 </div>
 												<div class="col-md-1">
 													<div class="form-group">
-														<label class="control-label hidden-md hidden-lg">Qty/Hrs</label>
+														<label class="control-label hidden-md hidden-lg">Qty/Hrs<span class="astric">*</span></label>
 														<input type="number" min="1" class="form-control quantity" name="quantity[]" id="quantity1">
 													</div>
 												</div>
 												<div class="col-md-2">
 													<div class="form-group">
-														<label class="control-label hidden-md hidden-lg">Unit Price</label>
+														<label class="control-label hidden-md hidden-lg">Unit Price<span class="astric">*</span></label>
 														<input type="text" class="form-control cost_per_item" name="cost_per_item[]" id="cost_per_item1" onblur="countamount(1);">
 													</div>
 												</div>
@@ -121,7 +121,7 @@
 													</div>	
 												</div>
 												<div class="col-md-2 border-dark  text-center">
-													<label class="control-label hidden-md hidden-lg">Amount</label>
+													<label class="control-label hidden-md hidden-lg">Amount<span class="astric">*</span></label>
 														<input type="text" name="amount[]" id="amount1">
 												</div>
 											</div>

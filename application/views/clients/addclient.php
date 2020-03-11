@@ -58,13 +58,13 @@
             					<div class="row">
             						<div class="col-md-6">
             							<div class="form-group">
-            								<label class="control-label">Company Name</label>
+            								<label class="control-label">Company Name<span class="astric">*</span></label>
             								<input id="company_name" class="form-control" type="text" name="company_name" value="<?php if(!empty($sessData['company_name'])) { echo $sessData['company_name']; } else { echo !empty($leads[0]->companyname) ?  $leads[0]->companyname :''; } ?>">
             							</div>
             						</div>
             						<div class="col-md-6">
             							<div class="form-group">
-            								<label class="control-label">Website</label>
+            								<label class="control-label">Website<span class="astric">*</span></label>
             								<input id="website" class="form-control" type="text" name="website" value="<?php if(!empty($sessData['website'])) { echo $sessData['website']; } else { echo !empty($leads[0]->website) ?  $leads[0]->website :'';} ?>">
             							</div>
             						</div>
@@ -82,13 +82,13 @@
             					<div class="row">
             						<div class="col-md-6">
             							<div class="form-group">
-            								<label class="control-label">Client Name</label>
+            								<label class="control-label">Client Name<span class="astric">*</span></label>
             								<input id="name" class="form-control" type="text" name="name" value="<?php if(!empty($sessData['name'])) { echo $sessData['name']; } else { echo !empty($leads[0]->clientname) ?  $leads[0]->clientname :'';} ?>">
             							</div>
             						</div>
             						<div class="col-md-6">
             							<div class="form-group">
-            								<label class="control-label">Client Email</label>
+            								<label class="control-label">Client Email<span class="astric">*</span></label>
             								<input id="email" class="form-control" type="email" name="email" value="<?php if(!empty($sessData['email'])) { echo $sessData['email']; } else { echo !empty($leads[0]->emailid) ?  $leads[0]->emailid :'';} ?>">
             								<span class="help-block">Client will login using this email.</span>
             							</div>
@@ -97,7 +97,7 @@
             					<div class="row">
             						<div class="col-md-4">
             							<div class="form-group">
-            								<label>Password</label>
+            								<label>Password<span class="astric">*</span></label>
             								<input type="Password" style="display: none;">
             								<input id="password" type="Password" class="form-control" name="password" value="<?php if(!empty($sessData['password'])) { echo $sessData['password']; } else {} ?>">
             								<span class="help-block">Client will login using this password.</span>
@@ -114,7 +114,7 @@
             						<div class="col-md-4">
             							<div class="form-group">
             								<div class="form-group">
-	                                            <label>Mobile</label>
+	                                            <label>Mobile<span class="astric">*</span></label>
 	                                            <input type="tel" name="mobile" id="mobile" class="form-control allow-no" value="<?php if(!empty($sessData['mobile'])) { echo $sessData['mobile']; } else {} ?>">
 	                                        </div>
             							</div>

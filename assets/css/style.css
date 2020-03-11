@@ -913,3 +913,10 @@ th {
   max-height: 440px;
   overflow: auto;
 }
+
+.astric {
+    color: red;
+    font-size: 19px;
+    font-weight: bold;
+    vertical-align: middle;
+  }

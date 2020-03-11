@@ -51,7 +51,7 @@
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-											<label class="control-label">Project Name</label>
+											<label class="control-label">Project Name<span class="astric">*</span></label>
 											<input id="project_name" class="form-control" type="text" name="project_name" value="">
 										</div>
 									</div>
@@ -84,13 +84,13 @@
 								<div class="row">
 									<div class="col-md-4">
 										<div class="form-group">
-											<label class="control-label">Start Date</label>
+											<label class="control-label">Start Date<span class="astric">*</span></label>
 											<input type="text" name="start_date" id="start_date" autocomplete="off" class="form-control" value="<?php if(!empty($sessData['start_date'])){echo $sessData['start_date'];}else{ }?>">
 										</div>
 									</div>
 									<div class="col-md-4" id="deadlineBox">
 										<div class="form-group">
-											<label class="control-label">Deadline</label>
+											<label class="control-label">Deadline<span class="astric">*</span></label>
 											<input type="text" name="deadline" id="deadline" autocomplete="off" class="form-control" value="<?php if(!empty($sessData['deadline'])){echo $sessData['deadline'];}else{ }?>" >
 										</div>
 									</div>
@@ -135,7 +135,7 @@
 										</div>
 									</div>
 								</div>
-								<h3 class="box-title mb-3 mt-2">Client Info</h3>
+								<h3 class="box-title mb-3 mt-2">Client Info<span class="astric">*</span></h3>
 								<div class="row">
 									<div class="col-md-12">
 										<div class="form-group">

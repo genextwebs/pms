@@ -61,7 +61,7 @@
                 					<div class="row">
                 						<div class="col-md-12">
                 							<div class="form-group">
-                								<label class="control-label">Ticket Subject <span class="text-danger">*</span></label>
+                								<label class="control-label">Ticket Subject<span class="astric">*</span></label>
                 								<input id="ticket_subject" class="form-control" type="text" name="ticket_subject" value="">
                 							</div>
                 						</div>
@@ -69,7 +69,7 @@
 									<div class="row">
                                 		<div class="col-md-12">
                                             <div class="form-group">
-                                                <label class="control-label">Ticket Description <span class="text-danger">*</span></label>
+                                                <label class="control-label">Ticket Description<span class="astric">*</span></label>
                                                 <textarea name="editor2" id="editor2"></textarea>
                                             </div>
                                         </div>
@@ -77,7 +77,7 @@
                         			<div class="row">
 		                    			<div class="col-md-6">
 		            						<div class="form-group type">
-		            							<label>Status <span class="text-danger">*</span></label>
+		            							<label>Status<span class="astric">*</span></label>
 		            							<select class="custom-select br-0" name="status" id="status">
 		            								<option value="">--Select--</option>
 		            								<option  value="1">Open</option>
@@ -135,7 +135,7 @@
 
 		            						<p id="succmsg" class="text-success"></p>
 	            						<div class="form-group">
-	            							<label class="control-label">Requester Name</label>
+	            							<label class="control-label">Requester Name<span class="astric">*</span></label>
 	            							<select class="custom-select br-0" name="requestername" id="requestername">
 	            								<option value="">--SELECT--</option>
 	            								<?php

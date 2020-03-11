@@ -41,7 +41,7 @@
 		                					<div class="row">
 		                						<div class="col-md-12">
 		                							<div class="form-group">
-		                								<label class="control-label">Project</label>
+		                								<label class="control-label">Project<span class="astric">*</span></label>
 		                								<select class="custom-select br-0" name="projectid">
 		                								<?php
 			                								foreach($project as $pj){
@@ -76,7 +76,7 @@
 			                					</div>
 		                						<div class="col-md-12">
 		                							<div class="form-group">
-			                							<label class="control-label">Title</label>
+			                							<label class="control-label">Title<span class="astric">*</span></label>
 			                							<input type="text" class="form-control" id="title_task" name="title_task">
 			                						</div>
 		                						</div>
@@ -88,13 +88,13 @@
 		                						</div>
 		                						<div class="col-md-12">
 		                							<div class="form-group">
-		                								<label class="control-label">start Date</label>
+		                								<label class="control-label">start Date<span class="astric">*</span></label>
 		                								<input id="start_date" type="text" class="form-control" name="startdate">
 		                							</div>
 		                						</div>
 		                						<div class="col-md-12">
 		                							<div class="form-group">
-		                								<label class="control-label">Due Date</label>
+		                								<label class="control-label">Due Date<span class="astric">*</span></label>
 		                								<input id="deadline" type="text" class="form-control" name="due_date">
 		                							</div>
 		                						</div>
@@ -113,7 +113,7 @@
 			                					</div>
 			                					<div class="col-md-12">
 			                						<div class="form-group">
-			                							<label class="control-label">Priority</label>
+			                							<label class="control-label">Priority<span class="astric">*</span></label>
 			                							<div class="custom-control custom-radio radio-danger">
 														    <input type="radio" class="custom-control-input" id="high-rad" name="radio-stacked" required>
 														    <label class="custom-control-label text-danger" for="high-rad">High</label>
