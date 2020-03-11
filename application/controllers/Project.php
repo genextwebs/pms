@@ -937,6 +937,23 @@ class Project extends CI_Controller {
 		$whereArr = array('id' => $id);
 		$this->common_model->deleteData('tbl_project_member',$whereArr);
 	}
+
+	public function overView(){
+		$data['id'] = base64_decode($this->uri->segment(3));
+		$sql = "SELECT tbl_project_info.*,tbl_clients.* from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id where tbl_project_info.id=".$data['id'];
+		$data['client'] = $this->common_model->coreQueryObject($sql);
+		$where = array('id'=>$data['client'][0]->user_id);
+		$data['clientEmail'] = $this->common_model->getData('tbl_user',$where);
+		$memberQue = "SELECT tbl_employee.*,tbl_project_member.*,tbl_user.* from tbl_employee inner join  tbl_project_member on tbl_employee.id = tbl_project_member.emp_id 
+			inner join tbl_user on tbl_employee.user_id = tbl_user.id 
+			where tbl_project_member.project_id=".$data['id'];
+		$data['projectMember'] = $this->common_model->coreQueryObject($memberQue);
+		$this->load->view('common/header');
+		$this->load->view('project/searchproject',$data);
+		$this->load->view('common/footer');
+	}
+
+
 	public function member(){
 		$data['id'] = base64_decode($this->uri->segment(3));
 		$sql = "SELECT tbl_project_member.id as memberid , tbl_project_member.emp_id , tbl_employee.id ,tbl_employee.employeename from tbl_project_member inner join tbl_employee on tbl_project_member.emp_id = tbl_employee.id where project_id =".$data['id'];
@@ -1034,9 +1051,11 @@ class Project extends CI_Controller {
             }
             if (isset($_GET['iDisplayStart']) && $_GET['iDisplayLength'] != '-1') {
                 $sLimit = (int) substr($_GET['iDisplayLength'], 0, 6);
+                //echo $sLimit;die;
                 $sOffset = (int) $_GET['iDisplayStart'];
             } else {
                 $sLimit = 10;
+                //echo $sLimit;die;
                 $sOffset = (int) $_GET['iDisplayStart'];
             }
             /** Paging End **/
@@ -1236,7 +1255,7 @@ class Project extends CI_Controller {
 		   	"sEcho" => intval($_GET['sEcho']),
 	        "iTotalRecords" => $iTotal,
 	        "iTotalRecordsFormatted" => number_format($iTotal), //ShowLargeNumber($iTotal),
-	        "iTotalDisplayRecords" => $iTotal,
+	        "iTotalDisplayRecords" => $iFilteredTotal,
 	        "aaData" => $datarow
 		);
 		} 	

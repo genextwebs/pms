@@ -27,7 +27,7 @@
 			                <div class="stats-box">
 			                	<ul class="nav nav-tabs" id="myTab" role="tablist">
 								  	<li class="nav-item">
-								    	<a class="nav-link" id="overview-tab" data-toggle="tab" href="#overview" role="tab" aria-controls="overview" aria-selected="true">Overview</a>
+								    	<a class="nav-link <?php if($controller == 'Project' && $function == 'overView') { echo "active";}?>" id="overview-tab"  href="<?php echo base_url().'Project/overView/'.base64_encode($id)?>" role="tab" aria-controls="overview" aria-selected="true">Overview</a>
 								  	</li>
 								  	<li class="nav-item" >
 								    	<a class="nav-link <?php if($controller == 'Project' && $function == 'member') { echo "active";}?>" id="members-tab"  href="<?php echo base_url().'Project/member/'.base64_encode($id)?>" role="tab" aria-controls="members" aria-selected="false">Members</a>
@@ -51,17 +51,17 @@
 		            			<div id="" class="">
 		            				<div class="tab-content" id="myTabContent">
 		            					<!-- tab1 -->
-									  	<div class="tab-pane fade section-1" id="overview" role="tabpanel" aria-labelledby="overview-tab">
+									  	<div class="tab-pane fade section-1 <?php if($controller == 'Project' && $function == 'overView') { echo "active show";}?>" id="overview" role="tabpanel" aria-labelledby="overview-tab">
 					            			<div class="row">
 					            				<div class="col-md-12">
 					            					<div class="stats-box">
-						            					<h3 class="b-b pb-2">Project #20 -<span class="font-bold">Server Installation</span> <a href="#" class="pull-right btn btn-outline-info btn-rounded edit-btn" style="font-size: small"><i class="icon-note"></i> Edit</a> </h3>
+						            					<h3 class="b-b pb-2">Project #20 -<span class="font-bold"><?php echo $client[0]->projectname; ?></span> <a href="<?php echo base_url().'Project/editproject/'.base64_encode($id); ?>" class="pull-right btn btn-outline-info btn-rounded edit-btn" style="font-size: small"><i class="icon-note"></i> Edit</a> </h3>
 						            					<div style="max-height: 400px; overflow-y: auto;">
 					                                        Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.
 					                                    </div>
 							            			</div>
 					            				</div>
-					            				<div class="col-md-6">
+					            				<!-- <div class="col-md-6">
 					            					<div id="project-milestones" class="stats-box">
 					            						<h3 class="box-title">
 					            							<i class="fa fa-flag"></i> Milestones (0)
@@ -72,7 +72,7 @@
 					            							No record found.
 					            						</div>
 					            					</div>
-					            				</div>
+					            				</div> -->
 					            				<div class="col-md-6">
 					            					<div id="active-timers" class="stats-box">
 					            						<h3 class="box-title b-b"><i class="fa fa-clock-o"></i> Active Timers</h3>
@@ -136,7 +136,7 @@
 					                                                    <h5 class="text-muted vb">Hours Logged</h5>
 					                                                </div>
 					                                                <div class="col-md-6 col-sm-6 col-xs-6">
-					                                                    <h3 class="counter text-right m-t-15 text-success">3233</h3>
+					                                                    <h3 class="counter text-right m-t-15 text-success"><?php echo $client[0]->hoursallocated; ?></h3>
 					                                                </div>
 					                                                <div class="col-md-12 col-sm-12 col-xs-12">
 					                                                    <div class="progress hight-4px">
@@ -214,13 +214,13 @@
 		            											<div class="card-body">
 		            												<dl>
                                                                         <dt>Company Name</dt>
-				                                                        <dd class="m-b-10">Kuhn, O'Kon and Bode</dd>
+				                                                        <dd class="m-b-10"><?php echo $client[0]->companyname;?></dd>
 				                                                        
 				                                                        <dt>Client Name</dt>
-				                                                        <dd class="m-b-10">Calista Monahan</dd>
+				                                                        <dd class="m-b-10"><?php echo $client[0]->clientname;?></dd>
 
 				                                                        <dt>Client Email</dt>
-				                                                        <dd class="m-b-10">norris65@example.net</dd>
+				                                                        <dd class="m-b-10"><?php echo $clientEmail[0]->emailid;?></dd>
 				                                                    </dl>
 		            											</div>
 		            										</div>
@@ -232,33 +232,17 @@
 		            											</div>
 		            											<div class="card-body">
 		            												<div class="message-center">
+		            													<?php foreach($projectMember as $pm) { ?>
 				                                                        <a href="#">
 				                                                            <div class="user-img">
 				                                                                <img src="images/user-avtar.png" alt="user" class="img-circle" width="40" height="40">
 				                                                            </div>
 				                                                            <div class="mail-contnet">
-				                                                                <h5>Mr. Hans Pfannerstill Jr.</h5>
-				                                                                <span class="mail-desc">sharon.effertz@example.com</span>
+				                                                                <h5><?php echo $pm->employeename;?></h5>
+				                                                                <span class="mail-desc"><?php echo $pm->emailid; ?></span>
 				                                                            </div>
 				                                                        </a>
-				                                                        <a href="#">
-				                                                            <div class="user-img">
-				                                                                <img src="images/user-avtar.png" alt="user" class="img-circle" width="40" height="40">
-				                                                            </div>
-				                                                            <div class="mail-contnet">
-				                                                                <h5>Dr. Troy Franecki</h5>
-				                                                                <span class="mail-desc">magali22@example.org</span>
-				                                                            </div>
-				                                                        </a>
-				                                                        <a href="#">
-				                                                            <div class="user-img">
-				                                                                <img src="images/user-avtar.png" alt="user" class="img-circle" width="40" height="40">
-				                                                            </div>
-				                                                            <div class="mail-contnet">
-				                                                                <h5>Mr. Hans Pfannerstill Jr.</h5>
-				                                                                <span class="mail-desc">sharon.effertz@example.com</span>
-				                                                            </div>
-				                                                        </a>
+				                                                        <?php } ?>
 				                                                    </div>
 		            											</div>
 		            										</div>
@@ -680,8 +664,8 @@
 										                							<select name="status" id="status" class="form-control">
 			                                                                    <option value="1">To Do</option>
 			                                                                    <option value="2">Doing</option>
-			                                                                    <option value="3">Done</option>
-			                                                                    <option value="4">Completed</option>
+			                                                                    
+			                                                                    <option value="3">Completed</option>
 			                                                                    <option value="0">Incomplete</option>
                                                             				</select>
 										                						</div>

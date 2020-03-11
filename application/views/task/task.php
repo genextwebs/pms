@@ -96,8 +96,7 @@
 								<option value="all">All</option>
 					            <option value="1">To Do</option>
                                 <option value="2">Doing</option>
-                                <option value="3">Done</option>
-                                <option value="4">Completed</option>
+                                <option value="3">Completed</option>
                                 <option value="0">Incomplete</option> 
 					        </select> 
 		            	</div>
