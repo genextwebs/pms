@@ -1,6 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-use Dompdf\Dompdf;	
+require_once('vendor/autoload.php');
+// reference the Dompdf namespace
+use Dompdf\Dompdf;
+	
 class Finance extends CI_Controller{
 	public function __construct(){
 		parent::__construct();
@@ -12,7 +15,7 @@ class Finance extends CI_Controller{
 		$this->user_type = $this->login->user_type;
 		$this->user_id = $this->login->id;	
 		func_check_login();
-
+		//$this->load->library('pdfgenerator');
 	}
 
 	public function index(){
@@ -957,29 +960,15 @@ class Finance extends CI_Controller{
 		$this->load->view('common/footer');
 	}
 	public function downloadFiles(){
-		 $fileName = 'invoice.pdf';
-            
-            $contentStr = base_url()."/attachments/invoice/1.html";
-            //$pdfroot = FCPATH.'user_report/'.$examId.'/'.$fileName;
+	 	$dompdf = new Dompdf();
+		$fileName = 'invoice.pdf';
+    	$html = $this->load->view('Invoices/1', true);
+    	 //$dompdf->render();
+    	 $pdf_string =   $dompdf->output();
+    	 // $dompdf->loadHtml($html);
+    	file_put_contents($html,$pdf_string); 
 
-            $content = file_get_contents($contentStr);
-            $content = str_replace('[', '', $content);
-            $content = str_replace(']', '', $content);
-
-            $content = str_replace('3.a.iv', ucfirst($que3AnsArr[0]->city), $content);
-            $content = str_replace('3.a.ii', $que3AnsArr[0]->spouse_fname." ".$que3AnsArr[0]->spouse_mname." ".$que3AnsArr[0]->spouse_lname, $content);
-
-            $dompdf->loadHtml($content);
-
-            // Render and download
-            
-            
-            //$dompdf->stream($fileName);
-            $pdf_string =   $dompdf->output();
-            //$this->zip->add_data($name, $pdf_string);
-            file_put_contents($pdf_string ); 
-            $path1 =  "./user_report/".$examId."/".$fileName;
-            $this->zip->read_file($path1);
-	}
+		$dompdf->stream($fileName);
+	}	
 }
 ?>

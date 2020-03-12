@@ -47,7 +47,7 @@ class SendMail
         $email->setSubject($subject);
         $email->addTo($toEmail,$recipientName);
         $email->addContent("text/html", $msg);
-        $sendgrid = new \SendGrid('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
+        $sendgrid = new \SendGrid('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
             ');
         try {
             //echo "ghng";die;
