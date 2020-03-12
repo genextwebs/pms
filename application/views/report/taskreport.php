@@ -62,13 +62,13 @@
 			<div class="col-md-4">
 				<div class="form-group">
 					<label class="control-label">SELECT DATE RANGE</label>
-			    		<div class="input-group input-daterange">
-					  	    <input type="text" class="start-date form-control br-0" id="start_date" name="start_date" value="<?php echo $startdate;?>" data-date-format='yyyy-mm-dd'>
-					   		<div class="input-group-prepend">
-					        	<span class="input-group-text bg-info text-white">To</span>
-				    		</div>
-				  		    <input type="text" class="end-date form-control br-0" id="deadline" name="deadline" value="<?php echo $enddate;?>" data-date-format='yyyy-mm-dd'>
-						</div>
+		    		<div class="input-group input-daterange">
+				  	    <input type="text" class="start-date form-control br-0" id="start_date" name="start_date" value="<?php echo $startdate;?>" data-date-format='yyyy-mm-dd'>
+				   		<div class="input-group-prepend">
+				        	<span class="input-group-text bg-info text-white">To</span>
+			    		</div>
+			  		    <input type="text" class="end-date form-control br-0" id="deadline" name="deadline" value="<?php echo $enddate;?>" data-date-format='yyyy-mm-dd'>
+					</div>
 				</div>
 			</div>
 			<div class="col-md-4">
@@ -76,14 +76,9 @@
 					<label class="control-label">Select Project</label>
 					<select id="projectData" class="custom-select" name="projectData">
 						<option value="">--Select--</option>
-							<?php 
-								foreach($allProjectData as $project){
-							?>
-							<option value="<?php echo $project->id; ?>"><?php echo $project->projectname; ?></option>
-							<?php	
-					
-							}
-							?>
+							<?php foreach($allProjectData as $project){ ?>
+								<option value="<?php echo $project->id; ?>"><?php echo $project->projectname; ?></option>
+							<?php } ?>
 					</select> 
 				</div>
 			</div>
@@ -92,127 +87,107 @@
 					<label class="control-label">Select Employee</label>
 					<select id="employeeData" class="custom-select" name="employeeData">
 						<option value="">--Select--</option>
-						<?php
-							foreach($allEmpData as $emp){
-						?>
-							<option value="<?php echo $emp->id ;?>"><?php echo $emp->employeename;?></option>
-						<?php 
-
-							} 
-						?>		
+							<?php foreach($allEmpData as $emp){  ?>
+								<option value="<?php echo $emp->id ;?>"><?php echo $emp->employeename;?></option>
+							<?php } ?>		
 					</select> 
 				</div>
 			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+		        <div class="form-group m-t-10">
+		            <label class="control-label col-12 mb-3">&nbsp;</label>
+		            <button type="button" id="btnApplyReport" class="btn btn-success col-lg-4 co-md-5"><i class="fa fa-check"></i> Apply</button>
+		        </div>
+        	</div>
+    	</div>
 	</div>
+	<h1>PIE CHART</h1>
+	<div id="piechart">
+	<?php 
+		$count1=0;$count2=0;
+		foreach ($Chart as $pie) {
+			if($pie->status==4){
+				//$dataStrCmp = count($pie->status);
+
+				$count1=$count1++;
+			}else if($pie->status==1){
+				//$dataStrpend = $pie->status;
+				$count2=$count2++;
+			}
+
+		/*	else if($pie->status==1){
+			$dataStrpend = $pie->status;
+			$c2=$count++;
+		}
+		 else if($pie->status==1){
+			$dataStrpend = $pie->status;
+			$c2=$count++;
+		}
+		else if($pie->status==1){
+			$dataStrpend = $pie->status;
+			$c2=$count++;
+		}*/
+		}
+	?> 
+	</div>
+	<script type="text/javascript">
+		Highcharts.chart('piechart', {
+		    chart: {
+		        plotBackgroundColor: null,
+		        plotBorderWidth: null,
+		        plotShadow: false,
+		        type: 'pie'
+		    },
+		    title: {
+		        text: 'Status'
+		    },
+		    tooltip: {
+		    },
+		    accessibility: {
+		        point: {
+		            valueSuffix: '%'
+		        }
+		    },
+		    plotOptions: {
+		        pie: {
+		            allowPointSelect: true,
+		            cursor: 'pointer',
+		            dataLabels: {
+		                enabled: true,
+		            }
+		        }
+		    },
+		    series: [{
+		       name: 'Status ',
+		        colorByPoint: true,
+		        data:[
+		        	 ['Completed Status',<?php echo $count1;?>],
+		        	 ['Pending Status',<?php echo $count2;?>]
+		        ]
+		    }]
+		});
+	</script>
 	<div class="row">
-		<div class="col-md-4">
-            <div class="form-group m-t-10">
-                <label class="control-label col-12 mb-3">&nbsp;</label>
-                <button type="button" id="btnApplyReport" class="btn btn-success col-lg-4 co-md-5"><i class="fa fa-check"></i> Apply</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
- 
-<h1>PIE CHART</h1>
-
-<div id="piechart">
-<?php 
-
-$count1=0;$count2=0;
-
-foreach ($Chart as $pie) {
-	if($pie->status==4){
-		//$dataStrCmp = $pie->status;
-		$c1=$count1++;
-	}else if($pie->status==1){
-		//$dataStrpend = $pie->status;
-		$c2=$count2++;
-	}
-/*	else if($pie->status==1){
-		$dataStrpend = $pie->status;
-		$c2=$count++;
-	}
-	 else if($pie->status==1){
-		$dataStrpend = $pie->status;
-		$c2=$count++;
-	}
-	else if($pie->status==1){
-		$dataStrpend = $pie->status;
-		$c2=$count++;
-	}*/
-}
-		
-?> 
-
-</div>
-
-
-
-
-<div class="row">
-	<div class="col-md-12">
-		<div class="stats-box"> 
-			<div class="table-responsive">
-				<table class="table table-bordered table-hover" id="taskreport">
-					<thead>
-						<tr role="row">
-							 <th>Id</th>
-							 <th>Project</th>
-							<th>Title</th>
-							 <th>Due Date</th> 
-							 <th>Assign To</th> 
-							 <th>Status</th>
-						</tr>
-					</thead>
-				</table>
+		<div class="col-md-12">
+			<div class="stats-box"> 
+				<div class="table-responsive">
+					<table class="table table-bordered table-hover" id="taskreport">
+						<thead>
+							<tr role="row">
+								 <th>Id</th>
+								 <th>Project</th>
+								<th>Title</th>
+								 <th>Due Date</th> 
+								 <th>Assign To</th> 
+								 <th>Status</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
-<!-- <script src="https://code.highcharts.com/modules/accessibility.js"></script> -->
-<script type="text/javascript">
 
-Highcharts.chart('piechart', {
-    chart: {
-        plotBackgroundColor: null,
-        plotBorderWidth: null,
-        plotShadow: false,
-        type: 'pie'
-    },
-    title: {
-        text: 'Status'
-    },
-    tooltip: {
-     //   pointFormat: '{series.xyz}: <b>{point.percentage:.1f}%</b>'
-    },
-    accessibility: {
-        point: {
-            valueSuffix: '%'
-        }
-    },
-    plotOptions: {
-        pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            dataLabels: {
-                enabled: true,
-                //format: '<b>{point.name}</b>: {point.percentage:.1f} %'
-            }
-        }
-    },
-    series: [{
-       name: 'Status ',
-        colorByPoint: true,
-        data:[
 
-        	 ['Completed Status',<?php echo $c1;?>],
-        	 ['Pending Status',<?php echo $c2?>]
-        ]
-
-       // pointInterval: 3600 * 1000,
-    }]
-});
-</script>

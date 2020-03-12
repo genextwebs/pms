@@ -154,7 +154,7 @@ class Ticket extends CI_Controller {
 			}
 			$sWhere = " WHERE 1 ".$sWhere;
 		}
-		if($this->user_type == 0){
+	if($this->user_type == 0){
 
 		$query = "SELECT tbl_ticket.* FROM tbl_ticket".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 		$TicketArr = $this->common_model->coreQueryObject($query);
@@ -181,91 +181,179 @@ class Ticket extends CI_Controller {
 		/** Output */
 		$datarow = array();
 		$i = 1;
-		foreach($TicketArr as $row) {
+	foreach($TicketArr as $row) {
 		$rowid = $row->id;
 		//echo($rowid);die;
 		if($this->user_type == 0){
-		$actionstring = '<div class="dropdown action m-r-10">
-		           <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
-		            <div class="dropdown-menu">
-		               <a  class="dropdown-item" href="'.base_url().'ticket/editticket/'.base64_encode($row->id).'";><i class="fa fa-edit"></i> Edit</a>
+			$actionstring = '<div class="dropdown action m-r-10">
+			           <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
+			            <div class="dropdown-menu">
+			               <a  class="dropdown-item" href="'.base_url().'ticket/editticket/'.base64_encode($row->id).'";><i class="fa fa-edit"></i> Edit</a>
 
-		               <a  href="javascript:void();" onclick="deleteticket(\''.base64_encode($row->id).'\');" class="dropdown-item" href="javascript:void()"><i class="fa fa-trash" ></i> Delete</a>
-		               
-		          </div>
-		</div>';
+			               <a  href="javascript:void();" onclick="deleteticket(\''.base64_encode($row->id).'\');" class="dropdown-item" href="javascript:void()"><i class="fa fa-trash" ></i> Delete</a>
+			               
+			          </div>
+			</div>';
+			//For Priority
+			if($row->priority=='1'){
+				$priority=$row->priority='Low';
+				$showStatus = '<label class="label label-success">'.$priority.'</label>';
+			}
+			else if($row->priority=='2'){
+				$priority=$row->priority='High';
+				$showStatus = '<label class="label label-warning">'.$priority.'</label>';
+			}
+			else if($row->priority=='3'){
+				$prioritypriority=$row->priority='Medium';
+				$showStatus = '<label class="label label-warning">'.$priority.'</label>';
+			}
+			else if($row->priority=='4'){
+				$priority=$row->priority='Urgent';
+				$showStatus = '<label class="label label-warning">'.$priority.'</label>';
+			}
+			//For Status
+			if($row->status=='1'){
+				$status=$row->status='Open';
+				$showStatus = '<label class="label label-success">'.$status.'</label>';
+			}
+			else if($row->status=='2'){
+				$status=$row->status='Pending';
+				$showStatus = '<label class="label label-success">'.$status.'</label>';
+			}
+			else if($row->status=='3'){
+				$status=$row->status='Resolved';
+				$showStatus = '<label class="label label-success">'.$status.'</label>';
+			}
+			else if($row->status=='4'){
+				$status=$row->status='Close';
+				$showStatus = '<label class="label label-success">'.$status.'</label>';
+			}
+
+			$datarow[] = array(
+				$id = $i,
+				$row->ticketsubject,
+				$row->requestername,
+				$row->created_at,
+				'<b>Agent:</b>'.$row->agent.
+				'<br/> <b>Staus:</b> <label class="label label-success">'.$row->status.'</label><br/>
+			   <label><b>Priority:</b></label>'.$row->priority,
+			   	$actionstring
+			);
+			$i++;
 		}else if($this->user_type == 1){
-		$actionstring ='<p>view</p>';
-
+			if($row->priority=='1'){
+				$priority=$row->priority='Low';
+				$showStatus = '<label class="label label-success">'.$priority.'</label>';
+			}
+			else if($row->priority=='2'){
+				$priority=$row->priority='High';
+				$showStatus = '<label class="label label-warning">'.$priority.'</label>';
+			}
+			else if($row->priority=='3'){
+				$prioritypriority=$row->priority='Medium';
+				$showStatus = '<label class="label label-warning">'.$priority.'</label>';
+			}
+			else if($row->priority=='4'){
+				$priority=$row->priority='Urgent';
+				$showStatus = '<label class="label label-warning">'.$priority.'</label>';
+			}
+			//For Status
+			if($row->status=='1'){
+				$status=$row->status='Open';
+				$showStatus = '<label class="label label-success">'.$status.'</label>';
+			}
+			else if($row->status=='2'){
+				$status=$row->status='Pending';
+				$showStatus = '<label class="label label-success">'.$status.'</label>';
+			}
+			else if($row->status=='3'){
+				$status=$row->status='Resolved';
+				$showStatus = '<label class="label label-success">'.$status.'</label>';
+			}
+			else if($row->status=='4'){
+				$status=$row->status='Close';
+				$showStatus = '<label class="label label-success">'.$status.'</label>';
+			}
+			$datarow[] = array(
+				$id = $i,
+				$row->ticketsubject,
+				$row->requestername,
+				$row->created_at,
+				'<b>Agent:</b>'.$row->agent.
+				'<br/> <b>Staus:</b> <label class="label label-success">'.$row->status.'</label><br/>
+			    <label><b>Priority:</b></label>'.$row->priority
+			);
+			$i++;
 		}else if($this->user_type == 2){
-		$actionstring = '<div class="dropdown action m-r-10">
-		           <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
-		            <div class="dropdown-menu">
-		               <a  class="dropdown-item" href="'.base_url().'ticket/editticket/'.base64_encode($row->id).'";><i class="fa fa-edit"></i> Edit</a>
+				$actionstring = 
+							'<div class="dropdown action m-r-10">
+		          				<button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
+		            				<div class="dropdown-menu">
+		              					<a  class="dropdown-item" href="'.base_url().'ticket/editticket/'.base64_encode($row->id).'";><i class="fa fa-edit"></i> Edit</a>
 
-		               <a  href="javascript:void();" onclick="deleteticket(\''.base64_encode($row->id).'\');" class="dropdown-item" href="javascript:void()"><i class="fa fa-trash" ></i> Delete</a>
+		               					<a  href="javascript:void();" onclick="deleteticket(\''.base64_encode($row->id).'\');" class="dropdown-item" href="javascript:void()"><i class="fa fa-trash" ></i> Delete</a>
 		               
-		          </div>
-		</div>';
-		}
-		//For Priority
-		if($row->priority=='1'){
-			$priority=$row->priority='Low';
-			$showStatus = '<label class="label label-success">'.$priority.'</label>';
-		}
-		else if($row->priority=='2'){
-			$priority=$row->priority='High';
-			$showStatus = '<label class="label label-warning">'.$priority.'</label>';
-		}
-		else if($row->priority=='3'){
-			$prioritypriority=$row->priority='Medium';
-			$showStatus = '<label class="label label-warning">'.$priority.'</label>';
-		}
-		else if($row->priority=='4'){
-			$priority=$row->priority='Urgent';
-			$showStatus = '<label class="label label-warning">'.$priority.'</label>';
-		}
-		//For Status
-		if($row->status=='1'){
-			$status=$row->status='Open';
-			$showStatus = '<label class="label label-success">'.$status.'</label>';
-		}
-		else if($row->status=='2'){
-			$status=$row->status='Pending';
-			$showStatus = '<label class="label label-success">'.$status.'</label>';
-		}
-		else if($row->status=='3'){
-			$status=$row->status='Resolved';
-			$showStatus = '<label class="label label-success">'.$status.'</label>';
-		}
-		else if($row->status=='4'){
-			$status=$row->status='Close';
-			$showStatus = '<label class="label label-success">'.$status.'</label>';
-		}
+		          					</div>
+							</div>';
 
-		$datarow[] = array(
-			$id = $i,
-			$row->ticketsubject,
-			$row->requestername,
-			$row->created_at,
-			'<b>Agent:</b>'.$row->agent.
-			'<br/> <b>Staus:</b> <label class="label label-success">'.$row->status.'</label><br/>
-		   <label><b>Priority:</b></label>'.$row->priority,
-			$actionstring
-		);
-		$i++;
+				//For Priority
+				if($row->priority=='1'){
+					$priority=$row->priority='Low';
+					$showStatus = '<label class="label label-success">'.$priority.'</label>';
+				}
+				else if($row->priority=='2'){
+					$priority=$row->priority='High';
+					$showStatus = '<label class="label label-warning">'.$priority.'</label>';
+				}
+				else if($row->priority=='3'){
+					$prioritypriority=$row->priority='Medium';
+					$showStatus = '<label class="label label-warning">'.$priority.'</label>';
+				}
+				else if($row->priority=='4'){
+					$priority=$row->priority='Urgent';
+					$showStatus = '<label class="label label-warning">'.$priority.'</label>';
+				}
+				//For Status
+				if($row->status=='1'){
+					$status=$row->status='Open';
+					$showStatus = '<label class="label label-success">'.$status.'</label>';
+				}
+				else if($row->status=='2'){
+					$status=$row->status='Pending';
+					$showStatus = '<label class="label label-success">'.$status.'</label>';
+				}
+				else if($row->status=='3'){
+					$status=$row->status='Resolved';
+					$showStatus = '<label class="label label-success">'.$status.'</label>';
+				}
+				else if($row->status=='4'){
+					$status=$row->status='Close';
+					$showStatus = '<label class="label label-success">'.$status.'</label>';
+				}
+
+				$datarow[] = array(
+					$id = $i,
+					$row->ticketsubject,
+					$row->requestername,
+					$row->created_at,
+					'<b>Agent:</b>'.$row->agent.
+					'<br/> <b>Staus:</b> <label class="label label-success">'.$row->status.'</label><br/>
+				   <label><b>Priority:</b></label>'.$row->priority
+				);
+			$i++;
 		}
+	}
 
 		$output = array
 		(
-		"sEcho" => intval($_GET['sEcho']),
-		   "iTotalRecords" => $iTotal,
-		   "iTotalRecordsFormatted" => number_format($iTotal), //ShowLargeNumber($iTotal),
-		   "iTotalDisplayRecords" => $iFilteredTotal,
-		   "aaData" => $datarow
+			"sEcho" => intval($_GET['sEcho']),
+		  	"iTotalRecords" => $iTotal,
+		   	"iTotalRecordsFormatted" => number_format($iTotal), //ShowLargeNumber($iTotal),
+		   	"iTotalDisplayRecords" => $iFilteredTotal,
+		   	"aaData" => $datarow
 		);
 		echo json_encode($output);
-		  exit();
+		exit();
 	}
 
 	public function editticket(){

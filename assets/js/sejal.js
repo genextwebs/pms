@@ -242,6 +242,32 @@ jQuery(document).ready(function() {
 	}
 
 	else if(controllerName == 'ticket' && (functionName == 'index' || functionName == '')){
+		
+		var user = jQuery('#userid').val();
+		if(user == 0){
+			var aoColumns= [{ "sWidth": "40px", sClass: "text-left", "asSorting": [  ] }, 
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] },
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] },
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ]  }, 
+
+		];
+		}else if(user == 1){
+			var aoColumns= [{ "sWidth": "40px", sClass: "text-left", "asSorting": [  ] }, 
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] },
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] },
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+			];
+		}else if(user == 2){
+			var aoColumns= [{ "sWidth": "40px", sClass: "text-left", "asSorting": [  ] }, 
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] },
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] },
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+			];
+		}
 		var oTable = jQuery('#tickets').DataTable({
 			'bRetrieve': true,
 			"bPaginate": true,
@@ -254,14 +280,7 @@ jQuery(document).ready(function() {
 			"bInfo": true,
 			"bAutoWidth": false,
 			"bProcessing": true,
-			"aoColumns": [{ "sWidth": "40px", sClass: "text-left", "asSorting": [  ] }, 
-			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] },
-			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
-			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] },
-			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
-			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
-
-		     ],
+			aoColumns,
 			"bServerSide": true,
 			"fixedHeader": true,
 			"sAjaxSource": base_url+"Ticket/ticketlist",
@@ -269,14 +288,12 @@ jQuery(document).ready(function() {
 			"sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
 			"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No tickets found<br/><br/></center>', "sZeroRecords": "<center><br/>No tickets found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ tickets", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
 			"fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
-			
-		    	//aoData.push( { "name": "agent", "value": $('#agent').val() } );
 		    	aoData.push({"name": "s_date", "value":$('#start_date').val()});
 		    	aoData.push({"name" :"e_date" ,"value":$('#deadline').val()});
-				aoData.push( { "name": "status1", "value": $('#status').val() } );
-				aoData.push( { "name": "priority", "value": $('#priority').val() } );
-				aoData.push( { "name": "channelname", "value": $('#channelname').val() } );
-				aoData.push( { "name": "tickettype", "value": $('#tickettype').val() } );
+				aoData.push({ "name": "status1", "value": $('#status').val() } );
+				aoData.push({ "name": "priority", "value": $('#priority').val() } );
+				aoData.push({ "name": "channelname", "value": $('#channelname').val() } );
+				aoData.push({ "name": "tickettype", "value": $('#tickettype').val() } );
 				
 				oSettings.jqXHR = $.ajax( {
 					"dataType": 'json',
@@ -428,14 +445,6 @@ jQuery(document).ready(function() {
 	                	else{
 	                		oLanguage.sInfo = '<b>_START_ to _END_</b> of <b>_TOTAL_</b> (<small>' + json.iTotalRecordsFormatted + ' TaskReport</small>)';
 	                	}
-	                    //$('#completed-counter').html(json.corequery);
-	                 //   alert(json.corequery);
-		              //  $('#total-counter').html(response.totalTasks);
-		              // $('#pending-counter').html(response.pendingTasks);
-
-		               // pieChart(response.completedTasks, response.pendingTasks);
-		                //pieChart(json.corequery);
-		                //initConter();
 	                	fnCallback(json);
 	                }
 	            });
@@ -619,10 +628,10 @@ jQuery(document).ready(function() {
 	                	var oTable = $('#finanacereport').dataTable();
 	                	var oLanguage = oTable.fnSettings().oLanguage;
 	                	if((json.estimateCount == true) && (json.iTotalDisplayRecords == json.limitCountQuery)){
-	                		oLanguage.sInfo = '<b>_START_ to _END_</b> of more than _TOTAL_ (<small>' + json.iTotalRecordsFormatted + ' AttandanceReport</small>)';
+	                		oLanguage.sInfo = '<b>_START_ to _END_</b> of more than _TOTAL_ (<small>' + json.iTotalRecordsFormatted + ' FinanaceReport</small>)';
 	                	}
 	                	else{
-	                		oLanguage.sInfo = '<b>_START_ to _END_</b> of <b>_TOTAL_</b> (<small>' + json.iTotalRecordsFormatted + ' AttandanceReport </small>)';
+	                		oLanguage.sInfo = '<b>_START_ to _END_</b> of <b>_TOTAL_</b> (<small>' + json.iTotalRecordsFormatted + ' FinanaceReport </small>)';
 	                	}
 
 	                	fnCallback(json);
@@ -691,7 +700,6 @@ $('#btnApply').click(function(){
 });
 
 $('#btnApplyLogs').click(function(){
-	//alert('hello');
 	var oTable = $('#timelog').DataTable();
 	oTable.draw();
 });
@@ -738,10 +746,6 @@ $(document).ready(function(){
     });
 });
 
-//
-
-	
-
 
 //addproject validation for all input
 $("form[name='creatclient']").validate({
@@ -757,8 +761,7 @@ $("form[name='creatclient']").validate({
 						digits:true,
 		},
 	},		
-	messages:
-		{
+	messages:{
 			project_budget : "Enter valid input",
 			hours_allocated : "Enter Valid input",
 		},
@@ -842,9 +845,8 @@ $("form[id='addticket']").validate({
 	submitHandler:function(form){
 	form.submit();
 	}
-
-
 });
+
 // for add category in addproject
 $("#save-category").click(function(event) {
 	var catname = $("input[name='category_name']").val();
@@ -874,9 +876,7 @@ $("#save-category").click(function(event) {
 							$('.modal-backdrop').find('div').remove();
 							$('body').removeAttr("style");
 							$('body').removeClass("modal-open");
-							//$('#project-category1').modal('toggle');
 							$('#category')[0].reset();
-
 							$('#succmsg').html('');
 							$('#succmsg').html('<b>Successfully category added</b>');
 							$('#succmsg').fadeOut(5000);
@@ -899,7 +899,6 @@ $("#save-category").click(function(event) {
 $("#save_leave").click(function() {
 	var leavename = $("input[name='leavename']").val();
 	if(leavename != ''){
-
 		$.ajax({
 				url: base_url+"leaves/checkleaves",
 			    type: 'POST',
@@ -919,7 +918,6 @@ $("#save_leave").click(function() {
 										$("tbody").append("<tr id='leave"+data.leaveData+"'><td>"+data.count+"</td><td>"+leavename+"</td> <td><input type='submit' class='btn btn-sm btn-danger btn-rounded delete-category' onclick='deleteleavetype(\""+data.leaveData+"\");' id='deletesearchLeave' value='Remove'></td></tr>");
 										$('#leave_type1').modal('toggle');
 										$('#leave')[0].reset();
-		    			
 								 }
 							});
 					}else{
@@ -956,7 +954,6 @@ $("#save_ticket").click(function(event) {
 							console.log(data.ticketdata);
 						    $('#question').html('');       
 							$('#question').append(data.ticketdata);
-							
 							$('#ticket')[0].reset();
 							$('#type1').modal('toggle');
 							$('#succmsg').html('');
@@ -999,15 +996,12 @@ $("#save_tchannel").click(function(event) {
 							console.log(data.ticketcdata);
 						    $('#channel').html('');       
 							$('#channel').append(data.ticketcdata);
-						
-							
 							$('#channel1').modal('toggle');
 							$('#ticketchannel')[0].reset();	
 							$('#succmsg').html('');
 							$('#succmsg').html('<b>Successfully Channel added</b>');
 							$('#succmsg').fadeOut(3000);
-
-					   }
+					   	}
 					});
 				}else{
 					jQuery('#errormsgc').html('')
@@ -1023,18 +1017,14 @@ $("#save_tchannel").click(function(event) {
 
 
 // addproject=> delete category 
-	function deleteleavetype(id)
-	{
-		
+	function deleteleavetype(id){
 		$.ajax({
 		    type: "POST",
 		    url: base_url+"leaves/deleteleavetype",
 		    cache: false,
 		    data: "id="+id,
-
 		    success: function(data){
 			   	if(data == 1){
-			   		//alert(id);
 					jQuery('#leave'+id).remove();
 					$('#leave_type1').removeClass('show');
 					$('.modal-backdrop').removeClass('show');
@@ -1052,8 +1042,6 @@ $("#save_tchannel").click(function(event) {
 			}
 		});
 	}
-
-
 
 	// addleaves=> addleavestype => deleteleaves 
 	function deletecat(id){
@@ -1082,8 +1070,7 @@ $("#save_tchannel").click(function(event) {
 	}
 
    
-	function searchleaves(id)
-	{
+	function searchleaves(id){
 		$.ajax({
 		    type: "POST",
 		    url: base_url+"leaves/searchleaves",
@@ -1096,11 +1083,9 @@ $("#save_tchannel").click(function(event) {
 
 			}
 		});
-
 	}
 
 	function edittimelog(id){
-
 		$('#timelog-popup').modal('show');
 		$.ajax({
 			type: "POST",
@@ -1108,19 +1093,13 @@ $("#save_tchannel").click(function(event) {
 		    cache: false,
 		    dataType: 'json',
 		    data: "id="+id,
-		   success: function(data){
-		    $('#timelog_edit').html('');
-		   	$('#timelog_edit').append(data);
-
+		    success: function(data){
+			    $('#timelog_edit').html('');
+			   	$('#timelog_edit').append(data);
 			},
-			error: function (xhr, ajaxOptions, thrownError) {
-			    }
-
+			error: function (xhr, ajaxOptions, thrownError) { }
 		});
 	}
-
-	
-	
 
 	function checkUncheck(){ 
 		var checkBox = document.getElementById("without_deadline");
@@ -1146,15 +1125,14 @@ $("#save_tchannel").click(function(event) {
 	function deleteproject(id){
 		var url = base_url+"project/deleteproject";
 		swal({
-		 title: "Are you sure?",
-		 text: "Do you want to delete this project?",
-		 type: "warning",
-		 showCancelButton: true,
-		 confirmButtonColor: "#DD6B55",
-		 confirmButtonText: "Yes, delete it!",
-		 closeOnConfirm: false
+			title: "Are you sure?",
+			text: "Do you want to delete this project?",
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#DD6B55",
+			confirmButtonText: "Yes, delete it!",
+			closeOnConfirm: false
 		},
-
 		function(isConfirm){
 			if (isConfirm) {
 				$.ajax({
@@ -1163,15 +1141,14 @@ $("#save_tchannel").click(function(event) {
 					    dataType: "JSON",
 					    data: {id:id},
 					    dataType: "html",
-					  
-				   success: function (data) {
-					   swal("Done!", "It was succesfully deleted!", "success");
-					   $('#project').DataTable().ajax.reload();
-					   $('#archievdata').DataTable().ajax.reload();
-				   },
-				   error: function (xhr, ajaxOptions, thrownError) {
+				    success: function (data) {
+					    swal("Done!", "It was succesfully deleted!", "success");
+					    $('#project').DataTable().ajax.reload();
+					    $('#archievdata').DataTable().ajax.reload();
+				    },
+				    error: function (xhr, ajaxOptions, thrownError) {
 					   swal("Error deleting!", "Please try again", "error");
-				   }
+				    }
 				});
 			}
 		});
@@ -1181,15 +1158,14 @@ $("#save_tchannel").click(function(event) {
 	function deletetimelog(id){
 		var url = base_url+"timelog/deletetimelog";
 		swal({
-		 title: "Are you sure?",
-		 text: "Do you want to delete this timelog?",
-		 type: "warning",
-		 showCancelButton: true,
-		 confirmButtonColor: "#DD6B55",
-		 confirmButtonText: "Yes, delete it!",
-		 closeOnConfirm: false
+			title: "Are you sure?",
+			text: "Do you want to delete this timelog?",
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#DD6B55",
+			confirmButtonText: "Yes, delete it!",
+			closeOnConfirm: false
 		},
-
 		function(isConfirm){
 			if (isConfirm) {
 				$.ajax({
@@ -1198,52 +1174,49 @@ $("#save_tchannel").click(function(event) {
 					    dataType: "JSON",
 					    data: {id:id},
 					    dataType: "html",
-					  
-				   success: function (data) {
-					   swal("Done!", "It was succesfully deleted!", "success");
-					   $('#timelog').DataTable().ajax.reload();
-					 
+				    success: function (data) {
+					    swal("Done!", "It was succesfully deleted!", "success");
+					    $('#timelog').DataTable().ajax.reload();
 				   },
-				   error: function (xhr, ajaxOptions, thrownError) {
+				    error: function (xhr, ajaxOptions, thrownError) {
 					   swal("Error deleting!", "Please try again", "error");
-				   }
+				    }
 				});
 			}
 		});
 	}
 
 	// deleteticket
-   function deleteticket(id){
+    function deleteticket(id){
 		var url = base_url+"ticket/deleteticket";
 		swal({
-		 title: "Are you sure?",
-		 text: "Do you want to delete this Ticket?",
-		 type: "warning",
-		 showCancelButton: true,
-		 confirmButtonColor: "#DD6B55",
-		 confirmButtonText: "Yes, delete it!",
-		 closeOnConfirm: false
+			title: "Are you sure?",
+			text: "Do you want to delete this Ticket?",
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#DD6B55",
+			confirmButtonText: "Yes, delete it!",
+			closeOnConfirm: false
 		},
-			function(isConfirm){
+		function(isConfirm){
 			if (isConfirm) {
-				   $.ajax({
-					   url: url,
-					   type: "POST",
-					   dataType: "JSON",
-					   data: {id:id},
-					   dataType: "html",
-					  
-					   success: function (data) {
-						   swal("Done!", "It was succesfully deleted!", "success");
-						   $('#tickets').DataTable().ajax.reload();
-					   },
-					   error: function (xhr, ajaxOptions, thrownError) {
-						   swal("Error deleting!", "Please try again", "error");
-					   }
-				   });
-			   }
-			});
-		}
+				$.ajax({
+					    url: url,
+					    type: "POST",
+					    dataType: "JSON",
+					    data: {id:id},
+					    dataType: "html",
+					   	success: function (data) {
+						   	swal("Done!", "It was succesfully deleted!", "success");
+						    $('#tickets').DataTable().ajax.reload();
+					  	},
+					   	error: function (xhr, ajaxOptions, thrownError) {
+						   	swal("Error deleting!", "Please try again", "error");
+					    }
+				});
+			}
+		});
+	}
 
 	//deletetemplate
 	function deletetemplate(id){
@@ -1274,43 +1247,40 @@ $("#save_tchannel").click(function(event) {
 					   }
 				   });
 			   }
-			   });
+			});
 		}
 
 	//delete leaves
 	function deleteleaves(id){
 		var url = base_url+"Leaves/deleteleaves";
 		swal({
-		 title: "Are you sure?",
-		 text: "Do you want to delete this leaves?",
-		 type: "warning",
-		 showCancelButton: true,
-		 confirmButtonColor: "#DD6B55",
-		 confirmButtonText: "Yes, delete it!",
-		 closeOnConfirm: false
+			title: "Are you sure?",
+			text: "Do you want to delete this leaves?",
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#DD6B55",
+			confirmButtonText: "Yes, delete it!",
+			closeOnConfirm: false
 		},
-			function(isConfirm){
+		function(isConfirm){
 			if (isConfirm) {
-				   $.ajax({
-					   url: url,
-					   type: "POST",
-					   dataType: "JSON",
-					   data: {id:id},
-					  dataType: "html",
-					  
-					   success: function (data) {
-						   swal("Done!", "It was succesfully deleted!", "success");
-						   $('#leaves').DataTable().ajax.reload();
-					   },
-					   error: function (xhr, ajaxOptions, thrownError) {
-						   swal("Error deleting!", "Please try again", "error");
-					   }
-				   });
-			   }
-			   });
+				$.ajax({
+					url: url,
+					type: "POST",
+					dataType: "JSON",
+					data: {id:id},
+					dataType: "html",
+					success: function (data) {
+						swal("Done!", "It was succesfully deleted!", "success");
+						$('#leaves').DataTable().ajax.reload();
+					},
+					error: function (xhr, ajaxOptions, thrownError) {
+						swal("Error deleting!", "Please try again", "error");
+					}
+				});
+			}
+		});
 	}
-
-
 
 	//edit leaves
 	function editleaves(id){
@@ -1318,7 +1288,6 @@ $("#save_tchannel").click(function(event) {
 		$('#editleaves').modal('show');
 		var url = base_url+"Leaves/editleavesbtn";
 		  	$.ajax({
-
 	   			type: 'POST',
 		   		url: url,
 		        cache: false,
@@ -1337,27 +1306,26 @@ $("#save_tchannel").click(function(event) {
 	function deleteSearchLeaves(id){
 		var url = base_url+"Leaves/deleteSearchLeaves";
 		swal({
-			 title: "Are you sure?",
-			 text: "Do you want to delete this leaves?",
-			 type: "warning",
-			 showCancelButton: true,
-			 confirmButtonColor: "#DD6B55",
-			 confirmButtonText: "Yes, delete it!",
-			 closeOnConfirm: false
+			title: "Are you sure?",
+			text: "Do you want to delete this leaves?",
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#DD6B55",
+			confirmButtonText: "Yes, delete it!",
+			closeOnConfirm: false
 		},
 		function(isConfirm){
 			if (isConfirm) {
-				$.ajax({
-					      
+				$.ajax({   
 				    url: url,
 				    type: "POST",
 				    dataType: "JSON",
 					data: {id:id},
 					dataType: "html",
 				    success: function (data) {
-						   swal("Done!", "It was succesfully deleted!", "success");
-						   $('#edileaves').modal('toggle');
-						   window.location.reload();
+						swal("Done!", "It was succesfully deleted!", "success");
+						$('#edileaves').modal('toggle');
+						window.location.reload();
 					},
 					error: function (xhr, ajaxOptions, thrownError) {
 						swal("Error deleting!", "Please try again", "error");
@@ -1387,28 +1355,25 @@ $("#save_tchannel").click(function(event) {
         var abs = $('#absence').val();
 		var sta = $('#status').val();
 		
-    		if(abs.trim() == ''){
-				alert('Enter Reason for absence');
-				return false;
-			}
-			else{
-				
-				$.ajax({
-						url: base_url+"Leaves/updateleaves",
-						type: "POST",
-						dataType: "JSON",
-						data: {id : id  , mem : mem ,ltype : ltype , date : date , abs : abs, sta : sta},
-						dataType: "html",
-					    success: function (data) {
-							$('#timelog-popup').modal('toggle');
-								window.location.reload();
-						},
-				    });
-		    }
+		if(abs.trim() == ''){
+			alert('Enter Reason for absence');
+			return false;
+		}else{
+			$.ajax({
+				url: base_url+"Leaves/updateleaves",
+				type: "POST",
+				dataType: "JSON",
+				data: {id : id  , mem : mem ,ltype : ltype , date : date , abs : abs, sta : sta},
+				dataType: "html",
+			    success: function (data) {
+					$('#timelog-popup').modal('toggle');
+						window.location.reload();
+				},
+			});
+		}
 	}
 
 	function updatetimelog(id){
-
 		var projectname =$('#project_name').val();
 		var date1 = $('#d1').val();
 		var date2 = $('#d2').val();
@@ -1417,56 +1382,51 @@ $("#save_tchannel").click(function(event) {
 		var hours = $('#hours1').val();
 		var emp = $('#empname').val();
 		var demo = $('#detail_memo').val();
-		
-			$.ajax({
-				url:base_url+"timelog/update_timelog",
-				type:"POST",
-				dataType:"json",
-				data:{id:id,pname:projectname,d1:date1,d2:date2,t1:time1,t2:time2,hour:hours,employee:emp,demo:demo},
-				dataType:"html",
-				success:function(data){
-					$('#timelog-popup').modal('toggle');
-					window.location.reload();
-				},
-			});
+		$.ajax({
+			url:base_url+"timelog/update_timelog",
+			type:"POST",
+			dataType:"json",
+			data:{id:id,pname:projectname,d1:date1,d2:date2,t1:time1,t2:time2,hour:hours,employee:emp,demo:demo},
+			dataType:"html",
+			success:function(data){
+				$('#timelog-popup').modal('toggle');
+				window.location.reload();
+			},
+		});
 	}
-	
 
 	function archivetoproject(id){
-
 		var url = base_url+"project/archivetoproject";
 		swal({
-				 title: "Are you sure?",
-				 text: "Do you want to restore this project?",
-				 type: "warning",
-				 showCancelButton: true,
-				 confirmButtonColor: "#DD6B55",
-				 confirmButtonText: "Yes, restore it!",
-				 closeOnConfirm: false
+				title: "Are you sure?",
+				text: "Do you want to restore this project?",
+				type: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "#DD6B55",
+				confirmButtonText: "Yes, restore it!",
+				closeOnConfirm: false
 		},
 	    function(isConfirm){
 			if (isConfirm) {
-				    $.ajax({
-						    url: url,
-						    type: "POST",
-						    dataType: "JSON",
-						    data: {id:id},
-						    dataType: "html",
-					  
-							success: function (data) {
-								swal("Done!", "Project restored successfully..!", "success");
-								$('#project').DataTable().ajax.reload();
-							},
-							error: function (xhr, ajaxOptions, thrownError) {
-								   swal("Error !", "Please try again", "error");
-							}
-				   });
+				$.ajax({
+				    url: url,
+				    type: "POST",
+				    dataType: "JSON",
+				    data: {id:id},
+				    dataType: "html",
+					success: function (data) {
+						swal("Done!", "Project restored successfully..!", "success");
+						$('#project').DataTable().ajax.reload();
+					},
+					error: function (xhr, ajaxOptions, thrownError) {
+						swal("Error !", "Please try again", "error");
+					}
+				});
 			}
 	    });
 	}
 		
 	function archivedata(id) {
-
 		var url = base_url+"project/archivedata";
 			swal({
 			 		title: "Are you sure?",
@@ -1497,15 +1457,11 @@ $("#save_tchannel").click(function(event) {
 		   });
 	}
 
-
-
-
 	$("#submitticket").click(function(event) {
 	var editorname = $("#editor").val();
 	var t_status = $("#status").val();
 	var empid= $("#requestername").val();
 	imgurl = base_url+"uploads/";
-
 		$.ajax({
 		    type: "POST",
 		    url: base_url+"ticket/insert_comment",
@@ -1517,13 +1473,12 @@ $("#save_tchannel").click(function(event) {
 				window.location.reload();
 			}
 		});
-
 	});
+
 
 	//delete tickets testttt
 	function delete_t_comment(id){
 		var url = base_url+"ticket/deletecomment";
-
 			swal({
 				title: "Are you sure?",
 				text: "Do you want to delete this Ticket Replay?",
@@ -1536,7 +1491,6 @@ $("#save_tchannel").click(function(event) {
 
 			function(isConfirm){
 				if (isConfirm) {
-					  
 					$.ajax({
 						    url: url,
 						    type: "POST",
@@ -1556,8 +1510,6 @@ $("#save_tchannel").click(function(event) {
 	}
 
 
-	
-
 	function showEmployee(){
 		pname = $('#project_name').val();
 		$('#empdiv').show();
@@ -1576,49 +1528,44 @@ $("#save_tchannel").click(function(event) {
 			});
 	    }
 	}
- 
-
-
  	$('#starttime').timepicker();
   	$('#endtime').timepicker();
-  
 	function append(dl, dtTxt, ddTxt) {
-	  var dd = document.createElement("dd");
-	  dd.textContent = ddTxt;
-	  dl.appendChild(dd);
-	  $("#hours1").val(dd.textContent);
+	  	var dd = document.createElement("dd");
+	  	dd.textContent = ddTxt;
+	 	dl.appendChild(dd);
+	  	$("#hours1").val(dd.textContent);
 	}
 
-$(document).ready(function() {
+	$(document).ready(function() {
+	  var today = new Date();
+	  $('#timelog_d1').val(today.getFullYear() + "-" + ('0' + (today.getMonth() + 1)).slice(-2) + "-" + ('0' + (today.getDate() + 1)).slice(-2));
+	  $('#timelog_d2').val($('#timelog_d1').val());
+	  $('#timelog_t1').val('00:00');
+	  $('#timelog_t2').val('00:00');
+	  //
+	  //$('#d1 #d2 #t1 #t2').
+	  $('#timelog_d1, #timelog_d2, #timelog_t1, #timelog_t2').on('change', function(ev) {
+	    var dl = document.getElementById("diff");
+	    while (dl.hasChildNodes()) {
+	      dl.removeChild(dl.lastChild);
+	    }
 
-  var today = new Date();
-  $('#timelog_d1').val(today.getFullYear() + "-" + ('0' + (today.getMonth() + 1)).slice(-2) + "-" + ('0' + (today.getDate() + 1)).slice(-2));
-  $('#timelog_d2').val($('#timelog_d1').val());
-  $('#timelog_t1').val('00:00');
-  $('#timelog_t2').val('00:00');
-  //
-  //$('#d1 #d2 #t1 #t2').
-  $('#timelog_d1, #timelog_d2, #timelog_t1, #timelog_t2').on('change', function(ev) {
-    var dl = document.getElementById("diff");
-    while (dl.hasChildNodes()) {
-      dl.removeChild(dl.lastChild);
-    }
+	    var date1 = new Date($('#timelog_d1').val() + " " + $('#timelog_t1').val()).getTime();
+	    var date2 = new Date($('#timelog_d2').val() + " " + $('#timelog_t2').val()).getTime();
+	   // append(dl, "Interval ", " from: " + $('#d1').val() + " " + $('#t1').val() + " to: " + $('#d2').val() + " " + $('#t2').val());
+	    var msec = date2 - date1;
+	    var mins = Math.floor(msec / 60000);
+	    var hrs = Math.floor(mins / 60);
+	    var days = Math.floor(hrs / 24);
+	    var yrs = Math.floor(days / 365);
+	    //append(dl, "Minutes: ", mins + " minutes");
+	    mins = mins % 60;
+	    append(dl, "", hrs +" Hrs " + mins + " Mins");
+	  });
+	  $('#timelog_d1').change();
 
-    var date1 = new Date($('#timelog_d1').val() + " " + $('#timelog_t1').val()).getTime();
-    var date2 = new Date($('#timelog_d2').val() + " " + $('#timelog_t2').val()).getTime();
-   // append(dl, "Interval ", " from: " + $('#d1').val() + " " + $('#t1').val() + " to: " + $('#d2').val() + " " + $('#t2').val());
-    var msec = date2 - date1;
-    var mins = Math.floor(msec / 60000);
-    var hrs = Math.floor(mins / 60);
-    var days = Math.floor(hrs / 24);
-    var yrs = Math.floor(days / 365);
-    //append(dl, "Minutes: ", mins + " minutes");
-    mins = mins % 60;
-    append(dl, "", hrs +" Hrs " + mins + " Mins");
-  });
-  $('#timelog_d1').change();
-
-});
+	});
 
 
 //for addtimelog calculate 
@@ -1734,8 +1681,6 @@ function calculateHours(){
 
 function showLeaveReportActive(id,status){
 
-	alert(id);
-	alert(status);
 	$.ajax({
 		type: "POST",
 		url: base_url+"LeaveReport/LeaveReportActive",

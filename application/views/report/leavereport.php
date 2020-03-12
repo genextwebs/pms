@@ -11,40 +11,36 @@
 		</div>
 	</div>
 </nav>
-
-		
+	
 <div class="content-in">
 	<div class="row">
 		<div class="col-md-4">
 			<div class="form-group">
 				<label class="control-label">SELECT DATE RANGE</label>
-					<div class="input-group input-daterange">
-					    <input type="text" class="start-date form-control br-0" id="startdate" name="startdate" value="<?php echo $startdate;?>" data-date-format='yyyy-mm-dd'>
-					    <div class="input-group-prepend">
-					      <span class="input-group-text bg-info text-white">To</span>
-					    </div>
-					    <input type="text" class="end-date form-control br-0" id="enddate" name="enddate" data-date-format='yyyy-mm-dd' value="<?php echo $enddate;?>">
-					</div>
+				<div class="input-group input-daterange">
+				    <input type="text" class="start-date form-control br-0" id="startdate" name="startdate" value="<?php echo $startdate;?>" data-date-format='yyyy-mm-dd'>
+				    <div class="input-group-prepend">
+				      <span class="input-group-text bg-info text-white">To</span>
+				    </div>
+				    <input type="text" class="end-date form-control br-0" id="enddate" name="enddate" data-date-format='yyyy-mm-dd' value="<?php echo $enddate;?>">
+				</div>
 			</div>
 		</div>
 
 		<?php if($this->user_type == 0) { ?>
-
-		<div class="col-lg-3 col-md-4">
-			<div class="form-group">
-				<label class="control-label">EMPLOYEE NAME
-				</label>
-			    <select id="empname" class="custom-select" name="empname">
-					<option value="">--Select--</option>
-						<?php
-							foreach($employee as $row){
-								echo '<option value="'.$row->id.'" >'.$row->employeename.'</option>';
-							}
-						?>
-				</select>
+			<div class="col-lg-3 col-md-4">
+				<div class="form-group">
+					<label class="control-label">EMPLOYEE NAME</label>
+				    <select id="empname" class="custom-select" name="empname">
+						<option value="">--Select--</option>
+							<?php
+								foreach($employee as $row){
+									echo '<option value="'.$row->id.'" >'.$row->employeename.'</option>';
+							} ?>
+					</select>
+				</div>
 			</div>
-		</div>
-			            <?php } ?>
+		<?php } ?>
 		<div class="col-md-4">
 		    <div class="form-group m-t-10">
 		        <label class="control-label col-12 mb-3">&nbsp;</label>
@@ -68,9 +64,7 @@
 	</div>
 </div>
 
-
 <!-- //common model leave -->
-
 <div class="modal fade project-category" id="commonleave" tabindex="-1" role="dialog"  aria-hidden="true">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content br-0">
@@ -83,41 +77,20 @@
 			<div class="modal-body">
 				<div class="table-responsive">
 					<div class="row">
-						<div id="counter">
-						
-					    </div>
-
-					<table class="table">
-						
-						
-						<thead>
-						<tr>
-							<th>#</th>
-							<th>Leave Type</th>
-							<th>Date</th>
-							<th>Reason For Absence</th>
-						</tr>
-						</thead>
-						 <tbody>
-						 	<!-- <tr>
-						 		<td></td>
-						 		<td></td>
-						 		<td></td>
-						 	</tr> -->
-								<!--  <?php foreach ($allleavedata as $row) { ?>      
-									  <tr id="cate_<?php echo $row->id;?>">
-									  	<td></td>
-										  <td><?php echo $row->leavetypeid; ?></td>
-										  <td><?php echo $row->date; ?></td>
-										 <td><?php echo $row->reasonforabsence; ?></td>
-									   </tr>
-							   <?php } ?> -->
-
-						</tbody>
-					</table>
+						<div id="counter"></div>
+						<table class="table">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>Leave Type</th>
+									<th>Date</th>
+									<th>Reason For Absence</th>
+								</tr>
+							</thead>
+							<tbody></tbody>
+						</table>
+					</div><hr>
 				</div>
-				<hr>
-				
 			</div>
 		</div>
 	</div>

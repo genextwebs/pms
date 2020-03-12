@@ -11,22 +11,19 @@
 		</div>
 	</div>
 </nav>
-<?php
-//'2020-01-01'<?php echo $this->session->userdata('s_date'); 
-?>
 		
 <div class="content-in">
 	<div class="row">
 		<div class="col-md-4">
 			<div class="form-group">
 				<label class="control-label">SELECT DATE RANGE</label>
-					<div class="input-group input-daterange">
-					    <input type="text" class="start-date form-control br-0" id="startdate" name="startdate" value="<?php echo $startdate;?>" data-date-format='yyyy-mm-dd'>
-					    <div class="input-group-prepend">
-					      <span class="input-group-text bg-info text-white">To</span>
-					    </div>
-					    <input type="text" class="end-date form-control br-0" id="enddate" name="enddate" value="<?php echo $enddate;?>" data-date-format='yyyy-mm-dd'>
-					</div>
+				<div class="input-group input-daterange">
+				    <input type="text" class="start-date form-control br-0" id="startdate" name="startdate" value="<?php echo $startdate;?>" data-date-format='yyyy-mm-dd'>
+				    <div class="input-group-prepend">
+				      <span class="input-group-text bg-info text-white">To</span>
+				    </div>
+				    <input type="text" class="end-date form-control br-0" id="enddate" name="enddate" value="<?php echo $enddate;?>" data-date-format='yyyy-mm-dd'>
+				</div>
 			</div>
 		</div>
 

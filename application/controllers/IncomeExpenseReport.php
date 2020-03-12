@@ -21,16 +21,10 @@ class IncomeExpenseReport extends CI_Controller {
 		    $edate=$this->session->userdata('edate');
 		}
 		else{ 
-			/*$sdate = '2019-01-02';
-			$edate = '2019-01-30';*/
 			$sdate=date('Y-m-d',strtotime('-1 month'));
 			$edate=date('Y-m-d');
 		}
 		$data['dateRange']= $this->createDateRangeArray($sdate,$edate);
-	/*
-		$query= 'SELECT purchasedate,price FROM tbl_expense where purchasedate between "'.$sdate.'" AND  "'.$edate.'"';*/
-	//echo $query;die;
-
 		$query= 'SELECT purchasedate,price,tbl_invoice.total FROM tbl_expense inner join tbl_invoice on tbl_expense.project = tbl_invoice.project where (purchasedate between "'.$sdate.'" AND "'.$edate.'")';
 
 		$data['allprice'] = $this->common_model->coreQueryObject($query);
@@ -44,7 +38,6 @@ class IncomeExpenseReport extends CI_Controller {
     			$string = str_replace($find,$replace,$price->price);
     			$string1 = $price->total;
 			if(array_key_exists($price->purchasedate,$temp)){
-				
 				$temp[$price->purchasedate]['expense']=$string+$temp[$price->purchasedate]['expense'];
 				$temp[$price->purchasedate]['income']=$string1+$temp[$price->purchasedate]['income'];
 			}
@@ -54,9 +47,6 @@ class IncomeExpenseReport extends CI_Controller {
 					$temp[$price->purchasedate]['income']=$string1;
 			}
 		}
-		/*echo "<PRE>";
-		print_r($temp);
-		exit;*/
 		$data['finalTempArr']=	$temp;
 		$data['sdate']=$sdate;
 		$data['edate']=$edate;

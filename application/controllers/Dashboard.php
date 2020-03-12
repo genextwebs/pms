@@ -55,7 +55,6 @@ class Dashboard extends CI_Controller
 
 		$whereArrPT = array('status' != 3);
 		$data['taskData'] = $this->common_model->getData('tbl_task',$whereArrPT);
-
 		$data['totalTaskPending'] = count($data['taskData']);
 
 
@@ -63,17 +62,31 @@ class Dashboard extends CI_Controller
 		$data['taskData'] = $this->common_model->getData('tbl_task',$whereArrCT);
 
 		$data['totalTaskComplete'] = count($data['taskData']);
-
 		$whereArrTp = array('status'=>2);
-		$data['ticketPending'] = $this->common_model->getData('tbl_ticket',$whereArrTp);
 
+		$data['ticketPending'] = $this->common_model->getData('tbl_ticket',$whereArrTp);
 		$data['totalticketPending'] = count($data['ticketPending']);
 
 		$whereArrTr = array('status'=>3);
 		$data['ticketResolved'] = $this->common_model->getData('tbl_ticket',$whereArrTr);
 
-		$data['totalticketResolved'] = count($data['ticketResolved']);
 		
+		$data['ticketNew'] = $this->common_model->getData('tbl_ticket');
+
+		$data['totalticketResolved'] = count($data['ticketResolved']);
+
+
+		$data['getEarning'] = $this->common_model->getData('tbl_project_info');
+		$temp = array();
+		foreach($data['getEarning'] as $earning){
+			$string = $earning->projectbudget;
+			if(array_key_exists($earning->startdate,$temp)){
+				$temp[$earning->startdate]['totalEarning']=$string+$temp[$earning->startdate]['totalEarning'];
+			}else{
+				$temp[$earning->startdate]['totalEarning']=$string;
+			}
+		}
+		$data['finalTempArr']=	$temp;
 		$this->load->view('common/header');
 		$this->load->view('dashboard/dashboard',$data);
 		$this->load->view('common/footer');

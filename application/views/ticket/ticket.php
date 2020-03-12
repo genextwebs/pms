@@ -11,6 +11,9 @@
 		</div>
 	</div>
 </nav>
+
+<input type="hidden" id="userid" value="<?php echo $this->user_type;?>">
+
 <?php if($this->user_type == 0){
 ?>
 <!-- contetn-wrap -->
@@ -251,12 +254,15 @@
 					<table class="table table-bordered table-hover" id="tickets">
 						<thead>
 							<tr role="row">
-								 <th>Id</th>
-								 <th>Ticket Subject</th>
+								<th>Id</th>
+								<th>Ticket Subject</th>
 								<th>Requester Name</th>
-								 <th>Requested On</th> 
-								 <th>Others</th> 
-								 <th>Action</th>
+								<th>Requested On</th> 
+								<th>Others</th> 
+								<?php 
+								    if($this->user_type == 0){ ?>
+								    	<th>Action</th>
+								<?php }else { } ?>
 							</tr>
 						</thead>
 					</table>

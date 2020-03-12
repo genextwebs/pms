@@ -34,7 +34,7 @@
 	<div class="wrapper">
 	   <nav id="sidebar">
          <div class="sidebar-header">
-                <h3 class="text-left logo-left"><img class="img-fluid img-logo" src="images/logo.png" alt="pecific school of engineering"></h3>
+                <h3 class="text-left logo-left"><img class="img-fluid img-logo" src="<?php echo base_url().'images/logo.png'?>" alt="pecific school of engineering"></h3>
                 <strong><img class="img-fluid" src="<?php base_url().'images/small-logo.png'?>" alt="pecific school of engineering"></strong>
         </div>
         <?php 
@@ -65,3 +65,12 @@
 		 
 		<div id="content" class="content">
 		<?php $this->load->view('common/topheader'); ?>
+
+         <!--Chart Report .js-->
+        <script src="<?php echo base_url();?>assets/js/highcharts.js"></script>
+        <script src="<?php echo base_url();?>assets/js/highstock.js"></script>
+        <script src="<?php echo base_url();?>assets/js/data.js"></script>
+        <script src="<?php echo base_url();?>assets/js/exporting.js"></script>
+        <script src="<?php echo base_url();?>assets/js/export-data.js"></script>
+        <script src="<?php echo base_url();?>assets/js/accessibility.js"></script>
+        <!--End Chart Report .js-->

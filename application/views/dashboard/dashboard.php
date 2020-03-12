@@ -76,7 +76,7 @@
                             </div>
                         </div>
                         <div class="col-sm-9 text-right">
-                            <span class="widget-title">  Unpaid Invoices</span><br>
+                            <span class="widget-title"> Unpaid Invoices</span><br>
                             <span class="counter">131</span>
                         </div>
                     </div>
@@ -233,7 +233,41 @@
     			<div class="col-md-12">
     				<div class="stats-box">
     					<h3 class="box-title mb-0">Recent Earnings</h3>
-    					<div id="myfirstchart" style="height: 205px;"></div>
+                        <?php
+                            $str='';
+                            $str1='';
+                            foreach($finalTempArr as $key=>$value){
+                                $str.= '"'.$key.'"'.',';
+                                $str1.= $value['totalEarning'].',';
+                            }
+                        ?>
+                        <div id="container" style="height: 400px"></div>
+                        <script type="text/javascript">
+                            Highcharts.chart('container', {
+                                chart: {
+                                    type: 'column'
+                                },
+                                title: {
+                                    text: 'EARNINGS'
+                                },
+                              
+                                xAxis: {
+                                    categories: [<?php echo rtrim($str,',');?>],
+                                    crosshair: true
+                                },
+                                yAxis: {
+                                    min: 0,
+                                    title: {
+                                        text: ''
+                                    }
+                                },
+                                   series: [{
+                                    name: 'Total Earning',
+                                    data: [<?php  echo rtrim($str1,',');?>]
+
+                                }]
+                            });
+                        </script>                        
     				</div>
     			</div>
     		</div>
@@ -246,44 +280,13 @@
 			    <div class="card-wrapper collapse show">
 			        <div class="card-body">
 			            <ul class="list-task list-group border-none" data-role="tasklist">
-			                <li class="list-group-item" data-role="task">
-			                    1. <a class="text-danger" href="#"> Gryphon. '--you advance twice--' 'Each with a deep voice, 'are done.</a> <i>2 Months Ago</i>
-			                </li>
-			                <li class="list-group-item" data-role="task">
-			                    2. <a class="text-danger" href="#"> However, when they hit her; and the executioner went off like an.</a> <i>4 Days From Now</i>
-			                </li>
-			                <li class="list-group-item" data-role="task">
-			                    3. <a class="text-danger" href="#"> WHAT?' said the Gryphon, half to itself, 'Oh dear! Oh dear! I'd.</a> <i>6 Months Ago</i>
-			                </li>
-			                <li class="list-group-item" data-role="task">
-			                    4. <a class="text-danger" href="#"> Alice was not quite know what a dear quiet thing,' Alice went on.</a> <i>11 Months Ago</i>
-			                </li>
-			                <li class="list-group-item" data-role="task">
-			                    5. <a class="text-danger" href="#"> Mouse, frowning, but very politely: 'Did you say things are worse.</a> <i>1 Day From Now</i>
-			                </li>
-			                <li class="list-group-item" data-role="task">
-			                    6. <a class="text-danger" href="#"> And the muscular strength, which it gave to my right size: the next.</a> <i>2 Days From Now</i>
-			                </li>
-			                <li class="list-group-item" data-role="task">
-			                    7. <a class="text-danger" href="#"> At last the Mouse, who was peeping anxiously into its eyes were.</a> <i>4 Days From Now</i>
-			                </li>
-			            </ul>
-			        </div>
-			    </div>
-			</div>
-    	</div>
-    	<div class="col-md-6">
-    		<div class="card c-wrapp">
-			    <div class="card-header">Pending FollowUp</div>
-			    <div class="card-wrapper collapse show">
-			        <div class="card-body">
-			            <ul class="list-task list-group border-none" data-role="tasklist">
-			                <li class="list-group-item" data-role="task">
-			                    <strong>Title</strong> <span class="pull-right"><strong>Follow Up Date</strong></span>
-			                </li>
-			                <li class="list-group-item" data-role="task">
-			                        No pending follow-up.                                    
-			                </li>
+                            <?php  foreach($ticketNew as $row){ ?>
+                                <li class="list-group-item" data-role="task">
+                                    <a class="text-danger" href="<?php echo base_url().'ticket/'?>"> <b><?php echo $row->ticketsubject;?></b></a><i><?php echo $row->created_at; ?></i>
+                                </li>
+                            <?php 
+                            }
+                        ?>  
 			            </ul>
 			        </div>
 			    </div>

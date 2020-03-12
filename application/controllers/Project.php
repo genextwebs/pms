@@ -141,7 +141,6 @@ class Project extends CI_Controller {
 						$sortColumnName = intval($_GET['iSortCol_' . $i]).'|'.$_GET['sSortDir_' . $i];
 					}
 				}
-
 				$sOrder = substr_replace($sOrder, "", -2);
 				if ($sOrder == "ORDER BY") {
 					$sOrder = "";
@@ -190,48 +189,30 @@ class Project extends CI_Controller {
 		if($this->user_type == 0){
 
 			$query = "SELECT tbl_project_info.*,tbl_clients.clientname as clientname from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
-			//echo $query;die;
 			$projectArr = $this->common_model->coreQueryObject($query);
-			//print_r($projectArr);die;
-
 			$query = "SELECT tbl_project_info.*,tbl_clients.clientname as clientname from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id".$sWhere;
-
 
 		}else if($this->user_type == 1){
 
 			$query = "SELECT tbl_project_info.*,tbl_clients.clientname as clientname from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
-			//echo $query;die;
 			$projectArr = $this->common_model->coreQueryObject($query);
-			
-			/*$query="SELECT tbl_project_info.*,tbl_clients.clientname FROM `tbl_project_info` inner join tbl_clients on tbl_project_info.clientid=tbl_clients.id where tbl_clients.user_id=".$this->user_id.''.$sWhere;*/
-				//echo $query;die;
-
 		}
 		else if($this->user_type == 2)
 			{
 				$whereArr= array('user_id'=>$this->user_id);
-				$data['empData']=$this->common_model->getData('tbl_employee',$whereArr);	
+				$data['empData']=$this->common_model->getData('tbl_employee',$whereArr);
 				$empid=$data['empData']['0']->id;
 				$WhereArr1=array('emp_id'=>$empid);
 				$data['projectData']=$this->common_model->getData('tbl_project_member',$WhereArr1);	
 				$pid=$data['projectData']['0']->project_id;
 				$query = "SELECT tbl_project_info.*,tbl_clients.clientname as clientname from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id where tbl_project_info.id=".$pid.$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
-				
 				$projectArr = $this->common_model->coreQueryObject($query);
-				//$query = "SELECT tbl_project_info.*,tbl_clients.clientname as clientname from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id where tbl_project_info.id=".$pid.$sWhere;
-				//echo($query);die;
 			}
-			
-
-			// print_r($projectArr);
-
 		$ProjectFilterArr = $this->common_model->coreQueryObject($query);
 		$iFilteredTotal = count($ProjectFilterArr);
-		//$whereArr=array('archive'=>0);
 		$whereArr = array('is_deleted'=>0);
 		$ProjectAllArr = $this->common_model->getData('tbl_project_info',$whereArr);
 		$iTotal = count($ProjectAllArr);
-		
 		/** Output */
 		$datarow = array();
 		$i = 1;
@@ -291,12 +272,12 @@ class Project extends CI_Controller {
 					<a href="javascript:void();" onclick="deleteproject(\''.base64_encode($rowid).'\');"  class="btn btn-danger btn-circle sa-params" data-toggle="tooltip"  data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>';
 			}
 		}
-		else if($this->user_type == 2) {  
-		 	$actionstring = ' <a href='.base_url().'Project/searchproject/'.base64_encode($row->id). ' class="btn btn-success btn-circle" data-toggle="tooltip" data-original-title="View Project Details"><i class="fa fa-search" aria-hidden="true"></i></a>';
+		else if($this->user_type == 2) { 
+		 	$actionstring = '<a href='.base_url().'project/showproject/'.base64_encode($row->id). ' class="btn btn-success btn-circle" data-toggle="tooltip" data-original-title="View Project Details"><i class="fa fa-search" aria-hidden="true"></i></a>';
 		 }
 
 		else if($this->user_type == 1){
-		 	$actionstring ='<p><a href='.base_url().'Project/searchproject/'.base64_encode($row->id). ' class="btn btn-success btn-circle" data-toggle="tooltip" data-original-title="View Project Details"><i class="fa fa-search" aria-hidden="true"></i></a></p>';
+		 	$actionstring ='<p><a href='.base_url().'Project/showproject/'.base64_encode($row->id). ' class="btn btn-success btn-circle" data-toggle="tooltip" data-original-title="View Project Details"><i class="fa fa-search" aria-hidden="true"></i></a></p>';
 		 }
 		$datarow[] = array(
 			$id = $i,
