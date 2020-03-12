@@ -64,20 +64,9 @@
 		$str.= '"'.$key.'"'.',';
 		$str1.= $value.',';
 	}
-	//print_r($key);
-
 ?>
 
-
-<script src="https://code.highcharts.com/stock/highstock.js"></script>
-<script src="https://code.highcharts.com/stock/modules/data.js"></script>
-<script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
-<script src="https://code.highcharts.com/stock/modules/export-data.js"></script>
 <script type="text/javascript">
-
-
-
-
 Highcharts.chart('container', {
     chart: {
         type: 'column'
