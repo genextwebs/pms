@@ -12,10 +12,12 @@
                     </div>
                 </div>
             </nav>
+    
+        <div class="content-in">
             <div class="col-sm-12">
                 <?php if($this->user_type == 0) { ?>
                     <div class="form-group pull-left">
-                        <a href="javascript:;" id="holiday" data-toggle="modal" data-target="#data-holiday">Add Holiday <i class="fa fa-plus" aria-hidden="true"></i></a>
+                        <a href="javascript:;" id="holiday" data-toggle="modal" data-target="#data-holiday" class="btn btn-primary">Add Holiday <i class="fa fa-plus" aria-hidden="true"></i></a>
                     </div>
                     <div class="pull-right" style="margin-right: 10px">
                         <a class="btn btn-outline btn-sm btn-primary markHoliday" href="javascript:;" id="default-holiday" data-toggle="modal" data-target="#data-defaultholiday">
@@ -32,19 +34,20 @@
                 <option value="2023" <?php if($selYear == '2023'){ echo 'selected'; }?>>2023</option> 
                 </select>       
             </div>
+        
    <br/>                 
   <ul class="nav nav-tabs">
-    <li class="active"><a data-toggle="tab" href="#January">January</a></li>
-    <li><a data-toggle="tab" href="#February">February</a></li>
-    <li><a data-toggle="tab" href="#March">March</a></li>
-    <li><a data-toggle="tab" href="#April">April</a></li>
-    <li><a data-toggle="tab" href="#May">May</a></li>
-    <li><a data-toggle="tab" href="#June">June</a></li>
-    <li><a data-toggle="tab" href="#July">July</a></li>
-    <li><a data-toggle="tab" href="#Augest">August</a></li>
-    <li><a data-toggle="tab" href="#September">September</a></li>
-    <li><a data-toggle="tab" href="#October">October</a></li>
-    <li><a data-toggle="tab" href="#November">November</a></li>
+    <li class="active"><a data-toggle="tab" href="#January">January</a></li>&nbsp;&nbsp;
+    <li><a data-toggle="tab" href="#February">February</a></li>&nbsp;&nbsp;
+    <li><a data-toggle="tab" href="#March">March</a></li>&nbsp;&nbsp;
+    <li><a data-toggle="tab" href="#April">April</a></li>&nbsp;&nbsp;
+    <li><a data-toggle="tab" href="#May">May</a></li>&nbsp;&nbsp;
+    <li><a data-toggle="tab" href="#June">June</a></li>&nbsp;&nbsp;
+    <li><a data-toggle="tab" href="#July">July</a></li>&nbsp;&nbsp;
+    <li><a data-toggle="tab" href="#Augest">August</a></li>&nbsp;&nbsp;
+    <li><a data-toggle="tab" href="#September">September</a></li>&nbsp;&nbsp;
+    <li><a data-toggle="tab" href="#October">October</a></li>&nbsp;&nbsp;
+    <li><a data-toggle="tab" href="#November">November</a></li>&nbsp;&nbsp;
     <li><a data-toggle="tab" href="#December">December</a></li>
   </ul>
   <div class="tab-content">
@@ -985,7 +988,7 @@
         </table>
     </div>
   </div>
-
+</div>
 
 <!-- model for add holiday -->
 <div class="modal fade holiday" id="data-holiday" tabindex="-1" role="dialog" aria-labelledby="holiday" aria-hidden="true">
