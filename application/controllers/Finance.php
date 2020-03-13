@@ -988,8 +988,6 @@ class Finance extends CI_Controller{
 		$filecontent= '';
 	 	$this->load->library('Pdf');
 	 	$filecontent.= '<h1 align="center">INVOICE</h1>
-	<div class="container">
-		<div>
 			<div align="left">
 				<h3>Invoice To:</h3>
 				<h4>'.$clientData[0]->clientname.'</h4>
@@ -1001,7 +999,6 @@ class Finance extends CI_Controller{
 				<h4>'.$clientData[0]->companyname.'</h4>
 				<h4>'.$clientData[0]->address.'.</h4>
 			</div>
-		</div>
 		<hr>
 		<div class="row">
 			<div class="col-sm-6">
@@ -1041,13 +1038,11 @@ class Finance extends CI_Controller{
 						<td>Total:</td>
 						<td>'.$invoiceData[0]->total.'</td>
 					</tr>
-				</table>
-	
-	</div>';
+				</table>';
 		
 		
 		$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
-		$pdf->SetTitle('My Title');
+		$pdf->SetTitle('INVOICE');
 		$pdf->SetHeaderMargin(30);
 		$pdf->SetTopMargin(20);
 		$pdf->setFooterMargin(20);

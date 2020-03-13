@@ -1221,7 +1221,7 @@ $("#pay").click(function(event) {
   	var userid = $('#userid').val();
   	var invoiceid = $('#invoiceid').val();
     var options = {
-    "key": "rzp_test_Mz6ATj37skcz3Z",
+    "key": "rzp_test_2ztarggUtWrOaN",
     "amount": (amount*100), // 2000 paise = INR 20
     "name": "PMS",
     "description": "Payment",
