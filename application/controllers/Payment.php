@@ -48,7 +48,7 @@ class Payment extends CI_Controller{
         $invoiceid = base64_decode($this->uri->segment(3));
 
         $whereArrI = array('id'=>$invoiceid);
-        $updateArrI = array('payment_done'=>1);
+        $updateArrI = array('payment_done'=>1,'status'=>1);
         $this->common_model->updateData('tbl_invoice',$updateArrI,$whereArrI);
         $whereArr = array('id'=>$this->user_id);
         $updateArr = array('payment_verify'=>1);

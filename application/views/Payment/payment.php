@@ -95,8 +95,9 @@
 														<label class="control-label">Amount<span class="astric">*</span></label>
 														<div class="row">
 														<div class="col-md-12">
+															<?php $total = (float)trim($invoiceData[0]->total); ?>
 															<div class="input-icon">
-																<input type="text" class="form-control" name="amount" id="amount" value="<?php echo !empty($invoiceData[0]->total) ? $invoiceData[0]->total : '' ?>" >
+																<input type="text" class="form-control" name="amount" id="amount" value="<?php echo  !empty($invoiceData[0]->total) ? $total : '' ?>" >
 															</div>
 														</div>
 														</div>
