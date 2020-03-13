@@ -1,5 +1,31 @@
 jQuery(document).ready(function() {
 	if(controllerName == 'project' && (functionName == 'index' || functionName == '')){
+		var user = jQuery('#projectuserid').val();
+		//alert(user);
+		if(user == 0){
+			var aoColumns = [{ "sWidth": "40px", sClass: "text-left", "asSorting": [  ] }, 
+				{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+				{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+				{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+				{ "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
+				{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+			];
+
+		}else if(user == 1){
+			var aoColumns = [{ "sWidth": "40px", sClass: "text-left", "asSorting": [  ] }, 
+				{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+				{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+				{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+				
+			];
+
+		}else if(user == 2){
+			var aoColumns = [{ "sWidth": "40px", sClass: "text-left", "asSorting": [  ] }, 
+				{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+				{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+				{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] },  				 
+			];
+		}
 		var oTable = jQuery('#project').DataTable({
 			'bRetrieve': true,
 			"bPaginate": true,
@@ -12,13 +38,7 @@ jQuery(document).ready(function() {
 			"bInfo": true,
 			"bAutoWidth": false,
 			"bProcessing": true,
-			"aoColumns": [{ "sWidth": "40px", sClass: "text-left", "asSorting": [  ] }, 
-			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
-			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
-			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
-			{ "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
-			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
-			],
+			aoColumns,			
 			"bServerSide": true,
 			"fixedHeader": true,
 			"sAjaxSource": base_url+"Project/projectlist",
@@ -327,6 +347,28 @@ jQuery(document).ready(function() {
 	}
 
 	else if(controllerName == 'timelog' && (functionName == 'index' || functionName == '')){
+		var user = jQuery('#timeloguserid').val();
+		if(user == 0){
+			var aoColumns =[{ "sWidth": "40px", sClass: "text-left", "asSorting": [  ] }, 
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] },
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] },
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ ] }, 
+		    ];
+		}else if(user == 2){
+			var aoColumns =[{ "sWidth": "40px", sClass: "text-left", "asSorting": [  ] }, 
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] },
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] },
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+		    ];
+
+		}
 		var oTable = jQuery('#timelog').DataTable({
 			'bRetrieve': true,
 			"bPaginate": true,
@@ -339,17 +381,7 @@ jQuery(document).ready(function() {
 			"bInfo": true,
 			"bAutoWidth": false,
 			"bProcessing": true,
-			"aoColumns": [{ "sWidth": "40px", sClass: "text-left", "asSorting": [  ] }, 
-			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] },
-			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
-			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] },
-			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
-			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
-			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
-			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ ] }, 
-
-
-		     ],
+			
 			"bServerSide": true,
 			"fixedHeader": true,
 			"sAjaxSource": base_url+"Timelog/timeloglist",

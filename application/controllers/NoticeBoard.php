@@ -108,17 +108,6 @@ class NoticeBoard extends CI_Controller{
             	}
 				$startdate=!empty($_POST['startdate']) ? $_POST['startdate'] : '';
 				$enddate=!empty($_POST['enddate']) ? $_POST['enddate'] : '';
-				/*$clientname=!empty($_POST['clientname']) ? $_POST['clientname'] : '';
-				$status=$_POST['status'];*/
-		
-					/*if(!empty($clientname)){
-						$sWhere.=' AND  clientname="'.$clientname.'"';
-					}
-					if($status=='all'){
-					}
-					else{
-						$sWhere.=' AND status='.$status;
-					}*/
 					if(!empty($startdate)){						
 						$sWhere.=' AND created_at>="'.$startdate.'"';
 					}
@@ -130,48 +119,45 @@ class NoticeBoard extends CI_Controller{
 						$sWhere = " WHERE 1 ".$sWhere;
 					}
 					/** Filtering End */
-					//					echo $sWhere;die;
 		}
-		
-		if($this->user_type == 0){
-			$query = "select * from tbl_notice".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
-	    $noticesArr = $this->common_model->coreQueryObject($query);
-		
-		$query =  "select * from tbl_notice".$sWhere;	
-		$noticesFilterArr = $this->common_model->coreQueryObject($query);
-	
-		$iFilteredTotal = count($noticesFilterArr);
 
+		$query = "select * from tbl_notice".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+    	$noticesArr = $this->common_model->coreQueryObject($query);
+		$query =  "select * from tbl_notice".$sWhere;	
+	    $noticesFilterArr = $this->common_model->coreQueryObject($query);
+		$iFilteredTotal = count($noticesFilterArr);
 		$noticesAllarr = $this->common_model->getData('tbl_clients');
 		$iTotal = count($noticesAllarr);
-
 		/** Output */
+
 		$datarow = array();
-			$i = 1;
-			foreach($noticesArr as $row) {
-				if($row->noticeto == '1'){
-					$to = $row->status = 'Employee';
-					
+		$i = 1;
+		foreach($noticesArr as $row) {
+			if($row->noticeto == '1'){
+				$to = $row->status = 'Employee';
+				
 
-				}
-				elseif($row->noticeto == '2'){
-					$to = $row->status = 'Client';
-					
+			}
+			elseif($row->noticeto == '2'){
+				$to = $row->status = 'Client';
+				
 
-				}
-				
-				$noticeid = $row->id;
-				$create_date = date('d-m-Y', strtotime($row->created_at));
-				
-				$actionStr = '<div class="dropdown action m-r-10">
-				                <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
-				               		 <div class="dropdown-menu">
-						                    <a  class="dropdown-item" href="'.base_url().'NoticeBoard/editnotices/'.base64_encode($noticeid).'/"><i class="fa fa-edit"></i> Edit</a>
-						                    <a  class="dropdown-item" href="javascript:void()" onclick="deletenotices(\''.base64_encode($noticeid).'\')"><i class="fa fa-trash "></i> Delete</a>
-				                	</div>
-				        </div>';
-				
-	          
+			}
+			$noticeid = $row->id;
+			$create_date = date('d-m-Y', strtotime($row->created_at));
+
+			if($this->user_type == 0){
+
+				$actionStr =  
+
+			    '<div class="dropdown action m-r-10">
+			        <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action <span class="caret"></span></button>
+			            <div class="dropdown-menu">
+		                    <a  class="dropdown-item" href="'.base_url().'NoticeBoard/editnotices/'.base64_encode($noticeid).'/"><i class="fa fa-edit"></i> Edit</a>
+		                    <a  class="dropdown-item" href="javascript:void()" onclick="deletenotices(\''.base64_encode($noticeid).'\')"><i class="fa fa-trash "></i> Delete</a>
+			            </div>
+			    </div>';
+
 				$datarow[] = array(
 					$id = $i,
 	                $row->heading,
@@ -179,70 +165,30 @@ class NoticeBoard extends CI_Controller{
 		            $to,	
 					$actionStr
 	           	);
-	           	$i++;
-	      	}
-	        
-			$output = array
-			(
-			   	"sEcho" => intval($_GET['sEcho']),
-		        "iTotalRecords" => $iTotal,
-		        "iTotalRecordsFormatted" => number_format($iTotal), //ShowLargeNumber($iTotal),
-		        "iTotalDisplayRecords" => $iFilteredTotal,
-		        "aaData" => $datarow
-			);
-			
-		}elseif ($this->user_type == 2) {
+           		$i++;
 
-			$query = "select * from tbl_notice".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
-	    	$noticesArr = $this->common_model->coreQueryObject($query);
-			$query =  "select * from tbl_notice".$sWhere;	
-			$noticesFilterArr = $this->common_model->coreQueryObject($query);
-			$iFilteredTotal = count($noticesFilterArr);
-			$whereArr = array('is_deleted'=>0);
-			$noticesAllarr = $this->common_model->getData('tbl_clients',$whereArr);
-			$iTotal = count($noticesAllarr);
+      		}elseif ($this->user_type == 2) {
 
-		/** Output */
-		$datarow = array();
-			$i = 1;
-			foreach($noticesArr as $row) {
-				if($row->noticeto == '1'){
-					$to = $row->status = 'Employee';
-				}
-				elseif($row->noticeto == '2'){
-					$to = $row->status = 'Client';
-				}
-				
-				$noticeid = $row->id;
-				$create_date = date('d-m-Y', strtotime($row->created_at));
-				
-				$actionStr = '<p>--</p>';
-				
-	          
 				$datarow[] = array(
 					$id = $i,
-	                $row->heading,
-	                $create_date,
-		            $to,	
-					$actionStr
-	           	);
-	           	$i++;
-	      	}
-	        
-			$output = array
-			(
-			   	"sEcho" => intval($_GET['sEcho']),
-		        "iTotalRecords" => $iTotal,
-		        "iTotalRecordsFormatted" => number_format($iTotal), //ShowLargeNumber($iTotal),
-		        "iTotalDisplayRecords" => $iFilteredTotal,
-		        "aaData" => $datarow
-			);
-		
-
-		} 
-		
-	   	  	echo json_encode($output);
-	      	exit();
+		            $row->heading,
+		            $create_date,
+		            $to	
+		       	);
+	       		$i++;
+  			}
+		}
+		 
+		$output = array
+		(
+		   	"sEcho" => intval($_GET['sEcho']),
+		    "iTotalRecords" => $iTotal,
+		    "iTotalRecordsFormatted" => number_format($iTotal), //ShowLargeNumber($iTotal),
+		    "iTotalDisplayRecords" => $iFilteredTotal,
+		    "aaData" => $datarow
+		);
+			echo json_encode($output);
+		exit();
 	}
 
 	public function editnotices(){

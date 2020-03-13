@@ -12,6 +12,7 @@
     </div>
 </nav>
 
+<input type="hidden" id="noticeusertype" value="<?php echo $this->user_type;?>">
 <!-- contetn-wrap -->
 <div class="content-in">  
     <div class="row">
@@ -68,38 +69,11 @@
 								    <input type="text" class="end-date form-control br-0" id="enddate" name="enddate" data-date-format='yyyy-mm-dd' >
 								</div>
 		                    </div>
-		                   <!--  <div class="col-md-2">
-		                        <h5>Select Status</h5>
-		                        <div class="form-group">
-		                        	<select class="select2 form-control" id="status" data-placeholder="Select Status" >
-		                        		<option value='all'>All</option>          
-							            <option value='1'>Active</option>  
-							            <option value='0'>Deactive</option>
-		                        	</select>
-		                        </div>
-		                    </div>
-		                    <div class="col-md-2">
-		                        <h5>Select Client</h5>
-		                        <div class="form-group">
-		                        	<select class="select2 form-control" id="clientname">
-			                        	<option value="">Select</option>
-										<?php
-											foreach($clients as $row)
-											{
-												if(!empty($row->clientname)){
-													echo '<option value="'.$row->clientname.'" >'.$row->clientname.'</option>';
-												}
-											}
-										?>
-									</select>
-		                        </div>
-		                    </div>
-		                    <div class="col-md-4"> --> 
-		                        <div class="form-group m-t-10">
-		                            <label class="control-label col-12 mb-3">&nbsp;</label>
-		                            <button type="button" id="btnApplyNotices" class="btn btn-success col-lg-4 co-md-5"><i class="fa fa-check"></i> Apply</button>
-		                            <button type="button" id="reset-filters" class="btn btn-inverse col-lg-4 co-md-5 offset-md-1"><i class="fa fa-refresh"></i> Reset</button>
-		                        </div>
+		                    <div class="form-group m-t-10">
+	                            <label class="control-label col-12 mb-3">&nbsp;</label>
+	                            <button type="button" id="btnApplyNotices" class="btn btn-success col-lg-4 co-md-5"><i class="fa fa-check"></i> Apply</button>
+	                            <button type="button" id="reset-filters" class="btn btn-inverse col-lg-4 co-md-5 offset-md-1"><i class="fa fa-refresh"></i> Reset</button>
+	                        </div>
 		                    </div> 
 		                </div>
 	                </form>
@@ -122,12 +96,16 @@
                 	<table class="table table-bordered" id="notices">
 					   	<thead>
 					      	<tr role="row">
-						         <th>Id</th>
-						         <th>Notices</th>
-						         <th>Date</th>
-						         <th>To</th>
-						         <th>Action</th>
-					      	</tr>
+						        <th>Id</th>
+						        <th>Notices</th>
+						        <th>Date</th>
+						        <th>To</th>
+						        <?php 
+								    if($this->user_type == 0){ ?>
+								    	<th>Action</th>
+									<?php }else { } 
+								?>					      	
+							</tr>
 					   	</thead>
 					 </table>
 				</div>

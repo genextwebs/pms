@@ -153,7 +153,6 @@ class Timelog extends CI_Controller {
 			}
 			
 		}
-		
 		if($this->user_type == 0){
 			$query = "SELECT tbl_project_info.projectbudget,tbl_project_info.*,tbl_timelog.*,tbl_employee.* FROM `tbl_timelog` inner join tbl_project_info on tbl_timelog.timelogprojectid = tbl_project_info.id inner join tbl_employee on tbl_employee.id = tbl_timelog.timelogemployeeid".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 
@@ -178,6 +177,7 @@ class Timelog extends CI_Controller {
 							'<a href="javascript:;" onclick="edittimelog(\''.base64_encode($rowid).'\')" class="btn btn-info btn-circle" data-original-title="Edit" data-toggle="modal" data-target="#timelog-popup" ><i class="fa fa-pencil" aria-hidden="true"></i></a>
 
 							 <a href="javascript:void();" onclick="deletetimelog(\''.base64_encode($rowid).'\');"  class="btn btn-danger btn-circle sa-params" data-toggle="tooltip"  data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>';
+
 				$datarow[] = array(
 					$id = $i,
 					$row->projectname,
@@ -195,7 +195,6 @@ class Timelog extends CI_Controller {
 			   "sEcho" => intval($_POST['sEcho']),
 			   "iTotalRecords" => $iTotal,
 			   "iTotalRecordsFormatted" => number_format($iTotal), 
-			   //ShowLargeNumber($iTotal),
 			   "iTotalDisplayRecords" => $iFilteredTotal,
 			   "aaData" => $datarow
 			);
@@ -212,7 +211,7 @@ class Timelog extends CI_Controller {
 			foreach($timeArr as $row) {
 				$rowid = $row->id;
 				$projectid =$row->timelogprojectid;
-					 $actionstring ='<p>--</p>';
+					// $actionstring ='<p>--</p>';
 			
 
 				$datarow[] = array(
@@ -223,7 +222,7 @@ class Timelog extends CI_Controller {
 					$row->timelogenddate.'<br/>'.$row->timelogendtime,
 					$row->totalhours,
 					$row->projectbudget,
-					$actionstring
+					//$actionstring
 					);
 
 				$i++;

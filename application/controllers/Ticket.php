@@ -183,18 +183,6 @@ class Ticket extends CI_Controller {
 		$i = 1;
 	foreach($TicketArr as $row) {
 		$rowid = $row->id;
-		//echo($rowid);die;
-		if($this->user_type == 0){
-			$actionstring = '<div class="dropdown action m-r-10">
-			           <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
-			            <div class="dropdown-menu">
-			               <a  class="dropdown-item" href="'.base_url().'ticket/editticket/'.base64_encode($row->id).'";><i class="fa fa-edit"></i> Edit</a>
-
-			               <a  href="javascript:void();" onclick="deleteticket(\''.base64_encode($row->id).'\');" class="dropdown-item" href="javascript:void()"><i class="fa fa-trash" ></i> Delete</a>
-			               
-			          </div>
-			</div>';
-			//For Priority
 			if($row->priority=='1'){
 				$priority=$row->priority='Low';
 				$showStatus = '<label class="label label-success">'.$priority.'</label>';
@@ -228,7 +216,18 @@ class Ticket extends CI_Controller {
 				$status=$row->status='Close';
 				$showStatus = '<label class="label label-success">'.$status.'</label>';
 			}
+		if($this->user_type == 0){
 
+			$actionstring = '<div class="dropdown action m-r-10">
+			           <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
+			            <div class="dropdown-menu">
+			               <a  class="dropdown-item" href="'.base_url().'ticket/editticket/'.base64_encode($row->id).'";><i class="fa fa-edit"></i> Edit</a>
+
+			               <a  href="javascript:void();" onclick="deleteticket(\''.base64_encode($row->id).'\');" class="dropdown-item" href="javascript:void()"><i class="fa fa-trash" ></i> Delete</a>
+			               
+			          </div>
+			</div>';
+			//For Priority
 			$datarow[] = array(
 				$id = $i,
 				$row->ticketsubject,
@@ -240,41 +239,10 @@ class Ticket extends CI_Controller {
 			   	$actionstring
 			);
 			$i++;
+
 		}else if($this->user_type == 1){
-			if($row->priority=='1'){
-				$priority=$row->priority='Low';
-				$showStatus = '<label class="label label-success">'.$priority.'</label>';
-			}
-			else if($row->priority=='2'){
-				$priority=$row->priority='High';
-				$showStatus = '<label class="label label-warning">'.$priority.'</label>';
-			}
-			else if($row->priority=='3'){
-				$prioritypriority=$row->priority='Medium';
-				$showStatus = '<label class="label label-warning">'.$priority.'</label>';
-			}
-			else if($row->priority=='4'){
-				$priority=$row->priority='Urgent';
-				$showStatus = '<label class="label label-warning">'.$priority.'</label>';
-			}
-			//For Status
-			if($row->status=='1'){
-				$status=$row->status='Open';
-				$showStatus = '<label class="label label-success">'.$status.'</label>';
-			}
-			else if($row->status=='2'){
-				$status=$row->status='Pending';
-				$showStatus = '<label class="label label-success">'.$status.'</label>';
-			}
-			else if($row->status=='3'){
-				$status=$row->status='Resolved';
-				$showStatus = '<label class="label label-success">'.$status.'</label>';
-			}
-			else if($row->status=='4'){
-				$status=$row->status='Close';
-				$showStatus = '<label class="label label-success">'.$status.'</label>';
-			}
-			$datarow[] = array(
+
+				$datarow[] = array(
 				$id = $i,
 				$row->ticketsubject,
 				$row->requestername,
@@ -284,52 +252,19 @@ class Ticket extends CI_Controller {
 			    <label><b>Priority:</b></label>'.$row->priority
 			);
 			$i++;
+
 		}else if($this->user_type == 2){
-				$actionstring = 
-							'<div class="dropdown action m-r-10">
-		          				<button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
-		            				<div class="dropdown-menu">
-		              					<a  class="dropdown-item" href="'.base_url().'ticket/editticket/'.base64_encode($row->id).'";><i class="fa fa-edit"></i> Edit</a>
 
-		               					<a  href="javascript:void();" onclick="deleteticket(\''.base64_encode($row->id).'\');" class="dropdown-item" href="javascript:void()"><i class="fa fa-trash" ></i> Delete</a>
-		               
-		          					</div>
-							</div>';
+			$actionstring =
+				'<div class="dropdown action m-r-10">
+      				<button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
+        				<div class="dropdown-menu">
+          					<a  class="dropdown-item" href="'.base_url().'ticket/editticket/'.base64_encode($row->id).'";><i class="fa fa-edit"></i> Edit</a>
 
-				//For Priority
-				if($row->priority=='1'){
-					$priority=$row->priority='Low';
-					$showStatus = '<label class="label label-success">'.$priority.'</label>';
-				}
-				else if($row->priority=='2'){
-					$priority=$row->priority='High';
-					$showStatus = '<label class="label label-warning">'.$priority.'</label>';
-				}
-				else if($row->priority=='3'){
-					$prioritypriority=$row->priority='Medium';
-					$showStatus = '<label class="label label-warning">'.$priority.'</label>';
-				}
-				else if($row->priority=='4'){
-					$priority=$row->priority='Urgent';
-					$showStatus = '<label class="label label-warning">'.$priority.'</label>';
-				}
-				//For Status
-				if($row->status=='1'){
-					$status=$row->status='Open';
-					$showStatus = '<label class="label label-success">'.$status.'</label>';
-				}
-				else if($row->status=='2'){
-					$status=$row->status='Pending';
-					$showStatus = '<label class="label label-success">'.$status.'</label>';
-				}
-				else if($row->status=='3'){
-					$status=$row->status='Resolved';
-					$showStatus = '<label class="label label-success">'.$status.'</label>';
-				}
-				else if($row->status=='4'){
-					$status=$row->status='Close';
-					$showStatus = '<label class="label label-success">'.$status.'</label>';
-				}
+           					<a  href="javascript:void();" onclick="deleteticket(\''.base64_encode($row->id).'\');" class="dropdown-item" href="javascript:void()"><i class="fa fa-trash" ></i> Delete</a>
+           
+      					</div>
+				</div>';
 
 				$datarow[] = array(
 					$id = $i,
@@ -365,18 +300,8 @@ class Ticket extends CI_Controller {
 		$whereEmp = array('is_deleted'=>0);
 		$data['getemployee']=$this->common_model->getData('tbl_employee',$whereEmp);
 		$data['ticketchannel']=$this->common_model->getData('tbl_ticket_channel');
-
-		//$data['ticketcomment']=$this->common_model->getData('tbl_ticket_comment');
-		/*
-		$query ="SELECT tbl_ticket.*,tbl_ticket_comment.comment,tbl_employee.id,tbl_user.profileimg FROM `tbl_ticket` inner join tbl_employee on tbl_ticket.requestername = tbl_employee.id inner join tbl_user on tbl_employee.user_id=tbl_user.id inner join tbl_ticket_comment on tbl_ticket.requestername =tbl_ticket_comment.ticketemployeeid";*/
-		//echo($query);die;
-		/*$query= "Select comment from tbl_ticket_comment inner join tbl_employee on tbl_ticket_comment.ticketemployeeid= tbl_employee.id inner join tbl_user on tbl_employee.id=tbl_ticket_comment.ticketemployeeid";*/
-		/*$query = "Select comment,tbl_employee.user_id from tbl_ticket_comment inner join tbl_employee on tbl_ticket_comment.ticketemployeeid= tbl_employee.id";*/
 		$query= "Select tbl_ticket_comment.*,tbl_employee.user_id from tbl_ticket_comment inner join tbl_employee on tbl_ticket_comment.ticketemployeeid= tbl_employee.id inner join tbl_user on tbl_employee.user_id=tbl_user.id";
-
 		$data['ticketcommenttest'] = $this->common_model->coreQueryObject($query);
-		/*echo '<pre>';
-		print_r($data['ticketcommenttest']);die;*/
 		$this->load->view('common/header');
 		$this->load->view('ticket/editticket',$data);
 		$this->load->view('common/footer');

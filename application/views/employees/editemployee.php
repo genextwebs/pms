@@ -261,7 +261,6 @@
 						                </div>
 						            </div>
 						        </div>
-						        
 						        <div class="form-actions">
 						            <input type="button" id="save-designation" class="btn btn-success" name="Save" value="Save"> <i class="fa fa-check"></i> 
 						        </div>

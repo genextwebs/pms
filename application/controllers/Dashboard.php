@@ -13,8 +13,6 @@ class Dashboard extends CI_Controller
 	}
 	
 	public function index(){
-		//echo $this->user_id;
-		//echo $this->user_type;
 		$whereArr = array('user_type'=>1,'is_deleted'=>0);
 		$userclientData = $this->common_model->getData('tbl_user',$whereArr);
 		$totalUser = count($userclientData);

@@ -44,7 +44,6 @@ class ProfileSetting extends CI_Controller
 						if($this->upload->do_upload('image_file')){
 
 							$updateArr= array('name'=>$name,'emailid'=>$email,'password'=>$pass,'mobile'=>$mobile,'profileimg'=>$_FILES['image_file']['name']);
-							print_r($updateArr);die;
 							$this->common_model->updateData('tbl_user',$updateArr,$whereArr);
 							$this->session->set_flashdata('message_name', 'Profile Updated sucessfully');
 						}

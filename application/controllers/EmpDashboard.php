@@ -23,31 +23,44 @@ class EmpDashboard extends CI_Controller
 				$data['totalProject']=count($data['projectData']);
 
 				$project = array();
-				for($i=0;$i<=count($data['projectData'])-1;$i++){
+				for($i=0; $i<=count($data['projectData'])-1;$i++){
 					$whereArr3 = array('id'=>$data['projectData'][$i]->project_id);
 					$project1 =$this->common_model->getData('tbl_project_info',$whereArr3);
 					array_push($project,$project1[0]);
 				}
+				//Totalproject
 				$data['projectDetail'] = $project;
+				$projectData = $this->common_model->getData('tbl_project_info');
+				$data['allproject'] = count($projectData);
+				
+			}
+			$whereArrUser = array('user_id'=>$this->user_id);
+			$userData = $this->common_model->getData('tbl_employee',$whereArrUser);
+
+			$whereArrPT = array('status!='=>3,'assignedto'=>$userData[0]->id);
+			$data['taskData1'] = $this->common_model->getData('tbl_task',$whereArrPT);
+			$data['totalTaskPending'] = count($data['taskData1']);
+
+			$whereArrCT = array('status'=>3,'assignedto'=>$userData[0]->id);
+			$data['taskData'] = $this->common_model->getData('tbl_task',$whereArrCT);
+			$data['totalTaskComplete'] = count($data['taskData']);
+
 		}
-		$whereArrUser = array('user_id'=>$this->user_id);
-		$userData = $this->common_model->getData('tbl_employee',$whereArrUser);
-		//print_r($userData);die;
-		$whereArrPT = array('status!='=>3,'assignedto'=>$userData[0]->id);
-		$data['taskData'] = $this->common_model->getData('tbl_task',$whereArrPT);
-		//echo $this->db->last_query();die;
-		//print_r($data['taskData']);die;
-		$data['totalTaskPending'] = count($data['taskData']);
-
-
-		$whereArrCT = array('status'=>3,'assignedto'=>$userData[0]->id);
-		$data['taskData'] = $this->common_model->getData('tbl_task',$whereArrCT);
-
-		$data['totalTaskComplete'] = count($data['taskData']);
-	}
-		elseif($this->user_type == 0) {
+		/*elseif($this->user_type == 0) {
 			$data='';
+		}*/
+		$data['getEarning'] = $this->common_model->getData('tbl_project_info');
+		$temp = array();
+		foreach($data['getEarning'] as $earning){
+			$string = $earning->projectbudget;
+			if(array_key_exists($earning->startdate,$temp)){
+				$temp[$earning->startdate]['totalEarning']=$string+$temp[$earning->startdate]['totalEarning'];
+			}else{
+				$temp[$earning->startdate]['totalEarning']=$string;
+			}
 		}
+		$data['finalTempArr']=	$temp;
+		$data['ticketNew'] = $this->common_model->getData('tbl_ticket');
 		$this->load->view('common/header');
 		$this->load->view('empdashboard/edashboard',$data);
 		$this->load->view('common/footer');

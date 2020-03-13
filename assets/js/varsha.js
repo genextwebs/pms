@@ -998,6 +998,23 @@ h=h+1;
 //notice table
 
 jQuery(document).ready(function() {
+	
+	var user = jQuery('#noticeusertype').val();
+		if(user == 0){
+			var aoColumns = [{ "sWidth": "40px", sClass: "text-left", "asSorting": [  ] }, 
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
+                     ];
+		}else if(user == 2){
+			var aoColumns = [{ "sWidth": "40px", sClass: "text-left", "asSorting": [  ] }, 
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+                     ];
+		}
+
 	if(controllerName == 'noticeboard' && (functionName == 'index' || functionName == '')){
 		var oTable = jQuery('#notices').DataTable({
 			'bRetrieve': true,
@@ -1011,13 +1028,7 @@ jQuery(document).ready(function() {
 	        "bInfo": true,
 	        "bAutoWidth": false,
 	        "bProcessing": true,
-	        "aoColumns": [{ "sWidth": "40px", sClass: "text-left", "asSorting": [  ] }, 
-                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
-                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
-                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
-                      { "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
-               
-                     ],
+	        aoColumns,
 	        "bServerSide": true,
 	        "fixedHeader": true,
 	        "sAjaxSource": base_url+"NoticeBoard/notice_list",

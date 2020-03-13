@@ -11,6 +11,7 @@
 		</div>
 	</div>
 </nav>
+<input type="hidden" id="timeloguserid" value="<?php echo $this->user_type;?>">
 
 <!-- contetn-wrap -->
 <div class="content-in">
@@ -70,13 +71,20 @@
         </div>
     </div>
 </div>
-<div class="row">
-	<div class="col-sm-12">
-		<div class="form-group custom-action">
-			<a href="<?php echo base_url().'timelog/addtimelog'?>" class="btn btn-outline-success btn-sm">Add TimeLog <i class="fa fa-plus" aria-hidden="true"></i></a>
+<?php if($this->user_type == 0){
+?>
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="form-group custom-action">
+				<a href="<?php echo base_url().'timelog/addtimelog'?>" class="btn btn-outline-success btn-sm">Add TimeLog <i class="fa fa-plus" aria-hidden="true"></i></a>
+			</div>
 		</div>
 	</div>
-</div>
+<?php
+}else {
+
+}
+?>
 <div class="row">
 	<div class="col-md-12">
 		<div class="stats-box"> 
@@ -105,7 +113,10 @@
 							 <th>End Date</th> 
 							 <th>Total Hours</th>
 							 <th>Earnings</th>
-							 <th>Action</th>
+							 <?php 
+								    if($this->user_type == 0){ ?>
+								    	<th>Action</th>
+								<?php }else { } ?>
 						</tr>
 					</thead>
 				</table>
