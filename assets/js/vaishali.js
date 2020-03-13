@@ -113,6 +113,13 @@ jQuery(document).ready(function() {
 	}
 
 	else if(controllerName == 'employee' && (functionName == 'index' || functionName == '')){
+		var FreeEmp = $('#Not-Working-Emp').val();
+		if(FreeEmp == ''){
+			url = 'employee/employee_list';
+		}
+		else{
+			url = 'employee/employee_list/'+FreeEmp;
+		}
 		var oTable = jQuery('#employee').DataTable({
 			'bRetrieve': true,
 	        "bPaginate": true,
@@ -134,7 +141,7 @@ jQuery(document).ready(function() {
                      ],
 	        "bServerSide": true,
 	        "fixedHeader": true,
-	        "sAjaxSource": base_url+"employee/employee_list",
+	        "sAjaxSource": base_url+url,
 	        "sServerMethod": "POST",
 	        "sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
         	"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No Employee found<br/><br/></center>', "sZeroRecords": "<center><br/>No Employee found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ leads", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
@@ -1097,5 +1104,19 @@ if (isConfirm) {
    });
 }                                            
                                               
-	
+//Not working Employee	
+/*$('#freeEmp').click(function(){
+	year = 1;	
+	$.ajax({
+		url : base_url+"Employee/index/"+year,
+        type : 'POST',
+        
+        error: function() {
+              alert('Something is wrong');
+           },
+        success: function(){
+        	
+        }
+	});
 
+});*/

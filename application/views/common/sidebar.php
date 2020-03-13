@@ -72,12 +72,10 @@ if($this->session->userdata('login')){
                 <li>
                     <a href="#">Task Board</a>
                 </li>
-                <li>
-                    <a href="#">Task Calendar</a>
-                </li>
+                    
             </ul>
         </li>
-       <!--  <li <?php if($controller == 'products' && ($functionName == 'products' || $functionName == '')) { echo 'class="active"'; } ?>>
+       <!--  <li <?php if($controller == 'products' && ($functionName == 'products' || $functionName == '')) { echo 'class="active"'; } ?>  >
             <a href="<?php echo base_url().'products'?>" class="nav-link-s">
                 <i class="icon-layers"></i>
                 <span>Products</span>

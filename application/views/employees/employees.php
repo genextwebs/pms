@@ -1,4 +1,4 @@
- <nav aria-label="breadcrumb" class="breadcrumb-nav">
+<nav aria-label="breadcrumb" class="breadcrumb-nav">
                 <div class="row">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                         <h4 class="page-title"><i class="icon-user"></i> Employees</h4>
@@ -33,7 +33,11 @@
 			                <h3 class="box-title text-white">Not working on project</h3>
 			                <ul class="list-inline two-wrap">
 			                    <li><i class="icon-user text-white"></i></li>
-			                    <li class="text-right"><span id="" class="counter text-white">41</span></li>
+			                    <?php 
+			                    	$sql = "SELECT * from tbl_employee where is_deleted = 0 AND  tbl_employee.id not in(SELECT emp_id from tbl_project_member)";
+										$empsAllArr = $this->common_model->coreQueryObject($sql);
+			                    ?>
+			                    <li class="text-right"><span id="" class="counter text-white"><?php echo count($empsAllArr); ?></span></li>
 			                </ul>
 			            </div>
                     </div>
@@ -42,15 +46,23 @@
                 	<div class="col-md-12">
                 		<div class="stats-box">
                 			<div class="row">
+                				<?php if(!empty($freeEmp) == 1){ ?>
+                				<div class="col-md-6">
+                					<div class="form-group">
+			                            <a href="<?php echo base_url().'employee'?>" class="btn btn-outline-success btn-sm">View All</a>
+			                        </div>
+                				</div>
+                				<?php } else { ?>
                 				<div class="col-md-6">
                 					<div class="form-group">
 			                            <a href="<?php echo base_url().'employee/addemployee'?>" class="btn btn-outline-success btn-sm">Add New Employee <i class="fa fa-plus" aria-hidden="true"></i></a>
 
 			                            <a href="javascript:;" id="toggle-filter" class="btn btn-outline-danger btn-sm toggle-filter"><i class="fa fa-sliders"></i> Filter Results</a>
 
-			                            <a href="#" class="btn btn-outline-info btn-sm text-capitalize">Not working on project</a>
+			                            <a href="<?php echo base_url().'Employee/index/'.base64_encode(1); ?>"  class="btn btn-outline-info btn-sm text-capitalize">Not working on project</a>
 			                        </div>
                 				</div>
+                			<?php } ?>
                 			</div>
                 			<div style="background: rgb(251, 251, 251); display: none;" id="filterdiv">
                 				<div class="col-md-12">
@@ -143,6 +155,9 @@
 				                            <button type="button" id="reset-filters" class="btn btn-inverse col-md-5 col-md-offset-1"><i class="fa fa-refresh"></i> Reset</button>
 		                            	</div>
                        			 </div>
+                       			 <?php if(!empty($freeEmp)) { ?>
+                       			 <input type="hidden" id="Not-Working-Emp" value="<?php echo $freeEmp;?>" > 
+                       			<?php } ?>
                     			</form>
                 			</div>
                 			<?php
@@ -170,8 +185,7 @@
 									         <th>Created At</th>
 									         <th>Action</th>
 								      	</tr>
-								   	</thead>
-								   
+								   	</thead>  
 								</table>
 							</div>
 		                </div>

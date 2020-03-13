@@ -11,6 +11,9 @@ class Employee extends CI_Controller
 	}
 	
 	public function index(){
+		if(!empty($this->uri->segment(3))){
+			$data['freeEmp'] = base64_decode($this->uri->segment(3));
+		}
 		$data['designation'] = $this->common_model->getData('tbl_designation');
 		$data['department'] = $this->common_model->getData('tbl_department');
 		$whereArr = array('is_deleted'=>0);
@@ -262,7 +265,7 @@ class Employee extends CI_Controller
             /** Filtering Start */
             if(!empty(trim($_GET['sSearch']))){
             	$searchTerm = trim($_GET['sSearch']);
-            	$sWhere .= ' AND (employeename like "%'.$searchTerm.'%" OR address like "%'.$searchTerm.'%" OR skills like "%'.$searchTerm.'%" OR slackusername like "%'.$searchTerm.'%")';
+            	$sWhere .= ' AND (employeename like "%'.$searchTerm.'%" OR address like "%'.$searchTerm.'%" OR skills like "%'.$searchTerm.'%" OR slackusername like "%'.$searchTerm.'%" OR tbl_user.emailid like "%'.$searchTerm.'%")';
             }
 			$status = $_POST['status'];
 			//echo $status;die;
@@ -295,15 +298,34 @@ class Employee extends CI_Controller
             }
             /** Filtering End */
 		}
-		
-	    $query = "SELECT tbl_user.id,tbl_user.is_deleted,tbl_employee.employeename,tbl_user.emailid,tbl_user.status,tbl_user.created_at from tbl_employee inner join  tbl_user on tbl_employee.user_id = tbl_user.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+		if($this->uri->segment(3)== 1){
+			$query = "SELECT tbl_user.id,tbl_user.is_deleted,tbl_employee.employeename,tbl_user.emailid,tbl_user.status,tbl_user.created_at from tbl_employee inner join  tbl_user on tbl_employee.user_id = tbl_user.id AND tbl_employee.id not in(SELECT emp_id from tbl_project_member)".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+			//echo $query;die;
+		}
+		else{
+			$query = "SELECT tbl_user.id,tbl_user.is_deleted,tbl_employee.employeename,tbl_user.emailid,tbl_user.status,tbl_user.created_at from tbl_employee inner join  tbl_user on tbl_employee.user_id = tbl_user.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+		}
+	    
 		$empsArr = $this->common_model->coreQueryObject($query);
 		//echo $this->db->last_query();die;
-		$query = "SELECT tbl_user.id,tbl_user.is_deleted,tbl_employee.employeename,tbl_user.emailid,tbl_user.status,tbl_user.created_at from tbl_employee inner join  tbl_user on tbl_employee.user_id = tbl_user.id".$sWhere;
-		$empsFilterArr = $this->common_model->coreQueryObject($query);
+		if($this->uri->segment(3) == 1){
+			$Filterquery = "SELECT tbl_user.id,tbl_user.is_deleted,tbl_employee.employeename,tbl_user.emailid,tbl_user.status,tbl_user.created_at from tbl_employee inner join  tbl_user on tbl_employee.user_id = tbl_user.id AND tbl_employee.id not in(SELECT emp_id from tbl_project_member)".$sWhere;
+		}
+		else{
+			$Filterquery = "SELECT tbl_user.id,tbl_user.is_deleted,tbl_employee.employeename,tbl_user.emailid,tbl_user.status,tbl_user.created_at from tbl_employee inner join  tbl_user on tbl_employee.user_id = tbl_user.id".$sWhere;
+		}
+		$empsFilterArr = $this->common_model->coreQueryObject($Filterquery);
 		$iFilteredTotal = count($empsFilterArr);
-
-		$empsAllArr = $this->common_model->getData('tbl_employee');
+		if($this->uri->segment(3) == 1){
+			$sql = "SELECT * from tbl_employee where is_deleted = 0 AND  tbl_employee.id not in(SELECT emp_id from tbl_project_member)";
+			$empsAllArr = $this->common_model->coreQueryObject($sql);
+		}
+		else{
+			$where = array('is_deleted'=>0);
+			$empsAllArr = $this->common_model->getData('tbl_employee',$where);
+		}
+		
+		
 		//print_r($empsAllArr);die;
 		$iTotal = count($empsAllArr);
 
@@ -415,7 +437,7 @@ class Employee extends CI_Controller
 	public function deleteemployee(){
 		$id = base64_decode($_POST['id']);
 		$whereArr = array('id'=>$id);
-		$whereArrEmployee=array('user_id'=>$clientid);
+		$whereArrEmployee = array('user_id'=>$id);
 		$updateArr = array('is_deleted' => '1');
 		$this->common_model->updateData('tbl_user',$updateArr,$whereArr);
 		$this->common_model->updateData('tbl_employee',$updateArr,$whereArrEmployee);
