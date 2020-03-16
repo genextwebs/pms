@@ -8,7 +8,7 @@ jQuery(document).ready(function() {
 				{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
 				{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
 				{ "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
-				{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+				{ "sWidth": "250px", sClass: "text-center", "asSorting": [  ] }, 
 			];
 
 		}else if(user == 1){
@@ -216,7 +216,7 @@ jQuery(document).ready(function() {
 			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
 			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
 			{ "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
-			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [  ] }, 
 			],
 			"bServerSide": true,
 			"fixedHeader": true,
@@ -270,7 +270,7 @@ jQuery(document).ready(function() {
 			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
 			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] },
 			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
-			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ]  }, 
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ ]  }, 
 
 		];
 		}else if(user == 1){
@@ -381,7 +381,7 @@ jQuery(document).ready(function() {
 			"bInfo": true,
 			"bAutoWidth": false,
 			"bProcessing": true,
-			
+			aoColumns,
 			"bServerSide": true,
 			"fixedHeader": true,
 			"sAjaxSource": base_url+"Timelog/timeloglist",
@@ -446,7 +446,7 @@ jQuery(document).ready(function() {
 							{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
 							{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
 							{ "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
-							{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+							{ "sWidth": "250px", sClass: "text-center", "asSorting": [  ] }, 
 							//{ "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
 						],
 			"bServerSide": true,
@@ -633,7 +633,7 @@ jQuery(document).ready(function() {
 			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
 			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] },
 			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] },
-			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [  ] }
 			],
 			"bServerSide": true,
 			"fixedHeader": true,

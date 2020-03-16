@@ -260,8 +260,8 @@ jQuery(document).ready(function() {
                       { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
                       { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
                       { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
-                      { "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
-                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc"  ]}, 
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [  ] }, 
                       { "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
                      ];
 		}else if(user == 1){
@@ -397,11 +397,11 @@ jQuery(document).ready(function() {
 				{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
 				{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
 				{ "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
-				{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+				{ "sWidth": "250px", sClass: "text-center", "asSorting": [ ] }, 
 			];
 
 		}else if(user == 1){
-			
+
 		}
 		
 		var oTable = jQuery('#invoices').DataTable({
@@ -420,7 +420,7 @@ jQuery(document).ready(function() {
                       { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
                       { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
                       { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
-                      { "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ]}, 
                       { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
                       { "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
 					  { "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
@@ -537,7 +537,7 @@ jQuery(document).ready(function() {
                       { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
                       { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
                       { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
-                      { "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc"  ]}, 
                       { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
                       { "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
 					  { "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
