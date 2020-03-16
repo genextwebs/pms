@@ -30,10 +30,7 @@ class EmpDashboard extends CI_Controller
 						array_push($project,$project1[0]);
 					}
 				}
-				//Totalproject
-				$data['projectDetail'] = $project;
-				$projectData = $this->common_model->getData('tbl_project_info');
-				$data['allproject'] = count($projectData);
+				
 			}
 			$whereArrUser = array('user_id'=>$this->user_id);
 			$userData = $this->common_model->getData('tbl_employee',$whereArrUser);

@@ -63,8 +63,8 @@
                                 <hr>
             					<div class="row">
             						<div class="col-md-12">
-            							<input type="radio" name="noticeto" value="1" <?php echo ($notices[0]->noticeto== '1') ?  "checked" : "" ;  ?>>To Employees
-                                        <input type="radio" name="noticeto" value="2" <?php echo ($notices[0]->noticeto== '2') ?  "checked" : "" ;  ?>>To Clients
+            							<input type="radio" name="noticeto" value="1" <?php echo ($notices[0]->noticeto== '1') ?  "checked" : "" ;  ?>>To Clients
+                                        <input type="radio" name="noticeto" value="2" <?php echo ($notices[0]->noticeto== '2') ?  "checked" : "" ;  ?>>To Employees
             						</div>
             					</div>
                                 <hr>

@@ -224,13 +224,13 @@ class Finance extends CI_Controller{
 					);
             }
             else if($this->user_type == 1){
-            
+            	$sWhere.= 'AND tbl_clients.user_id='.$this->user_id;
 					if(!empty($sWhere)){
 						$sWhere = " WHERE 1 ".$sWhere;
 					}
 					/** Filtering End */
 
-	    			$query = "select tbl_estimates.* , tbl_clients.* from tbl_estimates INNER JOIN tbl_clients ON tbl_clients.id=tbl_estimates.client where tbl_clients.user_id=".$this->user_id.''.$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+	    			$query = "select tbl_estimates.* , tbl_clients.* from tbl_estimates INNER JOIN tbl_clients ON tbl_clients.id=tbl_estimates.client".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 
 					$estimatesArr = $this->common_model->coreQueryObject($query);
 					/*echo $this->db->last_query();

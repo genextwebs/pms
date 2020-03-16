@@ -115,31 +115,57 @@ class NoticeBoard extends CI_Controller{
 						$sWhere.=' AND created_at<="'.$enddate.'"';
 					}
 					/*$sWhere.=' AND tbl_user.is_deleted=0';*/
+					if($this->user_type == 1){
+						$sWhere.=' AND noticeto=1';
+					}
+					elseif($this->user_type == 2){
+						$sWhere.=' AND noticeto=2';
+					}
 					if(!empty($sWhere)){
 						$sWhere = " WHERE 1 ".$sWhere;
 					}
 					/** Filtering End */
 		}
-
-		$query = "select * from tbl_notice".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
-    	$noticesArr = $this->common_model->coreQueryObject($query);
-		$query =  "select * from tbl_notice".$sWhere;	
-	    $noticesFilterArr = $this->common_model->coreQueryObject($query);
-		$iFilteredTotal = count($noticesFilterArr);
-		$noticesAllarr = $this->common_model->getData('tbl_clients');
-		$iTotal = count($noticesAllarr);
+		if($this->user_type == 0){
+			$query = "select * from tbl_notice".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+	    	$noticesArr = $this->common_model->coreQueryObject($query);
+			$query =  "select * from tbl_notice".$sWhere;	
+		    $noticesFilterArr = $this->common_model->coreQueryObject($query);
+			$iFilteredTotal = count($noticesFilterArr);
+			$noticesAllarr = $this->common_model->getData('tbl_notice');
+			$iTotal = count($noticesAllarr);
+		}
+		elseif($this->user_type == 1){
+			$query = "select * from tbl_notice".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+	    	$noticesArr = $this->common_model->coreQueryObject($query);
+			$query =  "select * from tbl_notice".$sWhere;	
+		    $noticesFilterArr = $this->common_model->coreQueryObject($query);
+			$iFilteredTotal = count($noticesFilterArr);
+			$noticesAllarr = $this->common_model->getData('tbl_notice');
+			$iTotal = count($noticesAllarr);
+		}
+		elseif($this->user_type == 2){
+			$query = "select * from tbl_notice2".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+	    	$noticesArr = $this->common_model->coreQueryObject($query);
+			$query =  "select * from tbl_notice".$sWhere;	
+		    $noticesFilterArr = $this->common_model->coreQueryObject($query);
+			$iFilteredTotal = count($noticesFilterArr);
+			$noticesAllarr = $this->common_model->getData('tbl_notice');
+			$iTotal = count($noticesAllarr);
+		}
+		
 		/** Output */
 
 		$datarow = array();
 		$i = 1;
 		foreach($noticesArr as $row) {
 			if($row->noticeto == '1'){
-				$to = $row->status = 'Employee';
+				$to = $row->status = 'Client';
 				
 
 			}
 			elseif($row->noticeto == '2'){
-				$to = $row->status = 'Client';
+				$to = $row->status = 'Employee';
 				
 
 			}
@@ -167,7 +193,17 @@ class NoticeBoard extends CI_Controller{
 	           	);
            		$i++;
 
-      		}elseif ($this->user_type == 2) {
+      		}elseif ($this->user_type == 1) {
+
+				$datarow[] = array(
+					$id = $i,
+		            $row->heading,
+		            $create_date,
+		            $to	
+		       	);
+	       		$i++;
+  			}
+  			elseif ($this->user_type == 2) {
 
 				$datarow[] = array(
 					$id = $i,

@@ -1033,7 +1033,14 @@ jQuery(document).ready(function() {
                       { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
                       { "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
                      ];
-		}else if(user == 2){
+		}else if(user == 1){
+			var aoColumns = [{ "sWidth": "40px", sClass: "text-left", "asSorting": [  ] }, 
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+                     ];
+		}
+		else if(user == 2){
 			var aoColumns = [{ "sWidth": "40px", sClass: "text-left", "asSorting": [  ] }, 
                       { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
                       { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 

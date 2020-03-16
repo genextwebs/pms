@@ -63,8 +63,8 @@
                                 <hr>
             					<div class="row">
             						<div class="col-md-12">
-            							<input type="radio" name="noticeto" value="1">To Employees
-                                        <input type="radio" name="noticeto" value="2">To Clients
+            							<input type="radio" name="noticeto" value="1">To Clients
+                                        <input type="radio" name="noticeto" value="2">To Employees
             						</div>
             					</div>
                                 <hr>

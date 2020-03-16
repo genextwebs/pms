@@ -43,16 +43,9 @@ class ProfileSetting extends CI_Controller
 							$updateArr= array('name'=>$name,'emailid'=>$email,'password'=>$password,'original_password'=>$originalpassword,'mobile'=>$mobile,'profileimg'=>$_FILES['image_file']['name']);
 							$this->common_model->updateData('tbl_user',$updateArr,$whereArr);
 							$this->session->set_flashdata('message_name', 'Profile Updated sucessfully');
-<<<<<<< HEAD
 						}else{
-=======
+							$error = array('error' => $this->upload->display_errors());
 							redirect('ProfileSetting/editprofile');
-						}
-
-						else{
->>>>>>> d2d9c0579ec318d4794cadf03c843a7f38a96ee2
-								$error = array('error' => $this->upload->display_errors());
-					
 						}
 					}
 					else{

@@ -73,6 +73,12 @@ if($this->session->userdata('login')){
                 <span>Invoices</span>
             </a>
         </li>
+         <li>
+            <a href="<?php echo base_url().'noticeboard'?>" class="nav-link-s">
+                <i class="ti-layout-media-overlay"></i>
+                <span>Notice Board</span>
+            </a>
+        </li>
      	<li>
             <a href="#" class="nav-link-s">
                 <i class="icon-calender"></i>
