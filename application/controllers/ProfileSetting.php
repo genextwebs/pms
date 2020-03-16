@@ -15,7 +15,7 @@ class ProfileSetting extends CI_Controller
 	public function editprofile(){	
 		$whereArr=array('id'=>$this->user_id);
 		$data['profile']=$this->common_model->getData('tbl_user',$whereArr);
-		print_r($data['profile']);
+		//print_r($data['profile']);
 		$this->load->view('common/header');
 		$this->load->view('profile/profilesetting',$data);
 		$this->load->view('common/footer');
@@ -23,7 +23,8 @@ class ProfileSetting extends CI_Controller
 				if(!empty($_POST)){
 					$name=$this->input->post('profile_name');
 					$email=$this->input->post('email_id');
-					$pass=$this->input->post('password');
+					$password=md5($this->input->post('password'));
+					$originalpassword=$this->input->post('password');
 					$mobile=$this->input->post('mobile_no');
 					
 					if(!empty($_FILES['image_file']['name'])){
@@ -39,9 +40,10 @@ class ProfileSetting extends CI_Controller
 
 						if($this->upload->do_upload('image_file')){
 
-							$updateArr= array('name'=>$name,'emailid'=>$email,'password'=>$pass,'mobile'=>$mobile,'profileimg'=>$_FILES['image_file']['name']);
+							$updateArr= array('name'=>$name,'emailid'=>$email,'password'=>$password,'original_password'=>$originalpassword,'mobile'=>$mobile,'profileimg'=>$_FILES['image_file']['name']);
 							$this->common_model->updateData('tbl_user',$updateArr,$whereArr);
 							$this->session->set_flashdata('message_name', 'Profile Updated sucessfully');
+							redirect('ProfileSetting/editprofile');
 						}
 
 						else{
@@ -51,9 +53,10 @@ class ProfileSetting extends CI_Controller
 					}
 					else{
 						$hiddenfile = $this->input->post('image_name');
-						$updateArr=array('name'=>$name,'emailid'=>$email,'password'=>md5($pass),'mobile'=>$mobile,'profileimg'=>$hiddenfile);
+						$updateArr=array('name'=>$name,'emailid'=>$email,'password'=>$password,'original_password'=>$originalpassword,'mobile'=>$mobile,'profileimg'=>$hiddenfile);
 						$this->common_model->updateData('tbl_user',$updateArr,$whereArr);
 						$this->session->set_flashdata('message_name', 'Profile Updated sucessfully');
+						redirect('ProfileSetting/editprofile');
 					}
 				}
 			}

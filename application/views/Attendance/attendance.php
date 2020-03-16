@@ -29,7 +29,8 @@
                 <div class="stats-box">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link <?php if($controller == 'Attendance' && ($function == 'index' || $function == '')) { echo 'active'; } ?>" id="overview-tab"  href="<?php echo base_url().'Attendance'?>" role="tab" aria-controls="overview" aria-selected="true">Summaary</a>
+                            <a class="nav-link <?php if($controller == 'Attendance' && ($function == 'index' || $function == '')) { echo 'active'; } ?>" id="overview-tab"  href="<?php echo base_url().'Attendance'?>" role="tab" aria-controls="overview" aria-selected="true">Summary</a>
+                            <hr/>
                         </li>
                         <?php  if($this->user_type == 0) { ?>
                         <li class="nav-item">
