@@ -225,17 +225,19 @@ class Ticket extends CI_Controller {
 			$actionstring = '<div class="dropdown action m-r-10">
 			           <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
 			            <div class="dropdown-menu">
-			               <a  class="dropdown-item" href="'.base_url().'ticket/editticket/'.base64_encode($row->id).'";><i class="fa fa-edit"></i> Edit</a>
-
-			               <a  href="javascript:void();" onclick="deleteticket(\''.base64_encode($row->id).'\');" class="dropdown-item" href="javascript:void()"><i class="fa fa-trash" ></i> Delete</a>
-			               
+			                <a  class="dropdown-item" href="'.base_url().'ticket/editticket/'.base64_encode($row->id).'";><i class="fa fa-edit"></i> Edit</a>
+			                <a  href="javascript:void();" onclick="deleteticket(\''.base64_encode($row->id).'\');" class="dropdown-item" href="javascript:void()"><i class="fa fa-trash" ></i> Delete</a>
 			          </div>
 			</div>';
+			$query = "SELECT tbl_ticket.*,tbl_clients.clientname FROM tbl_ticket 
+					inner join tbl_clients on tbl_clients.id=tbl_ticket.requestername".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+			$TicketArr = $this->common_model->coreQueryObject($query);
+			$cname = $TicketArr[0]->clientname;
 			//For Priority
 			$datarow[] = array(
 				$id = $i,
 				$row->ticketsubject,
-				$row->requestername,
+				$cname,
 				$row->created_at,
 				'<b>Agent:</b>'.$row->agent.
 				'<br/> <b>Staus:</b> <label class="label label-success">'.$row->status.'</label><br/>
@@ -256,7 +258,6 @@ class Ticket extends CI_Controller {
 			    <label><b>Priority:</b></label>'.$row->priority
 			);
 			$i++;
-
 		}else if($this->user_type == 2){
 
 			$actionstring =
