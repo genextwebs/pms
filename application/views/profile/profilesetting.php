@@ -61,8 +61,7 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label class="control-label">Your Password</label>
-											<input id="password" class="form-control" type="text" name="password" value="<?php echo !empty(
-											$profile[0]->name) ? $profile[0]->name : '' ?>">
+											<input id="password" class="form-control" type="text" name="password" value="<?php echo !empty($profile[0]->original_password) ? $profile[0]->original_password : '' ?>">
 										</div>
 									</div>
 									<div class="col-md-6">

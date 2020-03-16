@@ -23,7 +23,7 @@ if($this->session->userdata('login')){
             </a>
             <ul class="collapse list-unstyled" id="user-ico">
                  <li>
-                    <a href="#"><i class="ti-user"></i> <span>Profile Settings</span></a>
+                    <a href="<?php echo base_url().'ProfileSetting/editprofile';?>"><i class="ti-user"></i> <span>Profile Settings</span></a>
                 </li> 
                 <li>
                     <a href="<?php echo base_url().'Login/logout'; ?>"><i class="fa fa-power-off"></i> <span>Logout</span></a>

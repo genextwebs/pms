@@ -7,7 +7,6 @@ class ProfileSetting extends CI_Controller
 		parent::__construct();
 		$this->load->model('common_model');
 		$this->login = $this->session->userdata('login');
-
 		$this->user_id = $this->login->id;
 		func_check_login();
 	}
@@ -16,7 +15,7 @@ class ProfileSetting extends CI_Controller
 	public function editprofile(){	
 		$whereArr=array('id'=>$this->user_id);
 		$data['profile']=$this->common_model->getData('tbl_user',$whereArr);
-		/*echo '<pre>';print_r($_FILES);die;*/
+		print_r($data['profile']);
 		$this->load->view('common/header');
 		$this->load->view('profile/profilesetting',$data);
 		$this->load->view('common/footer');
@@ -26,9 +25,6 @@ class ProfileSetting extends CI_Controller
 					$email=$this->input->post('email_id');
 					$pass=$this->input->post('password');
 					$mobile=$this->input->post('mobile_no');
-					//print_r($_FILES);die;
-				 //   array('upload_data'=>$this->upload->data());
-					//$updateArr=array($profilepicture => '');
 					
 					if(!empty($_FILES['image_file']['name'])){
 						$config = array(
@@ -54,11 +50,10 @@ class ProfileSetting extends CI_Controller
 						}
 					}
 					else{
-						
 						$hiddenfile = $this->input->post('image_name');
-						$updateArr=array('name'=>$name,'emailid'=>$email,'password'=>$pass,'			  mobile'=>$mobile,'profileimg'=>$hiddenfile);
+						$updateArr=array('name'=>$name,'emailid'=>$email,'password'=>md5($pass),'mobile'=>$mobile,'profileimg'=>$hiddenfile);
 						$this->common_model->updateData('tbl_user',$updateArr,$whereArr);
-						$this->session->set_flashdata('message_name', 'Projects Updated sucessfully');
+						$this->session->set_flashdata('message_name', 'Profile Updated sucessfully');
 					}
 				}
 			}
