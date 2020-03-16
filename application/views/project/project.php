@@ -34,7 +34,7 @@
 							$Totals = $this->common_model->getData('tbl_employee',$whereArr);
 							$whereArr1 = array('emp_id'=>$Totals[0]->id);
 							$Totals = $this->common_model->getData('tbl_project_member',$whereArr1);
-
+		
 							if(!empty($Totals)){
 								$whereArr2 = array('id'=>$Totals[0]->project_id,'is_deleted'=>0);
 								$tProject = $this->common_model->getData('tbl_project_info',$whereArr2);
@@ -109,12 +109,14 @@
 
 								$whereArr = array('user_id'=>$this->user_id);
 								$Totals = $this->common_model->getData('tbl_employee',$whereArr);
-								if(!empty(!$Totals)){
+								if(!empty($Totals)){
 									$whereArr1 = array('emp_id'=>$Totals[0]->id);
 									$Totals = $this->common_model->getData('tbl_project_member',$whereArr1);
+									if(!empty($Totals)){
 									$whereArr2 = array('id'=>$Totals[0]->project_id,'status'=>1,'is_deleted'=>0);
 									$tProject = $this->common_model->getData('tbl_project_info',$whereArr2);
 									$total_Projectcom = count($tProject);
+									}
 								}
 
 							}elseif($this->user_type == 1){
@@ -136,6 +138,7 @@
 				<ul class="list-inline two-wrap">
 					<li><i class="icon-layers text-white"></i></li>
 					<?php 
+					$total_Projectpro = 0;
 						if($this->user_type == 0){
 							$whereArr=array('status'=>2,'is_deleted'=>0);
 							$Totals = $this->common_model->getData('tbl_project_info',$whereArr);
@@ -148,9 +151,11 @@
 							if(!empty($Totals)){
 								$whereArr1 = array('emp_id'=>$Totals[0]->id);
 								$Totals = $this->common_model->getData('tbl_project_member',$whereArr1);
+								if(!empty($Totals)){
 								$whereArr2 = array('id'=>$Totals[0]->project_id,'status'=>2,'is_deleted'=>0);
 								$tProject = $this->common_model->getData('tbl_project_info',$whereArr2);
-								$total_Projectpro = count($tProject); 
+								$total_Projectpro = count($tProject);
+								} 
 							}
 
 						}elseif($this->user_type == 1){
@@ -171,6 +176,7 @@
 				<ul class="list-inline two-wrap">
 					<li><i class="icon-layers text-white"></i></li>
 					<?php 
+					$total_Projecthold =0;
 						if($this->user_type == 0){
 							$whereArr=array('status'=>3,'is_deleted'=>0);
 							$Totals = $this->common_model->getData('tbl_project_info',$whereArr);
@@ -183,9 +189,11 @@
 							if(!empty($Totals)){
 								$whereArr1 = array('emp_id'=>$Totals[0]->id);
 								$Totals = $this->common_model->getData('tbl_project_member',$whereArr1);
+								if(!empty($Totals)){
 								$whereArr2 = array('id'=>$Totals[0]->project_id,'status'=>3,'is_deleted'=>0);
 								$tProject = $this->common_model->getData('tbl_project_info',$whereArr2);
-								$total_Projecthold = count($tProject); 
+								$total_Projecthold = count($tProject);
+								} 
 							}
 
 						}elseif($this->user_type == 1){
@@ -207,6 +215,7 @@
 				<ul class="list-inline two-wrap">
 					<li><i class="icon-layers text-white"></i></li>
 						<?php 
+						$total_Projectcancel = 0;
 							if($this->user_type == 0){
 								$whereArr=array('status'=>4,'is_deleted'=>0);
 								$Totals = $this->common_model->getData('tbl_project_info',$whereArr);
@@ -218,9 +227,11 @@
 								if(!empty($Totals)){
 									$whereArr1 = array('emp_id'=>$Totals[0]->id);
 									$Totals = $this->common_model->getData('tbl_project_member',$whereArr1);
-									$whereArr2 = array('id'=>$Totals[0]->project_id,'status'=>4,'is_deleted'=>0);
-									$tProject = $this->common_model->getData('tbl_project_info',$whereArr2);
-									$total_Projectcancel = count($tProject); 
+									if(!empty($Totals)){
+										$whereArr2 = array('id'=>$Totals[0]->project_id,'status'=>4,'is_deleted'=>0);
+										$tProject = $this->common_model->getData('tbl_project_info',$whereArr2);
+										$total_Projectcancel = count($tProject);
+									} 
 								}
 							}elseif($this->user_type == 1){
 								$whereArr = array('user_id'=>$this->user_id);
