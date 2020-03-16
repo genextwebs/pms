@@ -11,7 +11,7 @@
         </div>
     </div>
 </nav>
-
+<input type="hidden" id="estimateuserid" value="<?php echo $this->user_type;?>">
 <!-- contetn-wrap -->
 <div class="content-in">  
 	<div class="row">
@@ -97,7 +97,10 @@
 						         <th>Created At</th>
 								 <th>Valid Till</th>
 								 <th>Status</th>
-								 <th>Action</th>
+								 <?php 
+								    if($this->user_type == 0){ ?>
+								    	<th>Action</th>
+								<?php }else { } ?>
 					      	</tr>
 					   	</thead>
 					 </table>

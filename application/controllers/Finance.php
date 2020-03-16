@@ -264,7 +264,7 @@ class Finance extends CI_Controller{
 						$create_date = date('d-m-Y', strtotime($row->created_at));
 					
 						
-						$actionStr = '--';
+						//$actionStr = '--';
 						
 					
 						$datarow[] = array(
@@ -274,7 +274,7 @@ class Finance extends CI_Controller{
 							$create_date,
 							$row->validtill,
 			                $sta,	
-							$actionStr
+							//$actionStr
 			           	);
 			       		$i++;
 			  		}

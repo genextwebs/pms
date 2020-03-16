@@ -254,6 +254,25 @@ $(document).on('click','.remove',function(){
 jQuery(document).ready(function() {
 	if(controllerName == 'finance' && (functionName == 'index' || functionName == '')){
 		//alert(functionName);
+		var user = jQuery('#estimateuserid').val();
+		if(user == 0){
+			var aoColumns= [{ "sWidth": "40px", sClass: "text-left", "asSorting": [  ] }, 
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
+                     ];
+		}else if(user == 1){
+			var aoColumns= [{ "sWidth": "40px", sClass: "text-left", "asSorting": [  ] }, 
+                  { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+                  { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+                  { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+                  { "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
+                  { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+                 ];
+		}
 		var oTable = jQuery('#estimate').DataTable({
 			'bRetrieve': true,
 	        "bPaginate": true,
@@ -266,14 +285,7 @@ jQuery(document).ready(function() {
 	        "bInfo": true,
 	        "bAutoWidth": false,
 	        "bProcessing": true,
-	        "aoColumns": [{ "sWidth": "40px", sClass: "text-left", "asSorting": [  ] }, 
-                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
-                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
-                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
-                      { "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
-                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
-                      { "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
-                     ],
+	         aoColumns,
 	        "bServerSide": true,
 	        "fixedHeader": true,
 	        "sAjaxSource": base_url+"Finance/estimate_list",
@@ -378,6 +390,20 @@ function deleteestimates(estimateid){
 
 jQuery(document).ready(function() {
 	if(controllerName == 'finance' && (functionName == 'invoice')){
+		var user = jQuery('#invoiceuserid').val();
+		if(user == 0){
+			var aoColumns = [{ "sWidth": "40px", sClass: "text-left", "asSorting": [  ] }, 
+				{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+				{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+				{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+				{ "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
+				{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+			];
+
+		}else if(user == 1){
+			
+		}
+		
 		var oTable = jQuery('#invoices').DataTable({
 			'bRetrieve': true,
 	        "bPaginate": true,
