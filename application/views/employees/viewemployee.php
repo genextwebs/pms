@@ -1,12 +1,11 @@
-<nav aria-label="breadcrumb" class="breadcrumb-nav">
+ <nav aria-label="breadcrumb" class="breadcrumb-nav">
                 <div class="row">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                         <h4 class="page-title"><i class="icon-user"></i> Employees</h4>
                     </div>
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                         <ol class="breadcrumb">
-                            <li><a href="<?php echo base_url().'dashboard'?>
-                            ">Home</a></li>
+                            <li><a href="<?php echo base_url().'dashboard'; ?>">Home</a></li>
                             <li class="active">Employees</li>
                         </ol>
                     </div>
@@ -24,8 +23,8 @@
 				                    <div class="user-content"> <a href="javascript:void(0)">
 				                        <img src="images/default-profile-2.png" alt="user" class="thumb-lg img-circle">
 				                            </a>
-				                        <h4 class="text-white"><?php echo !empty($employee[0]->employeename) ?  $employee[0]->employeename : ' ' ?></h4>
-				                        <h5 class="text-white"><?php echo !empty($user[0]->emailid) ?  $user[0]->emailid : ' ' ?></h5>
+				                        <h4 class="text-white"><?php echo $empData[0]->employeename;?></h4>
+				                        <h5 class="text-white"><?php echo $empUser[0]->emailid;?></h5>
 				                    </div>
 				                </div>
 		                	</div>
@@ -56,7 +55,11 @@
 			                                <h3 class="box-title">Leaves Taken</h3>
 			                                <div class="row">
 			                                	<div class="col-sm-4"><i class="icon-logout text-warning"></i></div>
-			                                	<div class="col-sm-8 text-right counter">0</div>
+			                                	<?php 
+			                                	$whereLeave = array('empid' => $empData[0]->id , 'status' => 0);
+												$approveLeaves = $this->common_model->getData('tbl_leaves',$whereLeave);
+			                                	?>
+			                                	<div class="col-sm-8 text-right counter"><?php echo count($approveLeaves); ?></div>
 			                                </div>
 				                        </div>
 				                    </div>
@@ -65,7 +68,11 @@
 				                            <h3 class="box-title">Remaining Leaves</h3>
 				                            <div class="row">
 					                            <div class="col-sm-4"><i class="icon-logout text-danger"></i></div>
-					                            <div class="col-sm-8 text-right counter">15</div>
+					                            <?php 
+			                                	$whereLeave = array('empid' => $empData[0]->id , 'status' => 1);
+												$remainLeaves = $this->common_model->getData('tbl_leaves',$whereLeave);
+			                                	?>
+					                            <div class="col-sm-8 text-right counter"><?php echo count($remainLeaves); ?></div>
 					                        </div>
 				                        </div>
 				                    </div>
@@ -108,61 +115,61 @@
 							  	<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 							  		<div class="row">
 				                        <div class="col-sm-6 b-r"> <strong>Full Name</strong> <br>
-				                            <p class="text-muted"><?php echo !empty($employee[0]->employeename) ?  $employee[0]->employeename : ' ' ?></p>
+				                            <p class="text-muted"><?php echo $empData[0]->employeename; ?></p>
 				                        </div>
 				                        <div class="col-sm-6"> <strong>Mobile</strong> <br>
-				                            <p class="text-muted"><?php echo !empty($user[0]->mobile) ?  $user[0]->mobile : ' ' ?></p>
+				                            <p class="text-muted"><?php echo $empUser[0]->mobile; ?></p>
 				                        </div>
 				                    </div>
 				                    <hr>
 				                    <div class="row">
 				                        <div class="col-md-6 col-sm-6 b-r"> <strong>Email</strong> <br>
-				                            <p class="text-muted"><?php echo !empty($user[0]->emailid) ?  $user[0]->emailid : ' ' ?></p>
+				                            <p class="text-muted"><?php echo $empUser[0]->emailid; ?></p>
 				                        </div>
 				                        <div class="col-md-3 col-sm-6"> <strong>Address</strong> <br>
-				                            <p class="text-muted"><?php echo !empty($employee[0]->address) ?  $employee[0]->address : ' ' ?></p>
+				                            <p class="text-muted"><?php echo $empData[0]->address; ?></p>
 				                        </div>
 				                    </div>
 				                    <hr>
 				                    <div class="row">
 				                        <div class="col-md-6 col-sm-6 b-r"> <strong>Job Title</strong> <br>
-				                            <p class="text-muted"><?php echo !empty($employee[0]->joingdate) ?  $employee[0]->joingdate : ' ' ?></p>
+				                            <p class="text-muted">Project Manager</p>
 				                        </div>
 				                        <div class="col-md-3 col-sm-6"> <strong>Hourly Rate</strong> <br>
-				                            <p class="text-muted"><?php echo !empty($employee[0]->hourlyrate) ?  $employee[0]->hourlyrate : ' ' ?></p>
+				                            <p class="text-muted">20</p>
 				                        </div>
 				                    </div>
 				                    <hr>
 				                    <div class="row">
 				                        <div class="col-md-6 col-xs-6 b-r"> <strong>Slack Username</strong> <br>
-				                            <p class="text-muted"><?php echo !empty($employee[0]->slackusername) ?  $employee[0]->slackusername : ' ' ?></p>
+				                            <p class="text-muted"><?php echo $empData[0]->slackusername; ?></p>
 				                        </div>
 				                        <div class="col-md-6 col-xs-6"> <strong>Joining Date</strong> <br>
-				                            <p class="text-muted"><?php echo !empty($employee[0]->joingdate) ?  $employee[0]->joingdate : ' ' ?></p>
+				                            <p class="text-muted"><?php echo $empData[0]->joingdate; ?></p>
 				                        </div>
 				                    </div>
 				                    <hr>
 				                    <div class="row">
 				                        <div class="col-md-6 col-xs-6 b-r"> <strong>Gender</strong> <br>
-				                            <p class="text-muted"><?php if($employee[0]->gender == 0){
-																		echo 'Male';	
-																	} 
-																	else if($employee[0]->gender == 1){
-																		echo 'Female';
-																	}
-																	else{
-																		echo 'Others';
-																	}
-																	?>
-											</p>
+				                        	<?php if($empData[0]->gender == 0){
+				                        		$gender = 'Male';
+				                        	}else{
+				                        		$gender = 'Female';
+				                        	}?>	
+				                            <p class="text-muted"><?php echo $gender; ?></p>
 				                        </div>
-				                        <div class="col-md-6 col-xs-6"> <strong>Skills</strong> <br>
-				                        	<p class="text-muted"><?php echo !empty($employee[0]->skills) ?  $employee[0]->skills : ' '?></p>
+				                        <div class="col-md-6 col-xs-6"> Skills<br/><strong><?php echo $empData[0]->skills; ?></strong> <br>
 				                        </div>
 				                    </div>
 				                    <hr>
 							  	</div>
 							  	<!-- 3 -->
+							  	<?php 
+							  	$projectQuery = "select tbl_project_info.*,tbl_project_member.project_id,
+							  			tbl_project_member.emp_id from tbl_project_info inner join tbl_project_member on tbl_project_info.id = tbl_project_member.project_id where emp_id=".$empData[0]->id;
+							  	$memberData = $this->common_model->coreQueryObject($projectQuery);
+
+							  	?>
 							  	<div class="tab-pane fade" id="projects" role="tabpanel" aria-labelledby="projects-tab">
 							  		<div class="table-responsive">
 									    <table class="table">
@@ -175,10 +182,13 @@
 									            </tr>
 									        </thead>
 									        <tbody>
+									        	<?php 
+									        	$j=1;
+									        	for($i=0;$i<count($memberData);$i++){ ?>
 									            <tr>
-									                <td>1</td>
-									                <td><a href="https://demo.worksuite.biz/admin/projects/4">Chat Application</a></td>
-									                <td>02-09-2019 </td>
+									                <td><?php echo $j; ?></td>
+									                <td><a href="<?php echo base_url().'Project/overView/'.base64_encode($memberData[$i]->id)?>"><?php echo $memberData[$i]->projectname; ?></a></td>
+									                <td><?php echo $memberData[$i]->deadline; ?></td>
 									                <td>
 
 									                    <h5>Completed<span class="pull-right">76%</span></h5>
@@ -187,30 +197,8 @@
 									                    </div>
 									                </td>
 									            </tr>
-									            <tr>
-									                <td>2</td>
-									                <td><a href="https://demo.worksuite.biz/admin/projects/5">Cinema Ticket Booking System</a></td>
-									                <td>02-07-2019 </td>
-									                <td>
-
-									                    <h5>Completed<span class="pull-right">73%</span></h5>
-									                    <div class="progress hight-4px">
-									                        <div class="progress-bar bg-warning" role="progressbar" style="width: 73%" aria-valuenow="73" aria-valuemin="0" aria-valuemax="100"></div>
-									                    </div>
-									                </td>
-									            </tr>
-									            <tr>
-									                <td>3</td>
-									                <td><a href="https://demo.worksuite.biz/admin/projects/13">Airline Reservation System</a></td>
-									                <td>02-09-2019 </td>
-									                <td>
-
-									                    <h5>Completed<span class="pull-right">77%</span></h5>
-									                    <div class="progress hight-4px">
-									                        <div class="progress-bar bg-success" role="progressbar" style="width: 77%" aria-valuenow="77" aria-valuemin="0" aria-valuemax="100"></div>
-									                    </div>
-									                </td>
-									            </tr>
+									        <?php $j++; } ?>
+									            
 									        </tbody>
 									    </table>
 									</div>
@@ -238,20 +226,36 @@
 									            </tr>
 									        </thead>
 									        <tbody>
+									        	<?php 
+									        	$taskQuery = "select tbl_task.*,tbl_project_info.id , tbl_project_info.projectname from tbl_task inner join tbl_project_info on tbl_task.projectid = tbl_project_info.id where assignedto =".$empData[0]->id;
+									        	$taskData = $this->common_model->coreQueryObject($taskQuery);
+									        	//echo "<PRE>";print_r($taskData);die;
+									        	?>
+									        	<?php 
+									        	$j=1;
+									        	for($i=0;$i<count($taskData);$i++){ ?>
 									            <tr role="row" class="odd">
-									                <td class="" tabindex="0">3</td>
-									                <td><a href="#">Lemuel Padberg</a></td>
-									                <td>MINE,' said the.</td>
-									                <td><span class="text-danger">02-01-2019</span></td>
-									                <td><label class="label label-danger">Incomplete</label></td>
+									                <td class="" tabindex="0"><?php echo $j; ?></td>
+									                <td><a href="#"><?php echo $taskData[$i]->projectname; ?></a></td>
+									                <td><?php echo $taskData[$i]->title; ?></td>
+									                <td><span class="text-danger"><?php echo $taskData[$i]->duedate; ?></span></td>
+									                <?php 
+									                if($taskData[$i]->status = 0){ 
+									                	$status = 'Incomplete'; 
+									                }
+									                else if($taskData[$i]->status = 1){
+									                	$status = 'To Do';
+									                }
+									                else if($taskData[$i]->status = 2){
+									                	$status = 'Doing';
+									                }
+									                else if($taskData[$i]->status = 3){
+									                	$status = 'Completed';
+									                }
+									                ?>
+									                <td><label class="label label-danger"><?php echo $status; ?></label></td>
 									            </tr>
-									            <tr role="row" class="odd">
-									                <td class="" tabindex="0">3</td>
-									                <td><a href="#">Live meeting</a></td>
-									                <td>Please, Ma'am, is.</td>
-									                <td><span class="text-danger">02-01-2019</span></td>
-									                <td><label class="label label-danger">Incomplete</label></td>
-									            </tr>
+									            <?php $j++; } ?>
 									        </tbody>
 									    </table>
 									</div>

@@ -444,5 +444,18 @@ class Employee extends CI_Controller
 		redirect('employee');
 	}
 
+	public function viewemployee(){
+		$id = base64_decode($this->uri->segment(3));
+		$whereArr = array('user_id'=>$id , 'is_deleted' => 0);
+		$data['empData'] = $this->common_model->getData('tbl_employee',$whereArr);
+		$whereUSer = array('id'=>$id , 'is_deleted' => 0);
+		$data['empUser'] = $this->common_model->getData('tbl_user',$whereUSer);
+		$whereLeave = array('empid' => $data['empData'][0]->id);
+		$data['empLeaves'] = $this->common_model->getData('tbl_leaves',$whereLeave);
+		$this->load->view('common/header');
+		$this->load->view('employees/viewEmployee',$data);
+		$this->load->view('common/footer');
+	}	
+
 }
 ?>

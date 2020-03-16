@@ -17,7 +17,7 @@ jQuery(document).ready(function() {
                       { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
                       { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
                       { "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
-                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [  ] }, 
                       { "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
                      ],
 	        "bServerSide": true,
