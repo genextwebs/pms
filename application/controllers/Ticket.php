@@ -27,8 +27,12 @@ class Ticket extends CI_Controller {
 	public function addticket(){
 		$data['tickettype']=$this->common_model->getData('tbl_ticket_type');
 		$data['ticketchannel']=$this->common_model->getData('tbl_ticket_channel');
+	
+		$whereArr = array('is_deleted'=>0);
+		$data['getclient']  = $this->common_model->getData('tbl_clients',$whereArr);
 		$whereArr = array('is_deleted'=>0);
 		$data['getemployee']=$this->common_model->getData('tbl_employee',$whereArr);
+		//echo '<pre>';print_r($data['getemployee']);
 		$this->load->view('common/header');
 		$this->load->view('ticket/addticket',$data);
 		$this->load->view('common/footer');
@@ -156,7 +160,7 @@ class Ticket extends CI_Controller {
 		}
 	if($this->user_type == 0){
 
-		$query = "SELECT tbl_ticket.* FROM tbl_ticket".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+		$query = "SELECT tbl_ticket.*,tbl_ticket_channel.name as channel,tbl_ticket_type.name as type FROM tbl_ticket inner join tbl_ticket_channel on tbl_ticket.channelname=tbl_ticket_channel.id inner join tbl_ticket_type on tbl_ticket.type=tbl_ticket_type.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 		$TicketArr = $this->common_model->coreQueryObject($query);
 
 		$query = "SELECT tbl_ticket.*,tbl_ticket_channel.name as channel,tbl_ticket_type.name as type FROM tbl_ticket inner join tbl_ticket_channel on tbl_ticket.channelname=tbl_ticket_channel.id inner join tbl_ticket_type on tbl_ticket.type=tbl_ticket_type.id".$sWhere;

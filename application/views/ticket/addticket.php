@@ -132,11 +132,26 @@
 	            			<div class="card-body">
 	            				<div class="row">
 	            					<div class="col-md-12">
-
-		            						<p id="succmsg" class="text-success"></p>
+										<p id="succmsg" class="text-success"></p>
 	            						<div class="form-group">
 	            							<label class="control-label">Requester Name<span class="astric">*</span></label>
 	            							<select class="custom-select br-0" name="requestername" id="requestername">
+	            								<option value="">--SELECT--</option>
+	            								 <?php
+												foreach($getclient as $client){
+												?>
+													<option value="<?php echo $client->id?>"><?php echo $client->clientname;?></option>
+													<?php
+													} 
+												?> 	
+	            							</select>
+	            						</div>
+	            					</div>
+	            					<div class="col-md-12">
+										<p id="succmsg" class="text-success"></p>
+	            						<div class="form-group">
+	            							<label class="control-label">Agent Name<span class="astric">*</span></label>
+	            							<select class="custom-select br-0" name="agentname" id="agentname">
 	            								<option value="">--SELECT--</option>
 	            								<?php
 												foreach($getemployee as $emp){
@@ -146,20 +161,6 @@
 													<?php
 													} 
 												?> 	
-	            							</select>
-	            						</div>
-	            					</div>
-	            					<div class="col-md-12">
-	            						<div class="form-group">
-	            							<label class="control-label">Agent</label>
-	            							<select class="custom-select br-0" name="agentname" id="agentname">
-	            								<option selected>Agent not assigned</option>
-	            								<option>Kethi Oman[kethi@example.com]</option>
-	            								<option>Obama Donald[donald77@example.com]</option>
-	            								<option>Jequcy Trump[jequcy@example.com]</option>
-	            								<option>herry Oman[Oman@example.com]</option>
-	            								<option>Obama champ[Obama@example.com]</option>
-	            								<option>maxo Trump[Trump@example.com]</option>
 	            							</select>
 	            						</div>
 	            					</div>
