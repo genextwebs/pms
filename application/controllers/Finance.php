@@ -126,15 +126,14 @@ class Finance extends CI_Controller{
             	$sWhere .= ' AND (tbl_clients.clientname like "%'.$searchTerm.'%")';
             }
 
-           
+            if($this->user_type == 0){
             	$startdate=!empty($_POST['startdate']) ? $_POST['startdate'] : '';
 				$enddate=!empty($_POST['enddate']) ? $_POST['enddate'] : '';
 				$status=$_POST['status'];
-				//echo $status;die;
-					if($status == 'all'){
+					if($status=='all'){
 					}
 					else{
-						$sWhere.=' AND status='.$status;
+							$sWhere.=' AND status='.$status;
 					}
 					if(!empty($startdate)){						
 						$sWhere.=' AND validtill>="'.$startdate.'"';
@@ -142,18 +141,15 @@ class Finance extends CI_Controller{
 					if(!empty($enddate)){						
 						$sWhere.=' AND validtill<="'.$enddate.'"';
 					}
-					if($this->user_type == 1){
-		            	$sWhere.= 'AND tbl_clients.user_id='.$this->user_id;
-		            }
 					if(!empty($sWhere)){
 						$sWhere = " WHERE 1 ".$sWhere;
 					}
 					/** Filtering End */
 		
 				
-			 if($this->user_type == 0){
+		
 	    			$query = "select tbl_estimates.* , tbl_clients.clientname from tbl_estimates INNER JOIN tbl_clients ON tbl_clients.id=tbl_estimates.client".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
-	    			//echo $query;die;
+	    	
 					$estimatesArr = $this->common_model->coreQueryObject($query);
 
 					$query = "select tbl_estimates.* , tbl_clients.clientname from tbl_estimates INNER JOIN tbl_clients ON tbl_clients.id=tbl_estimates.client".$sWhere;
@@ -162,20 +158,6 @@ class Finance extends CI_Controller{
 					$iFilteredTotal = count($estimatesFilterArr);
 					$estimatesAllArr = $this->common_model->getData('tbl_estimates');
 					$iTotal = count($estimatesAllArr);
-
-			}else if($this->user_type == 1){
-    			$query = "select tbl_estimates.* ,tbl_clients.id as cid,tbl_clients.clientname from tbl_estimates INNER JOIN tbl_clients ON tbl_clients.id=tbl_estimates.client".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
-    			//echo $query;die;
-				$estimatesArr = $this->common_model->coreQueryObject($query);
-				
-				$query = "select tbl_estimates.* , tbl_clients.clientname from tbl_estimates INNER JOIN tbl_clients ON tbl_clients.id=tbl_estimates.client".$sWhere;
-
-				$estimatesFilterArr = $this->common_model->coreQueryObject($query);
-				$iFilteredTotal = count($estimatesFilterArr);
-				$queryAll = "select tbl_estimates.* , tbl_clients.clientname from tbl_estimates INNER JOIN tbl_clients ON tbl_clients.id=tbl_estimates.client".$sWhere;
-				$estimatesAllArr = $this->common_model->coreQueryObject($queryAll);
-				$iTotal = count($estimatesAllArr);
-			}
 
 					/** Output */
 					$datarow = array();
@@ -200,7 +182,7 @@ class Finance extends CI_Controller{
 							//$sta='<lable class="label label-success">'.$status.'</label>';
 						}
 						$create_date = date('d-m-Y', strtotime($row->created_at));
-					if($this->user_type == 0){
+					
 						if($checkstatus =='1'){
 							$actionStr = '<div class="dropdown action m-r-10">
 						                <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
@@ -219,14 +201,7 @@ class Finance extends CI_Controller{
 						               			 </div>
 											</div>';
 						}
-					}elseif($this->user_type == 1){
-						$actionStr = '<div class="dropdown action m-r-10">
-			                <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
-			                		<div class="dropdown-menu">
-			                		 <a  class="dropdown-item" href='.base_url().'Finance/downloadEstimates/'.base64_encode($row->id).'><i class="fa fa-download"></i> Download</a>
-									</div>
-						</div>';
-					}
+					
 						$datarow[] = array(
 							$id = $i,
 			                $row->clientname,
@@ -247,8 +222,73 @@ class Finance extends CI_Controller{
 				        "iTotalDisplayRecords" => $iFilteredTotal,
 				        "aaData" => $datarow
 					);
-            
-            
+            }
+            else if($this->user_type == 1){
+            	$sWhere.= 'AND tbl_clients.user_id='.$this->user_id;
+					if(!empty($sWhere)){
+						$sWhere = " WHERE 1 ".$sWhere;
+					}
+					/** Filtering End */
+
+	    			$query = "select tbl_estimates.* , tbl_clients.* from tbl_estimates INNER JOIN tbl_clients ON tbl_clients.id=tbl_estimates.client".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+
+					$estimatesArr = $this->common_model->coreQueryObject($query);
+					/*echo $this->db->last_query();
+					die;
+					*/$query = "select tbl_estimates.* , tbl_clients.clientname from tbl_estimates INNER JOIN tbl_clients ON tbl_clients.id=tbl_estimates.client".$sWhere;
+
+					$estimatesFilterArr = $this->common_model->coreQueryObject($query);
+					$iFilteredTotal = count($estimatesFilterArr);
+					$estimatesAllArr = $this->common_model->getData('tbl_estimates');
+					$iTotal = count($estimatesAllArr);
+
+					/** Output */
+					$datarow = array();
+					$i = 1;
+					foreach($estimatesArr as $row){
+						$id = $row->id;
+						$clientid = $row->client;
+						$checkstatus=$row->status;
+						if($row->status == '0'){
+							$status = $row->status = 'Waiting';
+							$sta='<lable class="label label-danger">'.$status.'</label>';
+						}
+						else if($row->status == '1'){
+							$status = $row->status = 'Accepted';
+							$sta='<lable class="label label-success">'.$status.'</label>';
+						}
+						else if($row->status == '2'){
+							$status = $row->status = 'Declined';
+							$sta='<lable class="label label-danger">'.$status.'</label>';
+						}
+						$create_date = date('d-m-Y', strtotime($row->created_at));
+					
+						
+						//$actionStr = '--';
+						
+					
+						$datarow[] = array(
+							$id = $i,
+			                $row->clientname,
+			                $row->total,
+							$create_date,
+							$row->validtill,
+			                $sta,	
+							//$actionStr
+			           	);
+			       		$i++;
+			  		}
+        
+					$output = array
+					(
+					   	"sEcho" => intval($_GET['sEcho']),
+				        "iTotalRecords" => $iTotal,
+				        "iTotalRecordsFormatted" => number_format($iTotal), //ShowLargeNumber($iTotal),
+				        "iTotalDisplayRecords" => $iFilteredTotal,
+				        "aaData" => $datarow
+					);
+            }
+				
   			echo json_encode($output);
   			exit();
 	}
@@ -1022,7 +1062,6 @@ $filecontent.='</table>
 			</tr>
 			
 		</table>
-		&#160;
 		<hr>
 		<div class="row">
 			<div class="col-sm-6">
@@ -1084,112 +1123,5 @@ $filecontent.='</table>
 		$pdf->Output('invoice.pdf', 'D');
 
 	}	
-
-	public function downloadEstimates(){
-		$estimateid = base64_decode($this->uri->segment(3));
-		//echo $estimateid;die;
-		$whereArr = array('id'=>$estimateid);
-		$estimateData = $this->common_model->getData('tbl_estimates',$whereArr);
-		$whereArrC = array('id'=>$estimateData[0]->client);
-		$clientData = $this->common_model->getData('tbl_clients',$whereArrC);
-		$whereArrU = array('id'=>$clientData[0]->user_id);
-		$userData = $this->common_model->getData('tbl_user',$whereArrU);
-		$whereArrE = array('estimateid'=>$estimateData[0]->id);
-		$itemData = $this->common_model->getData('tbl_products',$whereArrE);
-		$estimateDate = date("d-m-Y", strtotime($estimateData[0]->created_at));
-		if($estimateData[0]->status == 0){
-			$status = $estimateData[0]->status = 'Waiting';
-	
-		}
-		elseif($estimateData[0]->status == 1){
-			$status = $estimateData[0]->status = 'Accepted';
-			
-		}
-		elseif($estimateData[0]->status == 2){
-			$status = $estimateData[0]->status = 'Declined';
-		}
-		$this->load->library('Pdf');
-		$filecontent = '';
-		
-	 	
-
-	 	$filecontent.= '<h1 align="center">ESTIMATE</h1>
-	 	<table>
-			<tr> 
-				<th><h3><b>Estimate To:</b></h3></th>
-				<th style="text-align:right"><h3><b>Generated By:</b></h3></th>
-			</tr><br/>
-			<tr>
-				<td>'.$clientData[0]->clientname.'</td>
-				<td style="text-align:right">'.$clientData[0]->companyname.'</td>
-			</tr>
-			<tr>
-				<td >'.$userData[0]->emailid.'</td>
-				<td style="text-align:right">'.$clientData[0]->address.'</td>
-			</tr>
-			<tr>
-				<td>'.$userData[0]->mobile.'</td>
-			</tr>	
-		</table>
-		&#160;
-		<hr>  
-		&#160;
-		<div class="row">
-			<div class="col-sm-6">
-				Estimate Date: '.$estimateDate.'<br/>
-				Status: '.$status.'</span></font></p>
-			</div>
-		</div>
-		&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
-				<table style="padding-left:20pt;border-collapse: collapse;width:80%;margin-left: 80pt;margin-right: 50pt;font-size: 18pt;text-align: left;">
-					<tr style=" padding: 6px;border-bottom: 1px solid #ddd;">
-						<th style="background-color: #4CAF50;
-  color: white;padding: 15px;">SR No</th>
-						<th style="padding-left: 20px;">Item</th>
-						<th>Qty/Hrs</th>
-						<th>Unit Price</th>
-						<th style="background-color: gray;
-  color: black;padding: 15px;">Amount</th>
-					</tr>';
-					$a=1;
-		for($i=0;$i<=count($itemData)-1;$i++) {
-			
-		$filecontent.=	'<tr style=" padding: 8px;text-align: left;border-bottom: 1px solid #ddd;color:#4CAF50;">
-						<td style="background-color: #4CAF50;
-  color: white;padding: 15px;">'.$a.'</td>
-						<td style="padding-left: 20px;">'.$itemData[$i]->item.'</td>
-						<td>'.$itemData[$i]->qtyhrs.'</td>
-						<td>'.$itemData[$i]->unitprice.'</td>
-						<td style="background-color: gray;
-  color: black;padding: 15px;">'.$itemData[$i]->amount.'</td>
-					</tr>';
-			$a++;
-			}
-		
-		$filecontent.=	'<br/>
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td>Total:</td>
-						<td>'.$estimateData[0]->total.'</td>
-					</tr>
-				</table>';
-		
-		
-		$pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
-		$pdf->SetTitle('Estimate');
-		$pdf->SetHeaderMargin(30);
-		$pdf->SetTopMargin(20);
-		$pdf->setFooterMargin(20);
-		$pdf->SetAutoPageBreak(true);
-		$pdf->SetAuthor('Author');
-		$pdf->SetDisplayMode('real', 'default');
-
-		$pdf->AddPage();
-
-		$pdf->WriteHTML($filecontent);
-		$pdf->Output('estimate.pdf', 'D');
-	}
 }
 ?>

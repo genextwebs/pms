@@ -74,20 +74,57 @@
                                             </div>
                                         </div>
                         			</div>
-                        			<div class="row">
-		                    			<div class="col-md-6">
-		            						<div class="form-group type">
-		            							<label>Status<span class="astric">*</span></label>
-		            							<select class="custom-select br-0" name="status" id="status">
-		            								<option value="">--Select--</option>
-		            								<option  value="1">Open</option>
-		            								<option value="2">Pending</option>
-		            								<option value="3">Resolved</option>
-		            								<option value="4">Close</option>
-		            							</select>
-		            						</div>
-		            					</div>
-	            					</div>
+                        			<?php 
+                        				if ($this->user_type == 0) {
+                        				?>
+                        					<div class="row">
+				                    			<div class="col-md-6">
+				            						<div class="form-group type">
+				            							<label>Status<span class="astric">*</span></label>
+				            							<select class="custom-select br-0" name="status" id="status">
+				            								<option value="">--Select--</option>
+				            								<option  value="1">Open</option>
+				            								<option value="2">Pending</option>
+				            								<option value="3">Resolved</option>
+				            								<option value="4">Close</option>
+				            							</select>
+				            						</div>
+				            					</div>
+			            					</div>
+			            				<?php 
+                        				}else if ($this->user_type == 1){
+                        				?>
+                        					<div class="row">
+				                    			<div class="col-md-6">
+				            						<div class="form-group type">
+				            							<label>Status<span class="astric">*</span></label>
+				            							<select class="custom-select br-0" name="status" id="status">
+				            								<option value="1">Open</option>
+				            							</select>
+				            						</div>
+				            					</div>
+			            					</div>
+                        				<?php 
+                        				}else if ($this->user_type == 2){
+                        				?>
+                        					<div class="row">
+				                    			<div class="col-md-6">
+				            						<div class="form-group type">
+				            							<label>Status<span class="astric">*</span></label>
+				            							<select class="custom-select br-0" name="status" id="status">
+				            								<option value="">--Select--</option>
+				            								<option  value="1">Open</option>
+				            								<option value="2">Pending</option>
+				            								<option value="3">Resolved</option>
+				            								<option value="4">Close</option>
+				            							</select>
+				            						</div>
+				            					</div>
+			            					</div>
+                        				<?php 
+                        				}
+                        			?>
+                        			
                         			<div class="row">
                                 		<div class="col-md-12">
                                             <div class="form-group">
@@ -134,84 +171,112 @@
 	            					<div class="col-md-12">
 										<p id="succmsg" class="text-success"></p>
 	            						<div class="form-group">
-	            							<label class="control-label">Requester Name<span class="astric">*</span></label>
-	            							<select class="custom-select br-0" name="requestername" id="requestername">
-	            								<option value="">--SELECT--</option>
-	            								 <?php
-												foreach($getclient as $client){
-												?>
-													<option value="<?php echo $client->id?>"><?php echo $client->clientname;?></option>
-													<?php
-													} 
-												?> 	
-	            							</select>
+	            							
+	            							<?php 
+	            							if($this->user_type == 0){
+	            							?>
+	            								<label class="control-label">Requester Name<span class="astric">*</span></label>
+		            								<select class="custom-select br-0" name="requestername" id="requestername">
+			            								<option value="">--SELECT--</option>
+			            								 <?php
+			            								 foreach($getclient as $client){
+															?>
+																<option value="<?php echo $client->id?>"><?php echo $client->clientname;?></option>
+															
+															<?php
+															} 
+														?> 	
+		            								</select>
+	            							<?php 
+	            							}else if($this->user_type == 1){
+	            							?>
+	            								<input type="hidden" name="requestername" value="<?php echo $this->user_id;?>">
+
+	            							<?php }else if($this->user_type == 2){
+	            							?>	
+	            								<input type="hidden" name="requestername" value="-">
+		            						<?php } ?>
 	            						</div>
 	            					</div>
 	            					<div class="col-md-12">
 										<p id="succmsg" class="text-success"></p>
-	            						<div class="form-group">
-	            							<label class="control-label">Agent Name<span class="astric">*</span></label>
-	            							<select class="custom-select br-0" name="agentname" id="agentname">
-	            								<option value="">--SELECT--</option>
-	            								<?php
-												foreach($getemployee as $emp){
-												?>
-													
-													<option value="<?php echo $emp->id?>"><?php echo $emp->employeename;?></option>
-													<?php
-													} 
-												?> 	
-	            							</select>
-	            						</div>
+										<?php 
+	            							if($this->user_type == 0){
+	            							?>
+	            								<div class="form-group">
+		            								<label class="control-label">Agent Name<span class="astric">*</span></label>
+			            							<select class="custom-select br-0" name="agentname" id="agentname">
+			            								<option value="">--SELECT--</option>
+			            								<?php
+														foreach($getemployee as $emp){
+														?>
+															
+															<option value="<?php echo $emp->id?>"><?php echo $emp->employeename;?></option>
+															<?php
+															} 
+														?> 	
+			            							</select>
+	            								</div>
+	            							<?php }else if($this->user_type == 1){ ?>
+	            								<input type="hidden" name="agentname" value="-"> 
+	            							<?php }else if($this->user_type == 2){ ?>
+	            								<input type="hidden" name="agentname" value="-">
+	            							<?php } ?>
 	            					</div>
-	            					<div class="col-md-6">
-	            						<div class="form-group type">
-	            							<label>Type <a class="btn btn-sm btn-outline-info  ml-1" href="javascript:;" data-toggle="modal" data-target="#type1"><i class="fa fa-plus"></i> Add Type</a></label>
-	            							<select class="custom-select br-0" name="question" id="question">
-	            								<?php
-												foreach($tickettype as $type){
-												?>
-													
-													<option value="<?php echo $type->id?>"><?php echo $type->name;?></option>
-													<?php
-													} 
-												?> 		
-	            							</select>
-	            						</div>
-	            					</div>
-	            					<div class="col-md-6">
-	            						<div class="form-group type">
-	            							<label>Priority <span class="text-danger">*</span></label>
-	            							<select class="custom-select br-0" name="priority" id="priority">
-	            								<option value="">--SELECT--</option>
-	            								<option  value="1">Low</option>
-	            								<option value="2">High</option>
-	            								<option value="3">Medium</option>
-	            								<option value="4">Urgent</option>
-	            							</select>
-	            						</div>
-	            					</div>
-	            					<div class="col-md-12">
-	            						<div class="form-group channel">
-	            							<label class="control-label">Channel Name <a class="btn btn-sm btn-outline-info  ml-1" href="javascript:;" data-toggle="modal" data-target="#channel1"><i class="fa fa-plus"></i> Add channel</a></label>
-	            							<select class="custom-select br-0" name="channel" id="channel">
-	            								<?php
-													foreach($ticketchannel as $tchannel){
-													?>
-														
-													<option value="<?php echo $tchannel->id?>"><?php echo $tchannel->name;?></option>
-												<?php
-													} 
-												?> 		
-	            							</select>
-	            						</div>
-	            					</div>
-	            					<div class="col-md-12">
-	            						<div class="form-group">
-	            							<label class="control-label">Tags</label>
-	            							<input type="text" id="tags" class="form-control" name="tags">
-	            						</div>
-	            					</div>
+	            					<?php 
+	            							if($this->user_type == 0){ ?> 
+	            								<div class="col-md-6">
+	            									<div class="form-group type">
+				            							<label>Type <a class="btn btn-sm btn-outline-info  ml-1" href="javascript:;" data-toggle="modal" data-target="#type1"><i class="fa fa-plus"></i> Add Type</a></label>
+			            								<select class="custom-select br-0" name="question" id="question">
+				            								<?php
+															foreach($tickettype as $type){
+															?>
+																<option value="<?php echo $type->id?>"><?php echo $type->name;?></option>
+															<?php } ?> 		
+            											</select>
+	            									</div>
+	            								</div>
+	            								<div class="col-md-6">
+				            						<div class="form-group type">
+				            							<label>Priority <span class="text-danger">*</span></label>
+				            							<select class="custom-select br-0" name="priority" id="priority">
+				            								<option value="">--SELECT--</option>
+				            								<option  value="1">Low</option>
+				            								<option value="2">High</option>
+				            								<option value="3">Medium</option>
+				            								<option value="4">Urgent</option>
+				            							</select>
+				            						</div>
+	            								</div>
+	            								<div class="col-md-12">
+				            						<div class="form-group channel">
+				            							<label class="control-label">Channel Name <a class="btn btn-sm btn-outline-info  ml-1" href="javascript:;" data-toggle="modal" data-target="#channel1"><i class="fa fa-plus"></i> Add channel</a></label>
+				            							<select class="custom-select br-0" name="channel" id="channel">
+				            								<?php
+																foreach($ticketchannel as $tchannel){
+																?>
+																	
+																<option value="<?php echo $tchannel->id?>"><?php echo $tchannel->name;?></option>
+															<?php
+																} 
+															?> 		
+				            							</select>
+				            						</div>
+				            					</div>
+				            					<div class="col-md-12">
+				            						<div class="form-group">
+				            							<label class="control-label">Tags</label>
+				            							<input type="text" id="tags" class="form-control" name="tags">
+				            						</div>
+	            							</div>
+		            						<?php }else { ?>
+		            							<input type="hidden" name="question" value="-">
+		            							<input type="hidden" name="priority" value="-">
+		            							<input type="hidden" name="channel" value="-">
+		            							<input type="hidden" name="tags" value="-">
+		            							<?php
+		            						}?>
 	            				</div>
 	            			</div>
 	            		</div>
