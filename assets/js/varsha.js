@@ -255,7 +255,7 @@ jQuery(document).ready(function() {
 	if(controllerName == 'finance' && (functionName == 'index' || functionName == '')){
 		//alert(functionName);
 		var user = jQuery('#estimateuserid').val();
-		
+		if(user == 0){
 			var aoColumns= [{ "sWidth": "40px", sClass: "text-left", "asSorting": [  ] }, 
                       { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
                       { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
@@ -263,7 +263,21 @@ jQuery(document).ready(function() {
                       { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc"  ]}, 
                       { "sWidth": "250px", sClass: "text-center", "asSorting": [  ] }, 
                       { "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}
                      ];
+		}else{
+			var aoColumns= [{ "sWidth": "40px", sClass: "text-left", "asSorting": [  ] }, 
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc"  ]}, 
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [  ] }, 
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}
+                     ];
+		}
+
+			
+	
 		
 		var oTable = jQuery('#estimate').DataTable({
 			'bRetrieve': true,
@@ -385,6 +399,8 @@ jQuery(document).ready(function() {
 		var user = jQuery('#invoiceuserid').val();
 		if(user == 0){
 			var aoColumns = [{ "sWidth": "40px", sClass: "text-left", "asSorting": [  ] }, 
+				{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] },
+				{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] },
 				{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
 				{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
 				{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
@@ -392,7 +408,15 @@ jQuery(document).ready(function() {
 				{ "sWidth": "250px", sClass: "text-center", "asSorting": [ ] }, 
 			];
 
-		}else if(user == 1){
+		}else{
+			var aoColumns = [{ "sWidth": "40px", sClass: "text-left", "asSorting": [  ] }, 
+				{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] },
+				{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] },
+				{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+				{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+				{ "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
+				{ "sWidth": "250px", sClass: "text-center", "asSorting": [ ] }, 
+			];
 
 		}
 		
@@ -408,16 +432,7 @@ jQuery(document).ready(function() {
 	        "bInfo": true,
 	        "bAutoWidth": false,
 	        "bProcessing": true,
-	        "aoColumns": [{ "sWidth": "40px", sClass: "text-left", "asSorting": [  ] }, 
-                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
-                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
-                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
-                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ]}, 
-                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
-                      { "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
-					  { "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
-
-                     ],
+	        aoColumns,
 	        "bServerSide": true,
 	        "fixedHeader": true,
 	        "sAjaxSource": base_url+"Finance/invoice_list",
@@ -1284,3 +1299,9 @@ $("#pay").click(function(event) {
   e.preventDefault();
   });
 
+//
+function reply(){
+	$('#tdesc').css("display","block");
+	$('#files').css("display","block");
+	$('#reply-toggle').css("display","none");
+}

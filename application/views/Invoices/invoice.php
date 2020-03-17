@@ -120,7 +120,9 @@
 									         <th>Id</th>
 									         <th>Invoice#</th>
 									         <th>Project</th>
+									         <?php if($this->user_type == 0) { ?>
 									         <th>Client</th>
+									     	<?php } ?>
 											 <th>Total</th>
 											 <th>Invoice Date</th>
 											 <th>Status</th>

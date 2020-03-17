@@ -76,7 +76,13 @@
 																<?php
 																	foreach($project as $row)
 																	{
-																		echo '<option value="'.$row->id.'">'.$row->projectname.'</option>';
+																		$str='';
+																		if($row->id==$estimate[0]->project)
+																		{
+																			$str="selected";
+																		
+																		}
+																		echo '<option value="'.$row->id.'"'.$str.'>'.$row->projectname.'</option>';
 																	}
 																?>
 														</select>

@@ -50,7 +50,7 @@
 		                						<div class="col-md-4">
 		                							<div class="form-group">
 		                								<label class="control-label">Client<span class="astric">*</span></label>
-			                                            <select name="client" id="client" class="form-control">
+			                                            <select name="client" id="client" class="form-control" onchange="getprojectbyclient(this.value);">
 															<option value="">select</option>
 																<?php
 																	foreach($client as $row)
@@ -62,6 +62,14 @@
 		                							</div>
 		                						</div>
 		                						<div class="col-md-4">
+													<div class="form-group">
+														<label class="control-label">Project<span class="astric">*</span></label>
+			                                            <select name="project1" id="project" class="form-control">
+															<option value="">select</option>
+														</select>
+													</div>
+												</div>
+		                						<div class="col-md-4">
 		                							<div class="form-group">
 		                								<label class="control-label">Currency<span class="astric">*</span></label>
 														<select name="currency" id="currency" class="form-control">
@@ -71,6 +79,8 @@
 														</select>
 													</div>
 		                						</div>
+		                					</div>
+		                					<div class="row">
 												<div class="col-md-4">
 		                							<div class="form-group">
 		                								<label class="control-label">Valid Till<span class="astric">*</span></label>

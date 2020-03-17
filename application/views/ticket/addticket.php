@@ -70,7 +70,7 @@
                                 		<div class="col-md-12">
                                             <div class="form-group">
                                                 <label class="control-label">Ticket Description<span class="astric">*</span></label>
-                                                <textarea name="editor2" id="editor2"></textarea>
+                                                <textarea name="editor2" id="editor1"></textarea>
                                             </div>
                                         </div>
                         			</div>
@@ -82,7 +82,7 @@
 				            						<div class="form-group type">
 				            							<label>Status<span class="astric">*</span></label>
 				            							<select class="custom-select br-0" name="status" id="status">
-				            								<option value="">--Select--</option>
+				            								
 				            								<option  value="1">Open</option>
 				            								<option value="2">Pending</option>
 				            								<option value="3">Resolved</option>
@@ -92,38 +92,7 @@
 				            					</div>
 			            					</div>
 			            				<?php 
-                        				}else if ($this->user_type == 1){
-                        				?>
-                        					<div class="row">
-				                    			<div class="col-md-6">
-				            						<div class="form-group type">
-				            							<label>Status<span class="astric">*</span></label>
-				            							<select class="custom-select br-0" name="status" id="status">
-				            								<option value="1">Open</option>
-				            							</select>
-				            						</div>
-				            					</div>
-			            					</div>
-                        				<?php 
-                        				}else if ($this->user_type == 2){
-                        				?>
-                        					<div class="row">
-				                    			<div class="col-md-6">
-				            						<div class="form-group type">
-				            							<label>Status<span class="astric">*</span></label>
-				            							<select class="custom-select br-0" name="status" id="status">
-				            								<option value="">--Select--</option>
-				            								<option  value="1">Open</option>
-				            								<option value="2">Pending</option>
-				            								<option value="3">Resolved</option>
-				            								<option value="4">Close</option>
-				            							</select>
-				            						</div>
-				            					</div>
-			            					</div>
-                        				<?php 
-                        				}
-                        			?>
+                        				} ?>
                         			
                         			<div class="row">
                                 		<div class="col-md-12">

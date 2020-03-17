@@ -42,9 +42,29 @@ class Ticket extends CI_Controller {
 		if(!empty($_POST)){
 			$t_subject = $this->input->post('ticket_subject');
 			$t_editor  = $this->input->post('editor2');
-			$status   = $this->input->post('status');
-			$t_requestname = $this->input->post('requestername');
-			$t_agentname = $this->input->post('agentname');
+			if($this->user_type == 0){
+				$status = $this->input->post('status');
+			}elseif($this->user_type == 1){
+				$status =1;
+			}elseif($this->user_type == 2){
+				$status =1;
+			}
+			
+			if($this->user_type == 0){
+				$t_requestname = $this->input->post('requestername');
+			}elseif($this->user_type == 1){
+				$whereArr = array('user_id'=>$this->user_id);
+				$clientData = $this->common_model->getData('tbl_clients',$whereArr);
+				$t_requestname =$clientData[0]->id;
+			}
+			if($this->user_type == 0){
+				$t_agentname = $this->input->post('agentname');
+			}elseif($this->user_type == 2){
+				$whereArr = array('user_id'=>$this->user_id);
+				$empData = $this->common_model->getData('tbl_employee',$whereArr);
+				$t_agentname =$empData[0]->id;
+			}
+			
 			$t_question = $this->input->post('question');
 			$t_priority = $this->input->post('priority');
 			$t_channel = $this->input->post('channel');
@@ -160,7 +180,8 @@ class Ticket extends CI_Controller {
 		}
 	if($this->user_type == 0){
 
-		$query = "SELECT tbl_ticket.*,tbl_ticket_channel.name as channel,tbl_ticket_type.name as type FROM tbl_ticket inner join tbl_ticket_channel on tbl_ticket.channelname=tbl_ticket_channel.id inner join tbl_ticket_type on tbl_ticket.type=tbl_ticket_type.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+		$query = "SELECT * from tbl_ticket".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+		//echo $query;die;
 		$TicketArr = $this->common_model->coreQueryObject($query);
 
 		$query = "SELECT tbl_ticket.*,tbl_ticket_channel.name as channel,tbl_ticket_type.name as type FROM tbl_ticket inner join tbl_ticket_channel on tbl_ticket.channelname=tbl_ticket_channel.id inner join tbl_ticket_type on tbl_ticket.type=tbl_ticket_type.id".$sWhere;
@@ -229,19 +250,40 @@ class Ticket extends CI_Controller {
 			                <a  href="javascript:void();" onclick="deleteticket(\''.base64_encode($row->id).'\');" class="dropdown-item" href="javascript:void()"><i class="fa fa-trash" ></i> Delete</a>
 			          </div>
 			</div>';
-			$query = "SELECT tbl_ticket.*,tbl_clients.clientname FROM tbl_ticket 
-					inner join tbl_clients on tbl_clients.id=tbl_ticket.requestername".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
-			$TicketArr = $this->common_model->coreQueryObject($query);
-			$cname = $TicketArr[0]->clientname;
+			if($row->requestername != ''){
+				$query = "SELECT clientname from tbl_clients where id=".$row->requestername;
+				$TicketArr = $this->common_model->coreQueryObject($query);
+				for($i=0;$i<=count($TicketArr)-1;$i++){
+				$cname = $TicketArr[$i]->clientname;
+				}
+			}
+			else{
+				$cname= '-';
+			}
+			
+			//agent name 
+			if($row->agent != ''){
+				$query = "SELECT employeename from tbl_employee where id=".$row->agent;
+				$empData = $this->common_model->coreQueryObject($query);
+				for($i=0;$i<=count($empData)-1;$i++){
+				$agent = $empData[$i]->employeename;
+				}
+			}
+			else{
+				$agent= '-';
+			}
+			
+			
+			
 			//For Priority
 			$datarow[] = array(
 				$id = $i,
 				$row->ticketsubject,
 				$cname,
 				$row->created_at,
-				'<b>Agent:</b>'.$row->agent.
+				'<b>Agent:  </b>'.$agent.
 				'<br/> <b>Staus:</b> <label class="label label-success">'.$row->status.'</label><br/>
-			   <label><b>Priority:</b></label>'.$row->priority,
+			   <label><b>Priority: </b></label>'.$row->priority,
 			   	$actionstring
 			);
 			$i++;
@@ -386,13 +428,22 @@ class Ticket extends CI_Controller {
 	public function insert_comment(){
 
 		if(!empty($_POST)){
-		$comment = $this->input->post('name');
-		$status = $this->input->post('status');
-		$empid = $this->input->post('t_empid');
+		$ticket_comment = $this->input->post('ticket_comment');
+		$ticket_Image = $this->input->post('ticket_Image');
+		/*$status = $this->input->post('status');
+		$empid = $this->input->post('t_empid');*/
+		//Image Upload
+		
+			$file = $_FILES['ticket_Image']['name'];
+			$file_loc = $_FILES['ticket_Image']['tmp_name'];
+			$file_size = $_FILES['ticket_Image']['size'];
+			$file_type = $_FILES['ticket_Image']['type'];
+			$folder="uploads/";
+			move_uploaded_file($file_loc,$folder.$file);
 		$whereArr = array('id'=>$this->user_id);
 		$data = $this->common_model->getData('tbl_user',$whereArr);
 		//print_r($data);die;
-		$insArr = array('profileimg'=>$data[0]->profileimg,'comment' => $comment,'cpmmentstatusid'=> $status,'ticketemployeeid'=>$empid );
+		$insArr = array('profileimg'=>$file,'comment' => $ticket_comment);
 		$ticketArr =$this->common_model->insertData('tbl_ticket_comment',$insArr);
 		$tArray = $this->common_model->getData('tbl_ticket_comment');
 

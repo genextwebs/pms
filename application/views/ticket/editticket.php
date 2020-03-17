@@ -14,7 +14,7 @@
 </nav>
 <!-- contetn-wrap -->
 <div class="content-in">
-	<form id="editticket" name="editticket" class="aj-form" method="post" action="<?php echo base_url().'ticket/editticket/'.base64_encode($editticketId); ?>">  
+	<form id="editticket" name="editticket" class="aj-form" method="post" action="<?php echo base_url().'ticket/editticket/'.base64_encode($editticketId); ?>" enctype="multipart/form-data">  
 		<?php
 	        $mess = $this->session->flashdata('message_name');
 	        if(!empty($mess)){
@@ -107,18 +107,31 @@
 											</div>
                 						</div>
                 					</div>
-                					
-									<div class="row">
+                					<button class="btn btn-default btn-sm waves-effect waves-light" id="reply-toggle" type="button" onclick="reply();"><i class="fa fa-mail-reply"></i> Reply                           
+                					</button>
+                				
+									<div class="row" id="tdesc" style="display:none;">
+
                                 		<div class="col-md-12">
+                                			<label>Reply</label>
                                             <div class="form-group">
                                                 <label class="control-label">Ticket Description <span class="text-danger">*</span></label>
-                                               <textarea name="editor" id="editor" ></textarea> 
-                                                
-                                              
+                                               <textarea name="editor" id="editor1" ></textarea>   
                                             </div>
                                         </div>
                         			</div>
-                        			<div class="row">
+                        			<div class="row" id="files" style="display:none;">
+                                		<div class="col-md-12">
+                                            <div class="form-group">
+                                            	<label class="control-label">File 
+                                            	</label><br/>
+                                            	<input type='file'class="file-upload-input" name="ticket_Image" id="ticket_Image"/>
+                                            	<input type="hidden" name="hidden_Image">
+                                                
+                                            </div>
+                                        </div>
+                        			</div>
+                        			<!-- <div class="row">
 	            						<div class="col-md-6">
 	            							<p id="succmsg" class="text-success"></p>
 	            								<div class="form-group">
@@ -151,7 +164,7 @@
 		            							</select>
 		            						</div>
 		            					</div>
-	            					</div>
+	            					</div> -->
                         		</div>
                 				</div>
 	                		</div>
@@ -174,7 +187,7 @@
 									</div>
 	                            </div>
 	                		</div>
-
+	                	
 	                	</div>
 	                </div>
 	            </div>

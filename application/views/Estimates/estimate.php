@@ -87,7 +87,10 @@
 					   	<thead>
 					      	<tr role="row">
 						         <th>Id</th>
+						         <?php if($this->user_type == 0) { ?>
 						         <th>Client</th>
+						     <?php } ?>
+						         <th>Project</th>
 						         <th>Total</th>
 						         <th>Created At</th>
 								 <th>Valid Till</th>

@@ -56,7 +56,7 @@ if($this->session->userdata('login')){
         </li> -->
         <li <?php if($controller == 'ticket' && ($functionName == 'ticket' || $functionName == '')) { echo 'class="active"'; } ?>>
             <a href="<?php echo base_url().'ticket'?>" class="nav-link-s">
-                <i class="icon-layers"></i>
+                <i class="ti-ticket"></i>
                 <span>Tickets</span>
             </a>
         </li>
