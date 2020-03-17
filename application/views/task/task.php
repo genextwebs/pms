@@ -60,6 +60,7 @@
 					        </select> 
 		            	</div>
 		            </div>
+		            <?php if($this->user_type == 0) { ?>
 		            <div class="col-md-3">
 		            	<div class="form-group">
 							<label class="box-title mt-3">Select Assigned To</label>
@@ -74,6 +75,7 @@
 					        </select> 
 		            	</div>
 		            </div>
+		        <?php } ?>
 		           <!--  <div class="col-md-3">
 		            	<div class="form-group">
 		            		<label class="box-title mt-3">Select Assigned By</label>
@@ -130,6 +132,7 @@
 		                	<button type="button" class="btn btn-success" id="filter-results"><i class="fa fa-check"></i> Apply</button>
 		                </div>
 		            </div>
+		            <input type="hidden" id="userType" name="userType" value="<?php echo $this->user_type; ?>">
             	</div>
         	</form>
         </div>
@@ -182,8 +185,9 @@
 				                            <th>Id</th>
 				                            <th>Task</th>
 				                            <th>Project</th>
-				                            
+				                             <?php if($this->user_type == 0){ ?>
 				                            <th>Assigned To</th>
+				                           	<?php } ?>
 				                            <th>Client</th>
 				                            <!-- <th>Assigned By</th> -->
 				                            <th>Due Date</th>

@@ -316,18 +316,12 @@
 							<tr role="row">
 								<th>Id</th>
 								<th>Project Name</th>
-								<th>Deadline</th>	
+								<th>Project Members</th>
+								<th>Deadline</th>
+								<?php if($this->user_type == 0 || $this->user_type == 2) { ?>	
 								<th>Client</th>
-								<?php 
-								    if($this->user_type == 0){ ?>
-								    	<th>Project Members</th>
-								<?php }else{ } ?>
-								<?php 
-								    if($this->user_type == 0){ ?>
-								    	<th>Action</th>
-								<?php }else { } ?>
-								
-								
+								<?php } ?>
+								<th>Action</th>		    	
 							</tr>
 						</thead>
 					</table>

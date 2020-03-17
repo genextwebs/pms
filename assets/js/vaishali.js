@@ -189,7 +189,29 @@ jQuery(document).ready(function() {
 	}
 
 	else if((controllerName == 'project' || controllerName == 'task') && (functionName == 'task' || functionName == '')){
-		
+		var user = jQuery('#userType').val();
+
+		if(user == 0){
+			var aoColumns = [{ "sWidth": "40px", sClass: "text-left", "asSorting": [  ] }, 
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] },
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [  ]},  
+                     ];
+		}
+		else{
+			var aoColumns = [{ "sWidth": "40px", sClass: "text-left", "asSorting": [  ] }, 
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] },
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [  ]},  
+                     ];
+		}
 		var oTable = jQuery('#tasks-table').DataTable({
 			'bRetrieve': true,
 	        "bPaginate": true,
@@ -202,15 +224,7 @@ jQuery(document).ready(function() {
 	        "bInfo": true,
 	        "bAutoWidth": false,
 	        "bProcessing": true,
-	        "aoColumns": [{ "sWidth": "40px", sClass: "text-left", "asSorting": [  ] }, 
-                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] },
-                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
-                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
-                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
-                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
-                      { "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
-                      { "sWidth": "250px", sClass: "text-center", "asSorting": [  ]},  
-                     ],
+	        aoColumns, 
 	        "bServerSide": true,
 	        "fixedHeader": true,
 	        "sAjaxSource": base_url+"project/task_list/"+controllerName,

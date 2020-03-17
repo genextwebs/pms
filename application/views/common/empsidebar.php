@@ -96,9 +96,7 @@ if($this->session->userdata('login')){
                 <li>
                     <a href="#">Task Board</a>
                 </li>
-                <li>
-                    <a href="#">Task Calendar</a>
-                </li>
+                
             </ul>
         </li>
         <li <?php if($controller == 'timelog' && ($functionName == 'timelog' || $functionName == '')) { echo 'class="active"'; } ?>>

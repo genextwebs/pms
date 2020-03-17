@@ -1,8 +1,7 @@
 jQuery(document).ready(function() {
 	if(controllerName == 'project' && (functionName == 'index' || functionName == '')){
 		var user = jQuery('#projectuserid').val();
-		//alert(user);
-		if(user == 0){
+		if(user == 0 || user == 2){
 			var aoColumns = [{ "sWidth": "40px", sClass: "text-left", "asSorting": [  ] }, 
 				{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
 				{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
@@ -10,22 +9,16 @@ jQuery(document).ready(function() {
 				{ "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
 				{ "sWidth": "250px", sClass: "text-center", "asSorting": [  ] }, 
 			];
-
-		}else if(user == 1){
+		}
+		else{
 			var aoColumns = [{ "sWidth": "40px", sClass: "text-left", "asSorting": [  ] }, 
 				{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
-				{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
-				{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
-				
-			];
-
-		}else if(user == 2){
-			var aoColumns = [{ "sWidth": "40px", sClass: "text-left", "asSorting": [  ] }, 
-				{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
-				{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
-				{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] },  				 
+				{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] },  
+				{ "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
+				{ "sWidth": "250px", sClass: "text-center", "asSorting": [  ] }, 
 			];
 		}
+			
 		var oTable = jQuery('#project').DataTable({
 			'bRetrieve': true,
 			"bPaginate": true,

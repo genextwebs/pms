@@ -81,9 +81,9 @@
                 <th> Date </th>
                 <th> Occasion </th>
                 <th> Day </th>
-                <?php if($this->user_type == 0) { ?>
+                <!-- <?php if($this->user_type == 0) { ?> -->
                     <th> Action </th>
-                <?php } ?>
+               <!--  <?php } ?> -->
             </tr>
             </thead>
             <tbody id="janTbody">
@@ -160,9 +160,9 @@
                 <th> Date </th>
                 <th> Occasion </th>
                 <th> Day </th>
-                <?php if($this->user_type == 0) { ?>
+                <!-- <?php if($this->user_type == 0) { ?> -->
                 <th> Action </th>
-                <?php } ?>
+                <!-- <?php } ?> -->
             </tr>
             </thead>
             <tbody id="febTbody">
@@ -236,9 +236,9 @@
                 <th> Date </th>
                 <th> Occasion </th>
                 <th> Day </th>
-                <?php if($this->user_type == 0) { ?>
+                <!-- <?php if($this->user_type == 0) { ?> -->
                 <th> Action </th>
-                <?php } ?>
+               <!--  <?php } ?> -->
             </tr>
             </thead>
             <tbody id="marTbody">
@@ -312,9 +312,9 @@
                 <th> Date </th>
                 <th> Occasion </th>
                 <th> Day </th>
-                <?php if($this->user_type == 0) { ?>
+                <!-- <?php if($this->user_type == 0) { ?> -->
                 <th> Action </th>
-            <?php } ?>
+            <!-- <?php } ?> -->
             </tr>
             </thead>
             <tbody id="aprilTbody">
@@ -388,9 +388,9 @@
                 <th> Date </th>
                 <th> Occasion </th>
                 <th> Day </th>
-                <?php if($this->user_type == 0) { ?>
+                <!-- <?php if($this->user_type == 0) { ?> -->
                 <th> Action </th>
-            <?php } ?>
+           <!--  <?php } ?> -->
             </tr>
             </thead>
             <tbody id="mayTbody">
@@ -464,9 +464,9 @@
                 <th> Date </th>
                 <th> Occasion </th>
                 <th> Day </th>
-                <?php if($this->user_type == 0) { ?>
+                <!-- <?php if($this->user_type == 0) { ?> -->
                 <th> Action </th>
-                <?php } ?>
+                <!-- <?php } ?> -->
             </tr>
             </thead>
             <tbody id="juneTbody"> 
@@ -1078,3 +1078,17 @@
                 </div>
             </div>
 
+
+<script type="text/javascript">
+        var legthArr=[];
+        jQuery(document).ready(function(){
+            jQuery('.price-dsc').each(function() {
+                var height = jQuery(this).height();
+                legthArr.push(height); 
+            });
+            var maxValue = Math.max.apply(Math,legthArr);
+            jQuery('.price-dsc').each(function() {
+                jQuery(this).css('height',maxValue);
+            });
+        });
+    </script>

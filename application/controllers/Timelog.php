@@ -11,7 +11,7 @@ class Timelog extends CI_Controller {
 		$this->login = $this->session->userdata('login');
 		$this->user_id = $this->login->id;
         $this->user_type = $this->login->user_type;
-        $this->name = $this->login->name;
+        //$this->name = $this->login->name;
 		func_check_login();
 	}
 

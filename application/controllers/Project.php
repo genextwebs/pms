@@ -300,16 +300,32 @@ class Project extends CI_Controller {
 
 			 			'<p><a href='.base_url().'Project/showproject/'.base64_encode($row->id). ' class="btn btn-success btn-circle" data-toggle="tooltip" data-original-title="View Project Details"><i class="fa fa-search" aria-hidden="true"></i></a></p>';
 			}
-			$datarow[] = array(
+			if($this->user_type == 0){
+				$addMember = "<a href='".base_url()."Project/member/".base64_encode($rowid)."'> <i class='fa fa-plus'></i> Add Project  Members</a>"
+				.'<br/>'.$emp_str;
+			}
+			else{
+				$addMember = $emp_str;
+			}
+			if($this->user_type == 0 || $this->user_type == 2){
+				$datarow[] = array(
 				$id = $i,
 				$row->projectname.'<br/>'.$string.'<br/>'.$showStatus,
+				$addMember,
 				$row->deadline,
 				$row->clientname,
-				"<a href='".base_url()."Project/member/".base64_encode($rowid)."'> <i class='fa fa-plus'></i> Add Project  Members</a>"
-				.'<br/>'.$emp_str,
 				$actionstring
 				);
-				$i++;
+			}else{
+				$datarow[] = array(
+				$id = $i,
+				$row->projectname.'<br/>'.$string.'<br/>'.$showStatus,
+				$addMember,
+				$row->deadline,
+				$actionstring
+				);
+			}
+			$i++;
 		}
 		$output = array
 		(
@@ -925,12 +941,12 @@ class Project extends CI_Controller {
             /** Filtering Start */
             if(!empty(trim($_GET['sSearch']))){
             	$searchTerm = trim($_GET['sSearch']);
-            	$sWhere .= ' AND (title like "%'.$searchTerm.'%" OR description like "%'.$searchTerm.'%" OR tbl_task.startdate like "%'.$searchTerm.'%" OR tbl_task.duedate like "%'.$searchTerm.'%" OR tbl_employee.employeename like "%'.$searchTerm.'%" OR tbl_clients.clientname like "%'.$searchTerm.'%")';
+            	$sWhere .= ' AND (title like "%'.$searchTerm.'%" OR description like "%'.$searchTerm.'%" OR tbl_task.startdate like "%'.$searchTerm.'%" OR tbl_task.duedate like "%'.$searchTerm.'%" OR tbl_employee.employeename like "%'.$searchTerm.'%" OR tbl_clients.clientname like "%'.$searchTerm.'%" OR tbl_project_info.projectname like "%'.$searchTerm.'%")';
             }
             $project = !empty($_POST['project']) ? $_POST['project'] : '';
             $employee = !empty($_POST['employee']) ? $_POST['employee'] : '';
             $status = $_POST['status'];
-            $taskcategory = !empty($_POST['employee']) ? $_POST['taskcategory'] : '';
+            $taskcategory = !empty($_POST['taskcategory']) ? $_POST['taskcategory'] : '';
             $clientName = !empty($_POST['client']) ? $_POST['client'] : ''; 
             $startdate = !empty($_POST['startdate']) ? $_POST['startdate'] : '';
             $enddate = !empty($_POST['enddate']) ? $_POST['enddate'] : '';
@@ -941,11 +957,14 @@ class Project extends CI_Controller {
 	            else{
 	            	$sWhere.=' AND  projectid='.$project;
 	            }
-	            if($employee == 'all'){
+	            if($this->user_type == 0){
+	            	if($employee == 'all'){
 	            }
-	            else{
-	            	$sWhere.=' AND  assignedto='.$employee;
+		            else{
+		            	$sWhere.=' AND  assignedto='.$employee;
+		            }	
 	            }
+	            
 	            if($clientName == 'all'){
 	            }
 	            else{
@@ -972,6 +991,9 @@ class Project extends CI_Controller {
 				}
 				
 	        }
+	        if($this->user_type == 2){
+	        	$sWhere.= " AND tbl_employee.user_id =".$this->user_id;
+	        }
             if(!empty($sWhere)){
             	$sWhere = " WHERE 1 ".$sWhere;
             }
@@ -987,6 +1009,20 @@ class Project extends CI_Controller {
 		$iFilteredTotal = count($taskFilterArr);
 		$taskAllArr = $this->common_model->getData('tbl_task');
 		$iTotal = count($taskAllArr);
+		}
+		else if($this->user_type == 2){
+
+			$query = "SELECT tbl_task.* , tbl_employee.employeename,tbl_clients.clientname,tbl_project_info.clientid,tbl_project_info.projectname from tbl_task inner JOIN tbl_employee on tbl_task.assignedto = tbl_employee.id inner join tbl_project_info on tbl_task.projectid = tbl_project_info.id inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+
+			$taskArr = $this->common_model->coreQueryObject($query);
+
+			$filterQuery = "SELECT tbl_task.* , tbl_employee.employeename,tbl_clients.clientname,tbl_project_info.clientid,tbl_project_info.projectname from tbl_task inner JOIN tbl_employee on tbl_task.assignedto = tbl_employee.id inner join tbl_project_info on tbl_task.projectid = tbl_project_info.id inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id ".$sWhere;
+
+			$taskFilterArr = $this->common_model->coreQueryObject($filterQuery);
+			$iFilteredTotal = count($taskFilterArr);
+			$taskAllArr = $this->common_model->coreQueryObject($filterQuery);
+			$iTotal = count($taskAllArr);
+		}
 		/** Output */
 		$datarow = array();
 		$i = 1;
@@ -1015,8 +1051,8 @@ class Project extends CI_Controller {
 					$actionStr.= '<a href='.base_url().'task/edittask/'.base64_encode($row->id).' class="btn btn-info btn-circle edit-task" data-toggle="tooltip" data-task-id="69" data-original-title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a> &nbsp;';
 				}
 				$actionStr.='<a href="javascript:;" class="btn btn-danger btn-circle sa-params" data-toggle="tooltip" data-task-id="69" data-original-title="Delete" onclick="deleteTask(\''.$row->id.'\')"><i class="fa fa-times" aria-hidden="true"></i></a>';
-
-	        $datarow[] = array(
+			if($this->user_type == 0){
+				$datarow[] = array(
 					$id = $i,
 	                $row->title,
 	                $row->projectname,
@@ -1026,6 +1062,19 @@ class Project extends CI_Controller {
 					$str,
 					$actionStr
 	        );
+			}
+			else{
+				$datarow[] = array(
+					$id = $i,
+	                $row->title,
+	                $row->projectname,
+	                $row->employeename,
+					$row->duedate,
+					$str,
+					$actionStr
+	        );
+			}
+	        
 	        $i++;
       	}
         
@@ -1038,65 +1087,8 @@ class Project extends CI_Controller {
 	        "aaData" => $datarow
 		);
 
-		}else if($this->user_type == 2){
-
-			$query = "SELECT tbl_task.* , tbl_employee.employeename,tbl_clients.clientname,tbl_project_info.clientid,tbl_project_info.projectname from tbl_task inner JOIN tbl_employee on tbl_task.assignedto = tbl_employee.id inner join tbl_project_info on tbl_task.projectid = tbl_project_info.id inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id where tbl_employee.user_id =".$this->user_id.''.$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
-
-			$taskArr = $this->common_model->coreQueryObject($query);
-
-			$query = "SELECT tbl_task.* , tbl_employee.employeename,tbl_clients.clientname,tbl_project_info.clientid,tbl_project_info.projectname from tbl_task inner JOIN tbl_employee on tbl_task.assignedto = tbl_employee.id inner join tbl_project_info on tbl_task.projectid = tbl_project_info.id inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id where tbl_employee.user_id =".$this->user_id.''.$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
-
-		$taskFilterArr = $this->common_model->coreQueryObject($query);
-		$iTotal = count($taskFilterArr);
-		//$taskAllArr = $this->common_model->getData('tbl_task');
-		//$iTotal = count($taskAllArr);
-		/** Output */
-		$datarow = array();
-		$i = 1;
-		$str = '';
-		foreach($taskArr as $row) {
-			if($row->status == 0){
-				$status = $row->status = 'Incomplete';
-				$str = '<label class="label label-warning">'.$status.'</label>';
-			}
-			elseif($row->status == 1){
-				$status = $row->status = 'To Do';
-				$str = '<label class="label label-onhold">'.$status.'</label>';
-			}
-			elseif($row->status == 2){
-				$status = $row->status = 'Doing';
-				$str = '<label class="label label-inprogress">'.$status.'</label>';
-			}
-			elseif($row->status == 3){
-				$status = $row->status = 'Completed';
-				$str = '<label class="label label-success">'.$status.'</label>';
-			}
-			$actionStr="";
-			$actionStr.= '<a href='.base_url().'task/edittask/'.base64_encode($row->id).' class="btn btn-info btn-circle edit-task" data-toggle="tooltip" data-task-id="69" data-original-title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a> &nbsp;';
-
-	        $datarow[] = array(
-					$id = $i,
-	                $row->title,
-	                $row->projectname,
-	                $row->employeename,
-	                $row->clientname,
-					$row->duedate,
-					$str,
-					$actionStr
-	        );
-	        $i++;
-      	}
-        
-		$output = array
-		(
-		   	"sEcho" => intval($_GET['sEcho']),
-	        "iTotalRecords" => $iTotal,
-	        "iTotalRecordsFormatted" => number_format($iTotal), //ShowLargeNumber($iTotal),
-	        "iTotalDisplayRecords" => $iFilteredTotal,
-	        "aaData" => $datarow
-		);
-		} 	
-	    
+		
+		
 	  echo json_encode($output);
       exit();
 	}

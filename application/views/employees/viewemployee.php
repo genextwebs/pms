@@ -264,15 +264,25 @@
 							  	<div class="tab-pane fade" id="leaves" role="tabpanel" aria-labelledby="leaves-tab">
 							  		<div class="row">
 				                        <div class="col-md-6">
+				                        	<?php 
+				                        	$whereLeaveArr = array('empid' => $empData[0]->id);
+				                        	$leaveData =  $this->common_model->getData('tbl_leaves',$whereLeaveArr);
+			                        		$whereCasual = array('empid' => $empData[0]->id , 'leavetypeid' => 3);
+			                        		$LeaveTypeCasual = $this->common_model->getData('tbl_leaves', $whereCasual);
+			                        		$whereSick = array('empid' => $empData[0]->id , 'leavetypeid' =>1);
+			                        		$LeaveTypeSick = $this->common_model->getData('tbl_leaves', $whereSick);
+			                        		$whereEarned = array('empid' => $empData[0]->id , 'leavetypeid' =>2);
+			                        		$LeaveTypeEarned = $this->common_model->getData('tbl_leaves', $whereEarned);	
+				                        	?>
 				                            <ul class="basic-list">
 				                                <li>Casual
-				                                    <span class="pull-right bg-success label">0</span>
+				                                    <span class="pull-right bg-success label"><?php echo count($LeaveTypeCasual); ?></span>
 				                                </li>
 				                                <li>Sick
-				                                    <span class="pull-right bg-danger label">0</span>
+				                                    <span class="pull-right bg-danger label"><?php echo count($LeaveTypeSick); ?></span>
 				                                </li>
 				                                <li>Earned
-				                                    <span class="pull-right bg-info label">0</span>
+				                                    <span class="pull-right bg-info label"><?php echo count($LeaveTypeEarned); ?></span>
 				                                </li>
 				                           	</ul>
 				                        </div>
@@ -288,11 +298,26 @@
 									            </tr>
 									        </thead>
 									        <tbody>
+									        	<?php 
+									        	
+									        	for($i=0;$i<count($leaveData);$i++){ 
+									        		if($leaveData[$i]->leavetypeid == 1){
+									        		$leave = 'Sick';
+
+										        	}elseif($leaveData[$i]->leavetypeid == 2){
+										        		$leave = 'Earned';
+
+										        	}elseif($leaveData[$i]->leavetypeid == 3){
+										        		$leave = 'Casual';
+										        	}
+									        	?>
 									            <tr>
-									                <td></td>
-									                <td></td>
-									                <td></td>
+									                <td><?php echo $leave;?></td>
+									                <td><?php echo $leaveData[$i]->date; ?></td>
+									                <td><?php echo $leaveData[$i]->reasonforabsence; ?></td>
 									            </tr>
+									            <?php }
+									            ?>
 									        </tbody>
 									    </table>
 									</div>
@@ -312,38 +337,22 @@
 									            </tr>
 									        </thead>
 									        <tbody>
+									        	<?php 
+									        	$timelogQuery = "SELECT `tbl_timelog`.*,tbl_project_info.id as pid ,tbl_project_info.projectname from tbl_timelog inner join tbl_project_info on  tbl_project_info.id = tbl_timelog.timelogprojectid where timelogemployeeid=".$empData[0]->id;
+									        	$timelogData = $this->common_model->coreQueryObject($timelogQuery);
+									        	//echo "<PRE>";print_r($timelogData);die;
+									        	$j=1;
+									        	for($i=0;$i<count($timelogData);$i++) {	
+									        	?>
 									            <tr role="row" class="odd">
-									               <td class="" tabindex="0">3</td>
-									               <td><a href="#">Lemuel Padberg</a></td>
-									               <td>16-08-2019 10:25am</td>
-									               <td>22-08-2019 04:25pm</td>
-									               <td>164hrs</td>
-									               <td>working onet</td>
+									               <td class="" tabindex="0"><?php echo $j;  ?></td>
+									               <td><a href="<?php echo base_url().'Project/overView/'.base64_encode($timelogData[$i]->pid)?>"><?php echo $timelogData[$i]->projectname; ?></a></td>
+									               <td><?php echo $timelogData[$i]->timelogstarttime; ?></td>
+									               <td><?php echo $timelogData[$i]->timelogendtime; ?></td>
+									               <td><?php echo $timelogData[$i]->totalhours; ?></td>
+									               <td><?php echo $timelogData[$i]->timelogmemo; ?></td>
 									            </tr>
-									            <tr role="row" class="odd">
-									               <td class="" tabindex="0">2</td>
-									               <td><a href="#">Zemole Meeting</a></td>
-									               <td>19-08-2019 10:00am</td>
-									               <td>08-08-2019 08:22pm</td>
-									               <td>159hrs</td>
-									               <td>working onet</td>
-									            </tr>
-									            <tr role="row" class="odd">
-									               <td class="" tabindex="0">1</td>
-									               <td><a href="#">Lemuel Padberg</a></td>
-									               <td>16-08-2019 10:25am</td>
-									               <td>22-08-2019 04:25pm</td>
-									               <td>121hrs</td>
-									               <td>working onet</td>
-									            </tr>
-									            <tr role="row" class="odd">
-									               <td class="" tabindex="0">4</td>
-									               <td><a href="#">Zemole Tombaarg</a></td>
-									               <td>19-12-2019 10:00am</td>
-									               <td>08-11-2019 08:22pm</td>
-									               <td>109hrs</td>
-									               <td>working onet</td>
-									            </tr>
+									           <?php $j++; } ?> 
 									        </tbody>
 									    </table>
 									</div>
@@ -381,3 +390,46 @@
                 </div>
             </div>
             <!-- ends of contentwrap -->
+ <div class="modal fade" id="emp-docs" tabindex="-1" role="dialog" aria-labelledby="emp-docstitle" aria-hidden="true">
+			    <div class="modal-dialog modal-md" role="document">
+			        <div class="modal-content">
+			            <div class="modal-header">
+			                <h4 class="modal-title"><i class="fa fa-plus"></i>  Employee Documents</h4>
+			                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			                    <span aria-hidden="true">&times;</span>
+			                </button>
+			            </div>
+			            <div class="modal-body">
+			                <form class="employe-docs">
+			                    <div class="form-body">
+			                        <div class="row">
+			                            <div class="col-md-5">
+			                                <div class="form-group">
+			                                    <label class="control-label">Name</label>
+			                                    <input type="text" id="name" placeholder="Name" class="form-control" name="name">
+			                                </div>
+			                            </div>
+			                            <div class="col-md-5">
+			                                <div class="form-group">
+			                                    <label class="control-label">Phone</label>
+			                                    <input type="file" id="docs" class="form-control" name="docs" placeholder="Docs">
+			                                </div>
+			                            </div>
+			                            <div class="col-md-1">
+			                                <button type="button" onclick="" class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button>
+			                            </div>
+			                        </div>
+			                        <button type="button" id="plusButton" class="btn btn-sm btn-info" style="margin-bottom: 20px"> Add More <i class="fa fa-plus"></i> </button> 
+			                        <div class="alert alert-info"><i class="fa fa-info-circle"></i> Allowed file formats: jpg, png, gif, doc, docx, xls, xlsx, pdf, txt.</div>
+			                    </div>
+			                </form>
+			            </div>
+			            <div class="modal-footer text-left">
+			                <button type="submit" id="save-form" class="btn btn-info"> <i class="fa fa-check"></i> Save</button>
+			                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+        </div>
+    </div>
