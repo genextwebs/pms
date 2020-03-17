@@ -17,13 +17,14 @@
 	<div class="row">
 	    <div class="col-md-12">
 	        <div class="stats-box">
-	        	<?php
-	        	if($this->user_type == 0){
-	        	?>
 	        		<div class="row">
 					<div class="col-md-6">
 						<div class="form-group">
+							<?php
+			        	if($this->user_type == 0){
+			        	?>
 	                        <a class="btn btn-outline-success btn-sm"  href="<?php echo base_url().'Finance/addestimates' ?>">Create Estimate <i class="fa fa-plus" aria-hidden="true"></i></a>
+	                   <?php } ?>
 							<a href="javascript:;" id="toggle-filter" class="btn btn-outline-danger btn-sm toggle-filter"><i class="fa fa-sliders"></i> Filter Results</a>
 						</div>
 					</div>
@@ -65,13 +66,7 @@
 						</div>
 					</form>
 				</div>		
-	        	<?php
-	        	}else if($this->user_type == 1){
-	        	?>
-	        		
-	        	<?php
-	        	} 
-	        	?>
+	        	
 								
 		    		<?php
 						//warning 
@@ -97,10 +92,7 @@
 						         <th>Created At</th>
 								 <th>Valid Till</th>
 								 <th>Status</th>
-								 <?php 
-								    if($this->user_type == 0){ ?>
-								    	<th>Action</th>
-								<?php }else { } ?>
+								 <th>Action</th>	
 					      	</tr>
 					   	</thead>
 					 </table>
