@@ -139,7 +139,7 @@ class Holiday extends CI_Controller
 	}
 
 	public function displayData(){
-		$wherArr = array('user_id' =>$this->user_id);
+		$wherArr = array('user_id' =>1);
         $data['holiday'] = $this->common_model->getData('tbl_holiday_settings',$wherArr);
         $SatArr = array();
         $SunArr = array();

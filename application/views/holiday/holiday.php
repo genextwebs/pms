@@ -53,7 +53,7 @@
   <div class="tab-content">
     <?php
         $this->login = $this->session->userdata('login');
-        $this->user_id = $this->login->id;
+        $this->user_id = 1;
         $wherArr = array('user_id' => $this->user_id);
         $data['holiday'] = $this->common_model->getData('tbl_holiday_settings',$wherArr);
         $SatArr = array();
@@ -81,9 +81,9 @@
                 <th> Date </th>
                 <th> Occasion </th>
                 <th> Day </th>
-                <!-- <?php if($this->user_type == 0) { ?> -->
+                <?php if($this->user_type == 0) { ?> 
                     <th> Action </th>
-               <!--  <?php } ?> -->
+               <?php } ?>
             </tr>
             </thead>
             <tbody id="janTbody">
@@ -160,9 +160,9 @@
                 <th> Date </th>
                 <th> Occasion </th>
                 <th> Day </th>
-                <!-- <?php if($this->user_type == 0) { ?> -->
+                <?php if($this->user_type == 0) { ?> 
                 <th> Action </th>
-                <!-- <?php } ?> -->
+                <?php } ?>
             </tr>
             </thead>
             <tbody id="febTbody">
@@ -236,9 +236,9 @@
                 <th> Date </th>
                 <th> Occasion </th>
                 <th> Day </th>
-                <!-- <?php if($this->user_type == 0) { ?> -->
+                <?php if($this->user_type == 0) { ?> 
                 <th> Action </th>
-               <!--  <?php } ?> -->
+               <<?php } ?> 
             </tr>
             </thead>
             <tbody id="marTbody">
@@ -312,9 +312,9 @@
                 <th> Date </th>
                 <th> Occasion </th>
                 <th> Day </th>
-                <!-- <?php if($this->user_type == 0) { ?> -->
+                <?php if($this->user_type == 0) { ?> 
                 <th> Action </th>
-            <!-- <?php } ?> -->
+            <?php } ?> 
             </tr>
             </thead>
             <tbody id="aprilTbody">
@@ -388,9 +388,9 @@
                 <th> Date </th>
                 <th> Occasion </th>
                 <th> Day </th>
-                <!-- <?php if($this->user_type == 0) { ?> -->
+                <?php if($this->user_type == 0) { ?>
                 <th> Action </th>
-           <!--  <?php } ?> -->
+                <?php } ?>
             </tr>
             </thead>
             <tbody id="mayTbody">
@@ -464,9 +464,9 @@
                 <th> Date </th>
                 <th> Occasion </th>
                 <th> Day </th>
-                <!-- <?php if($this->user_type == 0) { ?> -->
+                <?php if($this->user_type == 0) { ?>
                 <th> Action </th>
-                <!-- <?php } ?> -->
+                <?php } ?> 
             </tr>
             </thead>
             <tbody id="juneTbody"> 
@@ -1078,17 +1078,3 @@
                 </div>
             </div>
 
-
-<script type="text/javascript">
-        var legthArr=[];
-        jQuery(document).ready(function(){
-            jQuery('.price-dsc').each(function() {
-                var height = jQuery(this).height();
-                legthArr.push(height); 
-            });
-            var maxValue = Math.max.apply(Math,legthArr);
-            jQuery('.price-dsc').each(function() {
-                jQuery(this).css('height',maxValue);
-            });
-        });
-    </script>
