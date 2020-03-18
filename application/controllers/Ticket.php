@@ -184,7 +184,12 @@ class Ticket extends CI_Controller {
 		//echo $query;die;
 		$TicketArr = $this->common_model->coreQueryObject($query);
 
-		$query = "SELECT tbl_ticket.*,tbl_ticket_channel.name as channel,tbl_ticket_type.name as type FROM tbl_ticket inner join tbl_ticket_channel on tbl_ticket.channelname=tbl_ticket_channel.id inner join tbl_ticket_type on tbl_ticket.type=tbl_ticket_type.id".$sWhere;
+		$query = "SELECT * from tbl_ticket".$sWhere;
+
+		$TicketFilterArr = $this->common_model->coreQueryObject($query);
+		$iFilteredTotal = count($TicketFilterArr);
+		$TicketAllArr = $this->common_model->getData('tbl_ticket');
+		$iTotal = count($TicketAllArr);
 
 		}else if($this->user_type == 1){
 		$query = "SELECT tbl_ticket.* FROM tbl_ticket".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
@@ -198,10 +203,7 @@ class Ticket extends CI_Controller {
 
 		$query = "SELECT tbl_ticket.*,tbl_ticket_channel.name as channel,tbl_ticket_type.name as type FROM tbl_ticket inner join tbl_ticket_channel on tbl_ticket.channelname=tbl_ticket_channel.id inner join tbl_ticket_type on tbl_ticket.type=tbl_ticket_type.id".$sWhere;
 		}
-		$TicketFilterArr = $this->common_model->coreQueryObject($query);
-		$iFilteredTotal = count($TicketFilterArr);
-		$TicketAllArr = $this->common_model->getData('tbl_ticket');
-		$iTotal = count($TicketAllArr);
+		
 
 		/** Output */
 		$datarow = array();
@@ -429,7 +431,7 @@ class Ticket extends CI_Controller {
 
 		if(!empty($_POST)){
 		$ticket_comment = $this->input->post('ticket_comment');
-		$ticket_Image = $this->input->post('ticket_Image');
+		//$ticket_Image = $this->input->post('ticket_Image');
 		/*$status = $this->input->post('status');
 		$empid = $this->input->post('t_empid');*/
 		//Image Upload
@@ -442,8 +444,17 @@ class Ticket extends CI_Controller {
 			move_uploaded_file($file_loc,$folder.$file);
 		$whereArr = array('id'=>$this->user_id);
 		$data = $this->common_model->getData('tbl_user',$whereArr);
-		//print_r($data);die;
-		$insArr = array('profileimg'=>$file,'comment' => $ticket_comment);
+		$whereArrEmp = array('user_id'=>$data[0]->id);
+		$empData = $this->common_model->getData('tbl_employee',$whereArrEmp);
+		
+		if($this->user_type == 0){
+			$replierId = 0;
+		}
+		else{
+					$replierId = $empData[0]->id;
+
+		}
+		$insArr = array('ticketemployeeid'=>$replierId,'profileimg'=>$file,'comment' => $ticket_comment);
 		$ticketArr =$this->common_model->insertData('tbl_ticket_comment',$insArr);
 		$tArray = $this->common_model->getData('tbl_ticket_comment');
 
@@ -453,7 +464,7 @@ class Ticket extends CI_Controller {
 		//$image=$img_corequery[0]->profileimg;
 		$image=$tArray[0]->profileimg;
 		$created = $tArray[0]->created_at;
-		$replay =  $comment;
+		$replay =  $tArray[0]->comment;;
 		$totaldata = count($tArray);
 		$commentArr = array();
 		$commentArr['count'] = $totaldata;

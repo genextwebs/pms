@@ -1306,11 +1306,3 @@ function reply(){
 	$('#reply-toggle').css("display","none");
 }
 
-//
-$(document).ready(function() {
-  $('#calendar').fullCalendar({
-    left: 'prev,next today',
-    center: 'title',
-    right: 'month,agendaWeek,agendaDay'
-  });
-});

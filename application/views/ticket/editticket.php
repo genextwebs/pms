@@ -14,7 +14,7 @@
 </nav>
 <!-- contetn-wrap -->
 <div class="content-in">
-	<form id="editticket" name="editticket" class="aj-form" method="post" action="<?php echo base_url().'ticket/editticket/'.base64_encode($editticketId); ?>" enctype="multipart/form-data">  
+	<form id="editticket" name="editticket" class="aj-form" method="post" action="<?php echo base_url().'Ticket/insert_comment' ?>" enctype="multipart/form-data">  
 		<?php
 	        $mess = $this->session->flashdata('message_name');
 	        if(!empty($mess)){
@@ -63,7 +63,7 @@
                 							<div class="form-group" id="comment_for_ticket">
                 								<label class="control-label">
                 							<?php
-                								 echo 'Ticket Subject='.$ticketinfo[0]->ticketsubject;
+                								 echo 'Ticket Subject  =  '.$ticketinfo[0]->ticketsubject;
                 								 echo '<br/><br/>';
                 								 echo $ticketinfo[0]->created_at;
                 								
@@ -175,7 +175,7 @@
 									  	<!-- <button type="submit" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" name="submitticket">
 									    	Submit
 									  	</button> -->
-									  	<button type="button" class="btn btn-success" aria-haspopup="true" aria-expanded="false" name="submitticket" id="submitticket">
+									  	<button type="submit" class="btn btn-success" aria-haspopup="true" aria-expanded="false" name="submitticket" id="">
 									    	Submit
 									  	</button> 
 									  <!-- 	<div class="dropdown-menu">
