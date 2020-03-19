@@ -1117,20 +1117,6 @@ if (isConfirm) {
    }
    });
 }                                            
-                                              
-//Not working Employee	
-/*$('#freeEmp').click(function(){
-	year = 1;	
-	$.ajax({
-		url : base_url+"Employee/index/"+year,
-        type : 'POST',
-        
-        error: function() {
-              alert('Something is wrong');
-           },
-        success: function(){
-        	
-        }
-	});
+       
 
-});*/
+
