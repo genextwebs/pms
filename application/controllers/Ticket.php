@@ -6,7 +6,7 @@ class Ticket extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		error_reporting(E_ALL);
-		ini_set('display_errors', 1);
+		ini_set('display_errors', 0);
 		$this->load->model('common_model');
 		$this->login = $this->session->userdata('login');
 		$this->user_type = $this->login->user_type;
@@ -243,13 +243,15 @@ class Ticket extends CI_Controller {
 				$status=$row->status='Close';
 				$showStatus = '<label class="label label-success">'.$status.'</label>';
 			}
-		if($this->user_type == 0){
+		if($this->user_type == 0 || $this->user_type == 2){
 
 			$actionstring = '<div class="dropdown action m-r-10">
 			           <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
 			            <div class="dropdown-menu">
-			                <a  class="dropdown-item" href="'.base_url().'ticket/editticket/'.base64_encode($row->id).'";><i class="fa fa-edit"></i> Edit</a>
+			               assigntask
+			                <a  class="dropdown-item" href="'.base_url().'ticket/assignticket/'.base64_encode($row->id).'";><i class="fa fa-edit"></i> Edit</a>
 			                <a  href="javascript:void();" onclick="deleteticket(\''.base64_encode($row->id).'\');" class="dropdown-item" href="javascript:void()"><i class="fa fa-trash" ></i> Delete</a>
+			                 <a  class="dropdown-item" href="'.base_url().'ticket/editticket/'.base64_encode($row->id).'";><i class="fa fa-view"></i> View</a>
 			          </div>
 			</div>';
 			if($row->requestername != ''){
@@ -302,29 +304,6 @@ class Ticket extends CI_Controller {
 			    <label><b>Priority:</b></label>'.$row->priority
 			);
 			$i++;
-		}else if($this->user_type == 2){
-
-			$actionstring =
-				'<div class="dropdown action m-r-10">
-      				<button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
-        				<div class="dropdown-menu">
-          					<a  class="dropdown-item" href="'.base_url().'ticket/editticket/'.base64_encode($row->id).'";><i class="fa fa-edit"></i> Edit</a>
-
-           					<a  href="javascript:void();" onclick="deleteticket(\''.base64_encode($row->id).'\');" class="dropdown-item" href="javascript:void()"><i class="fa fa-trash" ></i> Delete</a>
-           
-      					</div>
-				</div>';
-
-				$datarow[] = array(
-					$id = $i,
-					$row->ticketsubject,
-					$row->requestername,
-					$row->created_at,
-					'<b>Agent:</b>'.$row->agent.
-					'<br/> <b>Staus:</b> <label class="label label-success">'.$row->status.'</label><br/>
-				   <label><b>Priority:</b></label>'.$row->priority
-				);
-			$i++;
 		}
 	}
 
@@ -349,10 +328,11 @@ class Ticket extends CI_Controller {
 		$whereEmp = array('is_deleted'=>0);
 		$data['getemployee']=$this->common_model->getData('tbl_employee',$whereEmp);
 		$data['ticketchannel']=$this->common_model->getData('tbl_ticket_channel');
-		$query= "Select tbl_ticket_comment.*,tbl_employee.user_id from tbl_ticket_comment inner join tbl_employee on tbl_ticket_comment.ticketemployeeid= tbl_employee.id inner join tbl_user on tbl_employee.user_id=tbl_user.id";
+		/*$query= "Select tbl_ticket_comment.*,tbl_employee.user_id from tbl_ticket_comment inner join tbl_employee on tbl_ticket_comment.ticketemployeeid= tbl_employee.id inner join tbl_user on tbl_employee.user_id=tbl_user.id";*/
+		$query = "Select * from tbl_ticket_comment";
 		$data['ticketcommenttest'] = $this->common_model->coreQueryObject($query);
 		$this->load->view('common/header');
-		$this->load->view('ticket/editticket',$data);
+		$this->load->view('ticket/viewticket',$data);
 		$this->load->view('common/footer');
 	}
 
@@ -428,9 +408,9 @@ class Ticket extends CI_Controller {
 	}
 
 	public function insert_comment(){
-
+		//print_r($_FILES);die;
 		if(!empty($_POST)){
-		$ticket_comment = $this->input->post('ticket_comment');
+		$ticket_comment = $this->input->post('editor');
 		//$ticket_Image = $this->input->post('ticket_Image');
 		/*$status = $this->input->post('status');
 		$empid = $this->input->post('t_empid');*/
@@ -440,7 +420,7 @@ class Ticket extends CI_Controller {
 			$file_loc = $_FILES['ticket_Image']['tmp_name'];
 			$file_size = $_FILES['ticket_Image']['size'];
 			$file_type = $_FILES['ticket_Image']['type'];
-			$folder="uploads/";
+			$folder="upload/";
 			move_uploaded_file($file_loc,$folder.$file);
 		$whereArr = array('id'=>$this->user_id);
 		$data = $this->common_model->getData('tbl_user',$whereArr);
@@ -448,13 +428,14 @@ class Ticket extends CI_Controller {
 		$empData = $this->common_model->getData('tbl_employee',$whereArrEmp);
 		
 		if($this->user_type == 0){
-			$replierId = 0;
+			$replierId = 1;
 		}
 		else{
 					$replierId = $empData[0]->id;
 
 		}
 		$insArr = array('ticketemployeeid'=>$replierId,'profileimg'=>$file,'comment' => $ticket_comment);
+		//print_r($insArr);
 		$ticketArr =$this->common_model->insertData('tbl_ticket_comment',$insArr);
 		$tArray = $this->common_model->getData('tbl_ticket_comment');
 
@@ -462,7 +443,7 @@ class Ticket extends CI_Controller {
 
 		//$img_corequery= $this->common_model->coreQueryObject($query);
 		//$image=$img_corequery[0]->profileimg;
-		$image=$tArray[0]->profileimg;
+		/*$image=$tArray[0]->profileimg;
 		$created = $tArray[0]->created_at;
 		$replay =  $tArray[0]->comment;;
 		$totaldata = count($tArray);
@@ -473,7 +454,8 @@ class Ticket extends CI_Controller {
 		$commentArr['profileimg'] = $image;
 		$commentArr['insCommentData'] = $ticketArr;
 
-		echo json_encode($commentArr);exit;
+		echo json_encode($commentArr);exit;*/	
+		redirect('ticket/editticket');	
 		}
 	}
 
@@ -485,6 +467,12 @@ class Ticket extends CI_Controller {
 		//echo $this->db->last_query();die;
 		$this->session->set_flashdata('message','Delete Succesfully....');
 		redirect('ticket/index');
+	}
+
+	public function assigntask(){
+		$this->load->view('common/header');
+		$this->load->view('ticket/assignticket');
+		$this->load->view('common/footer');
 	}
 
 }

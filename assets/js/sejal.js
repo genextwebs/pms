@@ -278,7 +278,8 @@ jQuery(document).ready(function() {
 			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] },
 			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
 			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] },
-			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] },
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] },  
 			];
 		}
 		var oTable = jQuery('#tickets').DataTable({
@@ -1481,26 +1482,6 @@ $("#save_tchannel").click(function(event) {
 			    }
 		   });
 	}
-
-	$("#submitticket").click(function(event) {
-	var ticket_comment = $("#editor1").val();
-	var ticket_Image = $("input[name='ticket_Image']").val();
-	/*var t_status = $("#status").val();
-	var empid= $("#requestername").val();*/
-	imgurl = base_url+"uploads/";
-		$.ajax({
-		    type: "POST",
-		    url: base_url+"ticket/insert_comment",
-		    dataType: 'json',
-		    data:{ticket_comment:ticket_comment,ticket_Image:ticket_Image},
-		    success: function(data){
-				$('tbody').append("<tr><td>"+data.count+"</td><td><img height='50px' width='50px' src="+imgurl+data.profileimg+"></td><td>"+data.replay+"</td><td>"+data.create+"</td><td><input type='button' class='btn btn-sm btn-danger btn-rounded delete-category' onclick ='delete_t_comment(\""+data.insCommentData+"\");' id='deletereply' value='Remove'></td></tr>");
-				$('textarea').val('');
-				window.location.reload();
-			}
-		});
-	});
-
 
 	//delete tickets testttt
 	function delete_t_comment(id){

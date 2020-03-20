@@ -260,7 +260,7 @@
 								<th>Requested On</th> 
 								<th>Others</th> 
 								<?php 
-								    if($this->user_type == 0){ ?>
+								    if($this->user_type == 0 || $this->user_type == 2){ ?>
 								    	<th>Action</th>
 								<?php }else { } ?>
 							</tr>

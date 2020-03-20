@@ -14,7 +14,7 @@
 </nav>
 <!-- contetn-wrap -->
 <div class="content-in">
-	<form id="editticket" name="editticket" class="aj-form" method="post" action="<?php echo base_url().'Ticket/insert_comment' ?>" enctype="multipart/form-data">  
+	<form id="editticket" name="editticket" class="aj-form" method="post" enctype="multipart/form-data" action="<?php echo base_url().'Ticket/insert_comment' ?>">  
 		<?php
 	        $mess = $this->session->flashdata('message_name');
 	        if(!empty($mess)){
@@ -125,8 +125,8 @@
                                             <div class="form-group">
                                             	<label class="control-label">File 
                                             	</label><br/>
-                                            	<input type='file'class="file-upload-input" name="ticket_Image" id="ticket_Image"/>
-                                            	<input type="hidden" name="hidden_Image">
+                                            	<input type='file'class="file-upload-input" name="ticket_Image" id="ticket_Image	1"/>
+                                            	<input type="hidden" name="">
                                                 
                                             </div>
                                         </div>
