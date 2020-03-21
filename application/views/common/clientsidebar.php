@@ -48,18 +48,8 @@ if($this->session->userdata('login')){
                 <span>Projects</span>
             </a>
         </li>
-      <!--   <li <?php if($controller == 'products' && ($functionName == 'products' || $functionName == '')) { echo 'class="active"'; } ?>>
-            <a href="<?php echo base_url().'products'?>" class="nav-link-s">
-                <i class="icon-layers"></i>
-                <span>Products</span>
-            </a>
-        </li> -->
-        <li <?php if($controller == 'ticket' && ($functionName == 'ticket' || $functionName == '')) { echo 'class="active"'; } ?>>
-            <a href="<?php echo base_url().'ticket'?>" class="nav-link-s">
-                <i class="ti-ticket"></i>
-                <span>Tickets</span>
-            </a>
-        </li>
+     
+       
         <li <?php if($controller == 'finance' && ($functionName == 'finance' || $functionName == '')) { echo 'class="active"'; } ?>>
             <a href="<?php echo base_url().'finance'?>" class="nav-link-s">
                 <i class="icon-doc"></i>
@@ -71,6 +61,12 @@ if($this->session->userdata('login')){
             <a href="<?php echo base_url().'finance/invoice'?>" class="nav-link-s">
                 <i class="ti-receipt"></i>
                 <span>Invoices</span>
+            </a>
+        </li>
+         <li <?php if($controller == 'ticket' && ($functionName == 'ticket' || $functionName == '')) { echo 'class="active"'; } ?>>
+            <a href="<?php echo base_url().'ticket'?>" class="nav-link-s">
+                <i class="ti-ticket"></i>
+                <span>Tickets</span>
             </a>
         </li>
          <li>

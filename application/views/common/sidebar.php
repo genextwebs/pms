@@ -58,6 +58,18 @@ if($this->session->userdata('login')){
             </a>
         </li>
         <li>
+            <a href="#employees" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle collapsed">
+               <i class="ti-user"></i>
+               <span> Employees </span>
+            </a>
+            <ul class="collapse list-unstyled <?php if($controller == 'employee') {echo 'show'; }?>" id="employees">
+                <li <?php if($controller == 'employee' && ($functionName == 'employee' || $functionName == '')) { echo 'class="active"'; }  ?>>
+                    <a href="<?php echo base_url().'employee'?>">Employees List</a>
+                </li>
+                
+            </ul>
+        </li>
+        <li>
             <a href="#taskmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle collapsed">
                 <i class="ti-layout-list-thumb"></i>
                 <span>Tasks</span>
@@ -113,20 +125,7 @@ if($this->session->userdata('login')){
             </a>
         </li>
    
-        <li>
-            <a href="#employees" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle collapsed">
-               <i class="ti-user"></i>
-               <span> Employees </span>
-            </a>
-            <ul class="collapse list-unstyled <?php if($controller == 'employee') {echo 'show'; }?>" id="employees">
-                <li <?php if($controller == 'employee' && ($functionName == 'employee' || $functionName == '')) { echo 'class="active"'; }  ?>>
-                    <a href="<?php echo base_url().'employee'?>">Employees List</a>
-                </li>
-                <!-- <li>
-                    <a href="#">Teams</a>
-                </li> -->
-            </ul>
-        </li>
+        
           <li <?php if($controller == 'Attendance' && ($functionName == '' || $functionName == '')) { echo 'class="active"'; } ?>>
             <a href="<?php echo base_url().'Attendance'?>" class="nav-link-s">
                 <i class="icon-clock"></i>
@@ -196,11 +195,11 @@ if($this->session->userdata('login')){
              
             </ul>
         </li>
-        <li>
+        <!-- <li>
         	<a href="#" class="nav-link-s">
         		<i class="ti-settings"></i> 
         		<span> Settings</span>
         	</a>
-    	</li>
+    	</li> -->
     </ul>
 </div>

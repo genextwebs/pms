@@ -14,7 +14,7 @@
 </nav>
 <!-- contetn-wrap -->
 <div class="content-in">
-	<form id="addticket" class="aj-form" method="post" action="<?php echo base_url().'ticket/insertticket'; ?>" enctype="multipart/form-data">  
+	<form id="addticket" class="aj-form" method="post"  enctype="multipart/form-data">  
 		<?php
 	        $mess = $this->session->flashdata('message_name');
 	        if(!empty($mess)){
@@ -60,12 +60,13 @@
 									</div>
 
                 				</div>
+
                 				<div class="form-body">
                 					<div class="row">
                 						<div class="col-md-12">
                 							<div class="form-group">
                 								<label class="control-label">Ticket Subject<span class="astric">*</span></label>
-                								<input id="ticket_subject" class="form-control" type="text" name="ticket_subject" value="">
+                								<input id="ticket_subject" class="form-control" type="text" name="ticket_subject" value="<?php echo !empty($ticketData[0]->ticketsubject) ?  $ticketData[0]->ticketsubject : ''?>">
                 							</div>
                 						</div>
                 					</div>
@@ -73,7 +74,7 @@
                                 		<div class="col-md-12">
                                             <div class="form-group">
                                                 <label class="control-label">Ticket Description<span class="astric">*</span></label>
-                                                <textarea name="editor2" id="editor1"></textarea>
+                                                <textarea name="editor2" id="editor1"><?php echo !empty($ticketData[0]->ticketdescription) ?  $ticketData[0]->ticketdescription : ''?></textarea>
                                             </div>
                                         </div>
                         			</div>
@@ -86,10 +87,10 @@
 				            							<label>Status<span class="astric">*</span></label>
 				            							<select class="custom-select br-0" name="status" id="status">
 				            								
-				            								<option  value="1">Open</option>
-				            								<option value="2">Pending</option>
-				            								<option value="3">Resolved</option>
-				            								<option value="4">Close</option>
+				            								<option  value="1" <?php if($ticketData[0]->status=='1'){ echo 'selected'; } ?>>Open</option>
+				            								<option value="2" <?php if($ticketData[0]->status=='2'){ echo 'selected'; } ?>>Pending</option>
+				            								<option value="3" <?php if($ticketData[0]->status=='3'){ echo 'selected'; } ?>>Resolved</option>
+				            								<option value="4" <?php if($ticketData[0]->status=='4'){ echo 'selected'; } ?>>Close</option>
 				            							</select>
 				            						</div>
 				            					</div>
@@ -102,8 +103,9 @@
                                             <div class="form-group">
                                             	<label class="control-label">Ticket Image 
                                             	</label><br/>
-                                            	<input type='file'class="file-upload-input" name="ticket_Image" id="ticket_Image"/>
-                                            	<input type="hidden" name="hidden_Image" value="<?php echo !empty($expense[0]->invoicefile) ? $expense[0]->invoicefile : '' ?>" >
+                                            	<input type='file'class="" name="ticket_Image" id="ticket_Image" value=""/><p><?php echo !empty($ticketData[0]->ticketimage) ? $ticketData[0]->ticketimage : ''; ?></p>
+
+                                            	<input type="hidden" name="hidden_Image" value="<?php echo !empty($ticketData[0]->ticketimage) ? $ticketData[0]->ticketimage : '' ?>" >
                                                 
                                             </div>
                                         </div>
@@ -143,57 +145,46 @@
 	            					<div class="col-md-12">
 										<p id="succmsg" class="text-success"></p>
 	            						<div class="form-group">
-	            							
-	            							<?php 
-	            							if($this->user_type == 0){
-	            							?>
-	            								<label class="control-label">Requester Name<span class="astric">*</span></label>
-		            								<select class="custom-select br-0" name="requestername" id="requestername">
-			            								<option value="">--SELECT--</option>
-			            								 <?php
-			            								 foreach($getclient as $client){
-															?>
-																<option value="<?php echo $client->id?>"><?php echo $client->clientname;?></option>
-															
-															<?php
-															} 
-														?> 	
-		            								</select>
-	            							<?php 
-	            							}else if($this->user_type == 1){
-	            							?>
-	            								<input type="hidden" name="requestername" value="<?php echo $this->user_id;?>">
+	        								<label class="control-label">Requester Name<span class="astric">*</span></label>
+	            								<select class="custom-select br-0" name="requestername" id="requestername">
+		            								<option value="">--SELECT--</option>
+		            								 <?php
+													foreach($clientData as $row)
+													{
+														$str='';
+														if($row->id==$ticketData[0]->requestername)
+														{
+															$str="selected";
+														
+														}
+														echo '<option value="'.$row->id.'"'.$str.'>'.$row->clientname.'</option>';
+													}
+												?>	
 
-	            							<?php }else if($this->user_type == 2){
-	            							?>	
-	            								<input type="hidden" name="requestername" value="-">
-		            						<?php } ?>
+	            								</select>
 	            						</div>
 	            					</div>
 	            					<div class="col-md-12">
 										<p id="succmsg" class="text-success"></p>
-										<?php 
-	            							if($this->user_type == 0){
-	            							?>
 	            								<div class="form-group">
 		            								<label class="control-label">Agent Name<span class="astric">*</span></label>
 			            							<select class="custom-select br-0" name="agentname" id="agentname">
 			            								<option value="">--SELECT--</option>
 			            								<?php
-														foreach($getemployee as $emp){
-														?>
-															
-															<option value="<?php echo $emp->id?>"><?php echo $emp->employeename;?></option>
-															<?php
-															} 
-														?> 	
+													foreach($empData as $row)
+													{
+														$str='';
+														if($row->id==$ticketData[0]->agent)
+														{
+															$str="selected";
+														
+														}
+														echo '<option value="'.$row->id.'"'.$str.'>'.$row->employeename.'</option>';
+													}
+												?>	
 			            							</select>
 	            								</div>
-	            							<?php }else if($this->user_type == 1){ ?>
-	            								<input type="hidden" name="agentname" value="-"> 
-	            							<?php }else if($this->user_type == 2){ ?>
-	            								<input type="hidden" name="agentname" value="-">
-	            							<?php } ?>
+	            							
 	            					</div>
 	            					<?php 
 	            							if($this->user_type == 0){ ?> 

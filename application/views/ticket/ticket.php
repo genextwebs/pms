@@ -48,7 +48,7 @@
 			<div class="white-box p-t-10 p-b-10 bg-warning"> 
 				<h3 class="box-title text-white">TOTAL TICKETS</h3>
 				<ul class="list-inline two-wrap">
-					<li><i class="icon-logout text-white"></i></li>
+					
 						<?php 
 							$Total = $this->common_model->getData('tbl_ticket');
 							$total_leaves = count($Total);
@@ -62,7 +62,7 @@
 			<div class="white-box p-t-10 p-b-10 bg-warning"> 
 				<h3 class="box-title text-white">CLOSED TICKETS</h3>
 				<ul class="list-inline two-wrap">
-					<li><i class="icon-logout text-white"></i></li>
+					
 						<?php
 							$whereArr = array('status'=>4); 
 							$Total = $this->common_model->getData('tbl_ticket',$whereArr);
@@ -79,7 +79,7 @@
 			 <div class="white-box p-t-10 p-b-10 bg-warning"> 
 				<h3 class="box-title text-white">OPEN TICKETS</h3>
 				<ul class="list-inline two-wrap">
-					<li><i class="icon-logout text-white"></i></li>
+					
 						<?php 
 							$whereArr =	array('status'=>1);
 							$Total = $this->common_model->getData('tbl_ticket',$whereArr);
@@ -93,7 +93,7 @@
 			 <div class="white-box p-t-10 p-b-10 bg-warning"> 
 				<h3 class="box-title text-white">PENDING TICKETS</h3>
 				<ul class="list-inline two-wrap">
-					<li><i class="icon-logout text-white"></i></li>
+					
 						<?php 
 							$whereArr =	array('status'=>2);
 							$Total = $this->common_model->getData('tbl_ticket',$whereArr);
@@ -107,7 +107,7 @@
 			 <div class="white-box p-t-10 p-b-10 bg-warning"> 
 				<h3 class="box-title text-white">RESOLVED TICKETS</h3>
 				<ul class="list-inline two-wrap">
-					<li><i class="icon-logout text-white"></i></li>
+					
 						<?php 
 							$whereArr =	array('status'=>3);
 							$Total = $this->common_model->getData('tbl_ticket',$whereArr);
@@ -256,13 +256,13 @@
 							<tr role="row">
 								<th>Id</th>
 								<th>Ticket Subject</th>
-								<th>Requester Name</th>
-								<th>Requested On</th> 
-								<th>Others</th> 
 								<?php 
 								    if($this->user_type == 0 || $this->user_type == 2){ ?>
-								    	<th>Action</th>
-								<?php }else { } ?>
+								<th>Requester Name</th>
+							<?php } ?>
+								<th>Requested On</th> 
+								<th>Others</th> 
+								<th>Action</th>
 							</tr>
 						</thead>
 					</table>

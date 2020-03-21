@@ -72,12 +72,7 @@ if($this->session->userdata('login')){
                 <span>Dashbord</span>
             </a>
         </li>
-         <!-- <li <?php if($controller == 'clients' && ($functionName == 'index' || $functionName == '')) { echo 'class="active"'; } ?>>
-            <a href="<?php echo base_url().'clients'?>" class="nav-link-s">
-                <i class="icon-people"></i>
-                <span>Clients</span>
-            </a>
-        </li> -->
+    
          <li <?php if($controller == 'project' && ($functionName == 'project' || $functionName == '')) { echo 'class="active"'; } ?>>
             <a href="<?php echo base_url().'project'?>" class="nav-link-s">
                 <i class="icon-layers"></i>
@@ -123,33 +118,6 @@ if($this->session->userdata('login')){
                 <span>Tickets</span>
             </a>
         </li>
-   
-       <!--  <li>
-            <a href="#finance" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle collapsed">
-                <i class="fa fa-money"></i>
-                <span>Finance</span>
-            </a>
-            <ul class="collapse list-unstyled" id="finance">
-                <li>
-                    <a href="<?php echo base_url().'finance' ?>">Estimates</a>
-                </li>
-                <li>
-                    <a href="#">Invoices</a>
-                </li>
-                <li>
-                    <a href="#">Payments</a>
-                </li>
-                <li>
-                    <a href="#">Expenses</a>
-                </li>
-            </ul>
-        </li> -->
-      <!--    <li>
-            <a href="#" class="nav-link-s">
-                <i class="ti-envelope"></i>
-                <span>Messages</span>
-            </a>
-        </li> -->
         <li>
             <a href="#" class="nav-link-s">
                 <i class="icon-calender"></i>

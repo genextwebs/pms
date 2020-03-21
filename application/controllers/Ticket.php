@@ -74,9 +74,15 @@ class Ticket extends CI_Controller {
 			$file_loc = $_FILES['ticket_Image']['tmp_name'];
 			$file_size = $_FILES['ticket_Image']['size'];
 			$file_type = $_FILES['ticket_Image']['type'];
-			$folder="uploads/";
+			$folder="upload/";
 			move_uploaded_file($file_loc,$folder.$file);
-			$insArr  = array('ticketsubject'=>$t_subject,'ticketdescription'=>$t_editor,'status'=>$status, 'ticketimage'=>$file,'requestername'=>$t_requestname,'agent'=>$t_agentname,'type'=>$t_question,'priority'=>$t_priority,'channelname'=>$t_channel,'tags'=>$t_tags);
+			if($this->user_type == 0){
+				$insArr  = array('ticketsubject'=>$t_subject,'ticketdescription'=>$t_editor,'status'=>$status, 'ticketimage'=>$file,'requestername'=>$t_requestname,'agent'=>$t_agentname,'type'=>$t_question,'priority'=>$t_priority,'channelname'=>$t_channel,'tags'=>$t_tags,'assign_ticket'=>1);
+			}
+			else{
+				$insArr  = array('ticketsubject'=>$t_subject,'ticketdescription'=>$t_editor,'status'=>$status, 'ticketimage'=>$file,'requestername'=>$t_requestname,'agent'=>$t_agentname,'type'=>$t_question,'priority'=>$t_priority,'channelname'=>$t_channel,'tags'=>$t_tags);
+			}
+			
 			$query  =  $this->common_model->insertData('tbl_ticket',$insArr);
 			$this->session->set_flashdata('message_name','Ticket Inserted Successfully...');
 			redirect('ticket/index');
@@ -142,7 +148,7 @@ class Ticket extends CI_Controller {
 			/** Filtering Start */
 			if(!empty(trim($_GET['sSearch']))){
 				$searchTerm = trim($_GET['sSearch']);
-				$sWhere.= ' AND (ticketsubject like "%'.$searchTerm.'%")';
+				$sWhere.= ' AND (ticketsubject like "%'.$searchTerm.'%" OR tbl_employee.employeename like "%'.$searchTerm.'%")';
 			}
 			$sdate=!empty($_POST['s_date'])?$_POST['s_date']:'';
 			$enddate=!empty($_POST['e_date'])?$_POST['e_date']:'';
@@ -176,6 +182,17 @@ class Ticket extends CI_Controller {
 			else if(!empty($type)){
 				$sWhere.=' AND tbl_ticket.type='.$type;
 			}
+
+				$sWhere.=' AND tbl_ticket.status!=4';
+			
+			$whereArr = array('user_id'=>$this->user_id);
+			$empData = $this->common_model->getData('tbl_employee',$whereArr);
+			$whereArr = array('user_id'=>$this->user_id);
+			$clientData = $this->common_model->getData('tbl_clients',$whereArr);
+			if($this->user_type == 1){
+				$sWhere.=' AND tbl_ticket.requestername='.$clientData[0]->id;
+			}
+			
 			$sWhere = " WHERE 1 ".$sWhere;
 		}
 	if($this->user_type == 0){
@@ -192,16 +209,30 @@ class Ticket extends CI_Controller {
 		$iTotal = count($TicketAllArr);
 
 		}else if($this->user_type == 1){
-		$query = "SELECT tbl_ticket.* FROM tbl_ticket".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+		$query = "SELECT * FROM tbl_ticket".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 		$TicketArr = $this->common_model->coreQueryObject($query);
 
-		$query = "SELECT tbl_ticket.*,tbl_ticket_channel.name as channel,tbl_ticket_type.name as type FROM tbl_ticket inner join tbl_ticket_channel on tbl_ticket.channelname=tbl_ticket_channel.id inner join tbl_ticket_type on tbl_ticket.type=tbl_ticket_type.id".$sWhere;
+
+		$query = "SELECT * from tbl_ticket".$sWhere;
+		$TicketFilterArr = $this->common_model->coreQueryObject($query);
+		$iFilteredTotal = count($TicketFilterArr);
+		$queryAll ="SELECT * FROM tbl_ticket".$sWhere;
+		//print_r($queryAll);die;
+		$TicketAllArr = $this->common_model->coreQueryObject($queryAll);
+		//print_r($TicketAllArr);die;
+		$iTotal = count($TicketAllArr);
 
 		}else if($this->user_type == 2){
-		$query = "SELECT tbl_ticket.* FROM tbl_ticket".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+		$query = "SELECT * FROM tbl_ticket".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+		
 		$TicketArr = $this->common_model->coreQueryObject($query);
 
-		$query = "SELECT tbl_ticket.*,tbl_ticket_channel.name as channel,tbl_ticket_type.name as type FROM tbl_ticket inner join tbl_ticket_channel on tbl_ticket.channelname=tbl_ticket_channel.id inner join tbl_ticket_type on tbl_ticket.type=tbl_ticket_type.id".$sWhere;
+		$query = "SELECT * from tbl_ticket".$sWhere;
+		$TicketFilterArr = $this->common_model->coreQueryObject($query);
+		$iFilteredTotal = count($TicketFilterArr);
+		$queryAll ="SELECT * FROM tbl_ticket".$sWhere;
+		$TicketAllArr = $this->common_model->coreQueryObject($queryAll);
+		$iTotal = count($TicketAllArr);
 		}
 		
 
@@ -243,17 +274,31 @@ class Ticket extends CI_Controller {
 				$status=$row->status='Close';
 				$showStatus = '<label class="label label-success">'.$status.'</label>';
 			}
-		if($this->user_type == 0 || $this->user_type == 2){
-
+		
+			if($this->user_type == 0 || $this->user_type == 2){
+				$actionstring = '<div class="dropdown action m-r-10">
+			           <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
+			            <div class="dropdown-menu">
+			                
+			                 <a  class="dropdown-item" href="'.base_url().'ticket/viewticket/'.base64_encode($row->id).'";><i class="fa fa-eye"></i> View</a>
+			                 <a  href="javascript:void();" onclick="deleteticket(\''.base64_encode($row->id).'\');" class="dropdown-item" href="javascript:void()"><i class="fa fa-trash" ></i> Delete</a>
+			          </div>
+					
+					</div>';
+		}elseif($this->user_type == 1){
 			$actionstring = '<div class="dropdown action m-r-10">
 			           <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
 			            <div class="dropdown-menu">
-			               assigntask
-			                <a  class="dropdown-item" href="'.base_url().'ticket/assignticket/'.base64_encode($row->id).'";><i class="fa fa-edit"></i> Edit</a>
-			                <a  href="javascript:void();" onclick="deleteticket(\''.base64_encode($row->id).'\');" class="dropdown-item" href="javascript:void()"><i class="fa fa-trash" ></i> Delete</a>
-			                 <a  class="dropdown-item" href="'.base_url().'ticket/editticket/'.base64_encode($row->id).'";><i class="fa fa-view"></i> View</a>
+			                
+			                 <a  class="dropdown-item" href="'.base_url().'ticket/viewticket/'.base64_encode($row->id).'";><i class="fa fa-eye"></i> View</a>
+			                 <a  href="javascript:void();" onclick="deleteticket(\''.base64_encode($row->id).'\');" class="dropdown-item" href="javascript:void()"><i class="fa fa-trash" ></i> Delete</a>
+			                 <a  class="dropdown-item" href="'.base_url().'ticket/ticketclose/'.base64_encode($row->id).'";><i class="fa fa-close"></i>Close</a>
 			          </div>
-			</div>';
+					
+					</div>';
+
+		}
+			
 			if($row->requestername != ''){
 				$query = "SELECT clientname from tbl_clients where id=".$row->requestername;
 				$TicketArr = $this->common_model->coreQueryObject($query);
@@ -278,7 +323,7 @@ class Ticket extends CI_Controller {
 			}
 			
 			
-			
+		if($this->user_type == 0 || $this->user_type == 2){	
 			//For Priority
 			$datarow[] = array(
 				$id = $i,
@@ -297,11 +342,11 @@ class Ticket extends CI_Controller {
 				$datarow[] = array(
 				$id = $i,
 				$row->ticketsubject,
-				$row->requestername,
 				$row->created_at,
-				'<b>Agent:</b>'.$row->agent.
+				'<b>Agent:</b>'.$agent.
 				'<br/> <b>Staus:</b> <label class="label label-success">'.$row->status.'</label><br/>
-			    <label><b>Priority:</b></label>'.$row->priority
+			    <label><b>Priority:</b></label>'.$row->priority,
+			    $actionstring
 			);
 			$i++;
 		}
@@ -319,7 +364,7 @@ class Ticket extends CI_Controller {
 		exit();
 	}
 
-	public function editticket(){
+	public function viewticket(){
 		$id=base64_decode($this->uri->segment(3));
 		$whereArr=array('id'=>$id);
 		$data['editticketId']=$id;
@@ -329,7 +374,8 @@ class Ticket extends CI_Controller {
 		$data['getemployee']=$this->common_model->getData('tbl_employee',$whereEmp);
 		$data['ticketchannel']=$this->common_model->getData('tbl_ticket_channel');
 		/*$query= "Select tbl_ticket_comment.*,tbl_employee.user_id from tbl_ticket_comment inner join tbl_employee on tbl_ticket_comment.ticketemployeeid= tbl_employee.id inner join tbl_user on tbl_employee.user_id=tbl_user.id";*/
-		$query = "Select * from tbl_ticket_comment";
+		$query = "Select * from tbl_ticket_comment where ticketid=".$id;
+		//echo $query;die;
 		$data['ticketcommenttest'] = $this->common_model->coreQueryObject($query);
 		$this->load->view('common/header');
 		$this->load->view('ticket/viewticket',$data);
@@ -411,6 +457,8 @@ class Ticket extends CI_Controller {
 		//print_r($_FILES);die;
 		if(!empty($_POST)){
 		$ticket_comment = $this->input->post('editor');
+		$ticketid = $this->input->post('ticketid');
+		
 		//$ticket_Image = $this->input->post('ticket_Image');
 		/*$status = $this->input->post('status');
 		$empid = $this->input->post('t_empid');*/
@@ -434,7 +482,7 @@ class Ticket extends CI_Controller {
 					$replierId = $empData[0]->id;
 
 		}
-		$insArr = array('ticketemployeeid'=>$replierId,'profileimg'=>$file,'comment' => $ticket_comment);
+		$insArr = array('ticketid'=>$ticketid,'ticketemployeeid'=>$replierId,'profileimg'=>$file,'comment' => $ticket_comment);
 		//print_r($insArr);
 		$ticketArr =$this->common_model->insertData('tbl_ticket_comment',$insArr);
 		$tArray = $this->common_model->getData('tbl_ticket_comment');
@@ -455,7 +503,7 @@ class Ticket extends CI_Controller {
 		$commentArr['insCommentData'] = $ticketArr;
 
 		echo json_encode($commentArr);exit;*/	
-		redirect('ticket/editticket');	
+		redirect('ticket/viewticket/'.base64_encode($ticketid));	
 		}
 	}
 
@@ -469,12 +517,15 @@ class Ticket extends CI_Controller {
 		redirect('ticket/index');
 	}
 
-	public function assigntask(){
-		$this->load->view('common/header');
-		$this->load->view('ticket/assignticket');
-		$this->load->view('common/footer');
+	public function ticketclose(){
+		$ticketid = base64_decode($this->uri->segment(3));
+		$whereArr = array('id'=>$ticketid);
+		//print_r($whereArr);die;
+		$updateArr = array('status'=>4);
+		$this->common_model->updateData('tbl_ticket',$updateArr,$whereArr);
+		$this->session->set_flashdata('message_name','Ticket Close Succesfully..');
+		redirect('ticket/index');
 	}
-
 }
 
 

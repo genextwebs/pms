@@ -130,6 +130,17 @@
                                                 
                                             </div>
                                         </div>
+                                        <div class="card-footer text-right">
+	                			<!-- action btn -->
+	                			<input type="hidden" name="ticketid" value="<?php echo $ticketinfo[0]->id; ?>">
+                                <div class="form-actions">
+	                                <div class="btn-group">
+									  	<button type="submit" class="btn btn-success" aria-haspopup="true" aria-expanded="false" name="submitticket" id="">
+									    	Submit
+									  	</button> 
+									</div>
+	                            </div>
+	                		</div>
                         			</div>
                         			<!-- <div class="row">
 	            						<div class="col-md-6">
@@ -168,25 +179,7 @@
                         		</div>
                 				</div>
 	                		</div>
-	                		<div class="card-footer text-right">
-	                			<!-- action btn -->
-                                <div class="form-actions">
-	                                <div class="btn-group">
-									  	<!-- <button type="submit" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" name="submitticket">
-									    	Submit
-									  	</button> -->
-									  	<button type="submit" class="btn btn-success" aria-haspopup="true" aria-expanded="false" name="submitticket" id="">
-									    	Submit
-									  	</button> 
-									  <!-- 	<div class="dropdown-menu">
-										    <a class="dropdown-item" href="#">Submit Open <span style="width: 15px; height: 15px;" class="btn btn-danger btn-small btn-circle">&nbsp;</span></a>
-										    <a class="dropdown-item" href="#">Submit Pending <span style="width: 15px; height: 15px;" class="btn btn-warning btn-small btn-circle">&nbsp;</span></a>
-										    <a class="dropdown-item" href="#">Submit Resolved <span style="width: 15px; height: 15px;" class="btn btn-info btn-small btn-circle">&nbsp;</span></a>
-										    <a class="dropdown-item" href="#">Submit Close <span style="width: 15px; height: 15px;" class="btn btn-success btn-small btn-circle">&nbsp;</span></a>
-									  	</div> -->
-									</div>
-	                            </div>
-	                		</div>
+	                		
 	                	
 	                	</div>
 	                </div>
