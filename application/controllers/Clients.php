@@ -71,6 +71,7 @@ class Clients extends CI_Controller{
 				$last_inserted = $this->db->insert_id();
 				$updateArr = array('clientid'=>$last_inserted);
 				$id = base64_decode($this->uri->segment(3));
+				//echo $id;die;
 				$data['editID'] = $id;
 				$whereArr = array('id'=>$id);
 				//print_r($whereArr);

@@ -180,6 +180,7 @@ class Leads extends CI_Controller
 
 	public function addleads(){
 		$data['sessData'] = $this->session->flashdata('data');
+		//print_r($data);die;
 		$this->load->view('common/header');
 		$this->load->view('leads/addleads',$data);
 		$this->load->view('common/footer');
@@ -215,6 +216,7 @@ class Leads extends CI_Controller
 
 	public function editleads(){
 		$id = base64_decode($this->uri->segment(3));
+		//echo $id;die;
 		$whereArr=array('id'=>$id);
 		$data['leads'] = $this->common_model->getData('tbl_leads',$whereArr);
 		if(!empty($_POST))
@@ -232,6 +234,7 @@ class Leads extends CI_Controller
 			$note = $this->input->post('note');
 			$updateArr = array('clientid'=>0,'companyname'=>$companyname,'website'=>$website,'address'=>$address,'clientname'=>$clientname,'clientemail'=>$clientemail,'mobile'=>$mobile,'nextfollowup'=>$nextfollowup,'status'=>$status,'source'=>$source,'note'=>$note);
 			$whereArr = array('id'=>$id);
+			//print_r($whereArr);die;
 			$checkArr = array('clientemail'=>$clientemail,'id !='=>$id);
 			$checkEmail = $this->common_model->getData("tbl_leads",$checkArr);
 			if(empty($checkEmail)){
@@ -253,6 +256,7 @@ class Leads extends CI_Controller
 		$clientId = base64_decode($_POST['clientId']);
 		$type = $_POST['type'];
 		$whereArr = array('id'=>$leadId);
+		//print_r($whereArr);die;
 		$this->common_model->deleteData('tbl_leads',$whereArr);
 	} 
 

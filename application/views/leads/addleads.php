@@ -14,6 +14,7 @@
 </nav>
 
 <!-- contetn-wrap -->
+
 <div class="content-in">  
     <div class="row">
         <div class="col-md-12">
@@ -76,13 +77,13 @@
 								    <div class="col-md-6">
 								        <div class="form-group">
 								            <label class="control-label">Client Name<span class="astric">*</span></label>
-								            <input type="text" name="name" id="name" class="form-control" value="<?php if(!empty($sessData['client_name'])){echo $sessData['client_name'];}else{ }?>">
+								            <input type="text" name="name" id="name" class="form-control" value="<?php if(!empty($sessData['name'])){echo $sessData['name'];}else{ }?>">
 								        </div>
 								    </div>
 								    <div class="col-md-6">
 								        <div class="form-group">
 								            <label class="control-label">Client Email<span class="astric">*</span></label>
-								            <input type="text" name="email" id="email" class="form-control" value="">
+								            <input type="text" name="email" id="email" class="form-control" value="<?php if(!empty($sessData['email'])){echo $sessData['email'];}else{ }?>">
 								            <span class="help-desk">Lead will login using this email.</span>
 								        </div>
 								    </div>
