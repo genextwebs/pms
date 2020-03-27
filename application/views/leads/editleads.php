@@ -115,9 +115,9 @@
                                         <div class="form-group">
                                             <label class="control-label">Status</label>
                                             <select id="status" name="status" class="form-control">
-                                                <option value="0">Pending</option>
-                                                <option value="1">Overview</option>
-                                                <option value="2">Confirmed</option>
+                                                <option value="0" <?php if($leads[0]->status=='0'){ echo 'selected'; }?>>Pending</option>
+                                                <option value="1" <?php if($leads[0]->status=='1'){ echo 'selected'; }?>>Overview</option>
+                                                <option value="2" <?php if($leads[0]->status=='2'){ echo 'selected'; }?>>Confirmed</option>
                                             </select>
                                         </div>
                                     </div>
@@ -125,9 +125,9 @@
                                         <div class="form-group">
                                             <label class="control-label">Source</label>
                                             <select id="source" name="source" class="form-control">
-                                                <option value="0">Social Media</option>
-                                                <option value="1">Google</option>
-                                                <option value="2">Other</option>
+                                                <option value="0" <?php if($leads[0]->source=='0'){ echo 'selected'; }?>>Social Media</option>
+                                                <option value="1" <?php if($leads[0]->source=='1'){ echo 'selected'; }?>>Google</option>
+                                                <option value="2" <?php if($leads[0]->source=='2'){ echo 'selected'; }?>>Other</option>
                                             </select>
                                         </div>
                                     </div>
