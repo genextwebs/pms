@@ -73,8 +73,9 @@ class Clients extends CI_Controller{
 				$id = base64_decode($this->uri->segment(3));
 				$data['editID'] = $id;
 				$whereArr = array('id'=>$id);
+				//print_r($whereArr);
 				$this->common_model->updateData('tbl_leads',$updateArr,$whereArr);
-				//email
+				//$this->db->last_query();die;
 				 $subject = 'Congratulation,You are successfully register on PMS';
                 if(!empty($clientemail)){
                     
