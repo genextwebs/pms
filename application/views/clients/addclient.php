@@ -12,7 +12,6 @@
         </div>
     </div>
 </nav>
-
 <!-- contetn-wrap -->
 <div class="content-in">  
     <div class="row">
@@ -96,17 +95,20 @@
             					</div>
             					<div class="row">
             						<div class="col-md-4">
-            							<div class="form-group">
-            								<label>Password<span class="astric">*</span></label>
+            							<div class="form-group required pass-eye">
+            								<label class="pass-change">Password<span class="astric">*</span></label>
+
             								<input type="Password" style="display: none;">
-            								<input id="password" type="Password" class="form-control" name="password" value="<?php if(!empty($sessData['password'])) { echo $sessData['password']; } else {} ?>">
+            								<input id="password" type="Password" class="form-control pass-change" name="password" value="<?php if(!empty($sessData['password'])) { echo $sessData['password']; } else {} ?>"><span class="hidden-eye">
+                            <span class="pass-view" onclick="passwordAction(1)"><i class="fa fa-eye"></i></span>
+                            <span class="pass-hide" onclick="passwordAction(0)"><i class="fa fa-eye-slash"></i></span></span>
             								<span class="help-block">Client will login using this password.</span>
             							</div>
             						</div>
             						<div class="col-xs-12 col-md-4 mt-4">
             							<div class="form-group">
             								<div class="checkbox checkbox-info">
-                                                <input id="randompassword" name="randompassword" type="checkbox" onclick="checkuncheck();"  >
+                                                <input id="randompassword" name="randompassword" type="checkbox" <?php if(($sessData['randompassword']) == 'on' ) { echo 'checked';}  ?> onclick="checkuncheck();"  >
                                                 <label for="randompassword">Generate Random Password</label>
                                             </div>
             							</div>
@@ -168,7 +170,7 @@
                                             <label>Log In</label>
                                             <select name="login" id="login" class="form-control">
                                                 <option value="1" <?php if(!empty($sessData['login'])) {if($sessData['login']==1){echo 'selected';}} ?> >Enable</option>
-                                                <option value="0" <?php if(!empty($sessData['login'])) {if($sessData['login']==1){echo 'selected';}} ?> >Disable</option>
+                                                <option value="0" <?php if(!empty($sessData['login'])) {if($sessData['login']==0){echo 'selected';}} ?> >Disable</option>
                                             </select>
                                         </div>
                                     </div>

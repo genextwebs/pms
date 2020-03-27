@@ -63,9 +63,13 @@
 		                					</div>
 		                					<div class="row">
 		                						<div class="col-md-4">
-		                							<div class="form-group">
-		                								<label class="control-label">Password<span class="astric">*</span></label>
-		                								<input type="password" name="password" id="password" class="form-control">
+		                							<div class="form-group required pass-eye">
+		                								<label class="control-label pass-change">Password<span class="astric">*</span></label>
+		                								<input type="password" name="password" id="password" class="form-control pass-change">
+		                								<span class="hidden-eye">
+
+                                            <span class="pass-view" onclick="passwordAction(1)"><i class="fa fa-eye"></i></span>
+                                            <span class="pass-hide" onclick="passwordAction(0)"><i class="fa fa-eye-slash"></i></span></span>
 		                								<span class="help-desk">Employee will login using this password. </span>
 		                							</div>
 		                						</div>

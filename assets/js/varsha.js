@@ -1306,3 +1306,19 @@ function reply(){
 	$('#reply-toggle').css("display","none");
 }
 
+//
+function passwordAction(flag){
+  if(flag==0){
+    jQuery('input[type=password]').attr('type','text');
+    jQuery('.pass-view').show();
+    jQuery('.pass-hide').hide();
+    jQuery('#pass_repeat').attr('type','text');
+    jQuery('.pass-change').attr('type','text');
+  }else if(flag == 1){
+    jQuery('input[type=password]').attr('type','password');
+    jQuery('.pass-view').hide();
+    jQuery('.pass-hide').show();
+    jQuery('#pass_repeat').attr('type','password');
+    jQuery('.pass-change').attr('type','password');
+  }
+}

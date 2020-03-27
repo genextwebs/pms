@@ -920,3 +920,23 @@ th {
     font-weight: bold;
     vertical-align: middle;
   }
+
+.pass-eye{
+  position: relative;
+}
+.pass-eye input.form-control{
+  padding-right: 30px;
+}
+.pass-eye .hidden-eye {
+  position: absolute;
+  top: 38px;
+  right: 8px;
+  cursor: pointer;
+}
+.pass-eye .pass-view{
+  display: none;
+  color:#E0E0E0;
+}
+.pass-eye .pass-hide{
+  color:#E0E0E0;
+}

@@ -57,7 +57,7 @@ class Clients extends CI_Controller{
 			$whereArr = array('emailid' => $clientemail);
 			$data = $this->common_model->getData('tbl_user',$whereArr);
 			if(count($data)==1){
-				$this->session->set_flashdata('message_name','Email already exits');
+				$this->session->set_flashdata('message_name','Email address already exists');
 				$this->session->set_flashdata("data",$_POST);
 				redirect('Clients/addclients');
 			}
@@ -189,7 +189,7 @@ class Clients extends CI_Controller{
 	   	$query = "SELECT tbl_clients.id as clientId, tbl_user.id,tbl_user.is_deleted,tbl_clients.clientname,tbl_clients.companyname,tbl_user.emailid,tbl_user.status,tbl_user.created_at from tbl_clients INNER JOIN tbl_user ON tbl_clients.user_id=tbl_user.id ".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 	    $clientsArr = $this->common_model->coreQueryObject($query);
 		
-		$query =  "SELECT tbl_user.id,tbl_user.is_deleted,tbl_clients.clientname,tbl_clients.companyname,tbl_user.emailid,tbl_user.status,tbl_user.created_at from tbl_clients INNER JOIN tbl_user ON tbl_clients.user_id=tbl_user.id ".$sWhere;	
+		$query =  "SELECT tbl_clients.id as clientId, tbl_user.id,tbl_user.is_deleted,tbl_clients.clientname,tbl_clients.companyname,tbl_user.emailid,tbl_user.status,tbl_user.created_at from tbl_clients INNER JOIN tbl_user ON tbl_clients.user_id=tbl_user.id ".$sWhere;	
 		$clientsFilterArr = $this->common_model->coreQueryObject($query);
 	
 		$iFilteredTotal = count($clientsFilterArr);

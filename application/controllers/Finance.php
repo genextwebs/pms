@@ -925,13 +925,15 @@ class Finance extends CI_Controller{
 			$this->common_model->insertData('tbl_tax',$insArr);
 			$taxArray = $this->common_model->getData('tbl_tax');
 			$str = '';
+			$str1 = '';
 			foreach($taxArray as $row){
 				$str.='<option value="'.$row->rate.'">'.$row->taxname.'('.$row->rate.'%)</option>'; 
 			}
+			$str1.='<option value="'.$rate.'">'.$taxname.'('.$rate.'%)</option>'; 
 			$totaldata = count($taxArray);
 			$txtArr = array();
 			$txtArr['count'] = $totaldata;
-			$txtArr['taxdata'] = $str;
+			$txtArr['taxdata'] = $str1;
 			echo  json_encode($txtArr);exit; 
 			echo  $totaldata; exit;
 		}

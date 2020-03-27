@@ -468,12 +468,10 @@ $("#save-product").click(function(event) {
            type: 'POST',
            dataType: 'json',
            data: dataString,
-           error: function() {
-              alert('Something is wrong');
-           },
            success: function(data) {
+           	//alert(data.taxdata);
                 $('select[name="tax"]').html('');       
-                $('select[name="tax"]').append(data.taxdata);
+                $('select[name="tax[]"]').append(data.taxdata);
                 $("tbody").append("<tr><td>"+data.count+"</td><td>"+taxname+"</td><td>"+rate+"</td></tr>");
                 $('#project-tax').modal('toggle');
                 $('#tax')[0].reset();
