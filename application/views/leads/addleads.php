@@ -99,7 +99,7 @@
 										<div class="form-group">
 											<label class="control-label">Next Follow Up</label>
 											<select id="follow_up" name="follow_up" class="form-control">
-												<option selected value="1" <?php if(!empty($sessData['follow_up'])){
+												<option value="1" <?php if(!empty($sessData['follow_up'])){
                                                             if($sessData['follow_up'] == 1){
                                                                 echo 'selected';    
                                                             }}
