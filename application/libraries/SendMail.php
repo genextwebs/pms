@@ -47,14 +47,13 @@ class SendMail
         $email->setSubject($subject);
         $email->addTo($toEmail,$recipientName);
         $email->addContent("text/html", $msg);
-        $sendgrid = new \SendGrid('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
-            ');
+        $sendgrid = new \SendGrid('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');
         try {
             //echo "ghng";die;
            //print_r($email);die;
             $response = $sendgrid->send($email);
-           /* print_r($response);
-            print $response->statusCode() . "\n";
+            //echo "<PRE>";print_r($response);exit();
+            /*print $response->statusCode() . "\n";
             print_r($response->headers());
             print $response->body() . "\n";die;*/
         } catch (Exception $e) {
