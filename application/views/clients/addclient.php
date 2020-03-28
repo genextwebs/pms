@@ -99,9 +99,11 @@
             								<label class="pass-change">Password<span class="astric">*</span></label>
 
             								<input type="Password" style="display: none;">
-            								<input id="password" type="Password" class="form-control pass-change" name="password" value="<?php if(!empty($sessData['password'])) { echo $sessData['password']; } else {} ?>"><span class="hidden-eye">
-                            <span class="pass-view" onclick="passwordAction(1)"><i class="fa fa-eye"></i></span>
-                            <span class="pass-hide" onclick="passwordAction(0)"><i class="fa fa-eye-slash"></i></span></span>
+            								<input id="password" type="Password" class="form-control pass-change" name="password" value="<?php if(!empty($sessData['password'])) { echo $sessData['password']; } else {} ?>">
+                                            <span class="hidden-eye">
+
+                                            <span class="pass-view" onclick="passwordAction(1)"><i class="fa fa-eye"></i></span>
+                                            <span class="pass-hide" onclick="passwordAction(0)"><i class="fa fa-eye-slash"></i></span></span>
             								<span class="help-block">Client will login using this password.</span>
             							</div>
             						</div>
