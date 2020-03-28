@@ -303,20 +303,23 @@ class Clients extends CI_Controller{
 				$data['query']=$this->common_model->updateData('tbl_clients',$updateArr1,$whereArr);
 
 				$this->session->set_flashdata('message_name', "Data Update Succeessfully");
+
+				if(!empty($ltoc)){
+					redirect('leads');	
+				}
+				else{
+					redirect('clients');
+				}
 			}
 			else{
 				$this->session->set_flashdata('message_name', "Email address already exists");
-				if(!empty($ltoc)){
+				$this->session->set_flashdata("sessData",$_POST);
+				/*if(!empty($ltoc)){
 					return redirect('Clients/editclients/'.base64_encode($clientid).'/'.$ltoc);
 				}else{
 					return redirect('Clients/editclients/'.base64_encode($clientid));
-				}
-			}
-			if(!empty($ltoc)){
-				redirect('leads');	
-			}
-			else{
-				redirect('clients');
+				}*/
+
 			}
 		}
 		$this->load->view('common/header');

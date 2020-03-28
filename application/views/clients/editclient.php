@@ -12,7 +12,12 @@
         </div>
     </div>
 </nav>
-
+<?php
+$sessData = "";
+if($this->session->flashdata('sessData')){
+    $sessData = $this->session->flashdata('sessData');
+}
+?>
 <!-- contetn-wrap -->
 <div class="content-in">  
     <div class="row">
@@ -100,12 +105,29 @@
 	                                       </div>
             							</div>
             						</div>
+                                    <?php
+                                    $optst=$optst1="";
+                                //echo "<PRE>";print_r($sessData);exit();
+                                if(isset($sessData['status'])){
+                                    if(trim($sessData['status'])=='0'){
+                                        $optst="selected";
+                                    }else if(trim($sessData['status'])=='1'){
+                                        $optst1="selected";
+                                    }
+                                }else if(isset($user[0]->status)){
+                                    if(trim($user[0]->status)=='0'){
+                                        $optst="selected";
+                                    }else if(trim($user[0]->status)=='1'){
+                                        $optst1="selected";
+                                    }
+                                }
+                                ?>
 									<div class="col-md-4">
                                         <div class="form-group">
                                             <label>Status</label>
                                             <select name="status" id="status" class="form-control">
-                                               <option value="1" <?php if($user[0]->status=='1'){ echo 'selected'; } ?>>Active</option>
-												<option value="0" <?php if($user[0]->status=='0'){ echo 'selected'; }?>>DeActive</option>
+                                               <option value="1" <?= $optst1;?>>Active</option>
+												<option value="0" <?= $optst;?>>DeActive</option>
 											</select>
                                         </div>
                                     </div>
@@ -152,13 +174,30 @@
                                         </div>
                                     </div>
                                 </div>
+                                <?php
+                                $optstr=$optstr1="";
+                                //echo "<PRE>";print_r($sessData);exit();
+                                if(isset($sessData['login'])){
+                                    if(trim($sessData['login'])=='0'){
+                                        $optstr="selected";
+                                    }else if(trim($sessData['login'])=='1'){
+                                        $optstr1="selected";
+                                    }
+                                }else if(isset($user[0]->login)){
+                                    if(trim($user[0]->login)=='0'){
+                                        $optstr="selected";
+                                    }else if(trim($user[0]->login)=='1'){
+                                        $optstr1="selected";
+                                    }
+                                }
+                                ?>
                                 <div class="row">
                                     <div class="col-md-6 ">
                                         <div class="form-group">
                                             <label>Log In</label>
                                             <select name="login" id="login" class="form-control">
-                                               <option value="1" <?php if($user[0]->login=='1'){ echo 'selected'; } ?>>Enable</option>
-												<option value="0" <?php if($user[0]->login=='0'){ echo 'selected'; }?>>Disable</option>
+                                               <option value="1" <?= $optstr1;?>>Enable</option>
+												<option value="0" <?= $optstr;?>>Disable</option>
 											</select>
                                         </div>
                                     </div>
