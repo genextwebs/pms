@@ -12,6 +12,7 @@
         </div>
     </div>
 </nav>
+
 <!-- contetn-wrap -->
 <div class="content-in">  
     <div class="row">
@@ -110,7 +111,7 @@
             						<div class="col-xs-12 col-md-4 mt-4">
             							<div class="form-group">
             								<div class="checkbox checkbox-info">
-                                                <input id="randompassword" name="randompassword" type="checkbox" <?php if(($sessData['randompassword']) == 'on' ) { echo 'checked';}  ?> onclick="checkuncheck();"  >
+                                                <input id="randompassword" name="randompassword" type="checkbox" <?php if(!empty($sessData['randompassword'])) { if(($sessData['randompassword']) == 'on' ) { echo 'checked';} }  ?> onclick="checkuncheck();"  >
                                                 <label for="randompassword">Generate Random Password</label>
                                             </div>
             							</div>
@@ -171,8 +172,8 @@
                                         <div class="form-group">
                                             <label>Log In</label>
                                             <select name="login" id="login" class="form-control">
-                                                <option value="1" <?php if(!empty($sessData['login'])) {if($sessData['login']==1){echo 'selected';}} ?> >Enable</option>
-                                                <option value="0" <?php if(!empty($sessData['login'])) {if($sessData['login']==0){echo 'selected';}} ?> >Disable</option>
+                                               <option value="1" <?php if($sessData['login']=='1'){ echo 'selected'; } ?>>Enable</option>
+                                                <option value="0" <?php if($sessData['login']=='0'){ echo 'selected'; }?>>Disable</option>
                                             </select>
                                         </div>
                                     </div>

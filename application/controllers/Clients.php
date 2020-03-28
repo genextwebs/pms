@@ -173,10 +173,10 @@ class Clients extends CI_Controller{
 						$sWhere.=' AND status='.$status;
 					}
 					if(!empty($startdate)){						
-						$sWhere.=' AND created_at>="'.$startdate.'"';
+						$sWhere.=' AND created_at >= "'.$startdate.'00:00:00'.'"';
 					}
 					if(!empty($enddate)){						
-						$sWhere.=' AND created_at<="'.$enddate.'"';
+						$sWhere.=' AND created_at <= "'.$enddate.'23:59:00'.'"';
 					}
 					$sWhere.=' AND tbl_user.is_deleted=0';
 					if(!empty($sWhere)){
