@@ -50,7 +50,7 @@
                                         <?php echo $this->session->flashdata('message_name');?>
                                     </div>
                                 <?php
-                                }
+                                }if(!empty($editData)){print_r($editData);}
                                 ?>
                                 
                                 <input type="hidden" name="leadid" value="<?php echo $this->uri->segment(3);?>">
@@ -58,7 +58,8 @@
             						<div class="col-md-6">
             							<div class="form-group">
             								<label class="control-label">Company Name</label>
-            								<input id="company_name" class="form-control" type="text" name="company_name" value="<?php echo !empty($leads[0]->companyname)?$leads[0]->companyname:''?>">
+            								<input id="company_name" class="form-control" type="text" name="company_name" value="<?php
+                                             if(!empty($editData)) { echo $editData[0]->companyname; } else{ if(!empty($leads[0]->companyname)) { echo $leads[0]->companyname; } else{ }}?>">
             							</div>
             						</div>
             						<div class="col-md-6">

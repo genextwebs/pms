@@ -203,7 +203,7 @@
                                 				<div class="col-md-6">
 											        <div class="form-group">
 											            <label class="control-label">Hourly Rate</label>
-											            <input type="text" class="form-control" id="hourly-rate" name="hourly_rate" value="<?php if(!empty($sessData['hourly-rate'])){echo $sessData['hourly-rate'];}?>">
+											            <input type="text" class="form-control" id="hourly-rate" name="hourly_rate" value="<?php if(!empty($sessData['hourly_rate'])){echo $sessData['hourly_rate'];}?>">
 											        </div>
 											    </div>
                                 			</div>

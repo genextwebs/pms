@@ -179,7 +179,7 @@ class Leads extends CI_Controller
 	}
 
 	public function addleads(){
-		$data['sessData'] = $this->session->flashdata('data');
+		$data['sessData'] = $this->session->flashdata('LeadData');
 		//print_r($data);die;
 		$this->load->view('common/header');
 		$this->load->view('leads/addleads',$data);
@@ -202,7 +202,8 @@ class Leads extends CI_Controller
 			if(count($data) == 1){
 				#echo "hi";exit;
 				$this->session->set_flashdata('message_name', 'Email is already exits');
-				$this->session->set_flashdata("data",$_POST);
+				//print_r($_POST);die;
+				$this->session->set_flashdata("LeadData",$_POST);
 				redirect('leads/addleads');
 			}
 			else{
@@ -243,7 +244,9 @@ class Leads extends CI_Controller
 				redirect('Leads');
 			}else{
 				$this->session->set_flashdata('message_name', 'Email address already exists');
-				redirect('leads/editleads/'.base64_encode($id));
+				$data['editData'] = $updateArr;
+				//print_r($data['editData']);die;
+				redirect('leads/editleads/'.base64_encode($id),$data);
 			}
 		}
 		$this->load->view('common/header');
