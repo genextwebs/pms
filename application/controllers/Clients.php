@@ -173,10 +173,10 @@ class Clients extends CI_Controller{
 						$sWhere.=' AND status='.$status;
 					}
 					if(!empty($startdate)){						
-						$sWhere.=' AND created_at >= "'.$startdate.'00:00:00'.'"';
+						$sWhere.=' AND created_at >= "'.$startdate.' 00:00:00'.'"';
 					}
 					if(!empty($enddate)){						
-						$sWhere.=' AND created_at <= "'.$enddate.'23:59:00'.'"';
+						$sWhere.=' AND created_at <= "'.$enddate.' 23:59:00'.'"';
 					}
 					$sWhere.=' AND tbl_user.is_deleted=0';
 					if(!empty($sWhere)){
@@ -187,6 +187,7 @@ class Clients extends CI_Controller{
 				
 		
 	   	$query = "SELECT tbl_clients.id as clientId, tbl_user.id,tbl_user.is_deleted,tbl_clients.clientname,tbl_clients.companyname,tbl_user.emailid,tbl_user.status,tbl_user.created_at from tbl_clients INNER JOIN tbl_user ON tbl_clients.user_id=tbl_user.id ".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+	   	//echo $query;exit();
 	    $clientsArr = $this->common_model->coreQueryObject($query);
 		
 		$query =  "SELECT tbl_clients.id as clientId, tbl_user.id,tbl_user.is_deleted,tbl_clients.clientname,tbl_clients.companyname,tbl_user.emailid,tbl_user.status,tbl_user.created_at from tbl_clients INNER JOIN tbl_user ON tbl_clients.user_id=tbl_user.id ".$sWhere;	
