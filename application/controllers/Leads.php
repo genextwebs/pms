@@ -245,7 +245,7 @@ class Leads extends CI_Controller
 			}else{
 				$this->session->set_flashdata('message_name', 'Email address already exists');
 				$this->session->set_flashdata("sessData",$_POST);
-				$data['editData'] = $updateArr;
+				//$data['editData'] = $updateArr;
 				//print_r($data['editData']);die;
 				redirect('leads/editleads/'.base64_encode($id),$data);
 			}
