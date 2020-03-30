@@ -18,7 +18,7 @@ class Project extends CI_Controller {
 		$data['category']=$this->common_model->getData('tbl_project_category');
 		$whereArr = array('is_deleted'=>0);
 		$data['client']=$this->common_model->getData('tbl_clients',$whereArr);
-		
+
 		$this->load->view('common/header');
 		$this->load->view('project/project',$data);
 		$this->load->view('common/footer');
@@ -76,15 +76,15 @@ class Project extends CI_Controller {
 			$currency=$this->input->post('currency-id');
 			$hours=$this->input->post('hours_allocated');	
 			
-			$whereArr=array('projectname'=>$name);	
-			$query=$this->common_model->getData('tbl_project_info',$whereArr);
-			if(count($query)==1)
-			{
-				$this->session->set_flashdata('message_name', 'Projectname is already exists..');
-				$this->session->set_flashdata("data",$_POST);
-				redirect('Project/addproject');
-			}
-			else{
+			$whereArr=array('projectname'=>$name);
+			if(!empty($whereArr)){
+				$query=$this->common_model->getData('tbl_project_info',$whereArr);
+				if(count($query)==1){
+					$this->session->set_flashdata('message_name', 'Projectname is already exists..');
+					$this->session->set_flashdata("data",$_POST);
+					redirect('Project/addproject');
+				}	
+			}else{
 				$store=array('projectname'=>$name,'projectcategoryid'=>$cat,'startdate'=>$date,'manualtimelog'=>$timelog,
 				'projectmember'=>$member,'deadline'=>$deadline,'clientid'=>$client,'viewtask'=>$view,
 				'tasknotification'=>$tasks,'status'=>0,'projectsummary'=>$editor1,'note'=>$notes,
