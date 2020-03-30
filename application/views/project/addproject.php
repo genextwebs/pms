@@ -97,7 +97,7 @@
 									<div class="col-md-4" >
 										<div class="form-group" style="padding-top: 25px;">
 											<div class="custom-control custom-checkbox my-1 mr-sm-2">
-												<input type="checkbox" class="custom-control-input" name="without_deadline" id="without_deadline" onclick="checkUncheck()" >
+												<input type="checkbox" class="custom-control-input" name="without_deadline" id="without_deadline" onclick="checkUncheck()">
 												<label class="custom-control-label" for="without_deadline" style="padding-top: 2px;">Add project without deadline?</label>
 											</div>
 										</div>
@@ -105,7 +105,9 @@
 									<div class="col-md-4">
 										<div class="form-group">
 											<div class="custom-control custom-checkbox my-1 mr-sm-2">
-												<input type="checkbox" class="custom-control-input" name="manual_timelog" id="manual_timelog" value="<?php if(!empty($sessData['manual_timelog'])){echo $sessData['manual_timelog'];}else{ }?>">
+												<input type="checkbox" class="custom-control-input" name="manual_timelog" id="manual_timelog" <?php 
+												if(!empty($sessData['manual_timelog'])){
+													echo "checked";}else{ }?>>
 												<label class="custom-control-label" for="manual_timelog" style="padding-top: 2px;" >Allow manual time logs?</label>
 											</div>
 										</div>
@@ -113,7 +115,9 @@
 									<div class="col-md-4">
 										<div class="form-group">
 											<div class="custom-control custom-checkbox my-1 mr-sm-2">
-												<input type="checkbox" class="custom-control-input" name="project_member" id="project_member" checked>
+												<input type="checkbox" class="custom-control-input" name="project_member" id="project_member" <?php 
+												if(!empty($sessData['project_member'])){
+													echo "checked";}else{ }?>>
 												<label class="custom-control-label" for="project_member" style="padding-top: 2px;">Add me as a project member</label>
 											</div>
 										</div>
@@ -165,7 +169,7 @@
 									<div class="col-md-4">
 										<div class="form-group">
 											<div class="custom-control custom-checkbox my-1 mr-sm-2">
-												<input type="checkbox" class="custom-control-input" name="client-view-tasks" id="client-view-tasks" onclick="viewtask()">
+												<input type="checkbox" class="custom-control-input" name="client-view-tasks" id="client-view-tasks" onclick="viewtask()" <?php if(!empty($sessData['client-view-tasks'])){ echo "checked";}else{ }?>>
 												<label class="custom-control-label" for="client-view-tasks" style="padding-top: 2px;">Client can view tasks of this project</label>
 											</div>
 										</div>
@@ -173,7 +177,7 @@
 									<div class="col-md-8">
 										<div class="form-group"  id="viewnotification" style="display:none;">
 											<div class="custom-control custom-checkbox my-1 mr-sm-2">
-												<input type="checkbox" class="custom-control-input" name="tasks-notification" id="tasks-notification">
+												<input type="checkbox" class="custom-control-input" name="tasks-notification" id="tasks-notification" <?php if(!empty($sessData['tasks-notification'])){ echo "checked";}else{ }?>>
 												<label class="custom-control-label" for="tasks-notification" style="padding-top: 2px;">Send task notification to client?</label>
 											</div>
 										</div>
