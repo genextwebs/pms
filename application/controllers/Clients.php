@@ -59,7 +59,11 @@ class Clients extends CI_Controller{
 			if(count($data)==1){
 				$this->session->set_flashdata('message_name','Email address already exists');
 				$this->session->set_flashdata("data",$_POST);
-				redirect('Clients/addclients');
+				if(!empty($this->uri->segment(3))){
+					redirect('Clients/addclients/'.$this->uri->segment(3));
+				}else{
+					redirect('Clients/addclients');
+				}
 			}
 			else{
 				$userinsertArr=array('user_type'=>1,'name'=>$clientname,'emailid'=>$clientemail,'password'=>$password,'original_password'=>$orgpassword,'generaterandompassword'=>$grp,'mobile'=>$mobile,'status'=>1,'login'=>$login,'is_deleted'=>0);
