@@ -52,13 +52,13 @@ if($this->session->flashdata('sessData')){
             					<div class="row">
             						<div class="col-md-6">
             							<div class="form-group">
-            								<label class="control-label">Company Name</label>
+            								<label class="control-label">Company Name<span class="astric">*</span></label>
             								<input id="company_name" class="form-control" type="text" name="company_name" value="<?php echo !empty($clients[0]->companyname) ?  $clients[0]->companyname : ''?>">
             							</div>
             						</div>
             						<div class="col-md-6">
             							<div class="form-group">
-            								<label class="control-label">Website</label>
+            								<label class="control-label">Website<span class="astric">*</span></label>
             								<input id="website" class="form-control" type="text" name="website" value="<?php echo !empty($clients[0]->website) ?  $clients[0]->website : ''?>">
             							</div>
             						</div>
@@ -76,13 +76,13 @@ if($this->session->flashdata('sessData')){
             					<div class="row">
             						<div class="col-md-6">
             							<div class="form-group">
-            								<label class="control-label">Client Name</label>
+            								<label class="control-label">Client Name<span class="astric">*</span></label>
             								<input id="name" class="form-control" type="text" name="name" value="<?php echo !empty($clients[0]->clientname) ?  $clients[0]->clientname :''?>">
             							</div>
             						</div>
             						<div class="col-md-6">
             							<div class="form-group">
-            								<label class="control-label">Client Email</label>
+            								<label class="control-label">Client Email<span class="astric">*</span></label>
             								<input id="email" class="form-control" type="email" name="email" value="<?php echo !empty($user[0]->emailid) ?  $user[0]->emailid :''?>">
             								<span class="help-block">Client will login using this email.</span>
             							</div>
@@ -91,7 +91,7 @@ if($this->session->flashdata('sessData')){
             					<div class="row">
             						<div class="col-md-4">
             							<div class="form-group">
-            								<label>Password</label>
+            								<label>Password<span class="astric">*</span></label>
             								<input type="Password" style="display: none;">
             								<input id="password" type="Password" class="form-control" name="password">
             								<span class="help-block">Client will login using this password.</span>
@@ -100,7 +100,7 @@ if($this->session->flashdata('sessData')){
             						<div class="col-md-4">
             							<div class="form-group">
             								<div class="form-group">
-	                                            <label>Mobile</label>
+	                                            <label>Mobile<span class="astric">*</span></label>
 	                                            <input type="tel" name="mobile" id="mobile" value="<?php echo !empty($user[0]->mobile) ?  $user[0]->mobile :''?>" class="form-control allow-no">
 	                                       </div>
             							</div>
