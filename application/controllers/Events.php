@@ -2,12 +2,15 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Fullcalendar extends CI_Controller {
+class Events extends CI_Controller {
 
 	 public function __construct()
 	 {
 	  parent::__construct();
-	  $this->load->model('fullcalendar_model');
+	  $this->load->model('common_model');
+	  $this->load->library('SendMail');
+		$this->login = $this->session->userdata('login');
+		$this->user_type = $this->login->user_type;
 	 }
 
 	 function index()
@@ -18,12 +21,15 @@ class Fullcalendar extends CI_Controller {
 
 	 function load()
 	 {
-	  $event_data = $this->fullcalendar_model->fetch_all_event();
-	  foreach($event_data->result_array() as $row)
+	 	$query = "select * from tbl_events";
+	  $event_data = $this->common_model->coreQuery($query);
+	  foreach($event_data as $row)
 	  {
 	   $data[] = array(
 	    'id' => $row['id'],
 	    'title' => $row['title'],
+	    'place' => $row['place'],
+	    'eventdescription' => $row['eventdescription'],
 	    'start' => $row['start_event'],
 	    'end' => $row['end_event']
 	   );
@@ -37,24 +43,13 @@ class Fullcalendar extends CI_Controller {
 	  {
 	   $data = array(
 	    'title'  => $this->input->post('title'),
-	    'start_event'=> $this->input->post('start'),
-	    'end_event' => $this->input->post('end')
+	    'place'  => $this->input->post('place'),
+	    'eventdescription'=> $this->input->post('description'),
+	    'start_event'=> $this->input->post('startdate'),
+	    'end_event' => $this->input->post('enddate')
 	   );
-	   $this->fullcalendar_model->insert_event($data);
-	  }
-	 }
-
-	 function update()
-	 {
-	  if($this->input->post('id'))
-	  {
-	   $data = array(
-	    'title'   => $this->input->post('title'),
-	    'start_event' => $this->input->post('start'),
-	    'end_event'  => $this->input->post('end')
-	   );
-
-	   $this->fullcalendar_model->update_event($data, $this->input->post('id'));
+	   //print_r($data);die;
+	   $this->common_model->insertData('tbl_events',$data);
 	  }
 	 }
 
@@ -62,7 +57,9 @@ class Fullcalendar extends CI_Controller {
 	 {
 	  if($this->input->post('id'))
 	  {
-	   $this->fullcalendar_model->delete_event($this->input->post('id'));
+	  	   $whereArr = array('id'=>$this->input->post('id'));
+
+	   $this->common_model->deleteData('tbl_events',$whereArr);
 	  }
 	 }
 

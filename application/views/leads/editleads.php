@@ -59,7 +59,7 @@
             							<div class="form-group">
             								<label class="control-label">Company Name</label>
             								<input id="company_name" class="form-control" type="text" name="company_name" value="<?php
-                                             if(!empty($editData)) { echo $editData[0]->companyname; } else{ if(!empty($leads[0]->companyname)) { echo $leads[0]->companyname; } else{ }}?>">
+                                             if(!empty($editData)) { echo $editData[0]->companyname; } elseif(!empty($leads[0]->companyname)) { echo $leads[0]->companyname; } else{ }?>">
             							</div>
             						</div>
             						<div class="col-md-6">
