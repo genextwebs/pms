@@ -52,7 +52,7 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label class="control-label">Project Name<span class="astric">*</span></label>
-											<input id="project_name" class="form-control" type="text" name="project_name" value="">
+											<input id="project_name" class="form-control" type="text" name="project_name" value="<?php if(!empty($sessData['project_name'])){echo $sessData['project_name'];}else{ }?>">
 										</div>
 									</div>
 
@@ -97,7 +97,9 @@
 									<div class="col-md-4" >
 										<div class="form-group" style="padding-top: 25px;">
 											<div class="custom-control custom-checkbox my-1 mr-sm-2">
-												<input type="checkbox" class="custom-control-input" name="without_deadline" id="without_deadline" onclick="checkUncheck()">
+												<input type="checkbox" class="custom-control-input" name="without_deadline" id="without_deadline" <?php 
+												if(!empty($sessData['without_deadline'])){
+													echo "checked";}else{ }?> onclick="checkUncheck()">
 												<label class="custom-control-label" for="without_deadline" style="padding-top: 2px;">Add project without deadline?</label>
 											</div>
 										</div>
@@ -197,7 +199,7 @@
 									<div class="col-md-4">
 										<div class="form-group">
 											<label class="control-label">Project Budget</label>
-											<input type="text" class="form-control" name="project_budget" value="<?php if(!empty($sessData['project_budget'])){echo $sessData['project_budget'];}else{ }?>">
+											<input type="text" class="form-control allow-no" name="project_budget" value="<?php if(!empty($sessData['project_budget'])){echo $sessData['project_budget'];}else{ }?>">
 										</div>
 									</div>
 									<div class="col-md-4">
