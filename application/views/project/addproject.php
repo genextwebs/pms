@@ -175,12 +175,21 @@
 										</div>
 									</div>	
 									<div class="col-md-8">
-										<div class="form-group"  id="viewnotification" style="display:none;">
-											<div class="custom-control custom-checkbox my-1 mr-sm-2">
-												<input type="checkbox" class="custom-control-input" name="tasks-notification" id="tasks-notification" <?php if(!empty($sessData['tasks-notification'])){ echo "checked";}else{ }?>>
-												<label class="custom-control-label" for="tasks-notification" style="padding-top: 2px;">Send task notification to client?</label>
+										<?php if(!empty($sessData['tasks-notification'])){ ?>
+											<div class="form-group"  id="viewnotification">
+												<div class="custom-control custom-checkbox my-1 mr-sm-2">
+													<input type="checkbox" class="custom-control-input" name="tasks-notification" id="tasks-notification" <?php if(!empty($sessData['tasks-notification'])){ echo "checked";}else{ }?>>
+													<label class="custom-control-label" for="tasks-notification" style="padding-top: 2px;">Send task notification to client?</label>
+												</div>
+											</div>	
+										<?php } else{ ?>
+											<div class="form-group"  id="viewnotification" style="display: none;">
+												<div class="custom-control custom-checkbox my-1 mr-sm-2">
+													<input type="checkbox" class="custom-control-input" name="tasks-notification" id="tasks-notification" <?php if(!empty($sessData['tasks-notification'])){ echo "checked";}else{ }?>>
+													<label class="custom-control-label" for="tasks-notification" style="padding-top: 2px;">Send task notification to client?</label>
+												</div>
 											</div>
-										</div>
+										<?php }  ?>								
 									</div>	
 								</div>
 								<h3 class="box-title mb-3 mt-2">Budget Info</h3>
@@ -249,26 +258,4 @@
 	$this->load->view('common/projectcategory');
 ?>
 <!--end category--> 
- <script type="text/javascript">
-
-	function checkUncheck(){ 
-
-		var checkBox = document.getElementById("without_deadline");
-        if (checkBox.checked) {
-            $('#deadlineBox').hide().checked;
-        }
-		else{
-			 $('#deadlineBox').show();
-		}	
-	}
-	function viewtask(){ 
-
-		var checkBox = document.getElementById("client-view-tasks");
-        if (checkBox.checked) {
-            $('#viewnotification').show().checked;
-        }
-		else{
-			 $('#viewnotification').hide();
-		}	
-	}
-</script>
+ 
