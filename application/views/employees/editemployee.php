@@ -7,12 +7,17 @@
                         <ol class="breadcrumb">
                             <li><a href="<?php echo base_url().'dashboard'?>">Home</a></li>
                             <li><a href="<?php echo base_url().'employee'?>">Employees</a></li>
-                            <li class="active">Add New</li>
+                            <li class="active">Edit</li>
                         </ol>
                     </div>
                 </div>
             </nav>
-
+<?php
+$sessData = "";
+if($this->session->flashdata('sessDataEmp')){
+$sessData = $this->session->flashdata('sessDataEmp');
+}
+?>
             <!-- contetn-wrap -->
             <div class="content-in">  
                 <div class="row">
@@ -44,13 +49,15 @@
 		                						<div class="col-md-6">
 		                							<div class="form-group">
 		                								<label class="control-label">Employee Name</label>
-		                								<input id="name" class="form-control" type="text" name="employee_name" value="<?php echo !empty($employee[0]->employeename) ?  $employee[0]->employeename : ' '?>">
+		                								<input id="name" class="form-control" type="text" name="employee_name" value="<?php 
+		                								if(!empty($sessData)) { echo $sessData['employee_name']; } elseif(!empty($employee[0]->employeename)) { echo $employee[0]->employeename; } else{ }?>">
 		                							</div>
 		                						</div>
 		                						<div class="col-md-6">
 		                							<div class="form-group">
 		                								<label class="control-label">Employee Email</label>
-		                								<input id="employee_email" class="form-control" type="email" name="employee_email" value="<?php echo !empty($user[0]->emailid) ?  $user[0]->emailid : ' '?>">
+		                								<input id="employee_email" class="form-control" type="email" name="employee_email" value="<?php
+		                								if(!empty($sessData)) { echo $sessData['employee_email']; } elseif(!empty($user[0]->emailid)) { echo $user[0]->emailid; } else{ }?>">
 		                								<span class="help-desk">Employee will login using this email.</span>
 		                							</div>
 		                						</div>
@@ -74,7 +81,9 @@
 		                						<div class="col-md-4">
 		                							<div class="form-group">
 		                								<label class="control-label">Mobile</label>
-		                								<input type="text" class="form-control allow-no" id="mobile" name="mobile" value="<?php echo !empty($user[0]->mobile) ?  $user[0]->mobile : ' '?>">
+		                								<input type="text" class="form-control allow-no" id="mobile" name="mobile" value="<?php 
+		                								if(!empty($sessData)) { echo $sessData['mobile']; } elseif(!empty($user[0]->mobile)) { echo $user[0]->mobile; } else{ }?>">
+		                								
 		                							</div>
 		                						</div>
 		                					</div>
@@ -86,38 +95,54 @@
 													        <div class="input-group-prepend">
 													          	<div class="input-group-text br-0">@</div>
 													        </div>
-													        <input type="text" class="form-control" id="inlineFormInputGroup" name="username" placeholder="Username" value="<?php echo !empty($employee[0]->slackusername) ?  $employee[0]->slackusername : ' '?>">
+													        <input type="text" class="form-control" id="inlineFormInputGroup" name="username" placeholder="Username" value="<?php 
+													        if(!empty($sessData)) { echo $sessData['username']; } elseif(!empty($employee[0]->slackusername)) { echo $employee[0]->slackusername; } else{ }?>">
 													    </div>
 		                							</div>
 		                						</div>
 											    <div class="col-lg-3">
 											        <div class="form-group">
 											            <label class="control-label">Joining Date</label>
-											            <input type="text" name="joining-date" id="startdate" autocomplete="off" class="form-control" data-date-format='yyyy-mm-dd' value="<?php echo !empty($employee[0]->joingdate) ?  $employee[0]->joingdate : ' '?>">
+											            <input type="text" name="joining-date" id="startdate" autocomplete="off" class="form-control" data-date-format='yyyy-mm-dd' value="<?php 
+											            if(!empty($sessData)) { echo $sessData['joining-date']; } elseif(!empty($employee[0]->joingdate)) { echo $employee[0]->joingdate; } else{ }?>">
 											        </div>
 											    </div>
 											    <div class="col-lg-3" id="deadlineBox">
 											        <div class="form-group">
 											            <label class="control-label">Last date</label>
-											            <input type="text" name="last-date" id="enddate" autocomplete="off" class="form-control" data-date-format='yyyy-mm-dd' value="<?php echo !empty($employee[0]->lastdate) ?  $employee[0]->lastdate : ' '?>">
+											            <input type="text" name="last-date" id="enddate" autocomplete="off" class="form-control" data-date-format='yyyy-mm-dd' value="<?php 
+											            if(!empty($sessData)) { echo $sessData['last-date']; } elseif(!empty($employee[0]->lastdate)) { echo $employee[0]->lastdate; } else{ }?>">
 											        </div>
 											    </div>
 											    <div class="col-lg-3">
 											        <div class="form-group">
 											            <label class="control-label">Gender</label>
 											            <select class="form-control" name="gender">
-											            	<option value="0" <?php
-																	if($employee[0]->gender == 0){
-																		echo 'selected';	
-															}?>>Male</option>
-											            	<option value="1" <?php 
-																	if($employee[0]->gender == 1){
-																		echo 'selected';	
-															}?>>Female</option>
-											            	<option value="2" <?php 
-																	if($employee[0]->gender == 2){
-																		echo 'selected';	
-															}?>>Others</option>
+											            	<?php
+						                                    $optst=$optst1=$optst2="";
+						                                    //echo "<PRE>";print_r($sessData);exit();
+						                                    if(isset($sessData['gender'])){
+						                                        if(trim($sessData['gender'])=='0'){
+						                                            $optst="selected";
+						                                        }else if(trim($sessData['gender'])=='1'){
+						                                            $optst1="selected";
+						                                        }else if(trim($sessData['gender'])=='2'){
+						                                        	$optst2="selected";
+						                                        }
+						                                    }else if(isset($employee[0]->gender)){
+						                                        if(trim($employee[0]->gender)=='0'){
+						                                            $optst="selected";
+						                                        }else if(trim($employee[0]->gender)=='1'){
+						                                            $optst1="selected";
+						                                        }
+						                                        else if(trim($employee[0]->gender)=='2'){
+						                                        	$optst2="selected";
+						                                        }
+						                                    }
+						                                    ?>
+											            	<option value="0" <?php echo $optst; ?>>Male</option>
+											            	<option value="1" <?php echo $optst1; ?>>Female</option>
+											            	<option value="2" <?php echo $optst2; ?>>Others</option>
 											            </select>
 											        </div>
 											    </div>
@@ -127,7 +152,8 @@
                                         		<div class="col-md-12">
 		                                            <div class="form-group">
 		                                                <label class="control-label">Address</label>
-		                                                <textarea name="address" class="form-control" rows="4"><?php 	echo !empty($employee[0]->address) ?  $employee[0]->address : ' '?></textarea>
+		                                                <textarea name="address" class="form-control" rows="4"><?php
+		                                                if(!empty($sessData)) { echo $sessData['address']; } elseif(!empty($employee[0]->address)) { echo $employee[0]->address; } else{ } ?></textarea>
 		                                            </div>
 		                                        </div>
                                 			</div>
@@ -135,7 +161,8 @@
                                 				<div class="col-md-12">
 											        <div class="form-group">
 											            <label class="control-label">Skills</label>
-											            <input type="text" contenteditable data-placeholder="Skills" class="form-control" id="skills" name="skills" id="skills" value="<?php echo !empty($employee[0]->skills) ?  $employee[0]->skills : ' '?>">
+											            <input type="text" contenteditable data-placeholder="Skills" class="form-control" id="skills" name="skills" id="skills" value="<?php 
+											            if(!empty($sessData)) { echo $sessData['skills']; } elseif(!empty($employee[0]->skills)) { echo $employee[0]->skills; } else{ }?>">
 											        </div>
 											    </div>
                                 			</div>
@@ -185,38 +212,70 @@
                                 				<div class="col-md-6">
 											        <div class="form-group">
 											            <label class="control-label">Hourly Rate</label>
-											            <input type="text" class="form-control" id="hourly-rate" name="hourly_rate" value="<?php echo !empty($employee[0]->hourlyrate) ?  $employee[0]->hourlyrate : ' '?>">
+											            <input type="text" class="form-control" id="hourly-rate" name="hourly_rate" value="<?php
+											            if(!empty($sessData)) { echo $sessData['hourly_rate']; } elseif(!empty($employee[0]->hourlyrate)) { echo $employee[0]->hourlyrate; } else{ }?>">
+
 											        </div>
 											    </div>
+											    <?php
+			                                    $optst=$optst1="";
+			                                    //echo "<PRE>";print_r($sessData);exit();
+			                                    if(isset($sessData['status'])){
+			                                        if(trim($sessData['status'])=='0'){
+			                                            $optst="selected";
+			                                        }else if(trim($sessData['status'])=='1'){
+			                                            $optst1="selected";
+			                                        }
+			                                    }else if(isset($user[0]->status)){
+			                                        if(trim($user[0]->status)=='0'){
+			                                            $optst="selected";
+			                                        }else if(trim($user[0]->status)=='1'){
+			                                            $optst1="selected";
+			                                        }
+			                                    }
+			                                    ?>
 											    <div class="col-md-6">
 											        <div class="form-group">
 											            <label class="control-label">Status</label>
 											            <select name="status" id="status" class="form-control">
 			                                                <option value="0" <?php 
-																	if($user[0]->status == 0){
-																		echo 'selected';	
-															}?>>Active</option>
+															echo $optst;
+															?>>Active</option>
 			                                                <option value="1" <?php 
-																	if($user[0]->status == 1){
-																echo 'selected';	
-															}?>>Inactive</option>
+															echo $optst1;
+															?>>Inactive</option>
 			                                            </select>
 											        </div>
 											    </div>
                                 			</div>
+                                			<?php
+			                                    $optst=$optst1="";
+			                                    //echo "<PRE>";print_r($sessData);exit();
+			                                    if(isset($sessData['login'])){
+			                                        if(trim($sessData['login'])=='0'){
+			                                            $optst="selected";
+			                                        }else if(trim($sessData['login'])=='1'){
+			                                            $optst1="selected";
+			                                        }
+			                                    }else if(isset($employee[0]->login)){
+			                                        if(trim($employee[0]->login)=='0'){
+			                                            $optst="selected";
+			                                        }else if(trim($employee[0]->login)=='1'){
+			                                            $optst1="selected";
+			                                        }
+			                                    }
+			                                    ?>
                                 			<div class="row">
 			                                    <div class="col-md-6 ">
 			                                        <div class="form-group">
 			                                            <label>Log In</label>
 			                                            <select name="login" id="login" class="form-control">
 			                                                <option value="0" <?php 
-																	if($user[0]->login == 0){
-																		echo 'selected';	
-															}?>>Enable</option>
+																echo $optst;
+															?>>Enable</option>
 			                                                <option value="1" <?php 
-																	if($user[0]->login == 1){
-																echo 'selected';	
-															}?>>Disable</option>
+																echo $optst1;
+															?>>Disable</option>
 			                                            </select>
 			                                        </div>
 			                                    </div>

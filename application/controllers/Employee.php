@@ -376,12 +376,8 @@ class Employee extends CI_Controller
 		$data['user'] = $this->common_model->getData('tbl_user',$whereArr);
 		$data['employee'] = $this->common_model->getData('tbl_employee',$whereArr1);
 		$data['sessData'] = $this->session->flashdata('data');
-		$data['error_msg'] = $this->session->flashdata('error');
 		$data['designation'] = $this->common_model->getData('tbl_designation');
 		$data['department'] = $this->common_model->getData('tbl_department');
-		$this->load->view('common/header');
-		$this->load->view('employees/editemployee',$data);
-		$this->load->view('common/footer');
 		if(!empty($_POST)){
 			$employee_name = $this->input->post('employee_name');
 			$employee_email = $this->input->post('employee_email');
@@ -426,12 +422,25 @@ class Employee extends CI_Controller
 			$updateArr1['designation'] = $designation;
 			$updateArr1['department'] = $department;
 			$updateArr1['hourlyrate'] = $hourlyrate;
-			
-			$this->common_model->updateData('tbl_employee',$updateArr1,$whereArr1);
-			$this->session->set_flashdata('message_name', 'Employee Update sucessfully');
-			$this->common_model->updateData('tbl_user',$updateArr,$whereArr);
-			redirect('employee');
-		}			
+			$whereck = array('emailid'=>$_POST['employee_email'],'id !='=>$id);
+			$checkEmail = $this->common_model->getData('tbl_user',$whereck);
+			if(empty($checkEmail)){
+				$this->common_model->updateData('tbl_employee',$updateArr1,$whereArr1);
+				$this->session->set_flashdata('message_name', 'Employee Update sucessfully');
+				$this->common_model->updateData('tbl_user',$updateArr,$whereArr);
+				redirect('employee');
+			}
+			else{
+				$error = array('error' =>'Email is already exits' );
+				$this->session->set_flashdata('error', $error);
+				//echo "ghdvc";die;
+				$this->session->set_flashdata("sessDataEmp",$_POST);
+			}
+		}
+		$data['error_msg'] = $this->session->flashdata('error');
+		$this->load->view('common/header');
+		$this->load->view('employees/editemployee',$data);
+		$this->load->view('common/footer');			
 	}
 
 	public function deleteemployee(){
