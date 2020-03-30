@@ -203,7 +203,7 @@ class Leads extends CI_Controller
 				#echo "hi";exit;
 				$this->session->set_flashdata('message_name', 'Email is already exits');
 				//print_r($_POST);die;
-				$this->session->set_flashdata("LeadData",$_POST);
+				$this->session->set_flashdata("sessData",$_POST);
 				redirect('leads/addleads');
 			}
 			else{
@@ -244,6 +244,7 @@ class Leads extends CI_Controller
 				redirect('Leads');
 			}else{
 				$this->session->set_flashdata('message_name', 'Email address already exists');
+				$this->session->set_flashdata("sessData",$_POST);
 				$data['editData'] = $updateArr;
 				//print_r($data['editData']);die;
 				redirect('leads/editleads/'.base64_encode($id),$data);

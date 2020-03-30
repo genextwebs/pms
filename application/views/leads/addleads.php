@@ -14,7 +14,12 @@
 </nav>
 
 <!-- contetn-wrap -->
-
+<?php
+$sessData=array();
+if(!empty($this->session->flashdata('sessData'))){
+    $sessData = $this->session->flashdata('sessData');
+}
+?>
 <div class="content-in">  
     <div class="row">
         <div class="col-md-12">
@@ -95,20 +100,21 @@
 											<input type="text" id="mobile" name="mobile" class="form-control allow-no" value="<?php if(!empty($sessData['mobile'])){echo $sessData['mobile'];}else{ }?>">
 										</div>
 									</div>
+                                    <?php
+                                    $optst=$optst1="";
+                                    if(isset($sessData['follow_up'])){
+                                        if(trim($sessData['follow_up'])=='0'){
+                                            $optst="selected";
+                                        }else if(trim($sessData['follow_up'])=='1'){
+                                            $optst1="follow_up";
+                                        }
+                                    }?>
 									<div class="col-lg-4 col-md-6">
 										<div class="form-group">
 											<label class="control-label">Next Follow Up</label>
 											<select id="follow_up" name="follow_up" class="form-control">
-												<option value="1" <?php if(!empty($sessData['follow_up'])){
-                                                            if($sessData['follow_up'] == 1){
-                                                                echo 'selected';    
-                                                            }}
-                                                            ?>>Yes</option>
-												<option value="0" <?php if(!empty($sessData['follow_up'])){
-                                                            if($sessData['follow_up'] == 0){
-                                                                echo 'selected';    
-                                                            }}
-                                                            ?>>No</option>
+												<option value="1" <?= $optst1;?>>Yes</option>
+												<option value="0" <?= $optst;?>>No</option>
 											</select>
 										</div>
 									</div>

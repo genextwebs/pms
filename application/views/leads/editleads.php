@@ -12,7 +12,12 @@
         </div>
     </div>
 </nav>
-
+<?php
+$sessData=array();
+if(!empty($this->session->flashdata('sessData'))){
+    $sessData = $this->session->flashdata('sessData');
+}
+?>
 <!-- contetn-wrap -->
 <div class="content-in">  
     <div class="row">
@@ -101,24 +106,81 @@
 											<input type="text" id="mobile" name="mobile" class="form-control allow-no" value="<?php echo !empty($leads[0]->mobile)?$leads[0]->mobile:''?>">
 										</div>
 									</div>
+                                    <?php
+                                    $optst=$optst1="";
+                                    //echo "<PRE>";print_r($sessData);exit();
+                                    if(isset($sessData['follow_up'])){
+                                        if(trim($sessData['follow_up'])=='0'){
+                                            $optst="selected";
+                                        }else if(trim($sessData['follow_up'])=='1'){
+                                            $optst1="selected";
+                                        }
+                                    }else if(isset($user[0]->nextfollowup)){
+                                        if(trim($user[0]->nextfollowup)=='0'){
+                                            $optst="selected";
+                                        }else if(trim($user[0]->nextfollowup)=='1'){
+                                            $optst1="selected";
+                                        }
+                                    }
+                                    ?>
 									<div class="col-lg-4 col-md-6">
 										<div class="form-group">
 											<label class="control-label">Next Follow Up</label>
 											<select id="follow_up" name="follow_up" class="form-control">
-												<option value="0" <?php if($leads[0]->nextfollowup=='0'){ echo 'selected'; }?>>Yes</option>
-												<option value="1" <?php if($leads[0]->nextfollowup=='1'){ echo 'selected'; }?>>No</option>
+												<option value="0" <?= $optst;?>>Yes</option>
+												<option value="1" <?= $optst1;?>>No</option>
 											</select>
 										</div>
 									</div>
                                 </div>
+                                <?php
+                                $optstr=$optstr1=$optstr2="";
+                                //echo "<PRE>";print_r($sessData);exit();
+                                if(isset($sessData['status'])){
+                                    if(trim($sessData['status'])=='0'){
+                                        $optstr="selected";
+                                    }else if(trim($sessData['status'])=='1'){
+                                        $optstr1="selected";
+                                    }else if(trim($sessData['status'])=='2'){
+                                        $optstr2="selected";
+                                    }
+                                }else if(isset($user[0]->status)){
+                                    if(trim($user[0]->status)=='0'){
+                                        $optstr="selected";
+                                    }else if(trim($user[0]->status)=='1'){
+                                        $optstr1="selected";
+                                    }else if(trim($user[0]->status)=='2'){
+                                        $optstr2="selected";
+                                    }
+                                }
+                                $socialstr=$socialstr1=$socialstr2="";
+                                //echo "<PRE>";print_r($sessData);exit();
+                                if(isset($sessData['source'])){
+                                    if(trim($sessData['source'])=='0'){
+                                        $socialstr="selected";
+                                    }else if(trim($sessData['source'])=='1'){
+                                        $socialstr1="selected";
+                                    }else if(trim($sessData['source'])=='2'){
+                                        $socialstr2="selected";
+                                    }
+                                }else if(isset($user[0]->source)){
+                                    if(trim($user[0]->source)=='0'){
+                                        $socialstr="selected";
+                                    }else if(trim($user[0]->source)=='1'){
+                                        $socialstr1="selected";
+                                    }else if(trim($user[0]->source)=='2'){
+                                        $socialstr2="selected";
+                                    }
+                                }
+                                ?>
                                 <div class="row">
                                     <div class="col-lg-4 col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Status</label>
                                             <select id="status" name="status" class="form-control">
-                                                <option value="0" <?php if($leads[0]->status=='0'){ echo 'selected'; }?>>Pending</option>
-                                                <option value="1" <?php if($leads[0]->status=='1'){ echo 'selected'; }?>>Overview</option>
-                                                <option value="2" <?php if($leads[0]->status=='2'){ echo 'selected'; }?>>Confirmed</option>
+                                                <option value="0" <?= $optstr;?>>Pending</option>
+                                                <option value="1" <?= $optstr1;?>>Overview</option>
+                                                <option value="2" <?= $optstr2;?>>Confirmed</option>
                                             </select>
                                         </div>
                                     </div>
@@ -126,9 +188,9 @@
                                         <div class="form-group">
                                             <label class="control-label">Source</label>
                                             <select id="source" name="source" class="form-control">
-                                                <option value="0" <?php if($leads[0]->source=='0'){ echo 'selected'; }?>>Social Media</option>
-                                                <option value="1" <?php if($leads[0]->source=='1'){ echo 'selected'; }?>>Google</option>
-                                                <option value="2" <?php if($leads[0]->source=='2'){ echo 'selected'; }?>>Other</option>
+                                                <option value="0" <?= $socialstr;?>>Social Media</option>
+                                                <option value="1" <?= $socialstr1;?>>Google</option>
+                                                <option value="2" <?= $socialstr2;?>>Other</option>
                                             </select>
                                         </div>
                                     </div>
