@@ -99,8 +99,7 @@
             							<div class="form-group required pass-eye">
             								<label class="pass-change">Password<span class="astric">*</span></label>
 
-            								<input type="Password" style="display: none;">
-            								<input id="password" type="Password" class="form-control pass-change" name="password" value="<?php if(!empty($sessData['password'])) { echo $sessData['password']; } else {} ?>">
+            								<input id="password" type="Password" class="form-control pass-change" name="password" >
                                             <span class="hidden-eye">
 
                                             <span class="pass-view" onclick="passwordAction(1)"><i class="fa fa-eye"></i></span>
@@ -111,7 +110,7 @@
             						<div class="col-xs-12 col-md-4 mt-4">
             							<div class="form-group">
             								<div class="checkbox checkbox-info">
-                                                <input id="randompassword" name="randompassword" type="checkbox" <?php if(!empty($sessData['randompassword'])) { if(($sessData['randompassword']) == 'on' ) { echo 'checked';} }  ?> onclick="checkuncheck();"  >
+                                                <input id="randompassword" name="randompassword" type="checkbox" onclick="checkuncheck();"  >
                                                 <label for="randompassword">Generate Random Password</label>
                                             </div>
             							</div>

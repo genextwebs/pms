@@ -53,13 +53,15 @@ if($this->session->flashdata('sessData')){
             						<div class="col-md-6">
             							<div class="form-group">
             								<label class="control-label">Company Name<span class="astric">*</span></label>
-            								<input id="company_name" class="form-control" type="text" name="company_name" value="<?php echo !empty($clients[0]->companyname) ?  $clients[0]->companyname : ''?>">
+            								<input id="company_name" class="form-control" type="text" name="company_name" value="<?php
+                                             if(!empty($sessData)) { echo $sessData['company_name']; } elseif(!empty($clients[0]->companyname)) { echo $clients[0]->companyname; } else{ }?>">
             							</div>
             						</div>
             						<div class="col-md-6">
             							<div class="form-group">
             								<label class="control-label">Website<span class="astric">*</span></label>
-            								<input id="website" class="form-control" type="text" name="website" value="<?php echo !empty($clients[0]->website) ?  $clients[0]->website : ''?>">
+            								<input id="website" class="form-control" type="text" name="website" value="<?php
+                                             if(!empty($sessData)) { echo $sessData['website']; } elseif(!empty($clients[0]->website)) { echo $clients[0]->website; } else{ }?>">
             							</div>
             						</div>
             					</div>
@@ -67,7 +69,8 @@ if($this->session->flashdata('sessData')){
             						<div class="col-md-12">
             							<div class="form-group">
             								<label class="control-label">Address</label>
-            								<textarea name="address" id="address" rows="5"  class="form-control"><?php echo !empty($clients[0]->address) ?  $clients[0]->address : ''?></textarea>
+            								<textarea name="address" id="address" rows="5"  class="form-control"><?php
+                                             if(!empty($sessData)) { echo $sessData['address']; } elseif(!empty($clients[0]->address)) { echo $clients[0]->address; } else{ }?></textarea>
             							</div>
             						</div>
             					</div>
@@ -77,7 +80,7 @@ if($this->session->flashdata('sessData')){
             						<div class="col-md-6">
             							<div class="form-group">
             								<label class="control-label">Client Name<span class="astric">*</span></label>
-            								<input id="name" class="form-control" type="text" name="name" value="<?php echo !empty($clients[0]->clientname) ?  $clients[0]->clientname :''?>">
+            								<input id="name" class="form-control" type="text" name="name" value="<?php if(!empty($sessData)) { echo $sessData['name']; } elseif(!empty($clients[0]->clientname)) { echo $clients[0]->clientname; } else{ }?>">
             							</div>
             						</div>
             						<div class="col-md-6">
@@ -101,7 +104,7 @@ if($this->session->flashdata('sessData')){
             							<div class="form-group">
             								<div class="form-group">
 	                                            <label>Mobile<span class="astric">*</span></label>
-	                                            <input type="tel" name="mobile" id="mobile" value="<?php echo !empty($user[0]->mobile) ?  $user[0]->mobile :''?>" class="form-control allow-no">
+	                                            <input type="tel" name="mobile" id="mobile" value="<?php if(!empty($sessData)) { echo $sessData['mobile']; } elseif(!empty($user[0]->mobile)) { echo $user[0]->mobile; } else{ }?>" class="form-control allow-no">
 	                                       </div>
             							</div>
             						</div>
@@ -136,25 +139,25 @@ if($this->session->flashdata('sessData')){
             						<div class="col-md-3">
             							<div class="form-group">
             								<label class="control-label">Skype</label>
-            								<input id="skype" class="form-control" type="text" name="skype" value="<?php echo !empty($clients[0]->skype) ?  $clients[0]->skype :' '?>">
+            								<input id="skype" class="form-control" type="text" name="skype" value="<?php if(!empty($sessData)) { echo $sessData['skype']; } elseif(!empty($clients[0]->skype)) { echo $clients[0]->skype; } else{ }?>">
             							</div>
             						</div>
             						<div class="col-md-3">
             							<div class="form-group">
             								<label class="control-label">Linkedin</label>
-            								<input id="linkedin" class="form-control" type="text" name="linkedin" value="<?php echo !empty($clients[0]->linkedin) ?  $clients[0]->linkedin : ''?>">
+            								<input id="linkedin" class="form-control" type="text" name="linkedin" value="<?php if(!empty($sessData)) { echo $sessData['linkedin']; } elseif(!empty($clients[0]->linkedin)) { echo $clients[0]->linkedin; } else{ }?>">
             							</div>
             						</div>
             						<div class="col-md-3">
             							<div class="form-group">
             								<label class="control-label">Twitter</label>
-            								<input id="twitter" class="form-control" type="text" name="twitter" value="<?php echo !empty($clients[0]->twitter) ?  $clients[0]->twitter : ''?>">
+            								<input id="twitter" class="form-control" type="text" name="twitter" value="<?php if(!empty($sessData)) { echo $sessData['twitter']; } elseif(!empty($clients[0]->twitter)) { echo $clients[0]->twitter; } else{ }?>">
             							</div>
             						</div>
             						<div class="col-md-3">
             							<div class="form-group">
             								<label class="control-label">Facebook</label>
-            								<input id="facebook" class="form-control" type="text" name="facebook" value="<?php echo !empty($clients[0]->facebook) ?  $clients[0]->facebook : ''?>">
+            								<input id="facebook" class="form-control" type="text" name="facebook" value="<?php if(!empty($sessData)) { echo $sessData['facebook']; } elseif(!empty($clients[0]->facebook)) { echo $clients[0]->facebook; } else{ }?>">
             							</div>
             						</div>
             					</div>
@@ -162,7 +165,7 @@ if($this->session->flashdata('sessData')){
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="gst_number">GST Number</label>
-                                            <input type="text" id="gst_number" name="gst_number" class="form-control" value="<?php echo !empty($clients[0]->gstnumber) ?  $clients[0]->gstnumber : ''?>">
+                                            <input type="text" id="gst_number" name="gst_number" class="form-control" value="<?php if(!empty($sessData)) { echo $sessData['gst_number']; } elseif(!empty($clients[0]->gstnumber)) { echo $clients[0]->gstnumber; } else{ }?>">
                                         </div>
                                     </div>
                                 </div>
@@ -170,7 +173,7 @@ if($this->session->flashdata('sessData')){
                                     <div class="col-md-12">
                                         <label>Note</label>
                                         <div class="form-group">
-                                            <textarea name="note" id="note" class="form-control" rows="5"><?php echo !empty($clients[0]->note) ?  $clients[0]->note : ' '?></textarea>
+                                            <textarea name="note" id="note" class="form-control" rows="5"><?php if(!empty($sessData)) { echo $sessData['note']; } elseif(!empty($clients[0]->note)) { echo $clients[0]->note; } else{ }?></textarea>
                                         </div>
                                     </div>
                                 </div>
