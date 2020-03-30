@@ -150,9 +150,9 @@ if($this->session->userdata('login')){
                 <span>Messages</span>
             </a>
         </li> -->
-        <li>
-            <a href="#" class="nav-link-s">
-                <i class="icon-calender"></i>
+       <li <?php if($controller == 'events' && ($functionName == 'events' || $functionName == '')) { echo 'class="active"'; } ?>>
+            <a href="<?php echo base_url().'events'?>" class="nav-link-s">
+                <i class="icon-logout"></i>
                 <span>Events</span>
             </a>
         </li>
