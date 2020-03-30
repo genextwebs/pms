@@ -79,7 +79,7 @@ class Project extends CI_Controller {
 			$whereArr=array('projectname'=>$name);
 			if(!empty($whereArr)){
 				$query=$this->common_model->getData('tbl_project_info',$whereArr);
-				if(count($query)==1){
+				if(count($query) == 1){
 					$this->session->set_flashdata('message_name', 'Projectname is already exists..');
 					$this->session->set_flashdata("data",$_POST);
 					redirect('Project/addproject');

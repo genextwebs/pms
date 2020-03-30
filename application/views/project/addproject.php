@@ -189,7 +189,7 @@
 													<label class="custom-control-label" for="tasks-notification" style="padding-top: 2px;">Send task notification to client?</label>
 												</div>
 											</div>
-										<?php }  ?>								
+										<?php } ?>						
 									</div>	
 								</div>
 								<h3 class="box-title mb-3 mt-2">Budget Info</h3>
