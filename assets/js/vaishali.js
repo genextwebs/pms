@@ -273,7 +273,7 @@ jQuery(document).ready(function() {
 	}
 
 });
-$('#btnapply').click(function(){ 
+$('#btnapplyEmp').click(function(){ 
 			//button filter event click
 	var oTable = $('#employee').DataTable();
 	oTable.draw();
