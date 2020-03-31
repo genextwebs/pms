@@ -178,6 +178,11 @@ $sessData = $this->session->flashdata('sessDataEmp');
 											            	<option>--</option>
 											            	<?php foreach($designation as $row){
 											            		$str = '';
+											            		if(!empty($sessData)){
+											            			if($sessData['designation'] == $row->id){
+											            				$str = 'selected'; 
+											            			}
+											            		}
 											            		if($row->id == $employee[0]->designation){
 											            				$str = 'selected';
 											            		}
@@ -197,6 +202,11 @@ $sessData = $this->session->flashdata('sessDataEmp');
 											            	<option>--</option>
 											            	<?php foreach($department as $row){
 											            		$str = '';
+											            		if(!empty($sessData)){
+											            			if($sessData['department'] == $row->id){
+											            				$str = 'selected'; 
+											            			}
+											            		}
 											            		if($row->id == $employee[0]->department){
 											            				$str = 'selected';
 											            		}
