@@ -138,10 +138,10 @@ class Finance extends CI_Controller{
 						$sWhere.=' AND status='.$status;
 					}
 					if(!empty($startdate)){						
-						$sWhere.=' AND validtill>="'.$startdate.' 00:00:00'.'"';
+						$sWhere.=' AND validtill >= "'.$startdate.' 00:00:00'.'"';
 					}
 					if(!empty($enddate)){						
-						$sWhere.=' AND validtill<="'.$enddate.' 23:59:00'.'"';
+						$sWhere.=' AND validtill <= "'.$enddate.' 23:59:00'.'"';
 					}
 					if($this->user_type == 1){
 		            	$sWhere.= 'AND c.user_id='.$this->user_id;

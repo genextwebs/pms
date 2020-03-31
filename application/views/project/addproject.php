@@ -88,12 +88,16 @@
 											<input type="text" name="start_date" id="start_date" autocomplete="off" class="form-control" value="<?php if(!empty($sessData['start_date'])){echo $sessData['start_date'];}else{ }?>">
 										</div>
 									</div>
-									<div class="col-md-4" id="deadlineBox">
+									<?php $style = 'style="display: block;"'; ?>
+									<?php $style1 = 'style="display: none;"'; ?>
+
+									<div class="col-md-4" id="deadlineBox" <?php if(!empty($sessData)) { if(!empty($sessData['without_deadline'])) { if($sessData['without_deadline'] == 'on')  { echo $style1; } else { echo $style; } } } else { echo $style; } ?>>
 										<div class="form-group">
 											<label class="control-label">Deadline<span class="astric">*</span></label>
 											<input type="text" name="deadline" id="deadline" autocomplete="off" class="form-control" value="<?php if(!empty($sessData['deadline'])){echo $sessData['deadline'];}else{ }?>" >
 										</div>
 									</div>
+
 									<div class="col-md-4" >
 										<div class="form-group" style="padding-top: 25px;">
 											<div class="custom-control custom-checkbox my-1 mr-sm-2">
