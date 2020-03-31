@@ -41,7 +41,7 @@
 		                					<div class="row">
 		                						<div class="col-md-12">
 		                							<div class="form-group">
-		                								<label class="control-label">Project</label>
+		                								<label class="control-label">Project<span class="astric">*</span></label>
 		                								<select class="custom-select br-0" name="projectid">
 		                								<?php
 			                								foreach($project as $pj){
@@ -80,7 +80,7 @@
 			                					</div>
 		                						<div class="col-md-12">
 		                							<div class="form-group">
-			                							<label class="control-label">Title</label>
+			                							<label class="control-label">Title<span class="astric">*</span></label>
 			                							<input type="text" class="form-control" id="title_task" name="title_task" value="<?php echo !empty($taskData[0]->title) ?  $taskData[0]->title : ' '?>">
 			                						</div>
 		                						</div>
@@ -92,19 +92,19 @@
 		                						</div>
 		                						<div class="col-md-12">
 		                							<div class="form-group">
-		                								<label class="control-label">start Date</label>
+		                								<label class="control-label">Start Date<span class="astric">*</span></label>
 		                								<input id="start_date" type="text" class="form-control" name="startdate" value="<?php echo !empty($taskData[0]->startdate) ?  $taskData[0]->startdate : ' '?>">
 		                							</div>
 		                						</div>
 		                						<div class="col-md-12">
 		                							<div class="form-group">
-		                								<label class="control-label">Due Date</label>
+		                								<label class="control-label">Due Date<span class="astric">*</span></label>
 		                								<input id="deadline" type="text" class="form-control" name="due_date" value="<?php echo !empty($taskData[0]->duedate) ?  $taskData[0]->duedate : ' '?>">
 		                							</div>
 		                						</div>
 		                						<div class="col-md-12">
 			                						<div class="form-group">
-			                							<label class="control-label">Assigned To</label>
+			                							<label class="control-label">Assigned To<span class="astric">*</span></label>
 			                							<select id='selUser' class="custom-select" name="assignemp">
 												            <?php foreach($employee as $row){
 					            							$str = '';
@@ -133,7 +133,7 @@
 			                					</div>
 			                					<div class="col-md-12">
 			                						<div class="form-group">
-			                							<label class="control-label">Priority</label>
+			                							<label class="control-label">Priority<span class="astric">*</span></label>
 			                							<div class="custom-control custom-radio radio-danger">
 														    <input type="radio" class="custom-control-input" id="high-rad" name="radio-stacked" value="0" <?php if($taskData[0]->priority == '0'){ echo 'checked'; }?> required>
 														    <label class="custom-control-label text-danger" for="high-rad">High</label>

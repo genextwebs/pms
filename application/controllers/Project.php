@@ -1003,7 +1003,7 @@ class Project extends CI_Controller {
 	            	$sWhere.=' AND  taskcategory='.$taskcategory;
 	            }
 	            if(!empty($startdate)){						
-						$sWhere.=' AND tbl_task.startdate>="'.$startdate.' 00:00:00'.'"';
+						$sWhere.=' AND tbl_task.startdate>="'.$startdate.'"';
 				}
 				if(!empty($enddate)){						
 					$sWhere.=' AND tbl_task.duedate<="'.$enddate.' 23:59:00'.'"';

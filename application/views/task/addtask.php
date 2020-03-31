@@ -88,7 +88,7 @@
 		                						</div>
 		                						<div class="col-md-12">
 		                							<div class="form-group">
-		                								<label class="control-label">start Date<span class="astric">*</span></label>
+		                								<label class="control-label">Start Date<span class="astric">*</span></label>
 		                								<input id="start_date" type="text" class="form-control" name="startdate">
 		                							</div>
 		                						</div>
@@ -100,7 +100,7 @@
 		                						</div>
 		                						<div class="col-md-12">
 			                						<div class="form-group">
-			                							<label class="control-label">Assigned To</label>
+			                							<label class="control-label">Assigned To<span class="astric">*</span></label>
 			                							<select id='selUser' class="custom-select" name="assignemp">
 												            <?php foreach($employee as $row){
 					            							?>

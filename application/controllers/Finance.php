@@ -588,6 +588,7 @@ class Finance extends CI_Controller{
 					$actionStr = '<div class="dropdown action m-r-10">
 			                <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
 			                		<div class="dropdown-menu">
+			                		 <a  class="dropdown-item" href='.base_url().'Finance/doPayment/'.base64_encode($id).'><i class="fa fa-credit-card custom"></i> Payment</a>
 					       				<a  class="dropdown-item" href="javascript:void(0);" onclick="deleteinvoices(\''.base64_encode($id).'\')"><i class="fa fa-trash "></i> Delete</a>
 									</div>
 						</div>';

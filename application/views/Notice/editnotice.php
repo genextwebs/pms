@@ -55,7 +55,7 @@
             					<div class="row">
             						<div class="col-md-12">
             							<div class="form-group">
-            								<label class="control-label">Notice Heading</label>
+            								<label class="control-label">Notice Heading <span class="astric">*</span></label>
             								<input id="heading" class="form-control" type="text" name="heading" value="<?php echo !empty($notices[0]->heading) ? $notices[0]->heading : '' ?>">
             							</div>
             						</div>

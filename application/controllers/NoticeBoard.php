@@ -109,7 +109,7 @@ class NoticeBoard extends CI_Controller{
 				$startdate=!empty($_POST['startdate']) ? $_POST['startdate'] : '';
 				$enddate=!empty($_POST['enddate']) ? $_POST['enddate'] : '';
 					if(!empty($startdate)){						
-						$sWhere.=' AND created_at>="'.$startdate.'"';
+						$sWhere.=' AND created_at>="'.$startdate.' 00:00:00'.'"';
 					}
 					if(!empty($enddate)){						
 						$sWhere.=' AND created_at<="'.$enddate.'"';

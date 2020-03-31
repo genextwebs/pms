@@ -48,14 +48,14 @@ $sessData = $this->session->flashdata('sessDataEmp');
 		                					<div class="row">
 		                						<div class="col-md-6">
 		                							<div class="form-group">
-		                								<label class="control-label">Employee Name</label>
+		                								<label class="control-label">Employee Name<span class="astric">*</span></label>
 		                								<input id="name" class="form-control" type="text" name="employee_name" value="<?php 
 		                								if(!empty($sessData)) { echo $sessData['employee_name']; } elseif(!empty($employee[0]->employeename)) { echo $employee[0]->employeename; } else{ }?>">
 		                							</div>
 		                						</div>
 		                						<div class="col-md-6">
 		                							<div class="form-group">
-		                								<label class="control-label">Employee Email</label>
+		                								<label class="control-label">Employee Email<span class="astric">*</span></label>
 		                								<input id="employee_email" class="form-control" type="email" name="employee_email" value="<?php
 		                								if(!empty($sessData)) { echo $sessData['employee_email']; } elseif(!empty($user[0]->emailid)) { echo $user[0]->emailid; } else{ }?>">
 		                								<span class="help-desk">Employee will login using this email.</span>
@@ -65,7 +65,7 @@ $sessData = $this->session->flashdata('sessDataEmp');
 		                					<div class="row">
 		                						<div class="col-md-4">
 		                							<div class="form-group">
-		                								<label class="control-label">Password</label>
+		                								<label class="control-label">Password<span class="astric">*</span></label>
 		                								<input type="password" name="password" id="password" class="form-control">
 		                								<span class="help-desk">Employee will login using this password. </span>
 		                							</div>
@@ -80,7 +80,7 @@ $sessData = $this->session->flashdata('sessDataEmp');
 		                						</div>
 		                						<div class="col-md-4">
 		                							<div class="form-group">
-		                								<label class="control-label">Mobile</label>
+		                								<label class="control-label">Mobile<span class="astric">*</span></label>
 		                								<input type="text" class="form-control allow-no" id="mobile" name="mobile" value="<?php 
 		                								if(!empty($sessData)) { echo $sessData['mobile']; } elseif(!empty($user[0]->mobile)) { echo $user[0]->mobile; } else{ }?>">
 		                								
@@ -160,7 +160,7 @@ $sessData = $this->session->flashdata('sessDataEmp');
                                 			<div class="row">
                                 				<div class="col-md-12">
 											        <div class="form-group">
-											            <label class="control-label">Skills</label>
+											            <label class="control-label">Skills<span class="astric">*</span></label>
 											            <input type="text" contenteditable data-placeholder="Skills" class="form-control" id="skills" name="skills" id="skills" value="<?php 
 											            if(!empty($sessData)) { echo $sessData['skills']; } elseif(!empty($employee[0]->skills)) { echo $employee[0]->skills; } else{ }?>">
 											        </div>
@@ -169,7 +169,7 @@ $sessData = $this->session->flashdata('sessDataEmp');
                                 			<div class="row">
                                 				<div class="col-md-6">
 											        <div class="form-group">
-											            <label class="control-label">Designation</label>
+											            <label class="control-label">Designation<span class="astric">*</span></label>
 											            <a href="javascript:;" id="tax-settings" data-toggle="modal" data-target="#data-designation">
 											            	<i class="ti-settings text-info"></i>
 											            </a>
@@ -194,7 +194,7 @@ $sessData = $this->session->flashdata('sessDataEmp');
 											    </div>
 											    <div class="col-md-6">
 											        <div class="form-group">
-											            <label class="control-label">Department</label>
+											            <label class="control-label">Department<span class="astric">*</span></label>
 											            <a href="javascript:;" id="tax-settings" data-toggle="modal" data-target="#data-department">
 											            	<i class="ti-settings text-info"></i>
 											            	</a>

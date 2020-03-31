@@ -52,7 +52,7 @@
 												<div class="col-md-12 ">
 													<div class="col-md-12">
 		                								<div class="form-group">
-		                									<label class="control-label">Choose Member</label>
+		                									<label class="control-label">Choose Member<span class="astric">*</span></label>
 															<select name="employee" id="employee" class="form-control">
 															<option value="">--</option>
 																<?php
@@ -76,7 +76,7 @@
 												<div class="col-md-12 ">
 													<div class="col-md-12">
 		                								<div class="form-group">
-		                									<label class="control-label">Project</label>
+		                									<label class="control-label">Project<span class="astric">*</span></label>
 															<select name="project" id="project" class="form-control">
 															<option value="">--</option>
 																<?php
@@ -100,7 +100,7 @@
 												<div class="col-md-12 ">
 													<div class="col-md-12">
 		                								<div class="form-group">
-		                									<label class="control-label">Currency</label>
+		                									<label class="control-label">Currency<span class="astric">*</span></label>
 															<select name="currency" id="currency" class="form-control">
 															<option value="">--</option>
 															<option value="1" <?php if($expense[0]->currency=='1'){ echo 'selected'; } ?>>$(USD)</option>
@@ -114,7 +114,7 @@
 												<div class="col-md-12 ">
 													<div class="col-md-12">
 		                								<div class="form-group">
-		                									<label class="control-label">Item Name</label>
+		                									<label class="control-label">Item Name<span class="astric">*</span></label>
 															<input type="text" class="form-control" name="itemname" id="itemname" value="<?php echo !empty($expense[0]->item) ? $expense[0]->item : '' ?>">
 														</div>
 		                							</div>
@@ -124,7 +124,7 @@
 												<div class="col-md-12 ">
 													<div class="col-md-12">
 		                								<div class="form-group">
-		                									<label class="control-label">Price</label>
+		                									<label class="control-label">Price<span class="astric">*</span></label>
 															<input type="text" class="form-control" name="price" id="price" value="<?php echo !empty($expense[0]->price) ? $expense[0]->price : '' ?>">
 														</div>
 		                							</div>
@@ -134,7 +134,7 @@
 												<div class="col-md-12 ">
 													<div class="col-md-12">
 		                								<div class="form-group">
-		                									<label class="control-label">Purchased From</label>
+		                									<label class="control-label">Purchased From<span class="astric">*</span></label>
 															<input type="text" class="form-control" name="purchasedfrom" id="purchasedfrom" value="<?php echo !empty($expense[0]->purchasedform) ? $expense[0]->purchasedform : '' ?>">
 														</div>
 		                							</div>
@@ -144,7 +144,7 @@
 												<div class="col-md-12 ">
 													<div class="col-md-12">
 		                								<div class="form-group">
-		                									<label class="control-label">Purchase Date</label>
+		                									<label class="control-label">Purchase Date<span class="astric">*</span></label>
 															<div class="input-icon">
 																<input type="text" class="form-control" name="purchasedate" id="startdate" value="<?php echo !empty($expense[0]->purchasedate) ? $expense[0]->purchasedate : '' ?>" data-date-format='yyyy-mm-dd'>
 															</div>
