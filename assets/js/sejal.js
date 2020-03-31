@@ -1089,10 +1089,13 @@ $("#save_tchannel").click(function(event) {
 					$('#leavecategory')[0].reset();
 					$('#succmsg').html('');
 					$('#succmsg').html('<b>Successfully category removed</b>');
+					
+
 				}else{
 					$('#succmsg').html('');
 					$('#succmsg').html('<b>Something went to wrong</b>');
 				}
+
 			}
 		});
 	}

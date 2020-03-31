@@ -44,6 +44,11 @@ class Project extends CI_Controller {
 			}
 			$timelog=$chk_value;
 			
+			if($this->input->post('without_deadline')=='on'){
+					$without='1';
+			}
+			else{ $without='0';
+			}
 			if($this->input->post('project_member')=='on'){
 					$chk_value='1';
 			}
@@ -68,7 +73,7 @@ class Project extends CI_Controller {
 			$cat=$this->input->post('project-category');
 			$date=$this->input->post('start_date');
 			$deadline=$this->input->post('deadline');
-			$without=$this->input->post('without_deadline');
+			//$without=$this->input->post('without_deadline');
 			$editor1=$this->input->post('editor1');
 			$notes=$this->input->post('notes');
 			$client=$this->input->post('select_client');
@@ -77,16 +82,15 @@ class Project extends CI_Controller {
 			$hours=$this->input->post('hours_allocated');	
 			
 			$whereArr=array('projectname'=>$name);
-			if(!empty($whereArr)){
-				$query=$this->common_model->getData('tbl_project_info',$whereArr);
+			$query=$this->common_model->getData('tbl_project_info',$whereArr);
 				if(count($query) == 1){
 					$this->session->set_flashdata('message_name', 'Projectname is already exists..');
 					$this->session->set_flashdata("data",$_POST);
 					redirect('Project/addproject');
 				}	
-			}else{
+			else{
 				$store=array('projectname'=>$name,'projectcategoryid'=>$cat,'startdate'=>$date,'manualtimelog'=>$timelog,
-				'projectmember'=>$member,'deadline'=>$deadline,'clientid'=>$client,'viewtask'=>$view,
+				'projectmember'=>$member,'deadline'=>$deadline,'clientid'=>$client,'withoutdeadline'=>$without,'viewtask'=>$view,
 				'tasknotification'=>$tasks,'status'=>0,'projectsummary'=>$editor1,'note'=>$notes,
 				'projectbudget'=>$budget,'currency'=>$currency,'hoursallocated'=>$hours,'archive'=>0,'is_deleted'=>0);
 				$this->common_model->insertData('tbl_project_info',$store);
@@ -399,7 +403,12 @@ class Project extends CI_Controller {
 			else{ $chk_value='0';
 			}
 			$timelog=$chk_value;
-			
+			if($this->input->post('without_deadline')=='on'){
+				$without='1';
+			}
+			else{ $without='0';
+			}
+			$timelog=$chk_value;
 			if($this->input->post('project_member')=='on'){
 					$chk_value='1';
 			}
@@ -426,7 +435,7 @@ class Project extends CI_Controller {
 			$cat=$this->input->post('project-category');
 			$date=$this->input->post('start_date');
 			$deadline=$this->input->post('deadline');
-			$without=$this->input->post('without_deadline');
+			//$without=$this->input->post('without_deadline');
 			$editor1=$this->input->post('editor1');
 			$notes=$this->input->post('notes');
 			$client=$this->input->post('select-client');
@@ -434,15 +443,28 @@ class Project extends CI_Controller {
 			$currency=$this->input->post('currency-id');
 			$hours=$this->input->post('hours-allocated');	
 			$status=$this->input->post('status');
-			$updateArr=array('projectname'=>$name,'projectcategoryid'=>$cat,'startdate'=>$date,'manualtimelog'=>$timelog,
-			'projectmember'=>$member,'deadline'=>$deadline,'clientid'=>$client,'viewtask'=>$view,
-			'tasknotification'=>$tasks,'status'=>$status,'projectsummary'=>$editor1,'note'=>$notes,
-			'projectbudget'=>$budget,'currency'=>$currency,'hoursallocated'=>$hours,'archive'=>0);
-			$whereArr=array('id'=>$id);
-			//echo "<PRE>";print_r($updateArr);die;
-			$this->common_model->updateData('tbl_project_info',$updateArr,$whereArr);
-			$this->session->set_flashdata('message_name', 'Projects Updated sucessfully');
-			redirect('project/index');
+			$whereArr=array('projectname'=>$name ,'is_deleted!='=>1 ,'id !='=>$id);
+			$projectdata=$this->common_model->getData('tbl_project_info',$whereArr);
+				
+				if(empty($projectdata)){
+					$updateArr=array('projectname'=>$name,'projectcategoryid'=>$cat,'startdate'=>$date,'manualtimelog'=>$timelog,
+					'projectmember'=>$member,'deadline'=>$deadline,'clientid'=>$client,'withoutdeadline'=>$without,'viewtask'=>$view,
+					'tasknotification'=>$tasks,'status'=>$status,'projectsummary'=>$editor1,'note'=>$notes,
+					'projectbudget'=>$budget,'currency'=>$currency,'hoursallocated'=>$hours,'archive'=>0);
+					$whereArr=array('id'=>$id);
+					//echo "<PRE>";print_r($updateArr);die;
+					$this->common_model->updateData('tbl_project_info',$updateArr,$whereArr);
+					$this->session->set_flashdata('message_name', 'Projects Updated sucessfully');
+					redirect('project/index');
+					
+				}	
+				else{
+					$this->session->set_flashdata('message_name', 'Projectname is already exists..');
+					$this->session->set_flashdata("sessData",$_POST);
+					redirect('Project/editproject');
+				}
+			
+			
 		}			
 	}
 
@@ -981,10 +1003,10 @@ class Project extends CI_Controller {
 	            	$sWhere.=' AND  taskcategory='.$taskcategory;
 	            }
 	            if(!empty($startdate)){						
-						$sWhere.=' AND tbl_task.startdate>="'.$startdate.'"';
+						$sWhere.=' AND tbl_task.startdate>="'.$startdate.' 00:00:00'.'"';
 				}
 				if(!empty($enddate)){						
-					$sWhere.=' AND tbl_task.duedate<="'.$enddate.'"';
+					$sWhere.=' AND tbl_task.duedate<="'.$enddate.' 23:59:00'.'"';
 				}
 				if($hideComplete == 1){
 					$sWhere.=' AND tbl_task.status != 3';
@@ -1150,6 +1172,7 @@ class Project extends CI_Controller {
 			$this->common_model->deleteData('tbl_task',$deleteArr);
 		}
 	}
+
 
 }
 

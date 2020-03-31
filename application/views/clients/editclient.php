@@ -86,7 +86,7 @@ if($this->session->flashdata('sessData')){
             						<div class="col-md-6">
             							<div class="form-group">
             								<label class="control-label">Client Email<span class="astric">*</span></label>
-            								<input id="email" class="form-control" type="email" name="email" value="<?php echo !empty($user[0]->emailid) ?  $user[0]->emailid :''?>">
+            								<input id="email" class="form-control" type="email" name="email" value="<?php if(!empty($sessData)) { echo $sessData['email']; } elseif(!empty($user[0]->emailid)) { echo $user[0]->emailid; } else{ }?>">
             								<span class="help-block">Client will login using this email.</span>
             							</div>
             						</div>

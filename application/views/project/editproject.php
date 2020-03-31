@@ -13,6 +13,12 @@
 		</div>
 	</div>
 </nav>
+<?php
+$sessData = "";
+if($this->session->flashdata('sessData')){
+    $sessData = $this->session->flashdata('sessData');
+}
+?>
  <!-- contetn-wrap -->
 <div class="content-in">  
 	<div class="row">
@@ -48,7 +54,7 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label class="control-label">Project Name</label>
-											<input id="project_name" class="form-control" type="text" name="project_name" value="<?php echo !empty($projectinfo[0]->projectname) ? $projectinfo[0]->projectname : '' ?>">
+											<input id="project_name" class="form-control" type="text" name="project_name" value="<?php if(!empty($sessData)) { echo $sessData['project_name']; } elseif(!empty($projectinfo[0]->projectname)) { echo $projectinfo[0]->projectname; } else{ }?>">
 										</div>
 									</div>
 									<div class="col-md-6">
@@ -75,27 +81,104 @@
 									<div class="col-md-4">
 										<div class="form-group">
 											<label class="control-label">Start Date</label>
-											<input type="text" name="start_date" id="start_date" autocomplete="off" class="form-control" value="<?php echo !empty($projectinfo[0]->startdate) ? $projectinfo[0]->startdate : '' ?>">
+											<input type="text" name="start_date" id="start_date" autocomplete="off" class="form-control" value="<?php if(!empty($sessData)) { echo $sessData['start_date']; } elseif(!empty($projectinfo[0]->startdate)) { echo $projectinfo[0]->startdate; } else{ }?>">
 										</div>
 									</div>
-									<div class="col-md-4" id="deadlineBox">
+									<?php
+										if(!empty($sessData)){
+											if(!empty($sessData['without_deadline'])){
+												if($sessData['without_deadline'] == 'on'){
+
+														$style= 'display:none;';
+														
+													}
+													else{
+													$style= 'display:block;';
+													}	
+												}
+												else{
+													$style='display:block;';
+												}
+												
+											}
+											
+										
+										else
+										{
+											if($projectinfo[0]->withoutdeadline == '1'){
+											
+												$style= 'display:none;';
+											}
+											else{
+												
+												$style= 'display:block;';
+											}
+										}
+										?>
+									<div class="col-md-4" id="deadlineBox" style="<?php echo $style; ?>">
 										<div class="form-group">
 											<label class="control-label">Deadline</label>
-											<input type="text" name="deadline" id="deadline" autocomplete="off" class="form-control" value="<?php echo !empty($projectinfo[0]->deadline) ? $projectinfo[0]->deadline : '' ?>">
+											<input type="text" name="deadline" id="deadline" autocomplete="off" class="form-control" value="<?php if(!empty($sessData)) { echo $sessData['deadline']; } elseif(!empty($projectinfo[0]->deadline)) { echo $projectinfo[0]->deadline; } else{ }?>">
 										</div>
 									</div>
+									<?php
+									
+									
+										if(!empty($sessData)){
+											if(!empty($sessData['without_deadline'])){
+											if($sessData['without_deadline'] == 'on'){
+												$checked = 'checked';
+											}	
+											}
+											else{
+												$checked = 'unchecked';
+											}
+										}
+										else
+										{
+											if($projectinfo[0]->withoutdeadline == '1'){
+												$checked = 'checked';
+											}
+											else{
+												$checked = 'unchecked';
+											}
+										}
+									?>
 									<div class="col-md-4" >
 										<div class="form-group" style="padding-top: 25px;">
 											<div class="custom-control custom-checkbox my-1 mr-sm-2">
-												<input type="checkbox" class="custom-control-input" name="without_deadline" id="without_deadline" onclick="checkUncheck()">
+												<input type="checkbox" class="custom-control-input" name="without_deadline" id="without_deadline" <?php echo $checked; ?> onclick="checkUncheck()">
 												<label class="custom-control-label" for="without_deadline" style="padding-top: 2px;">Add project without deadline?</label>
 											</div>
 										</div>
 									</div>
+									<?php
+									
+									
+										if(!empty($sessData)){
+											if(!empty($sessData['manual_timelog'])){
+											if($sessData['manual_timelog'] == 'on'){
+												$checked = 'checked';
+												
+											}}
+											else{
+												$checked = 'unchecked';
+											}
+										}
+										else
+										{
+											if($projectinfo[0]->manualtimelog == '1'){
+												$checked = 'checked';
+											}
+											else{
+												$checked = 'unchecked';
+											}
+										}
+									?>
 									<div class="col-md-4">
 										<div class="form-group">
 											<div class="custom-control custom-checkbox my-1 mr-sm-2">
-												<input type="checkbox" class="custom-control-input" name="manual_timelog" id="manual_timelog" <?php if(($projectinfo[0]->manualtimelog)=='1'){ echo 'checked';}?>>
+												<input type="checkbox" class="custom-control-input" name="manual_timelog" id="manual_timelog" <?php echo $checked; ?>>
 												<label class="custom-control-label" for="manual_timelog" style="padding-top: 2px;">Allow manual time logs?</label>
 											</div>
 										</div>
@@ -105,7 +188,7 @@
 									<div class="col-md-12">
 										<div class="form-group">
 											<label class="control-label">Project Summary</label>
-											<textarea name="editor1"><?php echo !empty($projectinfo[0]->projectsummary) ? $projectinfo[0]->projectsummary : '' ?></textarea>
+											<textarea name="editor1"><?php if(!empty($sessData)) { echo $sessData['editor1']; } elseif(!empty($projectinfo[0]->projectsummary)) { echo $projectinfo[0]->projectsummary; } else{ }?></textarea>
 										</div>
 									</div>
 								</div>
@@ -113,7 +196,7 @@
 									<div class="col-md-12">
 										<div class="form-group">
 											<label class="control-label">Note</label>
-											<textarea id="notes" class="form-control" name="notes" rows="5"><?php echo !empty($projectinfo[0]->note) ? $projectinfo[0]->note : '' ?></textarea>
+											<textarea id="notes" class="form-control" name="notes" rows="5"><?php if(!empty($sessData)) { echo $sessData['notes']; } elseif(!empty($projectinfo[0]->note)) { echo $projectinfo[0]->note; } else{ }?></textarea>
 										</div>
 									</div>
 								</div>
@@ -128,7 +211,18 @@
 														<?php
 															foreach($client as $row)
 															{
-																$str='';
+																if(!empty($sessData['select-client'])){
+																	$str='';
+																if($row->id==$sessData['select-client'])
+																{
+																	$str='selected';
+																	?>	
+																	<?php
+																}
+																echo '<option value="'.$row->id.'"'.$str.'>'.$row->clientname.'</option>';
+																}
+																else{
+																	$str='';
 																if($row->id==$projectinfo->clientid)
 																{
 																	$str='selected';
@@ -136,34 +230,116 @@
 																	<?php
 																}
 																echo '<option value="'.$row->id.'"'.$str.'>'.$row->clientname.'</option>';
+																}
+																
 															}
 														?>
                     						</select>
                     					</div>
                     				</div>
                     			</div>
-								<div class="row">
+                    			
+									<?php
+										if(!empty($sessData)){
+											if(!empty($sessData['client-view-tasks'])){
+											if($sessData['client-view-tasks'] == 'on'){
+												
+												$checked = 'checked';
+												
+											}}
+											else{
+												$checked = 'unchecked';
+											}
+										}
+										else
+										{
+											if($projectinfo[0]->viewtask == '1'){
+												$checked = 'checked';
+											}
+											else{
+												$checked = 'unchecked';
+											}
+										}
+										?>
+								<div class="row" style="">
 									<div class="col-md-4">
 										<div class="form-group">
 											<div class="custom-control custom-checkbox my-1 mr-sm-2">                                                                      
-												<input type="checkbox" class="custom-control-input" name="client-view-tasks" id="client-view-tasks" onclick="viewtask()" value="1" <?php if(($projectinfo[0]->viewtask)=='1'){ echo 'checked';}?> >
+												<input type="checkbox" class="custom-control-input" name="client-view-tasks" id="client-view-tasks" onclick="viewtask()" <?php echo $checked; ?> >
 												<label class="custom-control-label" for="client-view-tasks" style="padding-top: 2px;">Client can view tasks of this project</label>
 											</div>
 										</div>
 									</div>	
 									<div class="col-md-8">
 										<?php
-											if(($projectinfo[0]->viewtask)=='1'){
-												$status= 'display:block;';
+										if(!empty($sessData)){
+											if(!empty($sessData['client-view-tasks'])){
+												if($sessData['client-view-tasks'] == 'on'){
+													if(!empty($sessData['tasks-notification'])){
+														if($sessData['tasks-notification'] == 'on'){
+														$style= 'display:none;';
+														
+													}}
+													else{
+														$style= 'display:block;';
+													}}
+													else{
+													$style= 'display:block;';
+													}	
+												}
+												else{
+													$style='display:block;';
+												}
+												
+											}
+											
+										
+										else
+										{
+											if($projectinfo[0]->viewtask == '1'){
+											
+												$style= 'display:block;';
 											}
 											else{
-												$status= 'display:none;';
+												
+												$style= 'display:none;';
 											}
-				
+										}
 										?>
-										<div class="form-group"  id="viewnotification" style="<?php echo $status;?>">
+										<?php
+										if(!empty($sessData)){
+											if(!empty($sessData['client-view-tasks'])){
+												if($sessData['client-view-tasks'] == 'on'){
+													if(!empty($sessData['tasks-notification'])){
+														if($sessData['tasks-notification'] == 'on'){
+														$checked = 'checked';
+														
+													}}
+													else{
+														$checked = 'unchecked';
+													}}
+													else{
+													$checked = 'unchecked';
+													}	
+												}
+												else{
+													$checked = 'unchecked';
+												}
+												
+											}
+										else
+										{
+											if($projectinfo[0]->viewtask == '1'){
+												$checked = 'checked';
+											}
+											else{
+												$checked = 'unchecked';
+											}
+										}
+										?>
+										<div class="form-group"  id="viewnotification" style="<?php echo $style;?>">
 											<div class="custom-control custom-checkbox my-1 mr-sm-2">
-												<input type="checkbox" class="custom-control-input" name="tasks-notification" id="tasks-notification" value="1" <?php if(($projectinfo[0]->tasknotification)=='1'){ echo 'checked';}?> >
+												<input type="checkbox" class="custom-control-input" name="tasks-notification" id="tasks-notification" value="1" <?php echo $checked; ?> >
 												<label class="custom-control-label" for="tasks-notification" style="padding-top: 2px;">Send task notification to client?</label>
 											</div>
 										</div>
@@ -174,7 +350,7 @@
 									<div class="col-md-4">
 										<div class="form-group">
 											<label class="control-label">Project Budget</label>
-											<input type="text" class="form-control" name="project-budget" value="<?php echo !empty($projectinfo[0]->projectbudget) ? $projectinfo[0]->projectbudget : '' ?>">
+											<input type="text" class="form-control" name="project-budget" value="<?php if(!empty($sessData)) { echo $sessData['project-budget']; } elseif(!empty($projectinfo[0]->projectbudget)) { echo $projectinfo[0]->projectbudget; } else{ }?>">
 										</div>
 									</div>
 									<div class="col-md-4">
@@ -192,20 +368,52 @@
 									<div class="col-md-4">
 										<div class="form-group">
 											<label class="control-label">Hours Allocated</label>
-											<input type="text" class="form-control" name="hours-allocated" value="<?php echo !empty($projectinfo[0]->hoursallocated) ? $projectinfo[0]->hoursallocated : '' ?>">
+											<input type="text" class="form-control" name="hours-allocated" value="<?php if(!empty($sessData)) { echo $sessData['hours-allocated']; } elseif(!empty($projectinfo[0]->hoursallocated)) { echo $projectinfo[0]->hoursallocated; } else{ }?>">
 										</div>
 									</div>
 								</div>
+								    <?php
+                                    $optst=$optst1="";
+                                //echo "<PRE>";print_r($sessData);exit();
+                                if(isset($sessData['status'])){ 
+                                    if(trim($sessData['status'])=='0'){
+                                        $optst1="selected";
+                                    }else if(trim($sessData['status'])=='1'){
+                                        $optst1="selected";
+                                    }else if(trim($sessData['status'])=='2'){
+                                        $optst1="selected";
+                                    }else if(trim($sessData['status'])=='3'){
+                                        $optst1="selected";
+                                    }else if(trim($sessData['status'])=='4'){
+                                        $optst1="selected";
+                                    }
+                                }else if(isset($projectinfo[0]->status)){
+                                    if(trim($projectinfo[0]->status)=='0'){
+                                        $optst1="selected";
+                                    }else if(trim($projectinfo[0]->status)=='1'){
+                                        $optst1="selected";
+                                    }
+                                    else if(trim($projectinfo[0]->status)=='2'){
+                                        $optst1="selected";
+                                    }
+                                    else if(trim($projectinfo[0]->status)=='3'){
+                                        $optst1="selected";
+                                    }
+                                    else if(trim($projectinfo[0]->status)=='4'){
+                                        $optst1="selected";
+                                    }
+                                }
+                                ?>
 								<div class="row">
 									<div class="col-md-4">
 										<div class="form-group">
 										<label class="control-label">Project Status</label>
-											<select name="status" id="" class="form-control" name="status">
-												<option value="0">Incomplete </option>
-												<option value="1">Complete </option>
-												<option value="2">In Progress </option>
-												<option value="3">On Hold  </option>
-												<option value="4">Canceled </option>
+											<select name="status" id="" class="form-control">
+												<option value="0" <?= $optst1;?>>Incomplete </option>
+												<option value="1" <?= $optst1;?>>Complete </option>
+												<option value="2" <?= $optst1;?>>In Progress </option>
+												<option value="3" <?= $optst1;?>>On Hold  </option>
+												<option value="4" <?= $optst1;?>>Canceled </option>
 										   </select>
 									   </div>
                                    </div>
