@@ -14,8 +14,11 @@
 	</div>
 </nav>
 <?php
+//echo "<PRE>";print_r($projectinfo);die;
 $sessData = "";
+
 if($this->session->flashdata('sessData')){
+	//echo "<PRE>";print_r($sessData);die;
     $sessData = $this->session->flashdata('sessData');
 }
 ?>
@@ -290,33 +293,17 @@ if($this->session->flashdata('sessData')){
 										if(!empty($sessData)){
 											if(!empty($sessData['client-view-tasks'])){
 												if($sessData['client-view-tasks'] == 'on'){
-													if(!empty($sessData['tasks-notification'])){
-														if($sessData['tasks-notification'] == 'on'){
-														$style= 'display:none;';
-														
-													}}
-													else{
 														$style= 'display:block;';
-													}}
-													else{
-													$style= 'display:block;';
-													}	
-												}
-												else{
-													$style='display:block;';
-												}
-												
+													}else{
+														$style= 'display:none;';	
+													}
+												}	
 											}
-											
-										
 										else
 										{
-											if($projectinfo[0]->viewtask == '1'){
-											
-												$style= 'display:block;';
+											if($projectinfo[0]->viewtask == '1'){$style= 'display:block;';
 											}
 											else{
-												
 												$style= 'display:none;';
 											}
 										}
@@ -325,26 +312,13 @@ if($this->session->flashdata('sessData')){
 										if(!empty($sessData)){
 											if(!empty($sessData['client-view-tasks'])){
 												if($sessData['client-view-tasks'] == 'on'){
-													if(!empty($sessData['tasks-notification'])){
-														if($sessData['tasks-notification'] == 'on'){
 														$checked = 'checked';
-														
-													}}
-													else{
-														$checked = 'unchecked';
-													}}
-													else{
-													$checked = 'unchecked';
-													}	
+													}
+													else { $checked = 'unchecked'; }
 												}
-												else{
-													$checked = 'unchecked';
-												}
-												
-											}
-										else
-										{
-											if($projectinfo[0]->viewtask == '1'){
+										}
+										else{
+											if($projectinfo[0]->tasknotification == '1'){
 												$checked = 'checked';
 											}
 											else{
@@ -368,15 +342,43 @@ if($this->session->flashdata('sessData')){
 											<input type="text" class="form-control" name="project-budget" value="<?php if(!empty($sessData)) { echo $sessData['project-budget']; } elseif(!empty($projectinfo[0]->projectbudget)) { echo $projectinfo[0]->projectbudget; } else{ }?>">
 										</div>
 									</div>
+									<?php
+                                    $optst1=$optst2=$optst3=$optst4="";
+                                //echo "<PRE>";print_r($sessData);exit();
+                                if(isset($sessData['currency-id'])){ 
+                                    if(trim($sessData['currency-id'])=='0'){
+                                        $optst1="selected";
+                                    }else if(trim($sessData['currency-id'])=='1'){
+                                        $optst2="selected";
+                                    }else if(trim($sessData['currency-id'])=='2'){
+                                        $optst3="selected";
+                                    }else if(trim($sessData['currency-id'])=='3'){
+                                        $optst4="selected";
+                                    }
+                                }else if(isset($projectinfo[0]->currency)){
+                                    if(trim($projectinfo[0]->currency)=='0'){
+                                        $optst1="selected";
+                                    }else if(trim($projectinfo[0]->currency)=='1'){
+                                        $optst2="selected";
+                                    }
+                                    else if(trim($projectinfo[0]->currency)=='2'){
+                                        $optst3="selected";
+                                    }
+                                    else if(trim($projectinfo[0]->currency)=='3'){
+                                        $optst4="selected";
+                                    }
+                                    
+                                }
+                                ?>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label class="control-label">Currency</label>
-											<select id="" class="form-control" name="currency-id" value="<?php echo !empty($projectinfo[0]->currency) ? $projectinfo[0]->currency : '' ?>">
+											<select id="" class="form-control" name="currency-id">
 												
-												<option value="1" <?php if($projectinfo[0]->currency=='1'){echo 'selected';}?>>Dollars (USD)</option>
-												<option value="2" <?php if($projectinfo[0]->currency=='2'){echo 'selected';}?>>Pounds (GBP)</option>
-												<option value="3" <?php if($projectinfo[0]->currency=='3'){echo 'selected';}?>>Euros (EUR)</option>
-												<option value="4" <?php if($projectinfo[0]->currency=='4'){echo 'selected';}?>>Rupee (INR)</option>
+												<option value="1" <?php echo $optst1; ?>>Dollars (USD)</option>
+												<option value="2" <?php echo $optst2;?>>Pounds (GBP)</option>
+												<option value="3" <?php echo $optst3; ?>>Euros (EUR)</option>
+												<option value="4" <?php echo $optst4; ?>>Rupee (INR)</option>
 											</select>
 										</div>
 									</div>
@@ -388,34 +390,34 @@ if($this->session->flashdata('sessData')){
 									</div>
 								</div>
 								    <?php
-                                    $optst=$optst1="";
+                                    $optst1=$optst2=$optst3=$optst4=$optst5="";
                                 //echo "<PRE>";print_r($sessData);exit();
                                 if(isset($sessData['status'])){ 
                                     if(trim($sessData['status'])=='0'){
                                         $optst1="selected";
                                     }else if(trim($sessData['status'])=='1'){
-                                        $optst1="selected";
+                                        $optst2="selected";
                                     }else if(trim($sessData['status'])=='2'){
-                                        $optst1="selected";
+                                        $optst3="selected";
                                     }else if(trim($sessData['status'])=='3'){
-                                        $optst1="selected";
+                                        $optst4="selected";
                                     }else if(trim($sessData['status'])=='4'){
-                                        $optst1="selected";
+                                        $optst5="selected";
                                     }
                                 }else if(isset($projectinfo[0]->status)){
                                     if(trim($projectinfo[0]->status)=='0'){
                                         $optst1="selected";
                                     }else if(trim($projectinfo[0]->status)=='1'){
-                                        $optst1="selected";
+                                        $optst2="selected";
                                     }
                                     else if(trim($projectinfo[0]->status)=='2'){
-                                        $optst1="selected";
+                                        $optst3="selected";
                                     }
                                     else if(trim($projectinfo[0]->status)=='3'){
-                                        $optst1="selected";
+                                        $optst4="selected";
                                     }
                                     else if(trim($projectinfo[0]->status)=='4'){
-                                        $optst1="selected";
+                                        $optst5="selected";
                                     }
                                 }
                                 ?>
@@ -425,10 +427,10 @@ if($this->session->flashdata('sessData')){
 										<label class="control-label">Project Status</label>
 											<select name="status" id="" class="form-control">
 												<option value="0" <?= $optst1;?>>Incomplete </option>
-												<option value="1" <?= $optst1;?>>Complete </option>
-												<option value="2" <?= $optst1;?>>In Progress </option>
-												<option value="3" <?= $optst1;?>>On Hold  </option>
-												<option value="4" <?= $optst1;?>>Canceled </option>
+												<option value="1" <?= $optst2;?>>Complete </option>
+												<option value="2" <?= $optst3;?>>In Progress </option>
+												<option value="3" <?= $optst4;?>>On Hold  </option>
+												<option value="4" <?= $optst5;?>>Canceled </option>
 										   </select>
 									   </div>
                                    </div>

@@ -461,7 +461,7 @@ class Project extends CI_Controller {
 				else{
 					$this->session->set_flashdata('message_name', 'Projectname is already exists..');
 					$this->session->set_flashdata("sessData",$_POST);
-					redirect('Project/editproject');
+					redirect('Project/editproject/'.$this->uri->segment(3));
 				}
 			
 			
