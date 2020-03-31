@@ -60,7 +60,7 @@ if($this->session->flashdata('sessData')){
 									<div class="col-md-6">
 										<div class="form-group project-category">
 										<label class="control-label" for="project-category">Project Category
-										<a href="#project-category1" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#project-category1">Add Project Category <i class="fa fa-plus" aria-hidden="true"></i></a>
+										<a href="#project-category1" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#project-category1"><i class="fa fa-plus" aria-hidden="true"></i>Add Project Category </a>
 										</label>
 																										
 											<select class="custom-select br-0" id="project-category" name="project-category">
@@ -68,11 +68,26 @@ if($this->session->flashdata('sessData')){
 												<?php
 													foreach($category as $cat)
 													{
-														echo '<option value="'.$cat->id.'">'.$cat->name.'</option>';
+														if(!empty($sessData)){
+														$str='';
+													if(!empty($sessData['project-category'])){
+														if($sessData['project-category'] == $cat->id){
+															$str='selected';
+														}
+														}}
+														else{
+														$str='';
+													if(!empty($projectinfo[0]->projectcategoryid)){
+														if($projectinfo[0]->projectcategoryid == $cat->id){
+															$str='selected';
+														}
+														}
 													}
+												}
 
 													
 												?>
+												<option value="<?php echo $cat->id?>" <?php echo $str;?>><?php echo $cat->name;?></option>
 											</select>
 										</div>
 									</div>

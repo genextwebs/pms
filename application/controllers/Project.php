@@ -1172,7 +1172,21 @@ class Project extends CI_Controller {
 			$this->common_model->deleteData('tbl_task',$deleteArr);
 		}
 	}
-
+	public function getcategory(){
+		
+		$catArray = $this->common_model->getData('tbl_project_category');
+			$str = '';
+			foreach($catArray as $row){
+				$str.='<option value="'.$row->id.'">'.$row->name.'</option>'; 
+			}
+			
+			
+			$catArr['catdata'] = $str;
+			
+			//print_r($catArr);die;
+			echo json_encode($catArr);exit; 
+		}
+	
 
 }
 

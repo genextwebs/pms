@@ -1080,15 +1080,33 @@ $("#save_tchannel").click(function(event) {
 		    data: "id="+id,
 		    success: function(data){
 			   	if(data == 1){
-					jQuery('#cate_'+id).remove();
-					$('#project-category1').removeClass('show');
+					
+					/*$('#project-category1').removeClass('show');
+					$('.modal-backdrop').removeClass('show');
+					$('.modal-backdrop').find('div').remove();
+					$('body').removeAttr("style");
+					$('body').removeClass("modal-open");
+					$('#leavecategory')[0].reset();
+					$('#succmsg').html('');*/
+					$('#succmsg').html('<b>Successfully category removed</b>');
+					$.ajax({
+						url: base_url+"project/getcategory",
+						type: 'POST',
+						dataType: 'JSON',
+						success: function(data){
+							jQuery('#cate_'+id).remove();
+							$('select[name="project-category"]').html('');       
+							$('select[name="project-category"]').append(data.catdata);
+							$('#project-category1').removeClass('show');
 					$('.modal-backdrop').removeClass('show');
 					$('.modal-backdrop').find('div').remove();
 					$('body').removeAttr("style");
 					$('body').removeClass("modal-open");
 					$('#leavecategory')[0].reset();
 					$('#succmsg').html('');
-					$('#succmsg').html('<b>Successfully category removed</b>');
+							jQuery('#errormsg').css('display','none');
+						}
+					});	
 					
 
 				}else{
