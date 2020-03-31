@@ -275,7 +275,7 @@ class Employee extends CI_Controller
 			$department = !empty($_POST['department']) ? $_POST['department'] : '';
 
 			if(!empty($employee)){
-				$sWhere.=' AND  id="'.$employee.'"';
+				$sWhere.=' AND  tbl_employee.id="'.$employee.'"';
 			}
 			if($status == 'All'){
 			}
@@ -290,6 +290,7 @@ class Employee extends CI_Controller
 			}
 			if(!empty($skill)){
 				$sk = 'FIND_IN_SET("'.$skill.'",skills)';
+				//echo $sk;die;
 				$sWhere.=' AND '.$sk;
 			}
 			$sWhere.=' AND tbl_user.is_deleted = 0';	
