@@ -6,7 +6,7 @@
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                         <ol class="breadcrumb">
                             <li><a href="<?php echo base_url().'dashboard'?>">Home</a></li>
-                            <li><a href="<?php echo base_url().'project'?>">Projects</a></li>
+                            <li><a href="<?php echo base_url().'Project/projecttemplate'?>">Project Template</a></li>
                             <?php
                             $controller = $this->uri->segment(1);
                             $function = $this->uri->segment(2);

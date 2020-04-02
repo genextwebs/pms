@@ -397,6 +397,7 @@ function deleteestimates(estimateid){
 jQuery(document).ready(function() {
 	if(controllerName == 'finance' && (functionName == 'invoice')){
 		var user = jQuery('#invoiceuserid').val();
+		//alert(user);
 		if(user == 0){
 			var aoColumns = [{ "sWidth": "40px", sClass: "text-left", "asSorting": [  ] }, 
 				{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] },

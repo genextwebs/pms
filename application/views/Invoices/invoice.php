@@ -93,6 +93,7 @@
 		                            <button type="button" id="btnApplyInvoices" class="btn btn-success col-lg-4 co-md-5"><i class="fa fa-check"></i> Apply</button>
 		                            <button type="button" id="reset-filters" class="btn btn-inverse col-lg-4 co-md-5 offset-md-1"><i class="fa fa-refresh"></i> Reset</button>
 		                        </div>
+		                        <input type="hidden" value="<?php echo $this->user_type;?>" id="invoiceuserid">
 		                    </div>
 							</div>
 		                </form>

@@ -615,6 +615,7 @@ class Finance extends CI_Controller{
 				}
 
 			}
+			//print_r($actionStr);die;	
 			if($this->user_type == 0){
 				$datarow[] = array(
 				$id = $i,

@@ -53,6 +53,7 @@
 		                						<div class="col-md-4">
 													<div class="form-group">
 													<?php 
+													//print_r($invoice);die;
 														$invoice1=$invoice[0]->invoice;
 														
 														$test=explode('#',$invoice1);
