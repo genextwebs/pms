@@ -46,7 +46,7 @@ class Payment extends CI_Controller{
     public function response($page = null)
     {
         $invoiceid = base64_decode($this->uri->segment(3));
-
+       //    echo $invoiceid;die;
         $whereArrI = array('id'=>$invoiceid);
         $updateArrI = array('payment_done'=>1,'status'=>1);
         $this->common_model->updateData('tbl_invoice',$updateArrI,$whereArrI);
@@ -56,6 +56,7 @@ class Payment extends CI_Controller{
         $this->load->view('common/header');
         $this->load->view('Payment/response');
         $this->load->view('common/footer');
+        redirect('finance/invoice');
     }  
 }
 ?>

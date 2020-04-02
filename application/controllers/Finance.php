@@ -585,6 +585,8 @@ class Finance extends CI_Controller{
 			}
 
 			if($this->user_type == 0){
+					
+				if($row->payment_done == 0){
 					$actionStr = '<div class="dropdown action m-r-10">
 			                <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
 			                		<div class="dropdown-menu">
@@ -592,8 +594,20 @@ class Finance extends CI_Controller{
 					       				<a  class="dropdown-item" href="javascript:void(0);" onclick="deleteinvoices(\''.base64_encode($id).'\')"><i class="fa fa-trash "></i> Delete</a>
 									</div>
 						</div>';
+				}
+				elseif($row->payment_done == 1){
+					$actionStr = '<div class="dropdown action m-r-10">
+			                <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
+			                		<div class="dropdown-menu">
+			                		 <a  class="dropdown-item" href='.base_url().'Finance/downloadFiles/'.base64_encode($id).'><i class="fa fa-download"></i> Download</a>
+					       				<a  class="dropdown-item" href="javascript:void(0);" onclick="deleteinvoices(\''.base64_encode($id).'\')"><i class="fa fa-trash "></i> Delete</a>
+									</div>
+						</div>';
+				}
 
 			}
+
+			
 			elseif($this->user_type == 1){
 				if($row->payment_done == 0){
 					$actionStr = '<div class="dropdown action m-r-10">

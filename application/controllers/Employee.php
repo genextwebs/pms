@@ -314,6 +314,7 @@ class Employee extends CI_Controller
 		}
 		else{
 			$Filterquery = "SELECT tbl_user.id,tbl_user.is_deleted,tbl_employee.employeename,tbl_user.emailid,tbl_user.status,tbl_user.created_at from tbl_employee inner join  tbl_user on tbl_employee.user_id = tbl_user.id".$sWhere;
+			
 		}
 		$empsFilterArr = $this->common_model->coreQueryObject($Filterquery);
 		$iFilteredTotal = count($empsFilterArr);

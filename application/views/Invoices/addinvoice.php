@@ -127,7 +127,7 @@
 														</div>
 													</div>
 												</div>
-												<div class="col-md-3">
+												<!-- <div class="col-md-3">
 													<div class="form-group">
 														<label class="control-label">Status<span class="astric">*</span></label>
 														<select class="form-control" name="status" id="status">
@@ -136,7 +136,7 @@
 															<option value="0">Unpaid</option>                                           
 														</select>
 													</div>
-												</div>
+												</div> -->
 		                					</div>
 											<div class="row">
 												<div class="col-md-3">
