@@ -114,7 +114,7 @@ function modalopen(){
                         //alert('gb');
                        var title =  $('#title').val();
                         var place =  $('#place').val();
-                         var description =  $('#editor1').val();alert(description);
+                         var description =  $('#editor1').val();
                          var startdate = $('#start_date').val();
                           var enddate =  $('#end_date').val();
                          // alert(startdate);
@@ -264,3 +264,33 @@ function modalopen(){
                     </div>
                 </div>
             </div>
+<script type="text/javascript">
+  
+
+       function startTimer(duration, display) {
+        var timer = duration, minutes, seconds;
+        setInterval(function () {
+            minutes = parseInt(timer / 60, 10)
+            seconds = parseInt(timer % 60, 10);
+
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            display.text(minutes + ":" + seconds);
+            var time = minutes + ":" + seconds;
+            if (--timer < 0) {
+                timer = duration;
+            }
+            if (time == '00:00') {
+                window.location.href = '<?php echo base_url().'login/logout'; ?>';
+            }
+        }, 1000);
+    }
+
+    jQuery(function ($) {
+        var fiveMinutes = 60 * 60,
+            display = $('#timer');
+        startTimer(fiveMinutes, display);
+    });
+    </script>
+</script>
