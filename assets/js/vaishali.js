@@ -771,14 +771,26 @@ $("#save-defaultholiday").click(function(event) {
         $.ajax({
            url: base_url+"holiday/insert_defaultholiday",
            type: 'POST',
-           
+           dataType : 'json',
            data: {saturday : saturday , sunday : sunday},
            error: function() {
               alert('Something is wrong');
            },
            success: function(data) {
-	               $('#data-defaultholiday').modal('toggle');
-	               $('#modeldefaultholiday')[0].reset();
+           			if(data.sat == 1){
+           				$('input[name=saturday]').attr('checked',true);
+           			}
+           			else{
+           				$('input[name=saturday]').attr('checked',false);
+           			}
+           			if(data.sun == 1){
+           				$('input[name=sunday]').attr('checked',true);
+           			}
+           			else{
+           				$('input[name=sunday]').attr('checked',false);
+           			}
+	               	$('#data-defaultholiday').modal('toggle');
+	               	$('#modeldefaultholiday')[0].reset();
                displayData();
            }
         });

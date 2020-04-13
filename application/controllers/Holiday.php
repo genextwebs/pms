@@ -176,8 +176,11 @@ class Holiday extends CI_Controller
                 $janStr .= '<td>'.$j.'</td>';
                 $janStr .= '<td>'.$date.'</td>';
                 $janStr .= '<td>';
-                if(($dateDay == 'Saturday' || $dateDay == 'Sunday') && ($SundayChk == 1 || $SaturdayChk == 1)){
+                if($dateDay == 'Saturday'  && $SaturdayChk == 1){
             		$janStr .= $janArr[$date].','.$dateDay;
+                }
+                elseif($dateDay == 'Sunday' && $SundayChk == 1){
+                    $janStr .= $janArr[$date].','.$dateDay;
                 }
                 else{
                 	$janStr .= $janArr[$date];
@@ -229,8 +232,11 @@ class Holiday extends CI_Controller
                 $febStr .= '<td>'.$j.'</td>';
                 $febStr .= '<td>'.$date.'</td>';
                 $febStr .= '<td>';
-                if(($dateDay == 'Saturday' || $dateDay == 'Sunday') && ($SundayChk == 1 || $SaturdayChk == 1)){
-            		$febStr .= $febArr[$date].','.$dateDay;
+                if($dateDay == 'Saturday'  && $SaturdayChk == 1){
+                    $febStr .= $febArr[$date].','.$dateDay;
+                }
+                elseif($dateDay == 'Sunday' && $SundayChk == 1){
+                    $febStr .= $febArr[$date].','.$dateDay;
                 }
                 else{
                 	$febStr .= $febArr[$date];
@@ -283,8 +289,11 @@ class Holiday extends CI_Controller
                 $marStr .= '<td>'.$j.'</td>';
                 $marStr .= '<td>'.$date.'</td>';
                 $marStr .= '<td>';
-                if(($dateDay == 'Saturday' || $dateDay == 'Sunday') && ($SundayChk == 1 || $SaturdayChk == 1)){
-            		$marStr .= $marArr[$date].','.$dateDay;
+                if($dateDay == 'Saturday'  && $SaturdayChk == 1){
+                    $marStr .= $marArr[$date].','.$dateDay;
+                }
+                elseif($dateDay == 'Sunday' && $SundayChk == 1){
+                    $marStr .= $marArr[$date].','.$dateDay;
                 }
                 else{
                 	$marStr .= $marArr[$date];
@@ -337,8 +346,11 @@ class Holiday extends CI_Controller
                 $aprilStr .= '<td>'.$j.'</td>';
                 $aprilStr .= '<td>'.$date.'</td>';
                 $aprilStr .= '<td>';
-                if(($dateDay == 'Saturday' || $dateDay == 'Sunday') && ($SundayChk == 1 || $SaturdayChk == 1)){
-            		$aprilStr .= $aprilArr[$date].','.$dateDay;
+                if($dateDay == 'Saturday'  && $SaturdayChk == 1){
+                    $aprilStr .= $aprilArr[$date].','.$dateDay;
+                }
+                elseif($dateDay == 'Sunday' && $SundayChk == 1){
+                    $aprilStr .= $aprilArr[$date].','.$dateDay;
                 }
                 else{
                 	$aprilStr .= $aprilArr[$date];
@@ -391,8 +403,11 @@ class Holiday extends CI_Controller
                 $mayStr .= '<td>'.$j.'</td>';
                 $mayStr .= '<td>'.$date.'</td>';
                 $mayStr .= '<td>';
-                if(($dateDay == 'Saturday' || $dateDay == 'Sunday') && ($SundayChk == 1 || $SaturdayChk == 1)){
-            		$mayStr .= $mayArr[$date].','.$dateDay;
+                if($dateDay == 'Saturday'  && $SaturdayChk == 1){
+                    $mayStr .= $mayArr[$date].','.$dateDay;
+                }
+                elseif($dateDay == 'Sunday' && $SundayChk == 1){
+                    $mayStr .= $mayArr[$date].','.$dateDay;
                 }
                 else{
                 	$mayStr .= $mayArr[$date];
@@ -447,8 +462,11 @@ class Holiday extends CI_Controller
                 $juneStr .= '<td>'.$j.'</td>';
                 $juneStr .= '<td>'.$date.'</td>';
                 $juneStr .= '<td>';
-                if(($dateDay == 'Saturday' || $dateDay == 'Sunday') && ($SundayChk == 1 || $SaturdayChk == 1)){
-            		$juneStr .= $juneArr[$date].','.$dateDay;
+                if($dateDay == 'Saturday'  && $SaturdayChk == 1){
+                    $juneStr .= $juneArr[$date].','.$dateDay;
+                }
+                elseif($dateDay == 'Sunday' && $SundayChk == 1){
+                    $juneStr .= $juneArr[$date].','.$dateDay;
                 }
                 else{
                 	$juneStr .= $juneArr[$date];
@@ -501,8 +519,11 @@ class Holiday extends CI_Controller
                 $julyStr .= '<td>'.$j.'</td>';
                 $julyStr .= '<td>'.$date.'</td>';
                 $julyStr .= '<td>';
-                if(($dateDay == 'Saturday' || $dateDay == 'Sunday') && ($SundayChk == 1 || $SaturdayChk == 1)){
-            		$julyStr .= $julyArr[$date].','.$dateDay;
+                if($dateDay == 'Saturday'  && $SaturdayChk == 1){
+                    $julyStr .= $julyArr[$date].','.$dateDay;
+                }
+                elseif($dateDay == 'Sunday' && $SundayChk == 1){
+                    $julyStr .= $julyArr[$date].','.$dateDay;
                 }
                 else{
                 	$julyStr .= $julyArr[$date];
@@ -555,8 +576,11 @@ class Holiday extends CI_Controller
                 $augStr .= '<td>'.$j.'</td>';
                 $augStr .= '<td>'.$date.'</td>';
                 $augStr .= '<td>';
-                if(($dateDay == 'Saturday' || $dateDay == 'Sunday') && ($SundayChk == 1 || $SaturdayChk == 1)){
-            		$augStr .= $augestArr[$date].','.$dateDay;
+                if($dateDay == 'Saturday'  && $SaturdayChk == 1){
+                    $augStr .= $augArr[$date].','.$dateDay;
+                }
+                elseif($dateDay == 'Sunday' && $SundayChk == 1){
+                    $augStr .= $augArr[$date].','.$dateDay;
                 }
                 else{
                 	$augStr .= $augestArr[$date];
@@ -609,8 +633,11 @@ class Holiday extends CI_Controller
                 $sepStr .= '<td>'.$j.'</td>';
                 $sepStr .= '<td>'.$date.'</td>';
                 $sepStr .= '<td>';
-                if(($dateDay == 'Saturday' || $dateDay == 'Sunday') && ($SundayChk == 1 || $SaturdayChk == 1)){
-            		$sepStr .= $sepArr[$date].','.$dateDay;
+                if($dateDay == 'Saturday'  && $SaturdayChk == 1){
+                    $sepStr .= $sepArr[$date].','.$dateDay;
+                }
+                elseif($dateDay == 'Sunday' && $SundayChk == 1){
+                    $sepStr .= $sepArr[$date].','.$dateDay;
                 }
                 else{
                 	$sepStr .= $sepArr[$date];
@@ -663,8 +690,11 @@ class Holiday extends CI_Controller
                 $octStr .= '<td>'.$j.'</td>';
                 $octStr .= '<td>'.$date.'</td>';
                 $octStr .= '<td>';
-                if(($dateDay == 'Saturday' || $dateDay == 'Sunday') && ($SundayChk == 1 || $SaturdayChk == 1)){
-            		$octStr .= $octArr[$date].','.$dateDay;
+                if($dateDay == 'Saturday'  && $SaturdayChk == 1){
+                    $octStr .= $octArr[$date].','.$dateDay;
+                }
+                elseif($dateDay == 'Sunday' && $SundayChk == 1){
+                    $octStr .= $octArr[$date].','.$dateDay;
                 }
                 else{
                 	$octStr .= $octArr[$date];
@@ -717,8 +747,11 @@ class Holiday extends CI_Controller
                 $novStr .= '<td>'.$j.'</td>';
                 $novStr .= '<td>'.$date.'</td>';
                 $novStr .= '<td>';
-                if(($dateDay == 'Saturday' || $dateDay == 'Sunday') && ($SundayChk == 1 || $SaturdayChk == 1)){
-            		$novStr .= $novArr[$date].','.$dateDay;
+                if($dateDay == 'Saturday'  && $SaturdayChk == 1){
+                    $novStr .= $novArr[$date].','.$dateDay;
+                }
+                elseif($dateDay == 'Sunday' && $SundayChk == 1){
+                    $novStr .= $novArr[$date].','.$dateDay;
                 }
                 else{
                 	$novStr .= $novArr[$date];
@@ -770,8 +803,11 @@ class Holiday extends CI_Controller
                 $decStr .= '<td>'.$j.'</td>';
                 $decStr .= '<td>'.$date.'</td>';
                 $decStr .= '<td>';
-                if(($dateDay == 'Saturday' || $dateDay == 'Sunday') && ($SundayChk == 1 || $SaturdayChk == 1)){
-            		$decStr .= $decArr[$date].','.$dateDay;
+                if($dateDay == 'Saturday'  && $SaturdayChk == 1){
+                    $decStr .= $decArr[$date].','.$dateDay;
+                }
+                elseif($dateDay == 'Sunday' && $SundayChk == 1){
+                    $decStr .= $decArr[$date].','.$dateDay;
                 }
                 else{
                 	$decStr .= $decArr[$date];
@@ -874,6 +910,12 @@ class Holiday extends CI_Controller
 				$this->common_model->insertData('tbl_holiday_settings',$insArr);
 			}
 		}
+        $wherArr = array('user_id' =>1);
+        $holiday = $this->common_model->getData('tbl_holiday_settings',$wherArr);
+        $hoidayData = array();
+        $holidayData['sat'] = $holiday[0]->saturday;
+        $holidayData['sun'] = $holiday[0]->sunday;
+        echo json_encode($holidayData);exit();
 	}
 
 	public function deleteholiday(){
