@@ -35,23 +35,22 @@ class Events extends CI_Controller {
 	   );
 	  }
 	  echo json_encode($data);
-	 }
+	}
 
-	 function insert()
-	 {
-	  if($this->input->post('title'))
-	  {
-	   $data = array(
-	    'title'  => $this->input->post('title'),
-	    'place'  => $this->input->post('place'),
-	    'eventdescription'=> $this->input->post('description'),
-	    'start_event'=> $this->input->post('startdate'),
-	    'end_event' => $this->input->post('enddate')
-	   );
-	   //print_r($data);die;
-	   $this->common_model->insertData('tbl_events',$data);
-	  }
-	 }
+	function insert()
+	{
+	  	if($this->input->post('title'))
+	  	{
+		   $data = array(
+		    'title'  => $this->input->post('title'),
+		    'place'  => $this->input->post('place'),
+		    'eventdescription'=> $this->input->post('description'),
+		    'start_event'=> $this->input->post('startdate'),
+		    'end_event' => $this->input->post('enddate')
+		   );
+	   		$this->common_model->insertData('tbl_events',$data);
+	  	}
+	}
 
 	 function delete()
 	 {
