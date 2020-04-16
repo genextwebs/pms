@@ -882,6 +882,17 @@ class Project extends CI_Controller {
 		echo $status;exit();
 	}
 
+	public function getTaskCategory(){
+		$catArray = $this->common_model->getData('tbl_task_category');
+			$str = '';
+			foreach($catArray as $row){
+				$str.='<option value="'.$row->id.'">'.$row->task_category_name.'</option>'; 
+			}
+			$catArr['catdata'] = $str;
+			echo json_encode($catArr);exit; 
+	}
+	
+
 	public function insertTask(){
 		$test = base64_decode($this->uri->segment(3));
 		if(!empty($_POST)){

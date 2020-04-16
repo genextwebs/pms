@@ -1018,7 +1018,19 @@ function deletetaskCat(id){
 	    data: "id="+id,
 	    success: function(data){
 		   	if(data == 1){
-		   		jQuery('#taskCat_'+id).remove();
+		   		//$('#succmsg').html('<b>Successfully category removed</b>');
+					$.ajax({
+						url: base_url+"project/getTaskCategory",
+						type: 'POST',
+						dataType: 'JSON',
+						success: function(data){
+							jQuery('#taskCat_'+id).remove();
+							$('select[name="task-category"]').html('');       
+							$('select[name="task-category"]').append(data.catdata);
+							$('#project-category1').removeClass('show');
+							$('#add-task-categ').modal('toggle');
+							}
+						});	
 		   	}
 		   	else{
 		   		$('#succmsg').html('');
