@@ -88,6 +88,7 @@
             events:"Events/load",
             selectable:true,
             selectHelper:true,
+            <?php if($this->user_type == 0) { ?>
             select:function(start, end, allDay)
             {
               var start = moment(start, 'DD.MM.YYYY').format('YYYY-MM-DD');
@@ -103,6 +104,7 @@
                 $('body').addClass('modal-open');  
               }
             },
+          <?php } ?>
             eventClick:function(event)
             {
                 if(confirm("Are you sure you want to remove it?"))
@@ -147,11 +149,13 @@
         <div class="content-in">
                 <h4 class="page-title"><i class="icon-calender"></i> Events</h4>    
             <br />
+            <?php if($this->user_type  == 0) { ?>
              <div class="row">
                 <div class="col-md-4">
                     <button type="button" name="btnsavetime" id="add-event" class="btn btn-success" align="right" onclick="modalopen();"> <i class="fa fa-plus"></i>Add Event</button>
                 </div>
             </div>
+          <?php } ?>
         </div>
         <div class="container">
             <div id="calendar"></div>

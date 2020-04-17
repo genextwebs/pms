@@ -69,16 +69,23 @@ if($this->session->userdata('login')){
                 <span>Tickets</span>
             </a>
         </li>
+        
+     	 <li <?php if($controller == 'events' && ($functionName == 'events' || $functionName == '')) { echo 'class="active"'; } ?>>
+            <a href="<?php echo base_url().'events'?>" class="nav-link-s">
+                <i class="icon-calender"></i>
+                <span>Events</span>
+            </a>
+        </li>
+        <li <?php if($controller == 'holiday' && ($functionName == 'holiday' || $functionName == '')) { echo 'class="active"'; } ?>>
+            <a href="<?php echo base_url().'holiday'?>" class="nav-link-s">
+                <i class="ti-calendar"></i>
+                <span>Holiday</span>
+            </a>
+        </li>
          <li>
             <a href="<?php echo base_url().'noticeboard'?>" class="nav-link-s">
                 <i class="ti-layout-media-overlay"></i>
                 <span>Notice Board</span>
-            </a>
-        </li>
-     	 <li <?php if($controller == 'events' && ($functionName == 'events' || $functionName == '')) { echo 'class="active"'; } ?>>
-            <a href="<?php echo base_url().'events'?>" class="nav-link-s">
-                <i class="icon-logout"></i>
-                <span>Events</span>
             </a>
         </li>
        

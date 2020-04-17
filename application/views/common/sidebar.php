@@ -140,7 +140,7 @@ if($this->session->userdata('login')){
         </li> -->
         <li <?php if($controller == 'holiday' && ($functionName == 'holiday' || $functionName == '')) { echo 'class="active"'; } ?>>
             <a href="<?php echo base_url().'holiday'?>" class="nav-link-s">
-                <i class="icon-calender"></i>
+                <i class="ti-calendar"></i>
                 <span>Holiday</span>
             </a>
         </li>
@@ -152,7 +152,7 @@ if($this->session->userdata('login')){
         </li> -->
        <li <?php if($controller == 'events' && ($functionName == 'events' || $functionName == '')) { echo 'class="active"'; } ?>>
             <a href="<?php echo base_url().'events'?>" class="nav-link-s">
-                <i class="icon-logout"></i>
+                <i class="icon-calender"></i>
                 <span>Events</span>
             </a>
         </li>
