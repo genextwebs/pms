@@ -275,7 +275,7 @@ class Ticket extends CI_Controller {
 				$showStatus = '<label class="label label-success">'.$status.'</label>';
 			}
 		
-			if($this->user_type == 0 || $this->user_type == 2){
+			if($this->user_type == 0){
 				$actionstring = '<div class="dropdown action m-r-10">
 			           <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
 			            <div class="dropdown-menu">
@@ -293,6 +293,18 @@ class Ticket extends CI_Controller {
 			                 <a  class="dropdown-item" href="'.base_url().'ticket/viewticket/'.base64_encode($row->id).'";><i class="fa fa-eye"></i> View</a>
 			                 <a  href="javascript:void();" onclick="deleteticket(\''.base64_encode($row->id).'\');" class="dropdown-item" href="javascript:void()"><i class="fa fa-trash" ></i> Delete</a>
 			                 <a  class="dropdown-item" href="'.base_url().'ticket/ticketclose/'.base64_encode($row->id).'";><i class="fa fa-close"></i>Close</a>
+			          </div>
+					
+					</div>';
+
+		}
+		elseif($this->user_type == 2){
+			$actionstring = '<div class="dropdown action m-r-10">
+			           <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
+			            <div class="dropdown-menu">
+			                
+			                 <a  class="dropdown-item" href="'.base_url().'ticket/viewticket/'.base64_encode($row->id).'";><i class="fa fa-eye"></i> View</a>
+			              
 			          </div>
 					
 					</div>';

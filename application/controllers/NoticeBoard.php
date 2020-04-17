@@ -147,7 +147,7 @@ class NoticeBoard extends CI_Controller{
 			$iTotal = count($noticesAllarr);
 		}
 		elseif($this->user_type == 2){
-			$query = "select * from tbl_notice2".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+			$query = "select * from tbl_notice".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 	    	$noticesArr = $this->common_model->coreQueryObject($query);
 			$query =  "select * from tbl_notice".$sWhere;	
 		    $noticesFilterArr = $this->common_model->coreQueryObject($query);

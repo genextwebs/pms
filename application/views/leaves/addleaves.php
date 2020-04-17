@@ -1,4 +1,4 @@
-<nav aria-label="breadcrumb" class="breadcrumb-nav">
+ <nav aria-label="breadcrumb" class="breadcrumb-nav">
 	<div class="row">
 		<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
 			<h4 class="page-title"><i class="icon-layers"></i> Leaves</h4>
@@ -107,9 +107,9 @@
 											<label class="control-label">Select Duration
 											</label>
 											<div>
-											 <input type="radio" id="radio_group1" name="duration_radio" value="0">Single<br>
-											 <input type="radio" id="radio_group2" name="duration_radio" value="1">Multiple<br>
-											 <input type="radio" id="radio_group3" name="duration_radio" value="2">Half Day<br>
+											 <input type="radio" id="radio_group1" name="duration_radio" value="0"> Single Day<br>
+											 <input type="radio" id="radio_group2" name="duration_radio" value="1"> Multiple Day<br>
+											 <input type="radio" id="radio_group3" name="duration_radio" value="2"> Half Day<br>
 											</div>
 										</div>
 									</div>

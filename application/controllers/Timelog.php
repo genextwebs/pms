@@ -217,7 +217,6 @@ class Timelog extends CI_Controller {
 				$datarow[] = array(
 					$id = $i,
 					$row->projectname,
-					$row->employeename,
 					$row->timelogstartdate.'<br/>'.$row->timelogstarttime,
 					$row->timelogenddate.'<br/>'.$row->timelogendtime,
 					$row->totalhours,

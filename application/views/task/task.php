@@ -46,6 +46,7 @@
 					        </select> 
 		            	</div>
 		            </div>
+		              <?php if($this->user_type == 0) { ?>
 		            <div class="col-md-3">
 		            	<div class="form-group">
 		            		<label class="box-title mt-3">Select Client</label>
@@ -60,7 +61,7 @@
 					        </select> 
 		            	</div>
 		            </div>
-		            <?php if($this->user_type == 0) { ?>
+		          
 		            <div class="col-md-3">
 		            	<div class="form-group">
 							<label class="box-title mt-3">Select Assigned To</label>

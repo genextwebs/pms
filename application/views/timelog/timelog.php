@@ -45,6 +45,7 @@
 			    
 			</div>
 		</div>
+		<?php if($this->user_type == 0) { ?>
 		<div class="col-md-4">
 			<div class="form-group">
 				<label class="control-label">Select Employee</label>
@@ -61,6 +62,7 @@
 				</select> 
 			</div>
 		</div>
+	<?php }	 ?>
 	</div>
 	<div class="row">
 		<div class="col-md-4">
@@ -73,6 +75,7 @@
 </div>
 <?php if($this->user_type == 0){
 ?>
+<div class="content-in">
 	<div class="row">
 		<div class="col-sm-12">
 			<div class="form-group custom-action">
@@ -80,6 +83,7 @@
 			</div>
 		</div>
 	</div>
+</div>
 <?php
 }else {
 
@@ -108,7 +112,9 @@
 						<tr role="row">
 							 <th>Id</th>
 							 <th>Project</th>
+						<?php if($this->user_type == 0){ ?>
 							<th>Employee Name</th>
+						<?php } ?>
 							 <th>Start Date</th> 
 							 <th>End Date</th> 
 							 <th>Total Hours</th>
