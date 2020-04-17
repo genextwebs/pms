@@ -57,7 +57,7 @@
 					            					<div class="stats-box">
 						            					<h3 class="b-b pb-2">Project #20 -<span class="font-bold"><?php echo $client[0]->projectname; ?></span> <a href="<?php echo base_url().'Project/editproject/'.base64_encode($id); ?>" class="pull-right btn btn-outline-info btn-rounded edit-btn" style="font-size: small"><i class="icon-note"></i> Edit</a> </h3>
 						            					<div style="max-height: 400px; overflow-y: auto;">
-					                                        Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.
+					                                        <?php echo $client[0]->projectsummary; ?>
 					                                    </div>
 							            			</div>
 					            				</div>

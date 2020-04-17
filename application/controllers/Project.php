@@ -696,7 +696,12 @@ class Project extends CI_Controller {
 
 	public function templateOverView(){
 		$data['id'] = base64_decode($this->uri->segment(3));
-		echo $data['id'];die;
+		$where = array('id' => $data['id']);
+		$data['template'] = $this->common_model->getData('tbl_project_template',$where);
+		$memberQue = "SELECT tbl_employee.*,tbl_template_member.*,tbl_user.* from tbl_employee inner join  tbl_template_member on tbl_employee.id = tbl_template_member.emp_id 
+			inner join tbl_user on tbl_employee.user_id = tbl_user.id 
+			where tbl_template_member.template_id=".$data['id'];
+		$data['templateMember'] = $this->common_model->coreQueryObject($memberQue);
 		$this->load->view('common/header');
 		$this->load->view('project/searchtemplate',$data);
 		$this->load->view('common/footer');

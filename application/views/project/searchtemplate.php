@@ -27,7 +27,7 @@
 			                <div class="stats-box">
 			                	<ul class="nav nav-tabs" id="myTab" role="tablist">
 								  	<li class="nav-item">
-								    	<a class="nav-link <?php if($controller == 'Project' && $function == 'templateOverView') { echo "active";}?>" id="overview-tab"  href="<?php echo base_url().'Project/templateOverView/'.base64_encode($id)?>" role="tab" aria-controls="overview" aria-selected="true">vOverview</a>
+								    	<a class="nav-link <?php if($controller == 'Project' && $function == 'templateOverView') { echo "active";}?>" id="overview-tab"  href="<?php echo base_url().'Project/templateOverView/'.base64_encode($id)?>" role="tab" aria-controls="overview" aria-selected="true">Overview</a>
 								  	</li>
 								  	<li class="nav-item" >
 								    	<a class="nav-link <?php if($controller == 'Project' && $function == 'templateMember') { echo "active";}?>" id="members-tab" href="<?php echo base_url().'Project/templateMember/'.base64_encode($id)?>" role="tab" aria-controls="members" aria-selected="false">Members</a>
@@ -46,9 +46,9 @@
 					            			<div class="row">
 					            				<div class="col-md-12">
 					            					<div class="stats-box">
-						            					<h3 class="b-b pb-2">Project #20 -<span class="font-bold"><?php echo $client[0]->projectname; ?></span> <a href="<?php echo base_url().'Project/editproject/'.base64_encode($id); ?>" class="pull-right btn btn-outline-info btn-rounded edit-btn" style="font-size: small"><i class="icon-note"></i> Edit</a> </h3>
+						            					<h3 class="b-b pb-2">Project Template #1 -<span class="font-bold"><?php echo $template[0]->projectname; ?></span> <a href="<?php echo base_url().'Project/edittemplate/'.base64_encode($id); ?>" class="pull-right btn btn-outline-info btn-rounded edit-btn" style="font-size: small"><i class="icon-note"></i> Edit</a> </h3>
 						            					<div style="max-height: 400px; overflow-y: auto;">
-					                                        Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.
+					                                        <?php echo $template[0]->projectsummary;?>
 					                                    </div>
 							            			</div>
 					            				</div>
@@ -64,158 +64,12 @@
 					            						</div>
 					            					</div>
 					            				</div> -->
-					            				<div class="col-md-6">
-					            					<div id="active-timers" class="stats-box">
-					            						<h3 class="box-title b-b"><i class="fa fa-clock-o"></i> Active Timers</h3>
-					            						<div class="table-responsive">
-					                                        <table class="table">
-					                                            <thead>
-					                                                <tr>
-					                                                    <th>#</th>
-					                                                    <th>Who's Working</th>
-					                                                    <th>Active Since</th>
-					                                                    <th>&nbsp;</th>
-					                                                </tr>
-					                                            </thead>
-					                                            <tbody id="timer-list">
-                           											<tr>
-					                                                    <td colspan="3">No active timer.</td>
-					                                                </tr>
-                                          						</tbody>
-					                                        </table>
-					                                    </div>
-					            					</div>
-					            				</div>
+					            				
 					            			</div>
-					            			<div class="row">
-					            				<div class="col-md-12">
-					            					<div class="stats-box">
-					            						<div class="row row-ini">
-					            							<div class="col-lg-3 col-md-6 row-ini-br">
-					            								<div class="col-in row">
-					                                                <div class="col-md-6 col-sm-6 col-xs-6"><i class="ti-layout-list-thumb"></i>
-					                                                    <h5 class="text-muted vb">Open Tasks</h5>
-					                                                </div>
-					                                                <div class="col-md-6 col-sm-6 col-xs-6">
-					                                                    <h3 class="counter text-right m-t-15 text-danger">0</h3>
-					                                                </div>
-					                                                <div class="col-md-12 col-sm-12 col-xs-12">
-					                                                    <div class="progress hight-4px">
-																		  	<div class="progress-bar bg-danger" style="width:0%;"></div>
-																		</div>
-					                                                </div>
-					                                            </div>
-					            							</div>
-					            							<div class="col-lg-3 col-md-6 row-ini-br b-r-none">
-					            								<div class="col-in row">
-					                                                <div class="col-md-6 col-sm-6 col-xs-6"><i class="ti-calendar"></i>
-					                                                    <h5 class="text-muted vb">Days Left</h5>
-					                                                </div>
-					                                                <div class="col-md-6 col-sm-6 col-xs-6">
-					                                                    <h3 class="counter text-right m-t-15 text-info">0</h3>
-					                                                </div>
-					                                                <div class="col-md-12 col-sm-12 col-xs-12">
-					                                                    <div class="progress hight-4px">
-																		  	<div class="progress-bar bg-info" style="width:0%;"></div>
-																		</div>
-					                                                </div>
-					                                            </div>
-					            							</div>
-					            							<div class="col-lg-3 col-md-6 row-ini-br">
-					            								<div class="col-in row">
-					                                                <div class="col-md-6 col-sm-6 col-xs-6"><i class="ti-alarm-clock"></i>
-					                                                    <h5 class="text-muted vb">Hours Logged</h5>
-					                                                </div>
-					                                                <div class="col-md-6 col-sm-6 col-xs-6">
-					                                                    <h3 class="counter text-right m-t-15 text-success"><?php echo $client[0]->hoursallocated; ?></h3>
-					                                                </div>
-					                                                <div class="col-md-12 col-sm-12 col-xs-12">
-					                                                    <div class="progress hight-4px">
-																		  	<div class="progress-bar bg-success" style="width:100%;"></div>
-																		</div>
-					                                                </div>
-					                                            </div>
-					            							</div>
-					            							<div class="col-lg-3 col-md-6 b-0">
-					            								<div class="col-in row">
-					                                                <div class="col-md-6 col-sm-6 col-xs-6"><i class="ti-alert"></i>
-					                                                    <h5 class="text-muted vb">Completion</h5>
-					                                                </div>
-				                                                    <div class="col-md-6 col-sm-6 col-xs-6">
-			                                                            <h3 class="counter text-right m-t-15 text-warning">68%</h3>
-			                                                        </div>
-			                                                        <div class="col-md-12 col-sm-12 col-xs-12">
-			                                                            <div class="progress hight-4px">
-																		  	<div class="progress-bar bg-warning" style="width:68%;"></div>
-																		</div>
-			                                                        </div>
-			                                            		</div>
-					            							</div>
-					            						</div>
-					            					</div>
-					            				</div>
-					            			</div>
-					            			<div class="row">
-		            							<div class="col-md-3">
-							                        <div class="stats-box bg-black pt-1 pb-1">
-										                <h3 class="box-title text-white">Project Budget</h3>
-										                <ul class="list-inline two-wrap">
-										                    <li><i class="fa fa-money text-white"></i></li>
-										                    <li class="text-right"><span id="" class="counter text-white">--</span></li>
-										                </ul>
-										            </div>
-							                    </div>
-							                    <div class="col-md-3">
-							                        <div class="stats-box bg-success pt-1 pb-1">
-										                <h3 class="box-title text-white">Earnings                                            <a href="javascript:void(0)"> <i class="fa fa-info-circle text-white"></i></a>
-                                    					</h3>
-										                <ul class="list-inline two-wrap">
-										                    <li><i class="fa fa-money text-white"></i></li>
-										                    <li class="text-right"><span id="" class="counter text-white">0</span></li>
-										                </ul>
-										            </div>
-							                    </div>
-							                    <div class="col-md-3">
-							                        <div class="stats-box bg-info pt-1 pb-1">
-										                <h3 class="box-title text-white">Hours Allocated</h3>
-										                <ul class="list-inline two-wrap">
-										                    <li><i class="ti-alarm-clock text-white"></i></li>
-										                    <li class="text-right"><span id="" class="counter text-white">--</span></li>
-										                </ul>
-										            </div>
-							                    </div>
-							                    <div class="col-md-3">
-							                        <div class="stats-box bg-warning pt-1 pb-1">
-										                <h3 class="box-title text-white">Expenses <a href="javascript:void(0)"> <i class="fa fa-info-circle text-white"></i></a></h3>
-										                <ul class="list-inline two-wrap">
-										                    <li><i class="fa fa-money text-white"></i></li>
-										                    <li class="text-right"><span id="" class="counter text-white">0</span></li>
-										                </ul>
-										            </div>
-							                    </div>
-		            						</div>
 		            						<div class="row">
 		            							<div class="col-lg-9 col-md-8">
 		            								<div class="row">
-		            									<div class="col-md-6">
-		            										<div class="card br-0">
-		            											<div class="card-header">
-		            												Client Details
-		            											</div>
-		            											<div class="card-body">
-		            												<dl>
-                                                                        <dt>Company Name</dt>
-				                                                        <dd class="m-b-10"><?php echo $client[0]->companyname;?></dd>
-				                                                        
-				                                                        <dt>Client Name</dt>
-				                                                        <dd class="m-b-10"><?php echo $client[0]->clientname;?></dd>
-
-				                                                        <dt>Client Email</dt>
-				                                                        <dd class="m-b-10"><?php echo $clientEmail[0]->emailid;?></dd>
-				                                                    </dl>
-		            											</div>
-		            										</div>
-		            									</div>
+		            									
 		            									<div class="col-md-6">
 		            										<div class="card br-0">
 		            											<div class="card-header">
@@ -223,14 +77,15 @@
 		            											</div>
 		            											<div class="card-body">
 		            												<div class="message-center">
-		            													<?php foreach($projectMember as $pm) { ?>
+		            													<?php //echo "<PRE>";print_r($templateMember);die;
+		            													foreach($templateMember as $tm) {  ?>
 				                                                        <a href="#">
 				                                                            <div class="user-img">
 				                                                                <img src="images/user-avtar.png" alt="user" class="img-circle" width="40" height="40">
 				                                                            </div>
 				                                                            <div class="mail-contnet">
-				                                                                <h5><?php echo $pm->employeename;?></h5>
-				                                                                <span class="mail-desc"><?php echo $pm->emailid; ?></span>
+				                                                                <h5><?php echo $tm->employeename;?></h5>
+				                                                                <span class="mail-desc"><?php echo $tm->emailid; ?></span>
 				                                                            </div>
 				                                                        </a>
 				                                                        <?php } ?>
@@ -239,139 +94,6 @@
 		            										</div>
 		            									</div>
 		            								</div>
-		            								<div class="row">
-		            									<div class="col-md-6">
-		            										<div class="card br-0">
-		            											<div class="card-header">
-		            												Open Tasks
-		            											</div>
-		            											<div class="card-body">
-		            												<ul class="list-border-none list-task list-group" data-role="tasklist">
-																	    <li class="list-group-item" data-role="task">
-																	        <strong>Title</strong> <span class="pull-right"><strong>Due Date</strong></span>
-																	    </li>
-																	    <li class="list-group-item" data-role="task">
-																	        <div class="row">
-																	        	<div class="col-8">
-																		            1. I beg your.
-																		        </div>
-																		        <label class="label label-danger pull-right col-4">09-08-2019</label>
-																	        </div>
-																	    </li>
-																	</ul>
-		            											</div>
-		            										</div>
-		            									</div>
-		            									<div class="col-md-6">
-		            										<div class="card br-0">
-		            											<div class="card-header">
-		            												Files
-		            											</div>
-		            											<div class="card-body">
-		            												You have not uploaded any file. 
-		            											</div>
-		            										</div>
-		            									</div>
-		            								</div>
-		            							</div>
-		            							<div id="project-timeline" class="col-lg-3 col-md-4">
-		            								<div class="card br-0">
-            											<div class="card-header">
-            												Activity Timeline
-            											</div>
-            											<div class="card-body">
-            												<div class="time_line">
-            													<div class="tl-grid">
-            														<div class="tl-left">
-            															<i class="fa fa-circle text-info"></i>
-            														</div>
-            														<div class="tl-right">
-            															<div>
-            																<h6>New member added to the Project.</h6>
-            																<span class="tl-date">2 minutes ago</span>
-            															</div>
-            														</div>
-            													</div>
-            													<div class="tl-grid">
-            														<div class="tl-left">
-            															<i class="fa fa-circle text-info"></i>
-            														</div>
-            														<div class="tl-right">
-            															<div>
-            																<h6>New task add to the Project.</h6>
-            																<span class="tl-date">2 minutes ago</span>
-            															</div>
-            														</div>
-            													</div>
-            													<div class="tl-grid">
-            														<div class="tl-left">
-            															<i class="fa fa-circle text-info"></i>
-            														</div>
-            														<div class="tl-right">
-            															<div>
-            																<h6>New member added to the Project.</h6>
-            																<span class="tl-date">2 minutes ago</span>
-            															</div>
-            														</div>
-            													</div>
-            													<div class="tl-grid">
-            														<div class="tl-left">
-            															<i class="fa fa-circle text-info"></i>
-            														</div>
-            														<div class="tl-right">
-            															<div>
-            																<h6>New task add to the Project.</h6>
-            																<span class="tl-date">2 minutes ago</span>
-            															</div>
-            														</div>
-            													</div>
-            													<div class="tl-grid">
-            														<div class="tl-left">
-            															<i class="fa fa-circle text-info"></i>
-            														</div>
-            														<div class="tl-right">
-            															<div>
-            																<h6>New member added to the Project.</h6>
-            																<span class="tl-date">2 minutes ago</span>
-            															</div>
-            														</div>
-            													</div>
-            													<div class="tl-grid">
-            														<div class="tl-left">
-            															<i class="fa fa-circle text-info"></i>
-            														</div>
-            														<div class="tl-right">
-            															<div>
-            																<h6>New task add to the Project.</h6>
-            																<span class="tl-date">2 minutes ago</span>
-            															</div>
-            														</div>
-            													</div>
-            													<div class="tl-grid">
-            														<div class="tl-left">
-            															<i class="fa fa-circle text-info"></i>
-            														</div>
-            														<div class="tl-right">
-            															<div>
-            																<h6>New member added to the Project.</h6>
-            																<span class="tl-date">2 minutes ago</span>
-            															</div>
-            														</div>
-            													</div>
-            													<div class="tl-grid">
-            														<div class="tl-left">
-            															<i class="fa fa-circle text-info"></i>
-            														</div>
-            														<div class="tl-right">
-            															<div>
-            																<h6>New task add to the Project.</h6>
-            																<span class="tl-date">2 minutes ago</span>
-            															</div>
-            														</div>
-            													</div>
-            												</div>
-            											</div>
-            										</div>
 		            							</div>
 		            						</div>
 									  </div>
