@@ -374,6 +374,9 @@ class Ticket extends CI_Controller {
 		$data['getemployee']=$this->common_model->getData('tbl_employee',$whereEmp);
 		$data['ticketchannel']=$this->common_model->getData('tbl_ticket_channel');
 		/*$query= "Select tbl_ticket_comment.*,tbl_employee.user_id from tbl_ticket_comment inner join tbl_employee on tbl_ticket_comment.ticketemployeeid= tbl_employee.id inner join tbl_user on tbl_employee.user_id=tbl_user.id";*/
+		$whereArr = array('ticketid'=>$id);
+		$data['ticketcommenttest']=$this->common_model->getData('tbl_ticket_channel');
+
 		$query = "Select * from tbl_ticket_comment where ticketid=".$id;
 		//echo $query;die;
 		$data['ticketcommenttest'] = $this->common_model->coreQueryObject($query);

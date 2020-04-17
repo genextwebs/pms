@@ -54,7 +54,12 @@
                         </div>
                         <div class="col-sm-9 text-right">
                             <span class="widget-title">  Unsolved Ticket</span><br>
-                            <span class="counter">131</span>
+                            <span class="counter"><?php
+                            $whereArrT = array('status' => 1);
+                            $ticketData = $this->common_model->getData('tbl_ticket',$whereArrT);
+                           //echo $this->db->last_query();die;
+                             $totalTicketUn =  count($ticketData);
+                              echo $totalTicketUn; ?></span>
                         </div>
                     </div>
                 </div>

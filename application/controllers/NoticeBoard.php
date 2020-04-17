@@ -141,7 +141,9 @@ class NoticeBoard extends CI_Controller{
 			$query =  "select * from tbl_notice".$sWhere;	
 		    $noticesFilterArr = $this->common_model->coreQueryObject($query);
 			$iFilteredTotal = count($noticesFilterArr);
-			$noticesAllarr = $this->common_model->getData('tbl_notice');
+
+			$query = "select * from tbl_notice".$sWhere;
+			$noticesAllarr = $this->common_model->coreQueryObject($query);
 			$iTotal = count($noticesAllarr);
 		}
 		elseif($this->user_type == 2){
@@ -150,7 +152,9 @@ class NoticeBoard extends CI_Controller{
 			$query =  "select * from tbl_notice".$sWhere;	
 		    $noticesFilterArr = $this->common_model->coreQueryObject($query);
 			$iFilteredTotal = count($noticesFilterArr);
-			$noticesAllarr = $this->common_model->getData('tbl_notice');
+			
+			$query = "select * from tbl_notice".$sWhere;
+			$noticesAllarr = $this->common_model->coreQueryObject($query);
 			$iTotal = count($noticesAllarr);
 		}
 		

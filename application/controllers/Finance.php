@@ -14,8 +14,6 @@ class Finance extends CI_Controller{
 		$this->user_type = $this->login->user_type;
 		$this->user_id = $this->login->id;	
 		func_check_login();
-
-		//$this->load->library('pdfgenerator');
 	}
 
 	public function index(){
@@ -360,7 +358,7 @@ class Finance extends CI_Controller{
 
 			
 			$insertArr=array('invoice' => $invoice,'project' => $project,'client'=>$data['invoicedata'][0]->companyname,'client'=>$data['invoicedata'][0]->clientid,
-				'currency' => $currency,'invoicedate' => $invoicedate,'duedate'=>$duedate,'status'=>$status,'recuringpayment'=>$recuringpayment,'billingfrequency'=>$billingfrequency,'billinginterval'=>$billinginterval,'billingcycle'=>$billingcycle,'total'=>$total,'note'=>$note);
+				'currency' => $currency,'invoicedate' => $invoicedate,'duedate'=>$duedate,'status'=>0,'recuringpayment'=>$recuringpayment,'billingfrequency'=>$billingfrequency,'billinginterval'=>$billinginterval,'billingcycle'=>$billingcycle,'total'=>$total,'note'=>$note);
 			$this->common_model->insertData('tbl_invoice',$insertArr);
 			$invoiceid=$this->db->insert_id();
 			
@@ -413,7 +411,7 @@ class Finance extends CI_Controller{
 			$sql="SELECT tbl_project_info.clientid,tbl_clients.clientname,tbl_clients.companyname FROM tbl_project_info INNER JOIN tbl_clients ON tbl_project_info.clientid = tbl_clients.id where tbl_project_info.id=".$project;	
 			$data['invoicedata']=$this->common_model->
 			coreQueryObject($sql);
-			$insertArr=array('invoice' => $invoice,'project' => $project,'companyname'=>$data['invoicedata'][0]->companyname,'client'=>$client,'currency' => $currency,'invoicedate' => $invoicedate,'duedate'=>$duedate,'status'=>$status,'recuringpayment'=>$recuringpayment,'billingfrequency'=>$billingfrequency,'billinginterval'=>$billinginterval,'billingcycle'=>$billingcycle,'total'=>$total,'note'=>$note);
+			$insertArr=array('invoice' => $invoice,'project' => $project,'companyname'=>$data['invoicedata'][0]->companyname,'client'=>$client,'currency' => $currency,'invoicedate' => $invoicedate,'duedate'=>$duedate,'status'=>0,'recuringpayment'=>$recuringpayment,'billingfrequency'=>$billingfrequency,'billinginterval'=>$billinginterval,'billingcycle'=>$billingcycle,'total'=>$total,'note'=>$note);
 			$this->common_model->insertData('tbl_invoice',$insertArr);
 			$invoiceid=$this->db->insert_id();
 			
@@ -569,6 +567,7 @@ class Finance extends CI_Controller{
 		/** Output */
 		$datarow = array();
 		$i = 1;
+		$sta = '';
 		foreach($invoicesArr as $row) {
 			$id = $row->id;
 			if($row->status == '0'){
