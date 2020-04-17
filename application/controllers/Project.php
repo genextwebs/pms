@@ -675,7 +675,7 @@ class Project extends CI_Controller {
 					$datarow[] = array(
 						$id = $i,
 						$row->projectname,
-						"<a href='".base_url()."Project/searchtemplate/".base64_encode($rowid)."'> <i class='fa fa-plus'></i> Add Template  Members</a>".'<br/>'.$emp_str,
+						"<a href='".base_url()."Project/templateMember/".base64_encode($rowid)."'> <i class='fa fa-plus'></i> Add Template  Members</a>".'<br/>'.$emp_str,
 						$row->name,
 						'<a href='.base_url().'Project/edittemplate/'.base64_encode($row->id). ' class="btn btn-info btn-circle" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
 						 <a href='.base_url().'Project/searchproject/'.base64_encode($row->id). ' class="btn btn-success btn-circle" data-toggle="tooltip" data-original-title="View Project Details"><i class="fa fa-search" aria-hidden="true"></i></a>
@@ -694,8 +694,17 @@ class Project extends CI_Controller {
 		exit();
 	}
 
-	public function searchtemplate(){
+	public function templateOverView(){
 		$data['id'] = base64_decode($this->uri->segment(3));
+		echo $data['id'];die;
+		$this->load->view('common/header');
+		$this->load->view('project/searchtemplate',$data);
+		$this->load->view('common/footer');
+	}
+
+	public function templateMember(){
+		$data['id'] = base64_decode($this->uri->segment(3));
+		//echo $data['id'];die;
 		$sql = "SELECT tbl_template_member.id as memberid,tbl_template_member.emp_id, tbl_employee.id ,tbl_employee.employeename from tbl_template_member inner join tbl_employee on tbl_template_member.emp_id = tbl_employee.id where template_id =".$data['id'];
 		$data['temp_member'] = $this->common_model->coreQueryObject($sql);
 		$data['emp_count'] = count($data['temp_member']);
@@ -796,9 +805,9 @@ class Project extends CI_Controller {
 					$this->common_model->insertData('tbl_template_member',$insArr);
 				}
 			}
-			redirect('Project/searchtemplate/'.$this->uri->segment(3));
+			redirect('Project/templateMember/'.$this->uri->segment(3));
 		}
-		redirect('Project/searchtemplate/'.$this->uri->segment(3));
+		redirect('Project/templateMember/'.$this->uri->segment(3));
 	}
 
 	public function deletetemplateM(){
