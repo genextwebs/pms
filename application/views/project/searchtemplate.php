@@ -23,11 +23,11 @@
             <div class="content-in">  
                 <div class="row">
                     <div class="col-md-12">
-	                    <section class="cview-detai seven-tab">
+	                    <section class="cview-detai seven-tab ">
 			                <div class="stats-box">
 			                	<ul class="nav nav-tabs" id="myTab" role="tablist">
 								  	<li class="nav-item">
-								    	<a class="nav-link <?php if($controller == 'Project' && $function == 'templateOverView') { echo "active";}?>" id="overview-tab"  href="<?php echo base_url().'Project/templateOverView/'.base64_encode($id)?>" role="tab" aria-controls="overview" aria-selected="true">Overview</a>
+								    	<a class="nav-link <?php if($controller == 'Project' && $function == 'templateOverView') { echo "active";}?>" id="overview-tab"  href="<?php echo base_url().'Project/templateOverView/'.base64_encode($id)?>" role="tab" aria-controls="overview" aria-selected="true">vOverview</a>
 								  	</li>
 								  	<li class="nav-item" >
 								    	<a class="nav-link <?php if($controller == 'Project' && $function == 'templateMember') { echo "active";}?>" id="members-tab" href="<?php echo base_url().'Project/templateMember/'.base64_encode($id)?>" role="tab" aria-controls="members" aria-selected="false">Members</a>
