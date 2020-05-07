@@ -9,7 +9,7 @@
                 <li class="active">Dashboard</li>
                 <li><!-- <a href="javascript:;">Start Timer <i class="fa fa-check-circle text-success"></i> --></a>
 
-                 <a href="javascript:;" id="holiday" data-toggle="modal" data-target="#data-tasktimer"><b>Start Timer</b><i class="fa fa-plus" aria-hidden="true"></i></a></li> 
+                 <a href="javascript:;" id="holiday" data-toggle="modal" data-target="#data-tasktimer" onclick="modal_open();"><b>Start Timer</b><i class="fa fa-plus" aria-hidden="true"></i></a></li> 
             </ol>
         </div>
     </div>
@@ -20,6 +20,7 @@
 
  <div><input type="button" name="btn" id='btn1' value="stop" onclick="to_start()"; class="btn btn-success" style="display:none;"></div>
 </div>
+<p id="n1"></p>
 
 <div class="content-in">  
     <div class="row db-stats">
@@ -95,7 +96,7 @@
         
     </div>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="stats-box">
                 <h3 class="box-title mb-0">Recent Earnings</h3>
                 <?php
@@ -135,6 +136,8 @@
                 </script>                        
             </div>
         </div>
+    </div>
+    <div class="row">
         <div class="col-md-6">
             <div class="card c-wrapp">
                 <div class="card-header">New Tickets</div>
@@ -143,7 +146,25 @@
                         <ul class="list-task list-group border-none" data-role="tasklist">
                             <?php  foreach($ticketNew as $row){ ?>
                                 <li class="list-group-item" data-role="task">
-                                    <a class="text-danger" href="<?php echo base_url().'ticket/'?>"> <b><?php echo $row->ticketsubject;?></b></a><i><?php echo $row->created_at; ?></i>
+                                    <a class="text-danger" href="<?php echo base_url().'ticket/'?>"> <b><?php echo $row->ticketsubject;?></b></a>&nbsp;&nbsp;&nbsp;<i><?php echo $row->created_at; ?></i>
+                                </li>
+                            <?php 
+                            }
+                        ?>  
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+          <div class="col-md-6">
+            <div class="card c-wrapp">
+                <div class="card-header">New Task</div>
+                <div class="card-wrapper collapse show">
+                    <div class="card-body">
+                        <ul class="list-task list-group border-none" data-role="tasklist">
+                            <?php  foreach($taskData as $row){ ?>
+                                <li class="list-group-item" data-role="task">
+                                    <a class="text-danger" href="<?php echo base_url().'ticket/'?>"> <b><?php echo $row->title;?></b></a>&nbsp;&nbsp;&nbsp;<i><?php echo $row->created_at; ?></i>
                                 </li>
                             <?php 
                             }
@@ -177,7 +198,7 @@
                                                <select class="select2 form-control" id="clientname">
                                         <option value="">Select</option>
                                         <?php
-                                            foreach($projectDetail as $row)
+                                            foreach($projectDetailData as $row)
                                             {
                                                 if(!empty($row->projectname)){
                                                     echo '<option value="'.$row->id.'" >'.$row->projectname.'</option>';

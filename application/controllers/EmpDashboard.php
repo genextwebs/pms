@@ -59,6 +59,23 @@ class EmpDashboard extends CI_Controller
 		}
 		$data['finalTempArr']=	$temp;
 		$data['ticketNew'] = $this->common_model->getData('tbl_ticket');
+		$whereArrEmp = array('user_id'=>$this->user_id);
+		$empData= $this->common_model->getData('tbl_employee',$whereArrEmp);
+		
+		$whereArr = array('assignedto'=>$empData[0]->id,'status!='=>3);
+		$data['taskData'] = $this->common_model->getData('tbl_task',$whereArr);
+		
+		$whereArrP = array('emp_id'=>$empData[0]->id);
+		$memberData = $this->common_model->getData('tbl_project_member',$whereArrP);
+		$projectDetailData = array();
+		$projectDetail = array();
+		for($i=0;$i<=count($memberData)-1;$i++){
+			$whereArrPro = array('id'=>$memberData[$i]->project_id);
+			$project = $this->common_model->getData('tbl_project_info',$whereArrPro);
+			array_push($projectDetail, $project[0]);
+		}
+		
+		$data['projectDetailData'] = $projectDetail;
 		$this->load->view('common/header');
 		$this->load->view('empdashboard/edashboard',$data);
 		$this->load->view('common/footer');

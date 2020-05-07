@@ -84,10 +84,29 @@ class Dashboard extends CI_Controller
 				$temp[$earning->startdate]['totalEarning']=$string;
 			}
 		}
+
 		$data['finalTempArr']=	$temp;
 		$this->load->view('common/header');
 		$this->load->view('dashboard/dashboard',$data);
-		$this->load->view('common/footer');
+	/*		$this->load->view('common/footer');
+*/	}
+
+	function load()
+	 {
+	 	$query = "select * from tbl_events";
+	  $event_data = $this->common_model->coreQuery($query);
+	  foreach($event_data as $row)
+	  {
+	   $data[] = array(
+	    'id' => $row['id'],
+	    'title' => $row['title'],
+	    'place' => $row['place'],
+	    'eventdescription' => $row['eventdescription'],
+	    'start' => $row['start_event'],
+	    'end' => $row['end_event']
+	   );
+	  }
+	  echo json_encode($data);
 	}
 	
 }

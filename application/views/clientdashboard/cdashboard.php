@@ -7,7 +7,7 @@
             <ol class="breadcrumb">
                 <li><a href="#">Home</a></li>
                 <li class="active">Dashboard</li>
-                <li><a class="btn btn-outline btn-inverse timer-modal" href="javascript:;">Start Timer <i class="fa fa-check-circle text-success"></i></a></li>
+                    
 
             </ol>
         </div>
@@ -55,8 +55,12 @@
                         <div class="col-sm-9 text-right">
                             <span class="widget-title">  Unsolved Ticket</span><br>
                             <span class="counter"><?php
-                            $whereArrT = array('status' => 1);
-                            $ticketData = $this->common_model->getData('tbl_ticket',$whereArrT);
+                           /* $whereArrT = array('status' => 1);
+                            $ticketData = $this->common_model->getData('tbl_ticket',$whereArrT);*/
+                            $query = "select * from tbl_ticket where status = 1 OR status = 2";
+                            $ticketData = $this->common_model->coreQuery($query);
+
+
                            //echo $this->db->last_query();die;
                              $totalTicketUn =  count($ticketData);
                               echo $totalTicketUn; ?></span>
