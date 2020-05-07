@@ -21,11 +21,11 @@ class TaskReport extends CI_Controller {
 		$data['allEmpData'] = $this->common_model->getData('tbl_employee',$whereArr);
 		$data['allProjectData'] = $this->common_model->getData('tbl_project_info',$whereArr);
 		$data['Chart']=$this->common_model->getData('tbl_task');
-		$str= '';
+		//$str= '';
 		foreach ($data['Chart'] as $pie) {
-			$str.= '<b>'.$pie->status;
-		}
-		
+			$data1['status'] =  $pie->status;
+		}	
+		$data['chart_data'] = json_encode($data1);
 		$this->load->view('common/header');
 		$this->load->view('report/taskreport',$data);
 		$this->load->view('common/footer');

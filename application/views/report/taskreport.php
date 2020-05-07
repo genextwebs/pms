@@ -34,7 +34,7 @@
 				<ul class="list-inline two-wrap">
 					<li><i class="icon-layers text-white"></i></li>
 					 <?php 
-					 	$whereArr=array('status'=>4);
+					 	$whereArr=array('status'=>3);
 						$Totals = $this->common_model->getData('tbl_task',$whereArr);
 						$tbl_task = count($Totals);
 					 ?>
@@ -103,71 +103,79 @@
         	</div>
     	</div>
 	</div>
-	<h1>PIE CHART</h1>
+	<h1 style="text-align: center;;">PIE CHART</h1>
+	<figure class="highcharts-fig32226+++ure">
 	<div id="piechart">
 	<?php 
-		$count1=0;$count2=0;
-		foreach ($Chart as $pie) {
-			if($pie->status==4){
-				//$dataStrCmp = count($pie->status);
-
-				$count1=$count1++;
-			}else if($pie->status==1){
-				//$dataStrpend = $pie->status;
-				$count2=$count2++;
-			}
-
-		/*	else if($pie->status==1){
-			$dataStrpend = $pie->status;
-			$c2=$count++;
+	//echo "<PRE>";print_r($Chart);die;
+	$incpm = $todo = $doing = $complete = 0;
+	foreach ($Chart as $pie) {
+		if($pie->status==0){
+			$incpm = $incpm+1;
 		}
-		 else if($pie->status==1){
-			$dataStrpend = $pie->status;
-			$c2=$count++;
+		if($pie->status==1){
+			$todo = $todo+1;
 		}
-		else if($pie->status==1){
-			$dataStrpend = $pie->status;
-			$c2=$count++;
-		}*/
+		if($pie->status==2){
+			$doing=$doing+1;
 		}
+		if($pie->status==3){
+			$complete=$complete+1;
+		}
+	}
 	?> 
 	</div>
+	</figure>
+	
 	<script type="text/javascript">
 		Highcharts.chart('piechart', {
-		    chart: {
-		        plotBackgroundColor: null,
-		        plotBorderWidth: null,
-		        plotShadow: false,
-		        type: 'pie'
-		    },
-		    title: {
-		        text: 'Status'
-		    },
-		    tooltip: {
-		    },
-		    accessibility: {
-		        point: {
-		            valueSuffix: '%'
-		        }
-		    },
-		    plotOptions: {
-		        pie: {
-		            allowPointSelect: true,
-		            cursor: 'pointer',
-		            dataLabels: {
-		                enabled: true,
-		            }
-		        }
-		    },
-		    series: [{
-		       name: 'Status ',
-		        colorByPoint: true,
-		        data:[
-		        	 ['Completed Status',<?php echo $count1;?>],
-		        	 ['Pending Status',<?php echo $count2;?>]
-		        ]
-		    }]
-		});
+  chart: {
+    plotBackgroundColor: null,
+    plotBorderWidth: null,
+    plotShadow: false,
+    type: 'pie'
+  },
+  title: {
+    text: 'TASK'
+  },
+  tooltip: {
+    pointFormat: '{series.name}: <b>{point.y}</b>'
+  },
+  accessibility: {
+    point: {
+      valueSuffix: '%'
+    }
+  },
+  plotOptions: {
+    pie: {
+      allowPointSelect: true,
+      cursor: 'pointer',
+      dataLabels: {
+        enabled: true,
+        format: '<b>{point.name}</b>: {point.y} '
+      }
+    }
+  },
+  series: [{
+    name: 'Task',
+    colorByPoint: true,
+    data: [{
+      name: 'Complete',
+      y: <?php echo $complete;?>,
+      sliced: true,
+      selected: true
+    }, {
+      name: 'Pending',
+      y: <?php echo $doing;?>
+    }, {
+      name: 'TO DO',
+      y: <?php echo $todo;?>
+    },  {
+      name: 'IN Complete',
+      y: <?php echo $incpm;?>
+    }]
+  }]
+});
 	</script>
 	<div class="row">
 		<div class="col-md-12">
@@ -190,4 +198,43 @@
 		</div>
 	</div>
 
+<style type="text/css">
+	.highcharts-figure, .highcharts-data-table table {
+  min-width: 320px; 
+  max-width: 800px;
+  margin: 1em auto;
+}
 
+.highcharts-data-table table {
+	font-family: Verdana, sans-serif;
+	border-collapse: collapse;
+	border: 1px solid #EBEBEB;
+	margin: 10px auto;
+	text-align: center;
+	width: 100%;
+	max-width: 500px;
+}
+.highcharts-data-table caption {
+  padding: 1em 0;
+  font-size: 1.2em;
+  color: #555;
+}
+.highcharts-data-table th {
+	font-weight: 600;
+  padding: 0.5em;
+}
+.highcharts-data-table td, .highcharts-data-table th, .highcharts-data-table caption {
+  padding: 0.5em;
+}
+.highcharts-data-table thead tr, .highcharts-data-table tr:nth-child(even) {
+  background: #f8f8f8;
+}
+.highcharts-data-table tr:hover {
+  background: #f1f7ff;
+}
+
+
+input[type="number"] {
+	min-width: 50px;
+} ?>
+</style>

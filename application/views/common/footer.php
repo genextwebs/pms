@@ -1,6 +1,6 @@
             <!-- footer -->
             <footer>
-                <p>2019 &copy; PMS</p>
+                <p>2020 &copy; PMS</p>
             </footer>
             <!-- ends of footer -->
         </div>
