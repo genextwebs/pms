@@ -421,7 +421,8 @@ jQuery(document).ready(function() {
 		});
 	}
 
-	else if(controllerName == 'taskreport' && functionName == 'index'){
+	else if(controllerName == 'taskreport' && ( functionName == '' || functionName == 'index')){
+		
 		var oTable = jQuery('#taskreport').DataTable({    
 			'bRetrieve': true,
 			"bPaginate": true,

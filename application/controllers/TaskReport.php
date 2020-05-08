@@ -98,14 +98,14 @@ class TaskReport extends CI_Controller {
 			
 			if(!empty(trim($_POST['startdate']))){
 				$startdate=!empty($_POST['startdate']) ? $_POST['startdate'] : '';
-			}else{
+			}/*else{
 				$startdate=date('Y-m-d',strtotime('-1 month'));
-			}
+			}*/
 			if(!empty(trim($_POST['enddate']))){ 
 				$enddate=!empty($_POST['enddate']) ? $_POST['enddate'] : '';
-			}else{
+			}/*else{
 				$enddate=date('Y-m-d');
-			}
+			}*/
 			/*
 			$startdate=!empty($_POST['startdate']) ? $_POST['startdate'] : '';
 			$enddate=!empty($_POST['enddate']) ? $_POST['enddate'] : '';*/
@@ -130,9 +130,9 @@ class TaskReport extends CI_Controller {
 			
 		}
 		$query = "SELECT tbl_project_info.projectname,tbl_task.*,tbl_employee.employeename FROM `tbl_task` inner join tbl_project_info on tbl_task.projectid = tbl_project_info.id inner join tbl_employee on tbl_task.assignedto =tbl_employee.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
-
+		//echo $query;
 		$taskReportArr = $this->common_model->coreQueryObject($query);
-
+		//print_r($taskReportArr);die;
 		$query = "SELECT tbl_project_info.projectname,tbl_task.*,tbl_employee.employeename FROM `tbl_task` inner join tbl_project_info on tbl_task.projectid = tbl_project_info.id inner join tbl_employee on tbl_task.assignedto =tbl_employee.id".$sWhere;
 
 		$TimeFilterArr = $this->common_model->coreQueryObject($query);
