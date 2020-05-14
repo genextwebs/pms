@@ -73,6 +73,60 @@
         startTimer(fiveMinutes, display);
     });
     </script>
+    <script type="text/javascript">
+        function taskChart(complete,doing,todo,incomp){
+        Highcharts.chart('piechart', {
+  chart: {
+    plotBackgroundColor: null,
+    plotBorderWidth: null,
+    plotShadow: false,
+    type: 'pie'
+  },
+  title: {
+    text: 'TASK'
+  },
+  tooltip: {
+    pointFormat: '{series.name}: <b>{point.y}</b>'
+  },
+  accessibility: {
+    point: {
+      valueSuffix: '%'
+    }
+  },
+  plotOptions: {
+    pie: {
+      allowPointSelect: true,
+      cursor: 'pointer',
+      dataLabels: {
+        enabled: true,
+        format: '<b>{point.name}</b>: {point.y} '
+      }
+    }
+  },
+  series: [{
+    name: 'Task',
+    colorByPoint: true,
+    data: [{
+      name: 'Complete',
+      y: eval(complete),
+      sliced: true,
+      selected: true
+    }, {
+      name: 'Pending',
+      y: eval(doing),
+    }, {
+      name: 'TO DO',
+      y: eval(todo),
+    },  {
+      name: 'IN Complete',
+      y: eval(incomp),
+    }]
+  }]
+});
+
+         }
+        
+    </script>
 </body>
 </html>
 

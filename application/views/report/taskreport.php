@@ -106,77 +106,10 @@
 	<h1 style="text-align: center;;">PIE CHART</h1>
 	<figure class="highcharts-fig32226+++ure">
 	<div id="piechart">
-	<?php 
-	//echo "<PRE>";print_r($Chart);die;
-	$incpm = $todo = $doing = $complete = 0;
-	foreach ($Chart as $pie) {
-		if($pie->status==0){
-			$incpm = $incpm+1;
-		}
-		if($pie->status==1){
-			$todo = $todo+1;
-		}
-		if($pie->status==2){
-			$doing=$doing+1;
-		}
-		if($pie->status==3){
-			$complete=$complete+1;
-		}
-	}
-	?> 
 	</div>
 	</figure>
 	
-	<script type="text/javascript">
-		Highcharts.chart('piechart', {
-  chart: {
-    plotBackgroundColor: null,
-    plotBorderWidth: null,
-    plotShadow: false,
-    type: 'pie'
-  },
-  title: {
-    text: 'TASK'
-  },
-  tooltip: {
-    pointFormat: '{series.name}: <b>{point.y}</b>'
-  },
-  accessibility: {
-    point: {
-      valueSuffix: '%'
-    }
-  },
-  plotOptions: {
-    pie: {
-      allowPointSelect: true,
-      cursor: 'pointer',
-      dataLabels: {
-        enabled: true,
-        format: '<b>{point.name}</b>: {point.y} '
-      }
-    }
-  },
-  series: [{
-    name: 'Task',
-    colorByPoint: true,
-    data: [{
-      name: 'Complete',
-      y: <?php echo $complete;?>,
-      sliced: true,
-      selected: true
-    }, {
-      name: 'Pending',
-      y: <?php echo $doing;?>
-    }, {
-      name: 'TO DO',
-      y: <?php echo $todo;?>
-    },  {
-      name: 'IN Complete',
-      y: <?php echo $incpm;?>
-    }]
-  }]
-});
-	</script>
+	
 	<div class="row">
 		<div class="col-md-12">
 			<div class="stats-box"> 

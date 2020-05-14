@@ -463,6 +463,10 @@ jQuery(document).ready(function() {
 					"data": aoData,
 	                "timeout": 60000, //1000 - 1 sec - wait one minute before erroring out = 30000
 	                "success": function(json) {
+	                	console.log(json.graphstr);
+	                	taskChart(json.graphstr.complete,json.graphstr.doing,json.graphstr.todo,json.graphstr.incpm)
+	                	
+	                	
 	                	var oTable = $('#taskreport').dataTable();
 	                	var oLanguage = oTable.fnSettings().oLanguage;
 
@@ -650,6 +654,7 @@ jQuery(document).ready(function() {
 	                "timeout": 60000, //1000 - 1 sec - wait one minute before erroring out = 30000
 	                "success": function(json) {
 	                	var getGraph = json.graphData;
+	                	console.log(getGraph);
 	                	var splitArr = getGraph.split('#$#');
 	                	graphDataAppend(splitArr[0],splitArr[1]);
 	                	var oTable = $('#finanacereport').dataTable();

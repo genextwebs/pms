@@ -182,10 +182,31 @@ class TaskReport extends CI_Controller {
 			);
 			$i++;
 		}
-
+	$ChartQuery = "select * from tbl_task ".$sWhere;
+	$Chart = $this->common_model->coreQueryObject($ChartQuery);
+	$incpm = $todo = $doing = $complete = 0;
+		foreach ($Chart as $pie) {
+			if($pie->status==0){
+				$incpm = $incpm+1;
+			}
+			if($pie->status==1){
+				$todo = $todo+1;
+			}
+			if($pie->status==2){
+				$doing=$doing+1;
+			}
+			if($pie->status==3){
+				$complete=$complete+1;
+			}
+		}
+	$data['complete'] = $complete;
+    $data['doing'] = $doing;
+    $data['todo'] = $todo;
+    $data['incpm'] = $incpm;
 		$output = array
 		(
 			"sEcho" => intval($_POST['sEcho']),
+			"graphstr"=> $data,
 					//"corequery"=>$corequery,
 				   "iTotalRecords" => $iTotal,
 				   "iTotalRecordsFormatted" => number_format($iTotal), 
