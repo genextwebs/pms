@@ -15,7 +15,7 @@ class FinanceReport extends CI_Controller {
 	}
 
 	public function index(){
-		$project = $this->session->userdata('project');
+		/*$project = $this->session->userdata('project');
 		$client = $this->session->userdata('client');
 		if (!empty($s_date) AND !empty($e_date)){
 			$startdate=$this->session->userdata('sdate');
@@ -31,7 +31,8 @@ class FinanceReport extends CI_Controller {
 	 		$query = 'SELECT * from tbl_invoice where project='.$project.' AND (invoicedate between "'.$startdate.'" AND "'.$enddate.'") AND (clientname ='.$client.')';
 	 	}else{
 	 		$query = 'SELECT * from tbl_invoice where 1 AND (invoicedate between "'.$startdate.'" AND "'.$enddate.'")';
-	 	}
+	 	}*/
+	 	$query = "SELECT * from tbl_invoice";
 	 	$data['getAmount'] = $this->common_model->coreQueryObject($query);
 	 	$temp = array();
 		$stri='';
@@ -46,23 +47,29 @@ class FinanceReport extends CI_Controller {
 			}
 		
 		}
+		//print_r($temp);die;
 		$data['allProjectData'] = $this->common_model->getData('tbl_project_info');
 	    $data['allClients'] = $this->common_model->getData('tbl_clients');
-	   	$data['sdate']=$startdate;
-		$data['edate']=$enddate;
+	   	//$data['sdate']=$startdate;
+		//$data['edate']=$enddate;
 		//$data['finalTempArr']=	$temp;
 		$this->load->view('common/header');
 		$this->load->view('report/financereport',$data);
 		$this->load->view('common/footer');
 	}
 
-
+	public function Month($month){
+	 			$sql = "select Month(month) as month from tbl_invoice";
+	 			$month = $this->common_model->coreQueryObject($sql);
+	 			return $month->month;
+	 		}
 	public function getPostData($post){
 		if(!empty($post)){
-			$sdate=$post['start_date'];
+			/*$sdate=$post['start_date'];
 	    	$edate=$post['deadline'];
 	    	$project=$post['project'];
 	    	$client=$post['clientData'];
+	    	//echo $client;die;
 	    	$this->session->set_userdata('sdate',$sdate);
 	    	$this->session->set_userdata('edate',$edate);
 	    	$this->session->set_userdata('project',$project);
@@ -85,20 +92,39 @@ class FinanceReport extends CI_Controller {
 	 			$query = 'SELECT * from tbl_invoice where project='.$project.' AND (invoicedate between "'.$startdate.'" AND "'.$enddate.'") AND (clientname ='.$client.')';
 	 		}else{
 	 			$query = 'SELECT * from tbl_invoice where 1 AND (invoicedate between "'.$startdate.'" AND "'.$enddate.'")';
-	 		}
+	 		}*/
+	 		$query = "SELECT total , SUM(total) as total , invoicedate, Month(invoicedate) as month from tbl_invoice group by Month(invoicedate)";
 	 		$data['getAmount'] = $this->common_model->coreQueryObject($query);
+
 	 		//echo $query;die;
+	 		//print_r($data);die;
 	 		$temp = array();
-			$stri='';
 			foreach($data['getAmount'] as $amount){
+
     			$string = $amount->total;
-				if(array_key_exists($amount->invoicedate,$temp)){
-					$temp[$amount->invoicedate]=$string+$temp[$amount->invoicedate];
-				}
+    			if($amount->month == 1){
+    				$month = 'January';
+    			}
+    			else if($amount->month == 2){
+    				$month = 'February';
+    			}
+    			else if($amount->month == 3){
+    				$month = 'March';
+    			}
+    			else if($amount->month == 4){
+    				$month = 'April';
+    			}
+    			else if($amount->month == 5){
+    				$month = 'May';
+    			}
+				//if(array_key_exists($amount->invoicedate,$temp)){
+					$temp[$month] = $string;
+				/*}
 				else{
 					$temp[$amount->invoicedate]=$string;
-				}
+				}*/
 			}
+			//echo "<PRE>";print_r($temp);die;
 			$str='';
 			$str1='';
 			foreach($temp as $key=>$value){
@@ -255,7 +281,7 @@ class FinanceReport extends CI_Controller {
 				$i++;
 			}
 			$dataGraph = $this->getPostData($_POST);
-			  
+			//print_r($dataGraph);die;  
 			$output = array
 			(
 			   	"sEcho" => intval($_GET['sEcho']),

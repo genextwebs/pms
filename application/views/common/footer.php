@@ -127,6 +127,34 @@
          }
         
     </script>
+    <script type="text/javascript">
+    function graphDataAppend(str,str1)
+    {
+    Highcharts.chart('container', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Finance Report'
+        },
+      
+        xAxis: {
+            categories: [str],
+            crosshair: true
+        },
+        yAxis: {
+            min: 0,
+            title: {
+
+            }
+        },
+        series: [{
+            name: 'Income',
+            data:[eval(str1)]
+        },]
+    });
+}
+</script>
 </body>
 </html>
 

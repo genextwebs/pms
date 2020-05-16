@@ -656,6 +656,7 @@ jQuery(document).ready(function() {
 	                	var getGraph = json.graphData;
 	                	console.log(getGraph);
 	                	var splitArr = getGraph.split('#$#');
+	                	console.log(splitArr);
 	                	graphDataAppend(splitArr[0],splitArr[1]);
 	                	var oTable = $('#finanacereport').dataTable();
 	                	var oLanguage = oTable.fnSettings().oLanguage;
