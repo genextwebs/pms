@@ -151,7 +151,7 @@ class TaskReport extends CI_Controller {
 
 			if($row->status=='0'){
 					$status=$row->status='Incomplete';
-					$showStatus = '<label class="label label-success">'.$status.'</label>';
+					$showStatus = '<label class="label label-danger">'.$status.'</label>';
 			}
 			else if($row->status=='1'){
 					$status=$row->status='Todo';
@@ -164,7 +164,7 @@ class TaskReport extends CI_Controller {
 			
 			else if($row->status=='3'){
 					$status=$row->status='Done';
-					$showStatus = '<label class="label label-danger">'.$status.'</label>';
+					$showStatus = '<label class="label label-success">'.$status.'</label>';
 			}
 			
 			else if($row->status=='4'){
