@@ -67,7 +67,7 @@
             </div>
         </div>
     </div>
-</div>
+
 	<?php
 		$mess = $this->session->flashdata('message_name');
 		if(!empty($mess)){ ?>
@@ -96,33 +96,8 @@
 		</table>
 	</div>
 
-	<div id="container" style="height: 400px"></div>
 
-<script type="text/javascript">
-function graphDataAppend(str,str1)
-{
-	alert(str);
-	Highcharts.chart('container', {
-	    chart: {
-	        type: 'column'
-	    },
-	    title: {
-	        text: 'Finance Report'
-	    },
-	  
-	    xAxis: {
-	       	categories: [str],
-	        crosshair: true
-	    },
-	    yAxis: {
-	        min: 0,
-	        title: {
-	        }
-	    },
-	    series: [{
-	        name: 'HourseLogged',
-	      	data:[eval(str1)]
-	    },]
-	});
-}
-</script>
+	<div id="container" style="height: 400px"></div>
+	</div>
+
+

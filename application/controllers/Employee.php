@@ -464,7 +464,7 @@ class Employee extends CI_Controller
 		$whereLeave = array('empid' => $data['empData'][0]->id);
 		$data['empLeaves'] = $this->common_model->getData('tbl_leaves',$whereLeave);
 		$this->load->view('common/header');
-		$this->load->view('employees/viewEmployee',$data);
+		$this->load->view('employees/viewemployee',$data);
 		$this->load->view('common/footer');
 	}	
 
