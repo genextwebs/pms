@@ -145,7 +145,7 @@
                                 				<div class="col-md-12">
 											        <div class="form-group">
 											            <label class="control-label">Skills<span class="astric">*</span></label>
-											            <input type="text" contenteditable data-placeholder="Skills" class="form-control" id="skills" name="skills" id="skills" value="<?php if(!empty($sessData['skills'])){echo $sessData['skills'];}?>">
+											            <input type="text" contenteditable data-placeholder="Skills" class="form-control" id="skills" name="skills" data-role="tagsinput" id="skills" value="<?php if(!empty($sessData['skills'])){echo $sessData['skills'];}?>">
 											        </div>
 											    </div>
                                 			</div>
@@ -311,3 +311,13 @@
             </div>
 
 
+<style type="text/css">
+	.label-info {
+  background-color: #5bc0de;
+  padding: 3px;
+}
+  .bootstrap-tagsinput{
+  	width:100%;
+  }
+
+</style>

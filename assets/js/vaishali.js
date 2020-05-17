@@ -517,10 +517,10 @@ if (isConfirm) {
 }
 
 // display skills in employee
-$(function() {
+/*$(function() {
 		$('#skills').tagsInput({width:'auto'});
     });
-
+*/
 // display designation in employee
 $('#save-designation').click(function(){
 	var name = $("input[name='designation_name']").val();

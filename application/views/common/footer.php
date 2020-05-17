@@ -31,8 +31,8 @@
     <script src="<?php echo base_url();?>assets/js/varsha.js"></script> 
     <script src="<?php echo base_url();?>assets/js/vaishali.js"></script>
     <script src="https://cdn.ckeditor.com/4.12.1/standard/ckeditor.js"></script>
-    <script src="https://xoxco.com/examples/jquery.tagsinput.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.js"></script>
+
    
     <script type="text/javascript">
         var controllerName = '<?php echo strtolower($this->uri->segment(1)); ?>';

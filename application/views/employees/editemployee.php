@@ -161,7 +161,7 @@ $sessData = $this->session->flashdata('sessDataEmp');
                                 				<div class="col-md-12">
 											        <div class="form-group">
 											            <label class="control-label">Skills<span class="astric">*</span></label>
-											            <input type="text" contenteditable data-placeholder="Skills" class="form-control" id="skills" name="skills" id="skills" value="<?php 
+											            <input type="text" contenteditable data-placeholder="Skills" class="form-control" id="skills" name="skills" data-role="tagsinput" id="skills" value="<?php 
 											            if(!empty($sessData)) { echo $sessData['skills']; } elseif(!empty($employee[0]->skills)) { echo $employee[0]->skills; } else{ }?>">
 											        </div>
 											    </div>
@@ -374,3 +374,13 @@ $sessData = $this->session->flashdata('sessDataEmp');
             </div>
 
 
+<style type="text/css">
+	.label-info {
+  background-color: #5bc0de;
+  padding: 3px;
+}
+  .bootstrap-tagsinput{
+  	width:100%;
+  }
+
+</style>
