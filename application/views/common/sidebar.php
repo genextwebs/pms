@@ -74,7 +74,7 @@ if($this->session->userdata('login')){
                 <i class="ti-layout-list-thumb"></i>
                 <span>Tasks</span>
             </a>
-            <ul class="collapse list-unstyled <?php if($controller == 'task' || $controller == 'dashboard') {echo 'show'; }?>" id="taskmenu">
+            <ul class="collapse list-unstyled <?php if($controller == 'task') {echo 'show'; }?>" id="taskmenu">
                 <li <?php if($controller == 'task' && ($functionName == 'task' || $functionName == '')) { echo 'class="active"'; } ?>>
                     <a href="<?php echo base_url().'task'?>">Tasks</a>
                 </li>
