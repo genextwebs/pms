@@ -131,7 +131,7 @@
     <script type="text/javascript">
     function graphDataAppend(str,str1)
     {
-      alert(str1);
+      alert(str);
     Highcharts.chart('container', {
         chart: {
             type: 'column'

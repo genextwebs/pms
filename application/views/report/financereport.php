@@ -13,16 +13,17 @@
 </nav>
 
 <div class="content-in">
+	<form id="financereport" class="aj-form--" name="financereport" method="post" action="<?php echo base_url().'FinanceReport/getPostData';?>">
 	<div class="row">
 		<div class="col-md-4">
 			<div class="form-group">
 				<label class="control-label">SELECT DATE RANGE</label>
 	    		<div class="input-group input-daterange">
-			  	    <input type="text" class="start-date form-control br-0" id="start_date" name="start_date" value="" data-date-format='yyyy-mm-dd'>
+			  	    <input type="text" class="start-date form-control br-0" id="start_date" name="start_date" value="<?php echo $sdate;?>" data-date-format='yyyy-mm-dd'>
 			   		<div class="input-group-prepend">
 			        	<span class="input-group-text bg-info text-white">To</span>
 		    		</div>
-		  		    <input type="text" class="end-date form-control br-0" id="deadline" name="deadline" value="" data-date-format='yyyy-mm-dd'>
+		  		    <input type="text" class="end-date form-control br-0" id="deadline" name="deadline" value="<?php echo $edate;?>" data-date-format='yyyy-mm-dd'>
 				</div>
 			</div>
 		</div>	
@@ -100,5 +101,38 @@
 		</table>
 	</div>
 	</div>
+</form>
+<?php
+	    $str='';$str1='';
+		foreach($finalTempArr as $key=>$value){
+			$str.= '"'.$key.'"'.',';
+			$str1.= $value.',';
+		}
+	?>
+<script type="text/javascript">
+    
+      //alert(str);
+    Highcharts.chart('container', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Finance Report'
+        },
+      
+        xAxis: {
+            categories: [<?php echo rtrim($str,',');?>],
+            crosshair: true
+        },
+        yAxis: {
+            min: 0,
+            title: {
 
-
+            }
+        },
+        series: [{
+            name: 'Income',
+            data:[<?php echo rtrim($str1,',');?>]
+        },]
+    });
+</script>
