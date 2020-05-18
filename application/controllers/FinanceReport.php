@@ -16,6 +16,7 @@ class FinanceReport extends CI_Controller {
 
 	public function index(){
 		$project=$this->session->userdata('project');
+
 		$client = $this->session->userdata('client');
 		if (!empty($this->session->userdata('sdate')) AND !empty($this->session->userdata('edate'))){
 			$sdate=$this->session->userdata('sdate');
@@ -27,17 +28,19 @@ class FinanceReport extends CI_Controller {
 				$sdate=date('Y-m-d',strtotime('-1 month'));
 				$edate=date('Y-m-d');
 		}
-		$Where = '';
-		if(!empty($project)){
-			$Where.= 'AND project='.$project;
+		$Where=$sWhere= '';
+		if($project != ''){
+			$sWhere.= 'AND project='.$project;
 		}
-		if(!empty($client)){
-			$Where.= 'AND client='.$client;
+		if($client != ''){
+			$sWhere.= 'AND client='.$client;
 		}
 		$Where =' where status = 1 AND (invoicedate between "'.$sdate.'" AND "'.$edate.'")';
-		$query = "SELECT total , SUM(total) as total , invoicedate, Month(invoicedate) as month , status from tbl_invoice".$Where." 
+		$query = "SELECT total , SUM(total) as total , invoicedate, Month(invoicedate) as month , status from tbl_invoice".$Where.$sWhere." 
 	 		group by Month(invoicedate) ";
+	 		//echo $query;die;
 	 		$data['getAmount'] = $this->common_model->coreQueryObject($query);
+	 		//print_r($data['getAmount']);die;
 	 		$temp = array();
 			foreach($data['getAmount'] as $amount){
 
@@ -202,28 +205,31 @@ class FinanceReport extends CI_Controller {
 			}
 			/*$startdate=!empty($_POST['start_date']) ? $_POST['start_date'] : '';
 			$enddate=!empty($_POST['deadline']) ? $_POST['deadline'] : '';*/
+			echo"<PRE>";print_r($_POST);die;
 			$project=!empty($_POST['project']) ? $_POST['project'] : '';
-			$client=!empty($_POST['clientData']) ? $_POST['clientData'] : '';
+			$client=!empty($_POST['client']) ? $_POST['client'] : '';
+			echo $project;die;
+			$Where='';
 			//echo $startdate.''.$enddate;die;
 			if(!empty($startdate)){						
-				$sWhere.=' AND invoicedate>="'.$startdate.'"';
+				$Where.=' AND invoicedate>="'.$startdate.'"';
 			}
 			if(!empty($enddate)){						
-				$sWhere.=' AND duedate<="'.$enddate.'"';
+				$Where.=' AND invoicedate<="'.$enddate.'"';
 			}
 			if(!empty($project)){						
-				$sWhere.=' AND tbl_invoice.project='.$project;
+				$Where.=' AND tbl_invoice.project='.$project;
 			}
 			if(!empty($client)){						
-				$sWhere.=' AND tbl_invoice.client='.$client;
+				$Where.=' AND tbl_invoice.client='.$client;
 			}
 			
-			$sWhere = " WHERE tbl_invoice.status=1 ".$sWhere;
+			$sWhere = " WHERE tbl_invoice.status=1 ".$Where;
 			
 		}
 		
 		$query = "SELECT tbl_invoice.*,projectname FROM `tbl_invoice` inner join tbl_project_info on tbl_invoice.project= tbl_project_info.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
-		//echo $query;die;
+		echo $query;die;
 		$FinanceArr = $this->common_model->coreQueryObject($query);
 		$query = "SELECT tbl_invoice.*,projectname FROM `tbl_invoice` inner join tbl_project_info on tbl_invoice.project= tbl_project_info.id".$sWhere;
 		$FinanceFilterArr = $this->common_model->coreQueryObject($query);
