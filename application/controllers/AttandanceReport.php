@@ -138,29 +138,39 @@ class AttandanceReport extends CI_Controller {
 			$rowid = $row->id;
 			$myattandance=$row->attendance;
 
-			$sql="SELECT tbl_employee.employeename,tbl_attendance.* FROM `tbl_attendance`inner join tbl_employee on tbl_attendance.employee=tbl_employee.id where tbl_attendance.employee = ".$row->employee." AND tbl_attendance.attendance = 1";
-
-
+			$sql="SELECT tbl_employee.employeename,tbl_attendance.* FROM `tbl_attendance`inner join tbl_employee on tbl_attendance.employee=tbl_employee.id where tbl_attendance.employee = ".$row->employee." AND tbl_attendance.attendance = 1 ";
 			$sql1="SELECT tbl_employee.employeename,tbl_attendance.* FROM `tbl_attendance` inner join tbl_employee on tbl_attendance.employee=tbl_employee.id where tbl_attendance.employee = ".$row->employee." AND tbl_attendance.attendance = 3";
+
+			$sql2="SELECT tbl_employee.employeename,tbl_attendance.* FROM `tbl_attendance`inner join tbl_employee on tbl_attendance.employee=tbl_employee.id where tbl_attendance.employee = ".$row->employee." AND tbl_attendance.attendance = 2";
+
+
+			
 
 			$getCountPresent = $this->common_model->coreQueryObject($sql);
 			$getCountAbsent = $this->common_model->coreQueryObject($sql1);
+			$getCountLate = $this->common_model->coreQueryObject($sql2);
+
 //echo $sql;echo $sql1;die;
-			$presentStatus=$absStatus="";
+			$presentStatus=$absStatus=$lateStatus="";
 			if($row->attendance=='1'){
 					$attendance=$row->attendance='Present';
 					$presentStatus = '<label class="label label-success">'.$attendance.'</label>';
 			}else if($row->attendance=='3'){ 
 					$attendance=$row->attendance='Absent';
 					$absStatus = '<label class="label label-danger">'.$attendance.'</label>';
+			}else if($row->attendance=='2'){ 
+					$attendance=$row->attendance='Late';
+					$lateStatus = '<label class="label label-success">'.$attendance.'</label>';
 			}
+			
 			
 			
 			$datarow[] = array(
 				$id = $i,
 				$row->employeename,
-				$presentStatus.'<p class="btn btn-info btn-circle">'.count($getCountPresent).'</p>',
-				$absStatus.'<p class="btn btn-info btn-circle">'.count($getCountAbsent).'</p>'
+				'<p class="btn btn-info btn-circle">'.count($getCountPresent).'</p><br/',
+				'<p class="btn btn-info btn-circle">'.count($getCountAbsent).'</p><br/>',
+				'<p class="btn btn-info btn-circle">'.count($getCountLate).'</p><br/>'
 				);
 				$i++;
 			}

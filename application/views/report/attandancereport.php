@@ -60,6 +60,7 @@
 						 <th>Employee</th>
 						 <th>Present</th>
 						 <th>Absent</th> 
+						 <th>Late</th>
 					</tr>
 				</thead>
 			</table>

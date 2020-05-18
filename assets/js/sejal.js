@@ -513,7 +513,7 @@ jQuery(document).ready(function() {
 			"sAjaxSource": base_url+"LeaveReport/leavelistreport",
 			"sServerMethod": "POST",
 			"sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
-			"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No Leaves Found<br/><br/></center>', "sZeroRecords": "<center><br/>No Projects found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ leads", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
+			"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No LeavesReport Found<br/><br/></center>', "sZeroRecords": "<center><br/>No Projects found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ leads", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
 			"fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
 			
 				aoData.push( { "name": "startdate", "value": $('#startdate').val() } );
@@ -568,14 +568,16 @@ jQuery(document).ready(function() {
 			"aoColumns": [{ "sWidth": "40px", sClass: "text-left", "asSorting": [  ] }, 
 			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
 			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] },
 			{ "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }
+
 			],
 			"bServerSide": true,
 			"fixedHeader": true,
 			"sAjaxSource": base_url+"AttandanceReport/attandancelistreport",
 			"sServerMethod": "POST",
 			"sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
-			"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No AttandanceReport found<br/><br/></center>', "sZeroRecords": "<center><br/>No AttandanceReport found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ leads", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
+			"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No AttandanceReport Found<br/><br/></center>', "sZeroRecords": "<center><br/>No AttandanceReport found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ leads", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
 			"fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
 			
 				aoData.push( { "name": "startdate", "value": $('#startdate').val() } );
