@@ -83,7 +83,7 @@
 												  <label for="date" class="control-label"> Start Date<span class="astric">*</span></label>
 												  <input type="date" name="timelog_d1" id="timelog_d1" value=""  class="form-control"/>
 												  <label for="time" class="control-label">Start Time<span class="astric">*</span></label>
-												  <input type="time" name="timelog_t1" id="timelog_t1" value=""  class="form-control"/>
+												  <input type="time" name="timelog_t1" id="timelog_t1" value="" class="form-control"/>
 												</div>
 											</div>
 											<div class="col-md-4">

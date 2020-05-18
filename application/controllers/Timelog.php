@@ -249,7 +249,7 @@ class Timelog extends CI_Controller {
 		redirect('timelog/index');
 	}
 
-	public function edittimelog(){
+	Public function edittimelog(){
 
 		$id=base64_decode($_POST['id']);
 		$whereArr=array('id'=>$id);
