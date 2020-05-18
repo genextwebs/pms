@@ -655,12 +655,12 @@ jQuery(document).ready(function() {
 					"data": aoData,
 	                "timeout": 60000, //1000 - 1 sec - wait one minute before erroring out = 30000
 	                "success": function(json) {
-	                	var getGraph = json.graphData;
-	                	console.log(getGraph);
-	                	var splitArr = getGraph.split('#$#');
-	                	console.log(splitArr);
-	                	graphDataAppend(splitArr[0],splitArr[1]);
-	                	alert(splitArr[0]);
+	                	//var getGraph = json.graphData;
+	                	//console.log(getGraph);
+	                	//var splitArr = getGraph.split('#$#');
+	                	//console.log(splitArr);
+	                	//graphDataAppend(splitArr[0],splitArr[1]);
+	                	//alert(splitArr[0]);
 	                	var oTable = $('#finanacereport').dataTable();
 	                	var oLanguage = oTable.fnSettings().oLanguage;
 	                	if((json.estimateCount == true) && (json.iTotalDisplayRecords == json.limitCountQuery)){
