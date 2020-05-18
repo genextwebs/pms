@@ -102,11 +102,13 @@ class LeaveReport extends CI_Controller {
 
 			$empname=!empty($_POST['ename']) ? $_POST['ename'] : '';
 			
-			if(!empty($startdate)){						
-				$sWhere.=' AND date>="'.$startdate.'"';
+			if(!empty($startdate)){	
+					$sdate = date("m/d/Y", strtotime($startdate));					
+				$sWhere.=' AND date>="'.$sdate.'"';
 			}
-			if(!empty($enddate)){						
-				$sWhere.=' AND date<="'.$enddate.'"';
+			if(!empty($enddate)){	
+			$edate = date("m/d/Y", strtotime($enddate));					
+				$sWhere.=' AND date<="'.$edate.'"';
 			}
 			if(!empty($empname)){						
 				$sWhere.=' AND tbl_leaves.empid='.$empname;
@@ -117,7 +119,9 @@ class LeaveReport extends CI_Controller {
 		}
 	
 		$query = "SELECT tbl_leaves.*,tbl_employee.employeename from tbl_leaves inner join tbl_employee on tbl_leaves.empid =tbl_employee.id".$sWhere.' group By tbl_employee.employeename '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+		//echo $query;die;
 		$LeavesArr = $this->common_model->coreQueryObject($query);
+
 
 		$query = "SELECT tbl_leaves.*,tbl_employee.employeename from tbl_leaves inner join tbl_employee on tbl_leaves.empid =tbl_employee.id".$sWhere.' group By tbl_employee.employeename '.$sOrder.' limit '.$sOffset.', '.$sLimit;
      
