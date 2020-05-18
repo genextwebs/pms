@@ -151,6 +151,7 @@ class Attendance extends CI_Controller{
 
 		$hquery="select * from tbl_holiday_settings";
 		$data['hday'] = $this->common_model->coreQueryObject($hquery);
+		if(!empty($data['hday'])){
 		if($data['hday'][0]->saturday == 1 &&  $data['hday'][0]->sunday == 1){
 			$data['holiday']=$data['ocday']+$daysat+$daysun;
 			$data['wday']=$totalday-$data['holiday'];
@@ -168,6 +169,7 @@ class Attendance extends CI_Controller{
 			$data['holiday']=$data['ocday'];
 			$data['wday']=$totalday-$data['holiday'];
 		}
+	}
 		$this->load->view('common/header');
 		$this->load->view('Attendance/attendance',$data);
 		$this->load->view('common/footer');

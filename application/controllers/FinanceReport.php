@@ -16,7 +16,7 @@ class FinanceReport extends CI_Controller {
 
 	public function index(){
 		$project=$this->session->userdata('project');
-
+		echo $project;die;
 		$client = $this->session->userdata('client');
 		if (!empty($this->session->userdata('sdate')) AND !empty($this->session->userdata('edate'))){
 			$sdate=$this->session->userdata('sdate');

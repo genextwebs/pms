@@ -260,7 +260,7 @@
                                     <div class="col-md-3">
                                         <h3>Total Working Days</h3>
                                         <ul class="list-inline two-part">
-                                            <li class="text-right"><span id="totalWorkingDays"><?php echo $wday; ?></span></li>
+                                            <li class="text-right"><span id="totalWorkingDays"><?php if(!empty($wday)) { echo $wday; } else{ echo 0;} ?></span></li>
                                         </ul>
                                     </div>
                                     <div class="col-md-3">
@@ -295,7 +295,7 @@
                                             <h3 class="box-title text-white"> Holidays</h3>
                                             <ul class="list-inline two-part">
                                                 <li><i class="icon-clock text-white"></i></li>
-                                                <li class="text-right"><span id="holidayDays" class="counter text-white"><?php echo $holiday; ?></span></li>
+                                                <li class="text-right"><span id="holidayDays" class="counter text-white"><?php if(!empty($holiday)) { echo $holiday; } else{ echo 0; } ?></span></li>
                                             </ul>
                                         </div>
                                     </div>
