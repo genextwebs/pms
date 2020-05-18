@@ -15,6 +15,7 @@ class IncomeExpenseReport extends CI_Controller {
 	}
 
 	public function index(){
+		$allproject=$this->session->userdata('project');
 
 		if (!empty($this->session->userdata('sdate')) AND !empty($this->session->userdata('edate'))){
 			$sdate=$this->session->userdata('sdate');
@@ -25,7 +26,19 @@ class IncomeExpenseReport extends CI_Controller {
 			$edate=date('Y-m-d');
 		}
 		$data['dateRange']= $this->createDateRangeArray($sdate,$edate);
-		$query= 'SELECT purchasedate,price,tbl_invoice.total FROM tbl_expense inner join tbl_invoice on tbl_expense.project = tbl_invoice.project where (purchasedate between "'.$sdate.'" AND "'.$edate.'")';
+
+		foreach($data['dateRange'] as $date){
+			$str = '"'.$date.'"'.',';
+		}
+
+		if(!empty($allproject)){
+	 		
+	 		$query= 'SELECT purchasedate,price,tbl_invoice.total FROM tbl_expense inner join tbl_invoice on tbl_expense.project = tbl_invoice.project where tbl_expense.project='.$allproject.' AND (purchasedate between "'.$sdate.'" AND "'.$edate.'")';
+	 	}else{
+	 		$query= 'SELECT purchasedate,price,tbl_invoice.total FROM tbl_expense inner join tbl_invoice on tbl_expense.project = tbl_invoice.project where (purchasedate between "'.$sdate.'" AND "'.$edate.'")';
+	 	}
+
+		
 
 		$data['allprice'] = $this->common_model->coreQueryObject($query);
 		//echo '<pre>';print_r($data['allprice']);die;
@@ -47,6 +60,8 @@ class IncomeExpenseReport extends CI_Controller {
 					$temp[$price->purchasedate]['income']=$string1;
 			}
 		}
+		$whereArr = array('is_deleted' => 0);
+		$data['allProjectData'] = $this->common_model->getData('tbl_project_info',$whereArr);
 		$data['finalTempArr']=	$temp;
 		$data['sdate']=$sdate;
 		$data['edate']=$edate;
@@ -61,11 +76,11 @@ class IncomeExpenseReport extends CI_Controller {
 		{
 			$sdate=$this->input->post('start_date');
 	    	$edate=$this->input->post('deadline');
-	    	/*$project=$this->input->post('projectData');*/
+	    	$project=$this->input->post('projectData');
 	    
 	    	$this->session->set_userdata('sdate',$sdate);
 	    	$this->session->set_userdata('edate',$edate);
-	    	/*$this->session->set_userdata('project',$project);*/
+	    	$this->session->set_userdata('project',$project);
 	    
 	    	redirect('IncomeExpenseReport/index');
 

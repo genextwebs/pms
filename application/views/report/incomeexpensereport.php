@@ -27,7 +27,19 @@
 					</div>
 				</div>
 			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="control-label">Select Project</label>
+					<select id="projectData" class="custom-select" name="projectData">
+						<option value="">--Select--</option>
+							<?php foreach($allProjectData as $project){ ?>
+								<option value="<?php echo $project->id; ?>"><?php echo $project->projectname; ?></option>
+							<?php } ?>
+					</select> 
+				</div>
+			</div>
 		</div>
+
 		<div class="row">
 			<div class="col-md-4">
 	            <div class="form-group m-t-10">
