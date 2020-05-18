@@ -13,7 +13,7 @@
 </nav>
 
 <div class="content-in">
-	<form id="financereport" class="aj-form--" name="financereport" method="post" action="<?php echo base_url().'FinanceReport/getPostData';?>">
+	
 	<div class="row">
 		<div class="col-md-4">
 			<div class="form-group">
@@ -101,7 +101,7 @@
 		</table>
 	</div>
 	</div>
-</form>
+
 <?php
 	    $str='';$str1='';
 		foreach($finalTempArr as $key=>$value){

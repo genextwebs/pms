@@ -97,7 +97,8 @@ class FinanceReport extends CI_Controller {
 	
 	
 
-	public function getPostData(){
+	/*public function getPostData(){
+		//echo "<PRE>";print_r($_POST);die;
 		if(!empty($_POST))
 		{
 			$sdate=$this->input->post('start_date');
@@ -111,7 +112,7 @@ class FinanceReport extends CI_Controller {
 	    	redirect('FinanceReport/index');
 
 		}
-	} 
+	} */
 	function createDateRangeArray($strDateFrom,$strDateTo)
 	{
 	    $aryRange=array();
@@ -205,10 +206,14 @@ class FinanceReport extends CI_Controller {
 			}
 			/*$startdate=!empty($_POST['start_date']) ? $_POST['start_date'] : '';
 			$enddate=!empty($_POST['deadline']) ? $_POST['deadline'] : '';*/
-			echo"<PRE>";print_r($_POST);die;
+			//echo"<PRE>";print_r($_POST);die;
 			$project=!empty($_POST['project']) ? $_POST['project'] : '';
 			$client=!empty($_POST['client']) ? $_POST['client'] : '';
-			echo $project;die;
+			$this->session->set_userdata('sdate',$startdate);
+	    	$this->session->set_userdata('edate',$enddate);
+	    	$this->session->set_userdata('project',$project);
+	    	$this->session->set_userdata('client',$client);
+			//echo $project;die;
 			$Where='';
 			//echo $startdate.''.$enddate;die;
 			if(!empty($startdate)){						
@@ -229,7 +234,7 @@ class FinanceReport extends CI_Controller {
 		}
 		
 		$query = "SELECT tbl_invoice.*,projectname FROM `tbl_invoice` inner join tbl_project_info on tbl_invoice.project= tbl_project_info.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
-		echo $query;die;
+		//echo $query;die;
 		$FinanceArr = $this->common_model->coreQueryObject($query);
 		$query = "SELECT tbl_invoice.*,projectname FROM `tbl_invoice` inner join tbl_project_info on tbl_invoice.project= tbl_project_info.id".$sWhere;
 		$FinanceFilterArr = $this->common_model->coreQueryObject($query);
