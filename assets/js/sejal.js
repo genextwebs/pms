@@ -1692,7 +1692,6 @@ $("#save_tchannel").click(function(event) {
 //for timelog calculate hours function
 function calculateHours(){
 		var today = new Date();
-
 	  	$('#d1').val(today.getFullYear() + "-" + ('0' + (today.getMonth() + 1)).slice(-2) + "-" + ('0' + (today.getDate() + 1)).slice(-2));
 	 	$('#d2').val($('#d1').val());
 	 	$('#t1').val('00:00');
