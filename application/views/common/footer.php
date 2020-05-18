@@ -131,6 +131,7 @@
     <script type="text/javascript">
     function graphDataAppend(str,str1)
     {
+      alert(str1);
     Highcharts.chart('container', {
         chart: {
             type: 'column'
@@ -151,7 +152,7 @@
         },
         series: [{
             name: 'Income',
-            data:[eval(str1)]
+            data:[10,20]
         },]
     });
 }

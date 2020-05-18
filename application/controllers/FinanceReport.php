@@ -64,6 +64,7 @@ class FinanceReport extends CI_Controller {
 	 			return $month->month;
 	 		}
 	public function getPostData($post){
+		//print_r($post);die;
 		if(!empty($post)){
 			/*$sdate=$post['start_date'];
 	    	$edate=$post['deadline'];
@@ -93,7 +94,8 @@ class FinanceReport extends CI_Controller {
 	 		}else{
 	 			$query = 'SELECT * from tbl_invoice where 1 AND (invoicedate between "'.$startdate.'" AND "'.$enddate.'")';
 	 		}*/
-	 		$query = "SELECT total , SUM(total) as total , invoicedate, Month(invoicedate) as month from tbl_invoice group by Month(invoicedate)";
+	 		$query = "SELECT total , SUM(total) as total , invoicedate, Month(invoicedate) as month , status from tbl_invoice where status = 1 
+	 		group by Month(invoicedate) ";
 	 		$data['getAmount'] = $this->common_model->coreQueryObject($query);
 
 	 		//echo $query;die;
@@ -125,12 +127,16 @@ class FinanceReport extends CI_Controller {
 				}*/
 			}
 			//echo "<PRE>";print_r($temp);die;
-			$str='';
+			$str=array();
 			$str1='';
 			foreach($temp as $key=>$value){
-				$str.= '"'.$key.'"'.',';
-				$str1.= $value.',';
+				$str[] = $key;
+				//$str.= $key.',';
+				$str1.= (int) $value.',';
 			}
+			//print_r($str);die;
+			$str = "'" . implode ( "', '", $str ) . "'";
+			//echo $str;die;
 	    	return rtrim($str,",")."#$#".rtrim($str1,",");
 		}
 	}
@@ -219,14 +225,14 @@ class FinanceReport extends CI_Controller {
 			}
 			if(!empty(trim($_POST['start_date']))){
 				$startdate=!empty($_POST['start_date']) ? $_POST['start_date'] : '';
-			}else{
+			}/*else{
 				$startdate=date('Y-m-d',strtotime('-1 month'));
-			}
+			}*/
 			if(!empty(trim($_POST['deadline']))){ 
 				$enddate=!empty($_POST['deadline']) ? $_POST['deadline'] : '';
-			}else{
+			}/*else{
 				$enddate=date('Y-m-d');
-			}
+			}*/
 			/*$startdate=!empty($_POST['start_date']) ? $_POST['start_date'] : '';
 			$enddate=!empty($_POST['deadline']) ? $_POST['deadline'] : '';*/
 			$project=!empty($_POST['project']) ? $_POST['project'] : '';
@@ -245,16 +251,18 @@ class FinanceReport extends CI_Controller {
 				$sWhere.=' AND tbl_invoice.clientname='.$client;
 			}
 			
-				$sWhere = " WHERE tbl_invoice.status=1 ".$sWhere;
+			$sWhere = " WHERE tbl_invoice.status=1 ".$sWhere;
 			
 		}
 		
 		$query = "SELECT tbl_invoice.*,projectname FROM `tbl_invoice` inner join tbl_project_info on tbl_invoice.project= tbl_project_info.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+		//echo $query;die;
 		$FinanceArr = $this->common_model->coreQueryObject($query);
 		$query = "SELECT tbl_invoice.*,projectname FROM `tbl_invoice` inner join tbl_project_info on tbl_invoice.project= tbl_project_info.id".$sWhere;
 		$FinanceFilterArr = $this->common_model->coreQueryObject($query);
 		$iFilteredTotal = count($FinanceFilterArr);
 		$FinanceAllArr = $this->common_model->getData('tbl_invoice');
+		//print_r($FinanceAllArr);die;
 		$iTotal = count($FinanceAllArr);
 		
 		/** Output */
@@ -280,6 +288,7 @@ class FinanceReport extends CI_Controller {
 			);
 				$i++;
 			}
+			//print_r($datarow);die;
 			$dataGraph = $this->getPostData($_POST);
 			//print_r($dataGraph);die;  
 			$output = array

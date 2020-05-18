@@ -80,6 +80,10 @@
 		</div>
 	<?php } ?>
  
+	
+
+
+	<div id="container" style="height: 400px"></div>
 	<div class="table-responsive">
 		<table class="table table-bordered table-hover" id="finanacereport">
 			<thead>
@@ -95,9 +99,6 @@
 			</thead>
 		</table>
 	</div>
-
-
-	<div id="container" style="height: 400px"></div>
 	</div>
 
 

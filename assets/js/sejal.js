@@ -658,6 +658,7 @@ jQuery(document).ready(function() {
 	                	var splitArr = getGraph.split('#$#');
 	                	console.log(splitArr);
 	                	graphDataAppend(splitArr[0],splitArr[1]);
+	                	alert(splitArr[0]);
 	                	var oTable = $('#finanacereport').dataTable();
 	                	var oLanguage = oTable.fnSettings().oLanguage;
 	                	if((json.estimateCount == true) && (json.iTotalDisplayRecords == json.limitCountQuery)){
