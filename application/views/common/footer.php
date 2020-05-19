@@ -131,8 +131,8 @@
     function graphDataAppend(str,str1)
     {
       //alert(str1);
-      var str2 = str.replace(/,/g, "");
-      alert(str);
+      //var str2 = str.replace(",", "\",\"");
+     //var  str3 = str1.replace(",", "\",\"");
     Highcharts.chart('container', {
         chart: {
             type: 'column'
@@ -142,7 +142,7 @@
         },
       
         xAxis: {
-            categories: [str2],
+            categories: [str],
             crosshair: true
         },
         yAxis: {
@@ -159,7 +159,7 @@
 }
 </script>
 
-    </script>
+    
     
 </body>
 </html>
