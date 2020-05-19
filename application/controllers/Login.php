@@ -46,7 +46,10 @@ class Login extends CI_Controller
 
 				}
 				else{
-					$this->session->set_flashdata('message', '<div id="message">Enter valid Email Address or Password.</div>');
+					$this->session->set_flashdata('failmsg', '<div id="message">Enter Valid Email Address and Password.</div>');
+					$this->session->set_flashdata("sessData",$_POST);
+
+
 					redirect('login');
 				}
 			}

@@ -18,9 +18,26 @@
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/sidebar.css">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/style.css">
 
+<script>
+	
+
+setTimeout(function(){
+   jQuery('.alert-success').hide();
+}, 20000);
+
+setTimeout(function(){
+   jQuery('.alert alert-danger').hide();
+}, 10);
+
+</script>
 </head>
 <body>
-
+<?php
+$sessData = "";
+if($this->session->flashdata('sessData')){
+    $sessData = $this->session->flashdata('sessData');
+}
+?>
 	<div id="login-wrapp" class="login-block">
 		<div class="login-wrapp">
 			<a class="logo" href="javascript:void(0);" style="padding: 25px 0px;">
@@ -57,13 +74,15 @@
 						<div class="col-md-12">
 							<div class="form-group">
 								<label style="font-size: 18px;"><b>Email</b><span class="astric">*</span></label>
-								<input type="email" id="email" class="form-control" name="email" placeholder="Email">
+								<input type="email" id="email" class="form-control" name="email" placeholder="Email" value="<?php
+                                             if(!empty($sessData)) { echo $sessData['email']; }else { echo ''; } ?>">
 							</div>
 						</div>
 						<div class="col-md-12">
 							<div class="form-group">
 								<label style="font-size: 18px;"><b>Password</b><span class="astric">*</span></label>
-								<input type="password" name="password" id="password" class="form-control" placeholder="password">
+								<input type="password" name="password" id="password" class="form-control" placeholder="password" value="<?php
+                                             if(!empty($sessData)) { echo $sessData['password']; }else { echo ''; } ?>">
 							</div>
 						</div>
 						<div class="col-md-12">
@@ -92,7 +111,9 @@
     <script src="<?php echo base_url();?>assets/js/bootstrap.js"></script>
     <!-- sidebar -->
 </body>
+
 </html>
+
 
 
 

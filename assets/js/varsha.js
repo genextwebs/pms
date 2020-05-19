@@ -1323,3 +1323,4 @@ function passwordAction(flag){
     jQuery('.pass-change').attr('type','password');
   }
 }
+
