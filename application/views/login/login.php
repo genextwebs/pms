@@ -18,18 +18,6 @@
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/sidebar.css">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/css/style.css">
 
-<script>
-	
-
-setTimeout(function(){
-   jQuery('.alert-success').hide();
-}, 20000);
-
-setTimeout(function(){
-   jQuery('.alert alert-danger').hide();
-}, 10);
-
-</script>
 </head>
 <body>
 <?php
@@ -109,6 +97,16 @@ if($this->session->flashdata('sessData')){
     <script src="<?php echo base_url();?>assets/js/popper.min.js"></script>
 	
     <script src="<?php echo base_url();?>assets/js/bootstrap.js"></script>
+
+	<script>
+	setTimeout(function(){
+	   jQuery('.alert-success').hide();
+	},5000);
+
+	setTimeout(function(){
+	   jQuery('.alert-danger').hide();
+	},5000);
+	</script>
     <!-- sidebar -->
 </body>
 
