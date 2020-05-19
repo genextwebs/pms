@@ -1012,9 +1012,9 @@ class Project extends CI_Controller {
 		            }	
 	            }
 	            
-	            if($clientName == 'all'){
+	            if($clientName == 'all' || empty($clientname)){
 	            }
-	            else{
+	            else {
 	            	$sWhere.=' AND  clientid='.$clientName;
 	            }
 	            if($status == 'all'){
@@ -1060,7 +1060,7 @@ class Project extends CI_Controller {
 		else if($this->user_type == 2){
 
 			$query = "SELECT tbl_task.* , tbl_employee.employeename,tbl_clients.clientname,tbl_project_info.clientid,tbl_project_info.projectname from tbl_task inner JOIN tbl_employee on tbl_task.assignedto = tbl_employee.id inner join tbl_project_info on tbl_task.projectid = tbl_project_info.id inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
-
+			//echo $query;die;
 			$taskArr = $this->common_model->coreQueryObject($query);
 
 			$filterQuery = "SELECT tbl_task.* , tbl_employee.employeename,tbl_clients.clientname,tbl_project_info.clientid,tbl_project_info.projectname from tbl_task inner JOIN tbl_employee on tbl_task.assignedto = tbl_employee.id inner join tbl_project_info on tbl_task.projectid = tbl_project_info.id inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id ".$sWhere;
@@ -1115,7 +1115,7 @@ class Project extends CI_Controller {
 					$id = $i,
 	                $row->title,
 	                $row->projectname,
-	                $row->employeename,
+	                $row->clientname,
 					$row->duedate,
 					$str,
 					$actionStr

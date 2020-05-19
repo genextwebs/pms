@@ -173,7 +173,7 @@ if($this->session->userdata('login')){
                <i class="ti-pie-chart"></i>
                <span> Reports </span>
             </a>
-            <ul class="collapse list-unstyled" id="reports" <?php if($controller == 'reports'){ echo 'show'; } ?>">
+            <ul class="collapse list-unstyled" id="reports" <?php if($controller == 'reports'){ echo 'show'; } ?>>
                 <li>
                     <a href="<?php echo base_url().'taskreport/index'?>">Task Report</a>
                 </li>

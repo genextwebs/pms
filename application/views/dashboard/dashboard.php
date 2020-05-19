@@ -16,7 +16,7 @@
 <div class="content-in">  
     <div class="row db-stats">
         <div class="col-md-3 col-sm-6">
-            <a href="#">
+            <a href="<?php echo base_url().'clients'?>">
                 <div class="stats-box">
                     <div class="row">
                         <div class="col-sm-3">
@@ -33,7 +33,7 @@
             </a>
         </div>
         <div class="col-md-3 col-sm-6">
-            <a href="#">
+            <a href="<?php echo base_url().'employee'?>">
                 <div class="stats-box">
                     <div class="row">
                         <div class="col-sm-3">
@@ -50,7 +50,7 @@
             </a>
         </div>
         <div class="col-md-3 col-sm-6">
-            <a href="#">
+            <a href="<?php echo base_url().'project'?>">
                 <div class="stats-box">
                     <div class="row">
                         <div class="col-sm-3">
@@ -67,7 +67,7 @@
             </a>
         </div>
         <div class="col-md-3 col-sm-6">
-            <a href="#">
+            <a href="<?php echo base_url().'finance/invoice'?>">
                 <div class="stats-box">
                     <div class="row">
                         <div class="col-sm-3">
@@ -77,7 +77,11 @@
                         </div>
                         <div class="col-sm-9 text-right">
                             <span class="widget-title"> Unpaid Invoices</span><br>
-                            <span class="counter">131</span>
+                            <?php
+                            $where = array('status' => 0);
+                            $unpaidinvoice = $this->common_model->getData('tbl_invoice',$where);
+                            ?>
+                            <span class="counter"><?php echo count($unpaidinvoice); ?></span>
                         </div>
                     </div>
                 </div>
@@ -102,7 +106,7 @@
             </a>
         </div>
         <div class="col-md-3 col-sm-6">
-            <a href="#">
+            <a href="<?php echo base_url().'task'?>">
                 <div class="stats-box">
                     <div class="row">
                         <div class="col-sm-3">
@@ -119,7 +123,7 @@
             </a>
         </div>
         <div class="col-md-3 col-sm-6">
-            <a href="#">
+            <a href="<?php echo base_url().'task'?>">
                 <div class="stats-box">
                     <div class="row">
                         <div class="col-sm-3">
@@ -136,7 +140,7 @@
             </a>
         </div>
         <div class="col-md-3 col-sm-6">
-            <a href="#">
+            <a href="<?php echo base_url().'Attendance'?>">
                 <div class="stats-box">
                     <div class="row">
                         <div class="col-sm-3">
@@ -158,7 +162,7 @@
     	<div class="col-md-6">
     		<div class="row">
     			<div class="col-md-6 col-sm-12 db-stats"> 
-                	<a href="#">
+                	<a href="<?php echo base_url().'ticket' ?>">
                         <div class="stats-box">
                             <div class="row">
                                 <div class="col-sm-3">
@@ -175,7 +179,7 @@
                     </a>
                 </div>
                 <div class="col-md-6 col-sm-12 db-stats"> 
-                	<a href="#">
+                	<a href="<?php echo base_url().'ticket'?>">
                         <div class="stats-box">
                             <div class="row">
                                 <div class="col-sm-3">
