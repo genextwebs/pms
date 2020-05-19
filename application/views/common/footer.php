@@ -126,11 +126,12 @@
 });
 
          }
-        
-    </script>
-    <script type="text/javascript">
+       </script>
+        <script type="text/javascript">
     function graphDataAppend(str,str1)
     {
+      //alert(str1);
+      var str2 = str.replace(/,/g, "");
       alert(str);
     Highcharts.chart('container', {
         chart: {
@@ -141,7 +142,7 @@
         },
       
         xAxis: {
-            categories: [str],
+            categories: [str2],
             crosshair: true
         },
         yAxis: {
@@ -152,11 +153,14 @@
         },
         series: [{
             name: 'Income',
-            data:[10,20]
+            data:[eval(str1)]
         },]
     });
 }
 </script>
+
+    </script>
+    
 </body>
 </html>
 
