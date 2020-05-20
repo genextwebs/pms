@@ -68,8 +68,8 @@ class Dashboard extends CI_Controller
 		$whereArrTr = array('status'=>3);
 		$data['ticketResolved'] = $this->common_model->getData('tbl_ticket',$whereArrTr);
 
-		
-		$data['ticketNew'] = $this->common_model->getData('tbl_ticket');
+		$query = "select * from tbl_ticket where status = 1 OR status = 2";
+		$data['ticketNew'] = $this->common_model->coreQueryObject($query);
 
 		$data['totalticketResolved'] = count($data['ticketResolved']);
 

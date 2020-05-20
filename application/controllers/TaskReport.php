@@ -21,11 +21,7 @@ class TaskReport extends CI_Controller {
 		$data['allEmpData'] = $this->common_model->getData('tbl_employee',$whereArr);
 		$data['allProjectData'] = $this->common_model->getData('tbl_project_info',$whereArr);
 		$data['Chart']=$this->common_model->getData('tbl_task');
-		//$str= '';
-		foreach ($data['Chart'] as $pie) {
-			$data1['status'] =  $pie->status;
-		}	
-		$data['chart_data'] = json_encode($data1);
+		
 		$this->load->view('common/header');
 		$this->load->view('report/taskreport',$data);
 		$this->load->view('common/footer');
@@ -98,14 +94,14 @@ class TaskReport extends CI_Controller {
 			
 			if(!empty(trim($_POST['startdate']))){
 				$startdate=!empty($_POST['startdate']) ? $_POST['startdate'] : '';
-			}/*else{
+			}else{
 				$startdate=date('Y-m-d',strtotime('-1 month'));
-			}*/
+			}
 			if(!empty(trim($_POST['enddate']))){ 
 				$enddate=!empty($_POST['enddate']) ? $_POST['enddate'] : '';
-			}/*else{
+			}else{
 				$enddate=date('Y-m-d');
-			}*/
+			}
 			/*
 			$startdate=!empty($_POST['startdate']) ? $_POST['startdate'] : '';
 			$enddate=!empty($_POST['enddate']) ? $_POST['enddate'] : '';*/
@@ -183,6 +179,7 @@ class TaskReport extends CI_Controller {
 			$i++;
 		}
 	$ChartQuery = "select * from tbl_task ".$sWhere;
+	//echo $ChartQuery;die;
 	$Chart = $this->common_model->coreQueryObject($ChartQuery);
 	$incpm = $todo = $doing = $complete = 0;
 		foreach ($Chart as $pie) {

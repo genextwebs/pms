@@ -39,7 +39,7 @@ class TimeLogReport extends CI_Controller {
 	 	}else{
 	 		$query = 'SELECT totalhours,timelogstartdate,timelogprojectid from tbl_timelog where (timelogstartdate between "'.$sdate.'" AND "'.$edate.'")';
 	 	}
-
+	 	//echo $query;die;
 		$data['getHours'] = $this->common_model->coreQueryObject($query);
 		$temp = array();
 		$stri='';

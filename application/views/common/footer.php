@@ -130,7 +130,7 @@
         <script type="text/javascript">
     function graphDataAppend(str,str1)
     {
-      //alert(str1);
+      alert(str);
       //var str2 = str.replace(",", "\",\"");
      //var  str3 = str1.replace(",", "\",\"");
     Highcharts.chart('container', {

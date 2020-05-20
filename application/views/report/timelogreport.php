@@ -55,6 +55,7 @@
 			$str.= '"'.$key.'"'.',';
 			$str1.= $value.',';
 		}
+		//echo $str;die;
 	?>
 	<script type="text/javascript">
 		Highcharts.chart('container', {
