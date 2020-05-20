@@ -285,8 +285,6 @@ class Timelog extends CI_Controller {
 							 <label for="date" class="control-label"> Start Date</label>
 						   <input type="date" name="d1" id="d1" value="'.$startdate.'"  class="form-control" onchange="changeDate();"/></div>
 					</div>';
-
-
 					$enddate='';
 						if(	!empty($timelog[0]->timelogenddate)){
 							$enddate = $timelog[0]->timelogenddate;
