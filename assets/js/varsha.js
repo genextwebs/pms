@@ -1254,6 +1254,7 @@ $("#pay").click(function(event) {
 
  // var SITEURL = "<?php echo base_url(); ?>";
   $('#pay').on('click', function(e){
+
   	var project = $('select[name="project"]').val();
   	var paidon = $('input[name="paidon"]').val();
   	var currency = $('select[name="currency"]').val();
@@ -1295,9 +1296,12 @@ $("#pay").click(function(event) {
     }
     
   };
+  if(project != '' && paidon != '' && currency != '' && amount != ''){
+
   var rzp1 = new Razorpay(options);
   rzp1.open();
   e.preventDefault();
+}
   });
 
 //
