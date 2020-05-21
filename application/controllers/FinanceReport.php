@@ -54,10 +54,10 @@ class FinanceReport extends CI_Controller {
 			//$data['dateRange']= $this->createDateRangeArray($startdate,$enddate);
 			$sWhere= '';
 			if(!empty($startdate)){						
-				$sWhere.=' AND invoicedate>="'.$startdate.'"';
+				$sWhere.=' AND invoicedate>="'.trim($startdate).'"';
 			}
 			if(!empty($enddate)){						
-				$sWhere.=' AND duedate<="'.$enddate.'"';
+				$sWhere.=' AND duedate<="'.trim($enddate).'"';
 			}
 			if(!empty($project)){						
 				$sWhere.=' AND tbl_invoice.project='.$project;
@@ -67,7 +67,7 @@ class FinanceReport extends CI_Controller {
 			}
 			
 			$sWhere = " WHERE tbl_invoice.status=1 ".$sWhere;
-			$query = "SELECT total , SUM(total) as total ,project, client duedate, invoicedate, Month(invoicedate) as month , status from tbl_invoice".$sWhere." 
+			$query = "SELECT total , SUM(total) as total ,project, client,duedate, invoicedate, Month(invoicedate) as month , status from tbl_invoice".$sWhere." 
 	 		group by Month(invoicedate) ";
 	 		//echo $query;die;
 	 		$data['getAmount'] = $this->common_model->coreQueryObject($query);
@@ -222,10 +222,10 @@ class FinanceReport extends CI_Controller {
 			$client=!empty($_POST['clientData']) ? $_POST['clientData'] : '';
 			//echo $startdate.''.$enddate;die;
 			if(!empty($startdate)){						
-				$sWhere.=' AND invoicedate>="'.$startdate.'"';
+				$sWhere.=' AND invoicedate>="'.trim($startdate).'"';
 			}
 			if(!empty($enddate)){						
-				$sWhere.=' AND duedate<="'.$enddate.'"';
+				$sWhere.=' AND duedate<="'.trim($enddate).'"';
 			}
 			if(!empty($project)){						
 				$sWhere.=' AND tbl_invoice.project='.$project;
@@ -239,7 +239,7 @@ class FinanceReport extends CI_Controller {
 		}
 		
 		$query = "SELECT tbl_invoice.*,projectname FROM `tbl_invoice` inner join tbl_project_info on tbl_invoice.project= tbl_project_info.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
-		//echo $query;die;
+		
 		$FinanceArr = $this->common_model->coreQueryObject($query);
 		$query = "SELECT tbl_invoice.*,projectname FROM `tbl_invoice` inner join tbl_project_info on tbl_invoice.project= tbl_project_info.id".$sWhere;
 		$FinanceFilterArr = $this->common_model->coreQueryObject($query);
