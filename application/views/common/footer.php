@@ -130,7 +130,7 @@
         <script type="text/javascript">
     function graphDataAppend(str,str1)
     {
-    Highcharts.chart('container', {
+    Highcharts.chart('finance_container', {
         chart: {
             type: 'column'
         },
@@ -155,7 +155,34 @@
     });
 }
 </script>
-
+<script type="text/javascript">
+  function graphTimelogData(month,total){
+    Highcharts.chart('timelog_container', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'TimeLog Report'
+        },
+      
+        xAxis: {
+            categories: month,
+            crosshair: true
+        },
+        yAxis: {
+            min: 0,
+            title: {
+            //    text: 'Rainfall (mm)'
+            }
+        },
+        series: [{
+            name: 'HourseLogged',
+            data: total
+            //data:[50.0,47.0,0.0]
+        },]
+    });
+  }
+</script>
     
     
 </body>

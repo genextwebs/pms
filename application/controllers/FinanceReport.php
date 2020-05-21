@@ -31,20 +31,12 @@ class FinanceReport extends CI_Controller {
 		if(!empty($post)){
 			$sdate=$post['start_date'];
 	    	$edate=$post['deadline'];
-	    	$project=
-	    	$post['project'];
+	    	$project=$post['project'];
 	    	$client=$post['clientData'];
-	    	//echo $client;die;
-	    	$this->session->set_userdata('sdate',$sdate);
-	    	$this->session->set_userdata('edate',$edate);
-	    	$this->session->set_userdata('project',$project);
-	    	$this->session->set_userdata('client',$client);
-	    	//redirect('FinanceReport/index');
-	    	$project = $this->session->userdata('project');
-		    $client = $this->session->userdata('client');
+	    	
 			if (!empty($sdate) AND !empty($edate)){
-				$startdate=$this->session->userdata('sdate');
-			    $enddate=$this->session->userdata('edate');
+				$startdate=$post['start_date'];
+			    $enddate=$post['deadline'];
 			}
 			else{
 			
