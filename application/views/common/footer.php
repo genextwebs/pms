@@ -130,9 +130,6 @@
         <script type="text/javascript">
     function graphDataAppend(str,str1)
     {
-      alert(str);
-      //var str2 = str.replace(",", "\",\"");
-     //var  str3 = str1.replace(",", "\",\"");
     Highcharts.chart('container', {
         chart: {
             type: 'column'
@@ -142,7 +139,7 @@
         },
       
         xAxis: {
-            categories: [str],
+            categories: str,
             crosshair: true
         },
         yAxis: {
@@ -153,7 +150,7 @@
         },
         series: [{
             name: 'Income',
-            data:[eval(str1)]
+            data:str1
         },]
     });
 }

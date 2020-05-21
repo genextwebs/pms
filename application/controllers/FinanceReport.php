@@ -146,19 +146,12 @@ class FinanceReport extends CI_Controller {
 			}
 
 			//echo "<PRE>";print_r($temp);die;
-			$str='';
-			$str1='';
+			$str=array();
 			foreach($temp as $key=>$value){
-				//$str[] = $key;
-				//$str.= $key.',';
-				//$str1.= (int) $value.',';
-				$str.= '"'.$key.'"'.',';
-				$str1.= $value.',';
+				$str['xdata'][] = $key;
+				$str['ydata'][]= (int)$value;
 			}
-			//print_r($str);die;
-			//$str = "'" . implode ( "', '", $str ) . "'";
-			//echo $str;die;
-	    	return rtrim($str,",")."#$#".rtrim($str1,",");
+			return $str;
 		}
 	}
 

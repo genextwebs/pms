@@ -657,9 +657,9 @@ jQuery(document).ready(function() {
 	                "success": function(json) {
 	                	var getGraph = json.graphData;
 	                	console.log(getGraph);
-	                	var splitArr = getGraph.split('#$#');
-	                	//console.log(splitArr);
-	                	graphDataAppend(splitArr[0],splitArr[1]);
+	                	var splitArr = getGraph.xdata;
+	                	//console.log(getGraph.xdata);
+	                	graphDataAppend(getGraph.xdata,getGraph.ydata);
 	                	//alert(splitArr[0]);
 	                	var oTable = $('#finanacereport').dataTable();
 	                	var oLanguage = oTable.fnSettings().oLanguage;
