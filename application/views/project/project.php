@@ -316,7 +316,9 @@
 							<tr role="row">
 								<th>Id</th>
 								<th>Project Name</th>
+								<?php if($this->user_type == 0 || $this->user_type == 2) { ?>
 								<th>Project Members</th>
+								<?php } ?>
 								<th>Deadline</th>
 								<?php if($this->user_type == 0 || $this->user_type == 2) { ?>	
 								<th>Client</th>

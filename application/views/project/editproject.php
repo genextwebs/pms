@@ -193,14 +193,14 @@ if($this->session->flashdata('sessData')){
 											}
 										}
 									?>
-									<div class="col-md-4">
+									<!-- <div class="col-md-4">
 										<div class="form-group">
 											<div class="custom-control custom-checkbox my-1 mr-sm-2">
 												<input type="checkbox" class="custom-control-input" name="manual_timelog" id="manual_timelog" <?php echo $checked; ?>>
 												<label class="custom-control-label" for="manual_timelog" style="padding-top: 2px;">Allow manual time logs?</label>
 											</div>
 										</div>
-									</div>		
+									</div> -->		
 								</div>
 								<div class="row">
 									<div class="col-md-12">
@@ -257,7 +257,7 @@ if($this->session->flashdata('sessData')){
                     				</div>
                     			</div>
                     			
-									<?php
+									<!-- <?php
 										if(!empty($sessData)){
 											if(!empty($sessData['client-view-tasks'])){
 											if($sessData['client-view-tasks'] == 'on'){
@@ -278,17 +278,17 @@ if($this->session->flashdata('sessData')){
 												$checked = 'unchecked';
 											}
 										}
-										?>
-								<div class="row" style="">
-									<div class="col-md-4">
+										?> -->
+								<!--<div class="row" style="">
+									 <div class="col-md-4">
 										<div class="form-group">
 											<div class="custom-control custom-checkbox my-1 mr-sm-2">                                                                      
 												<input type="checkbox" class="custom-control-input" name="client-view-tasks" id="client-view-tasks" onclick="viewtask()" <?php echo $checked; ?> >
 												<label class="custom-control-label" for="client-view-tasks" style="padding-top: 2px;">Client can view tasks of this project</label>
 											</div>
 										</div>
-									</div>	
-									<div class="col-md-8">
+									</div> -->	
+									<!-- <div class="col-md-8">
 										<?php
 										if(!empty($sessData)){
 											if(!empty($sessData['client-view-tasks'])){
@@ -326,14 +326,14 @@ if($this->session->flashdata('sessData')){
 											}
 										}
 										?>
-										<div class="form-group"  id="viewnotification" style="<?php echo $style;?>">
+										 <div class="form-group"  id="viewnotification" style="<?php echo $style;?>">
 											<div class="custom-control custom-checkbox my-1 mr-sm-2">
 												<input type="checkbox" class="custom-control-input" name="tasks-notification" id="tasks-notification" value="1" <?php echo $checked; ?> >
 												<label class="custom-control-label" for="tasks-notification" style="padding-top: 2px;">Send task notification to client?</label>
 											</div>
-										</div>
-									</div>	
-								</div>
+										</div> 
+									</div>
+								</div> -->	
 								<h3 class="box-title mb-3 mt-2">Budget Info</h3>
 								<div class="row">
 									<div class="col-md-4">

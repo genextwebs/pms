@@ -206,6 +206,7 @@ class Project extends CI_Controller {
 			$query1 = "SELECT tbl_project_info.*,tbl_clients.clientname as clientname from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id".$sWhere;
 			$ProjectAllArr = $this->common_model->coreQueryObject($query1);
 			$iTotal = count($ProjectAllArr);
+			
 		}
 		else if($this->user_type == 2){
 
@@ -324,7 +325,7 @@ class Project extends CI_Controller {
 				$datarow[] = array(
 				$id = $i,
 				$row->projectname.'<br/>'.$string.'<br/>'.$showStatus,
-				$addMember,
+				//$addMember,
 				$row->deadline,
 				$actionstring
 				);

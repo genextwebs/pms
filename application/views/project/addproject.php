@@ -108,7 +108,7 @@
 											</div>
 										</div>
 									</div>
-									<div class="col-md-4">
+									<!-- <div class="col-md-4">
 										<div class="form-group">
 											<div class="custom-control custom-checkbox my-1 mr-sm-2">
 												<input type="checkbox" class="custom-control-input" name="manual_timelog" id="manual_timelog" <?php 
@@ -117,7 +117,7 @@
 												<label class="custom-control-label" for="manual_timelog" style="padding-top: 2px;" >Allow manual time logs?</label>
 											</div>
 										</div>
-									</div>
+									</div> -->
 									<div class="col-md-4">
 										<div class="form-group">
 											<div class="custom-control custom-checkbox my-1 mr-sm-2">
@@ -172,15 +172,15 @@
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-md-4">
+									<!-- <div class="col-md-4">
 										<div class="form-group">
 											<div class="custom-control custom-checkbox my-1 mr-sm-2">
 												<input type="checkbox" class="custom-control-input" name="client-view-tasks" id="client-view-tasks" onclick="viewtask()" <?php if(!empty($sessData['client-view-tasks'])){ echo "checked";}else{ }?>>
 												<label class="custom-control-label" for="client-view-tasks" style="padding-top: 2px;">Client can view tasks of this project</label>
 											</div>
 										</div>
-									</div>	
-									<div class="col-md-8">
+									</div> -->	
+									<!-- <div class="col-md-8">
 										<?php if(!empty($sessData['tasks-notification'])){ ?>
 											<div class="form-group"  id="viewnotification">
 												<div class="custom-control custom-checkbox my-1 mr-sm-2">
@@ -196,7 +196,7 @@
 												</div>
 											</div>
 										<?php } ?>						
-									</div>	
+									</div> -->	
 								</div>
 								<h3 class="box-title mb-3 mt-2">Budget Info</h3>
 								<div class="row">
