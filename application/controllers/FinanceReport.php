@@ -15,60 +15,24 @@ class FinanceReport extends CI_Controller {
 	}
 
 	public function index(){
-		/*$project = $this->session->userdata('project');
-		$client = $this->session->userdata('client');
-		if (!empty($s_date) AND !empty($e_date)){
-			$startdate=$this->session->userdata('sdate');
-		    $enddate=$this->session->userdata('edate');
-		}
-		else{
-		
-			$startdate=date('Y-m-d',strtotime('-1 month'));
-			$enddate=date('Y-m-d');
-		}
-		$data['dateRange']= $this->createDateRangeArray($startdate,$enddate);
-		if(!empty($project)){
-	 		$query = 'SELECT * from tbl_invoice where project='.$project.' AND (invoicedate between "'.$startdate.'" AND "'.$enddate.'") AND (clientname ='.$client.')';
-	 	}else{
-	 		$query = 'SELECT * from tbl_invoice where 1 AND (invoicedate between "'.$startdate.'" AND "'.$enddate.'")';
-	 	}*/
-	 	$query = "SELECT * from tbl_invoice";
-	 	$data['getAmount'] = $this->common_model->coreQueryObject($query);
-	 	$temp = array();
-		$stri='';
-		foreach($data['getAmount'] as $amount){
-    			$string = $amount->total;
-
-			if(array_key_exists($amount->invoicedate,$temp)){
-				$temp[$amount->invoicedate]=$string+$temp[$amount->invoicedate];
-			}
-			else{
-					$temp[$amount->invoicedate]=$string;
-			}
-		
-		}
-		//print_r($temp);die;
+		$startdate=date('Y-m-d',strtotime('-1 month'));
+		$enddate=date('Y-m-d');
 		$data['allProjectData'] = $this->common_model->getData('tbl_project_info');
 	    $data['allClients'] = $this->common_model->getData('tbl_clients');
-	   	//$data['sdate']=$startdate;
-		//$data['edate']=$enddate;
-		//$data['finalTempArr']=	$temp;
+	   	$data['sdate']=$startdate;
+		$data['edate']=$enddate;
 		$this->load->view('common/header');
 		$this->load->view('report/financereport',$data);
 		$this->load->view('common/footer');
 	}
 
-	public function Month($month){
-	 			$sql = "select Month(month) as month from tbl_invoice";
-	 			$month = $this->common_model->coreQueryObject($sql);
-	 			return $month->month;
-	 		}
 	public function getPostData($post){
 		//print_r($post);die;
 		if(!empty($post)){
 			$sdate=$post['start_date'];
 	    	$edate=$post['deadline'];
-	    	$project=$post['project'];
+	    	$project=
+	    	$post['project'];
 	    	$client=$post['clientData'];
 	    	//echo $client;die;
 	    	$this->session->set_userdata('sdate',$sdate);
@@ -88,15 +52,22 @@ class FinanceReport extends CI_Controller {
 				$enddate=date('Y-m-d');
 			}
 			//$data['dateRange']= $this->createDateRangeArray($startdate,$enddate);
-			$Where=$sWhere= '';
-		if($project != ''){
-			$sWhere.= 'AND project='.$project;
-		}
-		if($client != ''){
-			$sWhere.= 'AND client='.$client;
-		}
-		$Where =' where status = 1';
-		$query = "SELECT total , SUM(total) as total , invoicedate, Month(invoicedate) as month , status from tbl_invoice".$Where." 
+			$sWhere= '';
+			if(!empty($startdate)){						
+				$sWhere.=' AND invoicedate>="'.$startdate.'"';
+			}
+			if(!empty($enddate)){						
+				$sWhere.=' AND duedate<="'.$enddate.'"';
+			}
+			if(!empty($project)){						
+				$sWhere.=' AND tbl_invoice.project='.$project;
+			}
+			if(!empty($client)){						
+				$sWhere.=' AND tbl_invoice.client='.$client;
+			}
+			
+			$sWhere = " WHERE tbl_invoice.status=1 ".$sWhere;
+			$query = "SELECT total , SUM(total) as total ,project, client duedate, invoicedate, Month(invoicedate) as month , status from tbl_invoice".$sWhere." 
 	 		group by Month(invoicedate) ";
 	 		//echo $query;die;
 	 		$data['getAmount'] = $this->common_model->coreQueryObject($query);
@@ -156,7 +127,7 @@ class FinanceReport extends CI_Controller {
 	}
 
 
-	function createDateRangeArray($strDateFrom,$strDateTo)
+	/*function createDateRangeArray($strDateFrom,$strDateTo)
 	{
 	    $aryRange=array();
 	    $iDateFrom=mktime(1,0,0,substr($strDateFrom,5,2),  substr($strDateFrom,8,2),substr($strDateFrom,0,4));
@@ -173,7 +144,7 @@ class FinanceReport extends CI_Controller {
 	    }
 	    return $aryRange;
 	}
-
+*/
 	public function fianancereportlist(){
 		if(!empty($_POST)){
 			$_GET = $_POST;
@@ -239,16 +210,14 @@ class FinanceReport extends CI_Controller {
 			}
 			if(!empty(trim($_POST['start_date']))){
 				$startdate=!empty($_POST['start_date']) ? $_POST['start_date'] : '';
-			}/*else{
+			}else{
 				$startdate=date('Y-m-d',strtotime('-1 month'));
-			}*/
+			}
 			if(!empty(trim($_POST['deadline']))){ 
 				$enddate=!empty($_POST['deadline']) ? $_POST['deadline'] : '';
-			}/*else{
+			}else{
 				$enddate=date('Y-m-d');
-			}*/
-			/*$startdate=!empty($_POST['start_date']) ? $_POST['start_date'] : '';
-			$enddate=!empty($_POST['deadline']) ? $_POST['deadline'] : '';*/
+			}
 			$project=!empty($_POST['project']) ? $_POST['project'] : '';
 			$client=!empty($_POST['clientData']) ? $_POST['clientData'] : '';
 			//echo $startdate.''.$enddate;die;
