@@ -294,6 +294,12 @@ $('#btnapplyEmp').click(function(){
 	var oTable = $('#employee').DataTable();
 	oTable.draw();
 });
+$('#reset_filters').click(function(){ 
+			//button filter event click
+	var oTable = $('#employee').DataTable();
+	oTable.draw();
+});
+
 $('#filter-results').click(function(){ 
 			//button filter event click
 	var oTable = $('#tasks-table').DataTable();
