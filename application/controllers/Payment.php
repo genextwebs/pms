@@ -14,7 +14,11 @@ class Payment extends CI_Controller{
 	}
 
 	public function index(){
-		$whereArr = array('status'=>0);
+
+        $query = "select tbl_invoice.*,tbl_project_info.id,tbl_project_info.projectname from tbl_invoice INNER JOIN tbl_project_info on tbl_invoice.project = tbl_project_info.id where tbl_invoice.status=0 GROUP BY tbl_project_info.projectname";
+        $data['allProjectData'] = $this->common_model->coreQueryObject($query);
+      
+		/*$whereArr = array('status'=>0);
 		$project=$this->common_model->getData('tbl_invoice',$whereArr);
         $projectArr = array();
         //$srray = array();
@@ -26,11 +30,11 @@ class Payment extends CI_Controller{
         }
         //srrayecho"<PRE>";print_r($projectArr);
         $srray = array_unique($projectArr);
-        echo"<PRE>";print_r($srray);
+       );
 
         $data['allProjectData'] = $srray;
        // print_r($data['allProjectData']);
-       
+       */
 		$this->load->view('common/header');
 		$this->load->view('Payment/payment',$data);
 		$this->load->view('common/footer');
@@ -76,7 +80,7 @@ class Payment extends CI_Controller{
 
    public function assignAmount(){
     $AmountArr = array();
-        $whereArr = array('project'=>$_POST['project']);
+        $whereArr = array('project'=>$_POST['project'],'status'=>0);
         $amountData = $this->common_model->getData('tbl_invoice',$whereArr);
         $total = 0;
         for($i=0;$i<=count($amountData)-1;$i++){
