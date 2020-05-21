@@ -215,15 +215,27 @@ class Project extends CI_Controller {
 			$empid=$data['empData']['0']->id;
 			$WhereArr1=array('emp_id'=>$empid);
 			$data['projectData']=$this->common_model->getData('tbl_project_member',$WhereArr1);	
-			$pid=$data['projectData']['0']->project_id;
-			$query = "SELECT tbl_project_info.*,tbl_clients.clientname as clientname from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id where tbl_project_info.id=".$pid.$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
-			$projectArr = $this->common_model->coreQueryObject($query);
+			//print_r($data['projectData']);die;
+			$projectData=$projectallData= array();
+			for($i=0;$i<=count($data['projectData'])-1;$i++){
+				$pid=$data['projectData'][$i]->project_id;
+				$query = "SELECT tbl_project_info.*,tbl_clients.clientname as clientname from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id where tbl_project_info.id=".$pid.$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+				//echo $query;die;
+				$project = $this->common_model->coreQueryObject($query);
+				//$ProjectFilterArr = $this->common_model->coreQueryObject($query);
 
-			$ProjectFilterArr = $this->common_model->coreQueryObject($query);
-			$iFilteredTotal = count($ProjectFilterArr);
-			$whereArr = array('is_deleted'=>0);
+				array_push($projectData, $project[0]);
+
+				$whereArr = array('is_deleted'=>0);
 			$query1 ="SELECT tbl_project_info.*,tbl_clients.clientname as clientname from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id where tbl_project_info.id=".$pid.$sWhere;
-			$ProjectAllArr = $this->common_model->coreQueryObject($query1);
+				$projectArr = $this->common_model->coreQueryObject($query1);
+				array_push($projectallData, $projectArr[0]);
+			}
+			$projectArr = $projectData;
+			$ProjectFilterArr = $projectArr;
+			$iFilteredTotal = count($ProjectFilterArr);
+
+			$ProjectAllArr = $projectallData;
 			$iTotal = count($ProjectAllArr);
 
 		}
