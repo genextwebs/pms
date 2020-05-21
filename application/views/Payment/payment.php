@@ -53,28 +53,31 @@
 												<div class="col-md-6">
 													<div class="form-group">
 													<label class="control-label">Select Project<span class="astric">*</span></label>
+													<?php if($invoiceData[0]->project == ''){ ?>
 			                                            <select name="project" id="project" class="form-control">
 															<option value="">select</option>
 																<?php
-																	foreach($project as $row)
+																	
+																	foreach($allProjectData as $row)
 																	{
-																		$str='';
-																		if($row->id==$invoiceData[0]->project)
-																		{
-																			$str="selected";
 																		
-																		}
-																		echo '<option value="'.$row->id.'"'.$str.'>'.$row->projectname.'</option>';
+																		echo '<option value="'.$row->id.'">'.$row->projectname.'</option>';
 																	}
 																?>
 														</select>
+													<?php }else{ 
+														$whereArr = array('id'=>$invoiceData[0]->project);
+														$project = $this->common_model->getData('tbl_project_info',$whereArr);
+														?>
+														<input type="text" name="project" id="project" class="form-control"  value="<?php echo  !empty($invoiceData[0]->project) ? $project[0]->projectname : '' ?>" readonly>
+													<?php } ?>
 													</div>
 												</div>
 												
 												<div class="col-md-6">
 													<div class="form-group">
 														<label class="control-label">Paid On<span class="astric">*</span></label>
-			                                            <input type="text" name="paidon" id="paidon" class="form-control" data-date-format='yyyy-mm-dd' value="<?php echo date('Y-m-d'); ?>">
+			                                            <input type="text" name="paidon" id="paidon" class="form-control" data-date-format='yyyy-mm-dd' value="<?php echo date('Y-m-d'); ?>" readonly>
 													</div>
 												</div>
 											</div>
@@ -82,12 +85,25 @@
 												<div class="col-md-6">
 		                							<div class="form-group">
 		                								<label class="control-label">Currency<span class="astric">*</span></label>
+		                								<?php if($invoiceData[0]->currency == ''){ ?>
 														<select name="currency" id="currency" class="form-control">
 															<option value="">select</option>
 															<option value="1" <?php if($invoiceData[0]->currency=='1'){ echo 'selected'; } ?>>$(USD)</option>
 															<option value="2" <?php if($invoiceData[0]->currency=='2'){ echo 'selected'; } ?>>R(IND)</option>
 
 														</select>
+													<?php }else{ 
+														$currency = '';
+														if($invoiceData[0]->currency == 1){
+																	$currency='$(USD)';
+															}
+														elseif($invoiceData[0]->currency == 2){
+																$currency='R(IND)';
+														}
+														?>
+														<input type="text" name="currency" id="currency" class="form-control"  value="<?php echo  !empty($invoiceData[0]->currency) ? $currency : '' ?>" readonly>
+
+													<?php } ?>
 													</div>
 		                						</div>
 												<div class="col-md-6">
@@ -97,7 +113,7 @@
 														<div class="col-md-12">
 															<?php $total = (float)trim($invoiceData[0]->total); ?>
 															<div class="input-icon">
-																<input type="text" class="form-control" name="amount" id="amount" value="<?php echo  !empty($invoiceData[0]->total) ? $total : '' ?>" >
+																<input type="text" class="form-control" name="amount" id="amount" value="<?php echo  !empty($invoiceData[0]->total) ? $total : '' ?>" readonly >
 															</div>
 														</div>
 														</div>

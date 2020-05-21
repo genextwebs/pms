@@ -14,8 +14,23 @@ class Payment extends CI_Controller{
 	}
 
 	public function index(){
-		$whereArr = array('is_deleted'=>0);
-		$data['project']=$this->common_model->getData('tbl_project_info',$whereArr);
+		$whereArr = array('status'=>0);
+		$project=$this->common_model->getData('tbl_invoice',$whereArr);
+        $projectArr = array();
+        //$srray = array();
+        for($i=0;$i<=count($project)-1;$i++){
+            $whereArr = array('id'=>$project[$i]->project);
+            $projectData = $this->common_model->getData('tbl_project_info',$whereArr);
+
+            array_push($projectArr, $projectData[0]);
+        }
+        //srrayecho"<PRE>";print_r($projectArr);
+        $srray = array_unique($projectArr);
+        echo"<PRE>";print_r($srray);
+
+        $data['allProjectData'] = $srray;
+       // print_r($data['allProjectData']);
+       
 		$this->load->view('common/header');
 		$this->load->view('Payment/payment',$data);
 		$this->load->view('common/footer');
@@ -58,5 +73,20 @@ class Payment extends CI_Controller{
         $this->load->view('common/footer');
         redirect('finance/invoice');
     }  
+
+   public function assignAmount(){
+    $AmountArr = array();
+        $whereArr = array('project'=>$_POST['project']);
+        $amountData = $this->common_model->getData('tbl_invoice',$whereArr);
+        $total = 0;
+        for($i=0;$i<=count($amountData)-1;$i++){
+             $data = $amountData[$i]->total;
+             $total = $total+$data;
+        }
+       
+
+        $amountArr['amountdata'] = $total;
+        echo json_encode($amountArr);exit();
+   }
 }
 ?>

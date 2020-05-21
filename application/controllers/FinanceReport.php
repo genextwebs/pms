@@ -262,7 +262,7 @@ class FinanceReport extends CI_Controller {
 				$sWhere.=' AND tbl_invoice.project='.$project;
 			}
 			if(!empty($client)){						
-				$sWhere.=' AND tbl_invoice.clientname='.$client;
+				$sWhere.=' AND tbl_invoice.client='.$client;
 			}
 			
 			$sWhere = " WHERE tbl_invoice.status=1 ".$sWhere;

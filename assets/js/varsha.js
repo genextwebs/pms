@@ -1328,3 +1328,22 @@ function passwordAction(flag){
   }
 }
 
+
+
+$('#project').change(function(){
+	project = $(this).val();
+	//alert(project);
+	$.ajax({
+		url : base_url+"Payment/assignAmount",
+        type : 'POST',
+         dataType: 'json',
+        data : {project: project},
+        error: function() {
+              alert('Something is wrong');
+           },
+        success: function(data){
+        	$('input[name="amount"]').val(data.amountdata);
+        }
+	});
+
+});

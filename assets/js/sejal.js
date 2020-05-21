@@ -656,7 +656,6 @@ jQuery(document).ready(function() {
 	                "timeout": 60000, //1000 - 1 sec - wait one minute before erroring out = 30000
 	                "success": function(json) {
 	                	var getGraph = json.graphData;
-	                	console.log(getGraph);
 	                	var splitArr = getGraph.xdata;
 	                	//console.log(getGraph.xdata);
 	                	graphDataAppend(getGraph.xdata,getGraph.ydata);
