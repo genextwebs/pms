@@ -17,8 +17,10 @@ class Finance extends CI_Controller{
 	}
 
 	public function index(){
+		$data['startdate']=date('Y-m-d',strtotime('-1 month'));
+		$data['enddate']=date('Y-m-d');
 		$this->load->view('common/header');
-		$this->load->view('Estimates/estimate');
+		$this->load->view('Estimates/estimate',$data);
 		$this->load->view('common/footer');
 	}
 	
@@ -433,6 +435,8 @@ class Finance extends CI_Controller{
 	}
 
 	public function invoice(){
+		$data['startdate']=date('Y-m-d',strtotime('-1 month'));
+		$data['enddate']=date('Y-m-d');
 		$data['project'] =$this->common_model->getData('tbl_project_info');
 		$data['clients']=$this->common_model->getData('tbl_clients');
 		$this->load->view('common/header');
@@ -670,7 +674,7 @@ class Finance extends CI_Controller{
 		$invoiceid=base64_decode($_POST['id']);
 		$whereArr=array('id'=>$invoiceid);
 		$this->common_model->deleteData('tbl_invoice',$whereArr);
-		echo $this->db->last_query();die;
+		
 		redirect('Finance/invoice');
 	}
 
@@ -708,6 +712,8 @@ class Finance extends CI_Controller{
 	}
 
 	public function expense(){
+		$data['startdate']=date('Y-m-d',strtotime('-1 month'));
+		$data['enddate']=date('Y-m-d');
 		$whereArr = array('is_deleted'=>0);
 		$data['employee'] =$this->common_model->getData('tbl_employee',$whereArr);
 		$this->load->view('common/header');

@@ -15,8 +15,10 @@ class NoticeBoard extends CI_Controller{
 	}
 
 	public function index(){
+		$data['startdate']=date('Y-m-d',strtotime('-1 month'));
+		$data['enddate']=date('Y-m-d');
 		$this->load->view('common/header');
-		$this->load->view('Notice/notice');
+		$this->load->view('Notice/notice',$data);
 		$this->load->view('common/footer');
 	}
 	

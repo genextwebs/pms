@@ -15,6 +15,8 @@ class Clients extends CI_Controller{
 	
 	public function index(){
 		$whereArr = array('is_deleted'=>0);
+		$data['startdate']=date('Y-m-d',strtotime('-1 month'));
+		$data['enddate']=date('Y-m-d');
 		$data['clients']=$this->common_model->getData('tbl_clients',$whereArr);
 		$data['userData']=$this->common_model->getData('tbl_user');		
 		$this->load->view('common/header');
