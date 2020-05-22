@@ -386,23 +386,7 @@
                               }
                             },
                           <?php } ?>
-                            eventClick:function(event)
-                            {
-                                if(confirm("Are you sure you want to remove it?"))
-                                {
-                                    var id = event.id;
-                                    $.ajax({
-                                        url:"Events/delete",
-                                        type:"POST",
-                                        data:{id:id},
-                                        success:function()
-                                        {
-                                            calendar.fullCalendar('refetchEvents');
-                                            alert('Event Removed');
-                                        }
-                                    })
-                                }
-                            }
+                            
                         });
                     $('#save-form').click(function(){
                       var title =  $('#title').val();

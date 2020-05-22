@@ -1655,7 +1655,7 @@ $("#save_tchannel").click(function(event) {
 		//for end date
 		$("#timelog_d2").datepicker({
 		    format: 'yyyy-mm-dd',
-		    autoclose: trues
+		    autoclose: true
 		}).on('changeDate', function (selected) {
 		    var maxDate = new Date(selected.date.valueOf());
 		    $('#timelog_d1').datepicker('setEndDate', maxDate);

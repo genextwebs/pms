@@ -296,7 +296,7 @@ class Timelog extends CI_Controller {
 						<div class="form-group">
 							<label class="control-label">End Date</label>
 							<input type="date" name="d2" id="d2" 
-							value="'.$enddate.'" class="form-control" />
+							value="'.$enddate.'" class="form-control" onchange="calculateHours();"/>
 						</div>
 					</div>
 				</div>';
