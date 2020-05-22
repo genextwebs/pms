@@ -207,7 +207,7 @@ if($this->session->flashdata('sessData')){
                                 </div>
                                 <div class="form-actions">
 	                                <button type="submit" name="btnupdate" id="save-form" class="btn btn-success"> <i class="fa fa-check"></i> Update</button>
-	                                <a href="<?php echo base_url().'Clients/index' ?>" class="btn btn-default">Back</a>
+	                                   <button type="Reset" name="btnreset" id="btnreset" class="btn btn-inverse"> <i class="fa fa-check"></i> Reset</button>
 	                            </div>
             				</div>
             			</form>

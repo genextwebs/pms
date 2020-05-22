@@ -196,7 +196,8 @@
 								</div>
 								<div class="row">
 									<div class="col-md-12">
-	                                <input type="submit" id="save-form" class="btn btn-success" name="btnupdate" value="Update" > <i class="fa fa-check"></i>
+	                                <button type="submit" id="save-form" class="btn btn-success" name="btnupdate"> <i class="fa fa-check"></i>Update</button>
+	                                <button type="Reset" name="btnreset" id="btnreset" class="btn btn-inverse"> <i class="fa fa-check"></i> Reset</button>
 									</div>
 								</div>
 										

@@ -180,7 +180,8 @@
                                 <div class="form-actions">
 	                                <!-- <input type="submit" id="save-form" class="btn btn-success" name="btnsubmit" value="Save" > <i class="fa fa-check"></i> -->
 	                                <button type="submit" name="btnsubmit" id="save-form" class="btn btn-success"> <i class="fa fa-check"></i> Save</button>
-									<a href="<?php echo base_url().'Clients/index' ?>" class="btn btn-default">Back</a>
+                                    <button type="Reset" name="btnreset" id="btnreset" class="btn btn-inverse"> <i class="fa fa-check"></i> Reset</button>
+									
 	                            </div>
             				</div>
             			</form>
