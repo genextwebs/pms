@@ -16,6 +16,8 @@ class Task extends CI_Controller {
 
 	public function index(){	
 		$whereArr = array('is_deleted'=>0);
+		$data['startdate']=date('Y-m-d',strtotime('-1 month'));
+		$data['enddate']=date('Y-m-d');
 		$data['employee'] = $this->common_model->getData('tbl_employee',$whereArr); 
 		$data['project'] = $this->common_model->getData('tbl_project_info',$whereArr);
 		$data['taskCat'] = $this->common_model->getData('tbl_task_category');

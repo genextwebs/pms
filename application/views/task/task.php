@@ -23,11 +23,11 @@
 		                <div class="form-group">
 		                    <label class="box-title mt-3">Select Date Range</label>
 		                    <div class="input-group input-daterange">
-							    <input type="text" class="start-date form-control br-0" id="start_date">
+							    <input type="text" class="start-date form-control br-0" id="start_date" value="<?php echo $startdate; ?>">
 							    <div class="input-group-prepend">
 							      <span class="input-group-text bg-info text-white">To</span>
 							    </div>
-							    <input type="text" class="end-date form-control br-0" id="deadline">
+							    <input type="text" class="end-date form-control br-0" id="deadline" value="<?php echo $enddate; ?>">
 							</div>
 		                </div>
 		            </div>

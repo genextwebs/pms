@@ -325,7 +325,7 @@ jQuery('#hide-complete').change(function(){
 	}
 })
 $(document).ready(function(){
-  $("#toggle-filter").click(function(){
+  $(".toggle-filter").click(function(){
     $("#filterdiv").toggle();
   });
 });
