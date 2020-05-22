@@ -226,7 +226,7 @@ class Project extends CI_Controller {
 				array_push($projectData, $project[0]);
 
 				$whereArr = array('is_deleted'=>0);
-			$query1 ="SELECT tbl_project_info.*,tbl_clients.clientname as clientname from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id where tbl_project_info.id=".$pid.$sWhere;
+				$query1 ="SELECT tbl_project_info.*,tbl_clients.clientname as clientname from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id where tbl_project_info.id=".$pid.$sWhere;
 				$projectArr = $this->common_model->coreQueryObject($query1);
 				array_push($projectallData, $projectArr[0]);
 			}
