@@ -136,7 +136,7 @@ $('#reset-filters').click(function(){
 	jQuery('#status').val('all');
 	jQuery('#clientname').val('');
 	$('#resetrmsg').html('');
-	jQuery('#ticket-filters').after('<p id="resetrmsg" style="color:#00B200"><b>Succesfully Reset Filters</b></p>');
+	jQuery('#ticket-filters').after('<p id="resetrmsg" style="color:#00B200"><b>Filters Reset Succesfully<b></p>');
 	$('#resetrmsg').fadeOut(6000); 
 	var oTable = $('#clients').DataTable();
 	oTable.draw();
@@ -1346,4 +1346,65 @@ $('#project').change(function(){
         }
 	});
 
+});
+
+$('#reset-filters-invoice').click(function(){ 
+			//button filter event click
+	jQuery('#status').val('all');
+	jQuery('#startdate').val('');
+	jQuery('#enddate').val('');
+	jQuery('#projectname').val("");
+	jQuery('#clientname').val("");
+	jQuery('#ticket-filters').after('<p id="resetrmsg" style="color:#00B200"><b>Filters Reset Succesfully<b></p>');
+	$('#resetrmsg').fadeOut(6000); 
+	var oTable1 = $('#invoices').DataTable();
+	oTable1.draw();
+});
+$('#reset-filters-estimates').click(function(){ 
+			//button filter event click
+	jQuery('#status').val('all');
+	jQuery('#startdate').val('');
+	jQuery('#enddate').val('');
+	
+	jQuery('#ticket-filters').after('<p id="resetrmsg" style="color:#00B200"><b>Filters Reset Succesfully<b></p>');
+	$('#resetrmsg').fadeOut(6000); 
+	var oTable1 = $('#estimate').DataTable();
+	oTable1.draw();
+});
+$('#reset-filters-expense').click(function(){ 
+			//button filter event click
+	jQuery('#status').val('all');
+	jQuery('#startdate').val('');
+	jQuery('#enddate').val('');
+	jQuery('#employee').val('');
+	
+	
+	jQuery('#ticket-filters').after('<p id="resetrmsg" style="color:#00B200"><b>Filters Reset Succesfully<b></p>');
+	$('#resetrmsg').fadeOut(6000); 
+	var oTable1 = $('#expenses').DataTable();
+	oTable1.draw();
+});
+$('#reset-filtersAttendance').click(function(){ 
+			//button filter event click
+	jQuery('#month').val('');
+	jQuery('#employee').val('all');
+	jQuery('#dept').val('all');
+	jQuery('#year').val('');
+	
+	
+	jQuery('#ticket-filters').after('<p id="resetrmsg" style="color:#00B200"><b>Filters Reset Succesfully<b></p>');
+	$('#resetrmsg').fadeOut(6000); 
+	var oTable1 = $('#attendance-data').DataTable();
+	oTable1.draw();
+});
+$('#reset-filters-notices').click(function(){ 
+			//button filter event click
+	jQuery('#startdate').val('');
+	jQuery('#enddate').val('');
+	
+	
+	jQuery('#notice-filters').after('<p id="resetrmsg" style="color:#00B200"><b>Filters Reset Succesfully<b></p>');
+	$('#resetrmsg').fadeOut(6000); 
+	var oTable1 = $('#notices').DataTable();
+	oTable1.draw();
 });

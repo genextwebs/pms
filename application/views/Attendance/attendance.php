@@ -118,7 +118,7 @@
                                                 <div class="col-md-2">
                                                     <div class="form-group m-t-25">
                                                         <button type="button" id="apply-filter"  class="btn btn-success btn-block"><i class="fa fa-check"></i>Apply</button>
-                                                        <button type="button" id="reset-filtersAttendance"  class="btn btn-inverse btn-block"><i class="fa fa-refresh"></i>Reset</button>
+                                                        <button type="reset" id="reset-filtersAttendance"  class="btn btn-inverse btn-block"><i class="fa fa-refresh"></i>Reset</button>
                                                     </div>
                                                 </div>
                                             </div>

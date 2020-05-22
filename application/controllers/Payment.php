@@ -93,4 +93,4 @@ class Payment extends CI_Controller{
         echo json_encode($amountArr);exit();
    }
 }
-?>
+?>  
