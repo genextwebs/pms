@@ -439,7 +439,7 @@ if($this->session->flashdata('sessData')){
 								<div class="form-actions">
 									<button type="submit" name="btnsave" id="save-form" class="btn btn-success"> <i class="fa fa-check"></i> Update</button>
 									<!-- <i class="fa fa-check"><input type="submit" id="save-form" class="btn btn-success" name="btnedit" value="Update"> </i>  -->
-									<input type="reset" class="btn btn-default" value="Reset">
+									<button type="Reset" name="btnreset" class="btn btn-inverse"> <i class="fa fa-check"></i> Reset</button>
 								</div>
 							</div>
 						</form>

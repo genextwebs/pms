@@ -208,7 +208,6 @@ class Project extends CI_Controller {
 			
 		}
 		else if($this->user_type == 2){
-
 			$whereArr= array('user_id'=>$this->user_id);
 			$data['empData']=$this->common_model->getData('tbl_employee',$whereArr);
 			$empid=$data['empData']['0']->id;
@@ -229,6 +228,7 @@ class Project extends CI_Controller {
 				$query1 ="SELECT tbl_project_info.*,tbl_clients.clientname as clientname from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id where tbl_project_info.id=".$pid.$sWhere;
 				$projectArr = $this->common_model->coreQueryObject($query1);
 				array_push($projectallData, $projectArr[0]);
+				print_r($projectArr);die;
 			}
 			$projectArr = $projectData;
 			$ProjectFilterArr = $projectArr;

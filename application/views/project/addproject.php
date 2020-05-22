@@ -248,7 +248,8 @@
 								<div class="form-actions">
 									<button type="submit" name="btnsave" id="save-form" class="btn btn-success"> <i class="fa fa-check"></i> Save</button>
 									<!-- <i class="fa fa-check"><input type="submit" id="save-form" class="btn btn-success" name="btnsave" value="Save"> </i>  -->
-									<input type="reset" class="btn btn-default" value="Reset">
+									<!-- <button type="Reset" class="btn btn-default" value="Reset">
+									 --><button type="Reset" name="btnreset" class="btn btn-inverse"> <i class="fa fa-check"></i> Reset</button>
 								</div>
 							</div>
 						</form>

@@ -1767,4 +1767,5 @@ jQuery('#close').click(function(){
     jQuery('#category_name').val('');
 });
 
-  
+ 
+$("#creatclient").reset();
