@@ -14,8 +14,25 @@
 <input type="hidden" id="timeloguserid" value="<?php echo $this->user_type;?>">
 
 <!-- contetn-wrap -->
+
+<?php if($this->user_type == 0){
+?>
 <div class="content-in">
 	<div class="row">
+		<div class="col-sm-12">
+			<div class="form-group custom-action">
+				<a href="<?php echo base_url().'timelog/addtimelog'?>" class="btn btn-outline-success btn-sm">Add TimeLog <i class="fa fa-plus" aria-hidden="true"></i></a>
+				<a href="javascript:;" id="toggle-filter" class="btn btn-outline-danger btn-sm toggle-filter"><i class="fa fa-sliders"></i> Filter Results</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="row filter-from" id="ticket-filters" style="display: none;">
+	                <div class="col-md-12">
+	                    <h4>Filter by <a href="javascript:;" class="pull-right toggle-filter"><i class="fa fa-times-circle-o"></i></a></h4>
+	                </div>
+	                <form action="" id="filter-form">
+	                	<div class="row">
 		<div class="col-md-4">
 			<div class="form-group">
 				<label class="control-label">SELECT DATE RANGE</label>
@@ -69,21 +86,14 @@
             <div class="form-group m-t-10">
                 <label class="control-label col-12 mb-3">&nbsp;</label>
                 <button type="button" id="btnApplyLogs" class="btn btn-success col-lg-4 co-md-5"><i class="fa fa-check"></i> Apply</button>
+                 <button type="button" id="reset-filters-timelog" class="btn btn-inverse col-lg-4 co-md-5 offset-md-1"><i class="fa fa-refresh"></i> Reset</button>
             </div>
         </div>
     </div>
+	                </form>
+	            </div>
 </div>
-<?php if($this->user_type == 0){
-?>
-<div class="content-in">
-	<div class="row">
-		<div class="col-sm-12">
-			<div class="form-group custom-action">
-				<a href="<?php echo base_url().'timelog/addtimelog'?>" class="btn btn-outline-success btn-sm">Add TimeLog <i class="fa fa-plus" aria-hidden="true"></i></a>
-			</div>
-		</div>
-	</div>
-</div>
+
 <?php
 }else {
 

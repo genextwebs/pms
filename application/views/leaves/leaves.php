@@ -17,10 +17,10 @@
 	<div class="row">
 		<?php if($this->user_type == 0){?>
 		<div class="col-md-2">
-			<div class="white-box p-t-10 p-b-10 bg-warning"> 
+			<div class="stats-box bg-black"> 
 				<h3 class="box-title text-white">Pending Leaves</h3>
 				<ul class="list-inline two-wrap">
-					<li><i class="icon-logout text-white"></i></li>
+					<li><i class="icon-user text-white"></i></li>
 					 <?php 
 					 	$where = array('status' => 0);
 						$Total = $this->common_model->getData('tbl_leaves',$where);
@@ -39,11 +39,17 @@
 				<div class="row">
 					<div class="col-sm-12">
 						<div class="form-group custom-action">
-							<a href="<?php echo base_url().'Leaves/addleaves';?>"  class="btn btn-outline-primary btn-sm"><i class="ti-plus" aria-hidden="true"></i>Apply For Leave </a>
+							<a href="<?php echo base_url().'Leaves/addleaves';?>"  class="btn btn-outline-success btn-sm"><i class="ti-plus" aria-hidden="true"></i>Apply For Leave </a>
+							<a href="javascript:;" id="toggle-filter" class="btn btn-outline-danger btn-sm toggle-filter"><i class="fa fa-sliders"></i> Filter Results</a>
 					  </div>
 				 </div>
 			 </div>
-			<div class="row">
+			 <div class="row filter-from" id="ticket-filters" style="display: none;">
+	                <div class="col-md-12">
+	                    <h4>Filter by <a href="javascript:;" class="pull-right toggle-filter"><i class="fa fa-times-circle-o"></i></a></h4>
+	                </div>
+	                <form action="" id="filter-form">
+	                	<div class="row">
 				<div class="col-md-4">
 					<div class="form-group">
 						<label class="control-label">SELECT DATE RANGE</label>
@@ -77,9 +83,13 @@
 		                        <div class="form-group m-t-10">
 		                            <label class="control-label col-12 mb-3">&nbsp;</label>
 		                            <button type="button" id="btnApplyLeaves" class="btn btn-success col-lg-4 co-md-5"><i class="fa fa-check"></i> Apply</button>
+		                            <button type="button" id="reset-filters-leaves" class="btn btn-inverse col-lg-4 co-md-5 offset-md-1"><i class="fa fa-refresh"></i> Reset</button>
 		                        </div>
 		        </div>
 			</div>
+	                </form>
+	            </div>
+			
 				<?php
 					$mess = $this->session->flashdata('message_name');
 					if(!empty($mess)){

@@ -19,6 +19,8 @@ class Ticket extends CI_Controller {
 		$data['e_date']=date('Y-m-d');
 		$data['tickettype']=$this->common_model->getData('tbl_ticket_type');
 		$data['ticketchannel']=$this->common_model->getData('tbl_ticket_channel');
+		$whereArr = array('is_deleted'=>0);
+		$data['getemployee']=$this->common_model->getData('tbl_employee',$whereArr);
 		$this->load->view('common/header');
 		$this->load->view('ticket/ticket',$data);
 		$this->load->view('common/footer');
@@ -152,6 +154,8 @@ class Ticket extends CI_Controller {
 			}
 			$sdate=!empty($_POST['s_date'])?$_POST['s_date']:'';
 			$enddate=!empty($_POST['e_date'])?$_POST['e_date']:'';
+			$agent=!empty($_POST['agent'])?$_POST['agent']:'';
+
 			$status=!empty($_POST['status1'])? $_POST['status1'] : '';
 			$priority=!empty($_POST['priority']) ? $_POST['priority'] : '';
 			$cname=!empty($_POST['channelname']) ? $_POST['channelname'] : '';
@@ -176,6 +180,9 @@ class Ticket extends CI_Controller {
 			}
 			else if(!empty($cname)){
 				$sWhere.=' AND tbl_ticket.channelname='.$cname;
+			}
+			if(!empty($agent)){
+				$sWhere.=' AND tbl_ticket.agent='.$agent;
 			}
 			if($type =='all'){
 			}

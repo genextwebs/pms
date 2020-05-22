@@ -305,6 +305,8 @@ jQuery(document).ready(function() {
 			"fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
 		    	aoData.push({"name": "s_date", "value":$('#start_date').val()});
 		    	aoData.push({"name" :"e_date" ,"value":$('#deadline').val()});
+		    	aoData.push({ "name": "agent", "value": $('#agent').val() } );
+
 				aoData.push({ "name": "status1", "value": $('#status').val() } );
 				aoData.push({ "name": "priority", "value": $('#priority').val() } );
 				aoData.push({ "name": "channelname", "value": $('#channelname').val() } );

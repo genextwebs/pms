@@ -77,7 +77,7 @@
 		                    </div> 
 		                </div>
 	                </form>
-	            </div>
+	            
             		<?php
 						//warning 
 						$mess = $this->session->flashdata('message_name');
@@ -109,6 +109,7 @@
 					   	</thead>
 					 </table>
 				</div>
+			</div>
             </div>
         </div>
     </div>

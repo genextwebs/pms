@@ -1408,3 +1408,44 @@ $('#reset-filters-notices').click(function(){
 	var oTable1 = $('#notices').DataTable();
 	oTable1.draw();
 });
+$('#reset-filters-timelog').click(function(){ 
+			//button filter event click
+	jQuery('#start_date').val('');
+	jQuery('#deadline').val('');
+	jQuery('#projectData').val('');
+	jQuery('#employeeData').val('');
+
+	jQuery('#ticket-filters').after('<p id="resetrmsg" style="color:#00B200"><b>Filters Reset Succesfully<b></p>');
+	$('#resetrmsg').fadeOut(6000); 
+	var oTable1 = $('#timelog').DataTable();
+	oTable1.draw();
+});
+
+$('#reset-filters-leaves').click(function(){ 
+			//button filter event click
+	jQuery('#startdate').val('');
+	jQuery('#enddate').val('');
+	jQuery('#empname').val('');
+	
+
+	jQuery('#ticket-filters').after('<p id="resetrmsg" style="color:#00B200"><b>Filters Reset Succesfully<b></p>');
+	$('#resetrmsg').fadeOut(6000); 
+	var oTable1 = $('#leaves').DataTable();
+	oTable1.draw();
+});
+$('#reset-filters-ticket').click(function(){ 
+			//button filter event click
+	jQuery('#tickettype').val('all');
+	jQuery('#channelname').val('all');
+	jQuery('#priority').val('all');
+		jQuery('#status').val('all');
+
+	jQuery('#agent').val('');
+
+	
+
+	jQuery('#ticket-filters').after('<p id="resetrmsg" style="color:#00B200"><b>Filters Reset Succesfully<b></p>');
+	$('#resetrmsg').fadeOut(6000); 
+	var oTable1 = $('#tickets').DataTable();
+	oTable1.draw();
+});
