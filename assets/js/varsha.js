@@ -1403,7 +1403,7 @@ $('#reset-filters-notices').click(function(){
 	jQuery('#enddate').val('');
 	
 	
-	jQuery('#notice-filters').after('<p id="resetrmsg" style="color:#00B200"><b>Filters Reset Succesfully<b></p>');
+	jQuery('#ticket-filters').after('<p id="resetrmsg" style="color:#00B200"><b>Filters Reset Succesfully<b></p>');
 	$('#resetrmsg').fadeOut(6000); 
 	var oTable1 = $('#notices').DataTable();
 	oTable1.draw();
