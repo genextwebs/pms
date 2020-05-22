@@ -285,21 +285,33 @@ jQuery(document).ready(function() {
 
 });
 $('#btnApplyTimeReport').click(function(){ 
-			//button filter event click
+	//button filter event click
 	var oTable = $('#timelogreport_table').DataTable();
 	oTable.draw();
 });
 $('#btnapplyEmp').click(function(){ 
-			//button filter event click
+	//button filter event click
 	var oTable = $('#employee').DataTable();
 	oTable.draw();
 });
 $('#reset_filters').click(function(){ 
-			//button filter event click
+	//button filter event click
+	jQuery('#status').val('All');
+	jQuery('#employeename').val('');
+	jQuery('#skill').val('');
+	jQuery('#department').val("");
+	jQuery('#designation').val("");
+	$('#designation').select2({
+      allowClear: true,
+      width: 95
+    });
+    $('#department').select2({
+      allowClear: true,
+      width: 95
+    });
 	var oTable = $('#employee').DataTable();
 	oTable.draw();
 });
-
 $('#filter-results').click(function(){ 
 			//button filter event click
 	var oTable = $('#tasks-table').DataTable();
