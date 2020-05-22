@@ -57,8 +57,9 @@ jQuery(document).ready(function() {
 		});
 	}
 
-	else if(controllerName == 'products' && (functionName == 'index' || functionName == '')){
-		var oTable = jQuery('#products').DataTable({
+	else if(controllerName == 'timelogreport' && (functionName == 'index' || functionName == '')){
+		//alert('dsvd');
+		var oTable = jQuery('#timelogreport_table').DataTable({
 			'bRetrieve': true,
 	        "bPaginate": true,
 	        "bLengthChange": true,
@@ -74,14 +75,22 @@ jQuery(document).ready(function() {
                       { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
                       { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
                       { "sWidth": "250px", sClass: "text-center", "asSorting": [  ]}, 
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
+                      { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
                      ],
 	        "bServerSide": true,
 	        "fixedHeader": true,
-	        "sAjaxSource": base_url+"products/product_list",
+	        "sAjaxSource": base_url+"TimeLogReport/timelog_list",
 	        "sServerMethod": "POST",
 	        "sDom": "<'row'<'col-sm-6'l><'col-sm-6'f>>t<'row'<'col-sm-6'i><'col-sm-6'p>>",
         	"oLanguage": { "sProcessing": "<i class='fa fa-spinner fa-spin fa-3x fa-fw green bigger-400'></i>", "sEmptyTable": '<center><br/>No Products found<br/><br/></center>', "sZeroRecords": "<center><br/>No Products found<br/><br/></center>", "sInfo": "_START_ to _END_ of _TOTAL_ leads", "sInfoFiltered": "", "oPaginate": {"sPrevious": "<i class='fa fa-angle-double-left'></i>", "sNext": "<i class='fa fa-angle-double-right'></i>"}},
         	"fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
+        		aoData.push( { "name": "pname", "value": $('#projectData').val() } );
+		    	
+		    	aoData.push({"name": "start_date", "value":$('#start_date').val()});
+		    	aoData.push({"name" :"deadline" ,"value":$('#deadline').val()});
+				
         		oSettings.jqXHR = $.ajax( {
 	                "dataType": 'json',
 	                "type": "POST",
@@ -89,7 +98,9 @@ jQuery(document).ready(function() {
 	                "data": aoData,
 	                "timeout": 60000, //1000 - 1 sec - wait one minute before erroring out = 30000
 	                "success": function(json) {
-	                    var oTable = $('#products').dataTable();
+	                	var graphdata = json.timeloggraphData;
+	                	graphTimelogData(graphdata.xdata,graphdata.ydata);
+	                    var oTable = $('#timelogreport_table').dataTable();
 	                    var oLanguage = oTable.fnSettings().oLanguage;
 
 	                    if((json.estimateCount == true) && (json.iTotalDisplayRecords == json.limitCountQuery)){
@@ -273,8 +284,31 @@ jQuery(document).ready(function() {
 	}
 
 });
+$('#btnApplyTimeReport').click(function(){ 
+	//button filter event click
+	var oTable = $('#timelogreport_table').DataTable();
+	oTable.draw();
+});
 $('#btnapplyEmp').click(function(){ 
-			//button filter event click
+	//button filter event click
+	var oTable = $('#employee').DataTable();
+	oTable.draw();
+});
+$('#reset_filters').click(function(){ 
+	//button filter event click
+	jQuery('#status').val('All');
+	jQuery('#employeename').val('');
+	jQuery('#skill').val('');
+	jQuery('#department').val("");
+	jQuery('#designation').val("");
+	$('#designation').select2({
+      allowClear: true,
+      width: 95
+    });
+    $('#department').select2({
+      allowClear: true,
+      width: 95
+    });
 	var oTable = $('#employee').DataTable();
 	oTable.draw();
 });

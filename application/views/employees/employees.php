@@ -152,7 +152,7 @@
 	                        		<div class="col-md-12">
 		                            	<div class="form-group pull-right">
 			                               <button type="button" id="btnapplyEmp" class="btn btn-success col-md-6" ><i class="fa fa-check"></i> Apply</button>
-				                            <button type="button" id="reset-filters" class="btn btn-inverse col-md-5 col-md-offset-1"><i class="fa fa-refresh"></i> Reset</button>
+				                            <button type="reset" id="reset_filters" class="btn btn-inverse col-md-5 col-md-offset-1"><i class="fa fa-refresh"></i> Reset</button>
 		                            	</div>
                        			 </div>
                        			 <?php if(!empty($freeEmp)) { ?>

@@ -133,7 +133,7 @@ class Finance extends CI_Controller{
 					if($status == 'all'){
 					}
 					else{
-						$sWhere.=' AND status='.$status;
+						$sWhere.=' AND e.status='.$status;
 					}
 					if(!empty($startdate)){						
 						$sWhere.=' AND validtill >= "'.$startdate.'"';

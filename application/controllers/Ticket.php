@@ -148,7 +148,7 @@ class Ticket extends CI_Controller {
 			/** Filtering Start */
 			if(!empty(trim($_GET['sSearch']))){
 				$searchTerm = trim($_GET['sSearch']);
-				$sWhere.= ' AND (ticketsubject like "%'.$searchTerm.'%" OR tbl_employee.employeename like "%'.$searchTerm.'%")';
+				$sWhere.= ' AND (ticketsubject like "%'.$searchTerm.'%" OR tbl_clients.clientname like "%'.$searchTerm.'%")';
 			}
 			$sdate=!empty($_POST['s_date'])?$_POST['s_date']:'';
 			$enddate=!empty($_POST['e_date'])?$_POST['e_date']:'';
@@ -197,13 +197,13 @@ class Ticket extends CI_Controller {
 		}
 	if($this->user_type == 0){
 
-		$query = "SELECT * from tbl_ticket".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+		$query = "SELECT tbl_ticket.*,tbl_clients.clientname from tbl_ticket INNER JOIN tbl_clients on tbl_ticket.requestername=tbl_clients.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 		//echo $query;die;
 		$TicketArr = $this->common_model->coreQueryObject($query);
 
-		$query = "SELECT * from tbl_ticket".$sWhere;
-
-		$TicketFilterArr = $this->common_model->coreQueryObject($query);
+		$query1 = "SELECT tbl_ticket.*,tbl_clients.clientname from tbl_ticket INNER JOIN tbl_clients on tbl_ticket.requestername=tbl_clients.id".$sWhere;
+		//echo $query1;die;
+		$TicketFilterArr = $this->common_model->coreQueryObject($query1);
 		$iFilteredTotal = count($TicketFilterArr);
 		$TicketAllArr = $this->common_model->getData('tbl_ticket');
 		$iTotal = count($TicketAllArr);
@@ -223,14 +223,14 @@ class Ticket extends CI_Controller {
 		$iTotal = count($TicketAllArr);
 
 		}else if($this->user_type == 2){
-		$query = "SELECT * FROM tbl_ticket".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+		$query = "SELECT tbl_ticket.*,tbl_clients.clientname from tbl_ticket INNER JOIN tbl_clients on tbl_ticket.requestername=tbl_clients.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 		
 		$TicketArr = $this->common_model->coreQueryObject($query);
 
-		$query = "SELECT * from tbl_ticket".$sWhere;
+		$query = "SELECT tbl_ticket.*,tbl_clients.clientname from tbl_ticket INNER JOIN tbl_clients on tbl_ticket.requestername=tbl_clients.id".$sWhere;
 		$TicketFilterArr = $this->common_model->coreQueryObject($query);
 		$iFilteredTotal = count($TicketFilterArr);
-		$queryAll ="SELECT * FROM tbl_ticket".$sWhere;
+		$queryAll ="SELECT tbl_ticket.*,tbl_clients.clientname from tbl_ticket INNER JOIN tbl_clients on tbl_ticket.requestername=tbl_clients.id".$sWhere;
 		$TicketAllArr = $this->common_model->coreQueryObject($queryAll);
 		$iTotal = count($TicketAllArr);
 		}

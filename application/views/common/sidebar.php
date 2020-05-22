@@ -175,22 +175,22 @@ if($this->session->userdata('login')){
             </a>
             <ul class="collapse list-unstyled" id="reports" <?php if($controller == 'reports'){ echo 'show'; } ?>>
                 <li>
-                    <a href="<?php echo base_url().'taskreport/index'?>">Task Report</a>
+                    <a href="<?php echo base_url().'TaskReport/index'?>">Task Report</a>
                 </li>
                 <li>
-                    <a href="<?php echo base_url().'timelogreport/index'?>">Time Log Report</a>
+                    <a href="<?php echo base_url().'TimeLogReport/index'?>">Time Log Report</a>
                 </li>
                 <li>
-                	<a href="<?php echo base_url().'financereport/index'?>">Finance Report</a>
+                	<a href="<?php echo base_url().'FinanceReport/index'?>">Finance Report</a>
                 </li>
                 <li>
-                	<a href="<?php echo base_url().'incomeexpensereport/index'?>">Income vs Expense Report</a>
+                	<a href="<?php echo base_url().'IncomeExpenseReport/index'?>">Income vs Expense Report</a>
                 </li>
                 <li>
-                	<a href="<?php echo base_url().'leavereport/index'?>">Leave Report</a>
+                	<a href="<?php echo base_url().'LeaveReport/index'?>">Leave Report</a>
                 </li>
                  <li>
-                    <a href="<?php echo base_url().'attandancereport/index'?>">Attandance Report</a>
+                    <a href="<?php echo base_url().'AttandanceReport/index'?>">Attandance Report</a>
                 </li>
              
             </ul>
