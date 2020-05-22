@@ -154,11 +154,11 @@ class Timelog extends CI_Controller {
 			
 		}
 		if($this->user_type == 0){
-			$query = "SELECT tbl_project_info.projectbudget,tbl_project_info.*,tbl_timelog.*,tbl_employee.* FROM `tbl_timelog` inner join tbl_project_info on tbl_timelog.timelogprojectid = tbl_project_info.id inner join tbl_employee on tbl_employee.id = tbl_timelog.timelogemployeeid".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+			$query = "SELECT tbl_project_info.projectbudget,tbl_project_info.*,tbl_timelog.*,tbl_timelog.id as tid,tbl_employee.* FROM `tbl_timelog` inner join tbl_project_info on tbl_timelog.timelogprojectid = tbl_project_info.id inner join tbl_employee on tbl_employee.id = tbl_timelog.timelogemployeeid".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 
 				$timeArr = $this->common_model->coreQueryObject($query);
-
-				$query = "SELECT tbl_project_info.projectbudget,tbl_project_info.*,tbl_timelog.*,tbl_employee.* FROM `tbl_timelog` inner join tbl_project_info on tbl_timelog.timelogprojectid = tbl_project_info.id 
+				//echo "<PRE>";print_r($timeArr);die;
+				$query = "SELECT tbl_project_info.projectbudget,tbl_project_info.*,tbl_timelog.*,tbl_timelog.id as tid,tbl_employee.* FROM `tbl_timelog` inner join tbl_project_info on tbl_timelog.timelogprojectid = tbl_project_info.id 
 				    inner join tbl_employee on tbl_employee.id = tbl_timelog.timelogemployeeid".$sWhere;
 
 			$TimeFilterArr = $this->common_model->coreQueryObject($query);
@@ -170,7 +170,7 @@ class Timelog extends CI_Controller {
 			$datarow = array();
 			$i = 1;
 			foreach($timeArr as $row) {
-				$rowid = $row->id;
+				$rowid = $row->tid;
 				$projectid =$row->timelogprojectid;
 		        $actionstring = 
 
@@ -252,8 +252,10 @@ class Timelog extends CI_Controller {
 	Public function edittimelog(){
 
 		$id=base64_decode($_POST['id']);
+		//echo $id;die;
 		$whereArr=array('id'=>$id);
 		$timelog= $this->common_model->getData('tbl_timelog',$whereArr);
+		//print_r($timelog);die;
 		$query ="select tbl_project_member.*,tbl_employee.employeename from tbl_project_member inner join tbl_employee on tbl_project_member.emp_id = tbl_employee.id where project_id=".$timelog[0]->timelogprojectid;
 	  	$getEmp=$this->common_model->coreQueryObject($query);
 		$data['projectinfo']=$this->common_model->getData('tbl_project_info');
@@ -294,7 +296,7 @@ class Timelog extends CI_Controller {
 						<div class="form-group">
 							<label class="control-label">End Date</label>
 							<input type="date" name="d2" id="d2" 
-							value="'.$enddate.'" class="form-control"/>
+							value="'.$enddate.'" class="form-control" />
 						</div>
 					</div>
 				</div>';
@@ -344,7 +346,11 @@ class Timelog extends CI_Controller {
 							<label class="control-label"> Employee Name</label>';
 		$str.=		            '<select name="empname" id="empname" class="custom-select br-0">';
 									foreach($getEmp as $emp){
+
 									$string='';
+									if($emp->id == $timelog[0]->timelogemployeeid){
+										$string='selected';
+									}
 											$str.= '<option value="'.$emp->id.'"'.$string.'>'.$emp->employeename.'</option>';
 								    }
 
@@ -390,6 +396,7 @@ public function update_timelog(){
 			$updateArr = array('timelogprojectid'=>$project,'timelogemployeeid'=>$emp,'timelogstartdate'=>$sdate,'timelogenddate'=>$edate,'timelogstarttime'=>$stime,'timelogendtime'=>$etime,'totalhours'=>$hours,'timelogmemo'=>$memo);
 			$this->common_model->updateData('tbl_timelog',$updateArr,$whereArr);
 			$this->session->set_flashdata('message_name','Timelog Update Succesfully....');
+			
 		}
 		
 	}

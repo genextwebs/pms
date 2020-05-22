@@ -1609,7 +1609,7 @@ $("#save_tchannel").click(function(event) {
 
 
 //for addtimelog calculate 
-	function calculateHours(){
+	/*function calculateHours(){
 		var today = new Date();
 
 	  	$('#d1').val(today.getFullYear() + "-" + ('0' + (today.getMonth() + 1)).slice(-2) + "-" + ('0' + (today.getDate() + 1)).slice(-2));
@@ -1618,7 +1618,7 @@ $("#save_tchannel").click(function(event) {
 	    $('#t2').val('00:00');
 	    $('#d1, #d2, #t1, #t2').on('change', function(ev) {
 	   		var dl = document.getElementById("diff");
-
+	   		alert(d1);
 	   	    while (dl.hasChildNodes()) {
 	    		dl.removeChild(dl.lastChild);
 	        }
@@ -1634,7 +1634,7 @@ $("#save_tchannel").click(function(event) {
 	    });
 
 	    $('#d1').change();
-	}
+	}*/
 
 //for addtimelog datepicker
 	$(document).ready(function(){
@@ -1655,7 +1655,7 @@ $("#save_tchannel").click(function(event) {
 		//for end date
 		$("#timelog_d2").datepicker({
 		    format: 'yyyy-mm-dd',
-		    autoclose: true
+		    autoclose: trues
 		}).on('changeDate', function (selected) {
 		    var maxDate = new Date(selected.date.valueOf());
 		    $('#timelog_d1').datepicker('setEndDate', maxDate);
@@ -1693,10 +1693,10 @@ $("#save_tchannel").click(function(event) {
 //for timelog calculate hours function
 function calculateHours(){
 		var today = new Date();
-	  	$('#d1').val(today.getFullYear() + "-" + ('0' + (today.getMonth() + 1)).slice(-2) + "-" + ('0' + (today.getDate() + 1)).slice(-2));
-	 	$('#d2').val($('#d1').val());
-	 	$('#t1').val('00:00');
-	    $('#t2').val('00:00');
+	  	//$('#d1').val(today.getFullYear() + "-" + ('0' + (today.getMonth() + 1)).slice(-2) + "-" + ('0' + (today.getDate() + 1)).slice(-2));
+	 	//$('#d2').val($('#d1').val());
+	 	//$('#t1').val('00:00');
+	    //$('#t2').val('00:00');
 	    $('#d1, #d2, #t1, #t2').on('change', function(ev) {
 	   		var dl = document.getElementById("diff");
 
@@ -1770,4 +1770,3 @@ jQuery('#close').click(function(){
 });
 
  
-$("#creatclient").reset();
