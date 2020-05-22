@@ -56,7 +56,7 @@ class Project extends CI_Controller {
 			}
 			$member=$chk_value;
 			
-			if($this->input->post('client-view-tasks')=='on'){
+			/*if($this->input->post('client-view-tasks')=='on'){
 					$chk_value='1';
 			}
 			else{ $chk_value='0';
@@ -67,7 +67,7 @@ class Project extends CI_Controller {
 					$chk_value='1';
 			}
 			else{ $chk_value='0';
-			}
+			}*/
 			$tasks=$chk_value;
 			$name=$this->input->post('project_name');
 			$cat=$this->input->post('project-category');
@@ -90,8 +90,7 @@ class Project extends CI_Controller {
 				}	
 			else{
 				$store=array('projectname'=>$name,'projectcategoryid'=>$cat,'startdate'=>$date,'manualtimelog'=>$timelog,
-				'projectmember'=>$member,'deadline'=>$deadline,'clientid'=>$client,'withoutdeadline'=>$without,'viewtask'=>$view,
-				'tasknotification'=>$tasks,'status'=>0,'projectsummary'=>$editor1,'note'=>$notes,
+				'projectmember'=>$member,'deadline'=>$deadline,'clientid'=>$client,'withoutdeadline'=>$without,'status'=>0,'projectsummary'=>$editor1,'note'=>$notes,
 				'projectbudget'=>$budget,'currency'=>$currency,'hoursallocated'=>$hours,'archive'=>0,'is_deleted'=>0);
 				$this->common_model->insertData('tbl_project_info',$store);
 				$this->session->set_flashdata('message_name', 'Project Insert sucessfully');
@@ -417,19 +416,20 @@ class Project extends CI_Controller {
 			}
 			$member=$chk_value;
 			
-			if($this->input->post('client-view-tasks')=='on'){
+			/*if($this->input->post('client-view-tasks')=='on'){
 					$chk_value='1';
 			}
 			else{ $chk_value='0';
 			}
-			$view=$chk_value;
+			$view=$chk_value;*/
 			
-			if($this->input->post('tasks-notification')=='on'){
+			/*if($this->input->post('tasks-notification')=='on'){
 					$chk_value='1';
 			}
 			else{ $chk_value='0';
 			}
 			$tasks=$chk_value;
+			*/
 			if(!empty($_POST))
 			{	
 			$name=$this->input->post('project_name');
@@ -449,10 +449,10 @@ class Project extends CI_Controller {
 				
 				if(empty($projectdata)){
 					$updateArr=array('projectname'=>$name,'projectcategoryid'=>$cat,'startdate'=>$date,'manualtimelog'=>$timelog,
-					'projectmember'=>$member,'deadline'=>$deadline,'clientid'=>$client,'withoutdeadline'=>$without,'viewtask'=>$view,
-					'tasknotification'=>$tasks,'status'=>$status,'projectsummary'=>$editor1,'note'=>$notes,
+					'projectmember'=>$member,'deadline'=>$deadline,'clientid'=>$client,'withoutdeadline'=>$without,'status'=>$status,'projectsummary'=>$editor1,'note'=>$notes,
 					'projectbudget'=>$budget,'currency'=>$currency,'hoursallocated'=>$hours,'archive'=>0);
 					$whereArr=array('id'=>$id);
+					print_r($updateArr);
 					//echo "<PRE>";print_r($updateArr);die;
 					$this->common_model->updateData('tbl_project_info',$updateArr,$whereArr);
 					$this->session->set_flashdata('message_name', 'Projects Updated sucessfully');
