@@ -1362,9 +1362,11 @@ $('#reset-filters-invoice').click(function(){
 });
 $('#reset-filters-estimates').click(function(){ 
 			//button filter event click
+		 jQuery('#startdate').val('');
+		 jQuery('#startdate').val('');
 	jQuery('#status').val('all');
-	jQuery('#startdate').val('');
-	jQuery('#enddate').val('');
+	// /jQuery('#startdate').reset();
+	//jQuery('#enddate').val('');
 	
 	jQuery('#ticket-filters').after('<p id="resetrmsg" style="color:#00B200"><b>Filters Reset Succesfully<b></p>');
 	$('#resetrmsg').fadeOut(6000); 

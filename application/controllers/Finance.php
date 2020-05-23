@@ -154,13 +154,13 @@ class Finance extends CI_Controller{
 				
 			 if($this->user_type == 0){
 	    			/*$query = "select tbl_estimates.* , tbl_clients.clientname from tbl_estimates INNER JOIN tbl_clients ON tbl_clients.id=tbl_estimates.client".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;*/
+
 	    			$query = "SELECT e.* , c.id as clientid,c.clientname,p.projectname FROM tbl_estimates e INNER JOIN tbl_clients c ON c.id = e.client INNER JOIN tbl_project_info p ON p.id = e.project".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 	    			//echo $query;die;
 					$estimatesArr = $this->common_model->coreQueryObject($query);
 
-					$query = "SELECT e.* , c.id as clientid,c.clientname,p.projectname FROM tbl_estimates e INNER JOIN tbl_clients c ON c.id = e.client INNER JOIN tbl_project_info p ON p.id = e.project".$sWhere;
-
-					$estimatesFilterArr = $this->common_model->coreQueryObject($query);
+					$query1 = "SELECT e.* , c.id as clientid,c.clientname,p.projectname FROM tbl_estimates e INNER JOIN tbl_clients c ON c.id = e.client INNER JOIN tbl_project_info p ON p.id = e.project".$sWhere;
+					$estimatesFilterArr = $this->common_model->coreQueryObject($query1);
 					$iFilteredTotal = count($estimatesFilterArr);
 					$estimatesAllArr = $this->common_model->getData('tbl_estimates');
 					$iTotal = count($estimatesAllArr);
@@ -202,6 +202,8 @@ class Finance extends CI_Controller{
 							//$sta='<lable class="label label-success">'.$status.'</label>';
 						}
 						$create_date = date('d-m-Y', strtotime($row->created_at));
+						$validtill = date('d-m-Y', strtotime($row->validtill));
+
 					if($this->user_type == 0){
 						if($checkstatus =='1'){
 							$actionStr = '<div class="dropdown action m-r-10">
@@ -236,7 +238,7 @@ class Finance extends CI_Controller{
 			                $row->projectname,
 			                $row->total,
 							$create_date,
-							$row->validtill,
+							$validtill,
 			                $sta,	
 							$actionStr
 			           	);
@@ -247,7 +249,7 @@ class Finance extends CI_Controller{
 			                $row->projectname,
 			                $row->total,
 							$create_date,
-							$row->validtill,
+							$validtill,
 			                $sta,	
 							$actionStr
 			           	);
@@ -408,7 +410,7 @@ class Finance extends CI_Controller{
 			$billingcycle=$this->input->post('billing_cycle');
 			$total=$this->input->post('finaltotal');
 			$note=$this->input->post('note');
-			echo $project;
+		
 			if($project != ''){
 			$sql="SELECT tbl_project_info.clientid,tbl_clients.clientname,tbl_clients.companyname FROM tbl_project_info INNER JOIN tbl_clients ON tbl_project_info.clientid = tbl_clients.id where tbl_project_info.id=".$project;	
 			$data['invoicedata']=$this->common_model->
@@ -529,10 +531,10 @@ class Finance extends CI_Controller{
 					$sWhere.=' AND i.status='.$status;
 				}
 				if(!empty($startdate)){						
-					$sWhere.=' AND duedate>="'.$startdate.'"';
+					$sWhere.=' AND invoicedate>="'.$startdate.'"';
 				}
 				if(!empty($enddate)){						
-					$sWhere.=' AND duedate<="'.$enddate.'"';
+					$sWhere.=' AND invoicedate<="'.$enddate.'"';
 				}
 				if(!empty($sWhere)){
 					$sWhere = " WHERE 1 ".$sWhere;
@@ -540,7 +542,7 @@ class Finance extends CI_Controller{
 					/** Filtering End */
 
 			$query = "SELECT i.* , c.id as clientid,c.clientname,p.projectname FROM tbl_invoice i INNER JOIN tbl_clients c ON c.id = i.client INNER JOIN tbl_project_info p ON p.id = i.project".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
-	    //echo $query;die;
+	   
 		$invoicesArr = $this->common_model->coreQueryObject($query);
 		//print_r($invoicesArr);die;
 		if($this->user_type == 1){

@@ -53,11 +53,11 @@
 		                    <div class="col-md-4">
 		                    	<h5>Select Date Range</h5>
 		                        <div class="input-group input-daterange">
-								    <input type="text" class="start-date form-control br-0" id="startdate" name="startdate" data-date-format='yyyy-mm-dd' value="<?php echo $startdate; ?>">
+								    <input type="text" class="start-date form-control br-0" id="startdate" name="startdate" data-date-format='yyyy-mm-dd'>
 								    <div class="input-group-prepend">
 								      <span class="input-group-text bg-info text-white">To</span>
 								    </div>
-								    <input type="text" class="end-date form-control br-0" id="enddate" name="enddate" data-date-format='yyyy-mm-dd' value="<?php echo $enddate; ?>" >
+								    <input type="text" class="end-date form-control br-0" id="enddate" name="enddate" data-date-format='yyyy-mm-dd' >
 								</div>
 		                    </div>
 		                    <div class="col-md-2">
