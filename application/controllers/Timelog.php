@@ -310,7 +310,7 @@ class Timelog extends CI_Controller {
 						<div class="col-md-4">
 							<div class="form-group" id="timeonly">
 								<label class="control-label">Start Time</label>
-							    <input type="time" name="t1" id="t1" value="'.$starttime.'"  class="form-control"/>
+							    <input type="time" name="t1" id="t1" value="'.$starttime.'"  class="form-control" onchange="calculateHours();"/>
 							</div>
 						</div>';
 
