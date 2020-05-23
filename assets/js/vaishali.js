@@ -724,7 +724,7 @@ $('#repeate-data').click(function(){
 	counter++;
 	$('#counter').val(eval(counter));
 	$('#dynamic').append('<div id="row'+counter+'"><div class="row"><div class="col-md-4"><div class="form-group"><input type="text" name="holiday_name[]" id="start_date'+counter+'"  placeholder="Date" class="form-control"></div></div><div class="col-md-4"><div class="form-group"><input type="text" name="occasion[]" id="occasion1"  placeholder="Occasion" class="form-control"><div class="col-md-1 text-right visible-md visible-lg"><button type="button" name="remove" id="'+counter+'" class="btn remove-item btn-circle btn-danger remove"><i class="fa fa-remove"></i></button></div></div></div></div>');
-	$("#start_date"+counter).datepicker({  format: 'dd-mm-yyyy'});
+	$("#start_date"+counter).datepicker({  format: 'yyyy-mm-dd'});
  });                                       
  
  $(document).on('click','.remove',function(){
