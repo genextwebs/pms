@@ -1579,7 +1579,7 @@ $("#save_tchannel").click(function(event) {
 
 	$(document).ready(function() {
 	  var today = new Date();
-	  $('#timelog_d1').val(today.getFullYear() + "-" + ('0' + (today.getMonth() + 1)).slice(-2) + "-" + ('0' + (today.getDate() + 1)).slice(-2));
+	  $('#timelog_d1').val(today.getFullYear() + "-" + ('0' + (today.getMonth() + 1)).slice(-2) + "-" + ('0' + (today.getDate())).slice(-2));
 	  $('#timelog_d2').val($('#timelog_d1').val());
 	  $('#timelog_t1').val('00:00');
 	  $('#timelog_t2').val('00:00');
