@@ -23,7 +23,7 @@
     			</div>
     			<div class="card-wrapper collapse show">
     				<div class="card-body">
-    					<form class="aj-form" method="post" action="<?php echo base_url().'Finance/insertEstimates' ?>" name="estimate" >
+    					<form class="aj-form" method="POST" action="<?php echo base_url().'Finance/insertEstimates' ?>" name="estimate" >
 								<?php 	//warning 
 									$mess = $this->session->flashdata('message_name');
 									if(!empty($mess)){
@@ -164,7 +164,7 @@
 											</div>
 											<div class="form-actions">
 												
-				                                <button type="submit" id="estimate-invoice" class="btn btn-success" name="btnsubmit"> <i class="fa fa-check"></i>Save</button>
+				                                <button type="submit" id="estimate-invoice" class="btn btn-success" name="btnsubmit1"> <i class="fa fa-check"></i>Save</button>
 												
 												<button type="Reset" name="btnreset" id="btnreset" class="btn btn-inverse"> <i class="fa fa-check"></i> Reset</button>		
 		                				</div>

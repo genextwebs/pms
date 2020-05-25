@@ -69,6 +69,7 @@ jQuery(document).ready(function() {
 	        "bInfo": true,
 	        "bAutoWidth": false,
 	        "bProcessing": true,
+	        
 	        "aoColumns": [{ "sWidth": "40px", sClass: "text-left", "asSorting": [  ] }, 
                       { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
                       { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] }, 
