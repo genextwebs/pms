@@ -51,7 +51,7 @@ class Timelog extends CI_Controller {
 			$insArr = array('timelogprojectid'=>$project ,'timelogemployeeid'=>$emp ,'timelogstartdate'=>$sdate , 'timelogenddate'=>$edate ,'timelogstarttime'=>$stime ,'timelogendtime'=>$etime,'totalhours'=>$hours,'timelogmemo'=>$memo);
 			$this->common_model->insertData('tbl_timelog',$insArr);
 			$this->session->set_flashdata('message_name','Timelog Inserted Succesfully....');
-			redirect('timelog/index');
+			redirect('timelog/');
 		}
 	}
 

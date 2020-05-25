@@ -198,18 +198,19 @@ class Project extends CI_Controller {
 
 			$query = "SELECT tbl_project_info.*,tbl_clients.clientname as clientname from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 			$projectArr = $this->common_model->coreQueryObject($query);
-
 			$ProjectFilterArr = $this->common_model->coreQueryObject($query);
 			$iFilteredTotal = count($ProjectFilterArr);
 			$whereArr = array('is_deleted'=>0);
 			$query1 = "SELECT tbl_project_info.*,tbl_clients.clientname as clientname from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id".$sWhere;
 			$ProjectAllArr = $this->common_model->coreQueryObject($query1);
 			$iTotal = count($ProjectAllArr);
+
 			
 		}
 		else if($this->user_type == 2){
 			$whereArr= array('user_id'=>$this->user_id);
 			$data['empData']=$this->common_model->getData('tbl_employee',$whereArr);
+			//print_r($data['empData']);die;
 			$empid=$data['empData']['0']->id;
 			$WhereArr1=array('emp_id'=>$empid);
 			$data['projectData']=$this->common_model->getData('tbl_project_member',$WhereArr1);	
