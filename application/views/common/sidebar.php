@@ -95,7 +95,7 @@ if($this->session->userdata('login')){
                 <i class="fa fa-money"></i>
                 <span>Finance</span>
             </a>
-            <ul class="collapse list-unstyled <?php if($controller == 'finance'){ echo 'show'; } ?>" id="finance">
+            <ul class="collapse list-unstyled <?php if($controller == 'finance' || $controller == 'payment'){ echo 'show'; } ?>" id="finance">
                 <li <?php if($controller == 'finance' && ($functionName == 'finance' || $functionName == '')) { echo 'class="active"'; } ?>>
                     <a href="<?php echo base_url().'finance' ?>">Estimates</a>
                 </li>
