@@ -34,7 +34,9 @@ class Finance extends CI_Controller{
 	}
 	
 	public function insertEstimates(){
-		if($this->input->post('btnsubmit')){
+		
+		if(!empty($_POST)){
+			
 			$client=$this->input->post('client');
 			$project=$this->input->post('project1');
 			$currency=$this->input->post('currency');
@@ -43,6 +45,7 @@ class Finance extends CI_Controller{
 			$note=$this->input->post('note');
 			
 			$insertArr=array('client' => $client,'project'=>$project,'currency' => $currency,'validtill' => $valid_till,'note' => $note,'status'=>'0','total'=>$total);
+			
 			$this->common_model->insertData('tbl_estimates',$insertArr);
 			$estimateid=$this->db->insert_id();
 				
@@ -58,7 +61,7 @@ class Finance extends CI_Controller{
 				$insertArr1=array('estimateid'=>$estimateid,'item' => $item_name[$i],'qtyhrs' => $quantity[$i], 'unitprice' => $cost_per_item[$i], 'tax' => $taxes[$i],'amount'=>$amount[$i],'description' => $item_Description[$i]);
 				$this->common_model->insertData('tbl_products',$insertArr1);
 			}
-			$this->session->set_flashdata('message_name', "Estimate Inserte Successfully..");
+			$this->session->set_flashdata('message_name', "Estimate Insert Successfully..");
 			redirect('Finance');	
 		}
 	}
@@ -124,7 +127,7 @@ class Finance extends CI_Controller{
             /** Filtering Start */
             if(!empty(trim($_GET['sSearch']))){
             	$searchTerm = trim($_GET['sSearch']);
-            	$sWhere .= ' AND (tbl_clients.clientname like "%'.$searchTerm.'%")';
+            	$sWhere .= ' AND (c.clientname like "%'.$searchTerm.'%" OR p.projectname like "%'.$searchTerm.'%" OR e.total like "%'.$searchTerm.'%")';
             }
 
            
@@ -339,7 +342,7 @@ class Finance extends CI_Controller{
 		$this->load->view('Invoices/createinvoice',$data);
 		$this->load->view('common/footer');
 
-		if($this->input->post('btnsubmit')){
+		if(!empty($_POST)){
 			$invoice=$this->input->post('invoice_number');
 			$project=$this->input->post('project');
 			$currency=$this->input->post('currency');
@@ -356,8 +359,9 @@ class Finance extends CI_Controller{
 			$updateArr=array('status'=>1);
 			$this->common_model->updateData('tbl_estimates',$updateArr,$whereArr);
 
-
+			if($project != ''){
 			$sql="SELECT tbl_project_info.clientid,tbl_clients.clientname,tbl_clients.companyname FROM tbl_project_info INNER JOIN tbl_clients ON tbl_project_info.clientid = tbl_clients.id where tbl_project_info.id=".$project;	
+			}
 			$data['invoicedata']=$this->common_model->coreQueryObject($sql);
 
 			
@@ -506,7 +510,7 @@ class Finance extends CI_Controller{
          	/** Filtering Start */
            	if(!empty(trim($_GET['sSearch']))){
             	$searchTerm = trim($_GET['sSearch']);
-            	$sWhere .= ' AND (c.clientname like "%'.$searchTerm.'%" OR i.companyname like "%'.$searchTerm.'%" OR i.note like "%'.$searchTerm.'%")';
+            	$sWhere .= ' AND (c.clientname like "%'.$searchTerm.'%" OR c.companyname like "%'.$searchTerm.'%" OR i.note like "%'.$searchTerm.'%" OR p.projectname like "%'.$searchTerm.'%" OR i.total like "%'.$searchTerm.'%")';
             }
 				$startdate=!empty($_POST['startdate']) ? $_POST['startdate'] : '';
 				$enddate=!empty($_POST['enddate']) ? $_POST['enddate'] : '';
@@ -690,7 +694,7 @@ class Finance extends CI_Controller{
 	}
 
 	public function insertexpense(){
-		if($this->input->post('btnsubmit')){
+		if(!empty($_POST)){
 			$employee=$this->input->post('employee');
 			$project=$this->input->post('project');
 			$currency=$this->input->post('currency');
@@ -783,7 +787,7 @@ class Finance extends CI_Controller{
          	/** Filtering Start */
            	if(!empty(trim($_GET['sSearch']))){
             	$searchTerm = trim($_GET['sSearch']);
-            	$sWhere .= ' AND (item like "%'.$searchTerm.'%" OR price like "%'.$searchTerm.'%" OR purchasedform like "%'.$searchTerm.'%" OR employee like "%'.$searchTerm.'%"  OR purchasedate like "%'.$searchTerm.'%")';
+            	$sWhere .= ' AND (item like "%'.$searchTerm.'%" OR price like "%'.$searchTerm.'%" OR purchasedform like "%'.$searchTerm.'%" OR tbl_employee.employeename like "%'.$searchTerm.'%"  OR purchasedate like "%'.$searchTerm.'%" OR tbl_expense.price like "%'.$searchTerm.'%" )';
             }
 				$startdate=!empty($_POST['startdate']) ? $_POST['startdate'] : '';
 				$enddate=!empty($_POST['enddate']) ? $_POST['enddate'] : '';
@@ -812,7 +816,7 @@ class Finance extends CI_Controller{
 			$query = "select tbl_expense.* , tbl_employee.employeename from tbl_expense INNER JOIN tbl_employee ON tbl_employee.id=tbl_expense.employee".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 	   		$expensesArr = $this->common_model->coreQueryObject($query);
 			
-			$query = "SELECT * from tbl_expense".$sWhere;
+			$query = "select tbl_expense.* , tbl_employee.employeename from tbl_expense INNER JOIN tbl_employee ON tbl_employee.id=tbl_expense.employee".$sWhere;
 			$expensesFilterArr = $this->common_model->coreQueryObject($query);
 			$iFilteredTotal = count($expensesFilterArr);
 

@@ -113,52 +113,51 @@ class Clients extends CI_Controller{
             $totalColumns = count($aColumns);
 
 			/** Paging Start **/
-            $sLimit = "";
-            $sOffset = "";
-            if ($_GET['iDisplayStart'] < 0) {
-                $_GET['iDisplayStart'] = 0;
-            }
-            if ($_GET['iDisplayLength'] < 0) {
-                $_GET['iDisplayLength'] = 10;
-            }
-            if (isset($_GET['iDisplayStart']) && $_GET['iDisplayLength'] != '-1') {
-                $sLimit = (int) substr($_GET['iDisplayLength'], 0, 6);
-                $sOffset = (int) $_GET['iDisplayStart'];
-            } else {
-                $sLimit = 10;
-                $sOffset = (int) $_GET['iDisplayStart'];
-            }
-            /** Paging End **/
-            /** Ordering Start **/
-            $noOrderColumns = array('other_do_ext');
-            if (isset($_GET['iSortCol_0']) && !in_array($aColumns[intval($_GET['iSortCol_0'])], $noOrderColumns)) {
-                $sOrder = " ";
-                for ($i = 0; $i < intval($_GET['iSortingCols']); $i++) {
-                    if ($_GET['bSortable_' . intval($_GET['iSortCol_' . $i])] == "true") {
+		$sLimit = "";
+		$sOffset = "";
+		if ($_GET['iDisplayStart'] < 0) {
+			$_GET['iDisplayStart'] = 0;
+		}
+		if ($_GET['iDisplayLength'] < 0) {
+			$_GET['iDisplayLength'] = 10;
+		}
+		if (isset($_GET['iDisplayStart']) && $_GET['iDisplayLength'] != '-1') {
+			$sLimit = (int) substr($_GET['iDisplayLength'], 0, 6);
+			$sOffset = (int) $_GET['iDisplayStart'];
+		} else {
+			$sLimit = 10;
+			$sOffset = (int) $_GET['iDisplayStart'];
+		}
+		/** Paging End **/
 
-                        if ($aColumns[intval($_GET['iSortCol_' . $i])] != '') {
-                            $sOrder .= $aColumns[intval($_GET['iSortCol_' . $i])] . " " . $_GET['sSortDir_' . $i] . ", ";
-                        } 
-                        else {
-                            $sOrder = $defaultOrderClause . " ";
-                        }
+		/** Ordering Start **/
+		$noOrderColumns = array('other_do_ext');
+		if (isset($_GET['iSortCol_0']) && !in_array($aColumns[intval($_GET['iSortCol_0'])], $noOrderColumns)) {
+		$sOrder = " ";
+			for ($i = 0; $i < intval($_GET['iSortingCols']); $i++) {
+				if ($_GET['bSortable_' . intval($_GET['iSortCol_' . $i])] == "true") {
 
-                        $sortColumnName = intval($_GET['iSortCol_' . $i]).'|'.$_GET['sSortDir_' . $i];
-                    }
-                }
+					if ($aColumns[intval($_GET['iSortCol_' . $i])] != '') {
+						$sOrder .= $aColumns[intval($_GET['iSortCol_' . $i])] . " " . $_GET['sSortDir_' . $i] . ", ";
+					}else {
+						$sOrder = $defaultOrderClause . " ";
+					}
+					$sortColumnName = intval($_GET['iSortCol_' . $i]).'|'.$_GET['sSortDir_' . $i];
+				}
+			}
 
-                $sOrder = substr_replace($sOrder, "", -2);
-                if ($sOrder == "ORDER BY") {
-                    $sOrder = "";
-                }
-            }
-             	else {
-                $sOrder = $defaultOrderClause;
-            	}
-				if(!empty($sOrder)){
-            	$sOrder = " ORDER BY ".$sOrder;
-            	}
-            	/** Ordering End **/
+			$sOrder = substr_replace($sOrder, "", -2);
+			if ($sOrder == "ORDER BY") {
+				$sOrder = "";
+			}
+			}else {
+				$sOrder = $defaultOrderClause;
+			}
+
+			if(!empty($sOrder)){
+				$sOrder = " ORDER BY ".$sOrder;
+			}
+			/** Ordering End **/
 
         	 /** Filtering Start */
            		if(!empty(trim($_GET['sSearch']))){
