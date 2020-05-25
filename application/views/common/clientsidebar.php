@@ -83,7 +83,7 @@ if($this->session->userdata('login')){
             </a>
         </li>
          <li>
-            <a href="<?php echo base_url().'noticeboard'?>" class="nav-link-s">
+            <a href="<?php echo base_url().'NoticeBoard'?>" class="nav-link-s">
                 <i class="ti-layout-media-overlay"></i>
                 <span>Notice Board</span>
             </a>
