@@ -743,7 +743,7 @@
 												</div>
 					            			</div>
 									  	</div>
-									  	
+									  	<input type="hidden" id="userType" name="userType" value="<?php echo $this->user_type; ?>">
 									  	<!-- tab5 -->
 									  	<div class="tab-pane fade" id="files" role="tabpanel" aria-labelledby="files-tab">
 					            			<div class="stats-box">

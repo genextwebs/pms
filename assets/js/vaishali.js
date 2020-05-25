@@ -201,7 +201,6 @@ jQuery(document).ready(function() {
 
 	else if((controllerName == 'project' || controllerName == 'task') && (functionName == 'task' || functionName == '')){
 		var user = jQuery('#userType').val();
-
 		if(user == 0){
 			var aoColumns = [{ "sWidth": "40px", sClass: "text-left", "asSorting": [  ] }, 
                       { "sWidth": "250px", sClass: "text-center", "asSorting": [ "desc", "asc" ] },

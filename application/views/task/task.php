@@ -133,9 +133,10 @@
 		                	<button type="button" class="btn btn-success" id="filter-results"><i class="fa fa-check"></i> Apply</button>
 		                </div>
 		            </div>
-		            <input type="hidden" id="userType" name="userType" value="<?php echo $this->user_type; ?>">
+		            
             	</div>
         	</form>
+        	<input type="hidden" id="userType" name="userType" value="<?php echo $this->user_type; ?>">
         </div>
         <div class="row">
         	<div class="col-md-12">
@@ -190,7 +191,6 @@
 				                            <th>Assigned To</th>
 				                           	<?php } ?>
 				                            <th>Client</th>
-				                            <!-- <th>Assigned By</th> -->
 				                            <th>Due Date</th>
 				                            <th>Status</th>
 				                            <th>Action</th>
@@ -199,37 +199,7 @@
 			                        <tbody>
 			                        	
 			                        </tbody>
-			                        <!-- <tbody>
-			                        	<tr>
-											<td>62</td>
-											<td><a href="javascript:;" class="show-task-detail">Test bugs</a></td>
-											<td><a href="javascript:;">Angkor</a></td>
-											<td>Prudence Senger Jr.</td>
-											<td><img src="images/default-profile-2.png" alt="user" class="img-circle" width="30"> Cabrel</td>
-											<td><img src="images/default-profile-2.png" alt="user" class="img-circle" width="30"> Abe Toy</td>
-											<td><span class="text-danger">07-09-2019</span></td>
-											<td><label class="label bg-red">Incomplete</label></td>
-											<td>
-												<a href="#" class="btn btn-info btn-circle" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>&nbsp;&nbsp;
-												<a href="javascript:;" class="btn btn-danger btn-circle sa-params" data-toggle="tooltip" data-task-id="62" data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>
-											</td>
-										</tr>
-										<tr>
-											<td>59</td>
-											<td><a href="javascript:;" class="show-task-detail">Test bugs</a></td>
-											<td><a href="javascript:;">Angkor</a></td>
-											<td>Prudence Senger Jr.</td>
-											<td><img src="images/default-profile-2.png" alt="user" class="img-circle" width="30"> Cabrel</td>
-											<td>-</td>
-
-											<td><span class="text-danger">07-09-2019</span></td>
-											<td><label class="label bg-olive">Doing</label></td>
-											<td>
-												<a href="#" class="btn btn-info btn-circle" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>&nbsp;&nbsp;
-												<a href="javascript:;" class="btn btn-danger btn-circle sa-params" data-toggle="tooltip" data-task-id="62" data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>
-											</td>
-										</tr>
-			                        </tbody> -->
+			                        
 			                    </table>
 			                </div>
 	                	</div>

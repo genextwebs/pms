@@ -966,10 +966,12 @@ class Project extends CI_Controller {
                 $sLimit = (int) substr($_GET['iDisplayLength'], 0, 6);
                 //echo $sLimit;die;
                 $sOffset = (int) $_GET['iDisplayStart'];
+                //echo $sOffset;die;
             } else {
                 $sLimit = 10;
                 //echo $sLimit;die;
                 $sOffset = (int) $_GET['iDisplayStart'];
+                
             }
             /** Paging End **/
             /** Ordering Start **/
@@ -1025,7 +1027,7 @@ class Project extends CI_Controller {
 		            }	
 	            }
 	            
-	            if($clientName == 'all' || empty($clientname)){
+	            if($clientName == 'all'){
 	            }
 	            else {
 	            	$sWhere.=' AND  clientid='.$clientName;
@@ -1064,7 +1066,7 @@ class Project extends CI_Controller {
 	    
 			$taskArr = $this->common_model->coreQueryObject($query);
 			$query = "SELECT tbl_task.* , tbl_employee.employeename,tbl_clients.clientname,tbl_project_info.clientid,tbl_project_info.projectname from tbl_task inner JOIN tbl_employee on tbl_task.assignedto = tbl_employee.id inner join tbl_project_info on tbl_task.projectid = tbl_project_info.id inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id ".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
-
+			//echo $query;die;
 		$taskFilterArr = $this->common_model->coreQueryObject($query);
 		$iFilteredTotal = count($taskFilterArr);
 		$taskAllArr = $this->common_model->getData('tbl_task');
@@ -1111,6 +1113,7 @@ class Project extends CI_Controller {
 					$actionStr.= '<a href='.base_url().'task/edittask/'.base64_encode($row->id).' class="btn btn-info btn-circle edit-task" data-toggle="tooltip" data-task-id="69" data-original-title="Edit"><i class="fa fa-pencil" aria-hidden="true"></i></a> &nbsp;';
 				}
 				$actionStr.='<a href="javascript:;" class="btn btn-danger btn-circle sa-params" data-toggle="tooltip" data-task-id="69" data-original-title="Delete" onclick="deleteTask(\''.$row->id.'\')"><i class="fa fa-times" aria-hidden="true"></i></a>';
+				//echo $actionStr;die;
 			if($this->user_type == 0){
 				$datarow[] = array(
 					$id = $i,
@@ -1137,7 +1140,7 @@ class Project extends CI_Controller {
 	        
 	        $i++;
       	}
-        
+        //echo "<PRE>";print_r($datarow);die;
 		$output = array
 		(
 		   	"sEcho" => intval($_GET['sEcho']),
