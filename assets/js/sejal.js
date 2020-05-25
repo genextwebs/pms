@@ -847,6 +847,7 @@ $("form[name='addtimelog']").validate({
 			timelog_t1  : "required",
 			timelog_t2  : "required",
 			memo  : "required",
+			empname : "required",
 
 	},	
 	messages:{
