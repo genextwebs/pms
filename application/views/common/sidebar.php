@@ -112,7 +112,7 @@ if($this->session->userdata('login')){
                 </li>
             </ul>
         </li>
-        <li>
+        <li <?php if($controller == 'timelog' && ($functionName == 'index' || $functionName == '')) { echo 'class="active"'; } ?>>
             <a href="<?php echo base_url().'timelog/'?>" class="nav-link-s">
                 <i class="icon-clock"></i>
                 <span>Time Logs</span>
@@ -126,7 +126,7 @@ if($this->session->userdata('login')){
         </li>
    
         
-          <li <?php if($controller == 'Attendance' && ($functionName == '' || $functionName == '')) { echo 'class="active"'; } ?>>
+          <li <?php if($controller == 'attendance' && ($functionName == 'index' || $functionName == '')) { echo 'class="active"'; } ?>>
             <a href="<?php echo base_url().'Attendance'?>" class="nav-link-s">
                 <i class="icon-clock"></i>
                 <span>Attendance</span>
@@ -162,7 +162,7 @@ if($this->session->userdata('login')){
                 <span>Leaves</span>
             </a>
         </li>
-        <li <?php if($controller == 'NoticeBoard' && ($functionName == 'index' || $functionName == '')) { echo 'class="active"'; } ?>>
+        <li <?php if($controller == 'noticeboard' && ($functionName == 'index' || $functionName == '')) { echo 'class="active"'; } ?>>
             <a href="<?php echo base_url().'NoticeBoard'?>" class="nav-link-s">
                 <i class="ti-layout-media-overlay"></i>
                 <span>Notice Board</span>
