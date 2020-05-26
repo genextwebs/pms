@@ -230,10 +230,10 @@ class Clients extends CI_Controller{
 				if($this->user_type == 2) {
 					$actionStr ="<abbr title=\"View Client Details\"><a class=\"btn btn-success btn-circle\" data-toggle=\"tooltip\" data-original-title=\"View Client Details\" href='".base_url()."Clients/viewclientdetail/".base64_encode($id)."/".base64_encode($clientid)."'><i class=\"fa fa-search\" aria-hidden=\"true\" ></i></a></abbr>";
 				}
-	          
+	          $clientname = "<a href=".base_url()."Clients/viewclientdetail/".base64_encode($id)."/".base64_encode($clientid).">".$row->clientname."</a>";
 				$datarow[] = array(
 					$id = $i,
-	                $row->clientname,
+	                $clientname,
 	                $row->companyname,
 		            $row->emailid,
 	                $sta,	

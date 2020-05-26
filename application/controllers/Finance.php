@@ -193,8 +193,6 @@ class Finance extends CI_Controller{
 						$clientid = $row->client;
 						$whereArr = array('id'=>$clientid);
 						$clientData = $this->common_model->getData('tbl_clients',$whereArr);
-						//print_r($clientData);
-
 						$userid = $clientData[$j]->user_id;
 
 						$checkstatus=$row->status;
@@ -593,9 +591,15 @@ class Finance extends CI_Controller{
 		/** Output */
 		$datarow = array();
 		$i = 1;
+
 		$sta = '';
 		foreach($invoicesArr as $row) {
+				$j = 0;
 			$id = $row->id;
+			$clientid = $row->clientid;
+			$whereArr = array('id'=>$clientid);
+						$clientData = $this->common_model->getData('tbl_clients',$whereArr);
+						$userid = $clientData[$j]->user_id;
 			if($row->status == '0'){
 				$status = $row->status = 'Unpaid';
 				$sta='<lable class="label label-danger">'.$status.'</label>';
@@ -656,11 +660,12 @@ class Finance extends CI_Controller{
 			}
 			//print_r($actionStr);die;	
 			if($this->user_type == 0){
+				$clientname = "<a href=".base_url()."Clients/viewclientdetail/".base64_encode($userid)."/".base64_encode($clientid).">".$row->clientname."</a>";
 				$datarow[] = array(
 				$id = $i,
                 $row->invoice,
                 $row->projectname,
-                $row->clientname,
+                $clientname,
                 $row->total,
              	$row->invoicedate,
                 $sta,	
@@ -679,6 +684,7 @@ class Finance extends CI_Controller{
 			}
 			
            	$i++;
+           	$j++;
       	}
         
 		$output = array(

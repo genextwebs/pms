@@ -204,7 +204,7 @@ class Ticket extends CI_Controller {
 		}
 	if($this->user_type == 0){
 
-		$query = "SELECT tbl_ticket.*,tbl_clients.clientname from tbl_ticket INNER JOIN tbl_clients on tbl_ticket.requestername=tbl_clients.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+		$query = "SELECT tbl_ticket.*,tbl_clients.clientname,tbl_clients.id as client from tbl_ticket INNER JOIN tbl_clients on tbl_ticket.requestername=tbl_clients.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 		//echo $query;die;
 		$TicketArr = $this->common_model->coreQueryObject($query);
 
@@ -247,6 +247,11 @@ class Ticket extends CI_Controller {
 		$datarow = array();
 		$i = 1;
 	foreach($TicketArr as $row) {
+		$j = 0;
+		$clientid = $row->client;
+						$whereArr = array('id'=>$clientid);
+						$clientData = $this->common_model->getData('tbl_clients',$whereArr);
+						$userid = $clientData[$j]->user_id;
 		$rowid = $row->id;
 			if($row->priority=='1'){
 				$priority=$row->priority='Low';
@@ -344,10 +349,17 @@ class Ticket extends CI_Controller {
 			
 		if($this->user_type == 0 || $this->user_type == 2){	
 			//For Priority
+			if($this->user_type == 0){
+				$clientname = "<a href=".base_url()."Clients/viewclientdetail/".base64_encode($userid)."/".base64_encode($clientid).">".$cname."</a>";
+			}
+			else{
+				$clientname = $cname;
+			}
+			
 			$datarow[] = array(
 				$id = $i,
 				$row->ticketsubject,
-				$cname,
+				$clientname,
 				$row->created_at,
 				'<b>Agent:  </b>'.$agent.
 				'<br/> <b>Staus:</b> <label class="label label-success">'.$row->status.'</label><br/>
@@ -355,6 +367,7 @@ class Ticket extends CI_Controller {
 			   	$actionstring
 			);
 			$i++;
+			$j++;
 
 		}else if($this->user_type == 1){
 

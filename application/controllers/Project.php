@@ -185,7 +185,7 @@ class Project extends CI_Controller {
 		}
 		if($this->user_type == 0){
 
-			$query = "SELECT tbl_project_info.*,tbl_clients.clientname as clientname from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+			$query = "SELECT tbl_project_info.*,tbl_clients.clientname as clientname,tbl_clients.id as client from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 			$projectArr = $this->common_model->coreQueryObject($query);
 			$query = "SELECT tbl_project_info.*,tbl_clients.clientname as clientname from tbl_project_info inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id".$sWhere;
 			$ProjectFilterArr = $this->common_model->coreQueryObject($query);
@@ -247,6 +247,11 @@ class Project extends CI_Controller {
 		$datarow = array();
 		$i = 1;
 		foreach($projectArr as $row) {
+			$j=0;
+			$clientid = $row->client;
+			$whereArr = array('id'=>$clientid);
+						$clientData = $this->common_model->getData('tbl_clients',$whereArr);
+						$userid = $clientData[$j]->user_id;
 			$rowid = $row->id;
 			$whereArr = array('project_id' => $rowid);
 			$p_member = $this->common_model->getData('tbl_project_member',$whereArr);
@@ -328,12 +333,19 @@ class Project extends CI_Controller {
 				$addMember = $emp_str;
 			}
 			if($this->user_type == 0 || $this->user_type == 2){
+				if($this->user_type == 0){
+					$clientname = "<a href=".base_url()."Clients/viewclientdetail/".base64_encode($userid)."/".base64_encode($clientid).">".$row->clientname."</a>";
+				}
+				else{
+					$clientname = $row->clientname;
+				}
+				
 				$datarow[] = array(
 				$id = $i,
 				$row->projectname.'<br/>'.$string.'<br/>'.$showStatus,
 				$addMember,
 				$row->deadline,
-				$row->clientname,
+				$clientname,
 				$actionstring
 				);
 			}else{
@@ -346,6 +358,7 @@ class Project extends CI_Controller {
 				);
 			}
 			$i++;
+			$j++;
 		}
 		$output = array
 		(
@@ -1066,7 +1079,7 @@ class Project extends CI_Controller {
             /** Filtering End */
 		}
 		if($this->user_type == 0){
-			$query = "SELECT tbl_task.* , tbl_employee.employeename,tbl_clients.clientname,tbl_project_info.clientid,tbl_project_info.projectname ,tbl_project_info.id as pid from tbl_task inner JOIN tbl_employee on tbl_task.assignedto = tbl_employee.id inner join tbl_project_info on tbl_task.projectid = tbl_project_info.id inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id ".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+			$query = "SELECT tbl_task.* , tbl_employee.employeename,tbl_clients.clientname,tbl_clients.id as client,tbl_project_info.clientid,tbl_project_info.projectname ,tbl_project_info.id as pid from tbl_task inner JOIN tbl_employee on tbl_task.assignedto = tbl_employee.id inner join tbl_project_info on tbl_task.projectid = tbl_project_info.id inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id ".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 	    
 			$taskArr = $this->common_model->coreQueryObject($query);
 			$query = "SELECT tbl_task.* , tbl_employee.employeename,tbl_clients.clientname,tbl_project_info.clientid,tbl_project_info.projectname,tbl_project_info.id as pid from tbl_task inner JOIN tbl_employee on tbl_task.assignedto = tbl_employee.id inner join tbl_project_info on tbl_task.projectid = tbl_project_info.id inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id ".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
@@ -1092,8 +1105,14 @@ class Project extends CI_Controller {
 		/** Output */
 		$datarow = array();
 		$i = 1;
+		
 		$str = '';
 		foreach($taskArr as $row) {
+			$j=0;
+			$clientid = $row->client;
+			$whereArr = array('id'=>$clientid);
+						$clientData = $this->common_model->getData('tbl_clients',$whereArr);
+						$userid = $clientData[$j]->user_id;
 			if($row->status == 0){
 				$status = $row->status = 'Incomplete';
 				$str = '<label class="label label-warning">'.$status.'</label>';
@@ -1119,13 +1138,15 @@ class Project extends CI_Controller {
 				$actionStr.='<a href="javascript:;" class="btn btn-danger btn-circle sa-params" data-toggle="tooltip" data-task-id="69" data-original-title="Delete" onclick="deleteTask(\''.$row->id.'\')"><i class="fa fa-times" aria-hidden="true"></i></a>';
 				//echo $actionStr;die;
 				$projectname = "<a href=".base_url()."Project/showproject/".base64_encode($row->pid).">".$row->projectname."</a>";
+				$clientname = "<a href=".base_url()."Clients/viewclientdetail/".base64_encode($userid)."/".base64_encode($clientid).">".$row->clientname."</a>";
+
 			if($this->user_type == 0){
 				$datarow[] = array(
 					$id = $i,
 	                $row->title,
 	                $projectname,
 	                $row->employeename,
-	                $row->clientname,
+	                $clientname,
 					$row->duedate,
 					$str,
 					$actionStr
@@ -1144,6 +1165,7 @@ class Project extends CI_Controller {
 			}
 	        
 	        $i++;
+	        $j++;
       	}
         //echo "<PRE>";print_r($datarow);die;
 		$output = array
