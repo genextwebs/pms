@@ -7,6 +7,7 @@ class ClientDashboard extends CI_Controller
 		parent::__construct();
 		$this->load->model('common_model');
 		$this->login = $this->session->userdata('login');
+		$this->user_id = $this->login->id;
 		func_check_login();
 	}
 	public function index(){

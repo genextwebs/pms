@@ -7,7 +7,7 @@ class Employee extends CI_Controller
 		parent::__construct();
 		$this->load->model('common_model');
 		func_check_login();
-		$this->load->library('SendMail');	
+		$this->load->library('SendMail');
 	}
 	
 	public function index(){
@@ -348,9 +348,10 @@ class Employee extends CI_Controller
 			$actionStr = "<abbr title=\"Edit\"><a class=\"btn btn-info btn-circle\" data-toggle=\"tooltip\" data-original-title=\"Edit\" href='".base_url()."employee/editemployee/".base64_encode($row->id)."'><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i></a></abbr>
 				<abbr title=\"View Employee Detail\"><a class=\"btn btn-success btn-circle\" data-toggle=\"tooltip\" data-original-title=\"search\" href='".base_url()."employee/viewemployee/".base64_encode($row->id)."'><i class=\"fa fa-search\" aria-hidden=\"true\"></i></a></abbr>
 				<abbr title=\"Delete\"><a  class=\"btn btn-danger btn-circle sa-params\" data-toggle=\"tooltip\"  data-original-title=\"Delete\" href=\"javascript:void(0);\" onClick='deleteemployee(\"".base64_encode($row->id)."\");'><i class=\"fa fa-times\" aria-hidden=\"true\"></i></a></abbr>";
+				$employeename = "<a href=".base_url()."employee/viewemployee/".base64_encode($row->id).">".$row->employeename."</a>";
 			$datarow[] = array(
 				$id = $i,
-                $row->employeename,
+                $employeename,
                 $row->emailid,
 				$status,
 				$create_date,

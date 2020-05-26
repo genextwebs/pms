@@ -18,7 +18,18 @@ if($this->session->userdata('login')){
 	<ul class="list-unstyled components user">
         <li>
             <a href="#user-ico" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle collapsed">
-                <img class="img-circle" src="<?php echo base_url();?>assets/images/default-profile-3.png" alt="user-img">
+                <?php 
+                $where = array('id' => $this->user_id);
+                //echo $this->login;die;
+                $userdata = $this->common_model->getData('tbl_user',$where);
+                if(!empty($userdata[0]->profileimg)){
+                    $url = base_url().'upload/'.$userdata[0]->profileimg;
+                }
+                else{
+                    $url = base_url().'assets/images/default-profile-3.png';
+                }
+                ?>
+                <img class="img-circle" src="<?php echo $url; ?>" alt="user-img">
                 <span><?php echo !empty($loginName)?$loginName:'User';?></span>
             </a>
             <ul class="collapse list-unstyled" id="user-ico">
