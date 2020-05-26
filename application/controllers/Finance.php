@@ -181,13 +181,22 @@ class Finance extends CI_Controller{
 				$estimatesAllArr = $this->common_model->coreQueryObject($queryAll);
 				$iTotal = count($estimatesAllArr);
 			}
+			//print_r($estimatesArr);die;
 
 					/** Output */
 					$datarow = array();
 					$i = 1;
+					
 					foreach($estimatesArr as $row){
+						$j=0;
 						$id = $row->id;
 						$clientid = $row->client;
+						$whereArr = array('id'=>$clientid);
+						$clientData = $this->common_model->getData('tbl_clients',$whereArr);
+						//print_r($clientData);
+
+						$userid = $clientData[$j]->user_id;
+
 						$checkstatus=$row->status;
 						if($row->status == '0'){
 
@@ -234,10 +243,14 @@ class Finance extends CI_Controller{
 									</div>
 						</div>';
 					}
+
 					if($this->user_type == 0){
+
 						$datarow[] = array(
 							$id = $i,
-			                $row->clientname,
+
+			               /*"<a href="echo base_url().'Clients/viewclientdetail/'.base64_encode($userid).'/'.base64_encode($clientid)?>">"*/
+			               '<a href="'.base_url().'Clients/viewclientdetail/"'.base64_encode($userid)."/".base64_encode($clientid).'>'.$row->clientname.'</a>',
 			                $row->projectname,
 			                $row->total,
 							$create_date,
@@ -259,6 +272,8 @@ class Finance extends CI_Controller{
 					}
 						
 		           		$i++;
+		           		$j++;
+
 		      		}
         
 					$output = array
