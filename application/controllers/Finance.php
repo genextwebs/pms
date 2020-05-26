@@ -245,12 +245,13 @@ class Finance extends CI_Controller{
 					}
 
 					if($this->user_type == 0){
-
+						$clientname = "<a href=".base_url()."Clients/viewclientdetail/".base64_encode($userid)."/".base64_encode($clientid).">".$row->clientname."</a>";
 						$datarow[] = array(
 							$id = $i,
 
 			               /*"<a href="echo base_url().'Clients/viewclientdetail/'.base64_encode($userid).'/'.base64_encode($clientid)?>">"*/
-			               '<a href="'.base_url().'Clients/viewclientdetail/"'.base64_encode($userid)."/".base64_encode($clientid).'>'.$row->clientname.'</a>',
+			               //'<a href="'.base_url().'Clients/viewclientdetail/"'.base64_encode($userid)."/".base64_encode($clientid).'>'.$row->clientname.'</a>',
+			                $clientname,
 			                $row->projectname,
 			                $row->total,
 							$create_date,
