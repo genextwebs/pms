@@ -1079,10 +1079,10 @@ class Project extends CI_Controller {
             /** Filtering End */
 		}
 		if($this->user_type == 0){
-			$query = "SELECT tbl_task.* , tbl_employee.employeename,tbl_clients.clientname,tbl_clients.id as client,tbl_project_info.clientid,tbl_project_info.projectname ,tbl_project_info.id as pid from tbl_task inner JOIN tbl_employee on tbl_task.assignedto = tbl_employee.id inner join tbl_project_info on tbl_task.projectid = tbl_project_info.id inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id ".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+			$query = "SELECT tbl_task.* , tbl_employee.employeename,tbl_employee.user_id as empid,tbl_clients.clientname,tbl_clients.id as client,tbl_project_info.clientid,tbl_project_info.projectname ,tbl_project_info.id as pid from tbl_task inner JOIN tbl_employee on tbl_task.assignedto = tbl_employee.id inner join tbl_project_info on tbl_task.projectid = tbl_project_info.id inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id ".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 	    
 			$taskArr = $this->common_model->coreQueryObject($query);
-			$query = "SELECT tbl_task.* , tbl_employee.employeename,tbl_clients.clientname,tbl_project_info.clientid,tbl_project_info.projectname,tbl_project_info.id as pid from tbl_task inner JOIN tbl_employee on tbl_task.assignedto = tbl_employee.id inner join tbl_project_info on tbl_task.projectid = tbl_project_info.id inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id ".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+			$query = "SELECT tbl_task.* , tbl_employee.employeename,tbl_employee.user_id as empid,tbl_clients.clientname,tbl_project_info.clientid,tbl_project_info.projectname,tbl_project_info.id as pid from tbl_task inner JOIN tbl_employee on tbl_task.assignedto = tbl_employee.id inner join tbl_project_info on tbl_task.projectid = tbl_project_info.id inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id ".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 			//echo $query;die;
 		$taskFilterArr = $this->common_model->coreQueryObject($query);
 		$iFilteredTotal = count($taskFilterArr);
@@ -1091,11 +1091,11 @@ class Project extends CI_Controller {
 		}
 		else if($this->user_type == 2){
 
-			$query = "SELECT tbl_task.* , tbl_employee.employeename,tbl_clients.clientname,tbl_project_info.clientid,tbl_project_info.projectname ,tbl_project_info.id as pid from tbl_task inner JOIN tbl_employee on tbl_task.assignedto = tbl_employee.id inner join tbl_project_info on tbl_task.projectid = tbl_project_info.id inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+			$query = "SELECT tbl_task.* , tbl_employee.employeename,tbl_employee.user_id as empid,tbl_clients.clientname,tbl_project_info.clientid,tbl_project_info.projectname ,tbl_project_info.id as pid from tbl_task inner JOIN tbl_employee on tbl_task.assignedto = tbl_employee.id inner join tbl_project_info on tbl_task.projectid = tbl_project_info.id inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 			//echo $query;die;
 			$taskArr = $this->common_model->coreQueryObject($query);
 
-			$filterQuery = "SELECT tbl_task.* , tbl_employee.employeename,tbl_clients.clientname,tbl_project_info.clientid,tbl_project_info.projectname ,tbl_project_info.id as pid from tbl_task inner JOIN tbl_employee on tbl_task.assignedto = tbl_employee.id inner join tbl_project_info on tbl_task.projectid = tbl_project_info.id inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id ".$sWhere;
+			$filterQuery = "SELECT tbl_task.* , tbl_employee.employeename,tbl_employee.user_id as empid,tbl_clients.clientname,tbl_project_info.clientid,tbl_project_info.projectname ,tbl_project_info.id as pid from tbl_task inner JOIN tbl_employee on tbl_task.assignedto = tbl_employee.id inner join tbl_project_info on tbl_task.projectid = tbl_project_info.id inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id ".$sWhere;
 
 			$taskFilterArr = $this->common_model->coreQueryObject($filterQuery);
 			$iFilteredTotal = count($taskFilterArr);
@@ -1139,13 +1139,14 @@ class Project extends CI_Controller {
 				//echo $actionStr;die;
 				$projectname = "<a href=".base_url()."Project/showproject/".base64_encode($row->pid).">".$row->projectname."</a>";
 				$clientname = "<a href=".base_url()."Clients/viewclientdetail/".base64_encode($userid)."/".base64_encode($clientid).">".$row->clientname."</a>";
-
+				//echo $row->empid;die;
+				$employeename = "<a href=".base_url()."employee/viewemployee/".base64_encode($row->empid).">".$row->employeename."</a>";
 			if($this->user_type == 0){
 				$datarow[] = array(
 					$id = $i,
 	                $row->title,
 	                $projectname,
-	                $row->employeename,
+	                $employeename,
 	                $clientname,
 					$row->duedate,
 					$str,
