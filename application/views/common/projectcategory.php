@@ -18,13 +18,15 @@
 						</tr>
 						</thead>
 						 <tbody>
-								<?php foreach ($category as $row) { ?>      
+								<?php $i= 1;
+								foreach ($category as $row) { 
+									 ?>      
 									  <tr id="cate_<?php echo $row->id;?>">
-										  <td><?php echo $row->id; ?></td>
+										  <td><?php echo $i; ?></td>
 										  <td><?php echo $row->name; ?></td>
 										  <td><a href="javascript:void(0);" data-cat-id="1" class="btn btn-sm btn-danger btn-rounded delete-category" onclick="deletecat('<?php echo $row->id; ?>')" id='deletecat'>Remove</a></td>
 									  </tr>
-							   <?php } ?>
+							   <?php $i++; }  ?>
 						</tbody>
 					</table>
 				</div>
