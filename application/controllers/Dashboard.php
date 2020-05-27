@@ -73,8 +73,12 @@ class Dashboard extends CI_Controller
 
 		$data['totalticketResolved'] = count($data['ticketResolved']);
 
-
-		$data['getEarning'] = $this->common_model->getData('tbl_project_info');
+		$startdate = date('Y-m-d',strtotime('-1 month'));
+		$enddate = date('Y-m-d');
+		$earningQuery = 'select * from tbl_project_info where startdate BETWEEN "'.$startdate.'"AND "'.$enddate.'"';
+		//echo $earningQuery;
+		$data['getEarning'] = $this->common_model->coreQueryObject($earningQuery);
+		//print_r($data['getEarning']);die;
 		$temp = array();
 		foreach($data['getEarning'] as $earning){
 			$string = $earning->projectbudget;

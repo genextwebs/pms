@@ -236,7 +236,7 @@
     		<div class="row">
     			<div class="col-md-12">
     				<div class="stats-box">
-    					<h3 class="box-title mb-0">Recent Earnings</h3>
+    					<h3 class="box-title mb-0">Recent Earnings (Last 30 Days)</h3>
                         <?php
                             $str='';
                             $str1='';
