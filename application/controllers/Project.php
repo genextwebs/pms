@@ -335,14 +335,16 @@ class Project extends CI_Controller {
 			if($this->user_type == 0 || $this->user_type == 2){
 				if($this->user_type == 0){
 					$clientname = "<a href=".base_url()."Clients/viewclientdetail/".base64_encode($userid)."/".base64_encode($clientid).">".$row->clientname."</a>";
+					$projectname = "<a href=".base_url()."Project/showproject/".base64_encode($row->id).">".$row->projectname."</a>";
 				}
 				else{
 					$clientname = $row->clientname;
+					$projectname = $row->projectname;
 				}
 				
 				$datarow[] = array(
 				$id = $i,
-				$row->projectname.'<br/>'.$string.'<br/>'.$showStatus,
+				$projectname.'<br/>'.$string.'<br/>'.$showStatus,
 				$addMember,
 				$row->deadline,
 				$clientname,

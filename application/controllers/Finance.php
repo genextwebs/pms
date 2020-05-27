@@ -158,7 +158,7 @@ class Finance extends CI_Controller{
 			 if($this->user_type == 0){
 	    			/*$query = "select tbl_estimates.* , tbl_clients.clientname from tbl_estimates INNER JOIN tbl_clients ON tbl_clients.id=tbl_estimates.client".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;*/
 
-	    			$query = "SELECT e.* , c.id as clientid,c.clientname,p.projectname FROM tbl_estimates e INNER JOIN tbl_clients c ON c.id = e.client INNER JOIN tbl_project_info p ON p.id = e.project".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+	    			$query = "SELECT e.* , c.id as clientid,c.clientname,p.projectname,p.id as pid FROM tbl_estimates e INNER JOIN tbl_clients c ON c.id = e.client INNER JOIN tbl_project_info p ON p.id = e.project".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 	    			//echo $query;die;
 					$estimatesArr = $this->common_model->coreQueryObject($query);
 
@@ -244,13 +244,14 @@ class Finance extends CI_Controller{
 
 					if($this->user_type == 0){
 						$clientname = "<a href=".base_url()."Clients/viewclientdetail/".base64_encode($userid)."/".base64_encode($clientid).">".$row->clientname."</a>";
+						$projectname = "<a href=".base_url()."Project/showproject/".base64_encode($row->pid).">".$row->projectname."</a>";
 						$datarow[] = array(
 							$id = $i,
 
 			               /*"<a href="echo base_url().'Clients/viewclientdetail/'.base64_encode($userid).'/'.base64_encode($clientid)?>">"*/
 			               //'<a href="'.base_url().'Clients/viewclientdetail/"'.base64_encode($userid)."/".base64_encode($clientid).'>'.$row->clientname.'</a>',
 			                $clientname,
-			                $row->projectname,
+			                $projectname,
 			                $row->total,
 							$create_date,
 							$validtill,
@@ -559,7 +560,7 @@ class Finance extends CI_Controller{
 				}
 					/** Filtering End */
 
-			$query = "SELECT i.* , c.id as clientid,c.clientname,p.projectname FROM tbl_invoice i INNER JOIN tbl_clients c ON c.id = i.client INNER JOIN tbl_project_info p ON p.id = i.project".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+			$query = "SELECT i.* , c.id as clientid,c.clientname,p.projectname,p.id as pid FROM tbl_invoice i INNER JOIN tbl_clients c ON c.id = i.client INNER JOIN tbl_project_info p ON p.id = i.project".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 	   
 		$invoicesArr = $this->common_model->coreQueryObject($query);
 		//print_r($invoicesArr);die;
@@ -575,7 +576,7 @@ class Finance extends CI_Controller{
 		}
 		elseif($this->user_type == 0){
 
-			$query = "SELECT i.*, c.id as clientid,c.clientname,p.projectname FROM tbl_invoice i INNER JOIN tbl_clients c ON c.id = i.client INNER JOIN tbl_project_info p ON p.id = i.project".$sWhere;
+			$query = "SELECT i.*, c.id as clientid,c.clientname,p.projectname,p.id as pid FROM tbl_invoice i INNER JOIN tbl_clients c ON c.id = i.client INNER JOIN tbl_project_info p ON p.id = i.project".$sWhere;
 		
 			$invoicesFilterArr = $this->common_model->coreQueryObject($query);
 		
@@ -661,10 +662,11 @@ class Finance extends CI_Controller{
 			//print_r($actionStr);die;	
 			if($this->user_type == 0){
 				$clientname = "<a href=".base_url()."Clients/viewclientdetail/".base64_encode($userid)."/".base64_encode($clientid).">".$row->clientname."</a>";
+				$projectname = "<a href=".base_url()."Project/showproject/".base64_encode($row->pid).">".$row->projectname."</a>";
 				$datarow[] = array(
 				$id = $i,
                 $row->invoice,
-                $row->projectname,
+                $projectname,
                 $clientname,
                 $row->total,
              	$row->invoicedate,
@@ -835,8 +837,9 @@ class Finance extends CI_Controller{
 					/** Filtering End */
 		}
 				
-			$query = "select tbl_expense.* , tbl_employee.employeename from tbl_expense INNER JOIN tbl_employee ON tbl_employee.id=tbl_expense.employee".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+			$query = "select tbl_expense.* , tbl_employee.employeename,tbl_employee.user_id as empid from tbl_expense INNER JOIN tbl_employee ON tbl_employee.id=tbl_expense.employee".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 	   		$expensesArr = $this->common_model->coreQueryObject($query);
+	   		
 			
 			$query = "select tbl_expense.* , tbl_employee.employeename from tbl_expense INNER JOIN tbl_employee ON tbl_employee.id=tbl_expense.employee".$sWhere;
 			$expensesFilterArr = $this->common_model->coreQueryObject($query);
@@ -867,12 +870,13 @@ class Finance extends CI_Controller{
 
 					<abbr title=\"Delete\"><a  class=\"btn btn-danger btn-circle sa-params\" data-toggle=\"tooltip\"  data-original-title=\"Delete\" href=\"javascript:void(0);\" onclick=\"deleteexpenses('".base64_encode($id)."');\"><i class=\"fa fa-times\" aria-hidden=\"true\"></i></a></abbr>";
 
+					$employeename = "<a href=".base_url()."employee/viewemployee/".base64_encode($row->empid).">".$row->employeename."</a>";
 				$datarow[] = array(
 					$id = $i,
 	                $row->item,
 	                $row->price,
 	                $row->purchasedform,
-	                $row->employeename,
+	                $employeename,
 	             	$row->purchasedate,
 	                $sta,	
 					$actionStr,

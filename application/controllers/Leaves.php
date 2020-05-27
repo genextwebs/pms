@@ -168,7 +168,7 @@ class Leaves extends CI_Controller {
 
 		if($this->user_type == 0){
 	
-		$query = "SELECT tbl_leaves.*,tbl_employee.employeename as empname,tbl_leavetype.name as leavetype from tbl_leaves INNER JOIN tbl_employee on tbl_leaves.empid = tbl_employee.id INNER JOIN tbl_leavetype ON tbl_leavetype.id = tbl_leaves.leavetypeid".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+		$query = "SELECT tbl_leaves.*,tbl_employee.employeename as empname,tbl_employee.user_id as empid,tbl_leavetype.name as leavetype from tbl_leaves INNER JOIN tbl_employee on tbl_leaves.empid = tbl_employee.id INNER JOIN tbl_leavetype ON tbl_leavetype.id = tbl_leaves.leavetypeid".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 	
 		$LeavesArr = $this->common_model->coreQueryObject($query);
 	
@@ -234,9 +234,14 @@ class Leaves extends CI_Controller {
 				}
 								
 			}
+			if($this->user_type == 0){
+				$employeename = "<a href=".base_url()."employee/viewemployee/".base64_encode($row->empid).">".$row->empname."</a>";
+			}else{
+				$employeename = $row->empname;
+			}
 			$datarow[] = array(
 				$id = $i,
-				$row->empname,
+				$employeename,
 				$row->date,
 				$showStatus,
 				$row->leavetype,

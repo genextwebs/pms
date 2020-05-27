@@ -119,7 +119,7 @@ class AttandanceReport extends CI_Controller {
 				$sWhere = " WHERE 1 ".$sWhere;
 			}
 		}
-		$query = "SELECT tbl_employee.employeename,tbl_attendance.* FROM `tbl_attendance` inner join tbl_employee on tbl_attendance.employee=tbl_employee.id".$sWhere.' Group by employeename'.$sOrder.' limit '.$sOffset.', '.$sLimit;
+		$query = "SELECT tbl_employee.employeename,tbl_employee.user_id as empid,tbl_attendance.* FROM `tbl_attendance` inner join tbl_employee on tbl_attendance.employee=tbl_employee.id".$sWhere.' Group by employeename'.$sOrder.' limit '.$sOffset.', '.$sLimit;
 
 		$AttendanceArr = $this->common_model->coreQueryObject($query);
 		$query = "SELECT tbl_employee.employeename,tbl_attendance.* FROM `tbl_attendance` inner join tbl_employee on tbl_attendance.employee=tbl_employee.id".$sWhere;
@@ -163,11 +163,11 @@ class AttandanceReport extends CI_Controller {
 					$lateStatus = '<label class="label label-success">'.$attendance.'</label>';
 			}
 			
-			
+			$employeename = "<a href=".base_url()."employee/viewemployee/".base64_encode($row->empid).">".$row->employeename."</a>";
 			
 			$datarow[] = array(
 				$id = $i,
-				$row->employeename,
+				$employeename,
 				'<p class="btn btn-info btn-circle">'.count($getCountPresent).'</p><br/',
 				'<p class="btn btn-info btn-circle">'.count($getCountAbsent).'</p><br/>',
 				'<p class="btn btn-info btn-circle">'.count($getCountLate).'</p><br/>'

@@ -230,7 +230,7 @@ class FinanceReport extends CI_Controller {
 			
 		}
 		
-		$query = "SELECT tbl_invoice.*,projectname FROM `tbl_invoice` inner join tbl_project_info on tbl_invoice.project= tbl_project_info.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+		$query = "SELECT tbl_invoice.*,projectname,tbl_project_info.id as pid FROM `tbl_invoice` inner join tbl_project_info on tbl_invoice.project= tbl_project_info.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 		
 		$FinanceArr = $this->common_model->coreQueryObject($query);
 		$query = "SELECT tbl_invoice.*,projectname FROM `tbl_invoice` inner join tbl_project_info on tbl_invoice.project= tbl_project_info.id".$sWhere;
@@ -252,10 +252,10 @@ class FinanceReport extends CI_Controller {
 					$showStatus = '<label class="label label-success">'.$status.'</label>';
 			}
 			//echo($row->status);die;
-		
+			$projectname = "<a href=".base_url()."Project/showproject/".base64_encode($row->pid).">".$row->projectname."</a>";
 			$datarow[] = array(
 				$id = $i,
-				$row->projectname,
+				$projectname,
 				$row->invoice,
 				$row->total,
 				$row->invoicedate,

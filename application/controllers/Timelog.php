@@ -154,7 +154,7 @@ class Timelog extends CI_Controller {
 			
 		}
 		if($this->user_type == 0){
-			$query = "SELECT tbl_project_info.projectbudget,tbl_project_info.*,tbl_timelog.*,tbl_timelog.id as tid,tbl_employee.* FROM `tbl_timelog` inner join tbl_project_info on tbl_timelog.timelogprojectid = tbl_project_info.id inner join tbl_employee on tbl_employee.id = tbl_timelog.timelogemployeeid".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+			$query = "SELECT tbl_project_info.projectbudget,tbl_project_info.id as pid,tbl_project_info.*,tbl_timelog.*,tbl_timelog.id as tid,tbl_employee.user_id as empid,tbl_employee.* FROM `tbl_timelog` inner join tbl_project_info on tbl_timelog.timelogprojectid = tbl_project_info.id inner join tbl_employee on tbl_employee.id = tbl_timelog.timelogemployeeid".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 
 				$timeArr = $this->common_model->coreQueryObject($query);
 				//echo "<PRE>";print_r($timeArr);die;
@@ -177,11 +177,13 @@ class Timelog extends CI_Controller {
 							'<a href="javascript:;" onclick="edittimelog(\''.base64_encode($rowid).'\')" class="btn btn-info btn-circle" data-original-title="Edit" data-toggle="modal" data-target="#timelog-popup" ><i class="fa fa-pencil" aria-hidden="true"></i></a>
 
 							 <a href="javascript:void();" onclick="deletetimelog(\''.base64_encode($rowid).'\');"  class="btn btn-danger btn-circle sa-params" data-toggle="tooltip"  data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>';
-
+							 $projectname = "<a href=".base_url()."Project/showproject/".base64_encode($row->pid).">".$row->projectname."</a>";
+							 $employeename = "<a href=".base_url()."employee/viewemployee/".base64_encode($row->empid).">".$row->employeename."</a>";
 				$datarow[] = array(
+
 					$id = $i,
-					$row->projectname,
-					$row->employeename,
+					$projectname,
+					$employeename,
 					$row->timelogstartdate.'<br/>'.$row->timelogstarttime,
 					$row->timelogenddate.'<br/>'.$row->timelogendtime,
 					$row->totalhours,

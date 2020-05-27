@@ -103,7 +103,7 @@
 									         <th>Item Name</th>
 									         <th>Price</th>
 									         <th>Purchased From</th>
-											 <th>Employess</th>
+											 <th>Employees</th>
 											 <th>Purchase Date</th>
 											 <th>Status</th>
 											 <th>Action</th>

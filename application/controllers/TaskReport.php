@@ -125,7 +125,7 @@ class TaskReport extends CI_Controller {
 			}
 			
 		}
-		$query = "SELECT tbl_project_info.projectname,tbl_task.*,tbl_employee.employeename FROM `tbl_task` inner join tbl_project_info on tbl_task.projectid = tbl_project_info.id inner join tbl_employee on tbl_task.assignedto =tbl_employee.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+		$query = "SELECT tbl_project_info.projectname,tbl_task.*,tbl_employee.employeename,tbl_employee.user_id as empid FROM `tbl_task` inner join tbl_project_info on tbl_task.projectid = tbl_project_info.id inner join tbl_employee on tbl_task.assignedto =tbl_employee.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 		//echo $query;
 		$taskReportArr = $this->common_model->coreQueryObject($query);
 		//print_r($taskReportArr);die;
@@ -167,13 +167,13 @@ class TaskReport extends CI_Controller {
 					$status=$row->status='Completed';
 					$showStatus = '<label class="label label-danger">'.$status.'</label>';
 			}
-
+			$employeename = "<a href=".base_url()."employee/viewemployee/".base64_encode($row->empid).">".$row->employeename."</a>";
 		$datarow[] = array(
 			$id = $i,
 			$row->projectname,
 			$row->title,
 			$row->duedate,
-			$row->employeename,
+			$employeename,
 			$showStatus,
 			);
 			$i++;

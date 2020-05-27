@@ -31,11 +31,11 @@
         			<hr>
         			<div class="row">
         				<div class="col-sm-6 b-r">
-        					<strong>StartDate</strong> <br>
+        					<strong>Start Date</strong> <br>
     						<p class="text-muted"><?php echo !empty($projectlist[0]->startdate) ?  $projectlist[0]->startdate : ' '?></p>
         				</div>
         				<div class="col-sm-6">
-        					<strong>EndDate</strong> <br>
+        					<strong>End Date</strong> <br>
         					<p class="text-muted"><?php echo !empty($projectlist[0]->deadline) ?  $projectlist[0]->deadline : ' '?></p>
         				</div>
         			</div>

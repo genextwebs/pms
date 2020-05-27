@@ -118,7 +118,7 @@ class LeaveReport extends CI_Controller {
 			}
 		}
 	
-		$query = "SELECT tbl_leaves.*,tbl_employee.employeename from tbl_leaves inner join tbl_employee on tbl_leaves.empid =tbl_employee.id".$sWhere.' group By tbl_employee.employeename '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+		$query = "SELECT tbl_leaves.*,tbl_employee.employeename,tbl_employee.user_id as empid from tbl_leaves inner join tbl_employee on tbl_leaves.empid =tbl_employee.id".$sWhere.' group By tbl_employee.employeename '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 		//echo $query;die;
 		$LeavesArr = $this->common_model->coreQueryObject($query);
 
@@ -154,10 +154,10 @@ class LeaveReport extends CI_Controller {
 				$showStatus1 = '<label>'.$status.'</label>';
 				//$count++;	
 			}
-				
+				$employeename = "<a href=".base_url()."employee/viewemployee/".base64_encode($row->empid).">".$row->employeename."</a>";
 				$datarow[] = array(
 					$id = $i,
-					$row->employeename,
+					$employeename,
 					$showStatus.'<p class="btn btn-info btn-circle">'.count($getCountActive).'</p><br/><a href="javascript:;" onclick="showLeaveReportActive(\''.base64_encode($row->empid).'\');" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#commonleave" >View <i class="fa fa-plus" aria-hidden="true" ></i></a>',
 
 					$showStatus1.'<p class="btn btn-info btn-circle">'.count($getCountPending).'</p><br/><a href="javascript:;" onclick="showLeaveReportPending(\''.base64_encode($row->empid).'\');" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#commonleave" >View <i class="fa fa-plus" aria-hidden="true" ></i></a>');
