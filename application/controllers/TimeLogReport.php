@@ -44,6 +44,10 @@ class TimeLogReport extends CI_Controller {
 				$enddate=date('Y-m-d');
 			}
 			$sWhere = '';
+			if(!empty(trim($_GET['sSearch']))){
+				$searchTerm = trim($_GET['sSearch']);
+				$sWhere.= ' AND (tbl_project_info.projectname like "%'.$searchTerm.'%" OR tbl_timelog.timelogstartdate like "%'.$searchTerm.'%" OR tbl_timelog.timelogendtime like "%'.$searchTerm.'%" OR tbl_timelog.totalhours like "%'.$searchTerm.'%" OR tbl_project_info.projectbudget like "%'.$searchTerm.'%" OR tbl_employee.employeename like "%'.$searchTerm.'%")';
+			}
 	    	if(!empty($project)){
 				$sWhere.=' AND tbl_timelog.timelogprojectid='.$project;
 			}
@@ -55,7 +59,8 @@ class TimeLogReport extends CI_Controller {
 				$sWhere.=' AND tbl_timelog.timelogenddate<="'.$enddate.'"';
 			}
 	    	$sWhere = " WHERE 1".$sWhere;
-	    	$query = "SELECT * from tbl_timelog ".$sWhere;
+	    	$query = "SELECT tbl_project_info.projectbudget,tbl_project_info.*,tbl_timelog.*,tbl_employee.* FROM `tbl_timelog` inner join tbl_project_info on tbl_timelog.timelogprojectid = tbl_project_info.id 
+		    inner join tbl_employee on tbl_employee.id = tbl_timelog.timelogemployeeid".$sWhere;
 	    	//echo $query;die;
 	    	$data['getHours'] = $this->common_model->coreQueryObject($query);
 			$temp = array();

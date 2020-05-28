@@ -138,6 +138,7 @@
           $('#start_date').datepicker();
           calendar.fullCalendar('refetchEvents');
           $("#data-events").css("display",'none');
+          //window.location.reload();
         }
       });
     });

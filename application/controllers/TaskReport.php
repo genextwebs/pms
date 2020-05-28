@@ -178,7 +178,7 @@ class TaskReport extends CI_Controller {
 			);
 			$i++;
 		}
-	$ChartQuery = "select * from tbl_task ".$sWhere;
+	$ChartQuery = "SELECT tbl_project_info.projectname,tbl_task.*,tbl_employee.employeename FROM `tbl_task` inner join tbl_project_info on tbl_task.projectid = tbl_project_info.id inner join tbl_employee on tbl_task.assignedto =tbl_employee.id".$sWhere;
 	//echo $ChartQuery;die;
 	$Chart = $this->common_model->coreQueryObject($ChartQuery);
 	$incpm = $todo = $doing = $complete = 0;
