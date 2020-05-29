@@ -34,7 +34,7 @@
 			                <a href="<?php echo base_url().'employee/addemployee';?>"><span class=" m-0">Add Employee</span></a>
 			            </li>
 			            <li class="dropdown-item">
-			                <a href="javascript:void(0);"><span class=" m-0">Add Payment</span></a>
+			                <a href="<?php echo base_url().'payment';?>"><span class=" m-0">Add Payment</span></a>
 			            </li>
 			            <li class="dropdown-item">
 			                <a href="<?php echo base_url().'ticket/addticket';?>"><span class=" m-0">Add Ticket</span> </a>
