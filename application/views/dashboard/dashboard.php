@@ -11,7 +11,6 @@
         </div>
     </div>
 </nav>
-
 <!-- contetn-wrap -->
 <div class="content-in">  
     <div class="row db-stats">

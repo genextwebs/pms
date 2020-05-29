@@ -93,8 +93,7 @@ class Dashboard extends CI_Controller
 		//echo "<PRE>";print_r($data['finalTempArr']);die;
 		$this->load->view('common/header');
 		$this->load->view('dashboard/dashboard',$data);
-	/*		$this->load->view('common/footer');
-*/	}
+		/*$this->load->view('common/footer');	*/}
 
 	function load()
 	 {
