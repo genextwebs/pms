@@ -244,7 +244,7 @@
                 <th> Day </th>
                 <?php if($this->user_type == 0) { ?> 
                 <th> Action </th>
-               <<?php } ?> 
+               <?php } ?> 
             </tr>
             </thead>
             <tbody id="marTbody">
