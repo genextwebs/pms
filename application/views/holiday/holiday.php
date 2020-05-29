@@ -98,7 +98,10 @@
                                 <td><?php echo $j; ?></td>
                                 <td><?php echo $date; ?></td>
                                 <td><?php
-                                    if(($dateDay == 'Saturday' || $dateDay == 'Sunday') && ($SundayChk == 1 || $SaturdayChk == 1)){
+                                    if($dateDay == 'Saturday'  && $SaturdayChk == 1){
+                                        echo $janArr[$date].','.$dateDay;
+                                    }
+                                    elseif($dateDay == 'Sunday' && $SundayChk == 1){
                                         echo $janArr[$date].','.$dateDay;
                                     }
                                     else{
@@ -178,7 +181,10 @@
                                 <td><?php echo $date; ?></td>
                                 <td>
                                 <?php
-                                    if(($dateDay == 'Saturday' || $dateDay == 'Sunday') && ($SundayChk == 1 || $SaturdayChk == 1)){
+                                    if($dateDay == 'Saturday'  && $SaturdayChk == 1){
+                                        echo $febArr[$date].','.$dateDay;
+                                    }
+                                    elseif($dateDay == 'Sunday' && $SundayChk == 1){
                                         echo $febArr[$date].','.$dateDay;
                                     }
                                     else{
@@ -254,7 +260,10 @@
                                 <td><?php echo $date; ?></td>
                                 <td>
                                 <?php
-                                if(($dateDay == 'Saturday' || $dateDay == 'Sunday') && ($SundayChk == 1 || $SaturdayChk == 1)){
+                                if($dateDay == 'Saturday'  && $SaturdayChk == 1){
+                                    echo $marArr[$date].','.$dateDay;
+                                }
+                                elseif($dateDay == 'Sunday' && $SundayChk == 1){
                                     echo $marArr[$date].','.$dateDay;
                                 }
                                 else{
@@ -330,7 +339,10 @@
                                 <td><?php echo $date; ?></td>
                                 <td>
                                 <?php
-                                if(($dateDay == 'Saturday' || $dateDay == 'Sunday') && ($SundayChk == 1 || $SaturdayChk == 1)){
+                                if($dateDay == 'Saturday'  && $SaturdayChk == 1){
+                                    echo  $aprilArr[$date].','.$dateDay;
+                                }
+                                elseif($dateDay == 'Sunday' && $SundayChk == 1){
                                     echo $aprilArr[$date].','.$dateDay;
                                 }
                                 else{
@@ -406,7 +418,10 @@
                                 <td><?php echo $date; ?></td>
                                 <td>
                                 <?php
-                                if(($dateDay == 'Saturday' || $dateDay == 'Sunday') && ($SundayChk == 1 || $SaturdayChk == 1)){
+                                if($dateDay == 'Saturday'  && $SaturdayChk == 1){
+                                    echo $mayArr[$date].','.$dateDay;
+                                }
+                                elseif($dateDay == 'Sunday' && $SundayChk == 1){
                                     echo $mayArr[$date].','.$dateDay;
                                 }
                                 else{
@@ -482,7 +497,10 @@
                                 <td><?php echo $date; ?></td>
                                 <td>
                                 <?php
-                                if(($dateDay == 'Saturday' || $dateDay == 'Sunday') && ($SundayChk == 1 || $SaturdayChk == 1)){
+                                if($dateDay == 'Saturday'  && $SaturdayChk == 1){
+                                    echo $juneArr[$date].','.$dateDay;
+                                }
+                                elseif($dateDay == 'Sunday' && $SundayChk == 1){
                                     echo $juneArr[$date].','.$dateDay;
                                 }
                                 else{
@@ -558,7 +576,10 @@
                                 <td><?php echo $date; ?></td>
                                 <td>
                                 <?php
-                                if(($dateDay == 'Saturday' || $dateDay == 'Sunday') && ($SundayChk == 1 || $SaturdayChk == 1)){
+                                if($dateDay == 'Saturday'  && $SaturdayChk == 1){
+                                    echo  $julyArr[$date].','.$dateDay;
+                                }
+                                elseif($dateDay == 'Sunday' && $SundayChk == 1){
                                     echo $julyArr[$date].','.$dateDay;
                                 }
                                 else{
@@ -634,8 +655,11 @@
                                 <td><?php echo $date; ?></td>
                                 <td>
                                 <?php
-                                if(($dateDay == 'Saturday' || $dateDay == 'Sunday') && ($SundayChk == 1 || $SaturdayChk == 1)){
-                                    echo $augestArr[$date].','.$dateDay;
+                                if($dateDay == 'Saturday'  && $SaturdayChk == 1){
+                                    echo $augArr[$date].','.$dateDay;
+                                }
+                                elseif($dateDay == 'Sunday' && $SundayChk == 1){
+                                    echo $augArr[$date].','.$dateDay;
                                 }
                                 else{
                                     echo $augestArr[$date];
@@ -710,7 +734,10 @@
                                 <td><?php echo $date; ?></td>
                                 <td>
                                 <?php
-                                if(($dateDay == 'Saturday' || $dateDay == 'Sunday') && ($SundayChk == 1 || $SaturdayChk == 1)){
+                                if($dateDay == 'Saturday'  && $SaturdayChk == 1){
+                                    echo $sepArr[$date].','.$dateDay;
+                                }
+                                elseif($dateDay == 'Sunday' && $SundayChk == 1){
                                     echo $sepArr[$date].','.$dateDay;
                                 }
                                 else{
@@ -786,7 +813,10 @@
                                 <td><?php echo $date; ?></td>
                                 <td>
                                 <?php
-                                if(($dateDay == 'Saturday' || $dateDay == 'Sunday') && ($SundayChk == 1 || $SaturdayChk == 1)){
+                                if($dateDay == 'Saturday'  && $SaturdayChk == 1){
+                                    echo $octArr[$date].','.$dateDay;
+                                }
+                                elseif($dateDay == 'Sunday' && $SundayChk == 1){
                                     echo $octArr[$date].','.$dateDay;
                                 }
                                 else{
@@ -862,7 +892,10 @@
                                 <td><?php echo $date; ?></td>
                                 <td>
                                 <?php
-                                if(($dateDay == 'Saturday' || $dateDay == 'Sunday') && ($SundayChk == 1 || $SaturdayChk == 1)){
+                                if($dateDay == 'Saturday'  && $SaturdayChk == 1){
+                                    echo $novArr[$date].','.$dateDay;
+                                }
+                                elseif($dateDay == 'Sunday' && $SundayChk == 1){
                                     echo $novArr[$date].','.$dateDay;
                                 }
                                 else{
@@ -938,7 +971,10 @@
                                 <td><?php echo $date; ?></td>
                                 <td>
                                 <?php
-                                if(($dateDay == 'Saturday' || $dateDay == 'Sunday') && ($SundayChk == 1 || $SaturdayChk == 1)){
+                                if($dateDay == 'Saturday'  && $SaturdayChk == 1){
+                                    echo $decArr[$date].','.$dateDay;
+                                }
+                                elseif($dateDay == 'Sunday' && $SundayChk == 1){
                                     echo $decArr[$date].','.$dateDay;
                                 }
                                 else{

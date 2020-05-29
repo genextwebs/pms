@@ -850,7 +850,7 @@ function displayData(){
               alert('Something is wrong');
            	},
       	 	success: function(data) {
-
+      	 		//alert(data.janStr);
 	           	jQuery('#janTbody').html('');
 	       		jQuery('#janTbody').append(data.janStr);
 	       		jQuery('#febTbody').html('');
