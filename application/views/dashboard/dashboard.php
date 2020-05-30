@@ -329,6 +329,8 @@
                   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/jquery.timepicker.css">
                   <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
                   <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+                  <script src="<?php echo base_url();?>assets/js/bootstrap.js"></script>
+                  
                   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
                   <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
                   <script src="https://cdn.ckeditor.com/4.12.1/standard/ckeditor.js"></script>
@@ -530,6 +532,12 @@
                     </div>
                 </div>
             </div>
+            <footer>
+                <p>2020 &copy; PMS</p>
+            </footer>
+            <!-- ends of footer -->
+        </div>
+    </div>
           <script type="text/javascript">
   
 
