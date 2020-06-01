@@ -148,7 +148,7 @@
 	                        	<?php if($this->user_type == 0){
 	                        	?>
 	                        	<a href="<?php echo base_url().'task/addTask'?>" class="btn btn-outline-success btn-sm">New Task <i class="fa fa-plus" aria-hidden="true"></i></a>
-	                            <a href="javascript:;" class="btn btn-inverse btn-sm hidden-sm hidden-xs"><i class="ti-layout-column3" aria-hidden="true"></i> Task Board</a>
+	                            <a href="<?php echo base_url().'task/taskBoard'?>" class="btn btn-inverse btn-sm hidden-sm hidden-xs"><i class="ti-layout-column3" aria-hidden="true"></i> Task Board</a>
 	                            <a href="javascript:void(0);" class="btn btn-sm btn-outline-success ml-1" data-original-title="Edit" data-toggle="modal" data-target="#add-task-categ">Add Task Category <i class="fa fa-plus" aria-hidden="true"></i></a>
 
 	                        	<?php 

@@ -78,8 +78,8 @@ if($this->session->userdata('login')){
                 <li <?php if($controller == 'task' && ($functionName == 'task' || $functionName == '')) { echo 'class="active"'; } ?>>
                     <a href="<?php echo base_url().'task'?>">Tasks</a>
                 </li>
-                <li>
-                    <a href="#">Task Board</a>
+                <li <?php if($controller == 'task' && $functionName == 'taskBoard') { echo 'class="active"'; } ?>>
+                    <a href="<?php echo base_url().'task/taskBoard'?>">Task Board</a>
                 </li>
                     
             </ul>

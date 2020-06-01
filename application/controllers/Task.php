@@ -76,4 +76,22 @@ class Task extends CI_Controller {
 			}
 		}
 	}
+
+	public function taskBoard(){
+		$this->load->view('common/header');
+		$this->load->view('task/taskboard');
+		$this->load->view('common/footer');
+	}
+
+	public function editstatus(){
+		$userid = $_POST['userid'];
+		$data = $_POST['data'];
+		$newstatus = $_POST['newstatus'];
+		//echo $userid;die;
+		$where = array('id'=>$userid);
+		$updateArr = array('status'=>$newstatus);
+		$this->common_model->updateData('tbl_task',$updateArr,$where);
+		echo $data;exit();
+	}
+	
 }
