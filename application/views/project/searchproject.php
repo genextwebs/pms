@@ -832,8 +832,9 @@
 															    			
 															    	?>
 															        <tr>
+															        	<?php  $employeename = "<a href=".base_url()."employee/viewemployee/".base64_encode($allEmployee[$i]->user_id).">".$allEmployee[$i]->employeename."</a>"; ?>
 															            <td>
-																			<?php echo $allEmployee[$i]->employeename; ?>       
+																			<?php echo $employeename; ?>       
 															            </td>
 															            <td>
 															                <?php echo $timelogData[$i]->timelogstartdate.'  '.$timelogData[$i]->timelogstarttime ?>
