@@ -252,7 +252,7 @@ class FinanceReport extends CI_Controller {
 					$showStatus = '<label class="label label-success">'.$status.'</label>';
 			}
 			//echo($row->status);die;
-			$projectname = "<a href=".base_url()."Project/showproject/".base64_encode($row->pid).">".$row->projectname."</a>";
+			$projectname = "<a href=".base_url()."Project/overView/".base64_encode($row->pid).">".$row->projectname."</a>";
 			$datarow[] = array(
 				$id = $i,
 				$projectname,

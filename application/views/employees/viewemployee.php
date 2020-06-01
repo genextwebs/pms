@@ -83,9 +83,9 @@
                 	<div class="col-md-7">
                 		<div class="stats-box">
 		                	<ul class="nav nav-tabs theme-tabsamp" id="myTab" role="tablist">
-							  <li class="nav-item">
+							 <!--  <li class="nav-item">
 							    <a class="nav-link active" id="activity-tab" data-toggle="tab" href="#activity" role="tab" aria-controls="activity" aria-selected="true">Activity</a>
-							  </li>
+							  </li> -->
 							  <li class="nav-item">
 							    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
 							  </li>
@@ -102,15 +102,15 @@
 							  <li class="nav-item">
 							    <a class="nav-link" id="timelogs-tab" data-toggle="tab" href="#timelogs" role="tab" aria-controls="timelogs" aria-selected="false">Time Logs</a>
 							  </li>
-							  <li class="nav-item">
+							<!--   <li class="nav-item">
 							    <a class="nav-link" id="documents-tab" data-toggle="tab" href="#documents" role="tab" aria-controls="documents" aria-selected="false">Documents</a>
-							  </li>
+							  </li> -->
 							</ul>
 							<div class="tab-content mt-4" id="myTabContent">
 								<!-- 1 -->
-							  	<div class="tab-pane fade show active" id="activity" role="tabpanel" aria-labelledby="activity-tab">
+							  	<!-- <div class="tab-pane fade show active" id="activity" role="tabpanel" aria-labelledby="activity-tab">
 						  			No activity by the user.
-							  	</div>
+							  	</div> -->
 							  	<!-- 2 -->
 							  	<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 							  		<div class="row">
@@ -358,7 +358,7 @@
 									</div>
 							  	</div>
 							  	<!-- 7 -->
-							  	<div class="tab-pane fade" id="documents" role="tabpanel" aria-labelledby="documents-tab">
+							  	<!-- <div class="tab-pane fade" id="documents" role="tabpanel" aria-labelledby="documents-tab">
 							  		<button class="btn btn-sm btn-info addDocs" onclick="" data-toggle="modal" data-target="#emp-docs"><i class="fa fa-plus"></i> Add</button>
 							  		<br><br>
 							  		<div class="table-responsive">
@@ -383,7 +383,7 @@
 											</tbody>
 				                        </table>
                     				</div>
-							  	</div>
+							  	</div> -->
 							</div>
 		                </div>
                 	</div>

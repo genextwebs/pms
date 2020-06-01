@@ -36,14 +36,14 @@
 								  	<li class="nav-item">
 								    	<a class="nav-link <?php if($controller == 'Project' && $function == 'task') { echo "active";}?>" id="tasks-tab"  href="<?php echo base_url().'Project/task/'.base64_encode($id)?>" role="tab" aria-controls="tasks" aria-selected="false">Tasks</a>
 								  	</li>
-								  	<li class="nav-item">
+								  	<!-- <li class="nav-item">
 								    	<a class="nav-link" id="files-tab" data-toggle="tab" href="#files" role="tab" aria-controls="files" aria-selected="false">Files</a>
+								  	</li> -->
+								  	<li class="nav-item">
+								    	<a class="nav-link <?php if($controller == 'Project' && $function == 'invoices') { echo "active";}?>" id="invoices-tab" href="<?php echo base_url().'Project/invoices/'.base64_encode($id)?>" role="tab" aria-controls="invoices" aria-selected="false">Invoices</a>
 								  	</li>
 								  	<li class="nav-item">
-								    	<a class="nav-link" id="invoices-tab" data-toggle="tab" href="#invoices" role="tab" aria-controls="invoices" aria-selected="false">Invoices</a>
-								  	</li>
-								  	<li class="nav-item">
-								    	<a class="nav-link" id="timelogs-tab" data-toggle="tab" href="#timelogs" role="tab" aria-controls="timelogs" aria-selected="false">Time Logs</a>
+								    	<a class="nav-link <?php if($controller == 'Project' && $function == 'timelogs') { echo "active";}?>" id="timelogs-tab" href="<?php echo base_url().'Project/timelogs/'.base64_encode($id)?>" role="tab" aria-controls="timelogs" aria-selected="false">Time Logs</a>
 								  	</li>
 								</ul>
 			                </div>
@@ -73,7 +73,7 @@
 					            						</div>
 					            					</div>
 					            				</div> -->
-					            				<div class="col-md-6">
+					            				<!-- <div class="col-md-6">
 					            					<div id="active-timers" class="stats-box">
 					            						<h3 class="box-title b-b"><i class="fa fa-clock-o"></i> Active Timers</h3>
 					            						<div class="table-responsive">
@@ -94,7 +94,7 @@
 					                                        </table>
 					                                    </div>
 					            					</div>
-					            				</div>
+					            				</div> -->
 					            			</div>
 					            			<div class="row">
 					            				<div class="col-md-12">
@@ -204,7 +204,7 @@
 							                    </div>
 		            						</div>
 		            						<div class="row">
-		            							<div class="col-lg-9 col-md-8">
+		            							<div class="col-lg-9 col-md-9">
 		            								<div class="row">
 		            									<div class="col-md-6">
 		            										<div class="card br-0">
@@ -234,9 +234,7 @@
 		            												<div class="message-center">
 		            													<?php foreach($projectMember as $pm) { ?>
 				                                                        <a href="#">
-				                                                            <div class="user-img">
-				                                                                <img src="images/user-avtar.png" alt="user" class="img-circle" width="40" height="40">
-				                                                            </div>
+				                                                           
 				                                                            <div class="mail-contnet">
 				                                                                <h5><?php echo $pm->employeename;?></h5>
 				                                                                <span class="mail-desc"><?php echo $pm->emailid; ?></span>
@@ -259,19 +257,24 @@
 																	    <li class="list-group-item" data-role="task">
 																	        <strong>Title</strong> <span class="pull-right"><strong>Due Date</strong></span>
 																	    </li>
+																	    <?php $j=1; ?>
+																	    <?php   for($i=0;$i<=count($taskArr)-1;$i++) { 
+																	    	 ?>
 																	    <li class="list-group-item" data-role="task">
 																	        <div class="row">
 																	        	<div class="col-8">
-																		            1. I beg your.
+																		            <?php echo $j.'. '.$taskArr[$i]->title; ?>
+
 																		        </div>
-																		        <label class="label label-danger pull-right col-4">09-08-2019</label>
+																		        <label class="label label-danger pull-right col-4"><?php echo $taskArr[$i]->duedate; ?></label>
 																	        </div>
 																	    </li>
+																	<?php $j++;  }  ?>
 																	</ul>
 		            											</div>
 		            										</div>
 		            									</div>
-		            									<div class="col-md-6">
+		            									<!-- <div class="col-md-6">
 		            										<div class="card br-0">
 		            											<div class="card-header">
 		            												Files
@@ -280,10 +283,10 @@
 		            												You have not uploaded any file. 
 		            											</div>
 		            										</div>
-		            									</div>
+		            									</div> -->
 		            								</div>
 		            							</div>
-		            							<div id="project-timeline" class="col-lg-3 col-md-4">
+		            							<!-- <div id="project-timeline" class="col-lg-3 col-md-4">
 		            								<div class="card br-0">
             											<div class="card-header">
             												Activity Timeline
@@ -381,7 +384,7 @@
             												</div>
             											</div>
             										</div>
-		            							</div>
+		            							</div> -->
 		            						</div>
 									  	</div>
 									  	<!-- tab2 -->
@@ -396,38 +399,37 @@
 					            							<table class="table">
 															    <thead>
 															        <tr>
+															        	<th>#</th>
 															            <th>Name</th>
 															            <th>User Role</th>
 															            <th>Action</th>
 															        </tr>
 															    </thead>
 															    <tbody>
-															    	<?php
+															    	<?php $j=1;
 															    		for($i=0 ; $i<$emp_count;$i++){
 															    			$project_member_id = $member[$i]->memberid;
 															    	?>
 															        <tr id="<?php echo $project_member_id; ?>-tr">
+															        	<td><?php echo $j; ?></td>
+															        	<?php  $employeename = "<a href=".base_url()."employee/viewemployee/".base64_encode($member[$i]->empid).">".$member[$i]->employeename."</a>"; ?>
 															            <td>
 															                <div class="row">
-															                    <div class="col-sm-3 col-xs-4">
-															                        <img src="images/user-avtar.png" alt="user" class="img-circle" width="40">
-															                    </div>
+															                    
 															                    <div class="col-sm-9 col-xs-8">
 
-															                        <?php echo $member[$i]->employeename?><br>
-															                        <span class="text-muted font-12">Developer</span>
+															                        <?php echo $employeename?>
+															                        
 															                    </div>
 															                </div>
 															            </td>
+															            	
 															            <td>
-															                <div class="custom-control custom-radio radio-info">
-																			    <input type="radio" class="custom-control-input" id="pro-admin" name="radio-stacked" required>
-																			    <label class="custom-control-label" for="pro-admin">Project Admin</label>
-																			</div>
+															               	<?php echo $allDes[$i]->name;?>
 															            </td>
 															            <td><a href="javascript:;" class="btn btn-sm btn-danger btn-rounded delete-members" onclick="deleteProjectM('<?php echo base64_encode($project_member_id); ?>')"><i class="fa fa-times"></i> Remove</a></td>
 															        </tr>
-															    <?php } ?>
+															    <?php $j++;  } ?>
 															    </tbody>
 															</table>
 					            						</div>
@@ -465,7 +467,7 @@
 				                                            </div>
 					            						</form>
 					            						<hr>
-					            						<h3>Add Team</h3>
+					            						<!-- <h3>Add Team</h3>
 					            						<form>
 					            							<div class="form-group">
 					            								<input type="text" class="form-control" name="choose_team" placeholder="choose Team">
@@ -473,7 +475,7 @@
 					            							<div class="form-actions">
 				                                                <button type="submit" id="save-members" class="btn btn-success"><i class="fa fa-check"></i> Save</button>
 				                                            </div>
-					            						</form>
+					            						</form> -->
 					            					</div>
 					            				</div>
 					            			</div>
@@ -745,300 +747,115 @@
 									  	</div>
 									  	<input type="hidden" id="userType" name="userType" value="<?php echo $this->user_type; ?>">
 									  	<!-- tab5 -->
-									  	<div class="tab-pane fade" id="files" role="tabpanel" aria-labelledby="files-tab">
+									  	<!-- <div class="tab-pane fade" id="files" role="tabpanel" aria-labelledby="files-tab">
 					            			<div class="stats-box">
 					            				
 					            			</div>
-									  	</div>
+									  	</div> -->
 									  	<!-- tab6 -->
-									  	<div class="tab-pane fade" id="invoices" role="tabpanel" aria-labelledby="invoices-tab">
-					            			<div class="stats-box">
-					            				<h2>Invoices</h2>
-					            				<ul class="list-group" id="invoices-list">
-												    <li class="list-group-item">
-												        <div class="row">
-												            <div class="col-sm-5 col-xs-12 m-b-10">
-												                14957057798
-												            </div>
-												            <div class="col-sm-2 col-xs-3 m-b-10">
-												                $ 27066
-												            </div>
-												            <div class="col-sm-2 col-xs-3 m-b-10">
-												                <label class="label label-danger">Unpaid</label>
-												            </div>
-												            <div class="col-sm-3 col-xs-12 m-b-10">
-												                <span class="m-r-10">11-07-2019</span>
-												                <a href="#" data-toggle="tooltip" data-original-title="Download" class="btn btn-inverse btn-circle"><i class="fa fa-download"></i></a>
-												                &nbsp;&nbsp;
-												                <a href="javascript:;" data-toggle="tooltip" data-original-title="Delete" data-invoice-id="400" class="btn btn-danger btn-circle sa-params"><i class="fa fa-times"></i></a>
-												            </div>
-												        </div>
-												    </li>
-												    <li class="list-group-item">
-												        <div class="row">
-												            <div class="col-sm-5 col-xs-12 m-b-10">
-												                14957054757
-												            </div>
-												            <div class="col-sm-2 col-xs-3 m-b-10">
-												                $ 41372
-												            </div>
-												            <div class="col-sm-2 col-xs-3 m-b-10">
-												                <label class="label label-danger">Unpaid</label>
-												            </div>
-												            <div class="col-sm-3 col-xs-12 m-b-10">
-												                <span class="m-r-10">17-07-2019</span>
-												                <a href="#" data-toggle="tooltip" data-original-title="Download" class="btn btn-inverse btn-circle"><i class="fa fa-download"></i></a>
-												                &nbsp;&nbsp;
-												                <a href="javascript:;" data-toggle="tooltip" data-original-title="Delete" data-invoice-id="399" class="btn btn-danger btn-circle sa-params"><i class="fa fa-times"></i></a>
-												            </div>
-												        </div>
-												    </li>
-												    <li class="list-group-item">
-												        <div class="row">
-												            <div class="col-sm-5 col-xs-12 m-b-10">
-												                14957053139
-												            </div>
-												            <div class="col-sm-2 col-xs-3 m-b-10">
-												                $ 22254
-												            </div>
-												            <div class="col-sm-2 col-xs-3 m-b-10">
-												                <label class="label label-danger">Unpaid</label>
-												            </div>
-												            <div class="col-sm-3 col-xs-12 m-b-10">
-												                <span class="m-r-10">28-07-2019</span>
-												                <a href="#" data-toggle="tooltip" data-original-title="Download" class="btn btn-inverse btn-circle"><i class="fa fa-download"></i></a>
-												                &nbsp;&nbsp;
-												                <a href="javascript:;" data-toggle="tooltip" data-original-title="Delete" data-invoice-id="390" class="btn btn-danger btn-circle sa-params"><i class="fa fa-times"></i></a>
-												            </div>
-												        </div>
-												    </li>
-												    <li class="list-group-item">
-												        <div class="row">
-												            <div class="col-sm-5 col-xs-12 m-b-10">
-												                14957054053
-												            </div>
-												            <div class="col-sm-2 col-xs-3 m-b-10">
-												                $ 26986
-												            </div>
-												            <div class="col-sm-2 col-xs-3 m-b-10">
-												                <label class="label label-success">Paid</label>
-												            </div>
-												            <div class="col-sm-3 col-xs-12 m-b-10">
-												                <span class="m-r-10">14-07-2019</span>
-												                <a href="#" data-toggle="tooltip" data-original-title="Download" class="btn btn-inverse btn-circle"><i class="fa fa-download"></i></a>
-												                &nbsp;&nbsp;
-												                <a href="javascript:;" data-toggle="tooltip" data-original-title="Delete" data-invoice-id="389" class="btn btn-danger btn-circle sa-params"><i class="fa fa-times"></i></a>
-												            </div>
-												        </div>
-												    </li>
-												    <li class="list-group-item">
-												        <div class="row">
-												            <div class="col-sm-5 col-xs-12 m-b-10">
-												                14957053502
-												            </div>
-												            <div class="col-sm-2 col-xs-3 m-b-10">
-												                $ 20277
-												            </div>
-												            <div class="col-sm-2 col-xs-3 m-b-10">
-												                <label class="label label-danger">Unpaid</label>
-												            </div>
-												            <div class="col-sm-3 col-xs-12 m-b-10">
-												                <span class="m-r-10">09-07-2019</span>
-												                <a href="#" data-toggle="tooltip" data-original-title="Download" class="btn btn-inverse btn-circle"><i class="fa fa-download"></i></a>
-												                &nbsp;&nbsp;
-												                <a href="javascript:;" data-toggle="tooltip" data-original-title="Delete" data-invoice-id="388" class="btn btn-danger btn-circle sa-params"><i class="fa fa-times"></i></a>
-												            </div>
-												        </div>
-												    </li>
-												    <li class="list-group-item">
-												        <div class="row">
-												            <div class="col-sm-5 col-xs-12 m-b-10">
-												                14957054597
-												            </div>
-												            <div class="col-sm-2 col-xs-3 m-b-10">
-												                $ 37280
-												            </div>
-												            <div class="col-sm-2 col-xs-3 m-b-10">
-												                <label class="label label-success">Paid</label>
-												            </div>
-												            <div class="col-sm-3 col-xs-12 m-b-10">
-												                <span class="m-r-10">21-07-2019</span>
-												                <a href="#" data-toggle="tooltip" data-original-title="Download" class="btn btn-inverse btn-circle"><i class="fa fa-download"></i></a>
-												                &nbsp;&nbsp;
-												                <a href="javascript:;" data-toggle="tooltip" data-original-title="Delete" data-invoice-id="387" class="btn btn-danger btn-circle sa-params"><i class="fa fa-times"></i></a>
-												            </div>
-												        </div>
-												    </li>
-												    <li class="list-group-item">
-												        <div class="row">
-												            <div class="col-sm-5 col-xs-12 m-b-10">
-												                14957053775
-												            </div>
-												            <div class="col-sm-2 col-xs-3 m-b-10">
-												                $ 37770
-												            </div>
-												            <div class="col-sm-2 col-xs-3 m-b-10">
-												                <label class="label label-success">Paid</label>
-												            </div>
-												            <div class="col-sm-3 col-xs-12 m-b-10">
-												                <span class="m-r-10">15-07-2019</span>
-												                <a href="#" data-toggle="tooltip" data-original-title="Download" class="btn btn-inverse btn-circle"><i class="fa fa-download"></i></a>
-												                &nbsp;&nbsp;
-												                <a href="javascript:;" data-toggle="tooltip" data-original-title="Delete" data-invoice-id="386" class="btn btn-danger btn-circle sa-params"><i class="fa fa-times"></i></a>
-												            </div>
-												        </div>
-												    </li>
-												    <li class="list-group-item">
-												        <div class="row">
-												            <div class="col-sm-5 col-xs-12 m-b-10">
-												                14957053345
-												            </div>
-												            <div class="col-sm-2 col-xs-3 m-b-10">
-												                $ 40524
-												            </div>
-												            <div class="col-sm-2 col-xs-3 m-b-10">
-												                <label class="label label-success">Paid</label>
-												            </div>
-												            <div class="col-sm-3 col-xs-12 m-b-10">
-												                <span class="m-r-10">27-07-2019</span>
-												                <a href="#" data-toggle="tooltip" data-original-title="Download" class="btn btn-inverse btn-circle"><i class="fa fa-download"></i></a>
-												                &nbsp;&nbsp;
-												                <a href="javascript:;" data-toggle="tooltip" data-original-title="Delete" data-invoice-id="385" class="btn btn-danger btn-circle sa-params"><i class="fa fa-times"></i></a>
-												            </div>
-												        </div>
-												    </li>
-												    <li class="list-group-item">
-												        <div class="row">
-												            <div class="col-sm-5 col-xs-12 m-b-10">
-												                14957053273
-												            </div>
-												            <div class="col-sm-2 col-xs-3 m-b-10">
-												                $ 14709
-												            </div>
-												            <div class="col-sm-2 col-xs-3 m-b-10">
-												                <label class="label label-success">Paid</label>
-												            </div>
-												            <div class="col-sm-3 col-xs-12 m-b-10">
-												                <span class="m-r-10">26-07-2019</span>
-												                <a href="#" data-toggle="tooltip" data-original-title="Download" class="btn btn-inverse btn-circle"><i class="fa fa-download"></i></a>
-												                &nbsp;&nbsp;
-												                <a href="javascript:;" data-toggle="tooltip" data-original-title="Delete" data-invoice-id="384" class="btn btn-danger btn-circle sa-params"><i class="fa fa-times"></i></a>
-												            </div>
-												        </div>
-												    </li>
-												</ul>
-					            			</div>
+									  	<div class="tab-pane <?php if($controller == 'Project' && $function == 'invoices') { echo "active show";}?>" id="invoices" role="tabpanel" aria-labelledby="invoices-tab">
+									  		<div class="row">
+									  			
+					            						<div class="card-body">
+					            							<table class="table">
+															    <thead>
+															        <tr>
+															            <th>Invoice</th>
+															            <th>Total</th>
+															            <th>Invoice Date</th>
+															            <th>Status</th>
+															            <th>Action</th>
+															        </tr>
+															    </thead>
+															    <tbody>
+															    	<?php 
+															    		for($i=0 ; $i<=count($invoiceData)-1;$i++){
+
+															    			if($invoiceData[$i]->status == '0'){
+																	$status = $invoiceData[$i]->status = 'Unpaid';
+																	$sta='<lable class="label label-danger">'.$status.'</label>';
+																}
+																else if($invoiceData[$i]->status == '1'){
+																	$status = $invoiceData[$i]->status = 'Paid';
+																	$sta='<lable class="label label-success">'.$status.'</label>';
+																}
+																else if($invoiceData[$i]->status == '2'){
+																	$status = $invoiceData[$i]->status = 'Partially Paid';
+																	$sta='<lable class="label label-info">'.$status.'</label>';
+																}
+
+															    			
+															    	?>
+															        <tr>
+															            <td>
+																			<?php echo $invoiceData[$i]->invoice; ?>       
+															            </td>
+															            <td>
+															                <?php echo $invoiceData[$i]->total; ?>
+															            </td>
+															            <td>
+															            	 <?php echo $invoiceData[$i]->invoicedate; ?>
+															            </td>
+															            <td>
+															            	<?php echo $sta; ?>
+															            </td>
+															            <td><div class="dropdown action m-r-10">
+														                <button type="button" class="btn btn-outline-info dropdown-toggle" data-toggle="dropdown">Action  <span class="caret"></span></button>
+														                		<div class="dropdown-menu">
+														                		 <a  class="dropdown-item" href='<?php echo base_url().'Finance/downloadFiles/'.base64_encode($invoiceData[$i]->id)?>'><i class="fa fa-download"></i> Download</a></div></div></td>
+																		<?php } ?>
+															    </tbody>
+															</table>
+					            
+					            				</div>
+									  		</div>
 									  	</div>
 									  	<!-- tab7 -->
-									  	<div class="tab-pane fade" id="timelogs" role="tabpanel" aria-labelledby="timelogs-tab">
-					            			<div class="stats-box">
-					            				<h2>Time Logs</h2>
-					            				<div class="row">
-					            					<div class="col-md-12">
-					            						<form class="">
-						            						<div class="form-body">
-						            							<div class="row mt-3">
-																    <div class="col-md-3">
-																        <div class="form-group">
-																            <label>Employee Name</label>
-																            <select class="custom-select br-0
-																            " name="user_id" id="user_id" data-style="form-control">
-																                <option value="64">Tianna Franecki</option>
-																            </select>
-																        </div>
-																    </div>
-																    <div class="col-md-3">
-																        <div class="form-group">
-																            <label>Start Date</label>
-																            <input id="start_date" name="start_date" type="text" class="form-control" value="31-08-2019">
-																        </div>
-																    </div>
-																    <div class="col-md-3">
-																        <div class="form-group">
-																            <label>End Date</label>
-																            <input id="end_date" name="end_date" type="text" class="form-control" value="31-08-2019">
-																        </div>
-																    </div>
-																</div>
-						            						</div>
-						            						<div class="form-actions m-t-30">
-			                                                    <button type="button" id="save-form" class="btn btn-success"><i class="fa fa-check"></i> Save</button>
-			                                                </div>
-						            					</form>
-						            					<hr>
-					            					</div>
+									  	<div class="tab-pane <?php if($controller == 'Project' && $function == 'timelogs') { echo "active show";}?>" id="timelogs" role="tabpanel" aria-labelledby="timelogs-tab">
+					            			<div class="row">
+									  			
+					            						<div class="card-body">
+					            							<table class="table">
+															    <thead>
+															        <tr>
+															            <th>Who Logged</th>
+															            <th>Start Time</th>
+															            <th>End Time</th>
+															            <th>Total Hours</th>
+															            <th>Memo</th>
+															            <th>Action</th>
+															        </tr>
+															    </thead>
+															    <tbody>
+															    	<?php 
+															    		for($i=0 ; $i<=count($timelogData)-1;$i++){
+															    			
+															    	?>
+															        <tr>
+															            <td>
+																			<?php echo $allEmployee[$i]->employeename; ?>       
+															            </td>
+															            <td>
+															                <?php echo $timelogData[$i]->timelogstartdate.'  '.$timelogData[$i]->timelogstarttime ?>
+															            </td>
+															            <td>
+															            	 <?php echo $timelogData[$i]->timelogenddate.' '.$timelogData[$i]->timelogendtime ?>
+															            </td>
+															            <td>
+															            	<?php echo $timelogData[$i]->totalhours; ?>
+															            </td>
+															            <td><?php echo $timelogData[$i]->timelogmemo; ?></td>
+															            <td>
+															            	<a href="javascript:;" onclick="edittimelog('<?php echo base64_encode($timelogData[$i]->id); ?>')" class="btn btn-info btn-circle" data-original-title="Edit" data-toggle="modal" data-target="#timelog-popup" ><i class="fa fa-pencil" aria-hidden="true"></i></a>
+
+							 <a href="javascript:void();" onclick="deletetimelog('<?php echo base64_encode($timelogData[$i]->id); ?>');"  class="btn btn-danger btn-circle sa-params" data-toggle="tooltip"  data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>
+															            </td>
+																		<?php } ?>
+															    </tbody>
+															</table>
+					            											            					
 					            				</div>
-					            				<div class="table-responsive">
-												    <table class="table table-bordered" id="timelogs-table">
-												        <thead>
-												            <tr role="row">
-												                <th>Id</th>
-												                <th>Who Logged</th>
-												                <th>Start Time</th>
-												                <th>End Time</th>
-												                <th>Total Hours</th>
-												                <th>Memo</th>
-												                <th>Last updated by</th>
-												                <th>Action</th>
-												            </tr>
-												        </thead>
-												        <tbody>
-												          <tr role="row" class="odd">
-												             <td class="" tabindex="0">3</td>
-												             <td>Lemuel Padberg</td>
-												             <td>07-09-2019 12:00 am</td>
-												             <td>16-09-2019 04:15 pm</td>
-												             <td>232 hrs</td>
-												             <td>working ondolores</td>
-												             <td></td>
-												             <td>
-												                <a href="#" class="btn btn-success btn-circle" data-toggle="tooltip" data-original-title="View Client Details"><i class="fa fa-search" aria-hidden="true"></i></a>
-												                <a href="" class="btn btn-danger btn-circle sa-params" data-toggle="tooltip" data-user-id="3" data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>
-												             </td>
-												          </tr>
-												          <tr role="row" class="odd">
-												             <td class="" tabindex="0">3</td>
-												             <td>Lemuel Padberg</td>
-												             <td>07-09-2019 12:00 am</td>
-												             <td>16-09-2019 04:15 pm</td>
-												             <td>232 hrs</td>
-												             <td>working ondolores</td>
-												             <td></td>
-												             <td>
-												                <a href="#" class="btn btn-success btn-circle" data-toggle="tooltip" data-original-title="View Client Details"><i class="fa fa-search" aria-hidden="true"></i></a>
-												                <a href="" class="btn btn-danger btn-circle sa-params" data-toggle="tooltip" data-user-id="3" data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>
-												             </td>
-												          </tr>
-												          <tr role="row" class="odd">
-												             <td class="" tabindex="0">3</td>
-												             <td>Lemuel Padberg</td>
-												             <td>07-09-2019 12:00 am</td>
-												             <td>16-09-2019 04:15 pm</td>
-												             <td>232 hrs</td>
-												             <td>working ondolores</td>
-												             <td></td>
-												             <td>
-												                <a href="#" class="btn btn-success btn-circle" data-toggle="tooltip" data-original-title="View Client Details"><i class="fa fa-search" aria-hidden="true"></i></a>
-												                <a href="" class="btn btn-danger btn-circle sa-params" data-toggle="tooltip" data-user-id="3" data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>
-												             </td>
-												          </tr>
-												          <tr role="row" class="odd">
-												             <td class="" tabindex="0">3</td>
-												             <td>Lemuel Padberg</td>
-												             <td>07-09-2019 12:00 am</td>
-												             <td>16-09-2019 04:15 pm</td>
-												             <td>232 hrs</td>
-												             <td>working ondolores</td>
-												             <td></td>
-												             <td>
-												                <a href="#" class="btn btn-success btn-circle" data-toggle="tooltip" data-original-title="View Client Details"><i class="fa fa-search" aria-hidden="true"></i></a>
-												                <a href="" class="btn btn-danger btn-circle sa-params" data-toggle="tooltip" data-user-id="3" data-original-title="Delete"><i class="fa fa-times" aria-hidden="true"></i></a>
-												             </td>
-												          </tr>
-												        </tbody>
-												    </table>
-												</div>
-					            			</div>
+									  		</div>
 									  	</div>
 									</div>
 		            			</div>
@@ -1111,3 +928,23 @@
             <!-- end add task category. -->
         </div>
     </div>
+
+   <!-- edit timelog  --> 
+    <div class="modal fade project-category" id="timelog-popup" tabindex="-1" role="dialog" aria-labelledby="project-category" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content br-0">
+			<div class="modal-body">
+				<div class="table-responsive" id="timelogpreview">
+					<div class="form-body">
+						<h3 class="box-title">Timelog Info</h3><hr>
+					</div>
+					<div class="modal-body">
+						<div class="table-responsive" id="timelog_edit">
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

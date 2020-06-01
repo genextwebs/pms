@@ -244,7 +244,7 @@ class Finance extends CI_Controller{
 
 					if($this->user_type == 0){
 						$clientname = "<a href=".base_url()."Clients/viewclientdetail/".base64_encode($userid)."/".base64_encode($clientid).">".$row->clientname."</a>";
-						$projectname = "<a href=".base_url()."Project/showproject/".base64_encode($row->pid).">".$row->projectname."</a>";
+						$projectname = "<a href=".base_url()."Project/overView/".base64_encode($row->pid).">".$row->projectname."</a>";
 						$datarow[] = array(
 							$id = $i,
 
@@ -662,7 +662,7 @@ class Finance extends CI_Controller{
 			//print_r($actionStr);die;	
 			if($this->user_type == 0){
 				$clientname = "<a href=".base_url()."Clients/viewclientdetail/".base64_encode($userid)."/".base64_encode($clientid).">".$row->clientname."</a>";
-				$projectname = "<a href=".base_url()."Project/showproject/".base64_encode($row->pid).">".$row->projectname."</a>";
+				$projectname = "<a href=".base_url()."Project/overView/".base64_encode($row->pid).">".$row->projectname."</a>";
 				$datarow[] = array(
 				$id = $i,
                 $row->invoice,

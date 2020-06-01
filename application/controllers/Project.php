@@ -335,7 +335,7 @@ class Project extends CI_Controller {
 			if($this->user_type == 0 || $this->user_type == 2){
 				if($this->user_type == 0){
 					$clientname = "<a href=".base_url()."Clients/viewclientdetail/".base64_encode($userid)."/".base64_encode($clientid).">".$row->clientname."</a>";
-					$projectname = "<a href=".base_url()."Project/showproject/".base64_encode($row->id).">".$row->projectname."</a>";
+					$projectname = "<a href=".base_url()."Project/overView/".base64_encode($row->id).">".$row->projectname."</a>";
 				}
 				else{
 					$clientname = $row->clientname;
@@ -742,7 +742,7 @@ class Project extends CI_Controller {
 	public function templateMember(){
 		$data['id'] = base64_decode($this->uri->segment(3));
 		//echo $data['id'];die;
-		$sql = "SELECT tbl_template_member.id as memberid,tbl_template_member.emp_id, tbl_employee.id ,tbl_employee.employeename from tbl_template_member inner join tbl_employee on tbl_template_member.emp_id = tbl_employee.id where template_id =".$data['id'];
+		$sql = "SELECT tbl_template_member.id as memberid,tbl_template_member.emp_id, tbl_employee.id ,tbl_employee.employeename,tbl_employee.user_id as empid from tbl_template_member inner join tbl_employee on tbl_template_member.emp_id = tbl_employee.id where template_id =".$data['id'];
 		$data['temp_member'] = $this->common_model->coreQueryObject($sql);
 		$data['emp_count'] = count($data['temp_member']);
 		$data['employee'] = $this->common_model->getData('tbl_employee');
@@ -868,6 +868,8 @@ class Project extends CI_Controller {
 		$memberQue = "SELECT tbl_employee.*,tbl_project_member.*,tbl_user.* from tbl_employee inner join  tbl_project_member on tbl_employee.id = tbl_project_member.emp_id 
 			inner join tbl_user on tbl_employee.user_id = tbl_user.id 
 			where tbl_project_member.project_id=".$data['id'];
+		$whereArr = array('projectid'=>$data['id'],'status!='=>3);
+		$data['taskArr'] = $this->common_model->getData('tbl_task',$whereArr);
 		$data['projectMember'] = $this->common_model->coreQueryObject($memberQue);
 		$this->load->view('common/header');
 		$this->load->view('project/searchproject',$data);
@@ -877,8 +879,16 @@ class Project extends CI_Controller {
 
 	public function member(){
 		$data['id'] = base64_decode($this->uri->segment(3));
-		$sql = "SELECT tbl_project_member.id as memberid , tbl_project_member.emp_id , tbl_employee.id ,tbl_employee.employeename from tbl_project_member inner join tbl_employee on tbl_project_member.emp_id = tbl_employee.id where project_id =".$data['id'];
+		$sql = "SELECT tbl_project_member.id as memberid , tbl_project_member.emp_id , tbl_employee.id ,tbl_employee.employeename,tbl_employee.designation,tbl_employee.user_id as empid from tbl_project_member inner join tbl_employee on tbl_project_member.emp_id = tbl_employee.id where project_id =".$data['id'];
 		$data['member'] = $this->common_model->coreQueryObject($sql);
+		$designationData = array();
+		for($i=0;$i<=count($data['member'])-1;$i++){
+			$where = array('id'=>$data['member'][$i]->designation);
+			$designation = $this->common_model->getData('tbl_designation',$where);
+			array_push($designationData,$designation[0]);
+		}
+		$data['allDes'] = $designationData;
+		//echo "<PRE>";print_r($data['allDes']);die;
 		$data['emp_count'] = count($data['member']);
 		$data['employee'] = $this->common_model->getData('tbl_employee');
 		$this->load->view('common/header');
@@ -1139,7 +1149,7 @@ class Project extends CI_Controller {
 				}
 				$actionStr.='<abbr title="Delete"><a href="javascript:;" class="btn btn-danger btn-circle sa-params" data-toggle="tooltip" data-task-id="69" data-original-title="Delete" onclick="deleteTask(\''.$row->id.'\')"><i class="fa fa-times" aria-hidden="true"></i></a></abbr>';
 				//echo $actionStr;die;
-				$projectname = "<a href=".base_url()."Project/showproject/".base64_encode($row->pid).">".$row->projectname."</a>";
+				$projectname = "<a href=".base_url()."Project/overView/".base64_encode($row->pid).">".$row->projectname."</a>";
 				$clientname = "<a href=".base_url()."Clients/viewclientdetail/".base64_encode($userid)."/".base64_encode($clientid).">".$row->clientname."</a>";
 				//echo $row->empid;die;
 				$employeename = "<a href=".base_url()."employee/viewemployee/".base64_encode($row->empid).">".$row->employeename."</a>";
@@ -1257,7 +1267,30 @@ class Project extends CI_Controller {
 			//print_r($catArr);die;
 			echo json_encode($catArr);exit; 
 		}
-	
+	public function invoices(){
+		$data['id'] = base64_decode($this->uri->segment(3));
+		$whereArr = array('project'=>$data['id']);
+		$data['invoiceData'] = $this->common_model->getData('tbl_invoice',$whereArr);
+		$this->load->view('common/header');
+		$this->load->view('project/searchproject',$data);
+		$this->load->view('common/footer');
+	}
+	public function timelogs(){
+		$data['id'] = base64_decode($this->uri->segment(3));
+		$whereArr = array('timelogprojectid'=>$data['id']);
+		$employeeData = array();
+		$data['timelogData'] = $this->common_model->getData('tbl_timelog',$whereArr);
+		for($i=0;$i<=count($data['timelogData'])-1;$i++){
+			$where = array('id'=>$data['timelogData'][$i]->timelogemployeeid);
+			$employee = $this->common_model->getData('tbl_employee',$where); 
+			array_push($employeeData,$employee[0]);
+		}
+		$data['allEmployee'] = $employeeData;
+		$this->load->view('common/header');
+		$this->load->view('project/searchproject',$data);
+		$this->load->view('common/footer');
+	}
+
 
 }
 

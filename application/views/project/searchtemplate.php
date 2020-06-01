@@ -80,9 +80,7 @@
 		            													<?php //echo "<PRE>";print_r($templateMember);die;
 		            													foreach($templateMember as $tm) {  ?>
 				                                                        <a href="#">
-				                                                            <div class="user-img">
-				                                                                <img src="images/user-avtar.png" alt="user" class="img-circle" width="40" height="40">
-				                                                            </div>
+				                                                            
 				                                                            <div class="mail-contnet">
 				                                                                <h5><?php echo $tm->employeename;?></h5>
 				                                                                <span class="mail-desc"><?php echo $tm->emailid; ?></span>
@@ -109,32 +107,33 @@
 					            							<table class="table">
 															    <thead>
 															        <tr>
+															        	<th>#</th>
 															            <th>Name</th>
 															            
 															            <th>Action</th>
 															        </tr>
 															    </thead>
 															    <tbody>
-															    	<?php
+															    	<?php $j=1;
 															    		for($i=0 ; $i<$emp_count;$i++){
 															    			$temp_id = $temp_member[$i]->memberid;
 															    	?>
 															        <tr id="<?php echo $temp_id; ?>-tr">
+															        	<td><?php echo $j ?></td>
+															        	<?php  $employeename = "<a href=".base_url()."employee/viewemployee/".base64_encode($temp_member[$i]->empid).">".$temp_member[$i]->employeename."</a>"; ?>
 															            <td>
 															                <div class="row">
-															                    <div class="col-sm-3 col-xs-4">
-															                        <img src="images/user-avtar.png" alt="user" class="img-circle" width="40">
-															                    </div>
+															                    
 															                    <div class="col-sm-9 col-xs-8">
 
-															                        <?php echo $temp_member[$i]->employeename?><br>
+															                        <?php echo $employeename?><br>
 															                        
 															                    </div>
 															                </div>
 															            </td>
 															            <td><a href="javascript:;" class="btn btn-sm btn-danger btn-rounded delete-members" onclick="deleteTemplateM('<?php echo base64_encode($temp_id); ?>')"><i class="fa fa-times"></i> Remove</a></td>
 															        </tr>
-															    <?php } ?>
+															    <?php $j++; } ?>
 															    </tbody>
 															</table>
 					            						</div>
@@ -174,7 +173,7 @@
 				                                            </div>
 					            						</form>
 					            						<hr>
-					            						<h3>Add Team</h3>
+					            						<!-- <h3>Add Team</h3>
 					            						<form>
 					            							<div class="form-group">
 					            								<input type="text" class="form-control" name="choose_team" placeholder="choose Team">
@@ -182,7 +181,7 @@
 					            							<div class="form-actions">
 				                                                <button type="submit" id="save-members" class="btn btn-success"><i class="fa fa-check"></i> Save</button>
 				                                            </div>
-					            						</form>
+					            						</form> -->
 					            					</div>
 					            				</div>
 					            			</div>

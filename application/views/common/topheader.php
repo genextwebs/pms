@@ -10,12 +10,12 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
         	<ul class="search-add">
-			    <li class="">
+			   <!--  <li class="">
 			        <form role="search" class="app-search hidden-xs">
 			            <input type="text" name="search_key" value=""  placeholder="Search..." class="form-control">
 			            <a href="#" class="submit-search"><i class="fa fa-search"></i></a>
 			        </form>
-			    </li>
+			    </li> -->
 			    <li class="dropdown">
 			        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
 			            <span>Add</span> <i class="ti-plus"></i>
@@ -132,12 +132,12 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
         	<ul class="search-add">
-			    <li class="">
+			   <!--  <li class="">
 			        <form role="search" class="app-search hidden-xs">
 			            <input type="text" name="search_key" value=""  placeholder="Search..." class="form-control">
 			            <a href="#" class="submit-search"><i class="fa fa-search"></i></a>
 			        </form>
-			    </li>
+			    </li> -->
 			 
 			</ul>
             <ul class="nav navbar-nav ml-auto">

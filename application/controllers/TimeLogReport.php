@@ -202,7 +202,7 @@ class TimeLogReport extends CI_Controller {
 			foreach($timeArr as $row) {
 				$rowid = $row->id;
 				$projectid =$row->timelogprojectid;
-		        $projectname = "<a href=".base_url()."Project/showproject/".base64_encode($row->pid).">".$row->projectname."</a>";
+		        $projectname = "<a href=".base_url()."Project/overView/".base64_encode($row->pid).">".$row->projectname."</a>";
 		        $employeename = "<a href=".base_url()."employee/viewemployee/".base64_encode($row->empid).">".$row->employeename."</a>";
 				$datarow[] = array(
 					$id = $i,

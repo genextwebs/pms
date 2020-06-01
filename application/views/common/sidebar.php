@@ -19,9 +19,9 @@ if($this->session->userdata('login')){
                 <span><?php echo !empty($loginName)?$loginName:'User';?></span>
             </a>
             <ul class="collapse list-unstyled" id="user-ico">
-                 <li>
+                <!--  <li>
                     <a href="<?php echo base_url().'EmpDashboard'; ?>"><i class="fa fa-sign-in"></i> <span>Login As Employee</span></a>
-                </li>
+                </li> -->
                 <li>
                     <a href="<?php echo base_url().'Login/logout'; ?>"><i class="fa fa-power-off"></i> <span>Logout</span></a>
                 </li>

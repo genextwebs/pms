@@ -125,11 +125,11 @@ class TaskReport extends CI_Controller {
 			}
 			
 		}
-		$query = "SELECT tbl_project_info.projectname,tbl_task.*,tbl_employee.employeename,tbl_employee.user_id as empid FROM `tbl_task` inner join tbl_project_info on tbl_task.projectid = tbl_project_info.id inner join tbl_employee on tbl_task.assignedto =tbl_employee.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+		$query = "SELECT tbl_project_info.projectname,tbl_project_info.id as pid,tbl_task.*,tbl_employee.employeename,tbl_employee.user_id as empid FROM `tbl_task` inner join tbl_project_info on tbl_task.projectid = tbl_project_info.id inner join tbl_employee on tbl_task.assignedto =tbl_employee.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 		//echo $query;
 		$taskReportArr = $this->common_model->coreQueryObject($query);
 		//print_r($taskReportArr);die;
-		$query = "SELECT tbl_project_info.projectname,tbl_task.*,tbl_employee.employeename FROM `tbl_task` inner join tbl_project_info on tbl_task.projectid = tbl_project_info.id inner join tbl_employee on tbl_task.assignedto =tbl_employee.id".$sWhere;
+		$query = "SELECT tbl_project_info.projectname,tbl_project_info.id as pid,tbl_task.*,tbl_employee.employeename FROM `tbl_task` inner join tbl_project_info on tbl_task.projectid = tbl_project_info.id inner join tbl_employee on tbl_task.assignedto =tbl_employee.id".$sWhere;
 
 		$TimeFilterArr = $this->common_model->coreQueryObject($query);
 		//echo $this->db->last_query();die;
@@ -168,9 +168,10 @@ class TaskReport extends CI_Controller {
 					$showStatus = '<label class="label label-danger">'.$status.'</label>';
 			}
 			$employeename = "<a href=".base_url()."employee/viewemployee/".base64_encode($row->empid).">".$row->employeename."</a>";
+			 $projectname = "<a href=".base_url()."Project/overView/".base64_encode($row->pid).">".$row->projectname."</a>";
 		$datarow[] = array(
 			$id = $i,
-			$row->projectname,
+			$projectname,
 			$row->title,
 			$row->duedate,
 			$employeename,

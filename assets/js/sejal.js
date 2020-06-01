@@ -1216,6 +1216,7 @@ $("#save_tchannel").click(function(event) {
 	
 	//delete timelog
 	function deletetimelog(id){
+		
 		var url = base_url+"timelog/deletetimelog";
 		swal({
 			title: "Are you sure?",
@@ -1236,7 +1237,11 @@ $("#save_tchannel").click(function(event) {
 					    dataType: "html",
 				    success: function (data) {
 					    swal("Done!", "It was succesfully deleted!", "success");
-					    $('#timelog').DataTable().ajax.reload();
+					   
+					    if(controllerName == 'project' && functionName == 'timelogs'){
+					    		window.location.reload();
+					    }
+					     $('#timelog').DataTable().ajax.reload();
 				   },
 				    error: function (xhr, ajaxOptions, thrownError) {
 					   swal("Error deleting!", "Please try again", "error");
