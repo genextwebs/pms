@@ -986,7 +986,7 @@ $(document).ready(function(){
 var h=0;
 var m=0;
 var s=0;
-function to_start(){
+function to_start(id){
 
 	switch(document.getElementById('btn').value)
 	{
@@ -1001,6 +1001,28 @@ function to_start(){
 	document.getElementById('btn').value='Stop';
 	break;
 	}
+
+	//add timer Data
+	
+	memo = $('#memo').val();
+	btnvalue = document.getElementById('btn').value;
+	
+	$.ajax({
+            url: base_url + 'EmpDashboard/addtimerData',
+            type: 'post',
+            dataType: 'json',
+            data: { 
+                project : id,
+                memo : memo
+      
+                
+              }, 
+            success: function (msg) {
+              window.location.href = base_url + 'Payment/response/'+msg.invoiceid;
+            }
+        });
+
+
 }
 
 

@@ -182,11 +182,16 @@
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content br-0">
                         <div class="modal-header">
-                            <h4 class="modal-title"><i class=" ti-plus"></i>Start Timer</h4>
+                            <h2 class="modal-title"><i class=" ti-plus"></i>Start Timer</h2>
                             <button type="button" class="closedata" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
+                       <?php  if(empty($taskData)) { ?>
+                         <div class="modal-body">
+                            <h3>No Task Assigned</h3>
+                         </div>
+                       <?php } else { ?>
                         <div class="modal-body">
                             <form id="modeldefaultholiday" class="" name="modeldefaultholiday" method="post">
                                 <div class="form-body">
@@ -211,10 +216,10 @@
                                         <div class="col-md-12">  
                                             <div class="form-group">
                                                 <label>Memo</label>
-                                                <input type="text" name="memo">
+                                                <input type="text" name="memo" id="memo">
                                             </div>
                                         </div>
-                                        <div><input type="button" name="btn" id='btn' value="Start" onclick="to_start()"; class="btn btn-success"></div>
+                                        <div><input type="button" name="btn" id='btn' value="Start" onclick="to_start(<?php echo $row->id?>)"; class="btn btn-success"></div>
                                     </div>
 
                                 </div>
@@ -224,6 +229,7 @@
                                 <!-- a -->
                             </form>
                         </div>
+                    <?php } ?>
                     </div>
                 </div>
             </div>

@@ -35,6 +35,9 @@ class EmpDashboard extends CI_Controller
 			$whereArrUser = array('user_id'=>$this->user_id);
 			$userData = $this->common_model->getData('tbl_employee',$whereArrUser);
 
+			$whereArrPT = array('assignedto'=>$userData[0]->id);
+			$data['taskData'] = $this->common_model->getData('tbl_task',$whereArrPT);
+
 			$whereArrPT = array('status!='=>3,'assignedto'=>$userData[0]->id);
 			$data['taskData1'] = $this->common_model->getData('tbl_task',$whereArrPT);
 			$data['totalTaskPending'] = count($data['taskData1']);
@@ -79,6 +82,13 @@ class EmpDashboard extends CI_Controller
 		$this->load->view('common/header');
 		$this->load->view('empdashboard/edashboard',$data);
 		$this->load->view('common/footer');
+	}
+
+	public function addtimerData(){
+		if(!empty($_POST)){
+			$insertArr = array('project'=>$_POST['project'],'memo'=>$_POST['memo']);
+			$this->common_model->insertData('tbl_emptask_timer',$insertArr);
+		}
 	}
 	
 }
