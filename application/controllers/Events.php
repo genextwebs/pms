@@ -10,6 +10,7 @@ class Events extends CI_Controller {
 	  $this->load->model('common_model');
 	  $this->load->library('SendMail');
 		$this->login = $this->session->userdata('login');
+		$this->user_id = $this->login->id;
 		$this->user_type = $this->login->user_type;
 	 }
 

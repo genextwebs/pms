@@ -41,7 +41,7 @@ if($this->session->userdata('login')){
         <li>
             <a href="#user-ico" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle collapsed">
                 <?php 
-                $where = array('id' => $this->user_id);
+                $where = array('id'=>$this->user_id);
                 //echo $this->user_id;die;
                 $userdata = $this->common_model->getData('tbl_user',$where);
                 if(!empty($userdata[0]->profileimg)){
@@ -77,8 +77,8 @@ if($this->session->userdata('login')){
     $functionName = strtolower($this->uri->segment(2));
     ?>
     <ul class="list-unstyled components">
-        <li>
-            <a href="<?php echo base_url().'EmpDashboard'; ?>" class="nav-link-s">
+        <li <?php if($controller == 'empdashboard'){ echo 'class="active"'; } ?>>
+            <a href="<?php echo base_url().'EmpDashboard'; ?>" class="nav-link-s" >
                 <i class="icon-speedometer"></i>
                 <span>Dashbord</span>
             </a>
@@ -95,12 +95,12 @@ if($this->session->userdata('login')){
                 <i class="ti-layout-list-thumb"></i>
                 <span>Tasks</span>
             </a>
-            <ul class="collapse list-unstyled" id="taskmenu">
-                <li>
+            <ul class="collapse list-unstyled <?php if($controller == 'task') {echo 'show'; }?>" id="taskmenu">
+                <li <?php if($controller == 'task' && ($functionName == 'task' || $functionName == '')) { echo 'class="active"'; } ?>>
                     <a href="<?php echo base_url().'task'?>">Tasks</a>
                 </li>
-                <li>
-                    <a href="#">Task Board</a>
+                <li <?php if($controller == 'task' && $functionName == 'taskboard') { echo 'class="active"'; } ?>>
+                    <a href="<?php echo base_url().'task/taskBoard'?>">Task Board</a>
                 </li>
                 
             </ul>
@@ -111,7 +111,7 @@ if($this->session->userdata('login')){
                 <span>Time Logs</span>
             </a>
         </li>
-        <li <?php if($controller == 'Attendance' && ($functionName == 'Attendance' || $functionName == '')) { echo 'class="active"'; } ?>>
+        <li <?php if($controller == 'attendance' && ($functionName == 'attendance' || $functionName == '')) { echo 'class="active"'; } ?>>
             <a href="<?php echo base_url().'Attendance'?>" class="nav-link-s">
                 <i class="icon-clock"></i>
                 <span>Attendance</span>
@@ -141,8 +141,8 @@ if($this->session->userdata('login')){
                 <span>Leaves</span>
             </a>
         </li>
-        <li>
-            <a href="<?php echo base_url().'NoticeBoard'?>" class="nav-link-s">
+        <li <?php if($controller == 'noticeboard' && ($functionName == 'noticeboard' || $functionName == '')) { echo 'class="active"'; } ?>>
+            <a href="<?php echo base_url().'noticeboard'?>" class="nav-link-s">
                 <i class="ti-layout-media-overlay"></i>
                 <span>Notice Board</span>
             </a>

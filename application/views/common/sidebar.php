@@ -33,7 +33,7 @@ if($this->session->userdata('login')){
     $functionName = strtolower($this->uri->segment(2));
     ?>
     <ul class="list-unstyled components">
-        <li>
+        <li <?php if($controller == 'dashboard'){ echo 'class="active"'; } ?>>
             <a href="<?php echo base_url().'Dashboard'; ?>" class="nav-link-s">
                 <i class="icon-speedometer"></i>
                 <span>Dashbord</span>
@@ -78,7 +78,7 @@ if($this->session->userdata('login')){
                 <li <?php if($controller == 'task' && ($functionName == 'task' || $functionName == '')) { echo 'class="active"'; } ?>>
                     <a href="<?php echo base_url().'task'?>">Tasks</a>
                 </li>
-                <li <?php if($controller == 'task' && $functionName == 'taskBoard') { echo 'class="active"'; } ?>>
+                <li <?php if($controller == 'task' && $functionName == 'taskboard') { echo 'class="active"'; } ?>>
                     <a href="<?php echo base_url().'task/taskBoard'?>">Task Board</a>
                 </li>
                     
@@ -173,23 +173,23 @@ if($this->session->userdata('login')){
                <i class="ti-pie-chart"></i>
                <span> Reports </span>
             </a>
-            <ul class="collapse list-unstyled" id="reports" <?php if($controller == 'reports'){ echo 'show'; } ?>>
-                <li>
+            <ul class="collapse list-unstyled <?php if($controller == 'reports' ||  'taskreport' ||  'timelogreport' || 'financereport' || 'incomeexpensereport' || 'leavereport' || 'attandancereport') { echo 'show'; } ?>" id="reports" >
+                <li <?php if($controller == 'taskreport' && ($functionName == 'index' || $functionName == '')){ echo 'class="active"'; } ?>>
                     <a href="<?php echo base_url().'TaskReport/index'?>">Task Report</a>
                 </li>
-                <li>
+                <li <?php if($controller == 'timelogreport' && ($functionName == 'index' || $functionName == '')){ echo 'class="active"'; } ?>>
                     <a href="<?php echo base_url().'TimeLogReport/index'?>">Time Log Report</a>
                 </li>
-                <li>
+                <li <?php if($controller == 'financereport' && ($functionName == 'index' || $functionName == '')){ echo 'class="active"'; } ?>>
                 	<a href="<?php echo base_url().'FinanceReport/index'?>">Finance Report</a>
                 </li>
-                <li>
+                <li <?php if($controller == 'incomeexpensereport' && ($functionName == 'index' || $functionName == '')){ echo 'class="active"'; } ?>>
                 	<a href="<?php echo base_url().'IncomeExpenseReport/index'?>">Income vs Expense Report</a>
                 </li>
-                <li>
+                <li <?php if($controller == 'leavereport' && ($functionName == 'index' || $functionName == '')){ echo 'class="active"'; } ?>>
                 	<a href="<?php echo base_url().'LeaveReport/index'?>">Leave Report</a>
                 </li>
-                 <li>
+                 <li <?php if($controller == 'attandancereport' && ($functionName == 'index' || $functionName == '')){ echo 'class="active"'; } ?>>
                     <a href="<?php echo base_url().'AttandanceReport/index'?>">Attandance Report</a>
                 </li>
              

@@ -9,7 +9,7 @@ class EmpDashboard extends CI_Controller
 		$this->login = $this->session->userdata('login');
 		$this->user_id = $this->login->id;
 		$this->user_type = $this->login->user_type;
-
+		//echo $this->user_id;die;
 		func_check_login();
 	}
 	public function index(){
