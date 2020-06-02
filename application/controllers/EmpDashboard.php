@@ -35,8 +35,10 @@ class EmpDashboard extends CI_Controller
 			$whereArrUser = array('user_id'=>$this->user_id);
 			$userData = $this->common_model->getData('tbl_employee',$whereArrUser);
 
-			$whereArrPT = array('assignedto'=>$userData[0]->id);
-			$data['taskData'] = $this->common_model->getData('tbl_task',$whereArrPT);
+			$whereArrEmptask = array('assignedto'=>$userData[0]->id);
+			//print_r($whereArrEmptask);die;
+			$data['taskEmpData'] = $this->common_model->getData('tbl_task',$whereArrEmptask);
+			//print_r($data['taskData']);die;
 
 			$whereArrPT = array('status!='=>3,'assignedto'=>$userData[0]->id);
 			$data['taskData1'] = $this->common_model->getData('tbl_task',$whereArrPT);

@@ -1055,12 +1055,14 @@ class Project extends CI_Controller {
 		            	$sWhere.=' AND  assignedto='.$employee;
 		            }	
 	            }
+	            if(!empty($clientName)){
+	            	if($clientName == 'all'){
+	            	}
+		            else {
+		            	$sWhere.=' AND  clientid='.$clientName;
+		            }
+	            }
 	            
-	            if($clientName == 'all'){
-	            }
-	            else {
-	            	$sWhere.=' AND  clientid='.$clientName;
-	            }
 	            if($status == 'all'){
 	            }
 	            else{
@@ -1103,7 +1105,7 @@ class Project extends CI_Controller {
 		}
 		else if($this->user_type == 2){
 
-			$query = "SELECT tbl_task.* , tbl_employee.employeename,tbl_employee.user_id as empid,tbl_clients.clientname,tbl_project_info.clientid,tbl_project_info.projectname ,tbl_project_info.id as pid from tbl_task inner JOIN tbl_employee on tbl_task.assignedto = tbl_employee.id inner join tbl_project_info on tbl_task.projectid = tbl_project_info.id inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
+			$query = "SELECT tbl_task.* , tbl_employee.employeename,tbl_employee.user_id as empid,tbl_clients.clientname,tbl_clients.clientname,tbl_clients.id as client,tbl_project_info.clientid,tbl_project_info.projectname ,tbl_project_info.id as pid from tbl_task inner JOIN tbl_employee on tbl_task.assignedto = tbl_employee.id inner join tbl_project_info on tbl_task.projectid = tbl_project_info.id inner join tbl_clients on tbl_project_info.clientid = tbl_clients.id".$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
 			//echo $query;die;
 			$taskArr = $this->common_model->coreQueryObject($query);
 

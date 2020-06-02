@@ -187,7 +187,7 @@
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
-                       <?php  if(empty($taskData)) { ?>
+                       <?php  if(empty($taskEmpData)) { ?>
                          <div class="modal-body">
                             <h3>No Task Assigned</h3>
                          </div>
