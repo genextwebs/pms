@@ -16,11 +16,11 @@
 </nav>
 
 <!-- contetn-wrap -->
-<div  class="row">
+<div class="row">
 
  <div><input type="button" name="btn" id='btn1' value="stop" onclick="to_start()"; class="btn btn-success" style="display:none;"></div>
 </div>
-<p id="n1"></p>
+<p id="tasktimer"></p>
 
 <div class="content-in">  
     <div class="row db-stats">
@@ -217,6 +217,8 @@
                                             <div class="form-group">
                                                 <label>Memo</label>
                                                 <input type="text" name="memo" id="memo">
+                                                <input type ='hidden' id="userid" value="<?php echo $this->user_id; ?>">
+
                                             </div>
                                         </div>
                                         <div><input type="button" name="btn" id='btn' value="Start" onclick="to_start(<?php echo $row->id?>)"; class="btn btn-success"></div>

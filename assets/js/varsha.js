@@ -993,34 +993,60 @@ function to_start(id){
 	case  'Stop':
 	window.clearInterval(tm); // stop the timer 
 	document.getElementById('btn').value='Stop';
+	var button = 2;
 	break;
 	case  'Start':
 	tm=window.setInterval('disp()',1000);
 	$('#btn1').css("display","block");
 	$("#data-tasktimer").modal("toggle");
 	document.getElementById('btn').value='Stop';
+	var button = 1;
 	break;
 	}
 
 	//add timer Data
 	
 	memo = $('#memo').val();
-	btnvalue = document.getElementById('btn').value;
+	userid = $('#userid').val();
+
+
+	//btnvalue = document.getElementById('btn').value;
+	//alert(btnvalue);
 	
+	if(button == 1){
 	$.ajax({
             url: base_url + 'EmpDashboard/addtimerData',
             type: 'post',
             dataType: 'json',
             data: { 
                 project : id,
-                memo : memo
+                memo : memo,
+                userid : userid  
+              }, 
+            success: function (msg) {
+              
+            }
+        });
+	}
+	else if(button == 2){
+		loggedhours = $('#tasktimer').text();
+	$.ajax({
+            url: base_url + 'EmpDashboard/updateempTask',
+            type: 'post',
+            dataType: 'json',
+            data: { 
+                
+                userid : userid,
+                loggedhours : loggedhours
+
       
                 
               }, 
             success: function (msg) {
-              window.location.href = base_url + 'Payment/response/'+msg.invoiceid;
+              
             }
         });
+	}
 
 
 }
@@ -1036,7 +1062,7 @@ if(h<10){var h1='0' + h;}
 else{var h1=h;}
 // Display the output //
 str= h1 + ':' + m1 +':' + s1 ;
-document.getElementById('n1').innerHTML=str;
+document.getElementById('tasktimer').innerHTML=str;
 // Calculate the stop watch // 
 if(s<59){ 
 s=s+1;

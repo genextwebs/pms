@@ -86,8 +86,17 @@ class EmpDashboard extends CI_Controller
 
 	public function addtimerData(){
 		if(!empty($_POST)){
-			$insertArr = array('project'=>$_POST['project'],'memo'=>$_POST['memo']);
-			$this->common_model->insertData('tbl_emptask_timer',$insertArr);
+			$insertArr = array('project'=>$_POST['project'],'memo'=>$_POST['memo'],'empid'=>$_POST['userid']);
+			$last_inserted_id = $this->common_model->insertData('tbl_emptask_timer',$insertArr);
+			$this->session->set_userData('lastid',$last_inserted_id);
+		}
+	}
+	public function updateempTask(){
+		if(!empty($_POST)){
+			$updateArr = array('loggedhours'=>$_POST['loggedhours']);
+			$lastid = $this->session->userData('lastid');
+			$whereArr = array('id'=>$lastid,'empid'=>$_POST['userid']);
+			$this->common_model->updateData('tbl_emptask_timer',$updateArr,$whereArr);
 		}
 	}
 	
