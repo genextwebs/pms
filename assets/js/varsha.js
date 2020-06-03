@@ -184,6 +184,9 @@ $(document).ready(function(){
   	$("#startdate").datepicker({
 			 dateFormat: 'Y-m-d'
 	   });
+  	$("#startdate1").datepicker({
+			 dateFormat: 'Y-m-d'
+	   });
 		
 		$("#enddate").datepicker({
 	  		 dateFormat: 'Y-m-d'
@@ -1541,3 +1544,8 @@ $('#reset-filters-ticket').click(function(){
         $('#startdate').datepicker('setEndDate', maxDate);
     });
   }
+
+   $(function() {
+      $('#startdate1').datepicker(
+      	'setStartDate', new Date());
+    })

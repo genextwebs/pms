@@ -118,7 +118,7 @@
 									<div class="col-md-2" id="deadlineBox">
 										<div class="form-group">
 											<label class="control-label">Date<span class="astric">*</span></label>
-											<input type="text" name="date" id="startdate" autocomplete="off" class="form-control" value="<?php if(!empty($sessData['date'])){echo $sessData['date'];}else{ }?>" >
+											<input type="text" name="date" id="startdate1" class="form-control" value="<?php if(!empty($sessData['date'])){echo $sessData['date'];}else{ }?>" >
 										</div>
 									</div>
 								</div>

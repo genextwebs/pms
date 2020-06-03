@@ -42,10 +42,11 @@ class Leaves extends CI_Controller {
 				$type  = $this->input->post('leave_type');
 				$radio = $this->input->post('duration_radio');
 				$date = $this->input->post('date');
+				$leavedate = date("Y-m-d", strtotime($date));
 				$abs  = $this->input->post('absence');
 				$status = $this->input->post('status');
 
-				$whereArr = array('empid'=>$mem,'leavetypeid'=>$type,'duration'=>$radio,'date'=>$date,'reasonforabsence'=>$abs,'status'=>$status);
+				$whereArr = array('empid'=>$mem,'leavetypeid'=>$type,'duration'=>$radio,'date'=>$leavedate,'reasonforabsence'=>$abs,'status'=>$status);
 
 				$this->common_model->insertData('tbl_leaves',$whereArr);
 				$this->session->set_flashdata('message_name', 'Leaves Insert sucessfully');
@@ -173,7 +174,7 @@ class Leaves extends CI_Controller {
 		$LeavesArr = $this->common_model->coreQueryObject($query);
 	
 		$query = "SELECT tbl_leaves.*,tbl_employee.employeename as empname,tbl_leavetype.name as leavetype from tbl_leaves INNER JOIN tbl_employee on tbl_leaves.empid = tbl_employee.id INNER JOIN tbl_leavetype ON tbl_leavetype.id = tbl_leaves.leavetypeid".$sWhere;
-
+		//echo $query;die;
 		}else if($this->user_type == 2){
 	
 			$query = "SELECT tbl_leaves.*,tbl_employee.employeename as empname,tbl_leavetype.name as leavetype from tbl_leaves INNER JOIN tbl_employee on tbl_leaves.empid = tbl_employee.id INNER JOIN tbl_leavetype ON tbl_leavetype.id = tbl_leaves.leavetypeid where tbl_employee.user_id=".$this->user_id.''.$sWhere.' '.$sOrder.' limit '.$sOffset.', '.$sLimit;
