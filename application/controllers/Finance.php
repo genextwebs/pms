@@ -415,7 +415,9 @@ class Finance extends CI_Controller{
 	}
 	
 	public function insertinvoice(){
-		if($this->input->post('btnsubmit')){
+		//print_r($_POST);die;
+		if(!empty($_POST)){
+			//echo "gdsh";die;
 			$invoice=$this->input->post('invoice_number');
 			$client=$this->input->post('client');
 			$project=$this->input->post('project1');
@@ -432,12 +434,11 @@ class Finance extends CI_Controller{
 		
 			if($project != ''){
 			$sql="SELECT tbl_project_info.clientid,tbl_clients.clientname,tbl_clients.companyname FROM tbl_project_info INNER JOIN tbl_clients ON tbl_project_info.clientid = tbl_clients.id where tbl_project_info.id=".$project;	
-			$data['invoicedata']=$this->common_model->
-			coreQueryObject($sql);
+			$data['invoicedata']=$this->common_model->coreQueryObject($sql);
 			$insertArr=array('invoice' => $invoice,'project' => $project,'companyname'=>$data['invoicedata'][0]->companyname,'client'=>$client,'currency' => $currency,'invoicedate' => $invoicedate,'duedate'=>$duedate,'status'=>0,'recuringpayment'=>$recuringpayment,'billingfrequency'=>$billingfrequency,'billinginterval'=>$billinginterval,'billingcycle'=>$billingcycle,'total'=>$total,'note'=>$note);
 			$this->common_model->insertData('tbl_invoice',$insertArr);
 			$invoiceid=$this->db->insert_id();
-			
+			//print_r($insertArr);die;
 			$item=$this->input->post('item_name');
 			$qtyhrs=$this->input->post('quantity');
 			$unitprice=$this->input->post('cost_per_item');

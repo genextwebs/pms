@@ -267,7 +267,7 @@
 
 											<div class="row">
 												<div class="col-md-12">
-													<button type="submit" id="estimate-invoice" class="btn btn-success" name="btnsubmit"> <i class="fa fa-check"></i>Save</button>
+													<button type="submit" id="estimate-invoice" class="btn btn-success" name="btnsubmitdata"> <i class="fa fa-check"></i>Save</button>
 													<button type="Reset" name="btnreset" id="btnreset" class="btn btn-inverse"> <i class="fa fa-check"></i> Reset</button>
 												</div>
 											</div>
