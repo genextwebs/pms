@@ -173,7 +173,8 @@ if($this->session->userdata('login')){
                <i class="ti-pie-chart"></i>
                <span> Reports </span>
             </a>
-            <ul class="collapse list-unstyled <?php if($controller == 'reports' ||  'taskreport' ||  'timelogreport' || 'financereport' || 'incomeexpensereport' || 'leavereport' || 'attandancereport') { echo 'show'; } ?>" id="reports" >
+
+            <ul class="collapse list-unstyled <?php if($controller == 'reports' || $controller == 'taskreport' || $controller == 'timelogreport' || $controller == 'financereport' || $controller == 'incomeexpensereport' || $controller == 'leavereport' || $controller == 'attandancereport') { echo 'show'; } ?>" id="reports" >
                 <li <?php if($controller == 'taskreport' && ($functionName == 'index' || $functionName == '')){ echo 'class="active"'; } ?>>
                     <a href="<?php echo base_url().'TaskReport/index'?>">Task Report</a>
                 </li>

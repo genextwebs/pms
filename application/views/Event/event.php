@@ -73,6 +73,44 @@
       $('#data-events').show();
       $('body').addClass('modal-open');
      }
+     $(function() {
+      $('#start_date').datepicker('setStartDate', new Date());
+    }).on('changeDate', function (selected) {
+        $('#end_date').datepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true,
+            todayHighlight: true
+        });
+        var minDate = new Date(selected.date.valueOf());
+        $('#end_date').datepicker("update", minDate);
+        $('#end_date').datepicker('setStartDate', minDate);
+    });
+
+    function changeDate(){
+
+    $("#start_date").datepicker({
+        format: 'yyyy-mm-dd',
+        todayHighlight: true,
+        autoclose: true,
+    }).on('changeDate', function (selected) {
+        $('#end_date').datepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true,
+            todayHighlight: true
+        });
+        var minDate = new Date(selected.date.valueOf());
+        $('#end_date').datepicker("update", minDate);
+        $('#end_date').datepicker('setStartDate', minDate);
+    });
+    //for end date
+    $("#end_date").datepicker({
+        format: 'yyyy-mm-dd',
+        autoclose: true
+    }).on('changeDate', function (selected) {
+        var maxDate = new Date(selected.date.valueOf());
+        $('#start_date').datepicker('setEndDate', maxDate);
+    });
+  }
     </script>
     <script>
     var setDate = '';

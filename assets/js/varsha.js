@@ -1500,3 +1500,44 @@ $('#reset-filters-ticket').click(function(){
 	var oTable1 = $('#tickets').DataTable();
 	oTable1.draw();
 });
+
+//datepicker filter
+   $(function() {
+      $('#startdate').datepicker();
+    }).on('changeDate', function (selected) {
+        $('#enddate').datepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true,
+            todayHighlight: true
+        });
+        var minDate = new Date(selected.date.valueOf());
+        $('#enddate').datepicker("update", minDate);
+        $('#enddate').datepicker('setStartDate', minDate);
+    });
+
+    function changeDate(){
+
+    $("#startdate").datepicker({
+        format: 'yyyy-mm-dd',
+        todayHighlight: true,
+        autoclose: true,
+    }).on('changeDate', function (selected) {
+    	alert('dvg v');
+        $('#enddate').datepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true,
+            todayHighlight: true
+        });
+        var minDate = new Date(selected.date.valueOf());
+        $('#enddate').datepicker("update", minDate);
+        $('#enddate').datepicker('setStartDate', minDate);
+    });
+    //for end date
+    $("#enddate").datepicker({
+        format: 'yyyy-mm-dd',
+        autoclose: true
+    }).on('changeDate', function (selected) {
+        var maxDate = new Date(selected.date.valueOf());
+        $('#startdate').datepicker('setEndDate', maxDate);
+    });
+  }
