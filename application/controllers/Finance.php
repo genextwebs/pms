@@ -669,7 +669,7 @@ class Finance extends CI_Controller{
                 $projectname,
                 $clientname,
                 $row->total,
-             	$row->invoicedate,
+                date('d-m-Y', strtotime($row->invoicedate)),
                 $sta,	
 				$actionStr
            	);
@@ -679,7 +679,7 @@ class Finance extends CI_Controller{
                 $row->invoice,
                 $row->projectname,
                 $row->total,
-             	$row->invoicedate,
+             	 date('d-m-Y', strtotime($row->invoicedate)),
                 $sta,	
 				$actionStr
            	);
@@ -877,7 +877,7 @@ class Finance extends CI_Controller{
 	                $row->price,
 	                $row->purchasedform,
 	                $employeename,
-	             	$row->purchasedate,
+	                date('d-m-Y', strtotime($row->purchasedate)),
 	                $sta,	
 					$actionStr,
 	           	);

@@ -85,13 +85,17 @@ class Task extends CI_Controller {
 
 	public function editstatus(){
 		$userid = $_POST['userid'];
-		$data = $_POST['data'];
+		$whereTask = array('id' =>$userid);
+		$taskData = $this->common_model->getData('tbl_task',$whereTask);
+		$dragStatus = $_POST['dragStatus'];
 		$newstatus = $_POST['newstatus'];
 		//echo $userid;die;
 		$where = array('id'=>$userid);
 		$updateArr = array('status'=>$newstatus);
 		$this->common_model->updateData('tbl_task',$updateArr,$where);
-		echo $data;exit();
+		$pString = '';
+		$pString.= '<p class="task_status" draggable="true" ondragstart="dragThis(event,"'.$userid.'")" id="'.$newstatus.'">'.$taskData[0]->title.'</p>';
+		echo $pString;exit();
 	}
 	
 }

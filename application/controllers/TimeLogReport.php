@@ -208,8 +208,8 @@ class TimeLogReport extends CI_Controller {
 					$id = $i,
 					$projectname,
 					$employeename,
-					$row->timelogstartdate.'<br/>'.$row->timelogstarttime,
-					$row->timelogenddate.'<br/>'.$row->timelogendtime,
+					date('d-m-Y', strtotime($row->timelogstartdate)).'<br/>'.$row->timelogstarttime,
+					date('d-m-Y', strtotime($row->timelogenddate)).'<br/>'.$row->timelogendtime,
 					$row->totalhours,
 					$row->projectbudget,
 					

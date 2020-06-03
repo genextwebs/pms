@@ -258,7 +258,7 @@ class FinanceReport extends CI_Controller {
 				$projectname,
 				$row->invoice,
 				$row->total,
-				$row->invoicedate,
+				date('d-m-Y', strtotime($row->invoicedate)),
 				$showStatus
 			);
 				$i++;

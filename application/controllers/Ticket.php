@@ -360,7 +360,7 @@ class Ticket extends CI_Controller {
 				$id = $i,
 				$row->ticketsubject,
 				$clientname,
-				$row->created_at,
+				date('d-m-Y', strtotime($row->created_at)),
 				'<b>Agent:  </b>'.$agent.
 				'<br/> <b>Staus:</b> <label class="label label-success">'.$row->status.'</label><br/>
 			   <label><b>Priority: </b></label>'.$row->priority,
@@ -374,7 +374,7 @@ class Ticket extends CI_Controller {
 				$datarow[] = array(
 				$id = $i,
 				$row->ticketsubject,
-				$row->created_at,
+				date('d-m-Y', strtotime($row->created_at)),
 				'<b>Agent:</b>'.$agent.
 				'<br/> <b>Staus:</b> <label class="label label-success">'.$row->status.'</label><br/>
 			    <label><b>Priority:</b></label>'.$row->priority,

@@ -93,11 +93,12 @@ function dropThis(i,newstatus) {
     	url:base_url+'task/editstatus',
     	type:'POST',
     	dataType: 'html',
-    	data:{userid:taskid,data:status,newstatus:newstatus},
+    	data:{userid:taskid,dragStatus:status,newstatus:newstatus},
     	success: function(data) {
-    		//alert(data);
-    		i.target.appendChild(document.getElementById(data));
-    		//window.location.reload();
+    		//i.target.appendChild(document.getElementById(status));
+    		
+    		//detail = para.innerHTML(data);
+    		i.target.appendChild(data);
     	}
     });
     

@@ -346,7 +346,7 @@ class Project extends CI_Controller {
 				$id = $i,
 				$projectname.'<br/>'.$string.'<br/>'.$showStatus,
 				$addMember,
-				$row->deadline,
+				date('d-m-Y', strtotime($row->deadline)),
 				$clientname,
 				$actionstring
 				);
@@ -355,7 +355,7 @@ class Project extends CI_Controller {
 				$id = $i,
 				$row->projectname.'<br/>'.$string.'<br/>'.$showStatus,
 				//$addMember,
-				$row->deadline,
+				date('d-m-Y', strtotime($row->deadline)),
 				$actionstring
 				);
 			}
@@ -1162,7 +1162,7 @@ class Project extends CI_Controller {
 	                $projectname,
 	                $employeename,
 	                $clientname,
-					$row->duedate,
+	                date('d-m-Y', strtotime($row->duedate)),
 					$str,
 					$actionStr
 	        );
@@ -1173,7 +1173,7 @@ class Project extends CI_Controller {
 	                $row->title,
 	                $row->projectname,
 	                $row->clientname,
-					$row->duedate,
+					date('d-m-Y', strtotime($row->duedate)),
 					$str,
 					$actionStr
 	        );

@@ -33,9 +33,9 @@
 								    	<a class="nav-link <?php if($controller == 'Project' && $function == 'templateMember') { echo "active";}?>" id="members-tab" href="<?php echo base_url().'Project/templateMember/'.base64_encode($id)?>" role="tab" aria-controls="members" aria-selected="false">Members</a>
 								  	</li>
 								  	
-								  	<li class="nav-item">
+								  	<!-- <li class="nav-item">
 								    	<a class="nav-link " id="tasks-tab" data-toggle="tab" href="#tasks" role="tab" aria-controls="tasks" aria-selected="false">Tasks</a>
-								  	</li>
+								  	</li> -->
 								</ul>
 			                </div>
 			                <div class="contetn-tab">
@@ -189,7 +189,7 @@
 									 	<!-- tab3 -->
 									  	
 									  	<!-- tab4 -->
-									  	<div class="tab-pane fade" id="tasks" role="tabpanel" aria-labelledby="tasks-tab">
+									  	<!-- <div class="tab-pane fade" id="tasks" role="tabpanel" aria-labelledby="tasks-tab">
 									  		<div class="row mb-2">
 									  			<div id="new-tadk-panel" class="col-md-12">
 									  				<div class="card">
@@ -337,7 +337,7 @@
 												    </table>
 												</div>
 					            			</div>
-									  	</div>
+									  	</div> -->
 									  	
 									  	
 									</div>

@@ -173,7 +173,7 @@ class TaskReport extends CI_Controller {
 			$id = $i,
 			$projectname,
 			$row->title,
-			$row->duedate,
+			date('d-m-Y', strtotime($row->duedate)),
 			$employeename,
 			$showStatus,
 			);
