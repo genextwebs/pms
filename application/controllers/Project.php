@@ -265,7 +265,7 @@ class Project extends CI_Controller {
 				if(!empty($emp_arr)){
 					$emp_name = substr($emp_arr[0]->employeename,0,1);
 					$empfull_name = $emp_arr[0]->employeename;
-					$emp_str.= '<abbr title="'.$empfull_name.'"><p class="btn btn-info btn-circle" style="margin:5px;"></abbr>'.ucfirst($emp_name);
+					$emp_str.= '<abbr title="'.$empfull_name.'"><p class="btn btn-info btn-circle" style="margin:5px;">'.ucfirst($emp_name).'</p></abbr>';
 				}
 			}
 
@@ -693,7 +693,7 @@ class Project extends CI_Controller {
 				/** Output */
 				$datarow = array();
 				$i = 1;
-				$empFullname = '';
+				//$empFullname = '';
 				foreach($templateArr as $row) {
 					$rowid = $row->id;
 					$whereArr = array('template_id' => $rowid);
@@ -707,7 +707,7 @@ class Project extends CI_Controller {
 					//echo $emp_name;
 					$empFullname = $emp_arr[0]->employeename;
 					//echo $empFullname;
-					$emp_str.= '<abbr title="'.$empFullname.'"><p class="btn btn-info btn-circle" style="margin:5px;"></abbr>'.ucfirst($emp_name);
+					$emp_str.= '<abbr title="'.$empFullname.'"><p class="btn btn-info btn-circle" style="margin:5px;">'.ucfirst($emp_name).'</p></abbr>';
 					}	
 					$datarow[] = array(
 						$id = $i,

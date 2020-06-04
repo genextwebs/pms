@@ -428,6 +428,8 @@ ul.border-none li{
   text-align: center;
   font-size: 12px;
   line-height: 1.428571429;
+  font-weight: bold;
+  
 }
 .label {
   letter-spacing: .05em;
