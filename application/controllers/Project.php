@@ -264,7 +264,7 @@ class Project extends CI_Controller {
 
 				if(!empty($emp_arr)){
 					$emp_name = substr($emp_arr[0]->employeename,0,1);
-					$empfull_name = substr($emp_arr[0]->employeename);
+					$empfull_name = $emp_arr[0]->employeename;
 					$emp_str.= '<abbr title="'.$empfull_name.'"><p class="btn btn-info btn-circle" style="margin:5px;"></abbr>'.ucfirst($emp_name);
 				}
 			}
