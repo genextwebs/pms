@@ -264,7 +264,8 @@ class Project extends CI_Controller {
 
 				if(!empty($emp_arr)){
 					$emp_name = substr($emp_arr[0]->employeename,0,1);
-					$emp_str.= ucfirst($emp_name);
+					$empfull_name = substr($emp_arr[0]->employeename);
+					$emp_str.= '<abbr title="'.$empfull_name.'"><p class="btn btn-info btn-circle" style="margin:5px;"></abbr>'.ucfirst($emp_name);
 				}
 			}
 
@@ -327,7 +328,7 @@ class Project extends CI_Controller {
 			}
 			if($this->user_type == 0){
 				$addMember = "<a href='".base_url()."Project/member/".base64_encode($rowid)."'> <i class='fa fa-plus'></i> Add Project  Members</a>"
-				.'<br/>'.$emp_str;
+				.'<br/>'.$emp_str.'</p>';
 			}
 			else{
 				$addMember = $emp_str;
@@ -692,6 +693,7 @@ class Project extends CI_Controller {
 				/** Output */
 				$datarow = array();
 				$i = 1;
+				$empFullname = '';
 				foreach($templateArr as $row) {
 					$rowid = $row->id;
 					$whereArr = array('template_id' => $rowid);
@@ -702,7 +704,10 @@ class Project extends CI_Controller {
 					$whereArrEmp = array('id' => $emp_id);
 					$emp_arr = $this->common_model->getData('tbl_employee',$whereArrEmp);
 					$emp_name = substr($emp_arr[0]->employeename,0,1);
-					$emp_str.= ucfirst($emp_name);
+					//echo $emp_name;
+					$empFullname = $emp_arr[0]->employeename;
+					//echo $empFullname;
+					$emp_str.= '<abbr title="'.$empFullname.'"><p class="btn btn-info btn-circle" style="margin:5px;"></abbr>'.ucfirst($emp_name);
 					}	
 					$datarow[] = array(
 						$id = $i,

@@ -11,8 +11,11 @@ if($this->session->userdata('login')){
     }
 }
 ?>
+
 <div id="sidebar-scroll" class="slim-nav">
+
 	<ul class="list-unstyled components user">
+
         <li>
             <a href="#user-ico" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle collapsed">
                 <img class="img-circle" src="<?php echo base_url();?>assets/images/default-profile-3.png" alt="user-img">

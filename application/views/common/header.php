@@ -35,7 +35,7 @@
 	   <nav id="sidebar">
          <div class="sidebar-header">
                 <h3 class="text-left logo-left"><img class="img-fluid img-logo" src="<?php echo base_url().'images/logo.png'?>" alt="pecific school of engineering"></h3>
-                <strong><img class="img-fluid" src="<?php base_url().'images/small-logo.png'?>" alt="pecific school of engineering"></strong>
+                <strong><img class="img-fluid" src="<?php echo base_url().'images/small-logo.png'?>"></strong>
         </div>
         <?php 
             $user_type = $this->session->userdata('login')->user_type;

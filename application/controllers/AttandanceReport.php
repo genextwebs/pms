@@ -168,7 +168,7 @@ class AttandanceReport extends CI_Controller {
 			$datarow[] = array(
 				$id = $i,
 				$employeename,
-				'<p class="btn btn-info btn-circle">'.count($getCountPresent).'</p><br/',
+				'<p class="btn btn-info btn-circle">'.count($getCountPresent).'</p><br/>',
 				'<p class="btn btn-info btn-circle">'.count($getCountAbsent).'</p><br/>',
 				'<p class="btn btn-info btn-circle">'.count($getCountLate).'</p><br/>'
 				);
