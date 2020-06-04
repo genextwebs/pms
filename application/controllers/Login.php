@@ -6,6 +6,8 @@ class Login extends CI_Controller
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('common_model');
+
+
 	}
 	
 	public function index(){
@@ -56,9 +58,26 @@ class Login extends CI_Controller
 		}
 	}
 	
+	function insertforgotData(){
+		$whereArr = array('email'=>$_POST['email']);
+		$userData = $this->common_model->getData('tbl_user',$whereArr);
+		if(!empty($userData)){
+				$updateArr = array('password'=>md5($_POST['password']),'original_password'=>$_POST['password']);
+				$this->common_model->updateData('tbl_user',$updateArr,$whereArr);
+				$this->session->set_flashdata('successmsg', '<div id="message">Enter Valid Email Address and Password.</div>');
+		}
+		else{
+			$this->session->set_flashdata('failmsg', '<div id="message">User does not Exists..</div>');
+		}
+
+	}
+
 	function logout(){
 		$this->session->sess_destroy();
 		
         redirect(base_url().'login');
 	}
+
+	
+	
 }

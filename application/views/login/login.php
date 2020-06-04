@@ -58,7 +58,7 @@ if($this->session->flashdata('sessData')){
 						</div>
 					</div>
                     <?php } ?>
-					<div class="row">
+					<div class="row" id="login">
 						<div class="col-md-12">
 							<div class="form-group">
 								<label style="font-size: 18px;"><b>Email</b><span class="astric">*</span></label>
@@ -79,7 +79,8 @@ if($this->session->flashdata('sessData')){
 								    <input type="checkbox" class="custom-control-input" name="remember_me" id="remember_me">
 								    <label class="custom-control-label" for="remember_me" style="padding-top: 2px;">Remember Me</label>
 								</div>
-								<a class="float-right forgot-link text-light-black" href="#"><i class="fa fa-lock m-r-5"></i> Forgot password?</a>
+								<!-- <a class="float-right forgot-link text-light-black" href="<?php echo base_url().'Login/forgotPassword' ?>"><i class="fa fa-lock m-r-5"></i> Forgot password?</a> -->
+								<button class="float-right forgot-link text-light-black" type="button" onclick="changediv();" ><i class="fa fa-lock m-r-5"></i> Forgot password?</button>
 							</div>
 						</div>
 						<div class="col-md-12">
@@ -88,6 +89,74 @@ if($this->session->flashdata('sessData')){
 							</div>
 						</div>
 					</div>
+					<!-- <div class="row" id="forgot" >
+						<div class="col-md-12">
+							<div class="form-group">
+								<label style="font-size: 18px;"><b>Email</b><span class="astric">*</span></label>
+								<input type="email" id="forgotemail" class="form-control" name="email" placeholder="Email" value="">
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="form-group">
+								<label style="font-size: 18px;"><b>Password</b><span class="astric">*</span></label>
+								<input type="password" name="password" id="password" class="form-control" placeholder="password" value="">
+							</div>
+						</div>
+						
+						<div class="col-md-12">
+							<div class="form-group">
+								<input type="button" name="btnsave" class="btn btn-info btn-lg btn-block rounded-4" value="Change Password" onclick="forgotPassword();" >
+							</div>
+						</div>
+					</div> -->
+				</form>
+					<form id="loginform" method="post" class="form-material"  id="forgotform"> 
+					<?php
+						//Success msg 
+						$mess = $this->session->flashdata('successmsg');
+						if(!empty($mess)){
+					?>
+				   	<div class="col-md-12">
+						<div class="submit-alerts">
+							<div class="alert alert-success" role="alert" style="display:block;">
+								<?php echo $mess; ?>
+							</div>
+						</div>
+					</div>
+                    <?php } 
+						//warning 
+						$fmsg = $this->session->flashdata('failmsg');
+						if(!empty($fmsg)){
+					?>
+				   	<div class="col-md-12">
+						<div class="submit-alerts">
+							<div class="alert alert-danger" role="alert" style="display:block;">
+								<?php echo $fmsg; ?>
+							</div>
+						</div>
+					</div>
+                    <?php } ?>
+					
+				 <div class="row" >
+						<div class="col-md-12">
+							<div class="form-group">
+								<label style="font-size: 18px;"><b>Email</b><span class="astric">*</span></label>
+								<input type="email" id="forgotemail" class="form-control" name="email" placeholder="Email" value="">
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="form-group">
+								<label style="font-size: 18px;"><b>Password</b><span class="astric">*</span></label>
+								<input type="password" name="password" id="password" class="form-control" placeholder="password" value="">
+							</div>
+						</div>
+						
+						<div class="col-md-12">
+							<div class="form-group">
+								<input type="button" name="btnsave" class="btn btn-info btn-lg btn-block rounded-4" value="Change Password" onclick="forgotPassword();" >
+							</div>
+						</div>
+					</div> 
 				</form>
 			</div>
 		</div>
@@ -95,7 +164,8 @@ if($this->session->flashdata('sessData')){
 
     <script src="<?php echo base_url();?>assets/js/jquery-3.2.1.slim.min.js"></script>
     <script src="<?php echo base_url();?>assets/js/popper.min.js"></script>
-	
+	    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+
     <script src="<?php echo base_url();?>assets/js/bootstrap.js"></script>
 
 	<script>
@@ -106,6 +176,28 @@ if($this->session->flashdata('sessData')){
 	setTimeout(function(){
 	   jQuery('.alert-danger').hide();
 	},5000);
+			var base_url = '<?php echo base_url(); ?>';
+	function changediv(){
+		$('#loginform').hide();
+		$('#forgotform').show();
+	}
+	function forgotPassword(){
+		email = $('#email').val();
+		alert(email);
+		$.ajax({
+		url : base_url+"login/insertforgotData",
+        type : 'POST',
+        dataType: 'file',
+        data : {email: email},
+        error: function() {
+              alert('Something is wrong');
+           },
+        success: function(data){
+        	//$('input[name="amount"]').val(data.amountdata);
+        }
+	});
+		
+	}
 	</script>
     <!-- sidebar -->
 </body>
