@@ -59,15 +59,17 @@ class Login extends CI_Controller
 	}
 	
 	function insertforgotData(){
-		$whereArr = array('email'=>$_POST['email']);
+		$whereArr = array('emailid'=>$_POST['email']);
 		$userData = $this->common_model->getData('tbl_user',$whereArr);
 		if(!empty($userData)){
 				$updateArr = array('password'=>md5($_POST['password']),'original_password'=>$_POST['password']);
 				$this->common_model->updateData('tbl_user',$updateArr,$whereArr);
-				$this->session->set_flashdata('successmsg', '<div id="message">Enter Valid Email Address and Password.</div>');
+				$this->session->set_flashdata('successmsg', '<div id="message">Password Changed Successfully</div>');
+				redirect('login');
 		}
 		else{
 			$this->session->set_flashdata('failmsg', '<div id="message">User does not Exists..</div>');
+			redirect('login');
 		}
 
 	}

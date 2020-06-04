@@ -110,7 +110,7 @@ if($this->session->flashdata('sessData')){
 						</div>
 					</div> -->
 				</form>
-					<form id="loginform" method="post" class="form-material"  id="forgotform"> 
+					<form method="post" class="form-material" action="<?php echo base_url().'login/insertforgotData'?>" style="display: none;" id="forgotform"> 
 					<?php
 						//Success msg 
 						$mess = $this->session->flashdata('successmsg');
@@ -153,7 +153,7 @@ if($this->session->flashdata('sessData')){
 						
 						<div class="col-md-12">
 							<div class="form-group">
-								<input type="button" name="btnsave" class="btn btn-info btn-lg btn-block rounded-4" value="Change Password" onclick="forgotPassword();" >
+								<input type="submit" name="btnsave" class="btn btn-info btn-lg btn-block rounded-4" value="Change Password" >
 							</div>
 						</div>
 					</div> 
@@ -177,11 +177,14 @@ if($this->session->flashdata('sessData')){
 	   jQuery('.alert-danger').hide();
 	},5000);
 			var base_url = '<?php echo base_url(); ?>';
-	function changediv(){
+	function changediv() {
 		$('#loginform').hide();
 		$('#forgotform').show();
+		var emailname = $('#email').val();
+		return emailname;
 	}
-	function forgotPassword(){
+
+	/*function forgotPassword(){
 		email = $('#email').val();
 		alert(email);
 		$.ajax({
@@ -195,10 +198,13 @@ if($this->session->flashdata('sessData')){
         success: function(data){
         	//$('input[name="amount"]').val(data.amountdata);
         }
-	});
+	});*/
 		
-	}
+	
 	</script>
+	<?php $a = a.val();
+	echo $a;die;
+	 ?>
     <!-- sidebar -->
 </body>
 
