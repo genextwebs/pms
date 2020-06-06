@@ -6,6 +6,7 @@ class Login extends CI_Controller
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('common_model');
+		ini_set('display_errors', 0);  
 
 
 	}
