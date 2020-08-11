@@ -103,10 +103,10 @@ class Leads extends CI_Controller
 		foreach($leadsArr as $row) {
 			$id = $row->id;
 			if($row->nextfollowup == '0'){
-				$next= $row->nextfollowup='Yes';
+				$next= $row->nextfollowup='No';
 			}
 			else{
-				$next = $row->nextfollowup='No';
+				$next = $row->nextfollowup='Yes';
 			}
 			if($row->status == '0'){
 				$status = $row->status = 'Pending';

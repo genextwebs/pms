@@ -178,7 +178,7 @@ jQuery(document).ready(function() {
 	                "success": function(json) {
 	                    var oTable = $('#employee').dataTable();
 	                    var oLanguage = oTable.fnSettings().oLanguage;
-
+	                    //alert(json.iTotalRecords);
 	                    if((json.estimateCount == true) && (json.iTotalDisplayRecords == json.limitCountQuery)){
 	                        oLanguage.sInfo = '<b>_START_ to _END_</b> of more than _TOTAL_ (<small>' + json.iTotalRecordsFormatted + ' Employees</small>)';
 	                    }

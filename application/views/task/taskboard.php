@@ -98,7 +98,7 @@ function dropThis(i,newstatus) {
     		//i.target.appendChild(document.getElementById(status));
     		
     		//detail = para.innerHTML(data);
-    		i.target.appendChild(data);
+    		i.target.append(data);
     	}
     });
     
